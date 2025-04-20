@@ -1,74 +1,40 @@
-# main_executor.py
 import argparse
-import logging
-import yaml
-import sys
-
+import asyncio
 from src.common.configuration_manager import ConfigurationManager
-from src.common.logger_setup import setup_logging
-# Import pipeline modules here
-# from src.pipelines.daily_collection_pipeline import DailyCollectionPipeline
-# from src.pipelines.event_processing_pipeline import EventProcessingPipeline
-# from src.pipelines.data_publishing_pipeline import DataPublishingPipeline
+from src.common.logger_setup import setup_logger
+from src.data_collection.playwright_scraper import PlaywrightTwitterScraper
 
+def main():
+    parser = argparse.ArgumentParser(description="VRChat Event Calendar Data Pipeline")
+    parser.add_argument("--all", action="store_true", help="Run all pipelines")
+    parser.add_argument("--collect", action="store_true", help="Run data collection pipeline")
+    parser.add_argument("--process", action="store_true", help="Run data processing pipeline")
+    parser.add_argument("--publish", action="store_true", help="Run data publishing pipeline")
+    args = parser.parse_args()
 
-def parse_command_line_arguments():
-    """
-    Parses command line arguments for the main execution script.
-    """
-    parser = argparse.ArgumentParser(description="Runs the VRChat event calendar pipeline.")
-    parser.add_argument(
-        "--mode",
-        choices=["collect", "process", "publish", "all"],
-        default="all",
-        help="Execution mode: collect, process, publish, or all.",
-    )
-    parser.add_argument(
-        "--config",
-        default="config/main_config.yaml",
-        help="Path to the main configuration file.",
-    )
-    return parser.parse_args()
+    config_manager = ConfigurationManager("config/main_config.yaml", "config/scraping_targets.yaml", "models/data_schemas.py")
+    logger = setup_logger("main_executor", config_manager.get("log_file", "app.log"))
 
+    logger.info(f"Starting data pipeline")
 
-def main_execution_flow():
-    """
-    Main execution logic for the VRChat event calendar pipeline.
-    """
-    args = parse_command_line_arguments()
+    from pipelines.data_pipeline import DataPipeline
+    pipeline = DataPipeline(logger=logger)
 
-    # Initialize configuration manager
-    config_manager = ConfigurationManager(args.config)
-    config = config_manager.get_config()
+    async def run_pipeline():
+        if args.all or args.collect or args.process or args.publish:
+            await pipeline.run("all")
+        elif args.collect:
+            await pipeline.run("collect")
+        elif args.process:
+            await pipeline.run("process")
+        elif args.publish:
+            await pipeline.run("publish")
+        else:
+            logger.info("No mode specified. Exiting.")
 
-    # Initialize logging
-    logger = setup_logging(config["logging"])
-    logger.info("Starting main execution flow.")
+    asyncio.run(run_pipeline())
 
-    try:
-        # Execute pipelines based on the specified mode
-        if args.mode == "all" or args.mode == "collect":
-            logger.info("Running data collection pipeline.")
-            # DailyCollectionPipeline(config["collection"], logger).run()
-            logger.info("Data collection pipeline completed.")
-
-        if args.mode == "all" or args.mode == "process":
-            logger.info("Running event processing pipeline.")
-            # EventProcessingPipeline(config["processing"], logger).run()
-            logger.info("Event processing pipeline completed.")
-
-        if args.mode == "all" or args.mode == "publish":
-            logger.info("Running data publishing pipeline.")
-            # DataPublishingPipeline(config["publishing"], logger).run()
-            logger.info("Data publishing pipeline completed.")
-
-        logger.info("Main execution flow completed successfully.")
-        return 0  # Success
-
-    except Exception as e:
-        logger.error(f"An error occurred during execution: {e}", exc_info=True)
-        return 1  # Failure
-
+    logger.info("Data pipeline completed")
 
 if __name__ == "__main__":
-    sys.exit(main_execution_flow())
+    main()
