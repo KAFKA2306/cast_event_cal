@@ -9,3 +9,9 @@ event_extraction_rules:
 gemini_api_key: ""
 deduplication_rules:
 recurring_event_rules:
+twitter_username: ""
+twitter_password: ""
+
+scraping_targets:
+  - query: 'lang:ja (イベント OR 開催 OR 主催 OR join OR ジョイン OR リクイン OR reqin OR リクエストインバイト OR "request invite" OR 本日 OR 営業 OR 応募) (VRChat OR VRC) min_retweets:3'
+  - list_url: 'https://x.com/i/lists/1834685283276935624'

@@ -1,15 +1,14 @@
+# src/common/data_storage_handler.py
 import json
+import os
 
 def save_data(data, filename):
-    """Saves data to a JSON file."""
-    with open(filename, 'w') as f:
-        json.dump(data, f)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 def load_data(filename):
-    """Loads data from a JSON file."""
-    try:
-        with open(filename, 'r') as f:
-            data = json.load(f)
-        return data
-    except FileNotFoundError:
-        return None
+    if not os.path.exists(filename):
+        return []
+    with open(filename, 'r', encoding='utf-8') as f:
+        return json.load(f)

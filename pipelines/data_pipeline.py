@@ -1,4 +1,4 @@
-from src.data_collection.playwright_scraper import PlaywrightTwitterScraper
+from src.data_collection.playwright_scraper import EnhancedTwitterScraper
 from src.data_processing.event_info_extractor import EventInformationExtractor
 from src.data_integration.event_deduplicator import EventDuplicateHandler
 from src.data_publishing.calendar_file_generator import CalendarFileGenerator
@@ -6,7 +6,6 @@ from src.common.configuration_manager import ConfigurationManager
 from src.common.logger_setup import setup_logger
 
 import asyncio
-from src.data_collection.playwright_scraper import PlaywrightTwitterScraper
 from src.data_collection.list_collector import TwitterListInfoCollector
 from src.data_processing.event_info_extractor import EventInformationExtractor
 from src.data_integration.event_deduplicator import EventDuplicateHandler
@@ -23,9 +22,9 @@ import os
 class DataPipeline:
     def __init__(self, config_file="config/main_config.yaml", logger=None):
         self.config_manager = ConfigurationManager(config_file)
-        self.logger = logger or setup_logger("data_pipeline", self.config_manager.get("log_file", "app.log"))
+        self.logger = logger or setup_logger("data_pipeline", self.config_manager.get_config().get("log_file", "app.log"))
         self.config = self.config_manager.config
-        self.scraper = PlaywrightTwitterScraper(self.config_manager)
+        self.scraper = EnhancedTwitterScraper(self.config_manager)
         self.list_collector = TwitterListInfoCollector(self.config_manager)
         self.extractor = EventInformationExtractor(self.config_manager)
         self.deduplicator = EventDuplicateHandler(self.config_manager)
@@ -53,9 +52,27 @@ class DataPipeline:
 
         if mode == "collect" or mode == "all":
             self.logger.info("Collecting data...")
-            all_tweets = await self.scraper.scrape()
+            scrape_tasks = []
+            for target in self.config_manager.get_config().get('scraping_targets'):
+                if 'query' in target:
+                    query = target['query']
+                    scrape_tasks.append(self.scraper.scrape_tweets(query=query))
+            all_tweets_results = await asyncio.gather(*scrape_tasks)
+            all_tweets = {}
+            for result in all_tweets_results:
+                all_tweets.update(result)
+            all_tweets_list = []
+            if all_tweets:
+                for tweet_data in all_tweets.values():
+                    all_tweets_list.extend(tweet_data)
+
             all_list_members = await self.list_collector.collect()
-            all_raw_data = all_tweets + all_list_members
+            all_list_members_list = []
+            if all_list_members:
+                for list_data in all_list_members.values():
+                    all_list_members_list.extend(list_data)
+
+            all_raw_data = all_tweets_list + all_list_members_list
             timestamp = now.strftime("%Y%m%d_%H%M%S")
             raw_data_filename = f"{self.raw_data_dir}all_raw_data_{timestamp}.json"
             save_data(all_raw_data, raw_data_filename)
@@ -75,12 +92,15 @@ class DataPipeline:
             all_events = []
             for raw_data_file in raw_data_files:
                 raw_data = load_data(raw_data_file)
+                if not raw_data:
+                    self.logger.warning(f"Raw data file {raw_data_file} is empty. Skipping processing.")
+                    continue
                 for item in raw_data:
                     event_info = self.extractor.extract(item['text'])
                     all_events.append(event_info)
 
             validated_events = []
-            data_schemas = self.config_manager.get('data_schemas')
+            data_schemas = self.config_manager.get_config().get('data_schemas')
             for event in all_events:
                 if self.schema_validator(event, data_schemas):
                     validated_events.append(event)
