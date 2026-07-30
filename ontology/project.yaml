@@ -1,0 +1,78 @@
+project:
+  id: kafka:cast-event-cal
+  name: VRChat Event Calendar Aggregator
+  repository: https://github.com/KAFKA2306/cast_event_cal
+  pages: null
+  version: 0.1.0
+  updated: 2026-07-30
+  core_ontology: https://raw.githubusercontent.com/KAFKA2306/know/main/ontology/causal-evidence-core.yaml
+  schema: https://raw.githubusercontent.com/KAFKA2306/know/main/ontology/project.schema.json
+
+purpose:
+  problem: Aggregate VRChat event information from multiple public sources while preserving organizer identity, event time, recurrence, timezone, and source provenance.
+  intended_decisions: [publish, update, merge_duplicate, cancel, flag_conflict, expire]
+  success_conditions:
+    - Each event retains organizer, source URL, source event identifier when available, timezone, start and end, and retrieval time.
+    - Cancellation, rescheduling, recurrence, and duplicate states are explicit.
+    - JSON, iCalendar, and web outputs derive from the same normalized event record.
+  falsification_conditions:
+    - Events with different organizers or times are merged solely by similar title.
+    - Local time is published without timezone or conversion provenance.
+    - A cancelled or stale event remains active without a status warning.
+
+scope:
+  included: [events, organizers, venues, VRChat worlds, recurrence, timezones, sources, normalized records, calendar outputs]
+  excluded: [private event data, inferred attendance, unsupported organizer identity, scraped personal information]
+  temporal: Source publication, retrieval, start, end, recurrence, update, cancellation, and expiry times are explicit.
+  abstraction_level: Multi-source event observation and calendar publication system.
+
+competency_questions:
+  - Which source and organizer support an event record?
+  - What timezone and recurrence rule apply to its start and end?
+  - Is the event active, changed, cancelled, duplicated, or expired?
+  - Why were two source records merged or kept separate?
+  - Do JSON, iCalendar, and web outputs represent the same normalized event?
+
+domain_mapping:
+  System: VRChatEventAggregationSystem
+  State: [source record state, normalized event state, schedule state, publication state]
+  Action: [fetch source, parse event, normalize time, resolve identity, merge duplicate, publish, cancel, expire]
+  Process: [source acquisition, event extraction, timezone normalization, entity resolution, calendar generation, deployment]
+  Observation: [source event listing, organizer statement, schedule field, cancellation notice, output record]
+  Model: [event normalization, duplicate-resolution policy, recurrence parser]
+  Requirement: [source attribution, organizer identity, timezone correctness, duplicate control, status freshness]
+  Claim: [event existence, organizer, time, venue, recurrence, cancellation status]
+  Evidence: [source URL, source snapshot, field locator, normalized record, transformation log]
+  Decision: [publish, update, merge_duplicate, cancel, flag_conflict, expire]
+
+claims_and_evidence:
+  assertion_types: [SourceObservation, NormalizedFact, CalculatedTime, Assumption, DecisionAssertion]
+  required_evidence:
+    SourceObservation: [source URL, retrieval time, source text or fields]
+    NormalizedFact: [source record IDs, normalization rule]
+    CalculatedTime: [source timezone, target timezone, conversion rule]
+    DecisionAssertion: [event IDs, reason, status timestamp]
+  unknown_policy: Missing timezone, organizer, or source identity produces flag_conflict and blocks confident publication.
+
+decision_rules:
+  - id: publish-event
+    when: Source, organizer or issuing account, timezone, start, and status are present.
+    result: publish
+  - id: duplicate-event
+    when: Organizer, source identity, schedule, and venue evidence support equivalence.
+    result: merge_duplicate
+  - id: stale-or-cancelled
+    when: An authoritative source reports cancellation or the configured expiry rule is met.
+    result: cancel_or_expire
+
+provenance:
+  sources: [public organizer pages, public event calendars, configured event-listing sources]
+  generated_artifacts: [normalized JSON, iCalendar files, web pages, update logs]
+  agents: [source adapters, parser, timezone normalizer, calendar generator, human reviewer]
+  lineage: Every output event links to one or more source records, retrieval times, normalization rules, and status changes.
+
+validation:
+  structural: Validate event IDs, timestamps, timezones, URLs, recurrence fields, and organizer records.
+  semantic: Preserve event identity, cancellation, rescheduling, recurrence, and timezone meaning across outputs.
+  evidence: Verify source snapshots, merge reasons, conversion rules, and freshness timestamps.
+  publication: JSON, iCalendar, and web outputs must agree on event identity, status, and schedule.
