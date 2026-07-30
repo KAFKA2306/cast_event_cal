@@ -1,68 +1,59 @@
 # VRChat Event Calendar Aggregator
 
-## Description
+複数の公開情報源からVRChatイベントを取得し、正規化されたJSON、iCalendar、Web表示へ変換するプロジェクトです。
 
-This project aggregates VRChat events from various online sources and provides a comprehensive calendar for end-users. 
+## 因果・証拠オントロジー
 
-**Target Audience:** VRChat end-users, community organizers
+上位システムは `VRChatEventAggregationSystem` です。
 
-**Key Features:**
+```text
+主催者・イベント媒体の公開情報
+→ 出典レコード取得
+→ 主催者・イベント同定
+→ タイムゾーン・日時・繰返し正規化
+→ 重複／変更／中止／期限切れ判定
+→ JSON・iCalendar・Web公開
+```
 
-*   Comprehensive VRChat event aggregation
-*   Calendar file generation (e.g., iCalendar)
-*   JSON API for accessing event data
-*   Web content updates with event information
+タイトルが似ているだけではイベントを統合しません。主催者、出典識別子、日時、会場またはワールドの証拠を使って同一性を判定します。タイムゾーン、出典、主催者が欠ける場合は `flag_conflict` とし、中止・変更・期限切れを明示します。
 
-## Prerequisites
+- [プロジェクト・オントロジー](ontology/project.yaml)
+- [共通因果・証拠オントロジー](https://github.com/KAFKA2306/know/blob/main/ontology/causal-evidence-core.yaml)
 
-*   Python 3.9 or higher
-*   pip package installer
-*   Python libraries listed in `requirements.txt`
-*   Configuration files in the `config/` directory
+## 主な機能
 
-## Setup
+- 公開VRChatイベント情報の集約
+- タイムゾーンを保持した日時正規化
+- 重複、変更、中止、期限切れの状態管理
+- iCalendar生成
+- JSON API生成
+- Webコンテンツ更新
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository_url> 
-    cd vrc_cast_event_calender
-    ```
-2.  **Install Python 3.9+:** 
-    Follow the instructions for your operating system to install Python 3.9 or a later version.
-3.  **Create a virtual environment (recommended):**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Linux/macOS
-    venv\Scripts\activate  # On Windows
-    ```
-4.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-5.  **Configure the project:**
-    *   Modify the configuration files in the `config/` directory, particularly `config/main_config.yaml` and `config/scraping_targets.yaml`, to adjust settings and scraping targets as needed.
+## 必要環境
 
-## Usage
+- Python 3.9以上
+- `requirements.txt` の依存関係
+- `config/main_config.yaml`
+- `config/scraping_targets.yaml`
 
-To run the project and start the data pipeline, execute the `main_executor.py` script from the project root:
+## セットアップ
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Windowsでは `venv\Scripts\activate` を使用します。
+
+## 実行
 
 ```bash
 python main_executor.py
 ```
 
-## Configuration
+各出力は同一の正規化イベントレコードから生成し、出典・取得時刻・変換規則を追跡可能にします。
 
-The project's configuration is managed through YAML files located in the `config/` directory:
+## ライセンス
 
-*   `config/main_config.yaml`: Contains the main configuration settings for the project.
-*   `config/scraping_targets.yaml`: Defines the targets for event scraping.
-
-Refer to the comments within these files for detailed information on each configuration option.
-
-## Contributing
-
-Contributions are welcome! To contribute to this project, please submit pull requests on GitHub. 
-
-## License
-
-This project is licensed under the MIT License.
+MIT
