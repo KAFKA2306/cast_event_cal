@@ -12,6 +12,7 @@ on:
       - data/recurring_events.json
       - data/one_off_events.json
       - scripts/materialize_events.py
+      - scripts/fetch_vrchat_calendar.py
       - main_executor.py
       - requirements.txt
       - pyproject.toml
@@ -40,8 +41,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Materialize recurring events
+      - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
+      - name: Discover public VRChat calendar events
+        env:
+          VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
+        run: python scripts/fetch_vrchat_calendar.py
       - name: Build calendar
         env:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
@@ -56,10 +61,15 @@ jobs:
           from pathlib import Path
 
           manual = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
+          discovered = json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8'))
+          discovery_health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
-          assert len(manual) >= 60, f'event coverage too small: {len(manual)}'
+          assert len(manual) >= 60, f'curated event coverage too small: {len(manual)}'
           assert len({item['source_id'] for item in manual}) == len(manual)
+          assert len({item['source_id'] for item in discovered}) == len(discovered)
+          assert discovery_health.get('status') in {'ok', 'degraded', 'skipped'}
+          assert discovery_health.get('event_count') == len(discovered)
           assert isinstance(events.get('events'), list)
           assert events.get('count') == len(events['events'])
           assert events.get('count') >= 60
@@ -68,12 +78,12 @@ jobs:
           PY
       - name: Commit generated data
         run: |
-          if [ -z "$(git status --porcelain -- data/manual_events.json public)" ]; then
+          if [ -z "$(git status --porcelain -- data/manual_events.json data/discovered_events.json data/discovery_health.json public)" ]; then
             echo 'No generated changes'
             exit 0
           fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/manual_events.json public
+          git add data/manual_events.json data/discovered_events.json data/discovery_health.json public
           git commit -m 'chore: refresh calendar [skip ci]'
           git push
