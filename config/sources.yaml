@@ -10,6 +10,11 @@ sources:
     enabled: true
     path: data/manual_events.json
 
+  - name: vrchat_calendar_discovery
+    type: manual_json
+    enabled: true
+    path: data/discovered_events.json
+
   # X API v2のBearer TokenをRepository Secret `X_BEARER_TOKEN`へ登録すると有効化できます。
   - name: x_vrchat_event_search
     type: x_recent_search
