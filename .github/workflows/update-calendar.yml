@@ -9,7 +9,9 @@ on:
     paths:
       - cast_event_cal/**
       - config/**
-      - data/manual_events.json
+      - data/recurring_events.json
+      - data/one_off_events.json
+      - scripts/materialize_events.py
       - main_executor.py
       - requirements.txt
       - pyproject.toml
@@ -38,12 +40,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Materialize recurring events
+        run: python scripts/materialize_events.py
       - name: Build calendar
         env:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
         run: python main_executor.py run --strict
-      - name: Validate generated assets
+      - name: Validate generated assets and coverage
         run: |
           grep -q 'VRChat Event Calendar' public/index.html
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
@@ -51,21 +55,25 @@ jobs:
           import json
           from pathlib import Path
 
+          manual = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+          assert len(manual) >= 60, f'event coverage too small: {len(manual)}'
+          assert len({item['source_id'] for item in manual}) == len(manual)
           assert isinstance(events.get('events'), list)
           assert events.get('count') == len(events['events'])
+          assert events.get('count') >= 60
           assert health.get('event_count') == events.get('count')
           assert health.get('status') in {'ok', 'degraded'}
           PY
       - name: Commit generated data
         run: |
-          if [ -z "$(git status --porcelain -- public)" ]; then
+          if [ -z "$(git status --porcelain -- data/manual_events.json public)" ]; then
             echo 'No generated changes'
             exit 0
           fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public
+          git add data/manual_events.json public
           git commit -m 'chore: refresh calendar [skip ci]'
           git push
