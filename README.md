@@ -1,10 +1,11 @@
 # cast_event_cal
 
-**公開カレンダー:** https://kafka2306.github.io/cast_event_cal/  
-**JSON API:** https://kafka2306.github.io/cast_event_cal/events.json  
-**iCalendar:** https://kafka2306.github.io/cast_event_cal/calendar.ics
+**公開カレンダー:** https://kafka2306.github.io/vrc_cast_event_calender/  
+**JSON API:** https://kafka2306.github.io/vrc_cast_event_calender/events.json  
+**iCalendar:** https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics  
+**公開ミラー:** https://github.com/KAFKA2306/vrc_cast_event_calender
 
-VRChatイベントの公開情報を定期取得し、出典を保持した正規化JSON、iCalendar、検索可能なWeb画面へ自動変換するパイプラインです。
+VRChatイベントの公開情報を定期取得し、出典を保持した正規化JSON、iCalendar、検索可能なWeb画面へ自動変換するパイプラインです。このリポジトリをデータ生成の正本とし、既にGitHub Pagesが稼働している公開ミラーへ成果物を同期します。
 
 ## v2で刷新した点
 
@@ -13,7 +14,8 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
 - 曖昧な日時を推測で確定せず、明示的な日時だけを採用
 - 出典IDを優先した重複排除と、取得元ごとの失敗隔離
 - `events.json`、`calendar.ics`、`health.json`、Web UIを一度に生成
-- 6時間ごとの自動更新、生成物のcommit、GitHub Pagesデプロイ
+- 6時間ごとのデータ生成、生成物のcommit、公開ミラーへの同期
+- 公開URLとJSON APIのHTTP 200自己監査
 - Python 3.11〜3.13でCI、設定検証、単体テスト、静的解析
 
 ## データフロー
@@ -24,7 +26,9 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
   → UTCへ正規化（表示はAsia/Tokyo）
   → 出典IDまたは主催者・タイトル・日時・会場で同一性判定
   → 公開期間でフィルタ
-  → JSON / ICS / health / GitHub Pagesを生成
+  → public/ にJSON / ICS / health / Web UIを生成
+  → vrc_cast_event_calenderへ同期
+  → GitHub Pages公開とHTTP 200監査
 ```
 
 ## ローカル実行
@@ -79,12 +83,24 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 
 ## 自動運用
 
-`.github/workflows/update-calendar.yml`が次を実行します。
+### データ生成
+
+`cast_event_cal/.github/workflows/update-calendar.yml`が次を実行します。
 
 1. 6時間ごと、手動実行、主要設定変更時に起動
 2. 取得・正規化・公開物生成
-3. 差分がある場合だけ`public/`を自動commit・push
-4. GitHub Pagesへデプロイ
+3. HTML、JSON、ICS、healthの整合性検証
+4. 差分がある場合だけ`public/`を自動commit・push
+
+### 本番公開
+
+`vrc_cast_event_calender/.github/workflows/sync-cast-event-production.yml`が次を実行します。
+
+1. 6時間ごとまたは手動で正本の`public/`を取得
+2. JSON件数、health、ICS、HTMLを検証
+3. GitHub Pagesの公開元へ同期
+4. 公開ページと`events.json`がHTTP 200になるまで確認
+5. `audit/production-status.json`へ公開監査結果を保存
 
 CIは`.github/workflows/ci.yml`でPython 3.11〜3.13を検証します。
 
