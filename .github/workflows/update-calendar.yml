@@ -1,4 +1,4 @@
-name: Update calendar and deploy Pages
+name: Update calendar data
 
 on:
   workflow_dispatch:
@@ -15,18 +15,17 @@ on:
       - pyproject.toml
       - .github/workflows/update-calendar.yml
 
+permissions:
+  contents: write
+
 concurrency:
-  group: pages
+  group: calendar-data-update
   cancel-in-progress: false
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -44,127 +43,29 @@ jobs:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
         run: python main_executor.py run --strict
+      - name: Validate generated assets
+        run: |
+          grep -q 'VRChat Event Calendar' public/index.html
+          grep -q 'BEGIN:VCALENDAR' public/calendar.ics
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+          assert isinstance(events.get('events'), list)
+          assert events.get('count') == len(events['events'])
+          assert health.get('event_count') == events.get('count')
+          assert health.get('status') in {'ok', 'degraded'}
+          PY
       - name: Commit generated data
         run: |
           if [ -z "$(git status --porcelain -- public)" ]; then
-            echo "No generated changes"
+            echo 'No generated changes'
             exit 0
           fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add public
-          git commit -m "chore: refresh calendar [skip ci]"
-          git push
-      - name: Detect Pages bootstrap token
-        id: pages_token
-        env:
-          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
-        run: |
-          if [ -n "$PAGES_TOKEN" ]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Configure existing GitHub Pages
-        id: configure_pages
-        continue-on-error: true
-        uses: actions/configure-pages@v5
-      - name: Enable and configure GitHub Pages
-        if: steps.configure_pages.outcome == 'failure' && steps.pages_token.outputs.available == 'true'
-        uses: actions/configure-pages@v5
-        with:
-          token: ${{ secrets.PAGES_TOKEN }}
-          enablement: true
-      - name: Stop when Pages is not enabled
-        if: steps.configure_pages.outcome == 'failure' && steps.pages_token.outputs.available != 'true'
-        run: |
-          echo "::error::GitHub Pages is not enabled. Set Settings > Pages > Source to GitHub Actions, or add PAGES_TOKEN with Pages write and Administration write permissions."
-          exit 1
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    outputs:
-      page_url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  verify:
-    needs: deploy
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Verify published endpoints
-        env:
-          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
-        run: |
-          set -u
-          base="${PAGE_URL%/}"
-          verified=false
-          root_status=000
-          events_status=000
-          for attempt in $(seq 1 30); do
-            root_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/index.html -w '%{http_code}' "$base/" || true)"
-            events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/events.json -w '%{http_code}' "$base/events.json" || true)"
-            if [ "$root_status" = "200" ] && [ "$events_status" = "200" ] \
-              && grep -q "VRChat Event Calendar" /tmp/index.html \
-              && python -c 'import json; data=json.load(open("/tmp/events.json", encoding="utf-8")); assert isinstance(data.get("events"), list)'; then
-              verified=true
-              break
-            fi
-            sleep 10
-          done
-          if [ "$verified" != "true" ]; then
-            echo "Pages verification failed: root=$root_status events=$events_status" >&2
-            exit 1
-          fi
-          mkdir -p audit
-          export ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status"
-          python - <<'PY'
-          import json
-          import os
-          from datetime import UTC, datetime
-
-          payload = {
-              "schema_version": "1.0",
-              "verified_at": datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-              "page_url": os.environ["PAGE_URL"],
-              "root_status": int(os.environ["ROOT_STATUS"]),
-              "events_status": int(os.environ["EVENTS_STATUS"]),
-              "source_commit": os.environ["GITHUB_SHA"],
-              "status": "ok",
-          }
-          with open("audit/pages-status.json", "w", encoding="utf-8") as handle:
-              json.dump(payload, handle, ensure_ascii=False, indent=2)
-              handle.write("\n")
-          PY
-      - name: Commit deployment verification
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add audit/pages-status.json
-          if git diff --cached --quiet; then
-            echo "No verification changes"
-            exit 0
-          fi
-          git commit -m "chore: record Pages verification [skip ci]"
-          git pull --rebase origin main
+          git commit -m 'chore: refresh calendar [skip ci]'
           git push
