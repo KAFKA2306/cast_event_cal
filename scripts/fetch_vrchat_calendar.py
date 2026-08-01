@@ -107,7 +107,9 @@ def fetch_term(
         )
         response.raise_for_status()
         payload = response.json()
-        page = payload.get("results", []) if isinstance(payload, dict) else []
+        if not isinstance(payload, dict):
+            raise ValueError("VRChat calendar search returned a non-object response")
+        page = payload.get("results", [])
         if not isinstance(page, list):
             raise ValueError("VRChat calendar search returned an invalid results field")
         rows.extend(item for item in page if isinstance(item, dict))
@@ -122,6 +124,30 @@ def write_json(path: Path, value: Any) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
+
+
+def write_preserved_health(
+    *,
+    health_output: Path,
+    generated_at: str,
+    existing_count: int,
+    status: str,
+    reason: str,
+    query_count: int,
+    errors: list[str],
+) -> None:
+    write_json(
+        health_output,
+        {
+            "schema_version": "1.0",
+            "generated_at": generated_at,
+            "status": status,
+            "reason": reason,
+            "event_count": existing_count,
+            "query_count": query_count,
+            "errors": errors,
+        },
+    )
 
 
 def run_discovery(
@@ -142,22 +168,33 @@ def run_discovery(
     if not cookie:
         if not output.exists():
             write_json(output, [])
-        write_json(
-            health_output,
-            {
-                "schema_version": "1.0",
-                "generated_at": generated_at,
-                "status": "skipped",
-                "reason": "VRCHAT_AUTH_COOKIE is not configured",
-                "event_count": len(existing),
-                "query_count": 0,
-                "errors": [],
-            },
+        write_preserved_health(
+            health_output=health_output,
+            generated_at=generated_at,
+            existing_count=len(existing),
+            status="skipped",
+            reason="VRCHAT_AUTH_COOKIE is not configured",
+            query_count=0,
+            errors=[],
         )
         print("VRChat calendar discovery skipped: VRCHAT_AUTH_COOKIE is not configured")
         return 0
 
-    token = normalize_cookie(cookie)
+    try:
+        token = normalize_cookie(cookie)
+    except ValueError as exc:
+        write_preserved_health(
+            health_output=health_output,
+            generated_at=generated_at,
+            existing_count=len(existing),
+            status="degraded",
+            reason="invalid credential; preserved previous discovery cache",
+            query_count=0,
+            errors=[str(exc)],
+        )
+        print(f"VRChat calendar discovery preserved {len(existing)} cached events")
+        return 0
+
     errors: list[str] = []
     raw_rows: list[dict[str, Any]] = []
     with httpx.Client(
@@ -180,17 +217,14 @@ def run_discovery(
     events = sorted(events_by_id.values(), key=lambda item: (str(item["starts_at"]), str(item["title"])))
 
     if errors and not events:
-        write_json(
-            health_output,
-            {
-                "schema_version": "1.0",
-                "generated_at": generated_at,
-                "status": "degraded",
-                "reason": "all live queries failed; preserved previous discovery cache",
-                "event_count": len(existing),
-                "query_count": len(terms),
-                "errors": errors,
-            },
+        write_preserved_health(
+            health_output=health_output,
+            generated_at=generated_at,
+            existing_count=len(existing),
+            status="degraded",
+            reason="all live queries failed; preserved previous discovery cache",
+            query_count=len(terms),
+            errors=errors,
         )
         print(f"VRChat calendar discovery preserved {len(existing)} cached events")
         return 0
