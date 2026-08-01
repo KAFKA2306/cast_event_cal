@@ -32,6 +32,18 @@ jobs:
       - run: pytest tests
       - run: python main_executor.py validate
       - run: python scripts/materialize_events.py
+      - name: Exercise credential-free discovery fallback
+        run: |
+          unset VRCHAT_AUTH_COOKIE
+          python scripts/fetch_vrchat_calendar.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
+          assert health['status'] == 'skipped'
+          assert health['event_count'] == len(json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8')))
+          PY
       - name: Enforce useful event coverage
         run: |
           python - <<'PY'
