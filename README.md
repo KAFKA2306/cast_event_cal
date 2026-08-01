@@ -10,13 +10,14 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
 ## v2で刷新した点
 
 - Xの画面スクレイピングとID・パスワード直書きを廃止
-- X API v2、VRChat Group Calendar、公開ICS、公開JSON、手動JSONを同じ取得層で処理
-- 曖昧な日時を推測で確定せず、明示的な日時だけを採用
+- VRChat公式カレンダー検索、X API v2、Group Calendar、公開ICS、公開JSON、手動JSONを同じ取得層で処理
 - 公開一次情報で確認した定期イベントを120日先まで開催日単位に展開
+- 公式カレンダー検索から公開イベントだけをライブ発見
+- 曖昧な日時を推測で確定せず、明示的な日時だけを採用
 - 出典IDを優先した重複排除と、取得元ごとの失敗隔離
 - `events.json`、`calendar.ics`、`health.json`、Web UIを一度に生成
 - 6時間ごとのデータ生成、生成物のcommit、公開ミラーへの同期
-- 60件未満を失敗させるイベント件数ゲート
+- 60件未満を失敗させる固定系列カバレッジゲート
 - 公開URLとJSON APIのHTTP 200自己監査
 - Python 3.11〜3.13でCI、設定検証、単体テスト、静的解析
 
@@ -28,7 +29,13 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
   → data/one_off_events.json（単発開催）
   → scripts/materialize_events.pyで120日分を日付展開
   → data/manual_events.json
-  → 取得・UTC正規化・重複排除
+
+VRChat公式カレンダー検索
+  → scripts/fetch_vrchat_calendar.py
+  → data/discovered_events.json
+
+上記2系統
+  → UTC正規化・重複除外
   → public/ にJSON / ICS / health / Web UIを生成
   → vrc_cast_event_calenderへ同期
   → GitHub Pages公開とHTTP 200監査
@@ -45,6 +52,31 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
 
 終了時刻を一次情報で確認できないイベントは、推測せず`end_time`を省略します。生成後の`source_id`は系列IDと開催日の組み合わせになり、同一系列の各回を独立した予定としてJSONとICSへ出力します。
 
+## VRChat公式カレンダーのライブ検索
+
+Repository Secret `VRCHAT_AUTH_COOKIE`が設定されている場合、`scripts/fetch_vrchat_calendar.py`がカレンダー検索APIを利用して新規イベントを取得します。
+
+既定の検索語:
+
+- 日本語
+- 初心者
+- 交流
+- 音楽
+- ゲーム
+- Quest
+
+採用ルール:
+
+- `accessType: public`だけを採用
+- Draft、削除済み、カレンダーID・タイトル・開始時刻欠損を除外
+- 同一カレンダーIDを統合
+- 固定系列と同一タイトル・同一開始時刻の結果を除外
+- Cookie未設定時は安全にスキップ
+- API障害または不正なCookieの場合は直前の発見キャッシュを保持
+- 実行状態を`data/discovery_health.json`へ保存
+
+ライブ検索結果は固定系列60件以上の品質ゲートには算入しません。API結果が減少しても、確認済みカレンダーの基盤を維持します。
+
 ## ローカル実行
 
 ```bash
@@ -53,6 +85,7 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e '.[dev]'
 python main_executor.py validate
 python scripts/materialize_events.py
+python scripts/fetch_vrchat_calendar.py
 python main_executor.py run --strict
 python -m http.server 8000 --directory public
 ```
@@ -90,6 +123,8 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 ## 出力
 
 - `data/manual_events.json`: 定期系列と単発予定を展開した入力データ
+- `data/discovered_events.json`: 公式カレンダー検索で発見した公開イベント
+- `data/discovery_health.json`: ライブ検索の状態、件数、失敗理由
 - `public/events.json`: 正規化イベントAPI
 - `public/calendar.ics`: カレンダー購読用
 - `public/health.json`: 取得元ごとの成功・失敗・件数
@@ -105,9 +140,10 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 
 1. 6時間ごと、手動実行、主要設定変更時に起動
 2. 定期系列を120日先まで展開
-3. 取得・正規化・公開物生成
-4. HTML、JSON、ICS、health、最低件数を検証
-5. 差分がある場合だけ`data/manual_events.json`と`public/`を自動commit・push
+3. VRChat公式カレンダーから公開イベントを検索
+4. 取得・正規化・公開物生成
+5. HTML、JSON、ICS、health、最低件数を検証
+6. 差分がある場合だけデータと`public/`を自動commit・push
 
 ### 本番公開
 
@@ -125,8 +161,10 @@ CIは`.github/workflows/ci.yml`でPython 3.11〜3.13を検証します。
 
 - APIトークン、Cookie、`.env`、ブラウザ認証状態をGitへ追加しない
 - Xのユーザー名・パスワードを使用しない
-- 公開情報のみを対象とし、招待制・非公開イベントを公開イベントと断定しない
+- `accessType: public`以外をライブ検索結果へ含めない
+- 招待制・非公開イベントを公開イベントと断定しない
 - 開催時刻や終了時刻を推測しない
+- API障害時に空データで正常なキャッシュを上書きしない
 - 取得元の利用規約、API上限、削除・中止情報を優先する
 
 ## ライセンス
