@@ -75,7 +75,75 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Verify published endpoints
+        env:
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -u
+          base="${PAGE_URL%/}"
+          verified=false
+          root_status=000
+          events_status=000
+          for attempt in $(seq 1 30); do
+            root_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/index.html -w '%{http_code}' "$base/" || true)"
+            events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/events.json -w '%{http_code}' "$base/events.json" || true)"
+            if [ "$root_status" = "200" ] && [ "$events_status" = "200" ] \
+              && grep -q "VRChat Event Calendar" /tmp/index.html \
+              && python -c 'import json; data=json.load(open("/tmp/events.json", encoding="utf-8")); assert isinstance(data.get("events"), list)'; then
+              verified=true
+              break
+            fi
+            sleep 10
+          done
+          if [ "$verified" != "true" ]; then
+            echo "Pages verification failed: root=$root_status events=$events_status" >&2
+            exit 1
+          fi
+          mkdir -p audit
+          export ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status"
+          python - <<'PY'
+          import json
+          import os
+          from datetime import UTC, datetime
+
+          payload = {
+              "schema_version": "1.0",
+              "verified_at": datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+              "page_url": os.environ["PAGE_URL"],
+              "root_status": int(os.environ["ROOT_STATUS"]),
+              "events_status": int(os.environ["EVENTS_STATUS"]),
+              "source_commit": os.environ["GITHUB_SHA"],
+              "status": "ok",
+          }
+          with open("audit/pages-status.json", "w", encoding="utf-8") as handle:
+              json.dump(payload, handle, ensure_ascii=False, indent=2)
+              handle.write("\n")
+          PY
+      - name: Commit deployment verification
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add audit/pages-status.json
+          if git diff --cached --quiet; then
+            echo "No verification changes"
+            exit 0
+          fi
+          git commit -m "chore: record Pages verification [skip ci]"
+          git pull --rebase origin main
+          git push
