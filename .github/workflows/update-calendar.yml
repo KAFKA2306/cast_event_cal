@@ -46,7 +46,7 @@ jobs:
         run: python main_executor.py run
       - name: Commit generated data
         run: |
-          if git diff --quiet -- public; then
+          if [ -z "$(git status --porcelain -- public)" ]; then
             echo "No generated changes"
             exit 0
           fi
