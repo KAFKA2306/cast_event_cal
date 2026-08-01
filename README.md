@@ -12,24 +12,38 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
 - Xの画面スクレイピングとID・パスワード直書きを廃止
 - X API v2、VRChat Group Calendar、公開ICS、公開JSON、手動JSONを同じ取得層で処理
 - 曖昧な日時を推測で確定せず、明示的な日時だけを採用
+- 公開一次情報で確認した定期イベントを120日先まで開催日単位に展開
 - 出典IDを優先した重複排除と、取得元ごとの失敗隔離
 - `events.json`、`calendar.ics`、`health.json`、Web UIを一度に生成
 - 6時間ごとのデータ生成、生成物のcommit、公開ミラーへの同期
+- 60件未満を失敗させるイベント件数ゲート
 - 公開URLとJSON APIのHTTP 200自己監査
 - Python 3.11〜3.13でCI、設定検証、単体テスト、静的解析
 
 ## データフロー
 
 ```text
-公開JSON / ICS / X API / VRChat Group Calendar / 手動JSON
-  → 取得元ごとに収集・失敗隔離
-  → UTCへ正規化（表示はAsia/Tokyo）
-  → 出典IDまたは主催者・タイトル・日時・会場で同一性判定
-  → 公開期間でフィルタ
+公開一次情報
+  → data/recurring_events.json（定期系列）
+  → data/one_off_events.json（単発開催）
+  → scripts/materialize_events.pyで120日分を日付展開
+  → data/manual_events.json
+  → 取得・UTC正規化・重複排除
   → public/ にJSON / ICS / health / Web UIを生成
   → vrc_cast_event_calenderへ同期
   → GitHub Pages公開とHTTP 200監査
 ```
+
+## 定期イベントの管理
+
+`data/recurring_events.json`には、曜日、開始時刻、終了時刻、タイムゾーン、根拠URLを持つ系列だけを登録します。`scripts/materialize_events.py`が実行時点から過去1日・未来120日の各開催日を生成するため、同じイベントを手作業で毎週追加する必要はありません。
+
+対応する頻度は次のとおりです。
+
+- `weekly`: 複数曜日を指定できる週次開催
+- `monthly_nth_weekday`: 第3日曜などの月次開催
+
+終了時刻を一次情報で確認できないイベントは、推測せず`end_time`を省略します。生成後の`source_id`は系列IDと開催日の組み合わせになり、同一系列の各回を独立した予定としてJSONとICSへ出力します。
 
 ## ローカル実行
 
@@ -38,7 +52,8 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e '.[dev]'
 python main_executor.py validate
-python main_executor.py run
+python scripts/materialize_events.py
+python main_executor.py run --strict
 python -m http.server 8000 --directory public
 ```
 
@@ -46,7 +61,7 @@ python -m http.server 8000 --directory public
 
 ## 取得元の追加
 
-`config/sources.yaml`を編集します。
+定期系列は`data/recurring_events.json`、単発予定は`data/one_off_events.json`へ追加します。APIまたはフィードは`config/sources.yaml`へ追加します。
 
 ```yaml
 sources:
@@ -74,6 +89,7 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 
 ## 出力
 
+- `data/manual_events.json`: 定期系列と単発予定を展開した入力データ
 - `public/events.json`: 正規化イベントAPI
 - `public/calendar.ics`: カレンダー購読用
 - `public/health.json`: 取得元ごとの成功・失敗・件数
@@ -88,9 +104,10 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 `cast_event_cal/.github/workflows/update-calendar.yml`が次を実行します。
 
 1. 6時間ごと、手動実行、主要設定変更時に起動
-2. 取得・正規化・公開物生成
-3. HTML、JSON、ICS、healthの整合性検証
-4. 差分がある場合だけ`public/`を自動commit・push
+2. 定期系列を120日先まで展開
+3. 取得・正規化・公開物生成
+4. HTML、JSON、ICS、health、最低件数を検証
+5. 差分がある場合だけ`data/manual_events.json`と`public/`を自動commit・push
 
 ### 本番公開
 
@@ -109,6 +126,7 @@ CIは`.github/workflows/ci.yml`でPython 3.11〜3.13を検証します。
 - APIトークン、Cookie、`.env`、ブラウザ認証状態をGitへ追加しない
 - Xのユーザー名・パスワードを使用しない
 - 公開情報のみを対象とし、招待制・非公開イベントを公開イベントと断定しない
+- 開催時刻や終了時刻を推測しない
 - 取得元の利用規約、API上限、削除・中止情報を優先する
 
 ## ライセンス

@@ -28,7 +28,18 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
-      - run: ruff check cast_event_cal tests/test_core.py main_executor.py
-      - run: pytest tests/test_core.py
+      - run: ruff check cast_event_cal scripts tests main_executor.py
+      - run: pytest tests
       - run: python main_executor.py validate
+      - run: python scripts/materialize_events.py
+      - name: Enforce useful event coverage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          events = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
+          assert len(events) >= 60, f'event coverage too small: {len(events)}'
+          assert len({item['source_id'] for item in events}) == len(events)
+          PY
       - run: python main_executor.py run --strict
