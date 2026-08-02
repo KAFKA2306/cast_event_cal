@@ -1,0 +1,162 @@
+name: Audit Yahoo v1.8 selection delta
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - config/yahoo-v18-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  audit-delta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: Save baseline
+        run: cp data/yahoo_realtime_events.json /tmp/yahoo-v17-events.json
+      - name: Apply and test v1.8 migration
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/apply_yahoo_policy_v18.py')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              'def structured_classify(text: str) -> tuple[str | None, str | None]:\n    folded = text.casefold()\n',
+              'def structured_classify(text: str) -> tuple[str | None, str | None]:\n',
+              1,
+          )
+          text = text.replace(
+              '    queries = "\\n".join(row["query"] for row in plan)',
+              '    queries = "\\\\n".join(row["query"] for row in plan)',
+              1,
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
+          python scripts/apply_yahoo_policy_v18.py
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/collect_yahoo_corpus.py')
+          lines = path.read_text(encoding='utf-8').splitlines()
+
+          def find(value: str, start: int = 0) -> int:
+              return next(i for i in range(start, len(lines)) if lines[i] == value)
+
+          def replace_set(name: str, body: list[str]) -> None:
+              start = find(f'{name} = {{')
+              end = find('}', start + 1)
+              lines[start:end + 1] = [f'{name} = {{', *[f'    {x}' for x in body], '}']
+
+          index = find('PRIVATE_INSTANCE_TERMS = {')
+          lines[index:index] = [
+              'VR_ACCESS_TERMS = {',
+              '    "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",',
+              '    "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",',
+              '    "group public", "フレンドインスタンス", "join制", "インスタンスへ", "インスタンスに",',
+              '    "インスタンスオープン",',
+              '}',
+              'GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}',
+          ]
+          replace_set('ATTENDANCE_TERMS', [
+              '"参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",',
+              '"ご来店", "遊びに来て", "お越し", "見に来て", "聴きに来て",',
+              '"お待ちしております", "お待ちしてます", "入場",',
+          ])
+          feature = find('    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)')
+          lines.insert(feature + 1, '    has_generic_event = has_any(text, GENERIC_EVENT_NOUN_TERMS)')
+          access = find('    has_access = has_any(text, PARTICIPATION_TERMS)', feature)
+          lines[access] = '    has_access = has_any(text, VR_ACCESS_TERMS)'
+          structure = find(
+              '    event_structure = has_specific_event or (has_action and has_access) or (has_access and has_attendance)',
+              feature,
+          )
+          lines[structure:structure + 1] = [
+              '    event_structure = (',
+              '        has_specific_event',
+              '        or (has_generic_event and has_action)',
+              '        or (has_action and has_access)',
+              '        or (has_access and has_attendance)',
+              '    )',
+          ]
+          refined = find('def refined_candidate_to_event(')
+          call = find('    event, reason = _ORIGINAL_CANDIDATE_TO_EVENT(', refined)
+          lines[call:call] = [
+              '    if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:',
+              '        return None, "missing_participation_method"',
+              '',
+          ]
+          path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          ruff check cast_event_cal scripts tests main_executor.py
+          pytest tests
+          python scripts/refine_yahoo_corpus.py
+      - name: Record selection delta
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          before = json.loads(Path('/tmp/yahoo-v17-events.json').read_text(encoding='utf-8'))
+          after = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
+          history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
+          before_by = {row['source_id'].split(':')[-1]: row for row in before}
+          after_by = {row['source_id'].split(':')[-1]: row for row in after}
+          history_by = {row['status_id']: row for row in history['candidates']}
+          lost_ids = sorted(set(before_by) - set(after_by))
+          gained_ids = sorted(set(after_by) - set(before_by))
+          report = {
+              'schema_version': '1.0',
+              'baseline_count': len(before),
+              'v18_count': len(after),
+              'lost_count': len(lost_ids),
+              'gained_count': len(gained_ids),
+              'lost': [
+                  {
+                      'status_id': status_id,
+                      'reason': history_by.get(status_id, {}).get('last_reason'),
+                      'title': before_by[status_id].get('title'),
+                      'description': before_by[status_id].get('description'),
+                      'retweet_count': history_by.get(status_id, {}).get('max_retweet_count') or history_by.get(status_id, {}).get('retweet_count'),
+                  }
+                  for status_id in lost_ids
+              ],
+              'gained': [
+                  {
+                      'status_id': status_id,
+                      'title': after_by[status_id].get('title'),
+                      'description': after_by[status_id].get('description'),
+                      'retweet_count': history_by.get(status_id, {}).get('max_retweet_count') or history_by.get(status_id, {}).get('retweet_count'),
+                  }
+                  for status_id in gained_ids
+              ],
+              'v18_reason_counts': dict(Counter(str(row.get('last_reason') or 'accepted') for row in history['candidates'])),
+          }
+          Path('/tmp/yahoo-v18-selection-delta.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+          git restore --worktree .
+          mkdir -p audit
+          cp /tmp/yahoo-v18-selection-delta.json audit/yahoo-v18-selection-delta.json
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add audit/yahoo-v18-selection-delta.json
+          git commit -m 'chore: record Yahoo v1.8 selection delta [skip ci]'
+          git push origin HEAD:${{ github.head_ref }}
