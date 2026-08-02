@@ -19,20 +19,21 @@ def test_materializes_rolling_120_day_window():
         future_days=120,
     )
     assert len(events) >= 250
-    assert len({event["source_id"] for event in events}) == len(events)
+    source_ids = {event["source_id"] for event in events}
+    assert len(source_ids) == len(events)
     local_days = [parse_instant(event["starts_at"]).astimezone(JST).date() for event in events]
     assert min(local_days).isoformat() == "2026-08-01"
     assert max(local_days).isoformat() <= "2026-11-30"
-    titles = {event["title"] for event in events}
+    represented_series = {source_id.rsplit(":", 1)[0] for source_id in source_ids if ":" in source_id}
     assert {
-        "おはよう！朝4時に何してるんだぃ？",
-        "EN-JP Language Exchange（土曜）",
-        "VRCゲームワールド部",
-        "VRCフィットボクシング（土曜）",
-        "しーぷかふぇ（第2・第4土曜 前半）",
-        "VR研究カフェ",
-        "謎めぐり",
-    } <= titles
+        "morning-four-photo",
+        "asmr-main-event",
+        "en-jp-language-exchange-saturday",
+        "exploit-weekly-match",
+        "ml-meetup",
+        "personally-match",
+        "sw-arch-first-monday",
+    } <= represented_series
 
 
 def test_generated_json_roundtrip(tmp_path):
