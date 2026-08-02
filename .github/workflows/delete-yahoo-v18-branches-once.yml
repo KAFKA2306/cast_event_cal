@@ -16,15 +16,13 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Delete completed work branches
+      - name: Delete remaining completed work branches
         run: |
           set -euo pipefail
           for branch in \
-            feat/yahoo-query-selection-v18 \
-            feat/yahoo-v18-final \
-            feat/yahoo-v18-final-commit \
-            feat/yahoo-v18-finalized \
             feat/yahoo-v18-materialize \
             feat/yahoo-v18-merge-ready; do
             git push origin --delete "$branch" || true
           done
+
+# retry-after-pr-closure
