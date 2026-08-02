@@ -1,4 +1,4 @@
-version: 3
+version: 4
 http:
   timeout_seconds: 25
 window:
@@ -19,6 +19,11 @@ sources:
     type: manual_json
     enabled: true
     path: data/x_events.json
+
+  - name: yahoo_realtime_events
+    type: manual_json
+    enabled: true
+    path: data/yahoo_realtime_events.json
 
 # 公開ICS/JSONフィードは以下の形式で追加する。
 # - name: community_ics
