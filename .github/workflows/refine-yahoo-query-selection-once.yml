@@ -22,137 +22,107 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-      - name: Run observable migration
+      - name: Run Yahoo v1.8 migration
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: |
-          set -uo pipefail
-          mkdir -p /tmp/yahoo-v18
-          stage=install
-          status=0
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
 
-          run_stage() {
-            stage="$1"
-            shift
-            echo "===== $stage =====" | tee "/tmp/yahoo-v18/$stage.log"
-            "$@" 2>&1 | tee -a "/tmp/yahoo-v18/$stage.log"
-            return ${PIPESTATUS[0]}
-          }
-
-          run_stage install bash -c "python -m pip install --upgrade pip && pip install -e '.[dev]'" || status=$?
-
-          if [ "$status" -eq 0 ]; then
-            stage=repair
-            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/repair.log
+          python - <<'PY'
           from pathlib import Path
 
           path = Path('scripts/apply_yahoo_policy_v18.py')
           text = path.read_text(encoding='utf-8')
-          folded = 'def structured_classify(text: str) -> tuple[str | None, str | None]:\n    folded = text.casefold()\n'
-          repaired = 'def structured_classify(text: str) -> tuple[str | None, str | None]:\n'
-          if folded not in text:
-              raise SystemExit('unused folded assignment not found')
-          text = text.replace(folded, repaired, 1)
-          old = '    queries = "\\n".join(row["query"] for row in plan)'
-          new = '    queries = "\\\\n".join(row["query"] for row in plan)'
-          if old not in text:
-              raise SystemExit('query newline literal not found')
-          text = text.replace(old, new, 1)
+          text = text.replace(
+              'def structured_classify(text: str) -> tuple[str | None, str | None]:\n    folded = text.casefold()\n',
+              'def structured_classify(text: str) -> tuple[str | None, str | None]:\n',
+              1,
+          )
+          text = text.replace(
+              '    queries = "\\n".join(row["query"] for row in plan)',
+              '    queries = "\\\\n".join(row["query"] for row in plan)',
+              1,
+          )
           path.write_text(text, encoding='utf-8')
           PY
-            status=${PIPESTATUS[0]}
-          fi
 
-          if [ "$status" -eq 0 ]; then
-            run_stage apply python scripts/apply_yahoo_policy_v18.py || status=$?
-          fi
+          python scripts/apply_yahoo_policy_v18.py
 
-          if [ "$status" -eq 0 ]; then
-            stage=logic
-            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/logic.log
+          python - <<'PY'
           from pathlib import Path
 
           path = Path('scripts/collect_yahoo_corpus.py')
-          text = path.read_text(encoding='utf-8')
+          lines = path.read_text(encoding='utf-8').splitlines()
 
-          marker = '''}
-          PRIVATE_INSTANCE_TERMS = {'''
-          insertion = '''}
-          VR_ACCESS_TERMS = {
-              "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",
-              "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",
-              "group public", "フレンドインスタンス", "join制", "インスタンスへ", "インスタンスに",
-              "インスタンスオープン",
-          }
-          GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}
-          PRIVATE_INSTANCE_TERMS = {'''
-          if marker not in text:
-              raise SystemExit('private instance marker not found')
-          text = text.replace(marker, insertion, 1)
+          def find_line(value: str, start: int = 0) -> int:
+              for index in range(start, len(lines)):
+                  if lines[index] == value:
+                      return index
+              raise RuntimeError(f'line not found: {value}')
 
-          old_attendance = '''ATTENDANCE_TERMS = {
-              "参加", "ご参加", "来場", "ご来場", "ご来店", "遊びに来て", "お越し", "見に来て",
-              "聴きに来て", "お待ちしております", "お待ちしてます", "入場",
-          }'''
-          new_attendance = '''ATTENDANCE_TERMS = {
-              "参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",
-              "ご来店", "遊びに来て", "お越し", "見に来て", "聴きに来て",
-              "お待ちしております", "お待ちしてます", "入場",
-          }'''
-          if old_attendance not in text:
-              raise SystemExit('attendance terms not found')
-          text = text.replace(old_attendance, new_attendance, 1)
+          def replace_set(name: str, body: list[str]) -> None:
+              start = find_line(f'{name} = {{')
+              end = find_line('}', start + 1)
+              lines[start:end + 1] = [f'{name} = {{', *[f'    {row}' for row in body], '}']
 
-          old_features = '''    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
-              has_action = has_any(text, EVENT_ACTION_TERMS)
-              has_access = has_any(text, PARTICIPATION_TERMS)'''
-          new_features = '''    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
-              has_generic_event = has_any(text, GENERIC_EVENT_NOUN_TERMS)
-              has_action = has_any(text, EVENT_ACTION_TERMS)
-              has_access = has_any(text, VR_ACCESS_TERMS)'''
-          if old_features not in text:
-              raise SystemExit('classifier feature block not found')
-          text = text.replace(old_features, new_features, 1)
+          private_index = find_line('PRIVATE_INSTANCE_TERMS = {')
+          lines[private_index:private_index] = [
+              'VR_ACCESS_TERMS = {',
+              '    "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",',
+              '    "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",',
+              '    "group public", "フレンドインスタンス", "join制", "インスタンスへ", "インスタンスに",',
+              '    "インスタンスオープン",',
+              '}',
+              'GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}',
+          ]
 
-          old_structure = '''    event_structure = has_specific_event or (has_action and has_access) or (has_access and has_attendance)'''
-          new_structure = '''    event_structure = (
-              has_specific_event
-              or (has_generic_event and has_action)
-              or (has_action and has_access)
-              or (has_access and has_attendance)
-          )'''
-          if old_structure not in text:
-              raise SystemExit('event structure expression not found')
-          text = text.replace(old_structure, new_structure, 1)
+          replace_set(
+              'ATTENDANCE_TERMS',
+              [
+                  '"参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",',
+                  '"ご来店", "遊びに来て", "お越し", "見に来て", "聴きに来て",',
+                  '"お待ちしております", "お待ちしてます", "入場",',
+              ],
+          )
 
-          old_private = '''    if has_product and has_only_generic_event and not has_participation:
-              return None, "product_only"
+          feature_index = find_line('    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)')
+          lines.insert(feature_index + 1, '    has_generic_event = has_any(text, GENERIC_EVENT_NOUN_TERMS)')
+          access_index = find_line('    has_access = has_any(text, PARTICIPATION_TERMS)', feature_index)
+          lines[access_index] = '    has_access = has_any(text, VR_ACCESS_TERMS)'
 
-              event, reason = _ORIGINAL_CANDIDATE_TO_EVENT('''
-          new_private = '''    if has_product and has_only_generic_event and not has_participation:
-              return None, "product_only"
-              if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
-              return None, "missing_participation_method"
+          structure_index = find_line(
+              '    event_structure = has_specific_event or (has_action and has_access) or (has_access and has_attendance)',
+              feature_index,
+          )
+          lines[structure_index:structure_index + 1] = [
+              '    event_structure = (',
+              '        has_specific_event',
+              '        or (has_generic_event and has_action)',
+              '        or (has_action and has_access)',
+              '        or (has_access and has_attendance)',
+              '    )',
+          ]
 
-              event, reason = _ORIGINAL_CANDIDATE_TO_EVENT('''
-          if old_private not in text:
-              raise SystemExit('private instance ordering block not found')
-          text = text.replace(old_private, new_private, 1)
+          refined_index = find_line('def refined_candidate_to_event(')
+          call_index = find_line('    event, reason = _ORIGINAL_CANDIDATE_TO_EVENT(', refined_index)
+          lines[call_index:call_index] = [
+              '    if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:',
+              '        return None, "missing_participation_method"',
+              '',
+          ]
 
-          path.write_text(text, encoding='utf-8')
+          path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
           PY
-            status=${PIPESTATUS[0]}
-          fi
 
-          if [ "$status" -eq 0 ]; then
-            run_stage tests bash -c "ruff check cast_event_cal scripts tests main_executor.py && pytest tests" || status=$?
-          fi
-          if [ "$status" -eq 0 ]; then
-            run_stage generate bash -c "python scripts/refine_yahoo_corpus.py && python main_executor.py run --strict && python scripts/render_frontend.py" || status=$?
-          fi
-          if [ "$status" -eq 0 ]; then
-            stage=validate
-            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/validate.log
+          ruff check cast_event_cal scripts tests main_executor.py
+          pytest tests
+          python scripts/refine_yahoo_corpus.py
+          python main_executor.py run --strict
+          python scripts/render_frontend.py
+
+          python - <<'PY'
           import json
           from pathlib import Path
 
@@ -188,35 +158,12 @@ jobs:
           assert {'イベント告知', '通常営業', 'リクイン'} & set(vocabulary['adopted_terms'])
           assert {'本日', '応募'} <= set(vocabulary['excluded_as_too_generic'])
           PY
-            status=${PIPESTATUS[0]}
-          fi
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
-          if [ "$status" -eq 0 ]; then
-            git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
-            git rm -f audit/yahoo-v18-migration-diagnostic.txt
-            git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
-            git commit -m 'feat: improve Yahoo query and selection policy v1.8'
-            git pull --rebase origin main
-            git push origin HEAD:main
-            exit 0
-          fi
-
-          git restore --worktree .
-          {
-            echo 'Yahoo v1.8 migration failed'
-            echo "failed_stage=$stage"
-            echo "status=$status"
-            for file in /tmp/yahoo-v18/*.log; do
-              echo
-              echo "===== $file ====="
-              cat "$file"
-            done
-          } > audit/yahoo-v18-migration-diagnostic.txt
-          git add audit/yahoo-v18-migration-diagnostic.txt
-          git commit -m 'chore: record Yahoo v1.8 migration failure [skip ci]'
+          git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
+          git rm -f audit/yahoo-v18-migration-diagnostic.txt
+          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
+          git commit -m 'feat: improve Yahoo query and selection policy v1.8'
           git pull --rebase origin main
           git push origin HEAD:main
-          exit "$status"
