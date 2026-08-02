@@ -21,17 +21,17 @@ def test_structured_parser_accepts_explicit_event_and_rejects_product_only():
     page = structured_page(
         [
             {
-                "tweetId": "1234567890123456789",
-                "full_text": "【VRC俺確】2026/8/7 22:00 VRChatイベントを開催。参加方法は当日Join",
+                "id": "1234567890123456789",
+                "displayText": "【VRC俺確】2026/8/7 22:00 VRChatイベントを開催。参加方法は当日Join",
                 "screenName": "host",
-                "retweetCount": 5,
+                "rtCount": 5,
                 "url": "https://x.com/host/status/1234567890123456789",
             },
             {
-                "tweetId": "2234567890123456789",
-                "full_text": "8/8 20:00 VRChat衣装をBOOTHで販売開始",
+                "id": "2234567890123456789",
+                "displayText": "8/8 20:00 VRChat衣装をBOOTHで販売開始",
                 "screenName": "shop",
-                "retweetCount": 20,
+                "rtCount": 20,
                 "url": "https://x.com/shop/status/2234567890123456789",
             },
         ]
@@ -40,7 +40,7 @@ def test_structured_parser_accepts_explicit_event_and_rejects_product_only():
     now = datetime(2026, 8, 2, tzinfo=UTC)
 
     accepted, reason = candidate_to_event(
-        candidates["1234567890123456789"], now=now, min_retweets=3, known_x_ids=set()
+        candidates["1234567890123456789"], now=now, min_retweets=3, x_ids=set()
     )
     assert reason is None
     assert accepted is not None
@@ -48,7 +48,7 @@ def test_structured_parser_accepts_explicit_event_and_rejects_product_only():
     assert accepted["organizer"] == "@host"
 
     rejected, reason = candidate_to_event(
-        candidates["2234567890123456789"], now=now, min_retweets=3, known_x_ids=set()
+        candidates["2234567890123456789"], now=now, min_retweets=3, x_ids=set()
     )
     assert rejected is None
     assert reason == "product_only"
@@ -63,12 +63,25 @@ def test_parser_requires_metrics_and_rejects_x_duplicate():
         "retweet_count": None,
     }
     now = datetime(2026, 8, 2, tzinfo=UTC)
-    assert candidate_to_event(base, now=now, min_retweets=3, known_x_ids=set())[1] == "retweet_count_missing"
+    assert candidate_to_event(base, now=now, min_retweets=3, x_ids=set())[1] == "retweet_count_missing"
 
     duplicate = dict(base, retweet_count=10)
     assert candidate_to_event(
-        duplicate, now=now, min_retweets=3, known_x_ids={"1234567890123456789"}
+        duplicate, now=now, min_retweets=3, x_ids={"1234567890123456789"}
     )[1] == "duplicate_x_source"
+
+
+def test_parent_json_blob_is_rejected_as_malformed():
+    malformed = {
+        "status_id": "3234567890123456789",
+        "url": "https://x.com/i/web/status/3234567890123456789",
+        "text": '2026/8/7 22:00 VRChatイベントを開催 {"displayText":"別投稿","rtCount":10}',
+        "author": None,
+        "retweet_count": 10,
+    }
+    assert candidate_to_event(
+        malformed, now=datetime(2026, 8, 2, tzinfo=UTC), min_retweets=3, x_ids=set()
+    )[1] == "malformed_text"
 
 
 def test_relative_datetime_and_cache_expiration():
