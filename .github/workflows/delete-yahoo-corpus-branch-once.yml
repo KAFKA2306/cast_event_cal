@@ -1,0 +1,42 @@
+name: Delete merged Yahoo corpus branch once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/delete-yahoo-corpus-branch-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Delete merged branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          status="$(curl -sS -o /tmp/delete-response -w '%{http_code}' \
+            -X DELETE \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs/heads/feat/yahoo-corpus-1000")"
+          if [ "$status" != '204' ] && [ "$status" != '422' ]; then
+            cat /tmp/delete-response >&2
+            exit 1
+          fi
+      - name: Remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/delete-yahoo-corpus-branch-once.yml
+          git commit -m 'chore: remove Yahoo corpus branch cleanup [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
