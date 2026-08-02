@@ -28,9 +28,32 @@ jobs:
         run: |
           set -o pipefail
           (python -m pip install --upgrade pip && pip install -e '.[dev]') 2>&1 | tee /tmp/install.log
+      - name: Repair migration generator
+        id: repair
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python - <<'PY' 2>&1 | tee /tmp/repair.log
+          from pathlib import Path
+
+          path = Path('scripts/apply_yahoo_policy_v18.py')
+          text = path.read_text(encoding='utf-8')
+          folded = 'def structured_classify(text: str) -> tuple[str | None, str | None]:\n    folded = text.casefold()\n'
+          repaired = 'def structured_classify(text: str) -> tuple[str | None, str | None]:\n'
+          if folded not in text:
+              raise SystemExit('unused folded assignment not found')
+          text = text.replace(folded, repaired, 1)
+          old = '    queries = "\\n".join(row["query"] for row in plan)'
+          new = '    queries = "\\\\n".join(row["query"] for row in plan)'
+          if old not in text:
+              raise SystemExit('query newline literal not found')
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
       - name: Apply v1.8 policy
         id: apply
-        if: steps.install.outcome == 'success'
+        if: steps.repair.outcome == 'success'
         continue-on-error: true
         run: |
           set -o pipefail
@@ -94,29 +117,31 @@ jobs:
           assert {'本日', '応募'} <= set(vocabulary['excluded_as_too_generic'])
           PY
       - name: Commit successful migration
-        if: steps.install.outcome == 'success' && steps.apply.outcome == 'success' && steps.tests.outcome == 'success' && steps.generate.outcome == 'success' && steps.validate.outcome == 'success'
+        if: steps.install.outcome == 'success' && steps.repair.outcome == 'success' && steps.apply.outcome == 'success' && steps.tests.outcome == 'success' && steps.generate.outcome == 'success' && steps.validate.outcome == 'success'
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
-          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public
+          git rm -f audit/yahoo-v18-migration-diagnostic.txt
+          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
           git commit -m 'feat: improve Yahoo query and selection policy v1.8'
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Record migration failure
-        if: steps.install.outcome != 'success' || steps.apply.outcome != 'success' || steps.tests.outcome != 'success' || steps.generate.outcome != 'success' || steps.validate.outcome != 'success'
+        if: steps.install.outcome != 'success' || steps.repair.outcome != 'success' || steps.apply.outcome != 'success' || steps.tests.outcome != 'success' || steps.generate.outcome != 'success' || steps.validate.outcome != 'success'
         run: |
           set -euo pipefail
           mkdir -p audit
           {
             echo 'Yahoo v1.8 migration failed'
             echo "install=${{ steps.install.outcome }}"
+            echo "repair=${{ steps.repair.outcome }}"
             echo "apply=${{ steps.apply.outcome }}"
             echo "tests=${{ steps.tests.outcome }}"
             echo "generate=${{ steps.generate.outcome }}"
             echo "validate=${{ steps.validate.outcome }}"
-            for file in /tmp/install.log /tmp/apply.log /tmp/tests.log /tmp/generate.log /tmp/validate.log; do
+            for file in /tmp/install.log /tmp/repair.log /tmp/apply.log /tmp/tests.log /tmp/generate.log /tmp/validate.log; do
               if [ -f "$file" ]; then
                 echo
                 echo "===== $file ====="
