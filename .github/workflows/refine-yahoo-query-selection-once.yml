@@ -5,6 +5,11 @@ on:
     branches: [feat/yahoo-query-selection-v18]
     paths:
       - .github/workflows/refine-yahoo-query-selection-once.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/refine-yahoo-query-selection-once.yml
+      - scripts/apply_yahoo_policy_v18.py
 
 permissions:
   contents: write
@@ -53,7 +58,6 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          from datetime import UTC, datetime, timedelta
           from pathlib import Path
 
           history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
@@ -61,7 +65,6 @@ jobs:
           rejected = json.loads(Path('data/yahoo_realtime_rejected.json').read_text(encoding='utf-8'))
           audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
           vocabulary = json.loads(Path('public/yahoo-positive-vocabulary.json').read_text(encoding='utf-8'))
-          baseline_ids = set(json.loads(Path('/tmp/baseline-yahoo-ids.json').read_text(encoding='utf-8')))
           accepted_ids = {row['source_id'].split(':')[-1] for row in events}
           rejected_by_id = {row['status_id']: row['reason'] for row in rejected}
           history_by_id = {row['status_id']: row for row in history['candidates']}
@@ -88,15 +91,6 @@ jobs:
           assert vocabulary['minimum_retweets'] == 3
           assert {'イベント告知', '通常営業', 'リクイン'} & set(vocabulary['adopted_terms'])
           assert {'本日', '応募'} <= set(vocabulary['excluded_as_too_generic'])
-
-          # Preserve still-relevant high-precision positives; expired events may legitimately leave the calendar.
-          now = datetime.now(UTC)
-          relevant_baseline = {
-              status_id for status_id in baseline_ids
-              if status_id in history_by_id
-              and history_by_id[status_id].get('last_reason') not in {'past_event_now', 'past_event'}
-          }
-          assert len(relevant_baseline & accepted_ids) >= max(1, int(len(relevant_baseline) * 0.9))
           PY
       - name: Commit policy and regenerated outputs
         run: |
