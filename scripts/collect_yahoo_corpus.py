@@ -30,15 +30,47 @@ HISTORY_MAX_COUNT = 5000
 PARTICIPATION_TERMS = {
     "参加方法", "参加条件", "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト",
     "request invite", "招待", "フレンド申請", "フレリク", "グループインスタンス",
-    "group instance", "group+", "group public", "public",
+    "group instance", "group+", "group public", "フレンドインスタンス", "join制",
+    "インスタンスへ", "インスタンスに", "インスタンスオープン",
 }
-PRIVATE_INSTANCE_TERMS = {"誕生日インスタンス", "birthday instance", "記念インスタンス", "インスタンスを開催"}
+VR_ACCESS_TERMS = {
+    "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",
+    "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",
+    "グループ＋", "group public", "フレンドインスタンス", "join制",
+    "インスタンスへ", "インスタンスに", "インスタンスオープン",
+}
+GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}
+BROADCAST_ONLY_TERMS = {
+    "配信予定", "コラボ配信", "ライブ配信", "youtube配信", "配信枠", "生配信",
+}
+PRIVATE_INSTANCE_TERMS = {
+    "誕生日インスタンス", "birthday instance", "記念インスタンス", "インスタンスを開催",
+}
 SPECIFIC_EVENT_TERMS = {
-    "カフェ", "cafe", "バー", "bar", "クラブ", "club", "オークション", "ライブ", "公演",
-    "集会", "交流会", "ワールドツアー", "ワールド巡り", "謎解き", "大会", "勉強会",
-    "講演", "上映", "営業",
+    "イベント告知", "営業告知", "通常営業", "開催決定", "ホストイベント", "交流イベント",
+    "集会", "交流会", "オークション", "ライブイベント", "公演", "djイベント", "vjイベント",
+    "歌ステージ", "ステージ", "ワールドツアー", "ワールド巡り", "謎解き", "大会", "勉強会",
+    "講演会", "講演", "セミナー", "上映会", "映画祭", "朗読会", "朗読劇",
+    "朗読ミュージカル", "舞台公演", "演奏会", "音楽会", "撮影会", "展示会", "展覧会",
+    "フェス", "festival", "祭り", "オフ会", "説明会", "体験会", "試写会", "フォトコン",
+    "vrchatライブ", "performance live", "講習会",
 }
+EVENT_ACTION_TERMS = {"開催", "open", "オープン", "開場", "開始", "営業", "公演", "実施", "開演"}
+ATTENDANCE_TERMS = {
+    "参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",
+    "ご来店", "遊びに来て", "遊びにきて", "お越し", "見に来て", "聴きに来て",
+    "お待ちしております", "お待ちしてます", "入場",
+}
+SPECIFIC_RECRUITMENT_TERMS = {
+    "キャスト募集", "スタッフ募集", "店員募集", "演者募集", "テスター募集", "参加者募集",
+    "出展募集", "公募", "応募期限", "面接",
+}
+DEADLINE_TERMS = {"締切", "〆切", "応募期限", "までに", "応募完了"}
+SOCIAL_ENTRY_TERMS = {"フォロー", "リポスト", "rp", "rt", "いいね", "リプ", "コメント", "抽選応募"}
+WORLD_DESCRIPTION_TERMS = {"ワールド紹介", "ワールドを更新", "常設", "いつでも", "販売開始", "公開しました"}
 GENERIC_EVENT_TERMS = {"開催", "イベント", "キャンペーン", "募集", "応募"}
+AUDIT_GROUPS = {"commerce_noise", "temporal_audit"}
+QUERY_CONTEXT = "(開催 OR 告知 OR 日時 OR OPEN OR オープン OR 開場 OR 開始 OR 営業 OR 本日 OR 今日 OR 明日 OR 今夜 OR 参加 OR JOIN OR リクイン OR Group+)"
 NEXT_MONTH_CONFLICT_RE = re.compile(
     r"次回.{0,50}?(?P<label_month>1[0-2]|0?[1-9])月.{0,80}?"
     r"(?:日時|日程)\s*[:：]?\s*(?:20\d{2}[./年-])?"
@@ -46,6 +78,7 @@ NEXT_MONTH_CONFLICT_RE = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 _ORIGINAL_CANDIDATE_TO_EVENT = implementation.candidate_to_event
+_ORIGINAL_PARSE_EVENT_DATETIME = implementation.parse_event_datetime
 
 
 def read_json(path: Path, default: Any) -> Any:
@@ -64,6 +97,91 @@ def utc_text(value: datetime) -> str:
 def has_any(text: str, terms: set[str]) -> bool:
     folded = text.casefold()
     return any(term.casefold() in folded for term in terms)
+
+
+def parse_event_datetime_v18(text: str, anchor: datetime) -> datetime | None:
+    parsed = _ORIGINAL_PARSE_EVENT_DATETIME(text, anchor)
+    if parsed is not None:
+        return parsed
+    normalized = implementation.normalize_text(text)
+    clock = r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
+    match = re.search(
+        rf"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*(?P<weekday>[月火水木金土日])曜日?"
+        rf".{{0,100}}?{clock}",
+        normalized,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return None
+    target = {name: index for index, name in enumerate("月火水木金土日")}[match.group("weekday")]
+    days_ahead = (target - anchor.weekday()) % 7
+    prefix = match.group("prefix") or ""
+    if prefix.startswith("来週"):
+        days_ahead += 7
+    elif prefix.startswith("次") and days_ahead == 0:
+        days_ahead = 7
+    day = (anchor + timedelta(days=days_ahead)).date()
+    result = datetime(
+        day.year,
+        day.month,
+        day.day,
+        int(match.group("hour")),
+        int(match.group("minute") or 0),
+        tzinfo=JST,
+    )
+    if not prefix and days_ahead == 0 and result < anchor - timedelta(hours=2):
+        result += timedelta(days=7)
+    return result
+
+
+def structured_classify(text: str) -> tuple[str | None, str | None]:
+    if not implementation.VRCHAT_RE.search(text):
+        return None, "not_vrchat"
+    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
+    has_generic_event = has_any(text, GENERIC_EVENT_NOUN_TERMS)
+    has_action = has_any(text, EVENT_ACTION_TERMS)
+    has_access = has_any(text, VR_ACCESS_TERMS)
+    has_attendance = has_any(text, ATTENDANCE_TERMS)
+    has_recruitment = has_any(text, SPECIFIC_RECRUITMENT_TERMS)
+    has_deadline = has_any(text, DEADLINE_TERMS)
+    has_product = has_any(text, implementation.PRODUCT_TERMS)
+    has_giveaway = has_any(text, implementation.GIVEAWAY_TERMS)
+    has_broadcast = has_any(text, BROADCAST_ONLY_TERMS)
+    has_social_entry = has_any(text, SOCIAL_ENTRY_TERMS)
+    looks_like_world_description = has_any(text, WORLD_DESCRIPTION_TERMS)
+    event_structure = (
+        has_specific_event
+        or (has_generic_event and has_action)
+        or (has_generic_event and has_attendance)
+        or (has_action and has_access)
+        or (has_access and has_attendance)
+    )
+    recruitment_structure = has_recruitment or (has_deadline and has_access)
+    if has_broadcast and not has_access and not has_attendance:
+        return None, "missing_event_marker"
+    if has_giveaway and has_social_entry and not event_structure:
+        return None, "giveaway_only"
+    if has_giveaway and not event_structure:
+        return None, "giveaway_only"
+    if has_product and not event_structure and not recruitment_structure:
+        return None, "product_only"
+    if looks_like_world_description and not has_specific_event and not (has_action and has_access):
+        return None, "missing_event_marker"
+    if recruitment_structure:
+        return "recruitment_deadline", None
+    if event_structure:
+        return "event", None
+    return None, "missing_event_marker"
+
+
+def query_for_group(group: str, term: str) -> str:
+    if group == "recruitment":
+        return f"({term}) (締切 OR 〆切 OR 応募期限 OR 面接 OR 募集) (VRChat OR VRC)"
+    if group == "access":
+        return f"({term}) {QUERY_CONTEXT} (VRChat OR VRC)"
+    if group in AUDIT_GROUPS:
+        return f"({term}) (VRChat OR VRC)"
+    return f"({term}) {QUERY_CONTEXT} (VRChat OR VRC)"
 
 
 def refined_candidate_to_event(
@@ -85,6 +203,9 @@ def refined_candidate_to_event(
     if has_product and has_only_generic_event and not has_participation:
         return None, "product_only"
 
+    if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+        return None, "missing_participation_method"
+
     event, reason = _ORIGINAL_CANDIDATE_TO_EVENT(
         candidate, now=now, min_retweets=min_retweets, x_ids=x_ids
     )
@@ -95,7 +216,10 @@ def refined_candidate_to_event(
 
 def configure_classifier() -> None:
     ledger.configure()
-    implementation.PARSER_VERSION = "1.5"
+    implementation.PARSER_VERSION = "1.8"
+    implementation.classify = structured_classify
+    implementation.parse_event_datetime = parse_event_datetime_v18
+    implementation.EVENT_TERMS = SPECIFIC_EVENT_TERMS | EVENT_ACTION_TERMS | PARTICIPATION_TERMS
     implementation.candidate_to_event = refined_candidate_to_event
 
 
@@ -115,7 +239,7 @@ def build_query_plan(config: dict[str, Any]) -> list[dict[str, str]]:
             raise ValueError(f"term group {group} must be an array")
         for index, raw in enumerate(values):
             term = str(raw).strip()
-            query = f"({term}) (VRChat OR VRC)"
+            query = query_for_group(str(group), term)
             if not term or query.casefold() in seen:
                 continue
             seen.add(query.casefold())
@@ -137,10 +261,17 @@ def build_query_plan(config: dict[str, Any]) -> list[dict[str, str]]:
 
 def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> list[dict[str, str]]:
     base = [row for row in plan if row["group"] == "base"]
-    shards = [row for row in plan if row["group"] != "base"]
-    count = max(1, min(count, len(shards)))
-    offset = (now.astimezone(JST).date().toordinal() * count) % len(shards)
-    return base + (shards[offset:] + shards[:offset])[:count]
+    production = [row for row in plan if row["group"] not in AUDIT_GROUPS | {"base"}]
+    audit = [row for row in plan if row["group"] in AUDIT_GROUPS]
+    production_count = max(1, min(max(count - 2, 1), len(production)))
+    audit_count = min(2, len(audit))
+    ordinal = now.astimezone(JST).date().toordinal()
+    production_offset = (ordinal * production_count) % len(production)
+    selected = base + (production[production_offset:] + production[:production_offset])[:production_count]
+    if audit_count:
+        audit_offset = (ordinal * audit_count) % len(audit)
+        selected += (audit[audit_offset:] + audit[:audit_offset])[:audit_count]
+    return selected
 
 
 def candidate_score(row: dict[str, Any]) -> tuple[bool, int, int]:

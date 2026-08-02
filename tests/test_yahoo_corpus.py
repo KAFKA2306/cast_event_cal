@@ -33,7 +33,7 @@ def test_query_plan_is_broad_unique_and_target_oriented():
         "communities",
         "recruitment",
         "commerce_noise",
-        "temporal",
+        "temporal_audit",
     }
 
 
