@@ -12,10 +12,12 @@ VRChatの公開イベント、定期集会、募集締切を、日時・参加�
 - 単発イベント: `data/one_off_events.json`
 - VRChat公式カレンダー: `data/discovered_events.json`
 - X API採用結果: `data/x_events.json`
-- Yahoo!リアルタイム検索の採用結果: `data/yahoo_realtime_events.json`
+- Yahoo当日観測スナップショット: `data/yahoo_realtime_candidates.json`
+- Yahoo採用結果: `data/yahoo_realtime_events.json`
 - Yahoo棄却記録: `data/yahoo_realtime_rejected.json`
 - Yahoo実行状態: `data/yahoo_realtime_health.json`
 - イベントオントロジー辞書: `config/event_ontology.json`
+- Yahoo検索シャード辞書: `config/yahoo_query_terms.json`
 
 ## 公開・監査データ
 
@@ -23,34 +25,71 @@ VRChatの公開イベント、定期集会、募集締切を、日時・参加�
 - カレンダー: `public/calendar.ics`
 - 取得状態: `public/health.json`
 - Yahoo候補台帳: `public/yahoo-candidate-history.json`
+- Yahoo分類監査: `public/yahoo-classifier-audit.json`
 - 公開オントロジー: `public/event-ontology.json`
 - オントロジー照合監査: `public/ontology-match-audit.json`
 - 公開後監査: `audit/production-status.json`
 
 ## Yahoo!リアルタイム検索
 
-毎日、次の検索条件を機械取得します。
+単一の巨大クエリだけでは同じ上位40件へ偏るため、検索空間を決定論的なシャードへ分割します。
+
+対象群:
+
+- 開催・参加・主催・集会などの中核語
+- JOIN、リクイン、Request Invite、Group Instanceなどの入場語
+- カフェ、バー、クラブ、居酒屋などの店舗型イベント語
+- DJ、ライブ、舞台、展示、撮影、ゲーム、謎解きなどの活動語
+- 言語交流、技術、研究、同期会、初心者案内などのコミュニティ語
+- キャスト、スタッフ、参加者、出展者などの募集語
+- 商品販売、衣装、アバター、プレゼントなどのノイズ監査語
+- 本日、明日、曜日、時刻などの相対日時語
+
+初回構築ではシャードを順番に取得し、候補台帳が1000件へ到達した時点で停止します。日次運用では基準クエリと16シャードをローテーションし、古い候補を保持したまま新しい検索領域を継続観測します。
+
+採用には、X投稿ID、VRChat/VRC関連性、開催または募集意図、明示日時、リポスト3件以上、未来180日以内が必要です。商品販売、配布、プレゼント応募、日時欠損、過去イベント、X APIとの重複、壊れたHTML断片は理由付きで棄却します。
+
+### 1000件以上の候補台帳
+
+Yahooの検索画面から投稿が消えた後でもロジック改善を反映できるよう、最大5000件・365日分を保持します。
 
 ```text
-(イベント OR 参加方法 OR 参加条件 OR 開催 OR 主催 OR join OR ジョイン OR リクイン OR reqin OR リクエストインバイト OR "request invite" OR 本日 OR 営業 OR 応募) (VRChat OR VRC)
-```
-
-採用には、X投稿ID、VRChat/VRC関連性、開催または募集意図、明示日時、リポスト3件以上、未来180日以内が必要です。商品販売、配布、抽選、日時欠損、過去イベント、X APIとの重複、壊れたHTML断片は理由付きで棄却します。
-
-### 30日候補台帳
-
-Yahooの検索画面から投稿が消えた後でもロジック改善を反映できるよう、すべての候補を30日間保存します。
-
-```text
-Yahoo検索結果
-  → 投稿候補を台帳へ追記
-  → first_seen_at / last_seen_at / 最大リポスト数を保存
+複数Yahoo検索シャード
+  → X投稿IDで重複排除
+  → 検索語、検索群、観測回数、最大リポスト数を保存
+  → X Snowflake投稿IDから投稿日時を復元
   → 台帳全件を最新ルールで毎日再判定
-  → 過去の誤棄却候補を自動昇格
-  → 採用・棄却・昇格件数をhealthへ記録
+  → 採用・棄却・理由分布を分類監査へ保存
+  → 高リポスト棄却と商用疑義採用を監査対象として抽出
 ```
 
-`本日`、`今日`、`明日`は再処理日ではなく`first_seen_at`を基準に解釈します。Yahooへの接続に失敗しても、保存済み台帳の再評価は継続できます。
+台帳の主なフィールド:
+
+- `status_id`
+- `text` / `author` / `url`
+- `first_seen_at` / `last_seen_at`
+- `source_created_at`
+- `retweet_count` / `max_retweet_count`
+- `observation_count`
+- `query_keys` / `query_groups` / `query_terms`
+- `last_decision` / `last_reason`
+
+`本日`、`今日`、`明日`などは再処理日や初回観測日ではなく、X投稿IDから復元した`source_created_at`を基準に解釈します。投稿日時を復元できない場合だけ`first_seen_at`へフォールバックします。これにより、古い投稿がYahoo検索へ再浮上しても「本日開催」として再登録されません。
+
+### 分類ロジック
+
+分類器はフェイルクローズです。
+
+- リポスト数が取得できない候補は採用しない
+- 商品販売・無料配布・プレゼントだけの投稿は採用しない
+- 「参加方法」がフォロー、RP、いいね、リプだけの場合はイベント参加とみなさない
+- 商品抽選を通すには、具体的イベント種別またはJOIN、リクイン、Group Instance等のVRChat入場手段が必要
+- 誕生日・記念インスタンスは明示的な参加方法がなければ採用しない
+- 告知月と明示日付の月が矛盾する候補は採用しない
+- 相対日時を投稿日時基準で展開した後、現在時刻より過去なら`past_event_now`で棄却する
+- 判定変更は回帰テストと分類監査の両方で固定する
+
+`public/yahoo-classifier-audit.json`には、採用率、棄却理由分布、高リポスト棄却、商用疑義採用、重複・日時欠損などの品質指標を保存します。
 
 ## イベントオントロジー
 
@@ -79,21 +118,22 @@ Yahoo検索結果
 
 ## 自動運用
 
-`.github/workflows/update-calendar.yml`は毎日05:17 JST、手動実行、主要ロジック変更時に起動します。
+`.github/workflows/update-calendar-v2.yml`は毎日05:17 JST、手動実行、主要ロジック変更時に起動します。
 
 1. 定期系列を未来120日まで展開
 2. VRChat公式カレンダーを取得
 3. X API候補を分類
-4. Yahoo候補を取得し30日台帳へ統合
-5. 台帳全件を最新ルールで再判定
-6. 4情報源をUTC正規化・重複排除
-7. オントロジー辞書で詳細と公式リンクを補完
-8. JSON、ICS、レスポンシブUIを生成
-9. 候補台帳、棄却理由、辞書照合、件数、一意性を品質ゲートで検証
-10. `pull --rebase`後に生成差分をcommit
-11. Pagesへ配信しHTTP、件数、オントロジー公開を監査
+4. Yahoo基準クエリと日次16シャードを取得
+5. 1000件以上の候補台帳へ統合
+6. X投稿時刻を基準に台帳全件を再分類
+7. 4情報源をUTC正規化・重複排除
+8. オントロジー辞書で詳細と公式リンクを補完
+9. JSON、ICS、レスポンシブUIを生成
+10. 台帳件数、由来情報、分類理由、既知誤採用、一意性を品質ゲートで検証
+11. `pull --rebase`後に生成差分をcommit
+12. Pagesへ配信し、イベントAPI、1000件台帳、分類監査をHTTP検証
 
-日常運用ではLLM判定を使用しません。追加・棄却・再昇格・辞書補完は決定論的なPython処理のみで行います。
+日常運用ではLLM判定を使用しません。追加・棄却・再分類・辞書補完は決定論的なPython処理のみで行います。
 
 ## ローカル検証
 
@@ -104,16 +144,23 @@ pip install -e '.[dev]'
 ruff check cast_event_cal scripts tests main_executor.py
 pytest tests
 python scripts/materialize_events.py
-python scripts/run_yahoo_realtime.py
+python scripts/collect_yahoo_corpus.py --mode daily --target 1000
+python scripts/refine_yahoo_corpus.py
 python main_executor.py run --strict
 python scripts/render_frontend.py
 python -m http.server 8000 --directory public
 ```
 
-Yahoo接続なしで保存済み候補だけを再評価する場合:
+初回に1000件を構築する場合:
 
 ```bash
-python scripts/replay_yahoo_history.py
+python scripts/collect_yahoo_corpus.py \
+  --mode bootstrap \
+  --target 1000 \
+  --max-queries 140 \
+  --delay-seconds 0.75 \
+  --require-target
+python scripts/refine_yahoo_corpus.py
 ```
 
 ## 品質原則
@@ -122,11 +169,12 @@ python scripts/replay_yahoo_history.py
 - 取得失敗時に正常キャッシュを空データで上書きしない
 - HTML構造不明時は候補を通さない
 - リポスト数不明のYahoo候補を採用しない
-- 商品販売や抽選をイベントとして混入させない
+- 商品販売や商品抽選をイベントとして混入させない
+- 古い相対日時告知を収集日のイベントとして復活させない
 - オントロジーの曖昧一致を公開しない
 - 採用条件変更には回帰テストを追加する
 - Python 3.11、3.12、3.13のCIを通過させる
-- 公開後にHTML、JSON、オントロジー、最低件数を監査する
+- 公開後にHTML、JSON、候補台帳、分類監査、オントロジーを監査する
 
 ## 必要なSecrets
 
