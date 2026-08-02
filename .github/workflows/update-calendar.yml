@@ -2,14 +2,183 @@ name: Update calendar and deploy Pages
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - cast_event_cal/**
+      - config/**
+      - data/recurring_events.json
+      - data/one_off_events.json
+      - data/x_events.json
+      - scripts/materialize_events.py
+      - scripts/fetch_vrchat_calendar.py
+      - scripts/fetch_x_events.py
+      - scripts/render_frontend.py
+      - web/**
+      - main_executor.py
+      - requirements.txt
+      - pyproject.toml
+      - .github/workflows/update-calendar.yml
 
 permissions:
   contents: write
   pages: write
   id-token: write
 
+concurrency:
+  group: cast-event-calendar-production
+  cancel-in-progress: false
+
 jobs:
-  maintenance-window:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - run: echo 'Repository consolidation in progress; use workflow_dispatch after completion.'
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Materialize curated recurring events
+        run: python scripts/materialize_events.py
+      - name: Discover public VRChat calendar events
+        env:
+          VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
+        run: python scripts/fetch_vrchat_calendar.py
+      - name: Discover and classify X events
+        env:
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_EVENT_MIN_RETWEETS: '3'
+        run: python scripts/fetch_x_events.py
+      - name: Build normalized calendar
+        run: python main_executor.py run --strict
+      - name: Render production frontend
+        run: python scripts/render_frontend.py
+      - name: Validate generated assets and coverage
+        run: |
+          set -euo pipefail
+          grep -q 'VRChat Event Calendar' public/index.html
+          grep -q 'id="agenda"' public/index.html
+          grep -q 'BEGIN:VCALENDAR' public/calendar.ics
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          recurring = json.loads(Path('data/recurring_events.json').read_text(encoding='utf-8'))
+          manual = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
+          discovered = json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8'))
+          discovery_health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
+          x_events = json.loads(Path('data/x_events.json').read_text(encoding='utf-8'))
+          x_health = json.loads(Path('data/x_discovery_health.json').read_text(encoding='utf-8'))
+          events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+          assert len(recurring) >= 25
+          assert len(manual) >= 250
+          assert len({item['series_id'] for item in recurring}) == len(recurring)
+          assert len({item['source_id'] for item in manual}) == len(manual)
+          assert len({item['source_id'] for item in discovered}) == len(discovered)
+          assert len({item['source_id'] for item in x_events}) == len(x_events)
+          assert discovery_health.get('status') in {'ok', 'degraded', 'skipped'}
+          assert discovery_health.get('event_count') == len(discovered)
+          assert x_health.get('status') in {'ok', 'degraded', 'skipped', 'seeded'}
+          assert x_health.get('event_count') == len(x_events)
+          assert events.get('count') == len(events.get('events', []))
+          assert events.get('count', 0) >= 250
+          assert health.get('status') in {'ok', 'degraded'}
+          assert health.get('event_count') == events.get('count')
+          assert health.get('enabled_sources', 0) >= 3
+          assert {item.get('name') for item in health.get('sources', [])} >= {
+              'repository_manual_events', 'vrchat_calendar_discovery', 'x_curated_events'
+          }
+          PY
+      - name: Commit generated data
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- data/manual_events.json data/discovered_events.json data/discovery_health.json data/x_events.json data/x_discovery_health.json public)" ]; then
+            echo 'No generated changes'
+          else
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add data/manual_events.json data/discovered_events.json data/discovery_health.json data/x_events.json data/x_discovery_health.json public
+            git commit -m 'chore: refresh calendar [skip ci]'
+            git push
+          fi
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify public Pages endpoints
+        env:
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${PAGE_URL%/}"
+          verified=false
+          for attempt in $(seq 1 30); do
+            root_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-index.html -w '%{http_code}' "$base/" || true)"
+            events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-events.json -w '%{http_code}' "$base/events.json" || true)"
+            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && grep -q 'id="agenda"' /tmp/live-index.html && python -c 'import json; data=json.load(open("/tmp/live-events.json", encoding="utf-8")); assert data.get("count", 0) >= 250'; then
+              verified=true
+              break
+            fi
+            sleep 10
+          done
+          test "$verified" = true
+          mkdir -p audit
+          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status"
+          python - <<'PY'
+          import json, os
+          from datetime import UTC, datetime
+          from pathlib import Path
+          live = json.loads(Path('/tmp/live-events.json').read_text(encoding='utf-8'))
+          result = {
+              'schema_version': '3.0',
+              'verified_at': datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00', 'Z'),
+              'page_url': os.environ['PAGE_URL'],
+              'root_status': int(os.environ['ROOT_STATUS']),
+              'events_status': int(os.environ['EVENTS_STATUS']),
+              'event_count': len(live.get('events', [])),
+              'minimum_event_count': 250,
+              'source_commit': os.environ['GITHUB_SHA'],
+              'status': 'ok',
+          }
+          Path('audit/production-status.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Record production verification
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add audit/production-status.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record production verification [skip ci]'
+            git pull --rebase origin main
+            git push
+          fi
