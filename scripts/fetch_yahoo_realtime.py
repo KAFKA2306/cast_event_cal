@@ -27,7 +27,7 @@ DEFAULT_QUERY = (
 DEFAULT_SEARCH_URL = "https://search.yahoo.co.jp/realtime/search?" + urlencode(
     {"ei": "UTF-8", "p": DEFAULT_QUERY, "md": "h"}
 )
-PARSER_VERSION = "1.1"
+PARSER_VERSION = "1.2"
 STATUS_RE = re.compile(
     r"(?:https?://)?(?:www\.)?(?:x|twitter)\.com/[^\s\"'<>\\]+/status/(\d+)", re.IGNORECASE
 )
@@ -39,14 +39,17 @@ ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
 AUTHOR_KEYS = ("screenName", "screen_name", "username", "userName", "handle")
 RETWEET_KEYS = ("rtCount", "retweet_count", "retweetCount", "repost_count", "repostCount")
 EVENT_TERMS = {
-    "イベント", "参加方法", "参加条件", "開催", "主催", "join", "ジョイン", "リクイン",
-    "reqin", "リクエストインバイト", "request invite", "本日", "営業", "公演", "集会",
-    "ライブ", "ツアー", "開場",
+    "イベント", "参加方法", "参加条件", "開催", "join", "ジョイン", "リクイン", "reqin",
+    "リクエストインバイト", "request invite", "営業", "公演", "集会", "ライブ", "ツアー",
+    "開場", "group instance", "グループインスタンス", "join先",
 }
 RECRUITMENT_TERMS = {"募集", "応募", "締切", "〆切", "テスター"}
 PRODUCT_TERMS = {
-    "booth", "販売開始", "発売", "プレゼント企画", "giveaway", "rpキャンペーン",
-    "プレゼントキャンペーン", "無料配布",
+    "booth", "販売", "発売", "配布", "価格", "セール", "商品", "patreon", "記事",
+    "キーチェーン", "衣装", "アバター",
+}
+GIVEAWAY_TERMS = {
+    "プレゼント", "giveaway", "rpキャンペーン", "抽選", "当選", "フォロー＆rp", "フォロー&rp",
 }
 
 
@@ -248,7 +251,10 @@ def classify(text: str) -> tuple[str | None, str | None]:
     has_event = any(term in folded for term in EVENT_TERMS)
     has_recruitment = any(term in folded for term in RECRUITMENT_TERMS)
     has_product = any(term in folded for term in PRODUCT_TERMS)
-    if has_product and not has_event and not has_recruitment:
+    has_giveaway = any(term in folded for term in GIVEAWAY_TERMS)
+    if has_giveaway and not has_event:
+        return None, "giveaway_only"
+    if has_product and not has_event and not (has_recruitment and "テスター" in folded):
         return None, "product_only"
     if has_recruitment and any(term in folded for term in ("締切", "〆切", "応募", "テスター")):
         return "recruitment_deadline", None
@@ -339,13 +345,29 @@ def parse_instant(value: str) -> datetime | None:
     return parsed.astimezone(UTC)
 
 
+def cached_event_is_valid(event: dict[str, Any], now: datetime) -> bool:
+    start = parse_instant(str(event.get("starts_at") or ""))
+    source_id = str(event.get("source_id") or "")
+    text = str(event.get("description") or "").strip()
+    if not start or not source_id.startswith("yahoo:x:"):
+        return False
+    if not now - timedelta(days=1) <= start <= now + timedelta(days=180):
+        return False
+    if len(text) < 12 or len(text) > 1200:
+        return False
+    if any(marker in text for marker in ('\\",\\"', '"displayText"', '"rtCount"')):
+        return False
+    return classify(text)[1] is None
+
+
 def merge_cache(existing: list[dict[str, Any]], fresh: list[dict[str, Any]], now: datetime) -> list[dict[str, Any]]:
     selected: dict[str, dict[str, Any]] = {}
-    for event in existing + fresh:
-        start = parse_instant(str(event.get("starts_at") or ""))
-        source_id = str(event.get("source_id") or "")
-        if start and source_id and now - timedelta(days=1) <= start <= now + timedelta(days=180):
-            selected[source_id] = event
+    for event in existing:
+        if cached_event_is_valid(event, now):
+            selected[str(event["source_id"])] = event
+    for event in fresh:
+        if cached_event_is_valid(event, now):
+            selected[str(event["source_id"])] = event
     return sorted(selected.values(), key=lambda item: (str(item.get("starts_at")), str(item.get("title"))))
 
 
