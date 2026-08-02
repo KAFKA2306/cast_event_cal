@@ -1,10 +1,10 @@
 {
-  "schema_version": "2.1",
+  "schema_version": "2.2",
   "retention_days": 365,
   "maximum_candidates": 5000,
   "target_count": 1000,
   "target_reached": true,
-  "generated_at": "2026-08-02T07:54:47Z",
+  "generated_at": "2026-08-02T07:57:39Z",
   "candidate_count": 1013,
   "query_summary": {
     "attempted": 34,
@@ -3526,7 +3526,7 @@
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
       "last_decision": "rejected",
-      "last_reason": "product_only",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "core-012-お知らせ"
       ],
@@ -7764,8 +7764,8 @@
       "retweet_count": 46,
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
-      "last_decision": "accepted",
-      "last_reason": null,
+      "last_decision": "rejected",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "core-002-参加方法"
       ],
@@ -9667,8 +9667,8 @@
       "retweet_count": 5,
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
-      "last_decision": "accepted",
-      "last_reason": null,
+      "last_decision": "rejected",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "core-003-参加条件"
       ],
@@ -10123,7 +10123,7 @@
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
       "last_decision": "rejected",
-      "last_reason": "missing_datetime",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "core-002-参加方法"
       ],
@@ -17660,7 +17660,7 @@
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
       "last_decision": "rejected",
-      "last_reason": "past_event_now",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "access-007-招待"
       ],
@@ -18511,7 +18511,7 @@
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
       "last_decision": "rejected",
-      "last_reason": "past_event_now",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "access-007-招待"
       ],
@@ -23580,7 +23580,7 @@
       "first_seen_at": "2026-08-02T07:49:27Z",
       "last_seen_at": "2026-08-02T07:49:27Z",
       "last_decision": "rejected",
-      "last_reason": "past_event_now",
+      "last_reason": "giveaway_only",
       "query_keys": [
         "core-003-参加条件"
       ],
@@ -23968,5 +23968,6 @@
       "source_created_at": "2026-08-01T07:00:27Z"
     }
   ],
-  "source_time_policy": "x_snowflake_created_at_then_first_seen_at"
+  "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
+  "giveaway_policy": "require_specific_event_or_vrchat_access_method"
 }
