@@ -48,12 +48,15 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git rm config/yahoo-v18-trigger.txt
           git rm -f \
-            .github/workflows/refine-yahoo-query-selection-once.yml \
             scripts/apply_yahoo_policy_v18.py \
             scripts/materialize_yahoo_v18_final.py
           git rm -f --ignore-unmatch \
             audit/yahoo-v18-migration-diagnostic.txt \
             audit/yahoo-v18-selection-delta.json
+          git restore --worktree --staged \
+            .github/workflows/refine-yahoo-query-selection-once.yml \
+            .github/workflows/update-calendar-v2.yml
+          rm -rf cast_event_cal.egg-info
           git add -A
           git commit -m 'feat: improve Yahoo query and selection policy v1.8 [skip ci]'
           git push origin HEAD:${{ github.head_ref }}
