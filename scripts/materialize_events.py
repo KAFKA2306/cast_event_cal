@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import json
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
@@ -55,13 +56,21 @@ def event_for_date(template: dict[str, Any], local_day: date) -> dict[str, Any]:
 
 
 def materialize_weekly(template: dict[str, Any], first_day: date, last_day: date) -> list[dict[str, Any]]:
-    weekdays = {WEEKDAYS[item] for item in template["schedule"].get("weekdays", [])}
+    schedule = template["schedule"]
+    weekdays = {WEEKDAYS[item] for item in schedule.get("weekdays", [])}
     if not weekdays:
         raise ValueError(f"{template['series_id']}: weekly schedule has no weekdays")
+    interval_weeks = int(schedule.get("interval_weeks", 1))
+    if interval_weeks < 1:
+        raise ValueError(f"{template['series_id']}: interval_weeks must be >= 1")
+    anchor_text = schedule.get("anchor_date")
+    anchor = date.fromisoformat(anchor_text) if anchor_text else first_day
+
     result: list[dict[str, Any]] = []
     current = first_day
     while current <= last_day:
-        if current.weekday() in weekdays:
+        week_delta = (current - anchor).days // 7
+        if current.weekday() in weekdays and week_delta % interval_weeks == 0:
             result.append(event_for_date(template, current))
         current += timedelta(days=1)
     return result
@@ -96,6 +105,29 @@ def materialize_monthly_nth_weekday(template: dict[str, Any], first_day: date, l
     return result
 
 
+def materialize_monthly_days(template: dict[str, Any], first_day: date, last_day: date) -> list[dict[str, Any]]:
+    schedule = template["schedule"]
+    days = sorted({int(item) for item in schedule.get("days", [])})
+    if not days or any(item < 1 or item > 31 for item in days):
+        raise ValueError(f"{template['series_id']}: monthly_days requires days between 1 and 31")
+
+    result: list[dict[str, Any]] = []
+    cursor = first_day.replace(day=1)
+    while cursor <= last_day:
+        _, month_last_day = calendar.monthrange(cursor.year, cursor.month)
+        for day_number in days:
+            if day_number > month_last_day:
+                continue
+            occurrence = cursor.replace(day=day_number)
+            if first_day <= occurrence <= last_day:
+                result.append(event_for_date(template, occurrence))
+        if cursor.month == 12:
+            cursor = cursor.replace(year=cursor.year + 1, month=1)
+        else:
+            cursor = cursor.replace(month=cursor.month + 1)
+    return result
+
+
 def materialize(
     recurring: list[dict[str, Any]],
     one_off: list[dict[str, Any]],
@@ -116,6 +148,8 @@ def materialize(
             events.extend(materialize_weekly(template, first_day, last_day))
         elif frequency == "monthly_nth_weekday":
             events.extend(materialize_monthly_nth_weekday(template, first_day, last_day))
+        elif frequency == "monthly_days":
+            events.extend(materialize_monthly_days(template, first_day, last_day))
         else:
             raise ValueError(f"{template.get('series_id')}: unsupported frequency {frequency}")
 
