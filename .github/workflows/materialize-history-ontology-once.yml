@@ -1,0 +1,80 @@
+name: Materialize Yahoo history and ontology once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/materialize-history-ontology-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: materialize-history-ontology-once
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run production generation
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: |
+          set -euo pipefail
+          python scripts/materialize_events.py
+          python scripts/run_yahoo_realtime.py
+          python main_executor.py run --strict
+          python scripts/render_frontend.py
+      - name: Validate history, promotions, ontology, and public output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
+          yahoo = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
+          yahoo_health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
+          ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
+          ontology_audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
+          events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+
+          assert history['candidate_count'] >= 2
+          assert history['retention_days'] == 30
+          assert len(yahoo) >= 2
+          assert yahoo_health['parser_version'] == '1.4'
+          assert yahoo_health['history_candidate_count'] == history['candidate_count']
+          assert ontology['schema_version'] == '1.1'
+          assert ontology_audit['ontology_entries'] >= 2
+          assert ontology_audit['matched_events'] >= 2
+          assert ontology_audit['ambiguous_events'] == 0
+          assert events['count'] == len(events['events'])
+          assert health['event_count'] == events['count']
+          assert health['ontology']['matched_events'] >= 2
+          ids = {item.get('source_id') for item in yahoo}
+          assert 'yahoo:x:2083770096582119685' in ids
+          assert 'yahoo:x:2083738482703466864' in ids
+          enriched = [item for item in events['events'] if item.get('ontology_id')]
+          assert len(enriched) >= 2
+          assert all(item.get('official_links') for item in enriched)
+          PY
+      - name: Commit generated evidence and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/manual_events.json data/yahoo_realtime_events.json data/yahoo_realtime_rejected.json data/yahoo_realtime_health.json public
+          git rm .github/workflows/materialize-history-ontology-once.yml
+          git commit -m 'chore: materialize Yahoo history and ontology [skip ci]'
+          git pull --rebase origin main
+          git push origin main
