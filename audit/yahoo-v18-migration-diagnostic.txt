@@ -1,0 +1,145 @@
+Yahoo v1.8 migration failed
+install=success
+apply=success
+tests=failure
+generate=skipped
+validate=skipped
+
+===== /tmp/install.log =====
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages (26.1.2)
+Collecting pip
+  Using cached pip-26.2-py3-none-any.whl.metadata (4.6 kB)
+Using cached pip-26.2-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 26.1.2
+    Uninstalling pip-26.1.2:
+      Successfully uninstalled pip-26.1.2
+Successfully installed pip-26.2
+Obtaining file:///home/runner/work/cast_event_cal/cast_event_cal
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting httpx<1,>=0.28 (from cast-event-cal==2.0.0)
+  Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting PyYAML<7,>=6.0.2 (from cast-event-cal==2.0.0)
+  Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting python-dateutil<3,>=2.9 (from cast-event-cal==2.0.0)
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytest<10,>=8 (from cast-event-cal==2.0.0)
+  Using cached pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting ruff<1,>=0.12 (from cast-event-cal==2.0.0)
+  Using cached ruff-0.16.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+Collecting anyio (from httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+Collecting certifi (from httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting iniconfig>=1.0.1 (from pytest<10,>=8->cast-event-cal==2.0.0)
+  Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting packaging>=22 (from pytest<10,>=8->cast-event-cal==2.0.0)
+  Using cached packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest<10,>=8->cast-event-cal==2.0.0)
+  Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pygments>=2.7.2 (from pytest<10,>=8->cast-event-cal==2.0.0)
+  Using cached pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting six>=1.5 (from python-dateutil<3,>=2.9->cast-event-cal==2.0.0)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting typing_extensions>=4.5 (from anyio->httpx<1,>=0.28->cast-event-cal==2.0.0)
+  Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached pytest-9.1.1-py3-none-any.whl (386 kB)
+Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+Using cached ruff-0.16.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (11.5 MB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Using cached packaging-26.2-py3-none-any.whl (100 kB)
+Using cached pygments-2.20.0-py3-none-any.whl (1.2 MB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached anyio-4.14.2-py3-none-any.whl (125 kB)
+Using cached idna-3.18-py3-none-any.whl (65 kB)
+Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Using cached certifi-2026.7.22-py3-none-any.whl (136 kB)
+Building wheels for collected packages: cast-event-cal
+  Building editable for cast-event-cal (pyproject.toml): started
+  Building editable for cast-event-cal (pyproject.toml): finished with status 'done'
+  Created wheel for cast-event-cal: filename=cast_event_cal-2.0.0-0.editable-py3-none-any.whl size=7104 sha256=100d0b1077a3a3793225f477e270c4f1664654da1867ca25a424673cd7c080ca
+  Stored in directory: /tmp/pip-ephem-wheel-cache-s__qgyak/wheels/a2/3e/3d/93a7deca37c39f2b196126c3c05d9f2ae6fe4cd587fa05284b
+Successfully built cast-event-cal
+Installing collected packages: typing_extensions, six, ruff, PyYAML, pygments, pluggy, packaging, iniconfig, idna, h11, certifi, python-dateutil, pytest, httpcore, anyio, httpx, cast-event-cal
+
+Successfully installed PyYAML-6.0.3 anyio-4.14.2 cast-event-cal-2.0.0 certifi-2026.7.22 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.18 iniconfig-2.3.0 packaging-26.2 pluggy-1.6.0 pygments-2.20.0 pytest-9.1.1 python-dateutil-2.9.0.post0 ruff-0.16.1 six-1.17.0 typing_extensions-4.16.0
+
+===== /tmp/apply.log =====
+
+===== /tmp/tests.log =====
+F841 Local variable `folded` is assigned to but never used
+   --> scripts/collect_yahoo_corpus.py:126:5
+    |
+125 | def structured_classify(text: str) -> tuple[str | None, str | None]:
+126 |     folded = text.casefold()
+    |     ^^^^^^
+127 |     if not implementation.VRCHAT_RE.search(text):
+128 |         return None, "not_vrchat"
+    |
+help: Remove assignment to unused variable `folded`
+
+invalid-syntax: missing closing quote in string literal
+  --> tests/test_yahoo_selection_policy.py:34:15
+   |
+32 |     config = read_json(__import__("pathlib").Path("config/yahoo_query_terms.json"), {})
+33 |     plan = build_query_plan(config)
+34 |     queries = "
+   |               ^
+35 | ".join(row["query"] for row in plan)
+36 |     assert "イベント告知" in queries
+   |
+
+invalid-syntax: Simple statements must be separated by newlines or semicolons
+  --> tests/test_yahoo_selection_policy.py:35:13
+   |
+33 |     plan = build_query_plan(config)
+34 |     queries = "
+35 | ".join(row["query"] for row in plan)
+   |             ^^^^^
+36 |     assert "イベント告知" in queries
+37 |     assert "通常営業" in queries
+   |
+
+invalid-syntax: missing closing quote in string literal
+  --> tests/test_yahoo_selection_policy.py:35:18
+   |
+33 |     plan = build_query_plan(config)
+34 |     queries = "
+35 | ".join(row["query"] for row in plan)
+   |                  ^^^^^^^^^^^^^^^^^^^
+36 |     assert "イベント告知" in queries
+37 |     assert "通常営業" in queries
+   |
+
+invalid-syntax: Unexpected indentation
+  --> tests/test_yahoo_selection_policy.py:36:1
+   |
+34 |     queries = "
+35 | ".join(row["query"] for row in plan)
+36 |     assert "イベント告知" in queries
+   | ^^^^
+37 |     assert "通常営業" in queries
+38 |     assert "Group+ instance" in queries
+   |
+
+Found 5 errors.
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).
