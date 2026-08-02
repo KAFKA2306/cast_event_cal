@@ -16,6 +16,7 @@ from scripts import run_yahoo_realtime as ledger
 
 TWITTER_EPOCH_MS = 1_288_834_974_657
 AUDIT_PATH = Path("public/yahoo-classifier-audit.json")
+POSITIVE_VOCABULARY_PATH = Path("public/yahoo-positive-vocabulary.json")
 STRONG_GIVEAWAY_TERMS = {
     "プレゼント企画",
     "無料配布",
@@ -191,7 +192,7 @@ def build_audit(
     total = len(evaluated)
     accepted_count = decisions.get("accepted", 0)
     return {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "classifier_version": implementation.PARSER_VERSION,
         "generated_at": implementation.utc_text(now),
         "target_count": target,
@@ -222,9 +223,41 @@ def build_audit(
     }
 
 
+def build_positive_vocabulary(events: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
+    config = corpus.read_json(corpus.CONFIG_PATH, {})
+    feedback = config.get("positive_feedback", {}) if isinstance(config, dict) else {}
+    terms = feedback.get("terms", []) if isinstance(feedback, dict) else []
+    counts: dict[str, int] = {}
+    examples: dict[str, list[str]] = {}
+    for raw_term in terms:
+        term = str(raw_term).strip()
+        if not term:
+            continue
+        matching = [
+            str(event.get("source_id"))
+            for event in events
+            if term.casefold() in str(event.get("description") or "").casefold()
+        ]
+        counts[term] = len(matching)
+        examples[term] = matching[:5]
+    adopted = [term for term, count in counts.items() if count > 0]
+    return {
+        "schema_version": "1.0",
+        "generated_at": implementation.utc_text(now),
+        "source": "accepted_yahoo_events",
+        "positive_event_count": len(events),
+        "minimum_retweets": 3,
+        "adoption_policy": "reusable_structural_terms_only",
+        "adopted_terms": adopted,
+        "term_counts": counts,
+        "example_event_ids": examples,
+        "excluded_as_too_generic": feedback.get("excluded_as_too_generic", []),
+    }
+
+
 def main() -> int:
     corpus.configure_classifier()
-    implementation.PARSER_VERSION = "1.7"
+    implementation.PARSER_VERSION = "1.8"
     now = datetime.now(UTC).replace(microsecond=0)
     history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
     if not isinstance(history_payload, dict):
@@ -242,7 +275,7 @@ def main() -> int:
     )
     history_payload.update(
         {
-            "schema_version": "2.2",
+            "schema_version": "2.3",
             "generated_at": implementation.utc_text(now),
             "candidate_count": len(evaluated),
             "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
@@ -252,6 +285,7 @@ def main() -> int:
     )
     implementation.write_json(ledger.HISTORY_PATH, history_payload)
     implementation.write_json(implementation.OUTPUT_PATH, accepted)
+    implementation.write_json(POSITIVE_VOCABULARY_PATH, build_positive_vocabulary(accepted, now))
     implementation.write_json(implementation.REJECTED_PATH, rejected[:2000])
 
     previous_audit = corpus.read_json(AUDIT_PATH, {})
