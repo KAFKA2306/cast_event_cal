@@ -1,21 +1,22 @@
 name: Implement Yahoo classifier v1.9
 
 on:
-  push:
-    branches: [feat/yahoo-v19-recovery]
+  pull_request:
     paths:
-      - scripts/apply_yahoo_v19_patch.py
-      - scripts/fix_yahoo_v19_module.py
-      - scripts/yahoo_classifier_v19.py
-      - scripts/evaluate_yahoo_v19_recovery.py
-      - .github/workflows/implement-yahoo-v19.yml
+      - scripts/**
+      - tests/**
+      - config/yahoo_query_terms.json
+      - .github/workflows/**
+      - README.md
+      - public/**
+      - data/**
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: implement-yahoo-v19
-  cancel-in-progress: false
+  group: implement-yahoo-v19-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   implement-test-replay:
@@ -24,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: feat/yahoo-v19-recovery
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
@@ -38,11 +39,12 @@ jobs:
         run: |
           python scripts/apply_yahoo_v19_patch.py
           python scripts/fix_yahoo_v19_module.py
+          rm -f .github/workflows/implement-yahoo-v19.yml
       - name: Static and regression tests
         run: |
           ruff check scripts/yahoo_classifier_v19.py scripts/evaluate_yahoo_v19_recovery.py scripts/audit_yahoo_recovery_patterns.py scripts/collect_yahoo_corpus.py scripts/refine_yahoo_corpus.py tests/test_yahoo_selection_policy.py
           pytest tests/test_yahoo_selection_policy.py tests/test_yahoo_best_1000.py tests/test_yahoo_query_ablation.py
-      - name: Replay current 2429-candidate ledger
+      - name: Replay current ledger
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: |
@@ -52,12 +54,11 @@ jobs:
         run: |
           python main_executor.py run --strict
           python scripts/render_frontend.py
-      - name: Validate recovery and generated assets
+      - name: Validate recovery and assets
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-
           recovery = json.loads(Path('public/yahoo-v19-recovery-audit.json').read_text(encoding='utf-8'))
           classifier = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
           history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
@@ -65,7 +66,6 @@ jobs:
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
           sources = {row['name']: row for row in health['sources']}
-
           assert recovery['classifier_version'] == '1.9'
           assert recovery['candidate_count'] >= 2429
           assert recovery['accepted_count'] > recovery['baseline_accepted_count']
@@ -78,7 +78,6 @@ jobs:
           assert recovery['quality']['unstructured_giveaway_accepted'] == 0
           assert recovery['quality']['duplicate_status_ids'] == 0
           assert recovery['quality']['ambiguous_decisions'] == 0
-
           assert classifier['classifier_version'] == '1.9'
           assert classifier['candidate_count'] == history['candidate_count']
           assert classifier['accepted_count'] == len(yahoo_events)
@@ -91,19 +90,18 @@ jobs:
           PY
           grep -q 'VRChat Event Calendar' public/index.html
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
-      - uses: actions/upload-artifact@v4
-        with:
-          name: yahoo-v19-recovery-evidence
-          path: |
-            public/yahoo-v19-recovery-audit.json
-            public/yahoo-classifier-audit.json
-            public/health.json
-            data/yahoo_realtime_events.json
-      - name: Commit implementation and replay evidence
+      - name: Package validated materialization
         run: |
           set -euo pipefail
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add -A
-          git commit -m 'Implement Yahoo classifier v1.9 recovery [skip ci]'
-          git push origin HEAD:feat/yahoo-v19-recovery
+          mkdir -p /tmp/materialized
+          git diff --cached --name-status > /tmp/materialized/manifest.tsv
+          git diff --cached --name-only --diff-filter=ACMRT | while IFS= read -r path; do
+            test -f "$path" || continue
+            mkdir -p "/tmp/materialized/$(dirname "$path")"
+            cp "$path" "/tmp/materialized/$path"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-v19-materialized
+          path: /tmp/materialized
