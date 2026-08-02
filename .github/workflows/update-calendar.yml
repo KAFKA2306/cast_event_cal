@@ -3,7 +3,7 @@ name: Update calendar and deploy Pages
 on:
   workflow_dispatch:
   schedule:
-    # 05:17 JST every day. Pushes to main still validate and deploy immediately.
+    # 05:17 JST every day. Pushes to main validate and deploy immediately.
     - cron: '17 20 * * *'
   push:
     branches: [main]
@@ -60,19 +60,20 @@ jobs:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_EVENT_MIN_RETWEETS: '3'
         run: python scripts/fetch_x_events.py
-      - name: Discover Yahoo realtime events
+      - name: Discover and replay Yahoo realtime candidates
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/run_yahoo_realtime.py
       - name: Build normalized calendar
         run: python main_executor.py run --strict
-      - name: Render production frontend
+      - name: Enrich ontology and render production frontend
         run: python scripts/render_frontend.py
-      - name: Validate generated assets and coverage
+      - name: Validate generated assets, history, and ontology
         run: |
           set -euo pipefail
           grep -q 'VRChat Event Calendar' public/index.html
           grep -q 'id="agenda"' public/index.html
+          grep -q 'event-ontology.json' public/index.html
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
           python - <<'PY'
           import json
@@ -87,6 +88,9 @@ jobs:
           yahoo_events = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
           yahoo_rejected = json.loads(Path('data/yahoo_realtime_rejected.json').read_text(encoding='utf-8'))
           yahoo_health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
+          history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
+          ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
+          ontology_audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
 
@@ -100,19 +104,49 @@ jobs:
           assert all(str(item['source_id']).startswith('yahoo:x:') for item in yahoo_events)
           assert all(item.get('review_required') is False for item in yahoo_events)
           assert all(isinstance(item.get('reason'), str) for item in yahoo_rejected)
+
           assert discovery_health.get('status') in {'ok', 'degraded', 'skipped'}
           assert discovery_health.get('event_count') == len(discovered)
           assert x_health.get('status') in {'ok', 'degraded', 'skipped', 'seeded'}
           assert x_health.get('event_count') == len(x_events)
           assert yahoo_health.get('status') in {'ok', 'degraded', 'seeded'}
           assert yahoo_health.get('event_count') == len(yahoo_events)
-          assert yahoo_health.get('parser_version')
+          assert yahoo_health.get('parser_version') == '1.4'
           assert isinstance(yahoo_health.get('rejection_counts'), dict)
+          assert yahoo_health.get('history_candidate_count') == history.get('candidate_count')
+          assert yahoo_health.get('history_accepted_count', 0) + yahoo_health.get('history_rejected_count', 0) == history.get('candidate_count')
+
+          assert history.get('schema_version') == '1.0'
+          assert history.get('retention_days') == 30
+          assert history.get('candidate_count') == len(history.get('candidates', []))
+          assert len({item['status_id'] for item in history.get('candidates', [])}) == history.get('candidate_count')
+          assert all(item.get('first_seen_at') and item.get('last_seen_at') for item in history.get('candidates', []))
+
+          assert ontology.get('schema_version') == '1.1'
+          assert ontology.get('matching_policy', {}).get('fuzzy_matching') is False
+          assert ontology.get('matching_policy', {}).get('pattern_only_match') is False
+          assert len(ontology.get('entries', [])) >= 2
+          assert ontology_audit.get('ontology_entries') == len(ontology.get('entries', []))
+          assert ontology_audit.get('event_count') == events.get('count')
+          assert ontology_audit.get('ambiguous_events') == 0
+          assert ontology_audit.get('matched_events', 0) >= 2
+
+          enriched = [item for item in events.get('events', []) if item.get('ontology_id')]
+          assert len(enriched) == ontology_audit.get('matched_events')
+          assert all(item.get('official_links') for item in enriched)
+          assert all(
+              str(link.get('url', '')).startswith('https://')
+              for item in enriched
+              for link in item.get('official_links', [])
+          )
+          assert all(item.get('participation_method') for item in enriched)
+
           assert events.get('count') == len(events.get('events', []))
           assert events.get('count', 0) >= 250
           assert health.get('status') in {'ok', 'degraded'}
           assert health.get('event_count') == events.get('count')
           assert health.get('enabled_sources', 0) >= 4
+          assert health.get('ontology', {}).get('matched_events') == ontology_audit.get('matched_events')
           assert {item.get('name') for item in health.get('sources', [])} >= {
               'repository_manual_events',
               'vrchat_calendar_discovery',
@@ -120,7 +154,7 @@ jobs:
               'yahoo_realtime_events',
           }
           PY
-      - name: Commit generated data
+      - name: Commit generated data safely
         run: |
           set -euo pipefail
           paths=(
@@ -141,7 +175,8 @@ jobs:
             git config user.email 41898282+github-actions[bot]@users.noreply.github.com
             git add "${paths[@]}"
             git commit -m 'chore: refresh calendar [skip ci]'
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -180,7 +215,19 @@ jobs:
           for attempt in $(seq 1 30); do
             root_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-index.html -w '%{http_code}' "$base/" || true)"
             events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-events.json -w '%{http_code}' "$base/events.json" || true)"
-            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && grep -q 'id="agenda"' /tmp/live-index.html && python -c 'import json; data=json.load(open("/tmp/live-events.json", encoding="utf-8")); assert data.get("count", 0) >= 250'; then
+            ontology_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-ontology.json -w '%{http_code}' "$base/event-ontology.json" || true)"
+            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && [ "$ontology_status" = '200' ] \
+              && grep -q 'id="agenda"' /tmp/live-index.html \
+              && grep -q '公式リンク' /tmp/live-index.html \
+              && python - <<'PY'
+          import json
+          events = json.load(open('/tmp/live-events.json', encoding='utf-8'))
+          ontology = json.load(open('/tmp/live-ontology.json', encoding='utf-8'))
+          assert events.get('count', 0) >= 250
+          assert ontology.get('schema_version') == '1.1'
+          assert len(ontology.get('entries', [])) >= 2
+          PY
+            then
               verified=true
               break
             fi
@@ -188,7 +235,7 @@ jobs:
           done
           test "$verified" = true
           mkdir -p audit
-          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status"
+          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status" ONTOLOGY_STATUS="$ontology_status"
           python - <<'PY'
           import json, os
           from datetime import UTC, datetime
@@ -196,12 +243,14 @@ jobs:
 
           live = json.loads(Path('/tmp/live-events.json').read_text(encoding='utf-8'))
           result = {
-              'schema_version': '4.0',
+              'schema_version': '5.0',
               'verified_at': datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00', 'Z'),
               'page_url': os.environ['PAGE_URL'],
               'root_status': int(os.environ['ROOT_STATUS']),
               'events_status': int(os.environ['EVENTS_STATUS']),
+              'ontology_status': int(os.environ['ONTOLOGY_STATUS']),
               'event_count': len(live.get('events', [])),
+              'ontology_enriched_count': sum(1 for item in live.get('events', []) if item.get('ontology_id')),
               'minimum_event_count': 250,
               'source_commit': os.environ['GITHUB_SHA'],
               'status': 'ok',
@@ -212,11 +261,12 @@ jobs:
           PY
       - name: Record production verification
         run: |
+          set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add audit/production-status.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore: record production verification [skip ci]'
             git pull --rebase origin main
-            git push
+            git push origin HEAD:main
           fi
