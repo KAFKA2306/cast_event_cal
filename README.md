@@ -4,78 +4,88 @@
 **JSON API:** https://kafka2306.github.io/cast_event_cal/events.json  
 **iCalendar:** https://kafka2306.github.io/cast_event_cal/calendar.ics
 
-VRChatイベントの公開情報を定期取得し、出典を保持した正規化JSON、iCalendar、検索可能なWeb画面へ自動変換・公開するパイプラインです。データ生成、GitHub Pages公開、公開後監査をこのリポジトリだけで完結させます。
+VRChatの公開イベント、定期集会、募集締切を、出典と時刻を保持したJSON・ICS・Web UIへ変換してGitHub Pagesで公開するリポジトリです。データ生成、公開、公開後監査を`cast_event_cal`だけで完結させます。
 
-## v2で刷新した点
+## 現在の構成
 
-- Xの画面スクレイピングとID・パスワード直書きを廃止
-- VRChat公式カレンダー検索、X API v2、Group Calendar、公開ICS、公開JSON、手動JSONを同じ取得層で処理
-- 公開一次情報で確認した定期イベントを120日先まで開催日単位に展開
-- 公式カレンダー検索から公開イベントだけをライブ発見
-- 曖昧な日時を推測で確定せず、明示的な日時だけを採用
-- 出典IDを優先した重複排除と、取得元ごとの失敗隔離
-- `events.json`、`calendar.ics`、`health.json`、Web UIを一度に生成
-- 6時間ごとのデータ生成・commit・GitHub Pages公開
-- 60件未満を失敗させる固定系列カバレッジゲート
-- 公開URLとJSON APIのHTTP 200自己監査
-- Python 3.11〜3.13でCI、設定検証、単体テスト、静的解析
+- 確認済み定期系列: `data/recurring_events.json`
+- 単発イベント: `data/one_off_events.json`
+- VRChat公式カレンダー発見結果: `data/discovered_events.json`
+- X検索の採用結果: `data/x_events.json`
+- 統合後の公開API: `public/events.json`
+- カレンダー購読: `public/calendar.ics`
+- 取得状態: `public/health.json`
+- 公開後監査: `audit/production-status.json`
 
 ## データフロー
 
 ```text
-公開一次情報
-  → data/recurring_events.json（定期系列）
-  → data/one_off_events.json（単発開催）
-  → scripts/materialize_events.pyで120日分を日付展開
+確認済みグループ情報
+  → data/recurring_events.json
+  → scripts/materialize_events.py
   → data/manual_events.json
 
-VRChat公式カレンダー検索
+VRChat公式カレンダー
   → scripts/fetch_vrchat_calendar.py
   → data/discovered_events.json
 
-上記2系統
-  → UTC正規化・重複除外
-  → public/ にJSON / ICS / health / Web UIを生成
+X API v2 Recent Search
+  → scripts/fetch_x_events.py
+  → 日時解析・カテゴリ分類・ノイズ除外・public_metrics判定
+  → data/x_events.json
+
+上記3系統
+  → main_executor.pyでUTC正規化・重複除外
+  → public/events.json / calendar.ics / health.json
+  → scripts/render_frontend.pyでWeb UI生成
   → GitHub Pagesへ直接デプロイ
-  → 公開ページとAPIをHTTP 200監査
-  → audit/production-status.jsonへ記録
+  → HTTP 200・件数・UI構造を監査
 ```
 
-## 定期イベントの管理
+## 定期イベント
 
-`data/recurring_events.json`には、曜日、開始時刻、終了時刻、タイムゾーン、根拠URLを持つ系列だけを登録します。`scripts/materialize_events.py`が実行時点から過去1日・未来120日の各開催日を生成するため、同じイベントを手作業で毎週追加する必要はありません。
+`data/recurring_events.json`には、開催日と開始時刻を明示情報から確定できる系列だけを登録します。
 
-対応する頻度は次のとおりです。
+対応する周期:
 
-- `weekly`: 複数曜日を指定できる週次開催
-- `monthly_nth_weekday`: 第3日曜などの月次開催
+- `weekly`: 毎週または複数曜日
+- `weekly` + `interval_weeks` + `anchor_date`: 基準日が確認できる隔週・数週おき
+- `monthly_nth_weekday`: 第1・第3木曜など
+- `monthly_days`: 毎月10日・20日・30日など
 
-終了時刻を一次情報で確認できないイベントは、推測せず`end_time`を省略します。生成後の`source_id`は系列IDと開催日の組み合わせになり、同一系列の各回を独立した予定としてJSONとICSへ出力します。
+「不定期」「頃」「隔週だが基準週不明」「休止中」は推測して展開しません。終了時刻が確認できない場合は`end_time`を省略します。
 
-## VRChat公式カレンダーのライブ検索
+## Xイベント発見
 
-Repository Secret `VRCHAT_AUTH_COOKIE`が設定されている場合、`scripts/fetch_vrchat_calendar.py`がカレンダー検索APIを利用して新規イベントを取得します。
+`scripts/fetch_x_events.py`は次の検索を既定値として使用します。
 
-既定の検索語:
+```text
+lang:ja (イベント OR 参加方法 OR 参加条件 OR 開催 OR 主催 OR join OR ジョイン OR リクイン OR reqin OR リクエストインバイト OR "request invite" OR 本日 OR 営業 OR 応募) (VRChat OR VRC) -is:retweet -is:reply
+```
 
-- 日本語
-- 初心者
-- 交流
-- 音楽
-- ゲーム
-- Quest
+X API v2のRecent Searchは直近7日を対象にします。画面検索で使われる`min_retweets:3`はAPI v2の検索演算子として使わず、`tweet.fields=public_metrics`で取得した`retweet_count`をコード側で判定します。
 
 採用ルール:
 
-- `accessType: public`だけを採用
-- Draft、削除済み、カレンダーID・タイトル・開始時刻欠損を除外
-- 同一カレンダーIDを統合
-- 固定系列と同一タイトル・同一開始時刻の結果を除外
-- Cookie未設定時は安全にスキップ
-- API障害または不正なCookieの場合は直前の発見キャッシュを保持
-- 実行状態を`data/discovery_health.json`へ保存
+- 年月日または月日と時刻が本文に明示された投稿だけを採用
+- 日本語の月日時刻はJSTとしてUTCへ変換
+- リポスト3件以上、または「参加方法」「開催」「営業」「締切」など強い開催マーカーがある投稿を採用
+- イベントと募集締切を別カテゴリに分類
+- BOOTH販売、発売、プレゼント企画だけの投稿は除外
+- API障害・Secret未設定時は直前キャッシュを保持
 
-ライブ検索結果は固定系列60件以上の品質ゲートには算入しません。API結果が減少しても、確認済みカレンダーの基盤を維持します。
+## UI
+
+`web/index.template.html`を正本とし、`scripts/render_frontend.py`が`public/index.html`を生成します。
+
+- 日付別アジェンダ表示
+- イベント名・主催・タグの全文検索
+- 7日・30日・120日の期間切替
+- カテゴリ・情報源フィルター
+- イベントと募集締切の分離
+- 今日、7日以内、有効情報源の集計
+- JSON APIとICS購読への導線
+- モバイルで横スクロールしないレスポンシブ構成
 
 ## ローカル実行
 
@@ -86,80 +96,42 @@ pip install -e '.[dev]'
 python main_executor.py validate
 python scripts/materialize_events.py
 python scripts/fetch_vrchat_calendar.py
+python scripts/fetch_x_events.py
 python main_executor.py run --strict
+python scripts/render_frontend.py
 python -m http.server 8000 --directory public
 ```
 
-`http://localhost:8000`で確認できます。
-
-## 取得元の追加
-
-定期系列は`data/recurring_events.json`、単発予定は`data/one_off_events.json`へ追加します。APIまたはフィードは`config/sources.yaml`へ追加します。
-
-```yaml
-sources:
-  - name: community_calendar
-    type: ics
-    enabled: true
-    url: https://example.com/calendar.ics
-
-  - name: community_api
-    type: json
-    enabled: true
-    url: https://example.com/events.json
-    items_path: events
-```
-
-JSONレコードでは最低限`title`と`starts_at`が必要です。日時はISO 8601を推奨します。
-
-## X API
-
-Repository Secretに`X_BEARER_TOKEN`を登録し、`config/sources.yaml`の`x_recent_search`または`x_list`を`enabled: true`へ変更します。X投稿からは、年月日または月日と時刻が明示された投稿のみを決定論的にイベント化します。LLMによる日時推測は行いません。
-
-## VRChat Group Calendar
-
-Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を`vrchat_group`取得元へ設定します。認証情報はリポジトリへ保存しません。
-
-## 出力
-
-- `data/manual_events.json`: 定期系列と単発予定を展開した入力データ
-- `data/discovered_events.json`: 公式カレンダー検索で発見した公開イベント
-- `data/discovery_health.json`: ライブ検索の状態、件数、失敗理由
-- `public/events.json`: 正規化イベントAPI
-- `public/calendar.ics`: カレンダー購読用
-- `public/health.json`: 取得元ごとの成功・失敗・件数
-- `public/index.html`: 検索・期間絞り込みUI
-- `audit/production-status.json`: Pages公開後のHTTP監査結果
-
-取得元が一部失敗した場合、成功した取得元のデータは公開し、`health.json`を`degraded`にします。全取得元が失敗した場合は終了コード1、`--strict`では1件でも失敗すると終了コード2です。
-
 ## 自動運用
 
-`.github/workflows/update-calendar.yml`が次を実行します。
+`.github/workflows/update-calendar.yml`は6時間ごと、手動実行、主要ファイル変更時に起動します。
 
-1. 6時間ごと、手動実行、主要設定変更時に起動
-2. 定期系列を120日先まで展開
-3. VRChat公式カレンダーから公開イベントを検索
-4. 取得・正規化・公開物生成
-5. HTML、JSON、ICS、health、最低件数、取得元を検証
-6. 差分がある場合だけデータと`public/`を自動commit・push
-7. `public/`をGitHub Pagesへ直接デプロイ
-8. 公開ページと`events.json`がHTTP 200になるまで確認
-9. `audit/production-status.json`へ公開監査結果を保存
+1. 定期系列を未来120日まで展開
+2. VRChat公式カレンダーを取得
+3. X API検索結果を分類
+4. 3系統を正規化・重複排除
+5. Web UIを生成
+6. 25系列以上、250開催以上、3情報源を品質ゲートで検証
+7. 生成差分をcommit
+8. GitHub Pagesへ直接デプロイ
+9. 公開ページ、JSON API、UI構造を監査
+10. `audit/production-status.json`へ結果を記録
 
-GitHub Pagesが未設定の場合は、Settings → Pages → Sourceを**GitHub Actions**に設定します。自動有効化する場合は、Pagesおよびリポジトリ管理権限を持つ`PAGES_TOKEN`をRepository Secretへ登録します。
+必要なRepository Secret:
 
-CIは`.github/workflows/ci.yml`でPython 3.11〜3.13を検証します。
+- `X_BEARER_TOKEN`
+- `VRCHAT_AUTH_COOKIE`
+- `PAGES_TOKEN`（Pages初回有効化時のみ）
 
-## セキュリティ
+## セキュリティと品質
 
-- APIトークン、Cookie、`.env`、ブラウザ認証状態をGitへ追加しない
-- Xのユーザー名・パスワードを使用しない
-- `accessType: public`以外をライブ検索結果へ含めない
-- 招待制・非公開イベントを公開イベントと断定しない
-- 開催時刻や終了時刻を推測しない
-- API障害時に空データで正常なキャッシュを上書きしない
-- 取得元の利用規約、API上限、削除・中止情報を優先する
+- APIトークン、Cookie、`.env`をGitへ追加しない
+- `accessType: public`以外のVRChatイベントを公開しない
+- 開催時刻・終了時刻・隔週基準日を推測しない
+- 取得失敗時に正常なキャッシュを空データで上書きしない
+- 商品販売やプレゼント企画を参加イベントとして混入させない
+- 取得元ごとの件数と状態を`health.json`に残す
+- 公開後にHTMLとJSONのHTTP 200、最低件数、UI識別子を検証する
 
 ## ライセンス
 
