@@ -1,0 +1,104 @@
+name: Yahoo query ablation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 20 * * *'
+  pull_request:
+    paths:
+      - config/yahoo_query_ablation.json
+      - scripts/run_yahoo_query_ablation.py
+      - tests/test_yahoo_query_ablation.py
+      - .github/workflows/yahoo-query-ablation.yml
+  push:
+    branches: [main]
+    paths:
+      - config/yahoo_query_ablation.json
+      - scripts/run_yahoo_query_ablation.py
+      - tests/test_yahoo_query_ablation.py
+      - .github/workflows/yahoo-query-ablation.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: yahoo-query-ablation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: Verify ablation implementation
+        run: |
+          ruff check scripts/run_yahoo_query_ablation.py tests/test_yahoo_query_ablation.py
+          pytest tests/test_yahoo_query_ablation.py
+      - name: Run controlled Yahoo query ablation
+        run: python scripts/run_yahoo_query_ablation.py --require-complete
+      - name: Validate empirical output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('public/yahoo-query-ablation.json').read_text(encoding='utf-8'))
+          assert payload['schema_version'] == '1.0'
+          assert payload['classifier_version'] == '1.8'
+          assert payload['status'] == 'ok'
+          assert payload['variant_count'] == 10
+          assert payload['successful_variant_count'] == 10
+          assert payload['full_variant_available'] is True
+          assert set(payload['block_effects']) == {'access', 'announcement', 'platform'}
+          assert all(row['candidate_count'] > 0 for row in payload['variants'])
+          assert all('content_acceptance_rate' in row for row in payload['variants'])
+          assert all('production_acceptance_rate' in row for row in payload['variants'])
+          print('\nAblation summary')
+          for row in payload['variants']:
+              print(
+                  f"{row['key']}: candidates={row['candidate_count']} "
+                  f"new={row['new_to_ledger_count']} "
+                  f"content={row['content_accepted_count']} "
+                  f"content_rate={row['content_acceptance_rate']:.1%} "
+                  f"production={row['production_accepted_count']} "
+                  f"incremental={row.get('incremental_accepted_vs_full_count', 0)}"
+              )
+          print('Block effects:', json.dumps(payload['block_effects'], ensure_ascii=False))
+          PY
+      - name: Upload reproducible evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-query-ablation-${{ github.sha }}
+          path: |
+            public/yahoo-query-ablation.json
+            data/yahoo-query-ablation-raw.json
+          retention-days: 30
+      - name: Commit empirical result
+        if: github.event_name != 'pull_request'
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add public/yahoo-query-ablation.json data/yahoo-query-ablation-raw.json
+          if git diff --cached --quiet; then
+            echo 'No ablation result changes'
+          else
+            git commit -m 'chore: refresh Yahoo query ablation [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Redeploy production Pages with evidence
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-calendar-v2.yml --ref main
