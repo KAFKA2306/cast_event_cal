@@ -18,6 +18,7 @@ on:
       - scripts/fetch_vrchat_calendar.py
       - scripts/fetch_x_events.py
       - scripts/fetch_yahoo_realtime.py
+      - scripts/run_yahoo_realtime.py
       - scripts/render_frontend.py
       - web/**
       - main_executor.py
@@ -62,7 +63,7 @@ jobs:
       - name: Discover Yahoo realtime events
         env:
           YAHOO_MIN_RETWEETS: '3'
-        run: python scripts/fetch_yahoo_realtime.py
+        run: python scripts/run_yahoo_realtime.py
       - name: Build normalized calendar
         run: python main_executor.py run --strict
       - name: Render production frontend
