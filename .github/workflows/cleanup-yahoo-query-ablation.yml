@@ -1,0 +1,32 @@
+name: Cleanup Yahoo query ablation branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cleanup-yahoo-query-ablation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Delete completed work branch
+        run: git push origin --delete feat/yahoo-query-ablation || true
+      - name: Remove one-time cleanup workflow
+        run: |
+          set -euo pipefail
+          rm .github/workflows/cleanup-yahoo-query-ablation.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .github/workflows/cleanup-yahoo-query-ablation.yml
+          git commit -m 'chore: remove completed Yahoo ablation branch cleanup [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
