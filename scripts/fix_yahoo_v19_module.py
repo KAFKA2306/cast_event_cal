@@ -3,6 +3,10 @@ from pathlib import Path
 path = Path("scripts/yahoo_classifier_v19.py")
 text = path.read_text(encoding="utf-8")
 text = text.replace(
+    "from datetime import UTC, datetime, time, timedelta",
+    "from datetime import datetime, time, timedelta",
+)
+text = text.replace(
     'WORLD_DESCRIPTION_RE = re.compile(r"(?i)(?:ワールド紹介|ワールドを更新|常設ワールド|いつでも|公開しました)")\n',
     'WORLD_DESCRIPTION_RE = re.compile(r"(?i)(?:ワールド紹介|ワールドを更新|常設ワールド|いつでも|公開しました)")\n'
     'NON_EVENT_NOTICE_RE = re.compile(r"(?i)(?:障害情報|障害発生|メンテナンス|不具合|API(?:の|に)?(?:エラー|遅延)|ログイン障害|アップデート情報)")\n',
