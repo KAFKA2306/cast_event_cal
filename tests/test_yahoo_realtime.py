@@ -5,6 +5,7 @@ import pytest
 
 from scripts.fetch_yahoo_realtime import (
     candidate_to_event,
+    classify,
     extract_candidates,
     merge_cache,
     parse_event_datetime,
@@ -84,18 +85,53 @@ def test_parent_json_blob_is_rejected_as_malformed():
     )[1] == "malformed_text"
 
 
-def test_relative_datetime_and_cache_expiration():
+def test_commerce_and_giveaway_override_generic_date_words():
+    assert classify("本日20:30 Patreon記事を公開 VRChat用キーチェーン") == (None, "product_only")
+    assert classify("8/5 21:00 VRChat衣装プレゼント 応募締切") == (None, "giveaway_only")
+    assert classify("8/9 23:59 VRChatアバターテスター応募締切") == (
+        "recruitment_deadline",
+        None,
+    )
+
+
+def test_relative_datetime_and_cache_expiration_and_revalidation():
     anchor = datetime(2026, 8, 2, 15, 0, tzinfo=UTC)
     parsed = parse_event_datetime("本日 23:00 VRChat集会を開催", anchor.astimezone())
     assert parsed is not None
 
     existing = [
-        {"source_id": "old", "starts_at": "2026-07-01T00:00:00Z", "title": "expired"},
-        {"source_id": "future", "starts_at": "2026-08-08T00:00:00Z", "title": "cached"},
+        {
+            "source_id": "yahoo:x:1111111111111111111",
+            "starts_at": "2026-07-01T00:00:00Z",
+            "title": "expired",
+            "description": "7/1 21:00 VRChatイベントを開催",
+        },
+        {
+            "source_id": "yahoo:x:2222222222222222222",
+            "starts_at": "2026-08-08T00:00:00Z",
+            "title": "commerce",
+            "description": "8/8 09:00 VRChat衣装をBOOTHで販売開始",
+        },
+        {
+            "source_id": "yahoo:x:3333333333333333333",
+            "starts_at": "2026-08-08T12:00:00Z",
+            "title": "cached",
+            "description": "8/8 21:00 VRChatイベントを開催。参加方法はJoin",
+        },
     ]
-    fresh = [{"source_id": "new", "starts_at": "2026-08-09T00:00:00Z", "title": "fresh"}]
+    fresh = [
+        {
+            "source_id": "yahoo:x:4444444444444444444",
+            "starts_at": "2026-08-09T12:00:00Z",
+            "title": "fresh",
+            "description": "8/9 21:00 VRChat集会を開催。グループインスタンスへJoin",
+        }
+    ]
     merged = merge_cache(existing, fresh, datetime(2026, 8, 2, tzinfo=UTC))
-    assert {item["source_id"] for item in merged} == {"future", "new"}
+    assert {item["source_id"] for item in merged} == {
+        "yahoo:x:3333333333333333333",
+        "yahoo:x:4444444444444444444",
+    }
 
 
 def test_search_url_is_pinned_to_yahoo_realtime():
