@@ -1,0 +1,36 @@
+name: Fix Yahoo v1.8 patcher escaping once
+
+on:
+  push:
+    branches: [feat/yahoo-query-selection-v18]
+    paths:
+      - .github/workflows/fix-yahoo-v18-patcher-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/yahoo-query-selection-v18
+      - name: Make regex replacements literal
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/apply_yahoo_policy_v18.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'updated, count = re.subn(pattern, replacement, text, count=1, flags=re.DOTALL)'
+          new = 'updated, count = re.subn(pattern, lambda _: replacement, text, count=1, flags=re.DOTALL)'
+          if old not in text:
+              raise SystemExit('replace_once implementation not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/fix-yahoo-v18-patcher-once.yml
+          git add scripts/apply_yahoo_policy_v18.py
+          git commit -m 'fix: make Yahoo v1.8 patch replacements literal'
+          git push origin HEAD:feat/yahoo-query-selection-v18
