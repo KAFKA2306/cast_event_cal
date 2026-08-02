@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "classifier_version": "1.8",
+  "result_limit": 40,
+  "minimum_retweets": 3,
+  "request_delay_seconds": 0.75,
+  "full_variant_key": "abc_full",
+  "blocks": {
+    "announcement": "(イベント告知 OR 営業告知 OR 通常営業 OR 開催決定 OR OPEN OR オープン)",
+    "access": "(JOIN OR ジョイン OR リクイン OR reqin OR Group+ OR グループインスタンス OR フレンドインスタンス OR 参加方法)",
+    "platform": "(VRChat OR VRC)"
+  },
+  "variants": [
+    {
+      "key": "abc_full",
+      "label": "A+B+C（完全式）",
+      "kind": "logical_ablation",
+      "blocks": ["announcement", "access", "platform"]
+    },
+    {
+      "key": "ac_no_access",
+      "label": "A+C（参加導線なし）",
+      "kind": "logical_ablation",
+      "blocks": ["announcement", "platform"]
+    },
+    {
+      "key": "bc_no_announcement",
+      "label": "B+C（告知表現なし）",
+      "kind": "logical_ablation",
+      "blocks": ["access", "platform"]
+    },
+    {
+      "key": "ab_no_platform",
+      "label": "A+B（VRChat指定なし）",
+      "kind": "logical_ablation",
+      "blocks": ["announcement", "access"]
+    },
+    {
+      "key": "a_only",
+      "label": "Aのみ（告知表現）",
+      "kind": "logical_ablation",
+      "blocks": ["announcement"]
+    },
+    {
+      "key": "b_only",
+      "label": "Bのみ（参加導線）",
+      "kind": "logical_ablation",
+      "blocks": ["access"]
+    },
+    {
+      "key": "c_only",
+      "label": "Cのみ（VRChat）",
+      "kind": "logical_ablation",
+      "blocks": ["platform"]
+    },
+    {
+      "key": "event_announcement_access",
+      "label": "イベント告知系×参加導線",
+      "kind": "lexical_subgroup",
+      "query": "(イベント告知 OR 開催決定) (Group+ OR グループインスタンス OR JOIN OR リクイン) (VRChat OR VRC)"
+    },
+    {
+      "key": "business_open_access",
+      "label": "営業・OPEN系×参加導線",
+      "kind": "lexical_subgroup",
+      "query": "(営業告知 OR 通常営業 OR OPEN OR オープン) (Group+ OR JOIN OR リクイン OR フレンドインスタンス) (VRChat OR VRC)"
+    },
+    {
+      "key": "participation_method_access",
+      "label": "参加方法系×参加導線",
+      "kind": "lexical_subgroup",
+      "query": "(参加方法) (JOIN OR リクイン OR Group+ OR フレンド申請) (VRChat OR VRC)"
+    }
+  ]
+}
