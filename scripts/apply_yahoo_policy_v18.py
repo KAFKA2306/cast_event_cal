@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def replace_once(path: str, pattern: str, replacement: str) -> None:
     target = ROOT / path
     text = target.read_text(encoding="utf-8")
-    updated, count = re.subn(pattern, replacement, text, count=1, flags=re.DOTALL)
+    updated, count = re.subn(pattern, lambda _: replacement, text, count=1, flags=re.DOTALL)
     if count != 1:
         raise RuntimeError(f"{path}: expected one replacement, got {count}: {pattern[:100]}")
     target.write_text(updated, encoding="utf-8")
