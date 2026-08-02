@@ -6,6 +6,10 @@ on:
     paths:
       - scripts/audit_yahoo_recovery_patterns.py
       - .github/workflows/audit-yahoo-recovery-patterns.yml
+  pull_request:
+    paths:
+      - scripts/audit_yahoo_recovery_patterns.py
+      - .github/workflows/audit-yahoo-recovery-patterns.yml
 
 permissions:
   contents: write
@@ -16,14 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: feat/yahoo-v19-recovery
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'feat/yahoo-v19-recovery' }}
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Generate rejection pattern audit
         run: python scripts/audit_yahoo_recovery_patterns.py
-      - name: Commit audit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-recovery-pattern-audit
+          path: public/yahoo-recovery-pattern-audit.json
+      - name: Commit audit on branch push
+        if: github.event_name == 'push'
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
