@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from scripts.enrich_event_ontology import main as enrich_event_ontology
+from cast_event_cal.ontology import main as enrich_event_ontology
 
 TEMPLATE = Path("web/index.template.html")
 EVENTS = Path("public/events.json")
