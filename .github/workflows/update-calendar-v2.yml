@@ -94,6 +94,7 @@ jobs:
           yahoo_health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
           history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
           classifier_audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
+          positive_vocabulary = json.loads(Path('public/yahoo-positive-vocabulary.json').read_text(encoding='utf-8'))
           ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
           ontology_audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
@@ -118,7 +119,7 @@ jobs:
           assert yahoo_snapshot.get('candidate_count') == len(yahoo_snapshot.get('candidates', []))
           assert yahoo_snapshot.get('raw_candidate_count', 0) >= yahoo_snapshot.get('candidate_count', 0)
           assert yahoo_health.get('status') in {'ok', 'degraded'}
-          assert yahoo_health.get('parser_version') == '1.7'
+          assert yahoo_health.get('parser_version') == '1.8'
           assert yahoo_health.get('event_count') == len(yahoo_events)
           assert yahoo_health.get('corpus_target_count') == 1000
           assert yahoo_health.get('corpus_target_reached') is True
@@ -127,7 +128,7 @@ jobs:
           assert yahoo_health.get('history_rejected_count') == len(yahoo_rejected)
           assert yahoo_health.get('source_timestamp_count', 0) >= 1000
 
-          assert history.get('schema_version') == '2.2'
+          assert history.get('schema_version') == '2.3'
           assert history.get('retention_days') == 365
           assert history.get('target_count') == 1000
           assert history.get('target_reached') is True
@@ -138,8 +139,8 @@ jobs:
           assert sum(bool(row.get('source_created_at')) for row in history.get('candidates', [])) >= 1000
           assert all(row.get('first_seen_at') and row.get('last_seen_at') for row in history.get('candidates', []))
 
-          assert classifier_audit.get('schema_version') == '1.2'
-          assert classifier_audit.get('classifier_version') == '1.7'
+          assert classifier_audit.get('schema_version') == '1.3'
+          assert classifier_audit.get('classifier_version') == '1.8'
           assert classifier_audit.get('target_reached') is True
           assert classifier_audit.get('candidate_count') == history.get('candidate_count')
           assert classifier_audit.get('accepted_count') == len(yahoo_events)
@@ -148,9 +149,24 @@ jobs:
           assert classifier_audit.get('quality', {}).get('missing_source_created_at') == 0
           assert classifier_audit.get('quality', {}).get('ambiguous_decisions') == 0
           assert classifier_audit.get('rejection_reason_counts', {}).get('past_event_now', 0) > 0
+
+          history_by_id = {row['status_id']: row for row in history.get('candidates', [])}
+          accepted_ids = {row['source_id'].split(':')[-1] for row in yahoo_events}
+          assert all(
+              int(history_by_id[status_id].get('max_retweet_count') or history_by_id[status_id].get('retweet_count') or 0) >= 3
+              for status_id in accepted_ids
+          )
           rejected_by_id = {row['status_id']: row['reason'] for row in yahoo_rejected}
           assert rejected_by_id.get('2083398056188518660') == 'giveaway_only'
           assert rejected_by_id.get('2083153426167578665') == 'giveaway_only'
+          assert rejected_by_id.get('2083591757128954342') == 'missing_event_marker'
+
+          assert positive_vocabulary.get('schema_version') == '1.0'
+          assert positive_vocabulary.get('minimum_retweets') == 3
+          assert positive_vocabulary.get('positive_event_count') == len(yahoo_events)
+          assert positive_vocabulary.get('adoption_policy') == 'reusable_structural_terms_only'
+          assert {'イベント告知', '通常営業', 'リクイン'} & set(positive_vocabulary.get('adopted_terms', []))
+          assert {'本日', '応募'} <= set(positive_vocabulary.get('excluded_as_too_generic', []))
 
           assert ontology.get('schema_version') == '1.1'
           assert ontology.get('matching_policy', {}).get('fuzzy_matching') is False
@@ -227,16 +243,22 @@ jobs:
             events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-events.json -w '%{http_code}' "$base/events.json" || true)"
             history_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-history.json -w '%{http_code}' "$base/yahoo-candidate-history.json" || true)"
             audit_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-audit.json -w '%{http_code}' "$base/yahoo-classifier-audit.json" || true)"
-            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && [ "$history_status" = '200' ] && [ "$audit_status" = '200' ] && python - <<'PY'
+            vocabulary_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-vocabulary.json -w '%{http_code}' "$base/yahoo-positive-vocabulary.json" || true)"
+            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && [ "$history_status" = '200' ] && [ "$audit_status" = '200' ] && [ "$vocabulary_status" = '200' ] && python - <<'PY'
           import json
           events = json.load(open('/tmp/live-events.json', encoding='utf-8'))
           history = json.load(open('/tmp/live-history.json', encoding='utf-8'))
           audit = json.load(open('/tmp/live-audit.json', encoding='utf-8'))
+          vocabulary = json.load(open('/tmp/live-vocabulary.json', encoding='utf-8'))
           assert events.get('count', 0) >= 250
           assert history.get('candidate_count', 0) >= 1000
-          assert history.get('schema_version') == '2.2'
-          assert audit.get('classifier_version') == '1.7'
+          assert history.get('schema_version') == '2.3'
+          assert audit.get('classifier_version') == '1.8'
+          assert audit.get('schema_version') == '1.3'
           assert audit.get('target_reached') is True
+          assert audit.get('accepted_count', 0) + audit.get('rejected_count', 0) == history.get('candidate_count')
+          assert vocabulary.get('positive_event_count') == audit.get('accepted_count')
+          assert vocabulary.get('minimum_retweets') == 3
           PY
             then
               verified=true
@@ -246,7 +268,7 @@ jobs:
           done
           test "$verified" = true
           mkdir -p audit
-          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status" HISTORY_STATUS="$history_status" AUDIT_STATUS="$audit_status"
+          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status" HISTORY_STATUS="$history_status" AUDIT_STATUS="$audit_status" VOCABULARY_STATUS="$vocabulary_status"
           python - <<'PY'
           import json, os
           from datetime import UTC, datetime
@@ -254,19 +276,22 @@ jobs:
           events = json.loads(Path('/tmp/live-events.json').read_text(encoding='utf-8'))
           history = json.loads(Path('/tmp/live-history.json').read_text(encoding='utf-8'))
           classifier = json.loads(Path('/tmp/live-audit.json').read_text(encoding='utf-8'))
+          vocabulary = json.loads(Path('/tmp/live-vocabulary.json').read_text(encoding='utf-8'))
           result = {
-              'schema_version': '6.0',
+              'schema_version': '7.0',
               'verified_at': datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00', 'Z'),
               'page_url': os.environ['PAGE_URL'],
               'root_status': int(os.environ['ROOT_STATUS']),
               'events_status': int(os.environ['EVENTS_STATUS']),
               'yahoo_history_status': int(os.environ['HISTORY_STATUS']),
               'yahoo_classifier_audit_status': int(os.environ['AUDIT_STATUS']),
+              'yahoo_positive_vocabulary_status': int(os.environ['VOCABULARY_STATUS']),
               'event_count': events.get('count', 0),
               'yahoo_candidate_count': history.get('candidate_count', 0),
               'yahoo_accepted_count': classifier.get('accepted_count', 0),
               'yahoo_rejected_count': classifier.get('rejected_count', 0),
               'classifier_version': classifier.get('classifier_version'),
+              'positive_vocabulary_terms': len(vocabulary.get('adopted_terms', [])),
               'source_commit': os.environ['GITHUB_SHA'],
               'status': 'ok',
           }
