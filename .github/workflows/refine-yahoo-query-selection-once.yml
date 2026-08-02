@@ -54,6 +54,6 @@ jobs:
           git rm -f --ignore-unmatch \
             audit/yahoo-v18-migration-diagnostic.txt \
             audit/yahoo-v18-selection-delta.json
-          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
+          git add -A
           git commit -m 'feat: improve Yahoo query and selection policy v1.8 [skip ci]'
           git push origin HEAD:${{ github.head_ref }}
