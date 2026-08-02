@@ -11,7 +11,10 @@ VRChatの公開イベント、定期集会、募集締切を、出典と時刻�
 - 確認済み定期系列: `data/recurring_events.json`
 - 単発イベント: `data/one_off_events.json`
 - VRChat公式カレンダー発見結果: `data/discovered_events.json`
-- X検索の採用結果: `data/x_events.json`
+- X API検索の採用結果: `data/x_events.json`
+- Yahoo!リアルタイム検索の採用結果: `data/yahoo_realtime_events.json`
+- Yahoo!リアルタイム検索の棄却記録: `data/yahoo_realtime_rejected.json`
+- Yahoo!リアルタイム検索の実行状態: `data/yahoo_realtime_health.json`
 - 統合後の公開API: `public/events.json`
 - カレンダー購読: `public/calendar.ics`
 - 取得状態: `public/health.json`
@@ -34,11 +37,19 @@ X API v2 Recent Search
   → 日時解析・カテゴリ分類・ノイズ除外・public_metrics判定
   → data/x_events.json
 
-上記3系統
+Yahoo!リアルタイム検索
+  → scripts/fetch_yahoo_realtime.py
+  → HTML内の構造化データ抽出
+  → 投稿ID・VRChat語・開催日時・イベント語・リポスト数を機械判定
+  → 採用: data/yahoo_realtime_events.json
+  → 棄却: data/yahoo_realtime_rejected.json
+  → 状態: data/yahoo_realtime_health.json
+
+上記4系統
   → main_executor.pyでUTC正規化・重複除外
   → public/events.json / calendar.ics / health.json
   → scripts/render_frontend.pyでWeb UI生成
-  → GitHub Pagesへ直接デプロイ
+  → GitHub Pagesへデプロイ
   → HTTP 200・件数・UI構造を監査
 ```
 
@@ -65,14 +76,38 @@ lang:ja (イベント OR 参加方法 OR 参加条件 OR 開催 OR 主催 OR joi
 
 X API v2のRecent Searchは直近7日を対象にします。画面検索で使われる`min_retweets:3`はAPI v2の検索演算子として使わず、`tweet.fields=public_metrics`で取得した`retweet_count`をコード側で判定します。
 
-採用ルール:
+Repository Secret `X_BEARER_TOKEN`がない場合はライブ検索をスキップし、直前キャッシュを保持します。
 
-- 年月日または月日と時刻が本文に明示された投稿だけを採用
-- 日本語の月日時刻はJSTとしてUTCへ変換
-- リポスト3件以上、または「参加方法」「開催」「営業」「締切」など強い開催マーカーがある投稿を採用
-- イベントと募集締切を別カテゴリに分類
-- BOOTH販売、発売、プレゼント企画だけの投稿は除外
-- API障害・Secret未設定時は直前キャッシュを保持
+## Yahoo!リアルタイム検索
+
+`scripts/fetch_yahoo_realtime.py`は次の公開検索条件を毎日取得します。
+
+```text
+(イベント OR 参加方法 OR 参加条件 OR 開催 OR 主催 OR join OR ジョイン OR リクイン OR reqin OR リクエストインバイト OR "request invite" OR 本日 OR 営業 OR 応募) (VRChat OR VRC)
+```
+
+検索URLでは`md=h`を使用します。Yahoo側の検索結果をそのまま公開せず、次の条件をすべて満たす投稿だけを採用します。
+
+- Xの投稿IDまたは投稿URLを取得できる
+- 本文に`VRChat`または`VRC`がある
+- 本文に年月日または月日と開始時刻がある、または「本日・今日・明日」と時刻がある
+- イベント開催語または募集締切語がある
+- リポスト数を取得でき、3件以上である
+- 開催時刻が過去12時間より前ではなく、180日より先でもない
+- X API側の既存投稿IDと重複しない
+- 商品販売・プレゼント企画だけの投稿ではない
+
+条件不足の候補は公開せず、`data/yahoo_realtime_rejected.json`へ次のような理由で隔離します。
+
+- `retweet_count_missing`
+- `retweet_below_threshold`
+- `missing_datetime`
+- `product_only`
+- `not_vrchat`
+- `past_event`
+- `duplicate_x_source`
+
+HTML構造変更、HTTPエラー、リダイレクト異常、レスポンス縮小、候補抽出ゼロの場合は`degraded`とし、正常な既存キャッシュを空データで上書きしません。各実行の候補数、採用数、棄却数、棄却理由別件数、HTMLサイズ、HTTP状態を`data/yahoo_realtime_health.json`へ保存します。
 
 ## UI
 
@@ -97,6 +132,7 @@ python main_executor.py validate
 python scripts/materialize_events.py
 python scripts/fetch_vrchat_calendar.py
 python scripts/fetch_x_events.py
+python scripts/fetch_yahoo_realtime.py
 python main_executor.py run --strict
 python scripts/render_frontend.py
 python -m http.server 8000 --directory public
@@ -104,24 +140,27 @@ python -m http.server 8000 --directory public
 
 ## 自動運用
 
-`.github/workflows/update-calendar.yml`は6時間ごと、手動実行、主要ファイル変更時に起動します。
+`.github/workflows/update-calendar.yml`は毎日05:17 JST、手動実行、主要ファイル変更時に起動します。日常運用でLLM判定は使用せず、決定論的なPython処理だけで追加・棄却します。
 
 1. 定期系列を未来120日まで展開
 2. VRChat公式カレンダーを取得
 3. X API検索結果を分類
-4. 3系統を正規化・重複排除
-5. Web UIを生成
-6. 25系列以上、250開催以上、3情報源を品質ゲートで検証
-7. 生成差分をcommit
-8. GitHub Pagesへ直接デプロイ
-9. 公開ページ、JSON API、UI構造を監査
-10. `audit/production-status.json`へ結果を記録
+4. Yahoo!リアルタイム検索を取得して機械判定
+5. 4系統を正規化・重複排除
+6. Web UIを生成
+7. 25系列以上、250開催以上、4情報源、Yahoo実行状態と棄却形式を品質ゲートで検証
+8. 生成差分をcommit
+9. GitHub Pagesへデプロイ
+10. 公開ページ、JSON API、UI構造を監査
+11. `audit/production-status.json`へ結果を記録
 
 必要なRepository Secret:
 
 - `X_BEARER_TOKEN`
 - `VRCHAT_AUTH_COOKIE`
 - `PAGES_TOKEN`（Pages初回有効化時のみ）
+
+Yahoo!リアルタイム検索にはSecretを使用しません。
 
 ## セキュリティと品質
 
@@ -130,8 +169,21 @@ python -m http.server 8000 --directory public
 - 開催時刻・終了時刻・隔週基準日を推測しない
 - 取得失敗時に正常なキャッシュを空データで上書きしない
 - 商品販売やプレゼント企画を参加イベントとして混入させない
+- リポスト数を確認できないYahoo候補は採用しない
+- YahooのHTML構造が不明になった場合は候補を通さず`degraded`にする
 - 取得元ごとの件数と状態を`health.json`に残す
 - 公開後にHTMLとJSONのHTTP 200、最低件数、UI識別子を検証する
+
+## 改善ループ
+
+日次実行で蓄積される`data/yahoo_realtime_rejected.json`と`data/yahoo_realtime_health.json`を監査し、繰り返し発生する安全な棄却原因だけを対象にパーサーとテストを改善します。
+
+改善時も次を維持します。
+
+- 採用条件を緩める変更には必ず回帰テストを追加する
+- 推測による日時補完を追加しない
+- 構造不明時に候補を通すフォールバックを追加しない
+- 品質ゲートとテストが通らない変更はmainへ反映しない
 
 ## ライセンス
 
