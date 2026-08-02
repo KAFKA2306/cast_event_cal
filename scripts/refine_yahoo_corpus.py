@@ -17,6 +17,29 @@ from scripts import run_yahoo_realtime as ledger
 
 TWITTER_EPOCH_MS = 1_288_834_974_657
 AUDIT_PATH = Path("public/yahoo-classifier-audit.json")
+STRONG_GIVEAWAY_TERMS = {
+    "プレゼント企画",
+    "無料配布",
+    "商品をギフト",
+    "商品プレゼント",
+    "抽選で",
+    "boothのお好きな商品",
+    "ショップ新作",
+}
+VR_EVENT_ACCESS_TERMS = {
+    "join",
+    "ジョイン",
+    "リクイン",
+    "reqin",
+    "request invite",
+    "リクエストインバイト",
+    "グループインスタンス",
+    "group instance",
+    "group+",
+    "インスタンス先着",
+    "入場",
+    "開場",
+}
 
 
 def twitter_snowflake_created_at(status_id: str) -> datetime | None:
@@ -49,6 +72,14 @@ def rejection_row(row: dict[str, Any], reason: str) -> dict[str, Any]:
     }
 
 
+def giveaway_without_event_access(text: str) -> bool:
+    return (
+        corpus.has_any(text, STRONG_GIVEAWAY_TERMS)
+        and not corpus.has_any(text, corpus.SPECIFIC_EVENT_TERMS)
+        and not corpus.has_any(text, VR_EVENT_ACCESS_TERMS)
+    )
+
+
 def reevaluate_with_source_time(
     history: list[dict[str, Any]],
     *,
@@ -79,12 +110,16 @@ def reevaluate_with_source_time(
             "author": row.get("author"),
             "retweet_count": row.get("retweet_count"),
         }
-        event, reason = corpus.refined_candidate_to_event(
-            candidate,
-            now=anchor,
-            min_retweets=min_retweets,
-            x_ids=x_ids,
-        )
+        text = str(candidate.get("text") or "")
+        if giveaway_without_event_access(text):
+            event, reason = None, "giveaway_only"
+        else:
+            event, reason = corpus.refined_candidate_to_event(
+                candidate,
+                now=anchor,
+                min_retweets=min_retweets,
+                x_ids=x_ids,
+            )
         if event:
             start = implementation.parse_instant(str(event.get("starts_at") or ""))
             if start is None:
@@ -157,7 +192,7 @@ def build_audit(
     total = len(evaluated)
     accepted_count = decisions.get("accepted", 0)
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "classifier_version": implementation.PARSER_VERSION,
         "generated_at": implementation.utc_text(now),
         "target_count": target,
@@ -190,7 +225,7 @@ def build_audit(
 
 def main() -> int:
     corpus.configure_classifier()
-    implementation.PARSER_VERSION = "1.6"
+    implementation.PARSER_VERSION = "1.7"
     now = datetime.now(UTC).replace(microsecond=0)
     history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
     if not isinstance(history_payload, dict):
@@ -208,10 +243,11 @@ def main() -> int:
     )
     history_payload.update(
         {
-            "schema_version": "2.1",
+            "schema_version": "2.2",
             "generated_at": implementation.utc_text(now),
             "candidate_count": len(evaluated),
             "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
+            "giveaway_policy": "require_specific_event_or_vrchat_access_method",
             "candidates": evaluated,
         }
     )
@@ -230,7 +266,7 @@ def main() -> int:
     health = ledger.read_object(implementation.HEALTH_PATH)
     health.update(
         {
-            "schema_version": "2.1",
+            "schema_version": "2.2",
             "parser_version": implementation.PARSER_VERSION,
             "generated_at": implementation.utc_text(now),
             "event_count": len(accepted),
@@ -241,6 +277,7 @@ def main() -> int:
                 bool(row.get("source_created_at")) for row in evaluated
             ),
             "source_time_policy": history_payload["source_time_policy"],
+            "giveaway_policy": history_payload["giveaway_policy"],
             "rejection_counts": audit["rejection_reason_counts"],
         }
     )
