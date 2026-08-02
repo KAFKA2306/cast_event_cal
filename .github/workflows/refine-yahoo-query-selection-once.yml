@@ -1,35 +1,33 @@
-name: Refine Yahoo query and selection policy once
+name: Materialize Yahoo query and selection policy v1.8
 
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
-      - .github/workflows/refine-yahoo-query-selection-once.yml
+      - config/yahoo-v18-trigger.txt
 
 permissions:
   contents: write
 
 jobs:
-  refine:
+  materialize:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: main
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
-      - name: Run Yahoo v1.8 migration
-        env:
-          YAHOO_MIN_RETWEETS: '3'
+      - name: Install dependencies
         run: |
-          set -euo pipefail
           python -m pip install --upgrade pip
           pip install -e '.[dev]'
-
+      - name: Apply v1.8 policy source migration
+        run: |
           python - <<'PY'
           from pathlib import Path
 
@@ -47,9 +45,9 @@ jobs:
           )
           path.write_text(text, encoding='utf-8')
           PY
-
           python scripts/apply_yahoo_policy_v18.py
-
+      - name: Separate event access from social participation
+        run: |
           python - <<'PY'
           from pathlib import Path
 
@@ -115,13 +113,19 @@ jobs:
 
           path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
           PY
-
+      - name: Run regression suite
+        run: |
           ruff check cast_event_cal scripts tests main_executor.py
           pytest tests
+      - name: Reclassify retained corpus and render
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: |
           python scripts/refine_yahoo_corpus.py
           python main_executor.py run --strict
           python scripts/render_frontend.py
-
+      - name: Validate corpus and precision guardrails
+        run: |
           python - <<'PY'
           import json
           from pathlib import Path
@@ -158,12 +162,14 @@ jobs:
           assert {'イベント告知', '通常営業', 'リクイン'} & set(vocabulary['adopted_terms'])
           assert {'本日', '応募'} <= set(vocabulary['excluded_as_too_generic'])
           PY
-
+      - name: Commit tested migration to PR branch
+        run: |
+          set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm config/yahoo-v18-trigger.txt
           git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
           git rm -f audit/yahoo-v18-migration-diagnostic.txt
           git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
-          git commit -m 'feat: improve Yahoo query and selection policy v1.8'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git commit -m 'feat: improve Yahoo query and selection policy v1.8 [skip ci]'
+          git push origin HEAD:${{ github.head_ref }}
