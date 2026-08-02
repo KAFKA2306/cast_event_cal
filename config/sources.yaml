@@ -1,4 +1,4 @@
-version: 2
+version: 3
 http:
   timeout_seconds: 25
 window:
@@ -15,33 +15,18 @@ sources:
     enabled: true
     path: data/discovered_events.json
 
-  # X API v2のBearer TokenをRepository Secret `X_BEARER_TOKEN`へ登録すると有効化できます。
-  - name: x_vrchat_event_search
-    type: x_recent_search
-    enabled: false
-    query: 'lang:ja (VRChat OR VRC) (イベント OR 開催 OR 営業 OR 集会 OR ライブ) -is:retweet'
-    max_results: 100
+  - name: x_curated_events
+    type: manual_json
+    enabled: true
+    path: data/x_events.json
 
-  - name: x_curated_list
-    type: x_list
-    enabled: false
-    list_id: '1834685283276935624'
-    max_results: 100
-
-  # VRChatのGroup Calendarを取得する例。VRCHAT_AUTH_COOKIEと実在group_idが必要です。
-  # - name: vrchat_group_example
-  #   type: vrchat_group
-  #   enabled: true
-  #   group_id: grp_00000000-0000-0000-0000-000000000000
-  #   max_results: 100
-
-  # 公開ICS/JSONフィードは次の形式で追加できます。
-  # - name: public_ics_example
-  #   type: ics
-  #   enabled: true
-  #   url: https://example.com/calendar.ics
-  # - name: public_json_example
-  #   type: json
-  #   enabled: true
-  #   url: https://example.com/events.json
-  #   items_path: events
+# 公開ICS/JSONフィードは以下の形式で追加する。
+# - name: community_ics
+#   type: ics
+#   enabled: true
+#   url: https://example.com/calendar.ics
+# - name: community_json
+#   type: json
+#   enabled: true
+#   url: https://example.com/events.json
+#   items_path: events
