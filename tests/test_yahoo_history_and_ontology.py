@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from scripts.enrich_event_ontology import enrich_event, select_entry
+from cast_event_cal.ontology import enrich_event, select_entry
 from scripts.run_yahoo_realtime import configure, merge_history, reevaluate_history
 
 
@@ -39,7 +39,6 @@ def test_history_reprocesses_vrc_before_japanese_and_relative_date():
 
 
 def test_history_preserves_first_seen_and_highest_retweet_count():
-    first = datetime(2026, 8, 2, 1, 0, tzinfo=UTC)
     later = datetime(2026, 8, 3, 1, 0, tzinfo=UTC)
     existing = [
         {
