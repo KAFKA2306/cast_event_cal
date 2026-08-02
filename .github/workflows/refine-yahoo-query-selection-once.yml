@@ -1,4 +1,4 @@
-name: Yahoo v1.8 intermediate materializer retired
+name: Finalize Yahoo query and selection policy v1.8
 
 on:
   pull_request:
@@ -6,8 +6,52 @@ on:
     paths:
       - config/yahoo-v18-trigger.txt
 
+permissions:
+  contents: write
+
 jobs:
-  retired:
+  finalize:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - run: echo 'Superseded by materialize-yahoo-v18-final.yml'
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: Apply final v1.8 policy
+        run: python scripts/materialize_yahoo_v18_final.py apply
+      - name: Run regression suite
+        run: |
+          ruff check cast_event_cal scripts tests main_executor.py
+          pytest tests
+      - name: Reclassify and render
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: |
+          python scripts/refine_yahoo_corpus.py
+          python main_executor.py run --strict
+          python scripts/render_frontend.py
+      - name: Validate exact corpus result
+        run: python scripts/materialize_yahoo_v18_final.py validate
+      - name: Commit tested policy to PR branch
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm config/yahoo-v18-trigger.txt
+          git rm \
+            .github/workflows/refine-yahoo-query-selection-once.yml \
+            scripts/apply_yahoo_policy_v18.py \
+            scripts/materialize_yahoo_v18_final.py
+          git rm -f audit/yahoo-v18-migration-diagnostic.txt audit/yahoo-v18-selection-delta.json
+          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
+          git commit -m 'feat: improve Yahoo query and selection policy v1.8 [skip ci]'
+          git push origin HEAD:${{ github.head_ref }}
