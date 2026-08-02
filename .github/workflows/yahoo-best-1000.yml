@@ -1,0 +1,140 @@
+name: Yahoo best 1000
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/run_yahoo_best_1000.py
+      - scripts/collect_yahoo_corpus.py
+      - scripts/refine_yahoo_corpus.py
+      - scripts/fetch_yahoo_realtime.py
+      - scripts/run_yahoo_realtime.py
+      - config/yahoo_query_terms.json
+      - tests/test_yahoo_best_1000.py
+      - .github/workflows/yahoo-best-1000.yml
+  push:
+    branches: [main]
+    paths:
+      - scripts/run_yahoo_best_1000.py
+      - scripts/collect_yahoo_corpus.py
+      - scripts/refine_yahoo_corpus.py
+      - scripts/fetch_yahoo_realtime.py
+      - scripts/run_yahoo_realtime.py
+      - config/yahoo_query_terms.json
+      - tests/test_yahoo_best_1000.py
+      - .github/workflows/yahoo-best-1000.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yahoo-best-1000-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  collect-and-evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: Verify best-1000 implementation
+        run: |
+          ruff check scripts/run_yahoo_best_1000.py tests/test_yahoo_best_1000.py
+          pytest tests/test_yahoo_best_1000.py
+      - name: Collect and classify exactly 1000 candidates
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: >-
+          python scripts/run_yahoo_best_1000.py
+          --target 1000
+          --max-queries 180
+          --delay-seconds 0.35
+          --require-target
+      - name: Validate 1000-candidate evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          audit = json.loads(Path('public/yahoo-best-1000-audit.json').read_text(encoding='utf-8'))
+          raw = json.loads(Path('data/yahoo-best-1000-raw.json').read_text(encoding='utf-8'))
+          events = json.loads(Path('data/yahoo-best-1000-events.json').read_text(encoding='utf-8'))
+          history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
+          classifier = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
+
+          assert audit['schema_version'] == '1.0'
+          assert audit['strategy_version'] == 'ablation-informed-1.0'
+          assert audit['classifier_version'] == '1.8'
+          assert audit['status'] == 'ok'
+          assert audit['target_count'] == 1000
+          assert audit['target_reached'] is True
+          assert audit['candidate_count'] == 1000
+          assert raw['candidate_count'] == 1000
+          assert len(raw['candidates']) == 1000
+          assert len({row['status_id'] for row in raw['candidates']}) == 1000
+          assert audit['quality']['duplicate_status_ids'] == 0
+          assert audit['quality']['missing_query_provenance'] == 0
+          assert audit['quality']['ambiguous_decisions'] == 0
+          assert audit['queries_succeeded'] > 0
+          assert audit['queries_attempted'] <= 180
+          assert audit['production_accepted_count'] == len(events)
+          assert audit['content_accepted_count'] >= audit['production_accepted_count']
+          assert audit['strategy']['primary'] == 'A+B+C full query'
+          assert audit['strategy']['complements'] == ['A+C', 'B+C']
+          assert {'A only', 'B only', 'C only', 'A+B without VRChat/VRC'} <= set(audit['strategy']['excluded'])
+          assert history['candidate_count'] >= 1000
+          assert classifier['candidate_count'] == history['candidate_count']
+          print(json.dumps({
+              'candidate_count': audit['candidate_count'],
+              'accepted_count': audit['production_accepted_count'],
+              'acceptance_rate': audit['production_acceptance_rate'],
+              'new_to_ledger': audit['new_to_existing_ledger_count'],
+              'new_accepted': audit['new_accepted_to_existing_ledger_count'],
+              'queries_attempted': audit['queries_attempted'],
+              'rejection_reasons': audit['rejection_reason_counts'],
+          }, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload full evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-best-1000-${{ github.sha }}
+          path: |
+            public/yahoo-best-1000-audit.json
+            data/yahoo-best-1000-raw.json
+            data/yahoo-best-1000-events.json
+          retention-days: 30
+      - name: Commit empirical result and production ledger
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          paths=(
+            data/yahoo-best-1000-raw.json
+            data/yahoo-best-1000-events.json
+            public/yahoo-best-1000-audit.json
+            data/yahoo_realtime_events.json
+            data/yahoo_realtime_rejected.json
+            data/yahoo_realtime_health.json
+            public/yahoo-candidate-history.json
+            public/yahoo-classifier-audit.json
+            public/yahoo-positive-vocabulary.json
+          )
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add "${paths[@]}"
+          if git diff --cached --quiet; then
+            echo 'No best-1000 changes'
+          else
+            git commit -m 'chore: record Yahoo best-1000 run [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
