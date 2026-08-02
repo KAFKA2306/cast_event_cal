@@ -1,0 +1,27 @@
+name: Trigger Yahoo v1.8 refinement once
+
+on:
+  push:
+    branches: [feat/yahoo-query-selection-v18]
+    paths:
+      - .github/workflows/trigger-yahoo-v18-refine-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/yahoo-query-selection-v18
+      - name: Touch refinement workflow and remove trigger
+        run: |
+          printf '\n# patcher-fixed trigger\n' >> .github/workflows/refine-yahoo-query-selection-once.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/trigger-yahoo-v18-refine-once.yml
+          git add .github/workflows/refine-yahoo-query-selection-once.yml
+          git commit -m 'ci: rerun Yahoo v1.8 refinement after patcher fix'
+          git push origin HEAD:feat/yahoo-query-selection-v18
