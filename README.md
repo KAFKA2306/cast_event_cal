@@ -1,11 +1,10 @@
 # cast_event_cal
 
-**公開カレンダー:** https://kafka2306.github.io/vrc_cast_event_calender/  
-**JSON API:** https://kafka2306.github.io/vrc_cast_event_calender/events.json  
-**iCalendar:** https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics  
-**公開ミラー:** https://github.com/KAFKA2306/vrc_cast_event_calender
+**公開カレンダー:** https://kafka2306.github.io/cast_event_cal/  
+**JSON API:** https://kafka2306.github.io/cast_event_cal/events.json  
+**iCalendar:** https://kafka2306.github.io/cast_event_cal/calendar.ics
 
-VRChatイベントの公開情報を定期取得し、出典を保持した正規化JSON、iCalendar、検索可能なWeb画面へ自動変換するパイプラインです。このリポジトリをデータ生成の正本とし、既にGitHub Pagesが稼働している公開ミラーへ成果物を同期します。
+VRChatイベントの公開情報を定期取得し、出典を保持した正規化JSON、iCalendar、検索可能なWeb画面へ自動変換・公開するパイプラインです。データ生成、GitHub Pages公開、公開後監査をこのリポジトリだけで完結させます。
 
 ## v2で刷新した点
 
@@ -16,7 +15,7 @@ VRChatイベントの公開情報を定期取得し、出典を保持した正�
 - 曖昧な日時を推測で確定せず、明示的な日時だけを採用
 - 出典IDを優先した重複排除と、取得元ごとの失敗隔離
 - `events.json`、`calendar.ics`、`health.json`、Web UIを一度に生成
-- 6時間ごとのデータ生成、生成物のcommit、公開ミラーへの同期
+- 6時間ごとのデータ生成・commit・GitHub Pages公開
 - 60件未満を失敗させる固定系列カバレッジゲート
 - 公開URLとJSON APIのHTTP 200自己監査
 - Python 3.11〜3.13でCI、設定検証、単体テスト、静的解析
@@ -37,8 +36,9 @@ VRChat公式カレンダー検索
 上記2系統
   → UTC正規化・重複除外
   → public/ にJSON / ICS / health / Web UIを生成
-  → vrc_cast_event_calenderへ同期
-  → GitHub Pages公開とHTTP 200監査
+  → GitHub Pagesへ直接デプロイ
+  → 公開ページとAPIをHTTP 200監査
+  → audit/production-status.jsonへ記録
 ```
 
 ## 定期イベントの管理
@@ -129,31 +129,25 @@ Repository Secretに`VRCHAT_AUTH_COOKIE`を登録し、実在する`group_id`を
 - `public/calendar.ics`: カレンダー購読用
 - `public/health.json`: 取得元ごとの成功・失敗・件数
 - `public/index.html`: 検索・期間絞り込みUI
+- `audit/production-status.json`: Pages公開後のHTTP監査結果
 
 取得元が一部失敗した場合、成功した取得元のデータは公開し、`health.json`を`degraded`にします。全取得元が失敗した場合は終了コード1、`--strict`では1件でも失敗すると終了コード2です。
 
 ## 自動運用
 
-### データ生成
-
-`cast_event_cal/.github/workflows/update-calendar.yml`が次を実行します。
+`.github/workflows/update-calendar.yml`が次を実行します。
 
 1. 6時間ごと、手動実行、主要設定変更時に起動
 2. 定期系列を120日先まで展開
 3. VRChat公式カレンダーから公開イベントを検索
 4. 取得・正規化・公開物生成
-5. HTML、JSON、ICS、health、最低件数を検証
+5. HTML、JSON、ICS、health、最低件数、取得元を検証
 6. 差分がある場合だけデータと`public/`を自動commit・push
+7. `public/`をGitHub Pagesへ直接デプロイ
+8. 公開ページと`events.json`がHTTP 200になるまで確認
+9. `audit/production-status.json`へ公開監査結果を保存
 
-### 本番公開
-
-`vrc_cast_event_calender/.github/workflows/sync-cast-event-production.yml`が次を実行します。
-
-1. 6時間ごとまたは手動で正本の`public/`を取得
-2. JSON件数、health、ICS、HTMLを検証
-3. GitHub Pagesの公開元へ同期
-4. 公開ページと`events.json`がHTTP 200になるまで確認
-5. `audit/production-status.json`へ公開監査結果を保存
+GitHub Pagesが未設定の場合は、Settings → Pages → Sourceを**GitHub Actions**に設定します。自動有効化する場合は、Pagesおよびリポジトリ管理権限を持つ`PAGES_TOKEN`をRepository Secretへ登録します。
 
 CIは`.github/workflows/ci.yml`でPython 3.11〜3.13を検証します。
 
