@@ -47,7 +47,7 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git rm config/yahoo-v18-trigger.txt
-          git rm \
+          git rm -f \
             .github/workflows/refine-yahoo-query-selection-once.yml \
             scripts/apply_yahoo_policy_v18.py \
             scripts/materialize_yahoo_v18_final.py
