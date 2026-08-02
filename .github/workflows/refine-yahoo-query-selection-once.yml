@@ -51,7 +51,9 @@ jobs:
             .github/workflows/refine-yahoo-query-selection-once.yml \
             scripts/apply_yahoo_policy_v18.py \
             scripts/materialize_yahoo_v18_final.py
-          git rm -f audit/yahoo-v18-migration-diagnostic.txt audit/yahoo-v18-selection-delta.json
+          git rm -f --ignore-unmatch \
+            audit/yahoo-v18-migration-diagnostic.txt \
+            audit/yahoo-v18-selection-delta.json
           git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
           git commit -m 'feat: improve Yahoo query and selection policy v1.8 [skip ci]'
           git push origin HEAD:${{ github.head_ref }}
