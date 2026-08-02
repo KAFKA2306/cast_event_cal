@@ -66,6 +66,84 @@ jobs:
           if [ "$status" -eq 0 ]; then
             run_stage apply python scripts/apply_yahoo_policy_v18.py || status=$?
           fi
+
+          if [ "$status" -eq 0 ]; then
+            stage=logic
+            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/logic.log
+          from pathlib import Path
+
+          path = Path('scripts/collect_yahoo_corpus.py')
+          text = path.read_text(encoding='utf-8')
+
+          marker = '''}
+          PRIVATE_INSTANCE_TERMS = {'''
+          insertion = '''}
+          VR_ACCESS_TERMS = {
+              "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",
+              "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",
+              "group public", "フレンドインスタンス", "join制", "インスタンスへ", "インスタンスに",
+              "インスタンスオープン",
+          }
+          GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}
+          PRIVATE_INSTANCE_TERMS = {'''
+          if marker not in text:
+              raise SystemExit('private instance marker not found')
+          text = text.replace(marker, insertion, 1)
+
+          old_attendance = '''ATTENDANCE_TERMS = {
+              "参加", "ご参加", "来場", "ご来場", "ご来店", "遊びに来て", "お越し", "見に来て",
+              "聴きに来て", "お待ちしております", "お待ちしてます", "入場",
+          }'''
+          new_attendance = '''ATTENDANCE_TERMS = {
+              "参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",
+              "ご来店", "遊びに来て", "お越し", "見に来て", "聴きに来て",
+              "お待ちしております", "お待ちしてます", "入場",
+          }'''
+          if old_attendance not in text:
+              raise SystemExit('attendance terms not found')
+          text = text.replace(old_attendance, new_attendance, 1)
+
+          old_features = '''    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
+              has_action = has_any(text, EVENT_ACTION_TERMS)
+              has_access = has_any(text, PARTICIPATION_TERMS)'''
+          new_features = '''    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
+              has_generic_event = has_any(text, GENERIC_EVENT_NOUN_TERMS)
+              has_action = has_any(text, EVENT_ACTION_TERMS)
+              has_access = has_any(text, VR_ACCESS_TERMS)'''
+          if old_features not in text:
+              raise SystemExit('classifier feature block not found')
+          text = text.replace(old_features, new_features, 1)
+
+          old_structure = '''    event_structure = has_specific_event or (has_action and has_access) or (has_access and has_attendance)'''
+          new_structure = '''    event_structure = (
+              has_specific_event
+              or (has_generic_event and has_action)
+              or (has_action and has_access)
+              or (has_access and has_attendance)
+          )'''
+          if old_structure not in text:
+              raise SystemExit('event structure expression not found')
+          text = text.replace(old_structure, new_structure, 1)
+
+          old_private = '''    if has_product and has_only_generic_event and not has_participation:
+              return None, "product_only"
+
+              event, reason = _ORIGINAL_CANDIDATE_TO_EVENT('''
+          new_private = '''    if has_product and has_only_generic_event and not has_participation:
+              return None, "product_only"
+              if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+              return None, "missing_participation_method"
+
+              event, reason = _ORIGINAL_CANDIDATE_TO_EVENT('''
+          if old_private not in text:
+              raise SystemExit('private instance ordering block not found')
+          text = text.replace(old_private, new_private, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+            status=${PIPESTATUS[0]}
+          fi
+
           if [ "$status" -eq 0 ]; then
             run_stage tests bash -c "ruff check cast_event_cal scripts tests main_executor.py && pytest tests" || status=$?
           fi
