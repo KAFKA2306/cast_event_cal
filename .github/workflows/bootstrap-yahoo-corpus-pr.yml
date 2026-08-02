@@ -98,22 +98,13 @@ jobs:
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add \
-            data/yahoo_realtime_candidates.json \
-            data/yahoo_realtime_events.json \
-            data/yahoo_realtime_rejected.json \
-            data/yahoo_realtime_health.json \
-            public/yahoo-candidate-history.json \
-            public/yahoo-classifier-audit.json \
-            public/events.json \
-            public/health.json \
-            public/index.html \
-            public/calendar.ics
+          git add data/manual_events.json data/yahoo_realtime_candidates.json data/yahoo_realtime_events.json data/yahoo_realtime_rejected.json data/yahoo_realtime_health.json public
           git rm .github/workflows/bootstrap-yahoo-corpus-pr.yml
           if git diff --cached --quiet; then
             echo 'No generated corpus changes'
             exit 0
           fi
           git commit -m 'data: materialize 1000-candidate Yahoo corpus [skip ci]'
+          git restore --worktree .
           git pull --rebase origin "${{ github.head_ref }}"
           git push origin "HEAD:${{ github.head_ref }}"
