@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "parser_version": "1.2",
+  "parser_version": "1.4",
   "generated_at": "2026-08-02T06:40:22Z",
   "status": "ok",
   "reason": null,
@@ -12,7 +12,7 @@
   "accepted_candidates": 0,
   "rejected_candidates": 40,
   "retained_events": 0,
-  "event_count": 0,
+  "event_count": 5,
   "rejection_counts": {
     "giveaway_only": 1,
     "missing_datetime": 11,
@@ -21,5 +21,11 @@
     "past_event": 1,
     "product_only": 5,
     "retweet_below_threshold": 9
-  }
+  },
+  "history_replay_mode": "ledger_only",
+  "history_retention_days": 30,
+  "history_candidate_count": 40,
+  "history_accepted_count": 5,
+  "history_rejected_count": 35,
+  "automatically_promoted_count": 3
 }
