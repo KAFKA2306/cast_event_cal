@@ -22,19 +22,28 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-      - name: Install dependencies
-        id: install
-        continue-on-error: true
+      - name: Run observable migration
+        env:
+          YAHOO_MIN_RETWEETS: '3'
         run: |
-          set -o pipefail
-          (python -m pip install --upgrade pip && pip install -e '.[dev]') 2>&1 | tee /tmp/install.log
-      - name: Repair migration generator
-        id: repair
-        if: steps.install.outcome == 'success'
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          python - <<'PY' 2>&1 | tee /tmp/repair.log
+          set -uo pipefail
+          mkdir -p /tmp/yahoo-v18
+          stage=install
+          status=0
+
+          run_stage() {
+            stage="$1"
+            shift
+            echo "===== $stage =====" | tee "/tmp/yahoo-v18/$stage.log"
+            "$@" 2>&1 | tee -a "/tmp/yahoo-v18/$stage.log"
+            return ${PIPESTATUS[0]}
+          }
+
+          run_stage install bash -c "python -m pip install --upgrade pip && pip install -e '.[dev]'" || status=$?
+
+          if [ "$status" -eq 0 ]; then
+            stage=repair
+            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/repair.log
           from pathlib import Path
 
           path = Path('scripts/apply_yahoo_policy_v18.py')
@@ -51,36 +60,21 @@ jobs:
           text = text.replace(old, new, 1)
           path.write_text(text, encoding='utf-8')
           PY
-      - name: Apply v1.8 policy
-        id: apply
-        if: steps.repair.outcome == 'success'
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          python scripts/apply_yahoo_policy_v18.py 2>&1 | tee /tmp/apply.log
-      - name: Run regression suite
-        id: tests
-        if: steps.apply.outcome == 'success'
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          (ruff check cast_event_cal scripts tests main_executor.py && pytest tests) 2>&1 | tee /tmp/tests.log
-      - name: Reclassify retained corpus and render
-        id: generate
-        if: steps.tests.outcome == 'success'
-        continue-on-error: true
-        env:
-          YAHOO_MIN_RETWEETS: '3'
-        run: |
-          set -o pipefail
-          (python scripts/refine_yahoo_corpus.py && python main_executor.py run --strict && python scripts/render_frontend.py) 2>&1 | tee /tmp/generate.log
-      - name: Validate corpus and known cases
-        id: validate
-        if: steps.generate.outcome == 'success'
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          python - <<'PY' 2>&1 | tee /tmp/validate.log
+            status=${PIPESTATUS[0]}
+          fi
+
+          if [ "$status" -eq 0 ]; then
+            run_stage apply python scripts/apply_yahoo_policy_v18.py || status=$?
+          fi
+          if [ "$status" -eq 0 ]; then
+            run_stage tests bash -c "ruff check cast_event_cal scripts tests main_executor.py && pytest tests" || status=$?
+          fi
+          if [ "$status" -eq 0 ]; then
+            run_stage generate bash -c "python scripts/refine_yahoo_corpus.py && python main_executor.py run --strict && python scripts/render_frontend.py" || status=$?
+          fi
+          if [ "$status" -eq 0 ]; then
+            stage=validate
+            python - <<'PY' 2>&1 | tee /tmp/yahoo-v18/validate.log
           import json
           from pathlib import Path
 
@@ -116,44 +110,35 @@ jobs:
           assert {'イベント告知', '通常営業', 'リクイン'} & set(vocabulary['adopted_terms'])
           assert {'本日', '応募'} <= set(vocabulary['excluded_as_too_generic'])
           PY
-      - name: Commit successful migration
-        if: steps.install.outcome == 'success' && steps.repair.outcome == 'success' && steps.apply.outcome == 'success' && steps.tests.outcome == 'success' && steps.generate.outcome == 'success' && steps.validate.outcome == 'success'
-        run: |
-          set -euo pipefail
+            status=${PIPESTATUS[0]}
+          fi
+
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
-          git rm -f audit/yahoo-v18-migration-diagnostic.txt
-          git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
-          git commit -m 'feat: improve Yahoo query and selection policy v1.8'
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Record migration failure
-        if: steps.install.outcome != 'success' || steps.repair.outcome != 'success' || steps.apply.outcome != 'success' || steps.tests.outcome != 'success' || steps.generate.outcome != 'success' || steps.validate.outcome != 'success'
-        run: |
-          set -euo pipefail
-          mkdir -p audit
+
+          if [ "$status" -eq 0 ]; then
+            git rm .github/workflows/refine-yahoo-query-selection-once.yml scripts/apply_yahoo_policy_v18.py
+            git rm -f audit/yahoo-v18-migration-diagnostic.txt
+            git add README.md config scripts tests .github/workflows/update-calendar-v2.yml data public audit
+            git commit -m 'feat: improve Yahoo query and selection policy v1.8'
+            git pull --rebase origin main
+            git push origin HEAD:main
+            exit 0
+          fi
+
+          git restore --worktree .
           {
             echo 'Yahoo v1.8 migration failed'
-            echo "install=${{ steps.install.outcome }}"
-            echo "repair=${{ steps.repair.outcome }}"
-            echo "apply=${{ steps.apply.outcome }}"
-            echo "tests=${{ steps.tests.outcome }}"
-            echo "generate=${{ steps.generate.outcome }}"
-            echo "validate=${{ steps.validate.outcome }}"
-            for file in /tmp/install.log /tmp/repair.log /tmp/apply.log /tmp/tests.log /tmp/generate.log /tmp/validate.log; do
-              if [ -f "$file" ]; then
-                echo
-                echo "===== $file ====="
-                cat "$file"
-              fi
+            echo "failed_stage=$stage"
+            echo "status=$status"
+            for file in /tmp/yahoo-v18/*.log; do
+              echo
+              echo "===== $file ====="
+              cat "$file"
             done
           } > audit/yahoo-v18-migration-diagnostic.txt
-          git restore --worktree .
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add audit/yahoo-v18-migration-diagnostic.txt
           git commit -m 'chore: record Yahoo v1.8 migration failure [skip ci]'
           git pull --rebase origin main
           git push origin HEAD:main
-          exit 1
+          exit "$status"
