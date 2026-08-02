@@ -85,11 +85,15 @@ def main() -> int:
         bool(v19.RECAP_RE.search(str(history_by_id[status_id].get("text") or "")))
         for status_id in accepted_ids
     )
-    commerce_accepted = sum(
-        corpus.has_any(str(history_by_id[status_id].get("text") or ""), implementation.GIVEAWAY_TERMS)
-        and not corpus.has_any(str(history_by_id[status_id].get("text") or ""), corpus.SPECIFIC_EVENT_TERMS)
+    commerce_accepted_ids = [
+        status_id
         for status_id in accepted_ids
-    )
+        if corpus.has_any(
+            str(history_by_id[status_id].get("text") or ""),
+            implementation.GIVEAWAY_TERMS,
+        )
+        and not v19.strong_occurrence(str(history_by_id[status_id].get("text") or ""))
+    ]
     baseline_accepted = sum(
         str(row.get("last_decision")) == "accepted" for row in history
     )
@@ -114,11 +118,21 @@ def main() -> int:
         "quality": {
             "low_repost_accepted": low_repost_accepted,
             "recap_report_accepted": recap_accepted,
-            "unstructured_giveaway_accepted": commerce_accepted,
+            "unstructured_giveaway_accepted": len(commerce_accepted_ids),
             "duplicate_status_ids": len(history) - len({str(row.get("status_id")) for row in history}),
             "ambiguous_decisions": sum(
                 row.get("last_decision") not in {"accepted", "rejected"} for row in evaluated
             ),
+        },
+        "quality_examples": {
+            "unstructured_giveaway_accepted": [
+                {
+                    "status_id": status_id,
+                    "url": history_by_id[status_id].get("url"),
+                    "text_excerpt": str(history_by_id[status_id].get("text") or "")[:500],
+                }
+                for status_id in commerce_accepted_ids[:20]
+            ]
         },
         "examples": examples,
     }
