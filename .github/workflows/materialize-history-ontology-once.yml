@@ -25,19 +25,30 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-      - run: pip install -r requirements.txt
-      - name: Run production generation
+      - name: Run and capture production generation
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: |
-          set -euo pipefail
-          python scripts/materialize_events.py
-          python scripts/run_yahoo_realtime.py
-          python main_executor.py run --strict
-          python scripts/render_frontend.py
-      - name: Validate history, promotions, ontology, and public output
-        run: |
-          python - <<'PY'
+          set +e
+          mkdir -p audit
+          : > audit/materialize-history-ontology.log
+          status=0
+          run_step() {
+            label="$1"
+            shift
+            echo "===== $label =====" | tee -a audit/materialize-history-ontology.log
+            "$@" >> audit/materialize-history-ontology.log 2>&1
+            code=$?
+            echo "exit_code=$code" | tee -a audit/materialize-history-ontology.log
+            if [ "$code" -ne 0 ] && [ "$status" -eq 0 ]; then status="$code"; fi
+          }
+          run_step install pip install -r requirements.txt
+          if [ "$status" -eq 0 ]; then run_step materialize python scripts/materialize_events.py; fi
+          if [ "$status" -eq 0 ]; then run_step yahoo python scripts/run_yahoo_realtime.py; fi
+          if [ "$status" -eq 0 ]; then run_step normalize python main_executor.py run --strict; fi
+          if [ "$status" -eq 0 ]; then run_step render python scripts/render_frontend.py; fi
+          if [ "$status" -eq 0 ]; then
+            run_step validate python - <<'PY'
           import json
           from pathlib import Path
 
@@ -68,13 +79,43 @@ jobs:
           assert len(enriched) >= 2
           assert all(item.get('official_links') for item in enriched)
           PY
-      - name: Commit generated evidence and remove one-shot workflow
+          fi
+          export MATERIALIZE_STATUS="$status"
+          python - <<'PY'
+          import json, os
+          from datetime import UTC, datetime
+          from pathlib import Path
+          result = {
+              'schema_version': '1.0',
+              'generated_at': datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00', 'Z'),
+              'status': 'ok' if os.environ['MATERIALIZE_STATUS'] == '0' else 'failed',
+              'exit_code': int(os.environ['MATERIALIZE_STATUS']),
+          }
+          Path('audit/materialize-history-ontology.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          PY
+          echo "$status" > /tmp/materialize-status
+          exit 0
+      - name: Commit generated evidence or diagnostic
+        if: always()
         run: |
           set -euo pipefail
+          status="$(cat /tmp/materialize-status 2>/dev/null || echo 99)"
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/manual_events.json data/yahoo_realtime_events.json data/yahoo_realtime_rejected.json data/yahoo_realtime_health.json public
-          git rm .github/workflows/materialize-history-ontology-once.yml
-          git commit -m 'chore: materialize Yahoo history and ontology [skip ci]'
-          git pull --rebase origin main
-          git push origin main
+          git add audit/materialize-history-ontology.json audit/materialize-history-ontology.log
+          if [ "$status" = '0' ]; then
+            git add data/manual_events.json data/yahoo_realtime_events.json data/yahoo_realtime_rejected.json data/yahoo_realtime_health.json public
+            git rm .github/workflows/materialize-history-ontology-once.yml
+          fi
+          if ! git diff --cached --quiet; then
+            if [ "$status" = '0' ]; then
+              git commit -m 'chore: materialize Yahoo history and ontology [skip ci]'
+            else
+              git commit -m 'audit: record Yahoo history materialization failure [skip ci]'
+            fi
+            git pull --rebase origin main
+            git push origin main
+          fi
+          test "$status" = '0'
