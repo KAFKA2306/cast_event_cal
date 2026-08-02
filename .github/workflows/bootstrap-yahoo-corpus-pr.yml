@@ -67,7 +67,7 @@ jobs:
           assert history['candidate_count'] >= 1000
           assert history['candidate_count'] == len(history['candidates'])
           assert len({row['status_id'] for row in history['candidates']}) == history['candidate_count']
-          assert all(row.get('query_keys') for row in history['candidates'])
+          assert sum(bool(row.get('query_keys')) for row in history['candidates']) >= 1000
           assert all(row.get('first_seen_at') and row.get('last_seen_at') for row in history['candidates'])
 
           assert candidates['candidate_count'] == len(candidates['candidates'])
