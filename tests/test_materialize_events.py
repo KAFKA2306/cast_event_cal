@@ -1,11 +1,13 @@
 import json
 from datetime import UTC, datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
-from scripts.materialize_events import materialize, read_array
+from scripts.materialize_events import materialize, parse_instant, read_array
 
 
 ROOT = Path(__file__).resolve().parents[1]
+JST = ZoneInfo("Asia/Tokyo")
 
 
 def test_materializes_rolling_120_day_window():
@@ -16,18 +18,20 @@ def test_materializes_rolling_120_day_window():
         past_days=1,
         future_days=120,
     )
-    assert len(events) == 70
-    assert len({event["source_id"] for event in events}) == 70
-    assert events[0]["starts_at"] == "2026-08-05T12:00:00Z"
-    assert events[-1]["starts_at"] == "2026-11-27T13:00:00Z"
+    assert len(events) >= 250
+    assert len({event["source_id"] for event in events}) == len(events)
+    local_days = [parse_instant(event["starts_at"]).astimezone(JST).date() for event in events]
+    assert min(local_days).isoformat() == "2026-08-01"
+    assert max(local_days).isoformat() <= "2026-11-30"
     titles = {event["title"] for event in events}
     assert {
-        "水曜Quest初心者の集い",
-        "ゆるゲMEET定期開催日",
-        "VRC初心者ワールドツアー",
-        "VRCふれあい動物園",
-        "Pyropaw Pyrocon Showcase",
-        "VRTon 2026",
+        "おはよう！朝4時に何してるんだぃ？",
+        "EN-JP Language Exchange（土曜）",
+        "VRCゲームワールド部",
+        "VRCフィットボクシング（土曜）",
+        "しーぷかふぇ（第2・第4土曜 前半）",
+        "VR研究カフェ",
+        "謎めぐり",
     } <= titles
 
 
