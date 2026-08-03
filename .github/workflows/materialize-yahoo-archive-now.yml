@@ -1,0 +1,116 @@
+name: Materialize Yahoo archive now
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/materialize-yahoo-archive-now.yml
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: yahoo-archive-materializer
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -e '.[dev]'
+      - name: Regression tests
+        run: pytest -q tests/test_yahoo_archive_policy.py tests/test_yahoo_corpus.py
+      - name: Reclassify retained Yahoo ledger
+        run: python scripts/reclassify_yahoo_archive.py
+      - name: Rebuild public assets
+        run: |
+          python main_executor.py run --strict
+          python scripts/render_frontend.py
+      - name: Validate generated archive
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          yahoo = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
+          rejected = json.loads(Path('data/yahoo_realtime_rejected.json').read_text(encoding='utf-8'))
+          audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
+          history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
+          events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          assert audit['classifier_version'] == '1.9'
+          assert audit['schema_version'] == '1.4'
+          assert history['schema_version'] == '2.4'
+          assert audit['accepted_count'] == len(yahoo)
+          assert audit['rejected_count'] == len(rejected)
+          assert audit['accepted_count'] + audit['rejected_count'] == history['candidate_count']
+          assert audit['accepted_count'] > 59
+          assert audit['past_accepted_count'] > 0
+          assert audit['low_retweet_accepted_count'] > 0
+          assert audit['rejection_reason_counts'].get('past_event', 0) == 0
+          assert audit['rejection_reason_counts'].get('past_event_now', 0) == 0
+          assert audit['rejection_reason_counts'].get('retweet_below_threshold', 0) == 0
+          assert events['count'] == len(events['events'])
+          PY
+      - name: Commit generated data
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/yahoo_realtime_events.json data/yahoo_realtime_rejected.json data/yahoo_realtime_health.json public
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'chore: materialize Yahoo archive policy [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    needs: materialize
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify deployed counts
+        env:
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${PAGE_URL%/}"
+          for attempt in $(seq 1 30); do
+            if curl -fsS "$base/yahoo-classifier-audit.json" -o /tmp/audit.json && python - <<'PY'
+          import json
+          audit = json.load(open('/tmp/audit.json', encoding='utf-8'))
+          assert audit['classifier_version'] == '1.9'
+          assert audit['accepted_count'] > 59
+          assert audit['past_accepted_count'] > 0
+          assert audit['low_retweet_accepted_count'] > 0
+          PY
+            then exit 0; fi
+            sleep 10
+          done
+          exit 1
