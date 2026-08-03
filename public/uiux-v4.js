@@ -1,1 +1,278 @@
-(()=>{'use strict'; const VERSION='2026-08-03-quality-view-v4',DETAIL_KEY='vrc-event-detailed-view-v1'; const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)]; const make=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text)el.textContent=text;return el}; const scrollToEl=el=>el?.scrollIntoView({behavior:'smooth',block:'start'}); function currentRange(){return $('.chip[data-range][aria-pressed=true]')?.dataset.range||'week'} function updateMobile(range){$$('.ux-mobile-nav [data-range-target]').forEach(b=>b.dataset.active=String(b.dataset.rangeTarget===range))} function selectRange(range,scroll=true){const chip=$(`.chip[data-range="${range}"]`);if(!chip)return;chip.click();updateMobile(range);if(scroll)scrollToEl($('.statusbar'))} function hero(){const root=$('.hero');if(!root)return;const eye=$('.eyebrow',root),title=$('h1',root),lede=$('.lede',root),actions=$('.hero-actions',root);if(eye)eye.textContent='LIVE EVENT DISCOVERY · JST';if(title)title.textContent='今夜のVRChatイベント';if(lede)lede.textContent='開催時刻、ジャンル、参加方法を一画面で比較。公式リンクへ最短で進み、気になるイベントは端末内の閲覧履歴から次回おすすめに反映されます。';if(actions&&!$('.ux-data-menu',root)){const d=make('details','ux-data-menu'),s=make('summary','','データ・監査');actions.replaceWith(d);d.append(s,actions)}} function command(){if($('.ux-command')||!$('.hero'))return;const bar=make('section','ux-command');bar.setAttribute('aria-label','クイック操作');bar.innerHTML='<div class="ux-next" aria-live="polite"><span class="ux-live">UPCOMING</span><span class="ux-next-copy"><strong id="ux-next-title">イベントを読み込み中</strong><span id="ux-next-meta">開催情報を確認しています</span></span></div><div class="ux-actions"><button class="ux-action" data-ux="today" data-primary="true">今日</button><button class="ux-action" data-ux="week">7日間</button><button class="ux-action" data-ux="recommend">おすすめ</button><button class="ux-action" data-ux="search">検索</button><button class="ux-density" data-ux="density">詳細表示</button></div>';$('.hero').after(bar);bar.addEventListener('click',e=>{const a=e.target.closest('[data-ux]')?.dataset.ux;if(a==='today'||a==='week')selectRange(a);if(a==='recommend')scrollToEl($('#recommendations'));if(a==='search'){scrollToEl($('.controls'));setTimeout(()=>$('#q')?.focus(),220)}if(a==='density')density()})} function reset(){const row=$('.filter-row');if(!row||$('.ux-reset',row))return;const b=make('button','ux-reset','条件をリセット');b.type='button';b.onclick=()=>{for(const [id,val] of [['q',''],['category','all'],['source','all']]){const el=$(`#${id}`);if(el){el.value=val;el.dispatchEvent(new Event(id==='q'?'input':'change',{bubbles:true}))}}const d=$('#include-deadlines');if(d){d.checked=false;d.dispatchEvent(new Event('change',{bubbles:true}))}selectRange('week',false)};row.append(b)} function metrics(){for(const [id,range] of [['metric-today','today'],['metric-week','week'],['metric-total','all']]){const m=$(`#${id}`)?.closest('.metric');if(!m||m.dataset.uxRange)continue;m.dataset.uxRange=range;m.tabIndex=0;m.setAttribute('role','button');m.setAttribute('aria-label',`${m.textContent.trim()}を表示`);const run=()=>selectRange(range);m.onclick=run;m.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();run()}}}} function density(force){const next=typeof force==='boolean'?force:!document.body.classList.contains('ux-detailed');document.body.classList.toggle('ux-detailed',next);try{localStorage.setItem(DETAIL_KEY,next?'1':'0')}catch{}$$('.ux-density').forEach(b=>{b.textContent=next?'標準表示':'詳細表示';b.setAttribute('aria-pressed',String(next))})} function mobile(){if($('.ux-mobile-nav'))return;const nav=make('nav','ux-mobile-nav');nav.setAttribute('aria-label','モバイル用ナビゲーション');nav.innerHTML='<button data-range-target="today">今日</button><button data-range-target="week">7日</button><button data-mobile="recommend">おすすめ</button><button data-mobile="search">検索</button>';document.body.append(nav);updateMobile(currentRange());nav.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.rangeTarget)selectRange(b.dataset.rangeTarget);if(b.dataset.mobile==='recommend')scrollToEl($('#recommendations'));if(b.dataset.mobile==='search'){scrollToEl($('.controls'));setTimeout(()=>$('#q')?.focus(),220)}}} function topButton(){if($('.ux-back-top'))return;const b=make('button','ux-back-top','↑');b.type='button';b.setAttribute('aria-label','ページ先頭へ戻る');b.dataset.visible='false';b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});document.body.append(b);addEventListener('scroll',()=>b.dataset.visible=String(scrollY>720),{passive:true})} function enhance(){const first=$('.event'),title=$('#ux-next-title'),meta=$('#ux-next-meta');$$('.event').forEach(card=>{if(card.dataset.uxEnhanced===VERSION)return;card.dataset.uxEnhanced=VERSION;const name=$('h2',card)?.textContent.trim();if(name)card.setAttribute('aria-label',name);$$('.event-link',card).forEach((a,i)=>{if(i===0)a.setAttribute('aria-label',`${name||'イベント'}の公式情報を開く`)})});if(!title||!meta)return;if(!first){title.textContent='条件に合うイベントはありません';meta.textContent='期間または絞り込み条件を変更してください';return}title.textContent=$('h2',first)?.textContent.trim()||'次のイベント';meta.textContent=[first.closest('.day')?.querySelector('.day-label strong')?.textContent.trim(),$('.time',first)?.textContent.replace(/\s+/g,' ').trim()].filter(Boolean).join(' · ')} function observe(){const a=$('#agenda');if(!a)return;new MutationObserver(enhance).observe(a,{childList:true,subtree:true});enhance()} function keyboard(){addEventListener('keydown',e=>{const editing=e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.target instanceof HTMLTextAreaElement;if(e.key==='/'&&!editing){e.preventDefault();scrollToEl($('.controls'));$('#q')?.focus()}if(editing||e.ctrlKey||e.metaKey||e.altKey)return;if(e.key.toLowerCase()==='t')selectRange('today');if(e.key.toLowerCase()==='w')selectRange('week');if(e.key.toLowerCase()==='r')scrollToEl($('#recommendations'))})} function start(){document.documentElement.dataset.qualityView=VERSION;if(!$('.skip-link')){const l=make('a','skip-link','イベント一覧へ移動');l.href='#agenda';document.body.prepend(l)}hero();command();reset();metrics();let detailed=false;try{detailed=localStorage.getItem(DETAIL_KEY)==='1'}catch{}density(detailed);mobile();topButton();observe();keyboard();$$('.chip[data-range]').forEach(c=>c.addEventListener('click',()=>updateMobile(c.dataset.range)))} document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start(); })();
+(()=>{
+  'use strict';
+
+  const VERSION='2026-08-04-quality-view-v5';
+  const DETAIL_KEY='vrc-event-detailed-view-v1';
+  const $=(selector,root=document)=>root.querySelector(selector);
+  const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
+  const make=(tag,className,text)=>{
+    const element=document.createElement(tag);
+    if(className) element.className=className;
+    if(text) element.textContent=text;
+    return element;
+  };
+  const scrollToEl=element=>element?.scrollIntoView({behavior:'smooth',block:'start'});
+
+  let pageLimit=defaultPageLimit();
+
+  function defaultPageLimit(){
+    return matchMedia('(max-width:600px)').matches?12:20;
+  }
+
+  function currentRange(){
+    return $('.chip[data-range][aria-pressed=true]')?.dataset.range||'today';
+  }
+
+  function updateRangeActions(range){
+    $$('.ux-action[data-range-target]').forEach(button=>{
+      const active=button.dataset.rangeTarget===range;
+      button.dataset.active=String(active);
+      if(active) button.dataset.primary='true';
+      else delete button.dataset.primary;
+    });
+  }
+
+  function selectRange(range,scroll=true){
+    const chip=$(`.chip[data-range="${range}"]`);
+    if(!chip) return;
+    chip.click();
+    updateRangeActions(range);
+    if(scroll) scrollToEl($('.statusbar'));
+  }
+
+  function hero(){
+    const root=$('.hero');
+    if(!root) return;
+    const eye=$('.eyebrow',root);
+    const title=$('h1',root);
+    const lede=$('.lede',root);
+    const actions=$('.hero-actions',root);
+    if(eye) eye.textContent='VRCHAT EVENT GUIDE · JST';
+    if(title) title.textContent='今夜のVRChat';
+    if(lede) lede.textContent='開催中・今夜のイベントを、時刻と参加方法から選べます。公式情報へ最短で移動できます。';
+    if(actions&&!$('.ux-data-menu',root)){
+      const details=make('details','ux-data-menu');
+      const summary=make('summary','','データ');
+      actions.replaceWith(details);
+      details.append(summary,actions);
+    }
+  }
+
+  function command(){
+    if($('.ux-command')||!$('.hero')) return;
+    const bar=make('section','ux-command');
+    bar.setAttribute('aria-label','クイック操作');
+    bar.innerHTML=`
+      <div class="ux-next" aria-live="polite">
+        <span class="ux-live">UPCOMING</span>
+        <span class="ux-next-copy">
+          <strong id="ux-next-title">イベントを読み込み中</strong>
+          <span id="ux-next-meta">開催情報を確認しています</span>
+        </span>
+      </div>
+      <div class="ux-actions">
+        <button class="ux-action" data-ux="today" data-range-target="today">今日</button>
+        <button class="ux-action" data-ux="week" data-range-target="week">7日</button>
+        <button class="ux-action" data-ux="search">検索</button>
+        <button class="ux-action" data-ux="recommend">おすすめ</button>
+        <button class="ux-density" data-ux="density">詳細表示</button>
+      </div>`;
+    $('.hero').after(bar);
+    bar.addEventListener('click',event=>{
+      const action=event.target.closest('[data-ux]')?.dataset.ux;
+      if(action==='today'||action==='week') selectRange(action);
+      if(action==='recommend') scrollToEl($('#recommendations'));
+      if(action==='search'){
+        scrollToEl($('.controls'));
+        setTimeout(()=>$('#q')?.focus(),180);
+      }
+      if(action==='density') density();
+    });
+  }
+
+  function filters(){
+    const controls=$('.controls');
+    if(!controls||$('.ux-filter-toggle',controls)) return;
+    const button=make('button','ux-filter-toggle','カテゴリ・情報源・期間を絞り込む');
+    button.type='button';
+    button.setAttribute('aria-expanded','false');
+    button.onclick=()=>{
+      const open=controls.classList.toggle('ux-filters-open');
+      button.setAttribute('aria-expanded',String(open));
+      button.textContent=open?'絞り込みを閉じる':'カテゴリ・情報源・期間を絞り込む';
+    };
+    controls.append(button);
+  }
+
+  function reset(){
+    const row=$('.filter-row');
+    if(!row||$('.ux-reset',row)) return;
+    const button=make('button','ux-reset','条件をリセット');
+    button.type='button';
+    button.onclick=()=>{
+      for(const [id,value] of [['q',''],['category','all'],['source','all']]){
+        const element=$(`#${id}`);
+        if(!element) continue;
+        element.value=value;
+        element.dispatchEvent(new Event(id==='q'?'input':'change',{bubbles:true}));
+      }
+      const deadlines=$('#include-deadlines');
+      if(deadlines){
+        deadlines.checked=false;
+        deadlines.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+      selectRange('today',false);
+    };
+    row.append(button);
+  }
+
+  function metrics(){
+    for(const [id,range] of [['metric-today','today'],['metric-week','week'],['metric-total','all']]){
+      const metric=$(`#${id}`)?.closest('.metric');
+      if(!metric||metric.dataset.uxRange) continue;
+      metric.dataset.uxRange=range;
+      metric.tabIndex=0;
+      metric.setAttribute('role','button');
+      metric.setAttribute('aria-label',`${metric.textContent.trim()}を表示`);
+      const run=()=>selectRange(range);
+      metric.onclick=run;
+      metric.onkeydown=event=>{
+        if(event.key==='Enter'||event.key===' '){
+          event.preventDefault();
+          run();
+        }
+      };
+    }
+  }
+
+  function density(force){
+    const detailed=typeof force==='boolean'?force:!document.body.classList.contains('ux-detailed');
+    document.body.classList.toggle('ux-detailed',detailed);
+    try{localStorage.setItem(DETAIL_KEY,detailed?'1':'0')}catch{}
+    $$('.ux-density').forEach(button=>{
+      button.textContent=detailed?'標準表示':'詳細表示';
+      button.setAttribute('aria-pressed',String(detailed));
+    });
+  }
+
+  function topButton(){
+    if($('.ux-back-top')) return;
+    const button=make('button','ux-back-top','↑');
+    button.type='button';
+    button.setAttribute('aria-label','ページ先頭へ戻る');
+    button.dataset.visible='false';
+    button.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+    document.body.append(button);
+    addEventListener('scroll',()=>button.dataset.visible=String(scrollY>720),{passive:true});
+  }
+
+  function applyPagination(){
+    const agenda=$('#agenda');
+    if(!agenda) return;
+    const events=$$('.event',agenda);
+    events.forEach((event,index)=>event.hidden=index>=pageLimit);
+    $$('.day',agenda).forEach(day=>{
+      day.hidden=!$$('.event',day).some(event=>!event.hidden);
+    });
+
+    let button=$('.ux-load-more');
+    const remaining=Math.max(0,events.length-pageLimit);
+    if(!remaining){
+      button?.remove();
+      return;
+    }
+    if(!button){
+      button=make('button','ux-load-more');
+      button.type='button';
+      agenda.after(button);
+      button.onclick=()=>{
+        pageLimit+=defaultPageLimit();
+        applyPagination();
+      };
+    }
+    button.textContent=`さらに表示（残り${remaining}件）`;
+  }
+
+  function enhance(){
+    const first=$('.event:not([hidden])');
+    const title=$('#ux-next-title');
+    const meta=$('#ux-next-meta');
+
+    $$('.event').forEach(card=>{
+      if(card.dataset.uxEnhanced===VERSION) return;
+      card.dataset.uxEnhanced=VERSION;
+      const name=$('h2',card)?.textContent.trim();
+      if(name) card.setAttribute('aria-label',name);
+      $$('.event-link',card).forEach((link,index)=>{
+        if(index===0) link.setAttribute('aria-label',`${name||'イベント'}の公式情報を開く`);
+      });
+    });
+
+    applyPagination();
+    const visible=$('.event:not([hidden])');
+    if(!title||!meta) return;
+    if(!visible){
+      title.textContent='条件に合うイベントはありません';
+      meta.textContent='期間または絞り込み条件を変更してください';
+      return;
+    }
+    title.textContent=$('h2',visible)?.textContent.trim()||'次のイベント';
+    meta.textContent=[
+      visible.closest('.day')?.querySelector('.day-label strong')?.textContent.trim(),
+      $('.time',visible)?.textContent.replace(/\s+/g,' ').trim(),
+    ].filter(Boolean).join(' · ');
+  }
+
+  function observe(){
+    const agenda=$('#agenda');
+    if(!agenda) return;
+    const observer=new MutationObserver(()=>{
+      pageLimit=defaultPageLimit();
+      queueMicrotask(enhance);
+    });
+    observer.observe(agenda,{childList:true,subtree:true});
+    enhance();
+  }
+
+  function keyboard(){
+    addEventListener('keydown',event=>{
+      const editing=event.target instanceof HTMLInputElement||event.target instanceof HTMLSelectElement||event.target instanceof HTMLTextAreaElement;
+      if(event.key==='/'&&!editing){
+        event.preventDefault();
+        scrollToEl($('.controls'));
+        $('#q')?.focus();
+      }
+      if(editing||event.ctrlKey||event.metaKey||event.altKey) return;
+      if(event.key.toLowerCase()==='t') selectRange('today');
+      if(event.key.toLowerCase()==='w') selectRange('week');
+      if(event.key.toLowerCase()==='r') scrollToEl($('#recommendations'));
+    });
+  }
+
+  function start(){
+    document.documentElement.dataset.qualityView=VERSION;
+    $('.ux-mobile-nav')?.remove();
+    if(!$('.skip-link')){
+      const link=make('a','skip-link','イベント一覧へ移動');
+      link.href='#agenda';
+      document.body.prepend(link);
+    }
+    hero();
+    command();
+    filters();
+    reset();
+    metrics();
+    let detailed=false;
+    try{detailed=localStorage.getItem(DETAIL_KEY)==='1'}catch{}
+    density(detailed);
+    topButton();
+    observe();
+    keyboard();
+    $$('.chip[data-range]').forEach(chip=>chip.addEventListener('click',()=>updateRangeActions(chip.dataset.range)));
+    setTimeout(()=>selectRange('today',false),0);
+  }
+
+  document.readyState==='loading'
+    ?document.addEventListener('DOMContentLoaded',start,{once:true})
+    :start();
+})();

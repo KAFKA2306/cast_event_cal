@@ -17,7 +17,7 @@ export async function onRequest(context) {
 
   const transformed = new HTMLRewriter().on('head', new HeadAssets()).transform(response);
   const headers = new Headers(transformed.headers);
-  headers.set('x-quality-view', '2026-08-03-quality-view-v4');
+  headers.set('x-quality-view', '2026-08-04-quality-view-v5');
   return new Response(transformed.body, {
     status: transformed.status,
     statusText: transformed.statusText,
