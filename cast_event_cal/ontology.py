@@ -6,10 +6,13 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
+from cast_event_cal.categories import classify_events, load_category_ontology
+
 ONTOLOGY_PATH = Path("config/event_ontology.json")
 EVENTS_PATH = Path("public/events.json")
 HEALTH_PATH = Path("public/health.json")
 PUBLIC_ONTOLOGY_PATH = Path("public/event-ontology.json")
+PUBLIC_CATEGORY_ONTOLOGY_PATH = Path("public/category-ontology.json")
 AUDIT_PATH = Path("public/ontology-match-audit.json")
 
 
@@ -116,6 +119,10 @@ def enrich_event(event: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]
     result["canonical_name"] = str(entry.get("canonical_name") or event.get("title") or "")
     result["official_links"] = links
     result.update(details)
+    if entry.get("category"):
+        result["ontology_category"] = str(entry["category"])
+    if entry.get("subcategory"):
+        result["ontology_subcategory"] = str(entry["subcategory"])
     if not result.get("location") and entry.get("default_location"):
         result["location"] = entry["default_location"]
     if not result.get("url") and links:
@@ -139,8 +146,13 @@ def enrich_event(event: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]
     return result
 
 
+def compact_category_summary(summary: dict[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in summary.items() if key != "organizer_profiles"}
+
+
 def main() -> int:
     ontology = read_json(ONTOLOGY_PATH)
+    category_ontology = load_category_ontology()
     entries = [item for item in ontology.get("entries", []) if isinstance(item, dict)]
     payload = read_json(EVENTS_PATH)
     events = [item for item in payload.get("events", []) if isinstance(item, dict)]
@@ -174,20 +186,25 @@ def main() -> int:
             )
         enriched.append(event)
 
-    payload["events"] = enriched
-    payload["count"] = len(enriched)
+    classified, category_summary, category_audit = classify_events(enriched, category_ontology)
+    payload["events"] = classified
+    payload["count"] = len(classified)
+    payload["category_ontology_schema_version"] = category_ontology.get("schema_version")
     write_json(EVENTS_PATH, payload)
     write_json(PUBLIC_ONTOLOGY_PATH, ontology)
+    write_json(PUBLIC_CATEGORY_ONTOLOGY_PATH, category_ontology)
     write_json(
         AUDIT_PATH,
         {
-            "schema_version": "1.0",
+            "schema_version": "2.0",
             "ontology_entries": len(entries),
             "event_count": len(events),
             "matched_events": matched,
             "unmatched_events": len(events) - matched - ambiguous,
             "ambiguous_events": ambiguous,
             "matches": audit_rows,
+            "category_classification": compact_category_summary(category_summary),
+            "category_review_queue": category_audit,
         },
     )
 
@@ -200,8 +217,12 @@ def main() -> int:
             "ambiguous_events": ambiguous,
             "status": "ok" if ambiguous == 0 else "degraded",
         }
+        health["category_classification"] = compact_category_summary(category_summary)
         write_json(HEALTH_PATH, health)
-    print(f"ontology: entries={len(entries)} matched={matched} ambiguous={ambiguous}")
+    print(
+        f"ontology: entries={len(entries)} matched={matched} ambiguous={ambiguous} "
+        f"categories={category_summary['category_breakdown']}"
+    )
     return 0
 
 
