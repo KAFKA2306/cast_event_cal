@@ -1,0 +1,40 @@
+name: Cleanup Pages UIUX live proof branches
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cleanup-pages-uiux-live-proof.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cleanup-pages-uiux-live-proof
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Delete superseded branches
+        run: |
+          set -euo pipefail
+          for branch in agent/pages-uiux-live-proof agent/cleanup-pages-uiux-live-proof; do
+            if git ls-remote --exit-code --heads origin "refs/heads/$branch" >/dev/null 2>&1; then
+              git push origin --delete "$branch"
+            fi
+          done
+      - name: Remove one-time cleanup workflow
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          rm .github/workflows/cleanup-pages-uiux-live-proof.yml
+          git add -A
+          git commit -m 'chore: remove UIUX proof cleanup [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
