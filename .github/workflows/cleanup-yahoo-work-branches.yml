@@ -1,0 +1,33 @@
+name: Cleanup completed Yahoo work branches
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cleanup-yahoo-work-branches.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Delete superseded branches and this workflow
+        run: |
+          set -euo pipefail
+          git push origin --delete fix/yahoo-archive-policy || true
+          git push origin --delete feat/yahoo-v19-recovery || true
+          rm .github/workflows/cleanup-yahoo-work-branches.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .github/workflows/cleanup-yahoo-work-branches.yml
+          git commit -m 'chore: remove completed Yahoo branch cleanup [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
