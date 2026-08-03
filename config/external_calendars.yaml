@@ -1,0 +1,55 @@
+version: 1
+http:
+  timeout_seconds: 25
+window:
+  past_days: 1
+  future_days: 120
+
+dedupe_against:
+  - data/manual_events.json
+  - data/discovered_events.json
+  - data/x_events.json
+  - data/yahoo_realtime_events.json
+
+sources:
+  - name: vrc_technology_academic_hub
+    type: ics
+    enabled: true
+    url: https://calendar.google.com/calendar/ical/fbd1334d10a177831a23dfd723199ab4d02036ae31cbc04d6fc33f08ad93a3e7%40group.calendar.google.com/public/basic.ics
+    source_page: https://vrc-ta-hub.com/event/list/
+    timezone: Asia/Tokyo
+    max_events: 3000
+    tags:
+      - 技術・学術
+      - 外部カレンダー
+
+  - name: official_event_websites
+    type: ontology_jsonld
+    enabled: true
+    ontology_path: config/event_ontology.json
+    allowed_link_kinds:
+      - official_website
+      - event_home
+      - announcement
+      - official_event_page
+    timezone: Asia/Tokyo
+    max_pages: 100
+    tags:
+      - 公式サイト
+      - JSON-LD
+
+  # VRCEveの利用規約は、事前許可のない継続的な自動取得と
+  # 外部サービスへの組み込みを禁止している。書面等で許諾を得た後だけ、
+  # Repository Secretsへ下記2値を設定して有効化する。
+  - name: vrceve_authorized_feed
+    type: permissioned_ics
+    enabled: true
+    approval_env: VRCEVE_DATA_USE_APPROVED
+    url_env: VRCEVE_ICS_URL
+    source_page: https://vrceve.com/
+    policy_url: https://vrceve.com/policy/
+    timezone: Asia/Tokyo
+    max_events: 3000
+    tags:
+      - VRCEve
+      - 許諾済みフィード
