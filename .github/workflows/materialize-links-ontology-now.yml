@@ -12,7 +12,7 @@ permissions:
 jobs:
   materialize:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -23,7 +23,10 @@ jobs:
           python-version: '3.12'
       - run: pip install -e '.[dev]'
       - run: pytest -q tests/test_official_asset_enrichment.py tests/test_event_link_discovery.py
-      - run: python scripts/discover_event_links.py
+      - name: Discover direct and already-expanded links
+        env:
+          EVENT_LINK_SKIP_SHORTENER_RESOLUTION: '1'
+        run: python scripts/discover_event_links.py
       - run: python scripts/render_frontend.py
       - name: Validate
         run: |
@@ -38,6 +41,7 @@ jobs:
           assert ontology['source_event_count']==events['count']
           assert ontology['observed_entity_count']>2
           assert links['events_with_primary_action']>0
+          assert links['shortener_resolution_skipped'] is True
           assert any(e.get('image_url') and e.get('primary_action_url') for e in events['events'])
           assert 'event-media-link' in html
           PY
