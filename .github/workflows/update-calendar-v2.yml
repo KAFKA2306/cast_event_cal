@@ -54,6 +54,7 @@ jobs:
           tests/test_vrchat_group_assets.py
           tests/test_external_calendar_sources.py
           tests/test_vrchat_discovery_routes.py
+          tests/test_category_ontology.py
       - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
       - name: Discover public VRChat calendar events
@@ -88,7 +89,7 @@ jobs:
         run: python scripts/discover_event_links.py
       - name: Enrich official VRChat group images
         run: python scripts/enrich_vrchat_group_assets.py
-      - name: Render linked-image frontend and live ontology
+      - name: Render linked-image frontend and live ontologies
         run: python scripts/render_frontend.py
       - name: Validate generated data
         run: |
@@ -97,6 +98,8 @@ jobs:
           grep -q 'event-media-link' public/index.html
           grep -q 'canonicalLinkKey' public/index.html
           grep -q 'preferredActionUrl' public/index.html
+          grep -q 'category-ontology.json' public/index.html
+          grep -q 'category_confidence' public/index.html
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
           python - <<'PY'
           import json
@@ -112,6 +115,8 @@ jobs:
           links = json.loads(Path('public/event-link-audit.json').read_text(encoding='utf-8'))
           groups = json.loads(Path('public/vrchat-group-asset-audit.json').read_text(encoding='utf-8'))
           ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
+          category_ontology = json.loads(Path('public/category-ontology.json').read_text(encoding='utf-8'))
+          ontology_audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
           external = json.loads(Path('data/external_discovery_health.json').read_text(encoding='utf-8'))
           rows = events['events']
 
@@ -131,10 +136,31 @@ jobs:
           assert groups['events_with_group_url'] > 0
           assert any(row.get('image_url') and row.get('primary_action_url') for row in rows)
           assert any(row.get('vrchat_group_url') for row in rows)
-          assert ontology['schema_version'] == '2.0'
+
+          allowed_categories = {
+              item['id']
+              for item in category_ontology['categories']
+              if isinstance(item, dict) and item.get('id')
+          }
+          allowed_modes = {'in_world', 'stream', 'hybrid', 'offline', 'deadline', 'unknown'}
+          assert category_ontology['schema_version'] == '2.0'
+          assert category_ontology['default_category'] == 'other'
+          assert {'community', 'music', 'performance', 'game', 'learning', 'technology', 'art', 'world_tour', 'wellness', 'language_exchange', 'recruitment_deadline', 'other'} <= allowed_categories
+          assert all(row.get('category') in allowed_categories for row in rows)
+          assert all(row.get('event_mode') in allowed_modes for row in rows)
+          assert all(isinstance(row.get('category_confidence'), (int, float)) for row in rows)
+          assert not any(row.get('category') == 'event' for row in rows)
+
+          assert ontology['schema_version'] == '3.0'
+          assert ontology['category_ontology_schema_version'] == '2.0'
           assert ontology['source_event_count'] == len(rows)
           assert ontology['observed_entity_count'] > 2
           assert ontology['generated_at']
+          assert sum(ontology['category_breakdown'].values()) == len(rows)
+          assert ontology_audit['schema_version'] == '2.0'
+          assert ontology_audit['category_classification']['event_count'] == len(rows)
+          assert sum(ontology_audit['category_classification']['category_breakdown'].values()) == len(rows)
+
           assert external['schema_version'] == '1.0'
           assert external['status'] in {'ok', 'degraded', 'skipped'}
           names = {source['name'] for source in external['sources']}
@@ -204,6 +230,8 @@ jobs:
               && curl -fsS "$base/event-link-audit.json?attempt=$attempt" -o /tmp/links.json \
               && curl -fsS "$base/vrchat-group-asset-audit.json?attempt=$attempt" -o /tmp/groups.json \
               && curl -fsS "$base/event-ontology.json?attempt=$attempt" -o /tmp/ontology.json \
+              && curl -fsS "$base/category-ontology.json?attempt=$attempt" -o /tmp/category-ontology.json \
+              && curl -fsS "$base/ontology-match-audit.json?attempt=$attempt" -o /tmp/ontology-audit.json \
               && curl -fsS "$base/index.html?attempt=$attempt" -o /tmp/index.html \
               && python - <<'PY'
           import json
@@ -211,17 +239,29 @@ jobs:
           links=json.load(open('/tmp/links.json',encoding='utf-8'))
           groups=json.load(open('/tmp/groups.json',encoding='utf-8'))
           ontology=json.load(open('/tmp/ontology.json',encoding='utf-8'))
+          category_ontology=json.load(open('/tmp/category-ontology.json',encoding='utf-8'))
+          ontology_audit=json.load(open('/tmp/ontology-audit.json',encoding='utf-8'))
           html=open('/tmp/index.html',encoding='utf-8').read()
+          rows=events['events']
+          allowed={item['id'] for item in category_ontology['categories'] if item.get('id')}
           assert events['count'] > 555
           assert links['events_with_primary_action'] > 0
           assert groups['events_with_group_url'] > 0
-          assert any(e.get('vrchat_group_url') for e in events['events'])
-          assert ontology['schema_version'] == '2.0'
+          assert any(e.get('vrchat_group_url') for e in rows)
+          assert category_ontology['schema_version'] == '2.0'
+          assert all(e.get('category') in allowed for e in rows)
+          assert all(isinstance(e.get('category_confidence'), (int,float)) for e in rows)
+          assert ontology['schema_version'] == '3.0'
+          assert ontology['category_ontology_schema_version'] == '2.0'
           assert ontology['source_event_count'] == events['count']
           assert ontology['observed_entity_count'] > 2
+          assert sum(ontology['category_breakdown'].values()) == events['count']
+          assert ontology_audit['category_classification']['event_count'] == events['count']
           assert 'event-media-link' in html
           assert 'canonicalLinkKey' in html
           assert 'preferredActionUrl' in html
+          assert 'category-ontology.json' in html
+          assert 'category_confidence' in html
           PY
             then verified=true; break; fi
             sleep 10
