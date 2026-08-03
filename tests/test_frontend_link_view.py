@@ -1,31 +1,55 @@
+from pathlib import Path
+
 from scripts.render_frontend import patch_frontend
 
 
+TEMPLATE = Path("web/index.template.html")
+
+
+def rendered_frontend() -> str:
+    return patch_frontend(TEMPLATE.read_text(encoding="utf-8"))
+
+
 def test_frontend_deduplicates_x_announcement_by_status_id() -> None:
-    template = """
-    <style></style>
-    <script>
-    function eventLinks(e){const rows=Array.isArray(e.official_links)?e.official_links:[];const seen=new Set();const valid=[];for(const row of rows){const url=String(row?.url||'');if(!url.startsWith('https://')||seen.has(url))continue;seen.add(url);valid.push({url,label:String(row?.label||'公式リンク'),kind:String(row?.kind||'official')})}if(!valid.length&&String(e.url||'').startsWith('https://'))valid.push({url:e.url,label:'告知・参加方法',kind:'announcement'});return valid.slice(0,3)}
-    function detailsHtml(e){return ''}
-    const card=`<div class="event-main"><div class="event-top">${detailsHtml(e)}${tags?`<div class="tags">${tags}</div>`:''}</div>`;
-    </script>
-    """
-    rendered = patch_frontend(template)
+    rendered = rendered_frontend()
     assert "x-status:" in rendered
     assert "seenKinds.has('announcement')" in rendered
 
 
 def test_frontend_prefers_official_vrchat_group_for_image_click() -> None:
-    template = """
-    <style></style>
-    <script>
-    function eventLinks(e){const rows=Array.isArray(e.official_links)?e.official_links:[];const seen=new Set();const valid=[];for(const row of rows){const url=String(row?.url||'');if(!url.startsWith('https://')||seen.has(url))continue;seen.add(url);valid.push({url,label:String(row?.label||'公式リンク'),kind:String(row?.kind||'official')})}if(!valid.length&&String(e.url||'').startsWith('https://'))valid.push({url:e.url,label:'告知・参加方法',kind:'announcement'});return valid.slice(0,3)}
-    function detailsHtml(e){return ''}
-    const card=`<div class="event-main"><div class="event-top">${detailsHtml(e)}${tags?`<div class="tags">${tags}</div>`:''}</div>`;
-    </script>
-    """
-    rendered = patch_frontend(template)
+    rendered = rendered_frontend()
     assert "preferredActionUrl" in rendered
     assert "vrchat_group" in rendered
     assert "https://vrchat.com/home/group/" in rendered
     assert "VRChat Group" in rendered
+
+
+def test_frontend_uses_only_local_browser_history_for_recommendations() -> None:
+    rendered = rendered_frontend()
+    assert 'id="recommendations"' in rendered
+    assert "kafka2306-vrc-event-click-history-v2" in rendered
+    assert "localStorage.getItem" in rendered
+    assert "localStorage.setItem" in rendered
+    assert "HISTORY_LIMIT=120" in rendered
+    assert "HISTORY_MAX_AGE_DAYS=180" in rendered
+    assert "RECOMMENDATION_LIMIT=6" in rendered
+    assert "HALF_LIFE_DAYS=28" in rendered
+    assert "MMR_RELEVANCE=0.82" in rendered
+    assert "data-event-history-id" in rendered
+    assert "端末内で計算 · 外部送信なし" in rendered
+
+
+def test_frontend_preserves_ontology_features_and_explanations() -> None:
+    rendered = rendered_frontend()
+    assert "categoryKey(e.category)" in rendered
+    assert "categoryLabel(e)" in rendered
+    assert "e.category_detail" in rendered
+    assert "e.event_mode" in rendered
+    assert "e.organizer" in rendered
+    assert "e.event_format" in rendered
+    assert "e.audience" in rendered
+    assert "weekdayLabel" in rendered
+    assert "timeBand" in rendered
+    assert "matchedReasons" in rendered
+    assert "閲覧傾向" in rendered
+    assert "renderAgenda();renderRecommendations()" in rendered
