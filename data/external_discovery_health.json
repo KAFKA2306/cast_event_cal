@@ -1,8 +1,35 @@
 {
   "schema_version": "1.0",
-  "generated_at": null,
-  "status": "not_run",
-  "event_count": 0,
-  "deduplicated_against_existing": 0,
-  "sources": []
+  "generated_at": "2026-08-03T14:37:43Z",
+  "status": "ok",
+  "event_count": 1,
+  "deduplicated_against_existing": 328,
+  "sources": [
+    {
+      "name": "vrc_technology_academic_hub",
+      "source_type": "ics",
+      "status": "ok",
+      "count": 329,
+      "stale_cache_count": 0,
+      "source_page": "https://vrc-ta-hub.com/event/list/"
+    },
+    {
+      "name": "official_event_websites",
+      "source_type": "ontology_jsonld",
+      "status": "skipped",
+      "count": 0,
+      "error": "no official event pages configured",
+      "stale_cache_count": 0
+    },
+    {
+      "name": "vrceve_authorized_feed",
+      "source_type": "permissioned_ics",
+      "status": "skipped",
+      "count": 0,
+      "error": "VRCEVE_DATA_USE_APPROVED is not approved",
+      "stale_cache_count": 0,
+      "source_page": "https://vrceve.com/",
+      "policy_url": "https://vrceve.com/policy/"
+    }
+  ]
 }
