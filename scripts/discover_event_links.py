@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from collections import Counter
 from datetime import UTC, datetime
@@ -85,25 +86,33 @@ def source_urls(event: dict[str, Any]) -> list[tuple[str, str]]:
     return rows
 
 
-def resolve(client: httpx.Client, url: str) -> tuple[str, str]:
+def resolve(client: httpx.Client, url: str, cache: dict[str, tuple[str, str]] | None = None) -> tuple[str, str]:
+    if cache is not None and url in cache:
+        return cache[url]
     host = (urlparse(url).hostname or "").lower()
     if host not in SHORTENERS:
-        return url, "direct"
-    try:
-        response = client.head(url, follow_redirects=True)
-        if response.status_code >= 400:
-            response = client.get(url, follow_redirects=True)
-        target = canonical(str(response.url))
-        return (target or url), "redirect"
-    except httpx.HTTPError:
-        return url, "unresolved_shortener"
+        result = (url, "direct")
+    elif os.getenv("EVENT_LINK_SKIP_SHORTENER_RESOLUTION") == "1":
+        result = (url, "unresolved_shortener")
+    else:
+        try:
+            response = client.head(url, follow_redirects=True)
+            if response.status_code >= 400:
+                response = client.get(url, follow_redirects=True)
+            target = canonical(str(response.url))
+            result = ((target or url), "redirect")
+        except httpx.HTTPError:
+            result = (url, "unresolved_shortener")
+    if cache is not None:
+        cache[url] = result
+    return result
 
 
-def enrich(event: dict[str, Any], client: httpx.Client) -> dict[str, Any]:
+def enrich(event: dict[str, Any], client: httpx.Client, resolution_cache: dict[str, tuple[str, str]] | None = None) -> dict[str, Any]:
     output = dict(event)
     discovered: dict[str, dict[str, str]] = {}
     for raw, evidence in source_urls(event):
-        resolved, resolution = resolve(client, raw)
+        resolved, resolution = resolve(client, raw, resolution_cache)
         host = (urlparse(resolved).hostname or "").lower()
         if host in BLOCKED:
             continue
@@ -134,9 +143,10 @@ def main() -> int:
     doc = json.loads(EVENTS.read_text(encoding="utf-8"))
     counts: Counter[str] = Counter()
     rows = []
-    with httpx.Client(timeout=10, follow_redirects=True, headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"}) as client:
+    resolution_cache: dict[str, tuple[str, str]] = {}
+    with httpx.Client(timeout=3, follow_redirects=True, headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"}) as client:
         for event in doc.get("events", []):
-            row = enrich(event, client)
+            row = enrich(event, client, resolution_cache)
             rows.append(row)
             for link in row.get("official_links", []) + row.get("related_links", []):
                 counts[str(link.get("kind"))] += 1
@@ -152,6 +162,8 @@ def main() -> int:
         "events_with_primary_action": sum(bool(row.get("primary_action_url")) for row in rows),
         "events_with_application": sum(any(link.get("kind") == "application" for link in row.get("official_links", [])) for row in rows),
         "events_with_vrchat_group": sum(any(link.get("kind") == "vrchat_group" for link in row.get("official_links", [])) for row in rows),
+        "resolution_cache_size": len(resolution_cache),
+        "shortener_resolution_skipped": os.getenv("EVENT_LINK_SKIP_SHORTENER_RESOLUTION") == "1",
         "sample": [
             {
                 "id": row.get("id"),
