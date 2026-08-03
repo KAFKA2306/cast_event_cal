@@ -1,8 +1,8 @@
 {
   "schema_version": "3.0",
-  "generated_at": "2026-08-03T21:54:02Z",
-  "source_event_generated_at": "2026-08-03T21:53:10Z",
-  "source_event_count": 588,
+  "generated_at": "2026-08-03T23:16:52Z",
+  "source_event_generated_at": "2026-08-03T23:15:52Z",
+  "source_event_count": 589,
   "matching_policy": {
     "fuzzy_matching": false,
     "pattern_only_match": false,
@@ -10,7 +10,7 @@
     "required_identity": "alias or exact organizer plus all required patterns"
   },
   "curated_entry_count": 2,
-  "observed_entity_count": 109,
+  "observed_entity_count": 110,
   "category_ontology_schema_version": "2.0",
   "category_labels": {
     "recruitment_deadline": "募集・締切",
@@ -33,9 +33,9 @@
     "wellness": 51,
     "technology": 38,
     "language_exchange": 34,
+    "other": 23,
     "learning": 22,
     "music": 22,
-    "other": 22,
     "world_tour": 18,
     "performance": 6,
     "recruitment_deadline": 5
@@ -67,14 +67,14 @@
     "workshop": 1
   },
   "event_mode_breakdown": {
-    "in_world": 580,
+    "in_world": 581,
     "deadline": 5,
     "hybrid": 3
   },
   "classification_source_breakdown": {
     "legacy_and_keywords": 461,
     "keyword_rules": 86,
-    "fallback": 22,
+    "fallback": 23,
     "legacy_category": 18,
     "curated_ontology": 1
   },
@@ -2343,6 +2343,56 @@
           "url": "https://vrchat.com/home/group/grp_31f3d5fc-14fc-403f-9b17-dd84e1ea6c4a",
           "label": "VRChat Group",
           "kind": "vrchat_group"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/hitoha_ks",
+      "organizer": "@Hitoha_ks",
+      "official_x_url": "https://x.com/Hitoha_ks",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HO1UYjBaEAAle4w.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-08-08T03:00:00Z",
+      "sample_event_ids": [
+        "7eb8dc6600ae7a6427d7"
+      ],
+      "sample_titles": [
+        "SwingBox in VRC 8/8 12:00〜17:00 21:00〜26:00 8/9 12:00〜17:00 21:00〜26:00 2日間で狂気の20時間のエレスイイベント わたし…"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "official_links": [
+        {
+          "url": "https://twitter.com/Hitoha_ks/status/2084414990027821351",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://twitter.com/swingbox_vrc/status/2080956389175013376",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/Hitoha_ks/status/2084414990027821351?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/Hitoha_ks",
+          "label": "公式X",
+          "kind": "official_x"
         }
       ]
     },
