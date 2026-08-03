@@ -17,14 +17,8 @@ SYNDICATION_URL = "https://cdn.syndication.twimg.com/tweet-result"
 X_STATUS_RE = re.compile(r"https://(?:www\.)?(?:x|twitter)\.com/([^/?#]+)/status/(\d+)", re.I)
 HANDLE_RE = re.compile(r"^@?([A-Za-z0-9_]{1,15})$")
 BLOCKED_WEB_HOSTS = {
-    "x.com",
-    "www.x.com",
-    "twitter.com",
-    "www.twitter.com",
-    "t.co",
-    "search.yahoo.co.jp",
-    "vrchat.com",
-    "www.vrchat.com",
+    "x.com", "www.x.com", "twitter.com", "www.twitter.com", "t.co",
+    "search.yahoo.co.jp", "vrchat.com", "www.vrchat.com", "pbs.twimg.com",
 }
 
 
@@ -33,7 +27,8 @@ def now_iso() -> str:
 
 
 def parse_x_identity(event: dict[str, Any]) -> tuple[str | None, str | None]:
-    for value in (event.get("url"), *(row.get("url") for row in event.get("official_links", []) if isinstance(row, dict))):
+    official_links = event.get("official_links") if isinstance(event.get("official_links"), list) else []
+    for value in (event.get("url"), *(row.get("url") for row in official_links if isinstance(row, dict))):
         match = X_STATUS_RE.search(str(value or ""))
         if match:
             return match.group(1), match.group(2)
@@ -57,8 +52,7 @@ def webp_image_url(url: str | None, *, profile: bool = False) -> str | None:
     if not value:
         return None
     parsed = urlparse(value)
-    host = parsed.hostname or ""
-    if host != "pbs.twimg.com":
+    if (parsed.hostname or "") != "pbs.twimg.com":
         return value if parsed.path.lower().endswith(".webp") else None
     path = parsed.path
     if profile:
@@ -69,22 +63,22 @@ def webp_image_url(url: str | None, *, profile: bool = False) -> str | None:
     return urlunparse(("https", parsed.netloc.lower(), path, "", urlencode(query), ""))
 
 
+def _collect_urls(value: Any, output: list[str]) -> None:
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if key in {"expanded_url", "unwound_url", "url"} and isinstance(child, str):
+                output.append(child)
+            else:
+                _collect_urls(child, output)
+    elif isinstance(value, list):
+        for child in value:
+            _collect_urls(child, output)
+
+
 def external_website(payload: dict[str, Any]) -> str | None:
     candidates: list[str] = []
-    user = payload.get("user") if isinstance(payload.get("user"), dict) else {}
-    for value in (user.get("url"), payload.get("card", {}).get("url") if isinstance(payload.get("card"), dict) else None):
-        if value:
-            candidates.append(str(value))
-    for owner in (user, payload):
-        entities = owner.get("entities") if isinstance(owner, dict) else None
-        if not isinstance(entities, dict):
-            continue
-        for section in entities.values():
-            if not isinstance(section, dict):
-                continue
-            for row in section.get("urls", []):
-                if isinstance(row, dict):
-                    candidates.extend(str(row.get(key) or "") for key in ("expanded_url", "url"))
+    for root in (payload.get("user"), payload.get("entities"), payload.get("card")):
+        _collect_urls(root, candidates)
     for candidate in candidates:
         url = canonical_https(candidate)
         if not url:
@@ -99,9 +93,18 @@ def assets_from_payload(payload: dict[str, Any], handle: str) -> dict[str, Any]:
     media: list[str] = []
     for row in payload.get("mediaDetails", []):
         if isinstance(row, dict):
-            value = webp_image_url(row.get("media_url_https") or row.get("media_url"))
-            if value:
-                media.append(value)
+            image = webp_image_url(row.get("media_url_https") or row.get("media_url"))
+            if image:
+                media.append(image)
+    for row in payload.get("photos", []):
+        if isinstance(row, dict):
+            image = webp_image_url(row.get("url"))
+            if image:
+                media.append(image)
+    video = payload.get("video") if isinstance(payload.get("video"), dict) else {}
+    poster = webp_image_url(video.get("poster"))
+    if poster:
+        media.append(poster)
     user = payload.get("user") if isinstance(payload.get("user"), dict) else {}
     profile_image = webp_image_url(user.get("profile_image_url_https") or user.get("profile_image_url"), profile=True)
     return {
@@ -109,7 +112,7 @@ def assets_from_payload(payload: dict[str, Any], handle: str) -> dict[str, Any]:
         "official_website_url": external_website(payload),
         "image_url": media[0] if media else profile_image,
         "image_kind": "post_media" if media else ("organizer_profile" if profile_image else None),
-        "evidence": "x_syndication",
+        "evidence": "x_syndication_token_v2",
     }
 
 
@@ -125,15 +128,15 @@ def enrich_event(event: dict[str, Any], cached: dict[str, Any] | None) -> dict[s
     assets = dict(cached or {})
     if handle and not assets.get("official_x_url"):
         assets["official_x_url"] = f"https://x.com/{handle}"
-    links = [link for link in row.get("official_links", []) if isinstance(link, dict) and canonical_https(link.get("url"))]
+    source_links = row.get("official_links") if isinstance(row.get("official_links"), list) else []
+    links = [link for link in source_links if isinstance(link, dict) and canonical_https(link.get("url"))]
     known = {str(link.get("url")) for link in links}
     announcement = canonical_https(row.get("url"))
-    additions = [
+    for url, label, kind in (
         (announcement, "公式告知", "announcement"),
         (assets.get("official_x_url"), "公式X", "official_x"),
         (assets.get("official_website_url"), "公式Web", "official_web"),
-    ]
-    for url, label, kind in additions:
+    ):
         if url and url not in known:
             links.append({"url": url, "label": label, "kind": kind, "evidence": assets.get("evidence") or "source_record"})
             known.add(url)
@@ -151,10 +154,17 @@ def enrich_event(event: dict[str, Any], cached: dict[str, Any] | None) -> dict[s
     return row
 
 
+def cache_needs_refresh(item: Any) -> bool:
+    if not isinstance(item, dict):
+        return True
+    return item.get("evidence") != "x_syndication_token_v2"
+
+
 def main() -> int:
     document = load_json(EVENTS_PATH, {})
     events = document.get("events", [])
-    cache_doc = load_json(CACHE_PATH, {"schema_version": "1.0", "items": {}})
+    cache_doc = load_json(CACHE_PATH, {"schema_version": "1.1", "items": {}})
+    cache_doc["schema_version"] = "1.1"
     cache: dict[str, Any] = cache_doc.setdefault("items", {})
     identities: dict[str, str] = {}
     for event in events:
@@ -164,14 +174,16 @@ def main() -> int:
 
     fetched = 0
     failures: Counter[str] = Counter()
-    with httpx.Client(timeout=12, follow_redirects=True, headers={"User-Agent": "cast-event-cal/2 official-asset-enricher"}) as client:
+    with httpx.Client(timeout=12, follow_redirects=True, headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"}) as client:
         for status_id, handle in identities.items():
-            if status_id in cache:
+            if not cache_needs_refresh(cache.get(status_id)):
                 continue
             try:
-                response = client.get(SYNDICATION_URL, params={"id": status_id, "lang": "ja"})
+                response = client.get(SYNDICATION_URL, params={"id": status_id, "lang": "ja", "token": "0"})
                 response.raise_for_status()
                 payload = response.json()
+                if not isinstance(payload, dict) or not payload.get("user"):
+                    raise ValueError("incomplete syndication payload")
                 cache[status_id] = {**assets_from_payload(payload, handle), "fetched_at": now_iso()}
                 fetched += 1
             except (httpx.HTTPError, ValueError, TypeError) as exc:
@@ -199,15 +211,15 @@ def main() -> int:
         "events": len(enriched),
         "official_x": sum(bool(row.get("official_x_url")) for row in enriched),
         "official_web": sum(bool(row.get("official_website_url")) for row in enriched),
-        "webp_image": sum(str(row.get("image_url") or "").lower().find("format=webp") >= 0 or str(row.get("image_url") or "").lower().endswith(".webp") for row in enriched),
+        "webp_image": sum("format=webp" in str(row.get("image_url") or "").lower() or str(row.get("image_url") or "").lower().endswith(".webp") for row in enriched),
         "post_media": sum(row.get("image_kind") == "post_media" for row in enriched),
         "profile_image": sum(row.get("image_kind") == "organizer_profile" for row in enriched),
         "unresolved": sum(row.get("asset_enrichment", {}).get("status") == "unresolved" for row in enriched),
     }
     audit = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": now_iso(),
-        "policy": "source-identity-and-x-syndication-only",
+        "policy": "source-identity-and-x-official-embed-metadata-only",
         "counts": counts,
         "network_fetches": fetched,
         "fetch_failures": dict(failures),
@@ -221,7 +233,7 @@ def main() -> int:
                 "image_kind": row.get("image_kind"),
             }
             for row in enriched
-            if row.get("official_x_url") or row.get("official_website_url") or row.get("image_url")
+            if row.get("image_url") or row.get("official_website_url")
         ][:20],
     }
     AUDIT_PATH.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
