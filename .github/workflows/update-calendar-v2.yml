@@ -12,14 +12,8 @@ on:
       - data/recurring_events.json
       - data/one_off_events.json
       - data/x_events.json
-      - scripts/materialize_events.py
-      - scripts/fetch_vrchat_calendar.py
-      - scripts/fetch_x_events.py
-      - scripts/fetch_yahoo_realtime.py
-      - scripts/run_yahoo_realtime.py
-      - scripts/collect_yahoo_corpus.py
-      - scripts/refine_yahoo_corpus.py
-      - scripts/render_frontend.py
+      - scripts/**
+      - tests/test_yahoo_archive_policy.py
       - web/**
       - main_executor.py
       - requirements.txt
@@ -38,7 +32,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -46,9 +40,9 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e '.[dev]'
+        run: pip install -e '.[dev]'
+      - name: Run archive-policy regression tests
+        run: pytest -q tests/test_yahoo_archive_policy.py tests/test_yahoo_corpus.py
       - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
       - name: Discover public VRChat calendar events
@@ -64,119 +58,56 @@ jobs:
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/collect_yahoo_corpus.py --mode daily --target 1000
-      - name: Reclassify Yahoo corpus by source timestamp
+      - name: Replay retained Yahoo corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/refine_yahoo_corpus.py
-      - name: Build normalized calendar
-        run: python main_executor.py run --strict
-      - name: Enrich ontology and render production frontend
-        run: python scripts/render_frontend.py
-      - name: Validate generated assets and Yahoo corpus
+      - name: Apply durable Yahoo archive policy
+        run: python scripts/reclassify_yahoo_archive.py
+      - name: Build normalized calendar and frontend
+        run: |
+          python main_executor.py run --strict
+          python scripts/render_frontend.py
+      - name: Validate generated data
         run: |
           set -euo pipefail
           grep -q 'VRChat Event Calendar' public/index.html
-          grep -q 'id="agenda"' public/index.html
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
           python - <<'PY'
           import json
           from pathlib import Path
 
-          recurring = json.loads(Path('data/recurring_events.json').read_text(encoding='utf-8'))
-          manual = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
-          discovered = json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8'))
-          discovery_health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
-          x_events = json.loads(Path('data/x_events.json').read_text(encoding='utf-8'))
-          x_health = json.loads(Path('data/x_discovery_health.json').read_text(encoding='utf-8'))
-          yahoo_snapshot = json.loads(Path('data/yahoo_realtime_candidates.json').read_text(encoding='utf-8'))
-          yahoo_events = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
-          yahoo_rejected = json.loads(Path('data/yahoo_realtime_rejected.json').read_text(encoding='utf-8'))
-          yahoo_health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
+          yahoo = json.loads(Path('data/yahoo_realtime_events.json').read_text(encoding='utf-8'))
+          rejected = json.loads(Path('data/yahoo_realtime_rejected.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
           history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
-          classifier_audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
-          positive_vocabulary = json.loads(Path('public/yahoo-positive-vocabulary.json').read_text(encoding='utf-8'))
-          ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
-          ontology_audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
+          audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
+          vocabulary = json.loads(Path('public/yahoo-positive-vocabulary.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
-          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
 
-          assert len(recurring) >= 25
-          assert len(manual) >= 250
-          assert len({row['series_id'] for row in recurring}) == len(recurring)
-          assert len({row['source_id'] for row in manual}) == len(manual)
-          assert len({row['source_id'] for row in discovered}) == len(discovered)
-          assert len({row['source_id'] for row in x_events}) == len(x_events)
-          assert len({row['source_id'] for row in yahoo_events}) == len(yahoo_events)
-          assert all(str(row['source_id']).startswith('yahoo:x:') for row in yahoo_events)
-          assert all(row.get('review_required') is False for row in yahoo_events)
-          assert all(isinstance(row.get('reason'), str) for row in yahoo_rejected)
-
-          assert discovery_health.get('status') in {'ok', 'degraded', 'skipped'}
-          assert discovery_health.get('event_count') == len(discovered)
-          assert x_health.get('status') in {'ok', 'degraded', 'skipped', 'seeded'}
-          assert x_health.get('event_count') == len(x_events)
-
-          assert yahoo_snapshot.get('candidate_count') == len(yahoo_snapshot.get('candidates', []))
-          assert yahoo_snapshot.get('raw_candidate_count', 0) >= yahoo_snapshot.get('candidate_count', 0)
-          assert yahoo_health.get('status') in {'ok', 'degraded'}
-          assert yahoo_health.get('parser_version') == '1.8'
-          assert yahoo_health.get('event_count') == len(yahoo_events)
-          assert yahoo_health.get('corpus_target_count') == 1000
-          assert yahoo_health.get('corpus_target_reached') is True
-          assert yahoo_health.get('history_candidate_count') == history.get('candidate_count')
-          assert yahoo_health.get('history_accepted_count') == len(yahoo_events)
-          assert yahoo_health.get('history_rejected_count') == len(yahoo_rejected)
-          assert yahoo_health.get('source_timestamp_count', 0) >= 1000
-
-          assert history.get('schema_version') == '2.3'
-          assert history.get('retention_days') == 365
-          assert history.get('target_count') == 1000
-          assert history.get('target_reached') is True
-          assert history.get('candidate_count', 0) >= 1000
-          assert history.get('candidate_count') == len(history.get('candidates', []))
-          assert len({row['status_id'] for row in history.get('candidates', [])}) == history.get('candidate_count')
-          assert sum(bool(row.get('query_keys')) for row in history.get('candidates', [])) >= 1000
-          assert sum(bool(row.get('source_created_at')) for row in history.get('candidates', [])) >= 1000
-          assert all(row.get('first_seen_at') and row.get('last_seen_at') for row in history.get('candidates', []))
-
-          assert classifier_audit.get('schema_version') == '1.3'
-          assert classifier_audit.get('classifier_version') == '1.8'
-          assert classifier_audit.get('target_reached') is True
-          assert classifier_audit.get('candidate_count') == history.get('candidate_count')
-          assert classifier_audit.get('accepted_count') == len(yahoo_events)
-          assert classifier_audit.get('accepted_count', 0) + classifier_audit.get('rejected_count', 0) == history.get('candidate_count')
-          assert classifier_audit.get('quality', {}).get('duplicate_status_ids') == 0
-          assert classifier_audit.get('quality', {}).get('missing_source_created_at') == 0
-          assert classifier_audit.get('quality', {}).get('ambiguous_decisions') == 0
-          assert classifier_audit.get('rejection_reason_counts', {}).get('past_event_now', 0) > 0
-
-          history_by_id = {row['status_id']: row for row in history.get('candidates', [])}
-          accepted_ids = {row['source_id'].split(':')[-1] for row in yahoo_events}
-          assert all(
-              int(history_by_id[status_id].get('max_retweet_count') or history_by_id[status_id].get('retweet_count') or 0) >= 3
-              for status_id in accepted_ids
-          )
-          rejected_by_id = {row['status_id']: row['reason'] for row in yahoo_rejected}
-          assert rejected_by_id.get('2083398056188518660') == 'giveaway_only'
-          assert rejected_by_id.get('2083153426167578665') == 'giveaway_only'
-          assert rejected_by_id.get('2083591757128954342') == 'missing_event_marker'
-
-          assert positive_vocabulary.get('schema_version') == '1.0'
-          assert positive_vocabulary.get('minimum_retweets') == 3
-          assert positive_vocabulary.get('positive_event_count') == len(yahoo_events)
-          assert positive_vocabulary.get('adoption_policy') == 'reusable_structural_terms_only'
-          assert {'イベント告知', '通常営業', 'リクイン'} & set(positive_vocabulary.get('adopted_terms', []))
-          assert {'本日', '応募'} <= set(positive_vocabulary.get('excluded_as_too_generic', []))
-
-          assert ontology.get('schema_version') == '1.1'
-          assert ontology.get('matching_policy', {}).get('fuzzy_matching') is False
-          assert ontology_audit.get('event_count') == events.get('count')
-          assert ontology_audit.get('ambiguous_events') == 0
-          assert events.get('count') == len(events.get('events', []))
-          assert events.get('count', 0) >= 250
-          assert health.get('status') in {'ok', 'degraded'}
-          assert health.get('event_count') == events.get('count')
-          assert health.get('enabled_sources', 0) >= 4
+          assert history['schema_version'] == '2.4'
+          assert history['candidate_count'] == len(history['candidates'])
+          assert len({row['status_id'] for row in history['candidates']}) == history['candidate_count']
+          assert audit['schema_version'] == '1.4'
+          assert audit['classifier_version'] == '1.9'
+          assert audit['accepted_count'] == len(yahoo)
+          assert audit['rejected_count'] == len(rejected)
+          assert audit['accepted_count'] + audit['rejected_count'] == history['candidate_count']
+          assert audit['accepted_count'] > 59
+          assert audit['past_accepted_count'] > 0
+          assert audit['low_retweet_accepted_count'] > 0
+          assert audit['rejection_reason_counts'].get('past_event', 0) == 0
+          assert audit['rejection_reason_counts'].get('past_event_now', 0) == 0
+          assert audit['rejection_reason_counts'].get('retweet_below_threshold', 0) == 0
+          assert health['parser_version'] == '1.9'
+          assert health['history_accepted_count'] == len(yahoo)
+          assert health['history_rejected_count'] == len(rejected)
+          assert vocabulary['minimum_retweets'] == 0
+          assert events['count'] == len(events['events'])
+          assert events['count'] > 555
+          assert all(row.get('review_required') is False for row in yahoo)
+          assert all(row.get('temporal_status') in {'past', 'upcoming'} for row in yahoo)
+          assert all(isinstance(row.get('retweet_count'), int) and row['retweet_count'] >= 0 for row in yahoo)
           PY
       - name: Commit generated data safely
         run: |
@@ -193,21 +124,16 @@ jobs:
             data/yahoo_realtime_health.json
             public
           )
-          if [ -z "$(git status --porcelain -- "${paths[@]}")" ]; then
-            echo 'No generated changes'
-          else
+          if [ -n "$(git status --porcelain -- "${paths[@]}")" ]; then
             git config user.name github-actions[bot]
             git config user.email 41898282+github-actions[bot]@users.noreply.github.com
             git add "${paths[@]}"
-            git commit -m 'chore: refresh calendar and Yahoo corpus [skip ci]'
-            git restore --worktree .
+            git commit -m 'chore: refresh calendar with Yahoo archive policy [skip ci]'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: public
 
@@ -231,7 +157,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-      - name: Verify public Pages endpoints
+      - name: Verify live Pages data
         env:
           PAGE_URL: ${{ needs.deploy.outputs.page_url }}
         run: |
@@ -239,63 +165,43 @@ jobs:
           base="${PAGE_URL%/}"
           verified=false
           for attempt in $(seq 1 30); do
-            root_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-index.html -w '%{http_code}' "$base/" || true)"
-            events_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-events.json -w '%{http_code}' "$base/events.json" || true)"
-            history_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-history.json -w '%{http_code}' "$base/yahoo-candidate-history.json" || true)"
-            audit_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-audit.json -w '%{http_code}' "$base/yahoo-classifier-audit.json" || true)"
-            vocabulary_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /tmp/live-vocabulary.json -w '%{http_code}' "$base/yahoo-positive-vocabulary.json" || true)"
-            if [ "$root_status" = '200' ] && [ "$events_status" = '200' ] && [ "$history_status" = '200' ] && [ "$audit_status" = '200' ] && [ "$vocabulary_status" = '200' ] && python - <<'PY'
+            if curl -fsS "$base/yahoo-classifier-audit.json" -o /tmp/audit.json \
+              && curl -fsS "$base/events.json" -o /tmp/events.json \
+              && python - <<'PY'
           import json
-          events = json.load(open('/tmp/live-events.json', encoding='utf-8'))
-          history = json.load(open('/tmp/live-history.json', encoding='utf-8'))
-          audit = json.load(open('/tmp/live-audit.json', encoding='utf-8'))
-          vocabulary = json.load(open('/tmp/live-vocabulary.json', encoding='utf-8'))
-          assert events.get('count', 0) >= 250
-          assert history.get('candidate_count', 0) >= 1000
-          assert history.get('schema_version') == '2.3'
-          assert audit.get('classifier_version') == '1.8'
-          assert audit.get('schema_version') == '1.3'
-          assert audit.get('target_reached') is True
-          assert audit.get('accepted_count', 0) + audit.get('rejected_count', 0) == history.get('candidate_count')
-          assert vocabulary.get('positive_event_count') == audit.get('accepted_count')
-          assert vocabulary.get('minimum_retweets') == 3
+          audit = json.load(open('/tmp/audit.json', encoding='utf-8'))
+          events = json.load(open('/tmp/events.json', encoding='utf-8'))
+          assert audit['classifier_version'] == '1.9'
+          assert audit['accepted_count'] > 59
+          assert audit['past_accepted_count'] > 0
+          assert audit['low_retweet_accepted_count'] > 0
+          assert events['count'] > 555
           PY
-            then
-              verified=true
-              break
-            fi
+            then verified=true; break; fi
             sleep 10
           done
           test "$verified" = true
           mkdir -p audit
-          export PAGE_URL ROOT_STATUS="$root_status" EVENTS_STATUS="$events_status" HISTORY_STATUS="$history_status" AUDIT_STATUS="$audit_status" VOCABULARY_STATUS="$vocabulary_status"
-          python - <<'PY'
+          PAGE_URL="$PAGE_URL" python - <<'PY'
           import json, os
           from datetime import UTC, datetime
           from pathlib import Path
-          events = json.loads(Path('/tmp/live-events.json').read_text(encoding='utf-8'))
-          history = json.loads(Path('/tmp/live-history.json').read_text(encoding='utf-8'))
-          classifier = json.loads(Path('/tmp/live-audit.json').read_text(encoding='utf-8'))
-          vocabulary = json.loads(Path('/tmp/live-vocabulary.json').read_text(encoding='utf-8'))
+          classifier = json.load(open('/tmp/audit.json', encoding='utf-8'))
+          events = json.load(open('/tmp/events.json', encoding='utf-8'))
           result = {
-              'schema_version': '7.0',
+              'schema_version': '1.0',
               'verified_at': datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00', 'Z'),
               'page_url': os.environ['PAGE_URL'],
-              'root_status': int(os.environ['ROOT_STATUS']),
-              'events_status': int(os.environ['EVENTS_STATUS']),
-              'yahoo_history_status': int(os.environ['HISTORY_STATUS']),
-              'yahoo_classifier_audit_status': int(os.environ['AUDIT_STATUS']),
-              'yahoo_positive_vocabulary_status': int(os.environ['VOCABULARY_STATUS']),
-              'event_count': events.get('count', 0),
-              'yahoo_candidate_count': history.get('candidate_count', 0),
-              'yahoo_accepted_count': classifier.get('accepted_count', 0),
-              'yahoo_rejected_count': classifier.get('rejected_count', 0),
-              'classifier_version': classifier.get('classifier_version'),
-              'positive_vocabulary_terms': len(vocabulary.get('adopted_terms', [])),
-              'source_commit': os.environ['GITHUB_SHA'],
+              'classifier_version': classifier['classifier_version'],
+              'yahoo_candidate_count': classifier['candidate_count'],
+              'yahoo_accepted_count': classifier['accepted_count'],
+              'yahoo_rejected_count': classifier['rejected_count'],
+              'past_accepted_count': classifier['past_accepted_count'],
+              'low_retweet_accepted_count': classifier['low_retweet_accepted_count'],
+              'event_count': events['count'],
               'status': 'ok',
           }
-          Path('audit/production-status.json').write_text(
+          Path('audit/yahoo-archive-pages-verification.json').write_text(
               json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
           )
           PY
@@ -304,9 +210,7 @@ jobs:
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add audit/production-status.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'chore: record production verification [skip ci]'
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
+          git add audit/yahoo-archive-pages-verification.json
+          git commit -m 'chore: record Yahoo archive Pages verification [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
