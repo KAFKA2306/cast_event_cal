@@ -8,6 +8,7 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from cast_event_cal.ontology import main as enrich_event_ontology
+from scripts.build_observed_ontology import main as build_observed_ontology
 
 TEMPLATE = Path("web/index.template.html")
 EVENTS = Path("public/events.json")
@@ -43,6 +44,7 @@ def patch_frontend(html: str) -> str:
 
 def main() -> int:
     enrich_event_ontology()
+    build_observed_ontology()
     payload = json.loads(EVENTS.read_text(encoding="utf-8"))
     generated_at = str(payload.get("generated_at") or "")
     html = TEMPLATE.read_text(encoding="utf-8").replace("{{GENERATED_AT}}", generated_at)
