@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from scripts.build_yahoo_rejection_sample_audit import main as build_yahoo_rejection_sample_audit
+
 CONFIG = Path("config/event_ontology.json")
 CATEGORY_CONFIG = Path("config/category_ontology.json")
 EVENTS = Path("public/events.json")
@@ -135,6 +137,7 @@ def build() -> dict[str, Any]:
 
 
 def main() -> int:
+    build_yahoo_rejection_sample_audit()
     payload = build()
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
