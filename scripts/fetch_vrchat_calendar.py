@@ -10,8 +10,9 @@ from typing import Any
 
 import httpx
 
-API_URL = "https://api.vrchat.cloud/api/1/calendar/search"
-USER_AGENT = "cast-event-cal/2.1 (+https://github.com/KAFKA2306/cast_event_cal)"
+SEARCH_API_URL = "https://api.vrchat.cloud/api/1/calendar/search"
+DISCOVER_API_URL = "https://api.vrchat.cloud/api/1/calendar/discover"
+USER_AGENT = "cast-event-cal/2.2 (+https://github.com/KAFKA2306/cast_event_cal)"
 DEFAULT_TERMS = ["日本語", "初心者", "交流", "音楽", "ゲーム", "Quest"]
 
 
@@ -72,6 +73,11 @@ def normalize_event(item: dict[str, Any]) -> dict[str, Any] | None:
         *(str(value).strip() for value in item.get("languages") or []),
         *(str(value).strip() for value in item.get("platforms") or []),
     }
+    if item.get("featured"):
+        tags.add("featured")
+    occurrence_kind = str(item.get("occurrenceKind") or "").strip()
+    if occurrence_kind:
+        tags.add(occurrence_kind)
     event: dict[str, Any] = {
         "source_id": event_id,
         "title": title,
@@ -91,28 +97,52 @@ def normalize_event(item: dict[str, Any]) -> dict[str, Any] | None:
     return {key: value for key, value in event.items() if value is not None}
 
 
-def fetch_term(
-    client: httpx.Client,
-    *,
-    term: str,
-    page_size: int,
-    max_pages: int,
-) -> list[dict[str, Any]]:
+def checked_results(payload: Any, *, route: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if not isinstance(payload, dict):
+        raise ValueError(f"VRChat calendar {route} returned a non-object response")
+    page = payload.get("results", [])
+    if not isinstance(page, list):
+        raise ValueError(f"VRChat calendar {route} returned an invalid results field")
+    return [item for item in page if isinstance(item, dict)], payload
+
+
+def fetch_discover(client: httpx.Client, *, page_size: int, max_pages: int) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    cursor: str | None = None
+    for _ in range(max_pages):
+        if cursor:
+            params: dict[str, Any] = {"n": page_size, "nextCursor": cursor}
+        else:
+            params = {
+                "scope": "upcoming",
+                "featuredResults": "include",
+                "nonFeaturedResults": "include",
+                "personalizedResults": "include",
+                "minimumRemainingMinutes": 0,
+                "n": page_size,
+            }
+        response = client.get(DISCOVER_API_URL, params=params)
+        response.raise_for_status()
+        page, payload = checked_results(response.json(), route="discovery")
+        rows.extend(page)
+        next_cursor = payload.get("nextCursor")
+        if not page or not isinstance(next_cursor, str) or not next_cursor.strip():
+            break
+        cursor = next_cursor
+    return rows
+
+
+def fetch_term(client: httpx.Client, *, term: str, page_size: int, max_pages: int) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     offset = 0
     for _ in range(max_pages):
         response = client.get(
-            API_URL,
+            SEARCH_API_URL,
             params={"searchTerm": term, "utcOffset": 9, "n": page_size, "offset": offset},
         )
         response.raise_for_status()
-        payload = response.json()
-        if not isinstance(payload, dict):
-            raise ValueError("VRChat calendar search returned a non-object response")
-        page = payload.get("results", [])
-        if not isinstance(page, list):
-            raise ValueError("VRChat calendar search returned an invalid results field")
-        rows.extend(item for item in page if isinstance(item, dict))
+        page, payload = checked_results(response.json(), route="search")
+        rows.extend(page)
         if not payload.get("hasNext") or len(page) < page_size:
             break
         offset += page_size
@@ -139,12 +169,13 @@ def write_preserved_health(
     write_json(
         health_output,
         {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "generated_at": generated_at,
             "status": status,
             "reason": reason,
             "event_count": existing_count,
             "query_count": query_count,
+            "routes": {"discover": 0, "search": 0},
             "errors": errors,
         },
     )
@@ -197,16 +228,25 @@ def run_discovery(
 
     errors: list[str] = []
     raw_rows: list[dict[str, Any]] = []
+    route_counts = {"discover": 0, "search": 0}
     with httpx.Client(
         timeout=timeout,
         follow_redirects=True,
         headers={"User-Agent": USER_AGENT, "Cookie": f"auth={token}"},
     ) as client:
+        try:
+            discovered = fetch_discover(client, page_size=page_size, max_pages=max_pages)
+            raw_rows.extend(discovered)
+            route_counts["discover"] = len(discovered)
+        except Exception as exc:
+            errors.append(f"discover: {type(exc).__name__}: {exc}")
         for term in terms:
             try:
-                raw_rows.extend(fetch_term(client, term=term, page_size=page_size, max_pages=max_pages))
+                searched = fetch_term(client, term=term, page_size=page_size, max_pages=max_pages)
+                raw_rows.extend(searched)
+                route_counts["search"] += len(searched)
             except Exception as exc:
-                errors.append(f"{term}: {type(exc).__name__}: {exc}")
+                errors.append(f"search:{term}: {type(exc).__name__}: {exc}")
 
     events_by_id: dict[str, dict[str, Any]] = {}
     for item in raw_rows:
@@ -222,7 +262,7 @@ def run_discovery(
             generated_at=generated_at,
             existing_count=len(existing),
             status="degraded",
-            reason="all live queries failed; preserved previous discovery cache",
+            reason="all live routes failed; preserved previous discovery cache",
             query_count=len(terms),
             errors=errors,
         )
@@ -233,16 +273,20 @@ def run_discovery(
     write_json(
         health_output,
         {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "generated_at": generated_at,
             "status": "ok" if not errors else "degraded",
             "event_count": len(events),
             "query_count": len(terms),
             "raw_result_count": len(raw_rows),
+            "routes": route_counts,
             "errors": errors,
         },
     )
-    print(f"discovered {len(events)} public VRChat calendar events")
+    print(
+        f"discovered {len(events)} public VRChat calendar events "
+        f"(discover={route_counts['discover']}, search={route_counts['search']})"
+    )
     return 0
 
 
@@ -253,7 +297,7 @@ def main() -> int:
     parser.add_argument("--exclude", type=Path, default=Path("data/manual_events.json"))
     parser.add_argument("--term", action="append", dest="terms")
     parser.add_argument("--page-size", type=int, default=100)
-    parser.add_argument("--max-pages", type=int, default=1)
+    parser.add_argument("--max-pages", type=int, default=2)
     parser.add_argument("--timeout", type=float, default=25.0)
     args = parser.parse_args()
     if not 1 <= args.page_size <= 100:
