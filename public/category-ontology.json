@@ -1,0 +1,578 @@
+{
+  "schema_version": "2.0",
+  "default_category": "other",
+  "minimum_keyword_score": 3,
+  "organizer_prior": {
+    "minimum_seed_events": 2,
+    "minimum_dominance": 0.75,
+    "maximum_direct_score": 2
+  },
+  "legacy_category_map": {
+    "event": null,
+    "hangout": "community",
+    "cafe": "community",
+    "orientation": "learning",
+    "photo": "art",
+    "fitness": "wellness",
+    "wellness": "wellness",
+    "performance": "performance",
+    "convention": "performance",
+    "game": "game",
+    "world_tour": "world_tour",
+    "technology": "technology",
+    "language_exchange": "language_exchange",
+    "recruitment_deadline": "recruitment_deadline"
+  },
+  "categories": [
+    {
+      "id": "recruitment_deadline",
+      "label": "募集・締切",
+      "priority": 120,
+      "strong_keywords": [
+        "募集締切",
+        "応募締切",
+        "キャスト募集",
+        "スタッフ募集",
+        "出展者募集",
+        "参加者募集",
+        "応募期限",
+        "エントリー締切"
+      ],
+      "keywords": [
+        "募集",
+        "応募",
+        "締切",
+        "〆切",
+        "エントリー",
+        "テスター",
+        "キャスト応募",
+        "スタッフ応募"
+      ],
+      "subcategories": {
+        "cast_recruitment": [
+          "キャスト募集",
+          "キャスト応募"
+        ],
+        "staff_recruitment": [
+          "スタッフ募集",
+          "スタッフ応募"
+        ],
+        "participant_recruitment": [
+          "参加者募集",
+          "出展者募集",
+          "出演者募集"
+        ],
+        "application_deadline": [
+          "応募締切",
+          "募集締切",
+          "応募期限",
+          "エントリー締切"
+        ]
+      }
+    },
+    {
+      "id": "language_exchange",
+      "label": "言語交流",
+      "priority": 110,
+      "strong_keywords": [
+        "language exchange",
+        "言語交流",
+        "日英交流",
+        "英日交流",
+        "日本語交流",
+        "英会話交流"
+      ],
+      "keywords": [
+        "英会話",
+        "日本語会話",
+        "韓国語交流",
+        "中国語交流",
+        "多言語交流",
+        "international exchange"
+      ],
+      "subcategories": {
+        "language_exchange": [
+          "language exchange",
+          "言語交流",
+          "日英交流",
+          "英日交流"
+        ],
+        "conversation_practice": [
+          "英会話",
+          "日本語会話",
+          "会話練習"
+        ]
+      }
+    },
+    {
+      "id": "technology",
+      "label": "技術・研究",
+      "priority": 105,
+      "strong_keywords": [
+        "技術学術",
+        "研究発表",
+        "学術発表",
+        "scientific",
+        "technology conference",
+        "ハッカソン"
+      ],
+      "keywords": [
+        "技術",
+        "研究",
+        "学術",
+        "科学",
+        "プログラミング",
+        "開発者",
+        "エンジニア",
+        "ai勉強会",
+        "機械学習",
+        "生成ai",
+        "ソフトウェア",
+        "論文",
+        "vr研究"
+      ],
+      "subcategories": {
+        "research": [
+          "研究",
+          "学術",
+          "論文",
+          "科学"
+        ],
+        "engineering": [
+          "技術",
+          "プログラミング",
+          "開発者",
+          "エンジニア",
+          "ソフトウェア"
+        ],
+        "ai": [
+          "ai勉強会",
+          "機械学習",
+          "生成ai"
+        ]
+      }
+    },
+    {
+      "id": "learning",
+      "label": "学習・講義",
+      "priority": 100,
+      "strong_keywords": [
+        "講義",
+        "講座",
+        "教室",
+        "勉強会",
+        "授業",
+        "解説会",
+        "セミナー"
+      ],
+      "keywords": [
+        "学習",
+        "歴史",
+        "教育",
+        "初心者講習",
+        "説明会",
+        "ワークショップ",
+        "入門",
+        "レクチャー",
+        "lecture",
+        "class"
+      ],
+      "subcategories": {
+        "lecture": [
+          "講義",
+          "講座",
+          "授業",
+          "レクチャー",
+          "lecture"
+        ],
+        "class": [
+          "教室",
+          "class",
+          "初心者講習"
+        ],
+        "workshop": [
+          "勉強会",
+          "ワークショップ",
+          "セミナー"
+        ],
+        "orientation": [
+          "説明会",
+          "オリエンテーション",
+          "入門"
+        ]
+      }
+    },
+    {
+      "id": "art",
+      "label": "アート・展示・撮影",
+      "priority": 95,
+      "strong_keywords": [
+        "美術展",
+        "作品展",
+        "写真展",
+        "展示会",
+        "撮影会",
+        "フォトウォーク"
+      ],
+      "keywords": [
+        "アート",
+        "美術",
+        "展示",
+        "作品展示",
+        "写真",
+        "撮影",
+        "ギャラリー",
+        "博物館",
+        "ミュージアム",
+        "art",
+        "gallery",
+        "museum"
+      ],
+      "subcategories": {
+        "exhibition": [
+          "美術展",
+          "作品展",
+          "写真展",
+          "展示会",
+          "ギャラリー",
+          "museum",
+          "博物館"
+        ],
+        "photography": [
+          "撮影会",
+          "フォトウォーク",
+          "写真",
+          "撮影"
+        ]
+      }
+    },
+    {
+      "id": "music",
+      "label": "音楽・ダンス",
+      "priority": 90,
+      "strong_keywords": [
+        "djイベント",
+        "dj party",
+        "音楽ライブ",
+        "ライブ演奏",
+        "ダンスイベント",
+        "クラブイベント"
+      ],
+      "keywords": [
+        "dj",
+        "ライブ",
+        "音楽",
+        "演奏",
+        "歌枠",
+        "コンサート",
+        "ダンス",
+        "クラブ",
+        "music",
+        "concert",
+        "dance"
+      ],
+      "subcategories": {
+        "dj": [
+          "dj",
+          "クラブイベント",
+          "dj party"
+        ],
+        "live_music": [
+          "音楽ライブ",
+          "ライブ演奏",
+          "演奏",
+          "コンサート",
+          "concert"
+        ],
+        "dance": [
+          "ダンス",
+          "dance"
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "label": "公演・ショー",
+      "priority": 85,
+      "strong_keywords": [
+        "演劇公演",
+        "舞台公演",
+        "朗読劇",
+        "お笑いライブ",
+        "ショーイベント"
+      ],
+      "keywords": [
+        "公演",
+        "演劇",
+        "舞台",
+        "ショー",
+        "朗読",
+        "漫才",
+        "コント",
+        "落語",
+        "劇団",
+        "パフォーマンス",
+        "performance",
+        "theater"
+      ],
+      "subcategories": {
+        "theater": [
+          "演劇",
+          "舞台",
+          "劇団",
+          "theater"
+        ],
+        "reading": [
+          "朗読",
+          "朗読劇"
+        ],
+        "comedy": [
+          "漫才",
+          "コント",
+          "落語",
+          "お笑いライブ"
+        ],
+        "show": [
+          "ショー",
+          "パフォーマンス",
+          "performance"
+        ]
+      }
+    },
+    {
+      "id": "game",
+      "label": "ゲーム・参加型",
+      "priority": 80,
+      "strong_keywords": [
+        "謎解き",
+        "クイズ大会",
+        "ゲーム大会",
+        "ボードゲーム",
+        "人狼",
+        "マーダーミステリー"
+      ],
+      "keywords": [
+        "ゲーム",
+        "クイズ",
+        "麻雀",
+        "将棋",
+        "チェス",
+        "かくれんぼ",
+        "鬼ごっこ",
+        "オークション",
+        "競技",
+        "トーナメント",
+        "game"
+      ],
+      "subcategories": {
+        "mystery": [
+          "謎解き",
+          "マーダーミステリー"
+        ],
+        "quiz": [
+          "クイズ",
+          "クイズ大会"
+        ],
+        "tabletop": [
+          "ボードゲーム",
+          "人狼",
+          "麻雀",
+          "将棋",
+          "チェス"
+        ],
+        "competition": [
+          "ゲーム大会",
+          "競技",
+          "トーナメント"
+        ],
+        "auction": [
+          "オークション"
+        ]
+      }
+    },
+    {
+      "id": "world_tour",
+      "label": "ワールド巡り・観光",
+      "priority": 75,
+      "strong_keywords": [
+        "ワールド巡り",
+        "ワールドツアー",
+        "world tour",
+        "world hopping"
+      ],
+      "keywords": [
+        "観光",
+        "旅行",
+        "散歩",
+        "街歩き",
+        "探訪",
+        "ワールド紹介",
+        "ワールド観光"
+      ],
+      "subcategories": {
+        "world_tour": [
+          "ワールド巡り",
+          "ワールドツアー",
+          "world tour",
+          "world hopping"
+        ],
+        "sightseeing": [
+          "観光",
+          "旅行",
+          "街歩き",
+          "探訪"
+        ]
+      }
+    },
+    {
+      "id": "wellness",
+      "label": "運動・ウェルネス",
+      "priority": 70,
+      "strong_keywords": [
+        "フィットネス集会",
+        "フィットボクシング",
+        "ラジオ体操",
+        "ヨガ集会",
+        "運動集会"
+      ],
+      "keywords": [
+        "フィットネス",
+        "運動",
+        "筋トレ",
+        "ヨガ",
+        "ストレッチ",
+        "体操",
+        "ボクシング",
+        "睡眠",
+        "瞑想",
+        "健康",
+        "wellness",
+        "fitness"
+      ],
+      "subcategories": {
+        "fitness": [
+          "フィットネス",
+          "運動",
+          "筋トレ",
+          "ボクシング",
+          "fitness"
+        ],
+        "yoga": [
+          "ヨガ",
+          "ストレッチ"
+        ],
+        "relaxation": [
+          "睡眠",
+          "瞑想",
+          "リラックス",
+          "wellness"
+        ]
+      }
+    },
+    {
+      "id": "community",
+      "label": "交流・カフェ",
+      "priority": 60,
+      "strong_keywords": [
+        "交流会",
+        "雑談会",
+        "初心者交流",
+        "同期会",
+        "カフェイベント",
+        "バーイベント"
+      ],
+      "keywords": [
+        "交流",
+        "雑談",
+        "集会",
+        "カフェ",
+        "喫茶",
+        "バー",
+        "bar",
+        "cafe",
+        "初見歓迎",
+        "初心者歓迎",
+        "お話",
+        "接客",
+        "ロールプレイ",
+        "同期会",
+        "飲み会"
+      ],
+      "subcategories": {
+        "cafe": [
+          "カフェ",
+          "喫茶",
+          "cafe"
+        ],
+        "bar": [
+          "バー",
+          "bar",
+          "飲み会"
+        ],
+        "social": [
+          "交流会",
+          "交流",
+          "同期会",
+          "初心者交流"
+        ],
+        "hangout": [
+          "雑談",
+          "お話",
+          "集会"
+        ],
+        "cast_service": [
+          "接客",
+          "キャスト",
+          "ロールプレイ"
+        ]
+      }
+    },
+    {
+      "id": "other",
+      "label": "その他",
+      "priority": 0,
+      "strong_keywords": [],
+      "keywords": [],
+      "subcategories": {}
+    }
+  ],
+  "modalities": {
+    "hybrid": [
+      "ハイブリッド",
+      "vrchatとyoutube",
+      "vrchat / zoom",
+      "vrchat／zoom",
+      "現地とvrchat"
+    ],
+    "stream": [
+      "配信",
+      "youtube",
+      "twitch",
+      "ツイキャス",
+      "stream",
+      "オンライン配信"
+    ],
+    "offline": [
+      "vrcとは関係ない",
+      "リアル会場",
+      "現地開催",
+      "オフライン開催",
+      "幕張メッセ",
+      "渋谷で",
+      "大阪で",
+      "東京で"
+    ],
+    "in_world": [
+      "vrchat",
+      "vrc",
+      "group+",
+      "group instance",
+      "グループインスタンス",
+      "join",
+      "ジョイン",
+      "リクイン",
+      "reqin",
+      "ワールド"
+    ]
+  }
+}

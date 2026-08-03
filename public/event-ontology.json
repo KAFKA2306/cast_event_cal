@@ -1,6 +1,6 @@
 {
-  "schema_version": "2.0",
-  "generated_at": "2026-08-03T09:56:15Z",
+  "schema_version": "3.0",
+  "generated_at": "2026-08-03T10:24:58Z",
   "source_event_generated_at": "2026-08-03T09:55:00Z",
   "source_event_count": 597,
   "matching_policy": {
@@ -11,6 +11,76 @@
   },
   "curated_entry_count": 2,
   "observed_entity_count": 117,
+  "category_ontology_schema_version": "2.0",
+  "category_labels": {
+    "recruitment_deadline": "募集・締切",
+    "language_exchange": "言語交流",
+    "technology": "技術・研究",
+    "learning": "学習・講義",
+    "art": "アート・展示・撮影",
+    "music": "音楽・ダンス",
+    "performance": "公演・ショー",
+    "game": "ゲーム・参加型",
+    "world_tour": "ワールド巡り・観光",
+    "wellness": "運動・ウェルネス",
+    "community": "交流・カフェ",
+    "other": "その他"
+  },
+  "category_breakdown": {
+    "community": 137,
+    "art": 132,
+    "game": 105,
+    "wellness": 52,
+    "technology": 37,
+    "language_exchange": 35,
+    "learning": 24,
+    "music": 23,
+    "other": 20,
+    "world_tour": 19,
+    "recruitment_deadline": 7,
+    "performance": 6
+  },
+  "subcategory_breakdown": {
+    "photography": 124,
+    "social": 73,
+    "fitness": 35,
+    "language_exchange": 35,
+    "tabletop": 35,
+    "mystery": 34,
+    "hangout": 29,
+    "engineering": 25,
+    "cafe": 19,
+    "world_tour": 19,
+    "dj": 18,
+    "orientation": 18,
+    "bar": 15,
+    "research": 12,
+    "lecture": 5,
+    "application_deadline": 2,
+    "dance": 2,
+    "show": 2,
+    "auction": 1,
+    "cast_recruitment": 1,
+    "cast_service": 1,
+    "exhibition": 1,
+    "reading": 1,
+    "staff_recruitment": 1,
+    "theater": 1,
+    "workshop": 1
+  },
+  "event_mode_breakdown": {
+    "in_world": 586,
+    "deadline": 7,
+    "hybrid": 3,
+    "offline": 1
+  },
+  "classification_source_breakdown": {
+    "legacy_and_keywords": 464,
+    "keyword_rules": 93,
+    "fallback": 20,
+    "legacy_category": 18,
+    "curated_ontology": 2
+  },
   "entries": [
     {
       "canonical_id": "zerozoku-auction",
@@ -26,6 +96,8 @@
       "required_patterns": [
         "オークション"
       ],
+      "category": "game",
+      "subcategory": "auction",
       "official_links": [
         {
           "label": "主催者公式X",
@@ -55,6 +127,8 @@
       "required_patterns": [
         "FOR LIGHT"
       ],
+      "category": "community",
+      "subcategory": "cafe",
       "official_links": [
         {
           "label": "主催者公式X",
@@ -95,6 +169,20 @@
         "おはよう！朝4時に何してるんだぃ？",
         "おはよう！朝4時に何してるんだぃ？"
       ],
+      "category_distribution": {
+        "art": 121
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 121,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "photography": 121
+      },
+      "event_mode_distribution": {
+        "in_world": 121
+      },
       "official_links": []
     },
     {
@@ -118,6 +206,20 @@
         "EN-JP Language Exchange（土曜）",
         "EN-JP Language Exchange（日曜）"
       ],
+      "category_distribution": {
+        "language_exchange": 35
+      },
+      "dominant_category": {
+        "value": "language_exchange",
+        "count": 35,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "language_exchange": 35
+      },
+      "event_mode_distribution": {
+        "in_world": 35
+      },
       "official_links": []
     },
     {
@@ -141,6 +243,20 @@
         "VRCフィットボクシング集会（土曜）",
         "VRCフィットボクシング集会（日曜）"
       ],
+      "category_distribution": {
+        "wellness": 35
+      },
+      "dominant_category": {
+        "value": "wellness",
+        "count": 35,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "fitness": 35
+      },
+      "event_mode_distribution": {
+        "in_world": 35
+      },
       "official_links": []
     },
     {
@@ -164,6 +280,22 @@
         "ASMR集会 初心者説明会",
         "ASMR集会 本営業"
       ],
+      "category_distribution": {
+        "community": 17,
+        "learning": 17
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 17,
+        "share": 0.5
+      },
+      "subcategory_distribution": {
+        "hangout": 17,
+        "orientation": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 34
+      },
       "official_links": []
     },
     {
@@ -187,6 +319,20 @@
         "VRCごいた会",
         "VRCごいた会"
       ],
+      "category_distribution": {
+        "game": 18
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 18,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "tabletop": 18
+      },
+      "event_mode_distribution": {
+        "in_world": 18
+      },
       "official_links": []
     },
     {
@@ -210,6 +356,18 @@
         "VRCゲームワールド部 月曜イベント",
         "VRCゲームワールド部 月曜イベント"
       ],
+      "category_distribution": {
+        "game": 18
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 18,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 18
+      },
       "official_links": []
     },
     {
@@ -233,6 +391,20 @@
         "EXPLOIT部 定期対戦会",
         "EXPLOIT部 定期対戦会"
       ],
+      "category_distribution": {
+        "game": 17
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "tabletop": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": [
         {
           "url": "https://x.com/EXPLOIT",
@@ -262,6 +434,20 @@
         "ML集会",
         "ML集会"
       ],
+      "category_distribution": {
+        "technology": 17
+      },
+      "dominant_category": {
+        "value": "technology",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "engineering": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -285,6 +471,20 @@
         "Personally match",
         "Personally match"
       ],
+      "category_distribution": {
+        "community": 17
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -308,6 +508,20 @@
         "VR BLOOD RECALL 初心者説明会＆交流会",
         "VR BLOOD RECALL 初心者説明会＆交流会"
       ],
+      "category_distribution": {
+        "community": 17
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -331,6 +545,18 @@
         "VRCでボーっとする会",
         "VRCでボーっとする会"
       ],
+      "category_distribution": {
+        "wellness": 17
+      },
+      "dominant_category": {
+        "value": "wellness",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -354,6 +580,20 @@
         "VRCふれあい動物園",
         "VRCふれあい動物園"
       ],
+      "category_distribution": {
+        "community": 17
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -377,6 +617,20 @@
         "VRC初心者ワールドツアー",
         "VRC初心者ワールドツアー"
       ],
+      "category_distribution": {
+        "world_tour": 17
+      },
+      "dominant_category": {
+        "value": "world_tour",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "world_tour": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -400,6 +654,18 @@
         "ゆるゲMEET定期開催日",
         "ゆるゲMEET定期開催日"
       ],
+      "category_distribution": {
+        "game": 17
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": [
         {
           "url": "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5/calendar/cal_0cfc20f2-aba2-4c15-8628-59212d1dc53f",
@@ -429,6 +695,20 @@
         "居酒屋なぞとき",
         "居酒屋なぞとき"
       ],
+      "category_distribution": {
+        "game": 17
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "mystery": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -452,6 +732,20 @@
         "水曜Quest初心者の集い",
         "水曜Quest初心者の集い"
       ],
+      "category_distribution": {
+        "community": 17
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": [
         {
           "url": "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca/calendar/cal_ffabe2fa-029c-427e-a20e-ec19ebfacb5f",
@@ -481,6 +775,20 @@
         "謎めぐり",
         "謎めぐり"
       ],
+      "category_distribution": {
+        "game": 17
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 17,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "mystery": 17
+      },
+      "event_mode_distribution": {
+        "in_world": 17
+      },
       "official_links": []
     },
     {
@@ -504,6 +812,20 @@
         "しーぷかふぇ 第4土曜 第一部",
         "しーぷかふぇ 第2土曜 第二部"
       ],
+      "category_distribution": {
+        "community": 16
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 16,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cafe": 16
+      },
+      "event_mode_distribution": {
+        "in_world": 16
+      },
       "official_links": []
     },
     {
@@ -527,6 +849,20 @@
         "VR研究カフェ（毎月20日）",
         "VR研究カフェ（毎月10日）"
       ],
+      "category_distribution": {
+        "technology": 12
+      },
+      "dominant_category": {
+        "value": "technology",
+        "count": 12,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "research": 12
+      },
+      "event_mode_distribution": {
+        "in_world": 12
+      },
       "official_links": []
     },
     {
@@ -550,6 +886,20 @@
         "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
         "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）"
       ],
+      "category_distribution": {
+        "technology": 8
+      },
+      "dominant_category": {
+        "value": "technology",
+        "count": 8,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "engineering": 8
+      },
+      "event_mode_distribution": {
+        "in_world": 8
+      },
       "official_links": [
         {
           "url": "https://x.com/SW_Arch",
@@ -579,6 +929,20 @@
         "ルルネ水族館（第1木曜）",
         "ルルネ水族館（第3木曜）"
       ],
+      "category_distribution": {
+        "community": 8
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 8,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 8
+      },
+      "event_mode_distribution": {
+        "in_world": 8
+      },
       "official_links": []
     },
     {
@@ -600,6 +964,21 @@
         "【VRChatイベント告知】 ｢アイスクリーム集会｣を開催します。 夏本番！みんなでアイスクリームを食べる集会です。 日時:8/2(日) 20:00～21:00 ｢VRChatたべもの集会｣G…",
         "【VRChatイベント告知】 ｢アイスクリーム集会｣を開催します。 夏本番！みんなでアイスクリームを食べる集会です。 日時:8/2(日) 20:00～21:00 ｢VRChatたべもの集会｣G…"
       ],
+      "category_distribution": {
+        "community": 3
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 3,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 2,
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 3
+      },
       "official_links": [
         {
           "url": "https://twitter.com/nagayanyan/status/2079556698751340586",
@@ -657,6 +1036,21 @@
         "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! アニソンDJ大集結のやつ！楽しいとこに来ちゃって下さい！ID-0 #VRC_…",
         "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! アニメだアニメ！よろしくどうぞ！ #VRC_APOP_FEAST https…"
       ],
+      "category_distribution": {
+        "music": 2,
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 2,
+        "share": 0.667
+      },
+      "subcategory_distribution": {
+        "dj": 2
+      },
+      "event_mode_distribution": {
+        "in_world": 3
+      },
       "official_links": [
         {
           "url": "https://twitter.com/rhinohornVR/status/2078017438864802265",
@@ -712,6 +1106,22 @@
         "【VJ Lounge SIGNAL】 VJの実演・解説・交流を楽しめるイベントを開催します！ VJを見てみたい方、これから始めたい方もお気軽にご参加ください。 📅2026年8月3日（月）21:…",
         "昼宣伝！ VJに焦点を当てた交流イベント！ クラブイベントとは少し違った形式になるのをご了承ください 目指すはVJ文化の拡大！ 8/3 月曜日の21時からVRChatにて宜しくお願いします～！…"
       ],
+      "category_distribution": {
+        "community": 1,
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 0.5
+      },
+      "subcategory_distribution": {
+        "dj": 1,
+        "social": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 2
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ComaPre/status/2079127292694134992",
@@ -752,6 +1162,20 @@
         "#SIREN集会VRC 本日23:00～VRCで #異界入り2026 !!VRCID:【NAKADARARIRI】にフレンド申請をお忘れなく!! ※PC限定/定員45名/途中入場可 https…",
         "🔻SIREN異界突入脱出集会2026🔻 毎年恒例のVRCユーザー(PC)限定SIRENファン非公式集会。めちゃ急ですが今年は既存会場で異界入り当日も開催‼ 【突入集会 8/3 23:00～】 …"
       ],
+      "category_distribution": {
+        "community": 2
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 2,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 2
+      },
+      "event_mode_distribution": {
+        "in_world": 2
+      },
       "official_links": [
         {
           "url": "https://twitter.com/nakadarariri/status/2083197505324695668",
@@ -792,6 +1216,20 @@
         "🚨【告知】🚨 ⭐️初主催DJイベント AniStopPable（アニストッパブル）開催！🎉 DJ・VJ交代時も音楽はノンストップ。 音を止めないDJ・VJが4時間駆け抜けます🔥 音の止まらない…",
         "🚨【開催まであと少し！】🚨 ⭐️AniStopPable（アニストッパブル） DJ・VJ交代時も音楽はノンストップ！ サブカル満載の4時間をお届けします🔥 📅8/8(土) 20:30～24:3…"
       ],
+      "category_distribution": {
+        "music": 2
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 2,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 2
+      },
+      "event_mode_distribution": {
+        "in_world": 2
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Shakugan_com487/status/2081312271750590667",
@@ -837,6 +1275,21 @@
         "【告知解禁 】VR サブカルイベントの フェス‼️ 総勢16人のDVJが集まって 2フロア開催のお祭り🎇 にてVJします！ 8/22(土）19:30～ at VRchatご予定くださいー ht…",
         "【告知】アニメのEDオンリーの DJイベント 宵待ちエンドロール にてVJします！ OPはよく聞くけどあよEDなかなかイベントで聞けないよね っていうそこの貴方！！ぜひ！ steamが使えてそ…"
       ],
+      "category_distribution": {
+        "music": 1,
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 0.5
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 2
+      },
       "official_links": [
         {
           "url": "https://twitter.com/317TutyVRC/status/2077590352660517097",
@@ -882,6 +1335,20 @@
         "【VRChat DJイベント告知】 約4年ぶりに #VR_EXCEED で復活！ ✨ Konatan Psychedelic Festival 📅2026/08/20 (木) ⏰20:00-2…",
         "【VRChat DJイベント告知】 8/3(月)のPsy-Trance DJイベント情報！(*‘ω‘ *) 🍍2026/08/03(Mon) 🍍22:00-25:00(JST) 🍍Join→G…"
       ],
+      "category_distribution": {
+        "music": 2
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 2,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 2
+      },
+      "event_mode_distribution": {
+        "in_world": 2
+      },
       "official_links": [
         {
           "url": "https://twitter.com/yossy222_VRC/status/2081546495783047173",
@@ -935,6 +1402,20 @@
       "sample_titles": [
         "0属オークション"
       ],
+      "category_distribution": {
+        "game": 1
+      },
+      "dominant_category": {
+        "value": "game",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "auction": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/0zoku_vrc/status/2083770096582119685?utm_source=yjrealtime&utm_medium=search",
@@ -963,6 +1444,20 @@
       "sample_titles": [
         "✨毎月9日は定例同期会の日！✨ 第10回同期会を 8/9(木) 21時から開始します！ VRC内の2025年9月同期会グループインスタンスで開催します！🎉 途中参加途中退出OKですのでお気軽に…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/202509VRC/status/2083913746049814998",
@@ -996,6 +1491,20 @@
       "sample_titles": [
         "【告知】 VRC A-POP FEAST、今年もやります！ A-POP原曲DJを集めたA-POPの祭りですよ！ 今回はフェスらしく真夏の開催！ 2floorでお送りします。 新進気鋭のあの人も…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/317TutyVRC/status/2077590352660517097",
@@ -1029,6 +1538,20 @@
       "sample_titles": [
         "🎧 VRChat DJイベント「のぶのーび」！ 8/14(金)の深夜（8/15(土)の未明） たかぽんはPsytranceやります！ ┈┈┈┈┈┈┈┈ 🌙 23:45 OPEN 🔊 24:00…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/__iGod/status/2083496975576784998",
@@ -1062,6 +1585,18 @@
       "sample_titles": [
         "『俺だけが勝ち確だと思っていた件』"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/_EmuEnvy",
@@ -1085,6 +1620,18 @@
       "sample_titles": [
         "8月3日夜22:30から 不定期開催イベント 「でぃだら娘空遊」 開催します ! ——————————————————————- フレンドインスタンスで開きますので 参加したい方はこの投稿にリ…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/_osiruko/status/2083447750969233708",
@@ -1118,6 +1665,18 @@
       "sample_titles": [
         "#RIM_ix ━━━ RIM:ix ━━━ 8/22(SAT) OPEN 21:50 22:00-23:00 VRChat (Group+:https://t.co/PB18hwR7U5) …"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/aiai1969767/status/2083387251816534442",
@@ -1156,6 +1715,18 @@
       "sample_titles": [
         "START VRC怪談集会 赤い部屋 第142回 ◎開催日時：8/3(月) 22:00 ◎参加方法：akaiheyaグループインスタンスにJOIN https://t.co/qmUv5bDOb…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/akaiheya_vrc/status/2084119568612487374?utm_source=yjrealtime&utm_medium=search",
@@ -1189,6 +1760,20 @@
       "sample_titles": [
         "🥃 ソロジャーナルワークショップ Bar Not Alone ソロジャーナルで遊びませんか？ 初心者さんも、経験者さんも、作者さんも大歓迎！ 気軽に遊びに来てください📖 📅 第2水曜 22:0…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "workshop": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/AkiranekoE/status/2083690882629505216?utm_source=yjrealtime&utm_medium=search",
@@ -1222,6 +1807,18 @@
       "sample_titles": [
         "START VRCホストイベント「Accept Your Love」 8/2(日)22:00〜23:00(21:55よりリクイン) 7月は営業できずすみませんでした！！8月1回目の営業です！！…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/AreYouLady123/status/2083089693357564356",
@@ -1255,6 +1852,20 @@
       "sample_titles": [
         "【イベント告知】VRChat韓国語教室「アリラン」にて第21回講義を開催します。 参加お待ちしてます！ -講義内容 1. ハングル基礎編 2. パッチム編 3. 発音編 -日時 2026/8/…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/ArirangVRC/status/2083770507850375581?utm_source=yjrealtime&utm_medium=search",
@@ -1283,6 +1894,20 @@
       "sample_titles": [
         "・FM言ノ葉局長 ・言ノ葉ラジオMC X→https://t.co/6V4nK9sGnD YouTube→https://t.co/nTX0JXmbnD ・VRC集会イベント「言ノ葉の集い」 …"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "hybrid": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Books0422/status/2083830419305402583",
@@ -1331,6 +1956,18 @@
       "sample_titles": [
         "START 開催日程 8/11(火) 12:00~ 8/16(日) 20:00~ 所要時間は2時間から3時間程度を見込んでおります。 ※今回の体験会はVRChatへの市販アバターのアップロード…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/chara_ket/status/2084184881433817387?utm_source=yjrealtime&utm_medium=search",
@@ -1359,6 +1996,20 @@
       "sample_titles": [
         "Quest Dance party Club No.269 [VRC Quest対応DJイベント] 📅8月4日(火) OPEN 20:40 JST～ START 21:00 JST～ 今週のゲ…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ClubDanceparty/status/2082974922272612758",
@@ -1392,6 +2043,18 @@
       "sample_titles": [
         "🌙【#ClubMorceau】#31🌙 ～ モルソ 第31回 通常営業 ～ ⏰8月2日(日曜日) 21:00~23:00 🌐Group+ instance (MORC.2201) 🎉Perfo…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ClubMorceau_VRC/status/2082390678047424664",
@@ -1425,6 +2088,20 @@
       "sample_titles": [
         "【VRChat DJイベント告知】Maroon#3 3ヶ月ぶりの開催、楽しい空間になりそうです！ 8月11日（火） 21:00- [JST] Start ▼DJ (50min set) ・Ec…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/eclairr_xx/status/2083847223167926414",
@@ -1458,6 +2135,18 @@
       "sample_titles": [
         "🎶VRChatライブ🎶 『Lumina Performance Live vol.21』 ⏰8/6(木)22:15開場│22:30開演 ✨出演 ・リア @Lia_vrc ・煉獄丸 @rengo…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/el_ma_riu/status/2083145652478136497",
@@ -1491,6 +2180,20 @@
       "sample_titles": [
         "📢集会スタッフ募集📢 この度VRCイベント、イケケモ集会 Ferulia は一緒にイベントを盛り上げてくれるスタッフを募集します ・イケケモが好きな方 ・集会を一緒に楽しみたい方 ぜひご応募く…"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "staff_recruitment": 1
+      },
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Ferulia00/status/2081592802870510033",
@@ -1529,6 +2232,20 @@
       "sample_titles": [
         "Cafe & Bar FOR LIGHT"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cafe": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/FOR_LIGHT202209/status/2083738482703466864?utm_source=yjrealtime&utm_medium=search",
@@ -1557,6 +2274,18 @@
       "sample_titles": [
         "【LIVE告知】 8月23日（日）、21：30～ VRChatにてLIVEやります～🍓 今回は「サザンオールスターズ」only live！ ぜひ遊びに来てくださいね🌊 #VRChat フレンド…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/frisbee_V/status/2083746800033517642",
@@ -1590,6 +2319,18 @@
       "sample_titles": [
         "ご主人様お嬢様ごきげんよう～❕ 今週の8/8(土)22:00～営業がございます♡ 当日はgroup joinなのでグループに入るのをお忘れなく❕ VRCグループ ▶︎ https://t.co…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/fyuear_r/status/2083682081184551379",
@@ -1628,6 +2369,18 @@
       "sample_titles": [
         "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 去年に続き 夏のアニメ祭り VRC A-POP FEAST 2026 やります！ 🗓️8/22 土曜日 19:30 OPEN!! 会場は2026特設ワールド …"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/haconiwa_VRC/status/2077926565833544098",
@@ -1661,6 +2414,20 @@
       "sample_titles": [
         "🎪 #白紙座 第３２回公演のおしらせ 🎪 2026年8月5日（水） 21:15 開場 ／ 21:30 開演 ましろ小劇場（VRChat） 様々な背景を持つ俳優たちによる、個性豊かなインプロ（即…"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "theater": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/hakushiza/status/2080216356952158297",
@@ -1694,6 +2461,20 @@
       "sample_titles": [
         "\\第25回 #VRC広島集会 開催します！/ 8月20日（木）22時～ #VRC広島集会 開催です🤍 ローカルな話題でゆるやかな時間を過ごしましょう😌 広島に興味を持っていらっしゃる方大歓迎😄…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Hibiki_VR_ac/status/2084089354952294853",
@@ -1732,6 +2513,20 @@
       "sample_titles": [
         "#個室闇鍋VRC 開催決定🎉 今回はグループインスタンス先着順で参加できます！ 参加方法などの詳細はツリーへ👇 🏠 個室での濃厚な時間。 いつものVRCイベントとは一味違う夜をお楽しみください…"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "application_deadline": 1
+      },
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ibekoresub/status/2082990245176586249",
@@ -1765,6 +2560,20 @@
       "sample_titles": [
         "【衣更ギンVRC４周年企画第１弾】[再] ～みんなでテクノブレイク踊ってみた！VRC～ 開催日：9/13(日) 22:00～ みんなの全力で楽しんでるダンスが見たい‼ ということで単発ですが主…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dance": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Isara_VRC/status/2084112024142012846",
@@ -1803,6 +2612,18 @@
       "sample_titles": [
         "【出演告知】 Jersey Clubが流れるVRCイベント、\"Dark Five Club\"に出演させていただきます！ #DFCJC の主催、#JerseyJunky の主催、そして #HAS…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Jokin0126_vrc/status/2082264781936037965",
@@ -1841,6 +2662,20 @@
       "sample_titles": [
         "START 本日のVRCラジオ Kのワールド巡りは直前のご連絡となりますが、延期となります。 次回放送は8月4日(火)24:00からとなります📻 https://t.co/stHwI2tGMg"
       ],
+      "category_distribution": {
+        "world_tour": 1
+      },
+      "dominant_category": {
+        "value": "world_tour",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "world_tour": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRCKWorldRadio/status/2082081752919765212",
@@ -1874,6 +2709,20 @@
       "sample_titles": [
         "8/5(水) 22:00～ 園芸部集会 Group 8/12(水) 22:00～ VRC園芸部集会 ～夏に枯れた植物、夏を越えた植物～ Group+ 8/19(水) 22:00～ 園芸部集会 …"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/kagami_nuit_vrc/status/2083438067671838761?utm_source=yjrealtime&utm_medium=search",
@@ -1902,6 +2751,18 @@
       "sample_titles": [
         "【#VRC餌場 開催告知！】 VRCの雑魚のイベント 餌場《Kamonegi》 8月10日（月曜日）22時～開催！！ 事前申し込み制になりますので下記のフォームにご記入ください！ 締め切りは8…"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/kamonegi10_06/status/2084118756473889132",
@@ -1935,6 +2796,20 @@
       "sample_titles": [
         "🎋【8/19 朗読ミュージカル】🐧🐼 七夕物語をベースにした完全新作朗読ミュージカル✨ 旧暦の七夕を一緒にお祝いしましょう🎋 出演：樹元オリエ × ききょうぱんだ 日時：2026年8月19日(…"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "reading": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/kikiki_kikyo/status/2074822308578173164",
@@ -1968,6 +2843,18 @@
       "sample_titles": [
         "【大切なことなのでもう一度】 来店ポイントの交換についてリマインドとなります！ 8/2 21:00までにキプカメラのワールドへJoinいただき、DMでVRC名とポイントの写真を共有いただくこと…"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/kipukamera/status/2081878354391908650",
@@ -2001,6 +2888,20 @@
       "sample_titles": [
         "第29回虜ロール集会をVRCで行います 8月5日(水)22時～23時 22時50分に集合写真を撮ります 参加される方は「虜ロール集会」グループにJoinをお願いします #虜ロール集会 ロール髪…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "photography": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/kodoresu_vr/status/2082464324216655917",
@@ -2039,6 +2940,20 @@
       "sample_titles": [
         "⚡リアルとバーチャルが交差する夜⚡ DJイベント『G1G4@VERSE(ギガバース)』久々に主催します🖖 ​渋谷XXIのオフライン会場と、VRChatのオンライン会場で同時開催🌐✨ ​🗓️ 8…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/kumakuma_0904/status/2081721537246490688",
@@ -2072,6 +2987,20 @@
       "sample_titles": [
         "【VRChatイベント告知】 8/2(日)22時から、初心者から熟練者まで集まって自炊のススメを学ぶ #自炊集会 を開催します🍳 今回は筋トレガチ勢のchanharuさんより、身体づくりに役に…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Kuroly7/status/2083024857474719790",
@@ -2110,6 +3039,18 @@
       "sample_titles": [
         "【イベント告知＆お便り募集】 VRChatラジオイベント「月刊つれぇわ＃8月号」 📅8/29(土) 22:00～ 📍「908 Production」 Group+インスタンス 📺Twitch同…"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/KuyaHuei_VR/status/2082398223872798889",
@@ -2143,6 +3084,20 @@
       "sample_titles": [
         "#VRC九州集会 は今週も開催！ 明日火曜日の21時からです！ 参加方法は以下のポストから！ また、VRCグループ人数2,000人到達＆九州集会3周年を記念して九州集会終了後の22時から『VR…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/KyushuShukai/status/1693556047456194720",
@@ -2176,6 +3131,18 @@
       "sample_titles": [
         "【LEAFstore VRC店】 \\ #over_the_radiance / 📅開催日時 8/30 20:00～ お家からVRChat内で臨場感あるライブが楽しめる.ᐟ LEAFから新ライブ…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/LEAFshade_/status/2073723567930560656",
@@ -2209,6 +3176,20 @@
       "sample_titles": [
         "＼🐱今日もワールド巡りいくぞー！💪／ VRChatの「新着・注目」から アドリブでワールドに突っ込む恒例企画‼️ （08/02・日曜日 22時～） https://t.co/yTxegBIpA…"
       ],
+      "category_distribution": {
+        "world_tour": 1
+      },
+      "dominant_category": {
+        "value": "world_tour",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "world_tour": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/luw_mooncat/status/2083868386644369441",
@@ -2242,6 +3223,18 @@
       "sample_titles": [
         "裏界隈プラベグループのトップを決めます😍 さらに 参加プラベグループの紹介や その場で面談等もありますので 興味のある方は是非遊びにきてね！ ♥️日時：８月５日(水) 22:00～♥️ 場所：…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/maemiemiemi/status/2083118271105311023",
@@ -2275,6 +3268,20 @@
       "sample_titles": [
         "📝出展申込み受付中❗📝 VRChatで開催するバーチャル即売会‼️ メタフェス2026の出展申込み受付中です❗ 一般出展は無料🆓✨ ⏬出展申込みはコチラから✨⏬ https://t.co/no…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/METAFES_jp/status/2078766798611021888?utm_source=yjrealtime&utm_medium=search",
@@ -2303,6 +3310,20 @@
       "sample_titles": [
         "初心者歓迎イベント『VRC将棋教室』！ 8月開催のご案内です。 講座と実戦で楽しく将棋を学べます🏫 講師が将棋上達を丁寧にサポート☕ 8/29(土) 21:10 ~ 23:00 グループ（ht…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/miraraKnight/status/2083313317666500975",
@@ -2336,6 +3357,20 @@
       "sample_titles": [
         "🎧出演告知🎧 8/15(土) 21:00〜開催の snaptrip にcrew DJとして出演します！ snaptripは、VRChatで普段から一緒に遊んでいる\"いつメン\"の集まり。今回はそ…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ponhayate_vrc/status/2084118223654633538",
@@ -2369,6 +3404,20 @@
       "sample_titles": [
         "🐾 ┈┈┈┈ 単発イベント ┈┈┈ 🐾 猫カフェ「にゃんめいと」VRChat店 🐈‍⬛擬人化×少年×猫カフェ風交流イベント ║2026/8/8（土） ║第1部 22:00~22:50 第2部 …"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cafe": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/mizuki_VRC/status/2080232112758907002",
@@ -2402,6 +3451,20 @@
       "sample_titles": [
         "START 今日の21時に2434VRC改変部の真夏の大運動会、ドラフト会議を僕のチャンネルで投稿します。 本開催は【2026年8月7日】【21時〜START】 2434VRC改変部Group…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "photography": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/momo_potensi/status/2080563836353171877",
@@ -2435,6 +3498,18 @@
       "sample_titles": [
         "#VRCにんおうきょう VRCイベント「忍桜郷」 🌸8月4日(火)22時🌸 🌸昼の暑さも、夜風がそっと和らげる頃 今宵も忍桜郷にてお待ちしております 【タイムテーブル】 21:50~21:52…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Ninoukyo_VRC/status/2084202614946984184",
@@ -2468,6 +3543,18 @@
       "sample_titles": [
         "START VRC1989年以前爆誕会 第161回定例飲み会(8/8(土)22:00開場・22:05乾杯)の告知です。参加条件は1989年以前生まれ(自称)。参加方法は代表にJoin。代表へf…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/NKYSKW_VRC/status/2083945313384210826",
@@ -2501,6 +3588,20 @@
       "sample_titles": [
         "【VRCゲーマーズイベント告知】 今年もやります水着ファッションショーイベント！ 開催日時：8/8 (土) 20:00～21:00 ファッションショーで改変をお披露目したいという方はDisco…"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "show": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/NUMA7ma_VRC/status/2080627512992989634",
@@ -2534,6 +3635,20 @@
       "sample_titles": [
         "🙌 営業告知 🙌 寝る前の雑談を楽しむVRCイベント『おやすみ前の隠れ家。』 事前抽選に加え、当日リクイン枠もご用意しております。 🕑開催日 8/8(土) 21:50～23:30 事前抽選はG…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/OYSM_VR/status/2084187675288797205",
@@ -2567,6 +3682,20 @@
       "sample_titles": [
         "2026年8月22日㈯20:30-24:00、2026年8月、リアルとメタバースの映画文化が交わる祭典として、映画祭「Portal Cinema Festival」を、VRChat上にて開催し…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/PCF0927/status/2074740243383906767",
@@ -2600,6 +3729,20 @@
       "sample_titles": [
         "🎉やるぞ〜〜 8月7日、21時‐24時 〔ぽぬたび VRC夏の陣〕 やる。 ◾︎概要 テーマ（部門）を公開⇒当日公開される課題ワールドで撮った写真を時間内にﾊｯｼｭﾀｸﾞつけてUPするだけ！ …"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "photography": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/pocho_inu/status/2082361100381872541?utm_source=yjrealtime&utm_medium=search",
@@ -2628,6 +3771,20 @@
       "sample_titles": [
         "Pyropaw Pyrocon Showcase"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "show": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/Pyropaw",
@@ -2656,6 +3813,18 @@
       "sample_titles": [
         "大会告知！#GGST #VRChat 2026年8月22日（土曜）21時より、VRChatプレイヤー限定のGGST大会の第8回大会を開催します！ 参加条件は大会Tonamelをご確認ください。…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Rinoa_VRC/status/2078354078581837955",
@@ -2689,6 +3858,18 @@
       "sample_titles": [
         "📢夏フェス開催のおしらせ❕ ⟡.· ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ ⟡.· 🏖☀️Rucha Fes 2026 -Summer-🍉🏝 ⟡.· ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ ⟡.· やりたいこと全…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ruu_01234/status/2083840956588343552",
@@ -2727,6 +3908,20 @@
       "sample_titles": [
         "【お知らせ】 先出し情報ですが、8/15(土)22:00〜VRChatイベントのBAR Melody Lineで超久々に歌うことが決定しました〜！ 是非みんなに歌を届けたいので時間を空けて遊び…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/SingSongLine/status/2083153781156610203",
@@ -2760,6 +3955,18 @@
       "sample_titles": [
         "【#Engrishを攻略しよう 5 開催のお知らせ】 📆開催日時：8月8日（土） 22:00～ 🎯場所：VRChat Group＋インスタンス ＆ Discord 💡参加条件：学生であること（…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/sirabosi_hinatu/status/2083360068549099578",
@@ -2793,6 +4000,18 @@
       "sample_titles": [
         "【Guest Recruitment】 完璧な笑顔で武装した彼女たちが、 ハイヒールを脱ぎ、素顔に戻る場所。 VRChat 1:1個室いちゃいちゃイベント『Sovereign's Secret…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/sovereign_vrc/status/2082413742231531814",
@@ -2826,6 +4045,20 @@
       "sample_titles": [
         "新作アバター『りこりす』テスター応募締切"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "application_deadline": 1
+      },
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://forms.gle/xtnTpqY2QPUGFshy6",
@@ -2854,6 +4087,20 @@
       "sample_titles": [
         "📶イベント告知📶 『VRChatロボっ娘アバター集会』やります。 日時:2026年8月8日(土)22:00～23:00 Group+インスタンスでの開催です。 ご参加の際はGroup加入後Gr…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/TAD_exe_VRC/status/2080959303486517348",
@@ -2887,6 +4134,20 @@
       "sample_titles": [
         "📢DJイベントのお知らせ📢 Kawaii Future Musicを中心としたVRDJイベントを開催します！ 📅 8/21(金) 🕘 21:00〜23:50 📍VRChat（Group+） 素…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/tapanohito/status/2082818006938452168",
@@ -2920,6 +4181,18 @@
       "sample_titles": [
         "【📢告 知📢】そのに VRCアニソンコネクト #51 オープンやります！ 百合顔からアニメ顔に......戻らなかったらきみ死ぬ200回流すよ～ 8/13(木) 21:00~ at VRC(G…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/TazTaz926/status/2082118916898488545",
@@ -2958,6 +4231,20 @@
       "sample_titles": [
         "第19回「プロステートチップLOVE」 日時：8月7日(金) 21:00開場(21:10スタート) 内容：講義「超上級者御用達!? 最凶！電極チップ特集」 参加資格：チップに興味があればどなた…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/ULPHA_S/status/2065398765167751649",
@@ -2996,6 +4283,20 @@
       "sample_titles": [
         "いよいよ明日、渋谷でDJします。 私の出番は20:00〜20:30。 vrcとは関係ないイベントなのでオフ会感覚で来てねとは言いにくいのですが、楽しいJPOPパーティなので興味がある方ぜひ〜〜…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "offline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/urara_vrc/status/2080523126119788645",
@@ -3034,6 +4335,20 @@
       "sample_titles": [
         "【イベント告知】 8/5(水)21時より、にVRchatでアニソン原曲パーティ「DJアニメくん」第6話がスタートします！ みんなでアニメくんになろう！ #Vmotion #でぃーあに"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/Vnkaok/status/2082440692153098294?utm_source=yjrealtime&utm_medium=search",
@@ -3062,6 +4377,18 @@
       "sample_titles": [
         "【VRChatイベント情報】 夏の水着イベント実施決定...！❤ ✝Secret Whisper✝ 2インスタンスの超拡大公演決定🔥 友達誘ってきてほしいな💕 8月5日 21:00～ グループ…"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/voisism_vrc/status/2083316775962485235",
@@ -3095,6 +4422,20 @@
       "sample_titles": [
         "<告知> ロケット打ち上げを観る集会 - アーカイブの部 🚀 Falcon 9 Block 5 | BlueBird 11-13 (Block 2 #6-8) 📆 日本時間 8/5(水) 16…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/vr_launch/status/2082745642745766378",
@@ -3128,6 +4469,20 @@
       "sample_titles": [
         "【VRChatバーイベント 新規キャスト募集】 RP→ノーマル雑談バーイベント 「Bar Lithops」 📚イベント企画書 https://t.co/ftNxUocBvr ✉️応募フォーム …"
       ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cast_recruitment": 1
+      },
+      "event_mode_distribution": {
+        "deadline": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_BarLithops/status/2084112021570940978",
@@ -3166,6 +4521,18 @@
       "sample_titles": [
         "#居酒屋和み #VRCカジュビリ #VRChat 前回好評だった「居酒屋なごみ」コラボ再び🍶🫛 🌻8月12日(水)21:00～ VRCイベント「居酒屋和み」さんとコラボイベントの開催が決定しま…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/vrc_cbc/status/2083840233876111559",
@@ -3199,6 +4566,20 @@
       "sample_titles": [
         "START VRC軽RP接客イベント【Cup of time】 営業のご連絡です。 営業日：8月5日 22:00 参加方法：ツリーにあるインスタンスリーダーへリクエストインバイト 1回 #VR…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_Cup_of_Time/status/2084112032085733744",
@@ -3232,6 +4613,18 @@
       "sample_titles": [
         "START VRCイベント 『Luminous Astrantia』 🍀第1回オープンのお知らせ🍀 8/14(金)22:55~24:10 🎇リポストキャンペーン🎇 ゲストさんの生演奏parti…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_lumitia/status/2083326848017031454",
@@ -3265,6 +4658,20 @@
       "sample_titles": [
         "【開催のお知らせ】 8/4(火) 23:00～ MDJがプレオープンいたします！ 今回個別接客を行うキャストはこちらです！ ぜっくん 霊柩ファントム Viola_vrc ÷わる÷ DJを聞きた…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_MDJ/status/2083394790712906199",
@@ -3298,6 +4705,18 @@
       "sample_titles": [
         "【イベント告知】 『VRC悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第76回は8月5日(水) 『21:00〜22:30』 ※当イベントはPCオンリ…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_nayameeting/status/2083886085877485717",
@@ -3331,6 +4750,20 @@
       "sample_titles": [
         "【VRC イベント開催】<日曜日> 💕「距離感めちゃ近 1対1 個室イチャイチャ接客イベント」#VRC_ステイクロース ⌛日時： 2026/08/09（日曜日）22:20～24:00頃 📨受付…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cast_service": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRC_StayClose/status/2083706861216518266",
@@ -3364,6 +4797,20 @@
       "sample_titles": [
         "”VRCバドミントン部初心者講習会” 日時：8/8(土) 22:00-23:00 初心者向けのバドミントン講習会を開催します！ 講師が基礎から丁寧にレクチャーしますので、ご参加ください！ 途中…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRCbadminton/status/2083522584138883522",
@@ -3397,6 +4844,20 @@
       "sample_titles": [
         "第9回 VRCボウリング部交流会にご参加いただきありがとうございました‼️ また次回も開催予定がありますので、ぜひ遊びに来てください✨ 次回は8/15(土) 20:00～の予定です🎳 #VRC…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRCbowlingClub/status/2082381268361302241",
@@ -3435,6 +4896,20 @@
       "sample_titles": [
         "【イベント告知】8/2（日）21時～ 2026年7月にVRChatを始めた皆さま、同期会を作りませんか？ VRC同期会を作ろう！ #2026年7月VRC同期会 VRChatのグループ「2026…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/vrcdouki/status/2074431589065564193",
@@ -3468,6 +4943,18 @@
       "sample_titles": [
         "START VRC吟行句会 第87回 開催します。 Android、iOS対応のworldです。 ■日時 8/4（火）21:30～24:00 ■参加方法 ・「VRC吟行句会」グループに参加 （…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/VRCHaiku/status/2083509617980821695?utm_source=yjrealtime&utm_medium=search",
@@ -3496,6 +4983,20 @@
       "sample_titles": [
         "#VRChat #VRChatイベント 会員の開催イベントについて告知します。 主催 飛鳥山はるか VRC世界史講義 毎週日曜日 20時30分から。 通史で世界史を解説しています。1時間半ほど…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRCSCA/status/2083749640760103140",
@@ -3529,6 +5030,18 @@
       "sample_titles": [
         "🔥VRChat内スト6大会、開催決定🔥 【VSC】VRC SF6 Championship 第1回 🗓 8/15(土) 20:00〜 👥 選手64名(先着)・参加費無料 📺 実況解説つき配信あ…"
       ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "hybrid": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VRCSF6_Champion/status/2081276166149923156",
@@ -3562,6 +5075,20 @@
       "sample_titles": [
         "🏮YSSおんゆ祭「BON DANCE」開催！🏮 ＼今年もこの季節がやってきた！／ ― 月極 #YSS_HomeLive #30 ― 🎆YSSおんゆ祭「BON DANCE」🎐 ￣￣￣￣￣￣￣￣￣…"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dance": 1
+      },
+      "event_mode_distribution": {
+        "hybrid": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/VrcYss/status/2083855733653995885",
@@ -3595,6 +5122,18 @@
       "sample_titles": [
         "VRTon 2026"
       ],
+      "category_distribution": {
+        "performance": 1
+      },
+      "dominant_category": {
+        "value": "performance",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://x.com/VRTon",
@@ -3623,6 +5162,20 @@
       "sample_titles": [
         "第69回「アバター改変なんもわからん集会」 日時：8月5日(水) 22:00開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加方法：VRCグループへJOIN ※講師はいますが講…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "bar": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/wakaran_vrc/status/2082435979541971082",
@@ -3656,6 +5209,20 @@
       "sample_titles": [
         "START 明日21時からVR空間で行う美術展『 #ARTLINK2026 』の説明会を行います！ 「VR美術館ってなに？」という疑問から、出展の流れ・作品の提出方法・今後のスケジュール等をご…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "exhibition": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/WESON_MUSEUM/status/2064633669046718611",
@@ -3694,6 +5261,18 @@
       "sample_titles": [
         "🔥WHOCARES ライブ出演🔥 百鬼夜行FES Vol.参 DAY2に出演します！！ 熱きVRChat発バンドKAGARIHIが贈るフェス 様々なジャンルが集って楽しそう 共に踊りましょう …"
       ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/Kagarihi_vr/status/2083508046752366960",
@@ -3727,6 +5306,20 @@
       "sample_titles": [
         "【夏祭り集会のお知らせ】 開催：8月27日(木) 22:00～23:00 参加方法：VRCグループ「White Rabbits」に参加 時間になりましたら、グループインスタンスへお越しください…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "hangout": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/WR_VRC/status/2083885523681353945",
@@ -3765,6 +5358,20 @@
       "sample_titles": [
         "8月9日(日)21時から『遊戯王VRC交流会』の第一回を開催します！ 遊戯王デュエルカフェというワールドにてOCGとMD入り乱れてのワイワイ遊戯王をしませんか！ 僕の初主催＆初運営ですが、皆さ…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "social": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/YakitoriYataro/status/2083174586934579596",
@@ -3798,6 +5405,20 @@
       "sample_titles": [
         "【イベント告知】 VRC英語交流カフェ「すごもり英語」 第５３回の開催が決まりました！ 📆8月2日（日）22:00〜23:00 🏞️時間になったらグループインスタンスへ！ グループの参加はこち…"
       ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cafe": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/yosemiVRC/status/2082712231972835622",
@@ -3836,6 +5457,20 @@
       "sample_titles": [
         "【告知】 VRC撮影講習会の受講者向け説明会を行います。 こちらは撮影に特化させた講習会です。 １回目の説明会は、8月5日 22時～ 15分ほど join先はリプツリーにある、yuki0122…"
       ],
+      "category_distribution": {
+        "learning": 1
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "orientation": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/yuki_ame0122/status/2083354510366531782",
@@ -3869,6 +5504,18 @@
       "sample_titles": [
         "START VRC和装接客型イベント 夢廻庵👘 🪭営業案内🪭 【8月5日(水)22時10分〜23時20分にて開催❗️】 ＊終了時間は前後する場合がございます ⛩️参加方法:グループjoin&事…"
       ],
+      "category_distribution": {
+        "art": 1
+      },
+      "dominant_category": {
+        "value": "art",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
       "official_links": [
         {
           "url": "https://twitter.com/yumemian29/status/2084114872397337064",

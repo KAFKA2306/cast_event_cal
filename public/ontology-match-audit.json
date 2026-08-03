@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "ontology_entries": 2,
   "event_count": 597,
   "matched_events": 2,
@@ -26,6 +26,822 @@
         "alias",
         "organizer",
         "required_patterns"
+      ]
+    }
+  ],
+  "category_classification": {
+    "schema_version": "2.0",
+    "event_count": 597,
+    "category_breakdown": {
+      "art": 132,
+      "community": 137,
+      "game": 105,
+      "language_exchange": 35,
+      "learning": 24,
+      "music": 23,
+      "other": 20,
+      "performance": 6,
+      "recruitment_deadline": 7,
+      "technology": 37,
+      "wellness": 52,
+      "world_tour": 19
+    },
+    "subcategory_breakdown": {
+      "application_deadline": 2,
+      "auction": 1,
+      "bar": 15,
+      "cafe": 19,
+      "cast_recruitment": 1,
+      "cast_service": 1,
+      "dance": 2,
+      "dj": 18,
+      "engineering": 25,
+      "exhibition": 1,
+      "fitness": 35,
+      "hangout": 29,
+      "language_exchange": 35,
+      "lecture": 5,
+      "mystery": 34,
+      "orientation": 18,
+      "photography": 124,
+      "reading": 1,
+      "research": 12,
+      "show": 2,
+      "social": 73,
+      "staff_recruitment": 1,
+      "tabletop": 35,
+      "theater": 1,
+      "workshop": 1,
+      "world_tour": 19
+    },
+    "event_mode_breakdown": {
+      "deadline": 7,
+      "hybrid": 3,
+      "in_world": 586,
+      "offline": 1
+    },
+    "classification_source_breakdown": {
+      "curated_ontology": 2,
+      "fallback": 20,
+      "keyword_rules": 93,
+      "legacy_and_keywords": 464,
+      "legacy_category": 18
+    },
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 48,
+    "audit_event_count": 49
+  },
+  "category_review_queue": [
+    {
+      "event_id": "642b7b65f4da4a3f6f44",
+      "title": "いよいよ明日、渋谷でDJします。 私の出番は20:00〜20:30。 vrcとは関係ないイベントなのでオフ会感覚で来てねとは言いにくいのですが、楽しいJPOPパーティなので興味がある方ぜひ〜〜…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": "dj",
+      "score": 5,
+      "confidence": 0.655,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:dj"
+      ],
+      "event_mode": "offline",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "aafacac9d498c7b837f7",
+      "title": "🌙【#ClubMorceau】#31🌙 ～ モルソ 第31回 通常営業 ～ ⏰8月2日(日曜日) 21:00~23:00 🌐Group+ instance (MORC.2201) 🎉Perfo…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "a673a786ea64f7e23635",
+      "title": "START VRC怪談集会 赤い部屋 第142回 ◎開催日時：8/3(月) 22:00 ◎参加方法：akaiheyaグループインスタンスにJOIN https://t.co/qmUv5bDOb…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "8488da8ae081a67169be",
+      "title": "8月3日夜22:30から 不定期開催イベント 「でぃだら娘空遊」 開催します ! ——————————————————————- フレンドインスタンスで開きますので 参加したい方はこの投稿にリ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c8d673e9f78ad5cd40da",
+      "title": "【Guest Recruitment】 完璧な笑顔で武装した彼女たちが、 ハイヒールを脱ぎ、素顔に戻る場所。 VRChat 1:1個室いちゃいちゃイベント『Sovereign's Secret…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "20f2bfffdf28746da541",
+      "title": "#VRCにんおうきょう VRCイベント「忍桜郷」 🌸8月4日(火)22時🌸 🌸昼の暑さも、夜風がそっと和らげる頃 今宵も忍桜郷にてお待ちしております 【タイムテーブル】 21:50~21:52…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1a349fb53d6e0268aae3",
+      "title": "【開催のお知らせ】 8/4(火) 23:00～ MDJがプレオープンいたします！ 今回個別接客を行うキャストはこちらです！ ぜっくん 霊柩ファントム Viola_vrc ÷わる÷ DJを聞きた…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": "dj",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:dj"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "e37b6978deb114541979",
+      "title": "【イベント告知】 『VRC悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第76回は8月5日(水) 『21:00〜22:30』 ※当イベントはPCオンリ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fe722777d71f3ced229e",
+      "title": "【告知】 VRC撮影講習会の受講者向け説明会を行います。 こちらは撮影に特化させた講習会です。 １回目の説明会は、8月5日 22時～ 15分ほど join先はリプツリーにある、yuki0122…",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": "orientation",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:説明会"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "art"
+      ]
+    },
+    {
+      "event_id": "4e6bf23651437b106997",
+      "title": "第29回虜ロール集会をVRCで行います 8月5日(水)22時～23時 22時50分に集合写真を撮ります 参加される方は「虜ロール集会」グループにJoinをお願いします #虜ロール集会 ロール髪…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": "photography",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:写真"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "a384812875debebce2a6",
+      "title": "裏界隈プラベグループのトップを決めます😍 さらに 参加プラベグループの紹介や その場で面談等もありますので 興味のある方は是非遊びにきてね！ ♥️日時：８月５日(水) 22:00～♥️ 場所：…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "aa4da2fca465cb3e7a7a",
+      "title": "🥃 ソロジャーナルワークショップ Bar Not Alone ソロジャーナルで遊びませんか？ 初心者さんも、経験者さんも、作者さんも大歓迎！ 気軽に遊びに来てください📖 📅 第2水曜 22:0…",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": "workshop",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ワークショップ"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "performance",
+        "community"
+      ]
+    },
+    {
+      "event_id": "6c18c71a89b25fb94794",
+      "title": "START VRC和装接客型イベント 夢廻庵👘 🪭営業案内🪭 【8月5日(水)22時10分〜23時20分にて開催❗️】 ＊終了時間は前後する場合がございます ⛩️参加方法:グループjoin&事…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "0e2e50f39599b97167f9",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "9fff51f1e387c6fb019e",
+      "title": "🎶VRChatライブ🎶 『Lumina Performance Live vol.21』 ⏰8/6(木)22:15開場│22:30開演 ✨出演 ・リア @Lia_vrc ・煉獄丸 @rengo…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ライブ"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "performance"
+      ]
+    },
+    {
+      "event_id": "f4a3c692befd6da02f8a",
+      "title": "『俺だけが勝ち確だと思っていた件』",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "f4b8906bf84bbf409e0d",
+      "title": "START VRC1989年以前爆誕会 第161回定例飲み会(8/8(土)22:00開場・22:05乾杯)の告知です。参加条件は1989年以前生まれ(自称)。参加方法は代表にJoin。代表へf…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "1f2a47f4de18495fc8ac",
+      "title": "【#Engrishを攻略しよう 5 開催のお知らせ】 📆開催日時：8月8日（土） 22:00～ 🎯場所：VRChat Group＋インスタンス ＆ Discord 💡参加条件：学生であること（…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2f1a82d8f3a0bb02c1a8",
+      "title": "ご主人様お嬢様ごきげんよう～❕ 今週の8/8(土)22:00～営業がございます♡ 当日はgroup joinなのでグループに入るのをお忘れなく❕ VRCグループ ▶︎ https://t.co…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "68b268debd9c91b13254",
+      "title": "START 開催日程 8/11(火) 12:00~ 8/16(日) 20:00~ 所要時間は2時間から3時間程度を見込んでおります。 ※今回の体験会はVRChatへの市販アバターのアップロード…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "b6c10287d78a6a03f652",
+      "title": "#居酒屋和み #VRCカジュビリ #VRChat 前回好評だった「居酒屋なごみ」コラボ再び🍶🫛 🌻8月12日(水)21:00～ VRCイベント「居酒屋和み」さんとコラボイベントの開催が決定しま…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ab3676c0dfc0c672bf2a",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "69b71a92363fc57d05e5",
+      "title": "【📢告 知📢】そのに VRCアニソンコネクト #51 オープンやります！ 百合顔からアニメ顔に......戻らなかったらきみ死ぬ200回流すよ～ 8/13(木) 21:00~ at VRC(G…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "6c9e3832d45c158ab972",
+      "title": "【出演告知】 Jersey Clubが流れるVRCイベント、\"Dark Five Club\"に出演させていただきます！ #DFCJC の主催、#JerseyJunky の主催、そして #HAS…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2f213a9205d2e4fe7759",
+      "title": "START VRCイベント 『Luminous Astrantia』 🍀第1回オープンのお知らせ🍀 8/14(金)22:55~24:10 🎇リポストキャンペーン🎇 ゲストさんの生演奏parti…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "music"
+      ]
+    },
+    {
+      "event_id": "9d50c02ed129919cd5f0",
+      "title": "🔥VRChat内スト6大会、開催決定🔥 【VSC】VRC SF6 Championship 第1回 🗓 8/15(土) 20:00〜 👥 選手64名(先着)・参加費無料 📺 実況解説つき配信あ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ed4b7f3b337613398aad",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "b98ede11c71cf718a25d",
+      "title": "【告知解禁 】VR サブカルイベントの フェス‼️ 総勢16人のDVJが集まって 2フロア開催のお祭り🎇 にてVJします！ 8/22(土）19:30～ at VRchatご予定くださいー ht…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1324b233d3b177ccf619",
+      "title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! アニメだアニメ！よろしくどうぞ！ #VRC_APOP_FEAST https…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "50aba76752ea7459fc49",
+      "title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 去年に続き 夏のアニメ祭り VRC A-POP FEAST 2026 やります！ 🗓️8/22 土曜日 19:30 OPEN!! 会場は2026特設ワールド …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "57bf0f6963f1e9b90624",
+      "title": "大会告知！#GGST #VRChat 2026年8月22日（土曜）21時より、VRChatプレイヤー限定のGGST大会の第8回大会を開催します！ 参加条件は大会Tonamelをご確認ください。…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ba706642901f77a147c2",
+      "title": "#RIM_ix ━━━ RIM:ix ━━━ 8/22(SAT) OPEN 21:50 22:00-23:00 VRChat (Group+:https://t.co/PB18hwR7U5) …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "efa9d09d3c126b5e8f7d",
+      "title": "📢夏フェス開催のおしらせ❕ ⟡.· ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ ⟡.· 🏖☀️Rucha Fes 2026 -Summer-🍉🏝 ⟡.· ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ ⟡.· やりたいこと全…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "57a3247eb1c026e538fe",
+      "title": "【LIVE告知】 8月23日（日）、21：30～ VRChatにてLIVEやります～🍓 今回は「サザンオールスターズ」only live！ ぜひ遊びに来てくださいね🌊 #VRChat フレンド…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "e78e71d06b40b34560fe",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "497038ba9c06e73682d6",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "384a43b5585f1b19ac51",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "ba89ee9fbed17e33ebde",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "8e895ea4fc3a1d1191c1",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "eca33aaa2c07ddc36737",
+      "title": "🔥WHOCARES ライブ出演🔥 百鬼夜行FES Vol.参 DAY2に出演します！！ 熱きVRChat発バンドKAGARIHIが贈るフェス 様々なジャンルが集って楽しそう 共に踊りましょう …",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ライブ"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "c4657f46747bbc224fd8",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "c0e0fcb0a951ab5bec96",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "5495c92eca44d929ccdc",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "8c2f2ec9b387f3b508ee",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "6b451b6fc0e238cd5b1a",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "da7303632997e92cec59",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "d4c99601664e9c3c1a51",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "80dacea56c65ba7e99c2",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "ebcd30a182a41db4c619",
+      "title": "VRCでボーっとする会",
+      "category": "wellness",
+      "label": "運動・ウェルネス",
+      "subcategory": null,
+      "score": 6,
+      "confidence": 0.58,
+      "source": "legacy_category",
+      "evidence": [
+        "legacy_category:wellness"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
       ]
     }
   ]
