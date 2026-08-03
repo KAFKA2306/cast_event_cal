@@ -1,4 +1,5 @@
 from cast_event_cal.categories import classify_events, direct_decision, load_category_ontology
+from scripts.build_yahoo_rejection_sample_audit import build as build_rejection_sample_audit
 
 
 def event(title: str, description: str = "", **values):
@@ -93,3 +94,16 @@ def test_recruitment_deadline_keeps_explicit_category():
     )
     assert decision.category == "recruitment_deadline"
     assert decision.event_mode == "deadline"
+
+
+def test_yahoo_rejection_sample_audit_covers_each_reason_and_prefers_high_retweets():
+    payload = build_rejection_sample_audit([
+        {"status_id": "1", "reason": "missing_datetime", "retweet_count": 2, "text_excerpt": "a"},
+        {"status_id": "2", "reason": "missing_datetime", "retweet_count": 9, "text_excerpt": "b"},
+        {"status_id": "3", "reason": "product_only", "retweet_count": 4, "text_excerpt": "c"},
+    ])
+    assert payload["materialized_rejected_count"] == 3
+    assert payload["reason_count"] == 2
+    reasons = {row["reason"]: row for row in payload["reasons"]}
+    assert reasons["missing_datetime"]["samples"][0]["status_id"] == "2"
+    assert reasons["product_only"]["samples"][0]["status_id"] == "3"
