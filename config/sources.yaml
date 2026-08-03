@@ -1,4 +1,4 @@
-version: 4
+version: 5
 http:
   timeout_seconds: 25
 window:
@@ -25,7 +25,14 @@ sources:
     enabled: true
     path: data/yahoo_realtime_events.json
 
-# 公開ICS/JSONフィードは以下の形式で追加する。
+  - name: external_calendar_events
+    type: manual_json
+    enabled: true
+    path: data/external_events.json
+
+# 公開ICS/JSONフィードをcoreへ直接追加する場合は以下の形式を使う。
+# 利用規約・robots・再配布条件を確認し、許諾が必要な媒体は
+# scripts/fetch_external_calendars.py の permissioned_ics を使用する。
 # - name: community_ics
 #   type: ics
 #   enabled: true
