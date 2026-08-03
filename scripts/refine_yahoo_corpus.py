@@ -13,10 +13,12 @@ if __package__ in {None, ""}:
 from scripts import collect_yahoo_corpus as corpus
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import run_yahoo_realtime as ledger
+from scripts.relative_datetime import build_resolution_audit, install_classifier_datetime
 
 TWITTER_EPOCH_MS = 1_288_834_974_657
 AUDIT_PATH = Path("public/yahoo-classifier-audit.json")
 POSITIVE_VOCABULARY_PATH = Path("public/yahoo-positive-vocabulary.json")
+DATE_RESOLUTION_AUDIT_PATH = Path("public/yahoo-date-resolution-audit.json")
 STRONG_GIVEAWAY_TERMS = {
     "プレゼント企画",
     "無料配布",
@@ -194,6 +196,7 @@ def build_audit(
     return {
         "schema_version": "1.3",
         "classifier_version": implementation.PARSER_VERSION,
+        "date_resolution_policy": "calendar-week-relative-date.v1",
         "generated_at": implementation.utc_text(now),
         "target_count": target,
         "candidate_count": total,
@@ -256,7 +259,9 @@ def build_positive_vocabulary(events: list[dict[str, Any]], now: datetime) -> di
 
 
 def main() -> int:
+    previous_events = implementation.read_array(implementation.OUTPUT_PATH)
     corpus.configure_classifier()
+    install_classifier_datetime(corpus, implementation)
     implementation.PARSER_VERSION = "1.8"
     now = datetime.now(UTC).replace(microsecond=0)
     history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
@@ -279,6 +284,7 @@ def main() -> int:
             "generated_at": implementation.utc_text(now),
             "candidate_count": len(evaluated),
             "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
+            "date_resolution_policy": "calendar-week-relative-date.v1",
             "giveaway_policy": "require_specific_event_or_vrchat_access_method",
             "candidates": evaluated,
         }
@@ -287,6 +293,14 @@ def main() -> int:
     implementation.write_json(implementation.OUTPUT_PATH, accepted)
     implementation.write_json(POSITIVE_VOCABULARY_PATH, build_positive_vocabulary(accepted, now))
     implementation.write_json(implementation.REJECTED_PATH, rejected[:2000])
+
+    generated_at = implementation.utc_text(now)
+    resolution_audit = build_resolution_audit(
+        previous_events,
+        accepted,
+        generated_at=generated_at,
+    )
+    implementation.write_json(DATE_RESOLUTION_AUDIT_PATH, resolution_audit)
 
     previous_audit = corpus.read_json(AUDIT_PATH, {})
     query_results = (
@@ -301,7 +315,7 @@ def main() -> int:
         {
             "schema_version": "2.2",
             "parser_version": implementation.PARSER_VERSION,
-            "generated_at": implementation.utc_text(now),
+            "generated_at": generated_at,
             "event_count": len(accepted),
             "history_candidate_count": len(evaluated),
             "history_accepted_count": len(accepted),
@@ -310,6 +324,13 @@ def main() -> int:
                 bool(row.get("source_created_at")) for row in evaluated
             ),
             "source_time_policy": history_payload["source_time_policy"],
+            "date_resolution_policy": history_payload["date_resolution_policy"],
+            "date_resolution_evidence_count": resolution_audit[
+                "events_with_resolution_evidence"
+            ],
+            "date_resolution_changed_event_count": resolution_audit[
+                "changed_event_count"
+            ],
             "giveaway_policy": history_payload["giveaway_policy"],
             "rejection_counts": audit["rejection_reason_counts"],
         }
@@ -318,7 +339,8 @@ def main() -> int:
     print(
         "Yahoo corpus refinement: "
         f"history={len(evaluated)} accepted={len(accepted)} rejected={len(rejected)} "
-        f"source_timestamps={health['source_timestamp_count']}"
+        f"source_timestamps={health['source_timestamp_count']} "
+        f"date_changes={resolution_audit['changed_event_count']}"
     )
     return 0
 
