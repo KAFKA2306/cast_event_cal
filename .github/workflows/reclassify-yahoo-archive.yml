@@ -1,4 +1,5 @@
 name: Reclassify Yahoo archive and deploy Pages
+# Re-run after the workflow became available on the default branch.
 
 on:
   workflow_dispatch:
@@ -93,6 +94,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -106,6 +108,7 @@ jobs:
   verify:
     needs: deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Verify Pages archive data
         env:
