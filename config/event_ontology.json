@@ -1,5 +1,17 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "2.0",
+  "governance": {
+    "curation_mode": "human_only",
+    "automatic_entry_creation": false,
+    "automatic_entry_rewrite": false,
+    "observed_events_may_only_link_to_existing_entries": true,
+    "preferred_sources": [
+      "official_website",
+      "vrchat_group",
+      "official_x",
+      "official_participation_guide"
+    ]
+  },
   "matching_policy": {
     "fuzzy_matching": false,
     "pattern_only_match": false,
@@ -27,24 +39,47 @@
         {
           "label": "主催者公式X",
           "url": "https://x.com/0zoku_vrc",
-          "kind": "organizer_profile"
+          "kind": "official_x"
         }
       ],
+      "schedule": {
+        "type": "irregular",
+        "label": "不定期開催",
+        "cadence": "開催回ごとに公式告知",
+        "note": "開催日時、出品条件、観戦条件は今回の公式告知を優先してください。"
+      },
+      "introduction": "VRChat内で参加者が品物や権利を競り合う、観戦も含めて場の熱量を楽しめるオークション形式のイベントです。",
+      "highlights": [
+        "出品者と参加者の掛け合いをライブで楽しめる",
+        "各回の出品内容によって体験が変わる",
+        "参加条件と観戦条件が公式告知で明示される"
+      ],
+      "first_time_guide": "初参加時は、当日の公式告知で参加資格、リクイン受付時間、観戦可否を確認してください。",
       "participation_method": "リクイン抽選式。参加条件と観戦条件は各回の公式告知を確認。",
       "event_format": "VRChat内オークションイベント",
       "audience": "所定のUC所持条件を満たす参加者・観戦者",
       "default_location": "VRChat",
       "tags": [
         "オークション",
-        "リクイン抽選"
-      ]
+        "リクイン抽選",
+        "不定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://x.com/0zoku_vrc"
+        ]
+      }
     },
     {
       "canonical_id": "cafe-bar-for-light",
       "canonical_name": "Cafe & Bar FOR LIGHT",
       "aliases": [
         "Cafe & Bar FOR LIGHT",
-        "FOR LIGHT"
+        "Café & Bar FOR LIGHT",
+        "FOR LIGHT",
+        "フォーライト"
       ],
       "organizers": [
         "@FOR_LIGHT202209"
@@ -56,20 +91,41 @@
       "subcategory": "cafe",
       "official_links": [
         {
-          "label": "主催者公式X",
+          "label": "イベント公式X",
           "url": "https://x.com/FOR_LIGHT202209",
-          "kind": "organizer_profile"
+          "kind": "official_x"
         }
       ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "日曜夜を中心に定期営業",
+        "note": "休止、時間変更、特別営業は当日の公式告知を優先してください。"
+      },
+      "introduction": "初心者から常連まで参加しやすく、静かな会話と賑やかな交流の両方を楽しめるローテーション制のVRChatカフェ・バーです。",
+      "highlights": [
+        "短いローテーションで複数の相手と会話しやすい",
+        "VRChat初心者・イベント初心者を歓迎",
+        "静かに話したい人と賑やかに過ごしたい人の両方に対応"
+      ],
+      "first_time_guide": "当日の公式告知でインスタンスリーダーを確認し、事前にフレンド申請してから指定時刻にJOINしてください。",
       "participation_method": "JOIN制。公式告知で指定されたILへフレンド申請後にJOIN。",
-      "event_format": "20分単位のローテーション制カフェ・バー",
+      "event_format": "20分単位を基本とするローテーション制カフェ・バー",
       "audience": "VRC初心者、イベント初心者を含む一般参加者",
       "default_location": "VRChat",
       "tags": [
         "カフェ",
         "JOIN制",
-        "初心者歓迎"
-      ]
+        "初心者歓迎",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://x.com/FOR_LIGHT202209"
+        ]
+      }
     }
   ]
 }
