@@ -1,0 +1,77 @@
+name: Yahoo query expert model
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/build_yahoo_expert_model.py
+      - tests/test_yahoo_expert_model.py
+      - public/yahoo-candidate-history.json
+      - .github/workflows/yahoo-expert-model.yml
+  push:
+    branches: [main]
+    paths:
+      - scripts/build_yahoo_expert_model.py
+      - tests/test_yahoo_expert_model.py
+      - public/yahoo-candidate-history.json
+      - .github/workflows/yahoo-expert-model.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yahoo-expert-model-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Regression tests
+        run: pytest -q tests/test_yahoo_expert_model.py tests/test_yahoo_corpus.py tests/test_yahoo_archive_policy.py
+      - name: Build evidence-gated model
+        run: python scripts/build_yahoo_expert_model.py
+      - name: Validate model artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          model = json.loads(Path('public/yahoo-query-expert-model.json').read_text(encoding='utf-8'))
+          assert model['schema_version'] == '1.0'
+          assert model['model_type'] == 'evidence_gated_query_experts'
+          assert model['fail_closed'] is True
+          assert model['status'] in {'ready', 'insufficient_evidence'}
+          assert model['training_rows'] > 0
+          assert model['accepted_universe_count'] > 0
+          assert all(item['support'] == item['accepted'] + item['rejected'] for item in model['experts'])
+          if model['status'] == 'ready':
+              assert model['recommended_query_keys']
+              assert model['ensemble_positive_coverage'] >= model['thresholds']['minimum_ensemble_coverage']
+          else:
+              assert model['recommended_query_keys'] == []
+          PY
+      - name: Commit model evidence
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add public/yahoo-query-expert-model.json
+          if git diff --cached --quiet; then
+            echo 'No expert-model changes'
+          else
+            git commit -m 'chore: refresh Yahoo expert model [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
