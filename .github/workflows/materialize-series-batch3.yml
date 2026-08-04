@@ -1,0 +1,85 @@
+name: Materialize verified event series batch 3
+
+on:
+  push:
+    branches:
+      - agent/expand-series-links-3
+    paths:
+      - .github/workflows/materialize-series-batch3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Capture classification baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+          baseline = {
+              'category_breakdown': health['category_classification']['category_breakdown'],
+              'subcategory_breakdown': health['category_classification']['subcategory_breakdown'],
+              'event_mode_breakdown': health['category_classification']['event_mode_breakdown'],
+          }
+          Path('/tmp/series-batch3-category-baseline.json').write_text(
+              json.dumps(baseline, ensure_ascii=False, sort_keys=True),
+              encoding='utf-8',
+          )
+          PY
+      - name: Materialize verified entries
+        run: python scripts/materialize_series_batch3.py
+      - name: Run full regression suite
+        run: pytest -q
+      - name: Regenerate public ontology data
+        run: |
+          python -m cast_event_cal.ontology
+          PYTHONPATH=. python scripts/build_observed_ontology.py
+          git show origin/main:public/yahoo-rejection-sample-audit.json > public/yahoo-rejection-sample-audit.json
+      - name: Validate exact outcome and classification stability
+        run: |
+          python scripts/materialize_series_batch3.py --validate
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          before = json.loads(Path('/tmp/series-batch3-category-baseline.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('public/health.json').read_text(encoding='utf-8'))
+          after = {
+              'category_breakdown': health['category_classification']['category_breakdown'],
+              'subcategory_breakdown': health['category_classification']['subcategory_breakdown'],
+              'event_mode_breakdown': health['category_classification']['event_mode_breakdown'],
+          }
+          assert after == before
+          PY
+      - name: Remove audit and implementation artifacts
+        run: |
+          rm -rf cast_event_cal.egg-info
+          rm -f series-batch3-audit.json
+          rm -f .github/workflows/audit-series-batch3.yml
+          rm -f .github/workflows/materialize-series-batch3.yml
+          rm -f scripts/materialize_series_batch3.py
+          git diff --check
+      - name: Commit verified batch
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m 'Expand verified event series linking batch 3'
+          git pull --rebase origin agent/expand-series-links-3
+          git push origin HEAD:agent/expand-series-links-3
