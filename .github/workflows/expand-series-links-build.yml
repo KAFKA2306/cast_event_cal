@@ -39,7 +39,7 @@ jobs:
       - name: Rebuild ontology enrichment
         run: |
           python -m cast_event_cal.ontology
-          python scripts/build_observed_ontology.py
+          PYTHONPATH=. python scripts/build_observed_ontology.py
       - name: Validate expanded links
         run: |
           python - <<'PY'
