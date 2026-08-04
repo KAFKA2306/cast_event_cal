@@ -1,7 +1,7 @@
 {
   "schema_version": "3.0",
-  "generated_at": "2026-08-04T03:28:18Z",
-  "source_event_generated_at": "2026-08-04T03:27:17Z",
+  "generated_at": "2026-08-04T04:52:59Z",
+  "source_event_generated_at": "2026-08-04T04:52:02Z",
   "source_event_count": 595,
   "curated_schema_version": "2.0",
   "governance": {
@@ -22,7 +22,7 @@
     "ambiguous_match_action": "reject",
     "required_identity": "alias or exact organizer plus all required patterns"
   },
-  "curated_entry_count": 2,
+  "curated_entry_count": 7,
   "observed_entity_count": 116,
   "category_ontology_schema_version": "2.0",
   "category_labels": {
@@ -40,34 +40,33 @@
     "other": "その他"
   },
   "category_breakdown": {
+    "community": 151,
     "art": 136,
-    "community": 134,
     "game": 106,
     "wellness": 51,
     "technology": 38,
     "language_exchange": 34,
     "other": 23,
-    "learning": 22,
     "music": 22,
     "world_tour": 18,
     "performance": 6,
+    "learning": 5,
     "recruitment_deadline": 5
   },
   "subcategory_breakdown": {
     "photography": 125,
-    "social": 74,
+    "social": 108,
     "tabletop": 36,
     "fitness": 34,
     "language_exchange": 34,
     "mystery": 34,
-    "hangout": 27,
     "engineering": 25,
-    "orientation": 18,
     "world_tour": 18,
     "cafe": 17,
     "dj": 17,
     "bar": 15,
     "research": 13,
+    "hangout": 10,
     "lecture": 3,
     "application_deadline": 2,
     "dance": 2,
@@ -75,6 +74,7 @@
     "auction": 1,
     "cast_recruitment": 1,
     "cast_service": 1,
+    "orientation": 1,
     "reading": 1,
     "theater": 1,
     "workshop": 1
@@ -85,11 +85,11 @@
     "hybrid": 3
   },
   "classification_source_breakdown": {
-    "legacy_and_keywords": 461,
+    "legacy_and_keywords": 341,
+    "curated_ontology": 121,
     "keyword_rules": 92,
     "fallback": 23,
-    "legacy_category": 18,
-    "curated_ontology": 1
+    "legacy_category": 18
   },
   "entries": [
     {
@@ -199,6 +199,312 @@
           "https://x.com/FOR_LIGHT202209"
         ]
       }
+    },
+    {
+      "canonical_id": "asmr-gathering",
+      "canonical_name": "ASMR集会",
+      "aliases": [
+        "ASMR集会",
+        "ASMR集会 本営業",
+        "ASMR集会 初心者説明会"
+      ],
+      "organizers": [
+        "ASMR集会"
+      ],
+      "required_patterns": [
+        "ASMR"
+      ],
+      "category": "community",
+      "subcategory": "hangout",
+      "official_links": [
+        {
+          "label": "VRChat Group",
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf",
+          "kind": "vrchat_group"
+        },
+        {
+          "label": "本営業の公式案内",
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_f2e0bfb7-765b-4c74-b56d-30ba9db37744",
+          "kind": "participation_guide"
+        },
+        {
+          "label": "初心者説明会",
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_ab8d8438-7c3a-4271-8a0f-f58aac1115b7",
+          "kind": "participation_guide"
+        }
+      ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "毎週金曜夜に初心者説明会と本営業",
+        "note": "開催有無、開始時刻、参加条件は最新のVRChat Group告知を優先してください。"
+      },
+      "introduction": "VRChatのワールドギミックを使い、ASMRをする側・受ける側に分かれて音の体験と交流を楽しむイベントです。",
+      "highlights": [
+        "耳かき・シャンプー・ドライヤーなど複数のASMRギミック",
+        "スタッフがマッチングとギミック操作をサポート",
+        "初参加者向けの説明会を本営業前に開催"
+      ],
+      "first_time_guide": "VRChat Groupへ参加し、初回は初心者説明会で進行とギミック操作を確認してから本営業のGroupインスタンスへ参加してください。",
+      "participation_method": "VRChat Groupに参加し、公式カレンダーに表示されるGroupインスタンスへJOIN。",
+      "event_format": "初心者説明会＋ASMR体験・交流会",
+      "audience": "ASMRを体験したい人、ギミック操作を学びたい初参加者",
+      "default_location": "VRChat",
+      "tags": [
+        "ASMR",
+        "初心者説明会",
+        "Group参加",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf",
+          "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_f2e0bfb7-765b-4c74-b56d-30ba9db37744",
+          "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_ab8d8438-7c3a-4271-8a0f-f58aac1115b7"
+        ]
+      }
+    },
+    {
+      "canonical_id": "en-jp-language-exchange",
+      "canonical_name": "VRC EN-JP Language Exchange",
+      "aliases": [
+        "EN-JP Language Exchange",
+        "VRC EN-JP Language Exchange",
+        "VRC EN－JP Language Exchange"
+      ],
+      "organizers": [
+        "EN-JP Language Exchange"
+      ],
+      "required_patterns": [
+        "Language Exchange"
+      ],
+      "category": "language_exchange",
+      "subcategory": "language_exchange",
+      "official_links": [
+        {
+          "label": "VRChat Group",
+          "url": "https://vrc.group/ENJPLE.4029",
+          "kind": "vrchat_group"
+        },
+        {
+          "label": "公式ワールド",
+          "url": "https://vrchat.com/home/launch?worldId=wrld_153be667-a86e-4aaf-9eed-921bd568ee9b",
+          "kind": "official_website"
+        }
+      ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "土曜昼・日曜夜を中心に週2回",
+        "note": "開催回、会話トピック、時刻変更は最新のGroup告知を優先してください。"
+      },
+      "introduction": "英語を学ぶ日本語話者と日本語を学ぶ英語話者が、用意されたトピックに沿って会話を練習する言語交換イベントです。",
+      "highlights": [
+        "日本語話者と英語話者が相互に会話練習",
+        "各回のトピックが用意される",
+        "バイリンガルスタッフの支援があり初心者も参加しやすい"
+      ],
+      "first_time_guide": "VRChat Groupへ参加し、当日のGroupインスタンスへJOINしてください。最初に使用言語と学習目的を伝えると会話へ入りやすくなります。",
+      "participation_method": "VRChat Groupへ参加し、開催時刻にGroupインスタンスへJOIN。",
+      "event_format": "日英言語交換・テーマ会話",
+      "audience": "英語を学ぶ日本語話者、日本語を学ぶ英語話者、言語学習初心者",
+      "default_location": "VRChat",
+      "tags": [
+        "言語交換",
+        "英語",
+        "日本語",
+        "初心者歓迎",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://vrc.group/ENJPLE.4029",
+          "https://vrchat.com/home/launch?worldId=wrld_153be667-a86e-4aaf-9eed-921bd568ee9b"
+        ]
+      }
+    },
+    {
+      "canonical_id": "vrc-goita",
+      "canonical_name": "VRCごいた会",
+      "aliases": [
+        "VRCごいた会",
+        "VRCごいた集会"
+      ],
+      "organizers": [
+        "VRCごいた会"
+      ],
+      "required_patterns": [
+        "ごいた"
+      ],
+      "category": "game",
+      "subcategory": "tabletop",
+      "official_links": [
+        {
+          "label": "VRChat Group",
+          "url": "https://vrchat.com/home/group/grp_de0301b7-4742-4f77-a592-fc921ff1945c",
+          "kind": "vrchat_group"
+        },
+        {
+          "label": "能登ごいた保存会東京支部の案内",
+          "url": "https://tokyo.goita.jp/sns/vrchat/",
+          "kind": "official_website"
+        }
+      ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "毎週月曜21時を中心に開催",
+        "note": "開催有無、会場、入門説明の時刻は最新のGroup告知を優先してください。"
+      },
+      "introduction": "能登の伝承娯楽「ごいた」をVRChat上で対局し、初心者から経験者まで同じ卓で学びながら交流する定期イベントです。",
+      "highlights": [
+        "VR・デスクトップの双方から参加できる",
+        "初心者向けのルール・操作説明がある",
+        "経験者と対局しながらごいたを学べる"
+      ],
+      "first_time_guide": "VRChat Groupへ参加し、21時ごろに開くGroup+インスタンスへJOINしてください。初参加時は入門説明の案内を確認してください。",
+      "participation_method": "VRChat Groupへ参加し、開催時刻にGroup+インスタンスへJOIN。",
+      "event_format": "伝承ボードゲーム「ごいた」の対局会・初心者入門会",
+      "audience": "ごいた初心者、ボードゲーム参加者、経験者",
+      "default_location": "VRChat",
+      "tags": [
+        "ごいた",
+        "ボードゲーム",
+        "初心者歓迎",
+        "Group+",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://vrchat.com/home/group/grp_de0301b7-4742-4f77-a592-fc921ff1945c",
+          "https://tokyo.goita.jp/sns/vrchat/"
+        ]
+      }
+    },
+    {
+      "canonical_id": "yuruge-meet",
+      "canonical_name": "ゆるゲMEET",
+      "aliases": [
+        "ゆるゲMEET",
+        "ゆるゲMEET定期開催日"
+      ],
+      "organizers": [
+        "ゆるゲMEET"
+      ],
+      "required_patterns": [
+        "ゆるゲMEET"
+      ],
+      "category": "game",
+      "subcategory": "tabletop",
+      "official_links": [
+        {
+          "label": "VRChat Group",
+          "url": "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5",
+          "kind": "vrchat_group"
+        },
+        {
+          "label": "公式カレンダー",
+          "url": "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5/calendar/cal_0cfc20f2-aba2-4c15-8628-59212d1dc53f",
+          "kind": "participation_guide"
+        }
+      ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "毎週水曜21時を中心に開催",
+        "note": "遊ぶゲームワールド、休止、特別回は最新の公式カレンダーを優先してください。"
+      },
+      "introduction": "VRChatのゲームワールドをみんなで遊ぶための集会で、ゲームワールドに慣れていない人にもスタッフが遊び方を案内します。",
+      "highlights": [
+        "毎回異なるゲームワールドを参加者と遊べる",
+        "VRChat初心者やゲームワールド未経験者を歓迎",
+        "スタッフがルールと操作を案内"
+      ],
+      "first_time_guide": "VRChat Groupへ参加し、20時55分ごろの開場案内を確認してGroupインスタンスへJOINしてください。",
+      "participation_method": "VRChat Groupまたは当日の公式案内からGroupインスタンスへJOIN。",
+      "event_format": "ゲームワールド体験・交流会",
+      "audience": "VRChat初心者、ゲームワールド初心者、協力・対戦ゲームを遊びたい人",
+      "default_location": "VRChat",
+      "tags": [
+        "ゲームワールド",
+        "初心者歓迎",
+        "Group参加",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5",
+          "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5/calendar/cal_0cfc20f2-aba2-4c15-8628-59212d1dc53f"
+        ]
+      }
+    },
+    {
+      "canonical_id": "wednesday-quest-beginners",
+      "canonical_name": "水曜Quest初心者の集い",
+      "aliases": [
+        "水曜Quest初心者の集い"
+      ],
+      "organizers": [
+        "水曜Quest初心者の集い"
+      ],
+      "required_patterns": [
+        "Quest",
+        "初心者"
+      ],
+      "category": "community",
+      "subcategory": "social",
+      "official_links": [
+        {
+          "label": "VRChat Group",
+          "url": "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca",
+          "kind": "vrchat_group"
+        },
+        {
+          "label": "公式カレンダー",
+          "url": "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca/calendar/cal_ffabe2fa-029c-427e-a20e-ec19ebfacb5f",
+          "kind": "participation_guide"
+        }
+      ],
+      "schedule": {
+        "type": "recurring",
+        "label": "定期開催",
+        "cadence": "毎週水曜21時から22時",
+        "note": "開催有無、対象条件、インスタンス案内は最新の公式カレンダーを優先してください。"
+      },
+      "introduction": "VRChatを始めたばかりの人やAndroid系端末の参加者が、同じ初心者同士で交流しやすい日本語向けイベントです。",
+      "highlights": [
+        "初心者同士で交流しやすい",
+        "Quest・PicoなどAndroid系参加者も対象",
+        "1時間の区切られた開催で初参加しやすい"
+      ],
+      "first_time_guide": "VRChat Groupへ参加し、公式カレンダーの時刻にGroupインスタンスへJOINしてください。日本語話者向けの案内と対象ランクを事前に確認してください。",
+      "participation_method": "VRChat Groupへ参加し、公式カレンダーからGroupインスタンスへJOIN。",
+      "event_format": "初心者向け交流会",
+      "audience": "VRChat初心者、Userランク程度までの参加者、Quest・Pico利用者",
+      "default_location": "VRChat",
+      "tags": [
+        "初心者交流",
+        "Quest",
+        "Pico",
+        "日本語",
+        "定期開催"
+      ],
+      "curation": {
+        "status": "human_curated",
+        "reviewed_at": "2026-08-04",
+        "sources": [
+          "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca",
+          "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca/calendar/cal_ffabe2fa-029c-427e-a20e-ec19ebfacb5f"
+        ]
+      }
     }
   ],
   "observed_entities": [
@@ -257,28 +563,44 @@
         "b1e743e63ebad0492dad"
       ],
       "sample_titles": [
-        "ASMR集会 本営業",
-        "ASMR集会 初心者説明会",
-        "ASMR集会 本営業"
+        "ASMR集会",
+        "ASMR集会",
+        "ASMR集会"
       ],
       "category_distribution": {
-        "community": 17,
-        "learning": 17
+        "community": 34
       },
       "dominant_category": {
         "value": "community",
-        "count": 17,
-        "share": 0.5
+        "count": 34,
+        "share": 1.0
       },
       "subcategory_distribution": {
-        "hangout": 17,
-        "orientation": 17
+        "social": 34
       },
       "event_mode_distribution": {
         "in_world": 34
       },
-      "matched_ontology_ids": {},
-      "official_links": []
+      "matched_ontology_ids": {
+        "asmr-gathering": 34
+      },
+      "official_links": [
+        {
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_ab8d8438-7c3a-4271-8a0f-f58aac1115b7",
+          "label": "初心者説明会",
+          "kind": "participation_guide"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf/calendar/cal_f2e0bfb7-765b-4c74-b56d-30ba9db37744",
+          "label": "本営業の公式案内",
+          "kind": "participation_guide"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_ef4bf571-8b5e-4068-b503-49a9a52829cf",
+          "label": "VRChat Group",
+          "kind": "vrchat_group"
+        }
+      ]
     },
     {
       "entity_id": "en-jp language exchange",
@@ -297,9 +619,9 @@
         "268a1cb6a5931591f9a4"
       ],
       "sample_titles": [
-        "EN-JP Language Exchange（日曜）",
-        "EN-JP Language Exchange（土曜）",
-        "EN-JP Language Exchange（日曜）"
+        "VRC EN-JP Language Exchange",
+        "VRC EN-JP Language Exchange",
+        "VRC EN-JP Language Exchange"
       ],
       "category_distribution": {
         "language_exchange": 34
@@ -315,8 +637,21 @@
       "event_mode_distribution": {
         "in_world": 34
       },
-      "matched_ontology_ids": {},
-      "official_links": []
+      "matched_ontology_ids": {
+        "en-jp-language-exchange": 34
+      },
+      "official_links": [
+        {
+          "url": "https://vrchat.com/home/launch?worldId=wrld_153be667-a86e-4aaf-9eed-921bd568ee9b",
+          "label": "公式ワールド",
+          "kind": "official_website"
+        },
+        {
+          "url": "https://vrc.group/ENJPLE.4029",
+          "label": "VRChat Group",
+          "kind": "vrchat_group"
+        }
+      ]
     },
     {
       "entity_id": "vrcフィットボクシング集会",
@@ -435,8 +770,21 @@
       "event_mode_distribution": {
         "in_world": 18
       },
-      "matched_ontology_ids": {},
-      "official_links": []
+      "matched_ontology_ids": {
+        "vrc-goita": 18
+      },
+      "official_links": [
+        {
+          "url": "https://tokyo.goita.jp/sns/vrchat/",
+          "label": "能登ごいた保存会東京支部の案内",
+          "kind": "official_website"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_de0301b7-4742-4f77-a592-fc921ff1945c",
+          "label": "VRChat Group",
+          "kind": "vrchat_group"
+        }
+      ]
     },
     {
       "entity_id": "vrcゲームワールド部",
@@ -717,9 +1065,9 @@
         "8a59be7e33dea47ccb15"
       ],
       "sample_titles": [
-        "ゆるゲMEET定期開催日",
-        "ゆるゲMEET定期開催日",
-        "ゆるゲMEET定期開催日"
+        "ゆるゲMEET",
+        "ゆるゲMEET",
+        "ゆるゲMEET"
       ],
       "category_distribution": {
         "game": 17
@@ -733,10 +1081,17 @@
       "event_mode_distribution": {
         "in_world": 17
       },
-      "matched_ontology_ids": {},
+      "matched_ontology_ids": {
+        "yuruge-meet": 17
+      },
       "official_links": [
         {
           "url": "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5/calendar/cal_0cfc20f2-aba2-4c15-8628-59212d1dc53f",
+          "label": "公式カレンダー",
+          "kind": "participation_guide"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_34ca87e0-7ab4-4a55-b9aa-5f502ad493d5",
           "label": "VRChat Group",
           "kind": "vrchat_group"
         }
@@ -815,10 +1170,17 @@
       "event_mode_distribution": {
         "in_world": 17
       },
-      "matched_ontology_ids": {},
+      "matched_ontology_ids": {
+        "wednesday-quest-beginners": 17
+      },
       "official_links": [
         {
           "url": "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca/calendar/cal_ffabe2fa-029c-427e-a20e-ec19ebfacb5f",
+          "label": "公式カレンダー",
+          "kind": "participation_guide"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_3e1dd1c4-c555-4477-a39d-96f0bb0469ca",
           "label": "VRChat Group",
           "kind": "vrchat_group"
         }
