@@ -13,6 +13,7 @@ CONFIG = Path("config/event_ontology.json")
 CATEGORY_CONFIG = Path("config/category_ontology.json")
 EVENTS = Path("public/events.json")
 OUTPUT = Path("public/event-ontology.json")
+AUDIT = Path("public/ontology-match-audit.json")
 
 
 def now_iso() -> str:
@@ -70,6 +71,9 @@ def build() -> dict[str, Any]:
         rows.sort(key=lambda row: str(row.get("starts_at") or ""), reverse=True)
         first = rows[0]
         links: dict[str, dict[str, str]] = {}
+        ontology_ids = Counter(
+            str(row.get("ontology_id")) for row in rows if str(row.get("ontology_id") or "").strip()
+        )
         for row in rows:
             for candidate in row.get("official_links", []):
                 if not isinstance(candidate, dict):
@@ -107,6 +111,7 @@ def build() -> dict[str, Any]:
                 "dominant_category": dominant(category_distribution, len(rows)),
                 "subcategory_distribution": subcategory_distribution,
                 "event_mode_distribution": mode_distribution,
+                "matched_ontology_ids": dict(sorted(ontology_ids.items())),
                 "official_links": sorted(links.values(), key=lambda row: (row["kind"], row["url"])),
             }
         )
@@ -122,6 +127,8 @@ def build() -> dict[str, Any]:
         "generated_at": now_iso(),
         "source_event_generated_at": event_doc.get("generated_at"),
         "source_event_count": int(event_doc.get("count") or len(events)),
+        "curated_schema_version": curated.get("schema_version"),
+        "governance": curated.get("governance", {}),
         "matching_policy": curated.get("matching_policy", {}),
         "curated_entry_count": len(curated.get("entries", [])),
         "observed_entity_count": len(observed),
@@ -136,10 +143,21 @@ def build() -> dict[str, Any]:
     }
 
 
+def preserve_audit_schema_compatibility() -> None:
+    if not AUDIT.exists():
+        return
+    audit = read(AUDIT)
+    # The enriched fields are additive. Keep the public audit version stable for
+    # existing consumers while the curated source schema is versioned separately.
+    audit["schema_version"] = "2.0"
+    AUDIT.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     build_yahoo_rejection_sample_audit()
     payload = build()
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    preserve_audit_schema_compatibility()
     print(
         f"observed ontology: curated={payload['curated_entry_count']} "
         f"observed={payload['observed_entity_count']} events={payload['source_event_count']} "
