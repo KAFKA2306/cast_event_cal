@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from cast_event_cal.ontology import enrich_event, validate_ontology
+from cast_event_cal.ontology import enrich_event, select_entry, validate_ontology
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,3 +56,26 @@ def test_matched_event_receives_series_profile_and_keeps_announcement_first() ->
     assert enriched["official_links"][0]["url"] == event["url"]
     assert any(link["kind"] == "official_x" for link in enriched["official_links"])
     assert "定期開催" in enriched["tags"]
+
+
+def test_verified_high_frequency_series_match_deterministically() -> None:
+    entries = load_ontology()["entries"]
+    cases = [
+        ("ASMR集会 初心者説明会", "ASMR集会", "asmr-gathering"),
+        ("EN-JP Language Exchange（日曜）", "EN-JP Language Exchange", "en-jp-language-exchange"),
+        ("VRCごいた会", "VRCごいた会", "vrc-goita"),
+        ("ゆるゲMEET定期開催日", "ゆるゲMEET", "yuruge-meet"),
+        ("水曜Quest初心者の集い", "水曜Quest初心者の集い", "wednesday-quest-beginners"),
+    ]
+    expected_ids = {expected_id for _, _, expected_id in cases}
+    assert expected_ids <= {entry["canonical_id"] for entry in entries}
+
+    for title, organizer, expected_id in cases:
+        entry, status, evidence = select_entry(
+            {"title": title, "description": "", "organizer": organizer},
+            entries,
+        )
+        assert status == "matched"
+        assert entry is not None
+        assert entry["canonical_id"] == expected_id
+        assert "alias" in evidence
