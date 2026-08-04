@@ -1,0 +1,38 @@
+name: Clean second expanded series linking branch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - config/event_ontology.json
+      - tests/test_event_series_ontology.py
+      - .github/workflows/cleanup-expand-series-links-2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Delete implementation branch
+        run: |
+          set -euo pipefail
+          branch='agent/expand-series-links-2'
+          if git ls-remote --exit-code --heads origin "refs/heads/$branch" >/dev/null 2>&1; then
+            git push origin --delete "$branch"
+          fi
+      - name: Remove one-time cleanup workflow
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          rm -f .github/workflows/cleanup-expand-series-links-2.yml
+          git add .github/workflows/cleanup-expand-series-links-2.yml
+          git commit -m 'chore: remove second series linking cleanup [skip ci]' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
