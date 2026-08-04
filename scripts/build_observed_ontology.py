@@ -70,6 +70,9 @@ def build() -> dict[str, Any]:
         rows.sort(key=lambda row: str(row.get("starts_at") or ""), reverse=True)
         first = rows[0]
         links: dict[str, dict[str, str]] = {}
+        ontology_ids = Counter(
+            str(row.get("ontology_id")) for row in rows if str(row.get("ontology_id") or "").strip()
+        )
         for row in rows:
             for candidate in row.get("official_links", []):
                 if not isinstance(candidate, dict):
@@ -107,6 +110,7 @@ def build() -> dict[str, Any]:
                 "dominant_category": dominant(category_distribution, len(rows)),
                 "subcategory_distribution": subcategory_distribution,
                 "event_mode_distribution": mode_distribution,
+                "matched_ontology_ids": dict(sorted(ontology_ids.items())),
                 "official_links": sorted(links.values(), key=lambda row: (row["kind"], row["url"])),
             }
         )
@@ -118,10 +122,12 @@ def build() -> dict[str, Any]:
         if isinstance(row, dict) and row.get("id")
     }
     return {
-        "schema_version": "3.0",
+        "schema_version": "3.1",
         "generated_at": now_iso(),
         "source_event_generated_at": event_doc.get("generated_at"),
         "source_event_count": int(event_doc.get("count") or len(events)),
+        "curated_schema_version": curated.get("schema_version"),
+        "governance": curated.get("governance", {}),
         "matching_policy": curated.get("matching_policy", {}),
         "curated_entry_count": len(curated.get("entries", [])),
         "observed_entity_count": len(observed),
