@@ -1,7 +1,7 @@
 class HeadAssets {
   element(element) {
     element.append(
-      '<link rel="stylesheet" href="/uiux-v4.css"><script defer src="/uiux-v4.js"></script>',
+      '<link rel="stylesheet" href="/uiux-v4.css"><script defer src="/uiux-v4.js"></script><script defer src="/series-profile.js"></script>',
       { html: true },
     );
   }
@@ -17,7 +17,7 @@ export async function onRequest(context) {
 
   const transformed = new HTMLRewriter().on('head', new HeadAssets()).transform(response);
   const headers = new Headers(transformed.headers);
-  headers.set('x-quality-view', '2026-08-04-quality-view-v5');
+  headers.set('x-quality-view', '2026-08-04-quality-view-v6');
   return new Response(transformed.body, {
     status: transformed.status,
     statusText: transformed.statusText,
