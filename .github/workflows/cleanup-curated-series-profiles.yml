@@ -1,0 +1,36 @@
+name: Clean curated series branches
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cleanup-curated-series-profiles.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Delete merged branches
+        run: |
+          set -euo pipefail
+          for branch in agent/curated-series-profiles agent/cleanup-curated-series-profiles; do
+            if git ls-remote --exit-code --heads origin "refs/heads/$branch" >/dev/null 2>&1; then
+              git push origin --delete "$branch"
+            fi
+          done
+      - name: Remove one-time workflow
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          rm .github/workflows/cleanup-curated-series-profiles.yml
+          git add .github/workflows/cleanup-curated-series-profiles.yml
+          git commit -m 'chore: remove curated series cleanup [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
