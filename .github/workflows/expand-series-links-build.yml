@@ -1,8 +1,13 @@
 name: Expand verified event series links
 
 on:
+  pull_request:
+    paths:
+      - config/event_ontology.json
+      - tests/test_event_series_ontology.py
+      - .github/workflows/expand-series-links-build.yml
   push:
-    branches: [agent/expand-series-links]
+    branches: [main, agent/expand-series-links]
     paths:
       - config/event_ontology.json
       - tests/test_event_series_ontology.py
@@ -12,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: expand-series-links
+  group: expand-series-links-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -74,6 +79,7 @@ jobs:
           }, ensure_ascii=False))
           PY
       - name: Commit regenerated public data
+        if: github.event_name == 'push'
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
@@ -85,6 +91,6 @@ jobs:
             echo 'No generated changes'
           else
             git commit -m 'chore: regenerate expanded series links [skip ci]'
-            git pull --rebase origin agent/expand-series-links
-            git push origin HEAD:agent/expand-series-links
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
