@@ -81,9 +81,9 @@ def test_verified_high_frequency_series_match_deterministically() -> None:
         assert "alias" in evidence
 
 
-
 def test_second_verified_series_batch_matches_deterministically() -> None:
     entries = load_ontology()["entries"]
+    entries_by_id = {entry["canonical_id"]: entry for entry in entries}
     cases = [
         ("EXPLOIT部 定期対戦会", "EXPLOIT", "exploit-club"),
         ("VRCゲームワールド部 月曜イベント", "VRCゲームワールド部", "vrc-game-world-club"),
@@ -94,7 +94,9 @@ def test_second_verified_series_batch_matches_deterministically() -> None:
         ("VRCフィットボクシング集会（日曜）", "VRCフィットボクシング集会", "vrc-fit-boxing"),
     ]
     expected_ids = {expected_id for _, _, expected_id in cases}
-    assert expected_ids <= {entry["canonical_id"] for entry in entries}
+    assert expected_ids <= entries_by_id.keys()
+    assert entries_by_id["vrc-fit-boxing"]["category"] == "wellness"
+    assert entries_by_id["vrc-fit-boxing"]["subcategory"] == "fitness"
 
     for title, organizer, expected_id in cases:
         entry, status, evidence = select_entry(
