@@ -133,3 +133,22 @@ def test_provenance_merge_preserves_queries_and_retweet_peak():
     assert rows[0]["observation_count"] == 2
     assert rows[0]["max_retweet_count"] == 9
     assert rows[0]["query_keys"] == ["access-001", "core-001"]
+
+
+
+def test_host_event_abbreviation_with_explicit_schedule_is_accepted():
+    configure_classifier()
+    event, reason = refined_candidate_to_event(
+        candidate(
+            "VRCで1番ド派手なホスイベ Attrazione。"
+            "8月度姫救済特別営業は2026年8月15日22時始動。"
+            "姫様のご来店をお待ちしております。#VRChat",
+            retweets=36,
+        ),
+        now=datetime(2026, 8, 4, tzinfo=UTC),
+        min_retweets=3,
+        x_ids=set(),
+    )
+    assert reason is None
+    assert event is not None
+    assert event["starts_at"] == "2026-08-15T13:00:00Z"
