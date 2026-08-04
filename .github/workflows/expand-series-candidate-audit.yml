@@ -20,125 +20,81 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Build unmatched-series candidate report
+      - name: Build concise unmatched-series summaries
         run: |
           python - <<'PY'
           import collections
           import json
-          import re
-          import unicodedata
           from pathlib import Path
 
           payload = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           rows = payload.get('events', payload if isinstance(payload, list) else [])
           unmatched = [row for row in rows if not row.get('series_profile')]
 
-          def text(value):
+          def clean(value):
               if value is None:
                   return ''
-              if isinstance(value, str):
-                  return value.strip()
-              if isinstance(value, (int, float, bool)):
-                  return str(value)
-              return ''
+              if isinstance(value, (list, dict)):
+                  value = json.dumps(value, ensure_ascii=False, separators=(',', ':'))
+              return str(value).replace('\t', ' ').replace('\r', ' ').replace('\n', ' ').strip()
 
-          def normalize_title(value):
-              s = unicodedata.normalize('NFKC', text(value)).lower()
-              s = re.sub(r'https?://\S+', ' ', s)
-              s = re.sub(r'[#＃][\wぁ-んァ-ヶ一-龠ー]+', ' ', s)
-              s = re.sub(r'\b20\d{2}[年/.-]\d{1,2}(?:[月/.-]\d{1,2}日?)?\b', ' ', s)
-              s = re.sub(r'\b\d{1,2}[月/.-]\d{1,2}日?\b', ' ', s)
-              s = re.sub(r'\b\d{1,2}:\d{2}(?:[-~〜～]\d{1,2}:\d{2})?\b', ' ', s)
-              s = re.sub(r'[（(][月火水木金土日](?:曜(?:日)?)?[）)]', ' ', s)
-              s = re.sub(r'(第\s*\d+\s*回|vol\.?\s*\d+|#\s*\d+)', ' ', s, flags=re.I)
-              s = re.sub(r'[\s\-‐‑‒–—―〜～・|｜:：/／\\,，.。!！?？「」『』【】\[\]()（）]+', ' ', s)
-              return s.strip()
-
-          exact = collections.defaultdict(list)
-          normalized = collections.defaultdict(list)
-          field_values = collections.defaultdict(lambda: collections.defaultdict(list))
-          key_counts = collections.Counter()
-
-          identity_key = re.compile(r'(organizer|author|account|host|group|owner|creator|screen_name|username)', re.I)
+          by_title = collections.defaultdict(list)
+          by_organizer = collections.defaultdict(list)
           for row in unmatched:
-              title = text(row.get('title') or row.get('name'))
+              title = clean(row.get('title'))
+              organizer = clean(row.get('organizer'))
               if title:
-                  exact[title].append(row)
-                  norm = normalize_title(title)
-                  if norm:
-                      normalized[norm].append(row)
-              for key, value in row.items():
-                  key_counts[key] += 1
-                  if identity_key.search(key):
-                      val = text(value)
-                      if val:
-                          field_values[key][val].append(row)
+                  by_title[title].append(row)
+              if organizer:
+                  by_organizer[organizer].append(row)
 
-          preferred_sample_keys = [
-              'id', 'event_id', 'title', 'name', 'organizer', 'organizer_name',
-              'author', 'author_name', 'screen_name', 'username', 'description',
-              'start_at', 'start_time', 'date', 'url', 'source_url', 'official_url',
-              'participation_url', 'vrchat_group_url', 'source', 'category', 'tags'
-          ]
+          title_lines = ['count\ttitle\torganizers\tdescription\tvrchat_group_url\turl\tsource']
+          for title, items in sorted(by_title.items(), key=lambda pair: (-len(pair[1]), pair[0])):
+              if len(items) < 2:
+                  continue
+              organizers = sorted({clean(item.get('organizer')) for item in items if clean(item.get('organizer'))})
+              sample = items[0]
+              title_lines.append('\t'.join([
+                  str(len(items)),
+                  title,
+                  ' | '.join(organizers),
+                  clean(sample.get('description')),
+                  clean(sample.get('vrchat_group_url')),
+                  clean(sample.get('url')),
+                  clean(sample.get('source')),
+              ]))
 
-          def compact(row):
-              result = {}
-              for key in preferred_sample_keys:
-                  if key in row and row[key] not in (None, '', [], {}):
-                      result[key] = row[key]
-              for key, value in row.items():
-                  if key not in result and identity_key.search(key) and value not in (None, '', [], {}):
-                      result[key] = value
-              return result
+          organizer_lines = ['count\torganizer\tdistinct_titles\tsample_titles\tvrchat_group_urls\tsources']
+          for organizer, items in sorted(by_organizer.items(), key=lambda pair: (-len(pair[1]), pair[0])):
+              if len(items) < 2:
+                  continue
+              titles = sorted({clean(item.get('title')) for item in items if clean(item.get('title'))})
+              groups = sorted({clean(item.get('vrchat_group_url')) for item in items if clean(item.get('vrchat_group_url'))})
+              sources = sorted({clean(item.get('source')) for item in items if clean(item.get('source'))})
+              organizer_lines.append('\t'.join([
+                  str(len(items)),
+                  organizer,
+                  str(len(titles)),
+                  ' | '.join(titles[:8]),
+                  ' | '.join(groups),
+                  ' | '.join(sources),
+              ]))
 
-          def groups(mapping, minimum=2, limit=200):
-              ranked = sorted(
-                  ((key, items) for key, items in mapping.items() if len(items) >= minimum),
-                  key=lambda pair: (-len(pair[1]), pair[0]),
-              )[:limit]
-              return [
-                  {
-                      'key': key,
-                      'count': len(items),
-                      'samples': [compact(item) for item in items[:4]],
-                  }
-                  for key, items in ranked
-              ]
-
-          identity_groups = {}
-          for key, mapping in sorted(field_values.items()):
-              entries = groups(mapping, minimum=2, limit=100)
-              if entries:
-                  identity_groups[key] = entries
-
-          report = {
-              'schema_version': '1.0',
-              'event_count': len(rows),
-              'unmatched_count': len(unmatched),
-              'row_keys': dict(key_counts.most_common()),
-              'first_unmatched_rows': [compact(row) for row in unmatched[:5]],
-              'repeated_exact_titles': groups(exact, minimum=2, limit=250),
-              'repeated_normalized_titles': groups(normalized, minimum=2, limit=250),
-              'repeated_identity_fields': identity_groups,
-          }
-          Path('series-candidate-audit.json').write_text(
-              json.dumps(report, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
+          Path('series-candidate-titles.tsv').write_text('\n'.join(title_lines) + '\n', encoding='utf-8')
+          Path('series-candidate-organizers.tsv').write_text('\n'.join(organizer_lines) + '\n', encoding='utf-8')
           print(json.dumps({
               'events': len(rows),
               'unmatched': len(unmatched),
-              'exact_groups': len(report['repeated_exact_titles']),
-              'normalized_groups': len(report['repeated_normalized_titles']),
-              'identity_fields': list(identity_groups),
+              'repeated_titles': len(title_lines) - 1,
+              'repeated_organizers': len(organizer_lines) - 1,
           }, ensure_ascii=False))
           PY
-      - name: Commit report
+      - name: Commit summaries
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add series-candidate-audit.json
-          git commit -m 'chore: generate unmatched series candidate audit [skip ci]'
+          git add series-candidate-titles.tsv series-candidate-organizers.tsv
+          git commit -m 'chore: summarize unmatched series candidates [skip ci]'
           git pull --rebase origin agent/expand-series-links-2
           git push origin HEAD:agent/expand-series-links-2
