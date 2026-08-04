@@ -1,4 +1,4 @@
-name: Update calendar and deploy Pages
+name: Update calendar data
 
 on:
   workflow_dispatch:
@@ -22,8 +22,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: cast-event-calendar-production
@@ -206,80 +204,3 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    outputs:
-      page_url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  verify:
-    needs: deploy
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Verify live Pages data
-        env:
-          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
-        run: |
-          set -euo pipefail
-          base="${PAGE_URL%/}"
-          verified=false
-          for attempt in $(seq 1 30); do
-            if curl -fsS "$base/events.json?attempt=$attempt" -o /tmp/events.json \
-              && curl -fsS "$base/event-link-audit.json?attempt=$attempt" -o /tmp/links.json \
-              && curl -fsS "$base/vrchat-group-asset-audit.json?attempt=$attempt" -o /tmp/groups.json \
-              && curl -fsS "$base/event-ontology.json?attempt=$attempt" -o /tmp/ontology.json \
-              && curl -fsS "$base/category-ontology.json?attempt=$attempt" -o /tmp/category-ontology.json \
-              && curl -fsS "$base/ontology-match-audit.json?attempt=$attempt" -o /tmp/ontology-audit.json \
-              && curl -fsS "$base/registration-count-audit.json?attempt=$attempt" -o /tmp/registration.json \
-              && curl -fsS "$base/index.html?attempt=$attempt" -o /tmp/index.html \
-              && python - <<'PY'
-          import json
-          events=json.load(open('/tmp/events.json',encoding='utf-8'))
-          links=json.load(open('/tmp/links.json',encoding='utf-8'))
-          groups=json.load(open('/tmp/groups.json',encoding='utf-8'))
-          ontology=json.load(open('/tmp/ontology.json',encoding='utf-8'))
-          category_ontology=json.load(open('/tmp/category-ontology.json',encoding='utf-8'))
-          ontology_audit=json.load(open('/tmp/ontology-audit.json',encoding='utf-8'))
-          registration=json.load(open('/tmp/registration.json',encoding='utf-8'))
-          html=open('/tmp/index.html',encoding='utf-8').read()
-          rows=events['events']
-          allowed={item['id'] for item in category_ontology['categories'] if item.get('id')}
-          assert events['count'] > 555
-          assert links['events_with_primary_action'] > 0
-          assert groups['events_with_group_url'] > 0
-          assert any(e.get('vrchat_group_url') for e in rows)
-          assert category_ontology['schema_version'] == '2.0'
-          assert all(e.get('category') in allowed for e in rows)
-          assert all(isinstance(e.get('category_confidence'), (int,float)) for e in rows)
-          assert ontology['schema_version'] == '3.0'
-          assert ontology['category_ontology_schema_version'] == '2.0'
-          assert ontology['source_event_count'] == events['count']
-          assert ontology['observed_entity_count'] > 2
-          assert sum(ontology['category_breakdown'].values()) == events['count']
-          assert ontology_audit['category_classification']['event_count'] == events['count']
-          assert registration['status'] == 'ok'
-          assert registration['latest']['calendar_event_count'] == events['count']
-          assert 'event-media-link' in html
-          assert 'canonicalLinkKey' in html
-          assert 'preferredActionUrl' in html
-          assert 'category-ontology.json' in html
-          assert 'category_confidence' in html
-          PY
-            then verified=true; break; fi
-            sleep 10
-          done
-          test "$verified" = true
