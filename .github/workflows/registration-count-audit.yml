@@ -4,6 +4,12 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '7 21 * * *'
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/registration-count-audit.yml
+      - scripts/build_registration_count_audit.py
+      - tests/test_registration_count_audit.py
 
 permissions:
   contents: write
