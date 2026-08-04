@@ -55,6 +55,7 @@ jobs:
           tests/test_external_calendar_sources.py
           tests/test_vrchat_discovery_routes.py
           tests/test_category_ontology.py
+          tests/test_registration_count_audit.py
       - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
       - name: Discover public VRChat calendar events
@@ -91,6 +92,8 @@ jobs:
         run: python scripts/enrich_vrchat_group_assets.py
       - name: Render linked-image frontend and live ontologies
         run: python scripts/render_frontend.py
+      - name: Build registration count audit
+        run: python scripts/build_registration_count_audit.py
       - name: Validate generated data
         run: |
           set -euo pipefail
@@ -110,6 +113,7 @@ jobs:
           health = json.loads(Path('data/yahoo_realtime_health.json').read_text(encoding='utf-8'))
           history = json.loads(Path('public/yahoo-candidate-history.json').read_text(encoding='utf-8'))
           audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
+          registration = json.loads(Path('public/registration-count-audit.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           assets = json.loads(Path('public/official-asset-audit.json').read_text(encoding='utf-8'))
           links = json.loads(Path('public/event-link-audit.json').read_text(encoding='utf-8'))
@@ -129,6 +133,14 @@ jobs:
           assert audit['past_accepted_count'] > 0
           assert audit['low_retweet_accepted_count'] > 0
           assert health['parser_version'] == '1.9'
+          assert registration['schema_version'] == '1.0'
+          assert registration['status'] == 'ok'
+          assert registration['snapshot_count'] == len(registration['snapshots'])
+          assert registration['latest']['calendar_event_count'] == events['count']
+          assert registration['latest']['yahoo_candidate_count'] == history['candidate_count']
+          assert registration['latest']['yahoo_accepted_count'] == len(yahoo)
+          assert registration['latest']['yahoo_rejected_count'] == len(rejected)
+          assert registration['latest']['yahoo_queries_failed'] == 0
           assert events['count'] == len(rows) and events['count'] > 555
           assert assets['counts']['official_x'] > 0
           assert assets['counts']['webp_image'] > 0
@@ -232,6 +244,7 @@ jobs:
               && curl -fsS "$base/event-ontology.json?attempt=$attempt" -o /tmp/ontology.json \
               && curl -fsS "$base/category-ontology.json?attempt=$attempt" -o /tmp/category-ontology.json \
               && curl -fsS "$base/ontology-match-audit.json?attempt=$attempt" -o /tmp/ontology-audit.json \
+              && curl -fsS "$base/registration-count-audit.json?attempt=$attempt" -o /tmp/registration.json \
               && curl -fsS "$base/index.html?attempt=$attempt" -o /tmp/index.html \
               && python - <<'PY'
           import json
@@ -241,6 +254,7 @@ jobs:
           ontology=json.load(open('/tmp/ontology.json',encoding='utf-8'))
           category_ontology=json.load(open('/tmp/category-ontology.json',encoding='utf-8'))
           ontology_audit=json.load(open('/tmp/ontology-audit.json',encoding='utf-8'))
+          registration=json.load(open('/tmp/registration.json',encoding='utf-8'))
           html=open('/tmp/index.html',encoding='utf-8').read()
           rows=events['events']
           allowed={item['id'] for item in category_ontology['categories'] if item.get('id')}
@@ -257,6 +271,8 @@ jobs:
           assert ontology['observed_entity_count'] > 2
           assert sum(ontology['category_breakdown'].values()) == events['count']
           assert ontology_audit['category_classification']['event_count'] == events['count']
+          assert registration['status'] == 'ok'
+          assert registration['latest']['calendar_event_count'] == events['count']
           assert 'event-media-link' in html
           assert 'canonicalLinkKey' in html
           assert 'preferredActionUrl' in html
