@@ -1,0 +1,38 @@
+name: Clean expanded series linking branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - config/event_ontology.json
+      - .github/workflows/expand-series-links-build.yml
+      - .github/workflows/cleanup-expand-series-links.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Delete implementation branch
+        run: |
+          set -euo pipefail
+          branch='agent/expand-series-links'
+          if git ls-remote --exit-code --heads origin "refs/heads/$branch" >/dev/null 2>&1; then
+            git push origin --delete "$branch"
+          fi
+      - name: Remove one-time workflows
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          rm -f .github/workflows/expand-series-links-build.yml
+          rm -f .github/workflows/cleanup-expand-series-links.yml
+          git add .github/workflows/expand-series-links-build.yml .github/workflows/cleanup-expand-series-links.yml
+          git commit -m 'chore: remove series linking workflows [skip ci]' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
