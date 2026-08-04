@@ -1,0 +1,90 @@
+name: Expand verified event series links
+
+on:
+  push:
+    branches: [agent/expand-series-links]
+    paths:
+      - config/event_ontology.json
+      - tests/test_event_series_ontology.py
+      - .github/workflows/expand-series-links-build.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expand-series-links
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Run focused regression tests
+        run: pytest -q tests/test_event_series_ontology.py
+      - name: Rebuild ontology enrichment
+        run: |
+          python -m cast_event_cal.ontology
+          python scripts/build_observed_ontology.py
+      - name: Validate expanded links
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          ontology = json.loads(Path('public/event-ontology.json').read_text(encoding='utf-8'))
+          audit = json.loads(Path('public/ontology-match-audit.json').read_text(encoding='utf-8'))
+          rows = events['events']
+          profiles = [row for row in rows if row.get('series_profile')]
+          expected = {
+              'asmr-gathering',
+              'en-jp-language-exchange',
+              'vrc-goita',
+              'yuruge-meet',
+              'wednesday-quest-beginners',
+          }
+
+          assert events['count'] == len(rows)
+          assert ontology['curated_entry_count'] == 7
+          assert ontology['curated_schema_version'] == '2.0'
+          assert audit['schema_version'] == '2.0'
+          assert audit['ambiguous_events'] == 0
+          assert audit['matched_events'] >= 100
+          assert expected <= set(audit['matched_series'])
+          assert len(profiles) == audit['matched_events']
+          assert all(
+              row.get('series_profile', {}).get('curation', {}).get('status') == 'human_curated'
+              for row in profiles
+          )
+          print(json.dumps({
+              'event_count': events['count'],
+              'matched_events': audit['matched_events'],
+              'matched_series': audit['matched_series'],
+              'ambiguous_events': audit['ambiguous_events'],
+          }, ensure_ascii=False))
+          PY
+      - name: Commit regenerated public data
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add config/event_ontology.json tests/test_event_series_ontology.py \
+            public/events.json public/event-ontology.json \
+            public/ontology-match-audit.json public/health.json
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'chore: regenerate expanded series links [skip ci]'
+            git pull --rebase origin agent/expand-series-links
+            git push origin HEAD:agent/expand-series-links
+          fi
