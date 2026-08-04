@@ -79,3 +79,29 @@ def test_verified_high_frequency_series_match_deterministically() -> None:
         assert entry is not None
         assert entry["canonical_id"] == expected_id
         assert "alias" in evidence
+
+
+
+def test_second_verified_series_batch_matches_deterministically() -> None:
+    entries = load_ontology()["entries"]
+    cases = [
+        ("EXPLOIT部 定期対戦会", "EXPLOIT", "exploit-club"),
+        ("VRCゲームワールド部 月曜イベント", "VRCゲームワールド部", "vrc-game-world-club"),
+        ("ML集会", "ML集会", "ml-gathering"),
+        ("Personally match", "Personally match 開催通知", "personally-match"),
+        ("VRC初心者ワールドツアー", "VRC初心者ワールドツアー", "vrc-beginner-world-tour"),
+        ("VRCフィットボクシング集会（土曜）", "VRCフィットボクシング集会", "vrc-fit-boxing"),
+        ("VRCフィットボクシング集会（日曜）", "VRCフィットボクシング集会", "vrc-fit-boxing"),
+    ]
+    expected_ids = {expected_id for _, _, expected_id in cases}
+    assert expected_ids <= {entry["canonical_id"] for entry in entries}
+
+    for title, organizer, expected_id in cases:
+        entry, status, evidence = select_entry(
+            {"title": title, "description": "", "organizer": organizer},
+            entries,
+        )
+        assert status == "matched"
+        assert entry is not None
+        assert entry["canonical_id"] == expected_id
+        assert "alias" in evidence
