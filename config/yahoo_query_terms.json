@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "classifier_version": "1.8",
   "target_count": 1000,
   "retention_days": 365,
@@ -8,7 +8,7 @@
   "bootstrap_query_count": 140,
   "request_delay_seconds": 0.75,
   "base_queries": [
-    "(イベント OR 集会 OR 交流会 OR 営業 OR 公演 OR ライブ OR DJ OR 大会 OR 朗読会 OR 朗読劇 OR 朗読ミュージカル OR 舞台 OR 上映会 OR 映画祭 OR 展示会 OR 撮影会 OR フェス OR 祭り OR オフ会 OR 説明会 OR 体験会) (VRChat OR VRC)",
+    "(イベント OR 集会 OR 交流会 OR 営業 OR 公演 OR ライブ OR DJ OR 大会 OR 朗読会 OR 朗読劇 OR 朗読ミュージカル OR 舞台 OR 上映会 OR 映画祭 OR 展示会 OR 撮影会 OR フェス OR 祭り OR オフ会 OR 説明会 OR 体験会) (開催 OR 告知 OR 日時 OR OPEN OR オープン OR 開場 OR 開始 OR 営業 OR 本日 OR 今日 OR 明日 OR 今夜 OR 参加 OR JOIN OR リクイン OR Group+) (VRChat OR VRC)",
     "(イベント告知 OR 営業告知 OR 通常営業 OR 開催決定 OR OPEN OR オープン) (JOIN OR ジョイン OR リクイン OR reqin OR Group+ OR グループインスタンス OR フレンドインスタンス OR 参加方法) (VRChat OR VRC)",
     "(JOIN OR ジョイン OR リクイン OR reqin OR リクエストインバイト OR \"request invite\" OR Group+ OR グループインスタンス OR フレンド申請) (開催 OR 告知 OR 日時 OR OPEN OR オープン OR 開場 OR 開始 OR 営業 OR 本日 OR 今日 OR 明日 OR 今夜) (VRChat OR VRC)",
     "(キャスト募集 OR スタッフ募集 OR 店員募集 OR 演者募集 OR テスター募集 OR 参加者募集 OR 出展募集 OR 公募) (締切 OR 〆切 OR 応募期限 OR 面接) (VRChat OR VRC)"
@@ -192,5 +192,16 @@
       "写真",
       "案内"
     ]
+  },
+  "negative_feedback": {
+    "source": "rejected_yahoo_candidates",
+    "policy": "use_for_query_structure_and_audit_only",
+    "do_not_hard_exclude": [
+      "販売",
+      "プレゼント",
+      "キャンペーン",
+      "配布"
+    ],
+    "reason": "These terms can coexist with valid event announcements; final fail-closed classification remains authoritative."
   }
 }
