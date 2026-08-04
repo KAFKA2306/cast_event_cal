@@ -38,7 +38,7 @@ jobs:
           test_text = tests.read_text(encoding='utf-8')
           marker = 'def test_host_event_abbreviation_with_explicit_schedule_is_accepted():'
           if marker not in test_text:
-              test_text += '''\n\n\ndef test_host_event_abbreviation_with_explicit_schedule_is_accepted():\n    configure_classifier()\n    event, reason = refined_candidate_to_event(\n        candidate(\n            "VRCで1番ド派手なホスイベ Attrazione。"\n            "8月度姫救済特別営業は2026年8月15日22時始動。"\n            "姫様のご来店をお待ちしております。#VRChat",\n            retweets=36,\n        ),\n        now=datetime(2026, 8, 4, tzinfo=UTC),\n        min_retweets=3,\n        x_ids=set(),\n    )\n    assert reason is None\n    assert event is not None\n    assert event["starts_at"].startswith("2026-08-15T22:00:00")\n'''
+              test_text += '''\n\n\ndef test_host_event_abbreviation_with_explicit_schedule_is_accepted():\n    configure_classifier()\n    event, reason = refined_candidate_to_event(\n        candidate(\n            "VRCで1番ド派手なホスイベ Attrazione。"\n            "8月度姫救済特別営業は2026年8月15日22時始動。"\n            "姫様のご来店をお待ちしております。#VRChat",\n            retweets=36,\n        ),\n        now=datetime(2026, 8, 4, tzinfo=UTC),\n        min_retweets=3,\n        x_ids=set(),\n    )\n    assert reason is None\n    assert event is not None\n    assert event["starts_at"] == "2026-08-15T13:00:00Z"\n'''
               tests.write_text(test_text, encoding='utf-8')
 
           Path('.github/workflows/apply-yahoo-host-event-term-once.yml').unlink()
