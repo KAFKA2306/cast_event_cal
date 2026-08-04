@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-04T03:10:41Z",
-  "event_count": 594,
+  "generated_at": "2026-08-04T03:28:14Z",
+  "event_count": 595,
   "link_kind_counts": {
-    "announcement": 192,
+    "announcement": 193,
     "application": 3,
     "community": 5,
-    "official_x": 131,
-    "related_web": 60,
+    "official_x": 132,
+    "related_web": 61,
     "stream": 2,
-    "vrchat_group": 48,
+    "vrchat_group": 49,
     "vrchat_world": 1
   },
-  "events_with_primary_action": 171,
+  "events_with_primary_action": 172,
   "events_with_application": 3,
-  "events_with_vrchat_group": 48,
-  "resolution_cache_size": 350,
+  "events_with_vrchat_group": 49,
+  "resolution_cache_size": 354,
   "shortener_resolution_skipped": false,
   "sample": [
     {
@@ -381,6 +381,35 @@
       ]
     },
     {
+      "id": "df3cf671239aebdc5d44",
+      "title": "【告知】 本日21:00から『沼民VRC部集会』を開催します。 グループインスタンスでの開催となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https://t.co/NJ7R…",
+      "primary_action_url": "https://vrchat.com/home/group/grp_c4849e38-2902-4099-8760-4c20a7a95832",
+      "primary_action_kind": "vrchat_group",
+      "official_links": [
+        {
+          "url": "https://vrchat.com/home/group/grp_c4849e38-2902-4099-8760-4c20a7a95832",
+          "kind": "vrchat_group",
+          "label": "VRChat Group",
+          "evidence": "text:description",
+          "resolution": "redirect"
+        },
+        {
+          "url": "https://x.com/KMID_Numanidive/status/2084478715246117041?utm_source=yjrealtime&utm_medium=search",
+          "kind": "announcement",
+          "label": "公式告知",
+          "evidence": "field:url",
+          "resolution": "direct"
+        },
+        {
+          "url": "https://x.com/KMID_Numanidive",
+          "kind": "official_x",
+          "label": "公式X",
+          "evidence": "field:official_x_url",
+          "resolution": "direct"
+        }
+      ]
+    },
+    {
       "id": "440939b6f604d85dffee",
       "title": "START VRC吟行句会 第87回 開催します。 Android、iOS対応のworldです。 ■日時 8/4（火）21:30～24:00 ■参加方法 ・「VRC吟行句会」グループに参加 （…",
       "primary_action_url": "https://x.com/VRCHaiku/status/2083509617980821695?utm_source=yjrealtime&utm_medium=search",
@@ -653,35 +682,6 @@
           "kind": "vrchat_group",
           "label": "VRChat Group",
           "evidence": "field:url",
-          "resolution": "direct"
-        }
-      ]
-    },
-    {
-      "id": "6f07806016926ee52605",
-      "title": "🎪 #白紙座 第３２回公演のおしらせ 🎪 2026年8月5日（水） 21:15 開場 ／ 21:30 開演 ましろ小劇場（VRChat） 様々な背景を持つ俳優たちによる、個性豊かなインプロ（即…",
-      "primary_action_url": "https://twitter.com/hakushiza/status/2080216356952158297",
-      "primary_action_kind": "announcement",
-      "official_links": [
-        {
-          "url": "https://twitter.com/hakushiza/status/2080216356952158297",
-          "kind": "announcement",
-          "label": "公式告知",
-          "evidence": "text:description",
-          "resolution": "redirect"
-        },
-        {
-          "url": "https://x.com/hakushiza/status/2080216356952158297?utm_source=yjrealtime&utm_medium=search",
-          "kind": "announcement",
-          "label": "公式告知",
-          "evidence": "field:url",
-          "resolution": "direct"
-        },
-        {
-          "url": "https://x.com/hakushiza",
-          "kind": "official_x",
-          "label": "公式X",
-          "evidence": "field:official_x_url",
           "resolution": "direct"
         }
       ]
