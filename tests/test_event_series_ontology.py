@@ -107,3 +107,26 @@ def test_second_verified_series_batch_matches_deterministically() -> None:
         assert entry is not None
         assert entry["canonical_id"] == expected_id
         assert "alias" in evidence
+
+
+
+def test_third_verified_series_batch_matches_deterministically() -> None:
+    entries = load_ontology()["entries"]
+    entries_by_id = {entry["canonical_id"]: entry for entry in entries}
+    cases = [
+        ("VRCでボーっとする会", "VRCでボーっとする会", "vrc-idle-gathering"),
+        ("VRCふれあい動物園", "VRCふれあい動物園", "vrc-petting-zoo"),
+    ]
+    assert {expected_id for _, _, expected_id in cases} <= entries_by_id.keys()
+    assert entries_by_id["vrc-idle-gathering"]["category"] == "wellness"
+    assert entries_by_id["vrc-petting-zoo"]["category"] == "community"
+
+    for title, organizer, expected_id in cases:
+        entry, status, evidence = select_entry(
+            {"title": title, "description": "", "organizer": organizer},
+            entries,
+        )
+        assert status == "matched"
+        assert entry is not None
+        assert entry["canonical_id"] == expected_id
+        assert "alias" in evidence
