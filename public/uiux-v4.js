@@ -276,3 +276,203 @@
     ?document.addEventListener('DOMContentLoaded',start,{once:true})
     :start();
 })();
+
+(()=>{
+  'use strict';
+
+  const $=(selector,root=document)=>root.querySelector(selector);
+  const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
+  const normalize=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ja').replace(/\s+/g,' ').trim();
+  const SEARCH_ALIASES=new Map([
+    ['cast',['cast','キャスト','接客','1対1','一対一','個室','メイド','執事','店員','スタッフ','ゲスト募集','キャスト募集','cast service','cast_service']],
+    ['キャスト',['cast','キャスト','接客','1対1','一対一','個室','メイド','執事','店員','スタッフ','ゲスト募集','キャスト募集','cast service','cast_service']],
+    ['接客',['cast','キャスト','接客','1対1','一対一','個室','メイド','執事','店員','スタッフ','ゲスト募集','キャスト募集','cast service','cast_service']],
+  ]);
+  const BATCH_DESKTOP=20;
+  const BATCH_MOBILE=12;
+
+  let semanticAliases=null;
+  let semanticValue='';
+  let semanticLimit=batchSize();
+  let semanticGuard=false;
+  let semanticTimer=0;
+  let sentinel=null;
+  let infiniteObserver=null;
+
+  function batchSize(){
+    return matchMedia('(max-width:600px)').matches?BATCH_MOBILE:BATCH_DESKTOP;
+  }
+
+  function aliasesFor(value){
+    return SEARCH_ALIASES.get(normalize(value))||null;
+  }
+
+  function installStyles(){
+    if($('#ux-infinite-scroll-style')) return;
+    const style=document.createElement('style');
+    style.id='ux-infinite-scroll-style';
+    style.textContent=`
+      .ux-load-more{display:none!important}
+      .ux-infinite-sentinel{order:6;display:flex;min-height:52px;align-items:center;justify-content:center;margin:8px 0 2px;color:var(--q-muted);font-size:.76rem;font-weight:750;text-align:center}
+      .ux-infinite-sentinel::before{content:"";width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--q-accent);box-shadow:0 0 0 5px rgba(54,86,212,.1)}
+      .ux-infinite-sentinel[data-complete="true"]::before{background:var(--q-accent-2)}
+    `;
+    document.head.append(style);
+  }
+
+  function ensureSentinel(){
+    const agenda=$('#agenda');
+    if(!agenda) return null;
+    if(!sentinel){
+      sentinel=document.createElement('div');
+      sentinel.className='ux-infinite-sentinel';
+      sentinel.setAttribute('role','status');
+      sentinel.setAttribute('aria-live','polite');
+      sentinel.textContent='イベントを読み込んでいます';
+    }
+    const loadMore=$('.ux-load-more');
+    if(loadMore) loadMore.after(sentinel);
+    else agenda.after(sentinel);
+    return sentinel;
+  }
+
+  function hiddenNormalCount(){
+    return $$('.event[hidden]',$('#agenda')).length;
+  }
+
+  function updateNormalSentinel(){
+    if(semanticAliases) return;
+    const marker=ensureSentinel();
+    if(!marker) return;
+    const remaining=hiddenNormalCount();
+    marker.dataset.complete=String(remaining===0);
+    marker.textContent=remaining?`下へスクロールすると残り${remaining}件を自動で表示します`:'すべてのイベントを表示しました';
+  }
+
+  function loadNormalBatch(){
+    const button=$('.ux-load-more');
+    if(!button){
+      updateNormalSentinel();
+      return;
+    }
+    button.click();
+    setTimeout(updateNormalSentinel,0);
+  }
+
+  function cardMatches(card,aliases){
+    const text=normalize(card.textContent);
+    return aliases.some(alias=>text.includes(normalize(alias)));
+  }
+
+  function updateSemanticSentinel(matches){
+    const marker=ensureSentinel();
+    if(!marker) return;
+    const visible=Math.min(semanticLimit,matches.length);
+    const remaining=Math.max(0,matches.length-visible);
+    marker.dataset.complete=String(remaining===0);
+    marker.textContent=remaining
+      ?`${visible}/${matches.length}件を表示中 · 下へスクロールして続きを表示`
+      :`${matches.length}件をすべて表示しました`;
+  }
+
+  function applySemanticFilter(reset=false){
+    if(!semanticAliases) return;
+    if(reset) semanticLimit=batchSize();
+    const agenda=$('#agenda');
+    if(!agenda) return;
+    const cards=$$('.event',agenda);
+    const matches=cards.filter(card=>cardMatches(card,semanticAliases));
+    cards.forEach(card=>{
+      card.dataset.semanticMatch=String(matches.includes(card));
+      card.hidden=true;
+    });
+    matches.slice(0,semanticLimit).forEach(card=>{card.hidden=false});
+    $$('.day',agenda).forEach(day=>{
+      day.hidden=!$$('.event',day).some(card=>!card.hidden);
+    });
+    const count=$('#result-count');
+    if(count) count.textContent=`${matches.length}件`;
+    updateSemanticSentinel(matches);
+  }
+
+  function loadSemanticBatch(){
+    if(!semanticAliases) return;
+    semanticLimit+=batchSize();
+    applySemanticFilter(false);
+  }
+
+  function rerenderSemanticBase(reset=true){
+    const input=$('#q');
+    if(!input||!semanticAliases||semanticGuard) return;
+    semanticGuard=true;
+    const preserved=input.value;
+    input.value='';
+    input.dispatchEvent(new Event('input',{bubbles:true}));
+    input.value=preserved;
+    semanticGuard=false;
+    clearTimeout(semanticTimer);
+    semanticTimer=setTimeout(()=>applySemanticFilter(reset),0);
+  }
+
+  function onQueryInput(event){
+    if(semanticGuard) return;
+    const input=event.currentTarget;
+    const aliases=aliasesFor(input.value);
+    if(!aliases){
+      semanticAliases=null;
+      semanticValue='';
+      semanticLimit=batchSize();
+      setTimeout(updateNormalSentinel,0);
+      return;
+    }
+    event.stopImmediatePropagation();
+    semanticAliases=aliases;
+    semanticValue=input.value;
+    rerenderSemanticBase(true);
+  }
+
+  function installSemanticSearch(){
+    const input=$('#q');
+    if(!input||input.dataset.semanticSearch==='true') return;
+    input.dataset.semanticSearch='true';
+    input.addEventListener('input',onQueryInput,true);
+    for(const selector of ['#category','#source','#include-deadlines']){
+      $(selector)?.addEventListener('change',()=>{
+        if(semanticAliases) setTimeout(()=>rerenderSemanticBase(true),0);
+      });
+    }
+    $$('.chip[data-range]').forEach(chip=>chip.addEventListener('click',()=>{
+      if(semanticAliases) setTimeout(()=>rerenderSemanticBase(true),0);
+    }));
+  }
+
+  function installInfiniteScroll(){
+    const marker=ensureSentinel();
+    if(!marker||infiniteObserver) return;
+    infiniteObserver=new IntersectionObserver(entries=>{
+      if(!entries.some(entry=>entry.isIntersecting)) return;
+      if(semanticAliases) loadSemanticBatch();
+      else loadNormalBatch();
+    },{root:null,rootMargin:'900px 0px',threshold:0.01});
+    infiniteObserver.observe(marker);
+    const agenda=$('#agenda');
+    if(agenda){
+      new MutationObserver(()=>{
+        ensureSentinel();
+        if(semanticAliases) setTimeout(()=>applySemanticFilter(false),0);
+        else setTimeout(updateNormalSentinel,0);
+      }).observe(agenda,{childList:true,subtree:true});
+    }
+    updateNormalSentinel();
+  }
+
+  function start(){
+    installStyles();
+    installSemanticSearch();
+    installInfiniteScroll();
+  }
+
+  document.readyState==='loading'
+    ?document.addEventListener('DOMContentLoaded',start,{once:true})
+    :start();
+})();
