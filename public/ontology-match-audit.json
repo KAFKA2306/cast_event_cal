@@ -2,75 +2,27 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 613,
-  "matched_events": 278,
+  "event_count": 605,
+  "matched_events": 277,
   "matched_series": {
-    "yuruge-meet": 18,
-    "wednesday-quest-beginners": 18,
-    "ml-gathering": 18,
-    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 34,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
+    "yuruge-meet": 17,
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 17,
+    "vrc-idle-gathering": 17,
     "zerozoku-auction": 1
   },
-  "unmatched_events": 335,
+  "unmatched_events": 328,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "b3389da24ea6ca360036",
-      "title": "ゆるゲMEET定期開催日",
-      "status": "matched",
-      "ontology_id": "yuruge-meet",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "7f161ad14e54dce0d440",
-      "title": "水曜Quest初心者の集い",
-      "status": "matched",
-      "ontology_id": "wednesday-quest-beginners",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "00392e07628fb83f1e01",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "0e2e50f39599b97167f9",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "63509dae1c93d81393c2",
       "title": "VRC初心者ワールドツアー",
@@ -3358,216 +3310,105 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "b40b3f9f3acec693adfa",
+      "title": "ASMR集会 初心者説明会",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "dd3fd2bf7d3bcec45acc",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "157db7487dd5197fbcb6",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 613,
+    "event_count": 605,
     "category_breakdown": {
-      "art": 137,
-      "community": 164,
-      "game": 106,
+      "art": 134,
+      "community": 162,
+      "game": 105,
       "language_exchange": 34,
-      "learning": 7,
-      "music": 19,
-      "other": 25,
-      "performance": 7,
+      "learning": 5,
+      "music": 21,
+      "other": 26,
+      "performance": 6,
       "recruitment_deadline": 5,
-      "technology": 39,
-      "wellness": 52,
-      "world_tour": 18
+      "technology": 37,
+      "wellness": 51,
+      "world_tour": 19
     },
     "subcategory_breakdown": {
-      "application_deadline": 2,
+      "application_deadline": 1,
       "auction": 1,
-      "bar": 18,
+      "bar": 15,
       "cafe": 19,
-      "cast_recruitment": 1,
+      "cast_recruitment": 2,
       "cast_service": 2,
       "dance": 2,
-      "dj": 13,
+      "dj": 14,
       "engineering": 25,
       "fitness": 34,
-      "hangout": 12,
+      "hangout": 10,
       "language_exchange": 34,
       "lecture": 3,
       "live_music": 1,
-      "mystery": 36,
-      "orientation": 3,
-      "photography": 127,
+      "mystery": 35,
+      "orientation": 2,
+      "photography": 125,
+      "quiz": 1,
       "reading": 1,
-      "research": 14,
+      "research": 12,
       "show": 2,
-      "social": 113,
+      "social": 116,
       "tabletop": 34,
       "theater": 1,
-      "workshop": 1,
-      "world_tour": 18
+      "world_tour": 19
     },
     "event_mode_breakdown": {
       "deadline": 5,
       "hybrid": 3,
-      "in_world": 605
+      "in_world": 597
     },
     "classification_source_breakdown": {
-      "curated_ontology": 260,
-      "fallback": 25,
-      "keyword_rules": 104,
-      "legacy_and_keywords": 223,
+      "curated_ontology": 259,
+      "fallback": 26,
+      "keyword_rules": 97,
+      "legacy_and_keywords": 222,
       "legacy_category": 1
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 40,
-    "audit_event_count": 40
+    "low_confidence_event_count": 37,
+    "audit_event_count": 37
   },
   "category_review_queue": [
-    {
-      "event_id": "5b5897fd185dfc9d9f9a",
-      "title": "START VRC人生周回遅れ部集会を今日の21時からやります。 人生周回遅れなそこの君🫵待ってます。 フレンドオンリーインスタンスになるので、AlienNAwareまでフレンド申請お願いしま…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "e37b6978deb114541979",
-      "title": "【イベント告知】 『VRC悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第76回は8月5日(水) 『21:00〜22:30』 ※当イベントはPCオンリ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d1533a1f61d56637855d",
-      "title": "START VRC軍装同好会定期集会！ 今回はiyorokenさん制作の 【Just Sonatine】 で開催します！ 開催日8月5日 22時～ 皆様のご参加お待ちしております！ グループ …",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "662239231affbbd34aee",
-      "title": "START 明日です！ VRChatでのBar DJ #GrooveNoir は8月5日（水）22時から90分ほど。 今回は6月〜7月の新譜を中心に、深めのジャジーなハウスから心躍るディスコ・…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "music",
-        "community"
-      ]
-    },
-    {
-      "event_id": "fe722777d71f3ced229e",
-      "title": "【告知】 VRC撮影講習会の受講者向け説明会を行います。 こちらは撮影に特化させた講習会です。 １回目の説明会は、8月5日 22時～ 15分ほど join先はリプツリーにある、yuki0122…",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "orientation",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:説明会"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "art"
-      ]
-    },
-    {
-      "event_id": "4e6bf23651437b106997",
-      "title": "第29回虜ロール集会をVRCで行います 8月5日(水)22時～23時 22時50分に集合写真を撮ります 参加される方は「虜ロール集会」グループにJoinをお願いします #虜ロール集会 ロール髪…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": "photography",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:写真"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "a384812875debebce2a6",
-      "title": "裏界隈プラベグループのトップを決めます😍 さらに 参加プラベグループの紹介や その場で面談等もありますので 興味のある方は是非遊びにきてね！ ♥️日時：８月５日(水) 22:00～♥️ 場所：…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "aa4da2fca465cb3e7a7a",
-      "title": "🥃 ソロジャーナルワークショップ Bar Not Alone ソロジャーナルで遊びませんか？ 初心者さんも、経験者さんも、作者さんも大歓迎！ 気軽に遊びに来てください📖 📅 第2水曜 22:0…",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "workshop",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ワークショップ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "performance",
-        "community"
-      ]
-    },
-    {
-      "event_id": "6c18c71a89b25fb94794",
-      "title": "START VRC和装接客型イベント 夢廻庵👘 🪭営業案内🪭 【8月5日(水)22時10分〜23時20分にて開催❗️】 ＊終了時間は前後する場合がございます ⛩️参加方法:グループjoin&事…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
     {
       "event_id": "bed51476678e8839eca5",
       "title": "第2回 練習会 開催！！ #vrcニコニコ盆踊り 【開催日時】 8月6日 21時～22時 【開催場所】 『vrcニコニコ盆踊り（夏）』グループにて、「グループ＋」インスタンスを開きます #vr…",
@@ -3580,6 +3421,40 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "4acf9aeed4310f6bb07f",
+      "title": "START 本日、8月6日木曜日22時〜の【VRC芸術集会（仮）】 では、「須恵器」について扱います。 解説者: ブリカツ村長 さん 参加方法：グループに参加&当日join groupURL:…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "81b01c34eac6517177e3",
+      "title": "✨VRChatライブ✨ 『Lumina Performance Live vol.21』 ⏰8/6(今日)22:15～開場 🪄#VRC_Lumina Group開催 💫タイムテーブル ①22:…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ライブ"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "performance"
+      ]
     },
     {
       "event_id": "9fff51f1e387c6fb019e",
@@ -3612,6 +3487,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "920b789641bcd92b9c82",
+      "title": "＼\\⚡️𝙏𝙊𝘿𝘼𝙔'𝙎 𝙀𝙑𝙀𝙉𝙏!!⚡️/／ 『NEW ORDER the story of LAUTRIV』 先行上映会 いよいよ本日！ LAUTRIV初のドキュメンタリー映画の先行上映会…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "70b693dffbffd9114ac3",
       "title": "#VRCカジュビリ #VRChat カジュアルビリヤード部恒例「夏壊し」 今年も8/7(金)22時～開催決定🌻🌻 VRChat内でも屈指の名作と謳われる@y23586様作「PROJECT:SU…",
       "category": "other",
@@ -3632,6 +3520,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "dec9caa1fc3a02fac04f",
+      "title": "╲🌸動画投稿のお知らせ🌸／ きたる 2026年8月8日(土) 22～24時 VRchatにてねころさん主催の 「#超寝転ん盆踊り2026」が開催！ 公式ソング「寝転ん盆唄」をCOVER！ イベ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3798,6 +3699,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "bf0395ef034d6018aff7",
+      "title": "第12回VRC射撃部定例イベント #VRC射撃部 へお越しいただきありがとうございました。 本日はクレー射撃部 1位 苔類(Tairui)様 2位 なべさん46様 3位 アスト・ケイヤ様でした…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "6c9e3832d45c158ab972",
       "title": "【出演告知】 Jersey Clubが流れるVRCイベント、\"Dark Five Club\"に出演させていただきます！ #DFCJC の主催、#JerseyJunky の主催、そして #HAS…",
       "category": "other",
@@ -3878,6 +3792,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "46a23f92c1ef2f40edec",
+      "title": "START VRCアカウント【Lustroir】アカウントにフレンド申請。 ▪️8月19日21時25分にリクエストインバイト（1度のみ） お連れ様がいる場合当日会場のスタッフにお伝え下さい。 …",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "b98ede11c71cf718a25d",
