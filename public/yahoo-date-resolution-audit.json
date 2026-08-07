@@ -1,17 +1,26 @@
 {
   "schema_version": "1.0",
   "policy_version": "calendar-week-relative-date.v1",
-  "generated_at": "2026-08-07T01:00:27Z",
+  "generated_at": "2026-08-07T13:23:26Z",
   "timezone": "Asia/Tokyo",
   "week_start": "monday",
-  "previous_event_count": 80,
-  "current_event_count": 64,
-  "events_with_resolution_evidence": 64,
+  "previous_event_count": 88,
+  "current_event_count": 76,
+  "events_with_resolution_evidence": 76,
   "resolution_method_counts": {
-    "explicit_calendar_date": 59,
-    "next_occurrence_unprefixed": 1,
-    "relative_day_from_source_timestamp": 4
+    "explicit_calendar_date": 64,
+    "next_calendar_week_weekday": 1,
+    "next_occurrence_unprefixed": 2,
+    "relative_day_from_source_timestamp": 9
   },
-  "changed_event_count": 0,
-  "changed_events": []
+  "changed_event_count": 1,
+  "changed_events": [
+    {
+      "source_id": "yahoo:x:2085697243840176183",
+      "previous_starts_at": "2026-08-18T12:50:00Z",
+      "current_starts_at": "2026-08-11T12:50:00Z",
+      "date_resolution_method": "next_calendar_week_weekday",
+      "date_resolution_anchor": "2026-08-07T11:59:07Z"
+    }
+  ]
 }
