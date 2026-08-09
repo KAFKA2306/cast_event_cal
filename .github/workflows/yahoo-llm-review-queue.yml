@@ -1,0 +1,88 @@
+name: Yahoo machine classification and LLM review queue
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 20 * * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/build_yahoo_llm_review_queue.py
+      - tests/test_yahoo_llm_review_queue.py
+      - data/yahoo_llm_review_resolutions.json
+      - .github/workflows/yahoo-llm-review-queue.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yahoo-llm-review-queue
+  cancel-in-progress: false
+
+jobs:
+  build-review-queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e '.[dev]'
+      - name: Verify deterministic queue rules
+        run: |
+          ruff check scripts/build_yahoo_llm_review_queue.py tests/test_yahoo_llm_review_queue.py
+          pytest -q tests/test_yahoo_llm_review_queue.py
+      - name: Build pending LLM review queue
+        run: python scripts/build_yahoo_llm_review_queue.py
+      - name: Validate queue integrity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          queue = json.loads(Path('data/yahoo_llm_review_queue.json').read_text(encoding='utf-8'))
+          resolutions = json.loads(Path('data/yahoo_llm_review_resolutions.json').read_text(encoding='utf-8'))
+          audit = json.loads(Path('public/yahoo-llm-review-queue-audit.json').read_text(encoding='utf-8'))
+
+          items = queue['items']
+          resolved = {
+              str(row['status_id'])
+              for row in resolutions.get('resolutions', [])
+              if isinstance(row, dict) and row.get('status_id')
+          }
+          ids = [str(row['status_id']) for row in items]
+
+          assert queue['schema_version'] == '1.0'
+          assert queue['pending_count'] == len(items)
+          assert len(ids) == len(set(ids))
+          assert not (set(ids) & resolved)
+          assert all(row['review_kind'] in {'ambiguous_rejection', 'possible_false_positive'} for row in items)
+          assert all(row['priority'] in {'high', 'medium', 'normal'} for row in items)
+          assert all(row.get('requested_llm_output') for row in items)
+          assert audit['schema_version'] == '1.0'
+          assert audit['pending_count'] == len(items)
+          assert audit['duplicate_status_ids'] == 0
+          assert audit['status'] == 'ok'
+          PY
+      - name: Commit queue snapshot
+        run: |
+          set -euo pipefail
+          paths=(
+            data/yahoo_llm_review_queue.json
+            public/yahoo-llm-review-queue-audit.json
+          )
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add "${paths[@]}"
+          if git diff --cached --quiet; then
+            echo 'Yahoo LLM review queue is already current'
+          else
+            git commit -m 'chore: refresh Yahoo LLM review queue [skip ci]'
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
