@@ -2,12 +2,13 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 604,
+  "event_count": 617,
   "matched_events": 278,
   "matched_series": {
-    "en-jp-language-exchange": 36,
     "vrc-fit-boxing": 36,
     "personally-match": 18,
+    "en-jp-language-exchange": 35,
+    "cafe-bar-for-light": 1,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
@@ -20,21 +21,9 @@
     "vrc-petting-zoo": 17,
     "zerozoku-auction": 1
   },
-  "unmatched_events": 326,
+  "unmatched_events": 339,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "fd7d6f4974838102ec72",
-      "title": "EN-JP Language Exchange（土曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "dff20d7ec1ad1fbb03e4",
       "title": "VRCフィットボクシング集会（土曜）",
@@ -76,6 +65,18 @@
       "title": "VRCフィットボクシング集会（日曜）",
       "status": "matched",
       "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "1bc0d022c312a61144d8",
+      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日22:30〜23:35 OPEN 形式：20分×3ローテ 📌参加方法 JOIN制｜ILへフレンド申請→JOIN VRC初心者の方もイ…",
+      "status": "matched",
+      "ontology_id": "cafe-bar-for-light",
       "evidence": [
         "alias",
         "organizer",
@@ -3362,17 +3363,17 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 604,
+    "event_count": 617,
     "category_breakdown": {
-      "art": 137,
-      "community": 158,
+      "art": 141,
+      "community": 163,
       "game": 104,
-      "language_exchange": 36,
-      "learning": 4,
-      "music": 21,
+      "language_exchange": 35,
+      "learning": 5,
+      "music": 24,
       "other": 25,
       "performance": 5,
-      "recruitment_deadline": 5,
+      "recruitment_deadline": 6,
       "technology": 37,
       "wellness": 53,
       "world_tour": 19
@@ -3380,16 +3381,16 @@
     "subcategory_breakdown": {
       "application_deadline": 1,
       "auction": 1,
-      "bar": 15,
-      "cafe": 19,
+      "bar": 17,
+      "cafe": 20,
       "cast_service": 2,
       "dance": 3,
-      "dj": 15,
+      "dj": 17,
       "engineering": 24,
       "fitness": 36,
-      "hangout": 7,
-      "language_exchange": 36,
-      "lecture": 2,
+      "hangout": 9,
+      "language_exchange": 35,
+      "lecture": 3,
       "mystery": 34,
       "orientation": 2,
       "photography": 122,
@@ -3403,35 +3404,22 @@
       "world_tour": 19
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 7,
-      "in_world": 592
+      "deadline": 6,
+      "hybrid": 8,
+      "in_world": 603
     },
     "classification_source_breakdown": {
       "curated_ontology": 261,
       "fallback": 25,
-      "keyword_rules": 100,
+      "keyword_rules": 113,
       "legacy_and_keywords": 217,
       "legacy_category": 1
     },
     "organizer_profile_count": 23,
-    "low_confidence_event_count": 38,
-    "audit_event_count": 38
+    "low_confidence_event_count": 41,
+    "audit_event_count": 41
   },
   "category_review_queue": [
-    {
-      "event_id": "7eb8dc6600ae7a6427d7",
-      "title": "SwingBox in VRC 8/8 12:00〜17:00 21:00〜26:00 8/9 12:00〜17:00 21:00〜26:00 2日間で狂気の20時間のエレスイイベント わたし…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "22358ad30fc80d72f9ac",
       "title": "おはようです！ 今夜は海夏青ちゃん主催 #nuts_Fes に出演するよ～！！ タイムテーブルも出た✨ 8月8日(土)19:30オープン、20:00スタート！ インスタンスは「たまLab.」さ…",
@@ -3496,6 +3484,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "adc34a070d12dc6256f1",
+      "title": "【本日の注目イベント✨】 🕒8/8(土) 21:55～ 🟠VRCホストイベント【club Focus】🟠 VRChatホストイベント 多種多様なホストから繰り広げられる会話で今までとは一味違う…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "e12de9aa2ef8fb943118",
@@ -3598,6 +3599,23 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "53f21beeed233197b64d",
+      "title": "START 今日も21時～茶屋若葉開店します。 VRC初心者さんメインの交流イベント。上級者も歓迎です。 店員が交流サポート、話下手の方もお気軽に♪ 「wakaba0214_茶屋若葉」へフレン…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "12995d4c53bfdad513a4",
       "title": "🀄🏖️今週末は水着営業！🏖️🀄 📅 8/9(日) 22:00〜25:00 今年も昨年同様、混一色キャストの水着営業を開催します！✨ 今日、明日と暑い日が続きますのでVRChatでは少しでも涼し…",
       "category": "community",
@@ -3628,6 +3646,23 @@
     {
       "event_id": "b6938087754fbdef1910",
       "title": "START 明日20時からVRC夜マック集会！！ 明日20時からVRC夜マック集会！！ 明日20時からVRC夜マック集会！！ https://t.co/WRd5j3v108",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "e5c339e9bfd10aa9ad8f",
+      "title": "START 本日のポスター紹介はVRC怪談集会赤い部屋@akaiheya_vrc✨ 毎週月曜22時頃開催で、会場の円卓にそれぞれ話者が集まり、順番に怪談を語っていくイベントとなります😌 一線で…",
       "category": "art",
       "label": "アート・展示・撮影",
       "subcategory": null,
@@ -3822,6 +3857,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "d2951dc89f92eb608697",
+      "title": "【❤VRChatイベント告知💙】 HEARTSOME vol.31 2026/8/19(Wed.) JST 20:45 OPEN 21:00 Start 久しぶりに水曜日開催！！ ゲストDJに…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "music"
+      ]
     },
     {
       "event_id": "46a23f92c1ef2f40edec",
