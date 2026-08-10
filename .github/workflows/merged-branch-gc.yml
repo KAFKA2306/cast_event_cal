@@ -1,0 +1,33 @@
+name: Residue-free merged branch GC
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/merged-branch-gc.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/merged-branch-gc.yml"
+  schedule:
+    - cron: "35 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: read
+    uses: KAFKA2306/semiconductor-earnings-model/.github/workflows/reusable-merged-branch-gc.yml@542bbe6b6c15c325dfa5100c9824aeb3008d586e
+    with:
+      apply: false
+
+  cleanup:
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: read
+    uses: KAFKA2306/semiconductor-earnings-model/.github/workflows/reusable-merged-branch-gc.yml@542bbe6b6c15c325dfa5100c9824aeb3008d586e
+    with:
+      apply: true
