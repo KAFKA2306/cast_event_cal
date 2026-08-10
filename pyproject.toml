@@ -17,10 +17,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "ruff>=0.12,<1"]
+dev = ["pytest>=8,<10", "ruff>=0.12,<1", "mcp>=2,<3"]
+mcp = ["mcp>=2,<3"]
 
 [project.scripts]
 cast-event-cal = "cast_event_cal.core:main"
+cast-event-cal-mcp = "cast_event_cal.mcp_server:main"
 
 [tool.setuptools.packages.find]
 include = ["cast_event_cal*"]
