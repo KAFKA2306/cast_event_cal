@@ -55,3 +55,9 @@ jobs:
           assert len({item['source_id'] for item in events}) == len(events)
           PY
       - run: python main_executor.py run --strict
+      - name: Verify clean checkout
+        if: always()
+        run: |
+          git reset --hard HEAD
+          git clean -fdx
+          test -z "$(git status --porcelain --untracked-files=all)"
