@@ -1,0 +1,29 @@
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DOC = ROOT / "docs" / "canonical-flow.md"
+
+
+def test_canonical_flow_contract_exists() -> None:
+    text = DOC.read_text(encoding="utf-8")
+    assert "cast_event_cal` is the canonical repository" in text
+    assert "vrc_cast_event_calender` is a projection-only distribution repository" in text
+    assert "public/events.json" in text
+    assert "public/calendar.ics" in text
+
+
+def test_ratchet_kpis_are_limited_to_three() -> None:
+    text = DOC.read_text(encoding="utf-8")
+    expected = {
+        "acceptance_precision",
+        "publication_freshness",
+        "publication_success_rate",
+    }
+    found = {name for name in expected if f"`{name}`" in text}
+    assert found == expected
+    assert text.count(" — ") >= 3
+
+
+def test_obsolete_weekly_research_workflow_is_absent() -> None:
+    assert not (ROOT / ".github" / "workflows" / "weekly-repo-research.yml").exists()
