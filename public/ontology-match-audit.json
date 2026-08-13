@@ -2,75 +2,27 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 596,
+  "event_count": 598,
   "matched_events": 278,
   "matched_series": {
-    "yuruge-meet": 18,
-    "wednesday-quest-beginners": 18,
-    "ml-gathering": 18,
-    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 34,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
-    "zerozoku-auction": 1,
+    "zerozoku-auction": 2,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
-    "exploit-club": 17
+    "exploit-club": 17,
+    "yuruge-meet": 17,
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 17,
+    "vrc-idle-gathering": 17
   },
-  "unmatched_events": 318,
+  "unmatched_events": 320,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "5284d3e54b6392243a98",
-      "title": "ゆるゲMEET定期開催日",
-      "status": "matched",
-      "ontology_id": "yuruge-meet",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "98ff2818c353efea1564",
-      "title": "水曜Quest初心者の集い",
-      "status": "matched",
-      "ontology_id": "wednesday-quest-beginners",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "3fb09cefec3f14894a00",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "ab3676c0dfc0c672bf2a",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "6c95eb3eadd2e843ddf0",
       "title": "VRC初心者ワールドツアー",
@@ -158,6 +110,18 @@
     {
       "event_id": "9b13e1f4aec9bae953c0",
       "title": "START VRCイベント 〜０属オークション〜 ✨8月開催告知✨ 『第4回』 8/15 (土) 22:00～ ✅リクイン抽選式 ✅参加条件は5万UC以上の所持条件 ✅観戦枠参加は1万UC以上…",
+      "status": "matched",
+      "ontology_id": "zerozoku-auction",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "1f7566d3f86a1a581901",
+      "title": "START VRCイベント 〜０属オークション〜 ✨第4回開催✨ 【RT招待キャンペーン！】 『開催日時』 8/15 (土) 22:00～ ✅リクイン抽選式 ✅参加条件は5万UC以上の所持条件…",
       "status": "matched",
       "ontology_id": "zerozoku-auction",
       "evidence": [
@@ -3358,141 +3322,105 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "7d5614540fb2493d2029",
+      "title": "ASMR集会 初心者説明会",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "86e123bd8697e47475b5",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "d61f12df2844ef162844",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 596,
+    "event_count": 598,
     "category_breakdown": {
       "art": 133,
-      "community": 153,
+      "community": 159,
       "game": 108,
       "language_exchange": 34,
       "learning": 1,
-      "music": 21,
-      "other": 24,
-      "performance": 5,
+      "music": 22,
+      "other": 22,
+      "performance": 6,
       "recruitment_deadline": 5,
-      "technology": 40,
-      "wellness": 52,
-      "world_tour": 20
+      "technology": 38,
+      "wellness": 51,
+      "world_tour": 19
     },
     "subcategory_breakdown": {
       "application_deadline": 1,
-      "auction": 1,
-      "bar": 16,
-      "cafe": 14,
+      "auction": 2,
+      "bar": 15,
+      "cafe": 15,
+      "cast_recruitment": 1,
       "cast_service": 2,
+      "competition": 1,
       "dance": 2,
-      "dj": 12,
-      "engineering": 26,
+      "dj": 13,
+      "engineering": 25,
       "exhibition": 1,
       "fitness": 34,
-      "hangout": 11,
+      "hangout": 13,
       "language_exchange": 34,
       "lecture": 1,
-      "mystery": 36,
-      "photography": 126,
+      "mystery": 35,
+      "photography": 125,
       "quiz": 1,
       "reading": 2,
-      "research": 14,
-      "show": 1,
-      "social": 110,
+      "research": 13,
+      "show": 2,
+      "social": 114,
       "tabletop": 34,
       "theater": 1,
-      "world_tour": 20
+      "world_tour": 19
     },
     "event_mode_breakdown": {
       "deadline": 5,
       "hybrid": 6,
-      "in_world": 585
+      "in_world": 587
     },
     "classification_source_breakdown": {
       "curated_ontology": 260,
-      "fallback": 24,
-      "keyword_rules": 92,
+      "fallback": 22,
+      "keyword_rules": 96,
       "legacy_and_keywords": 219,
       "legacy_category": 1
     },
     "organizer_profile_count": 23,
-    "low_confidence_event_count": 32,
-    "audit_event_count": 32
+    "low_confidence_event_count": 30,
+    "audit_event_count": 30
   },
   "category_review_queue": [
-    {
-      "event_id": "8a0c406a23b2fe9a42fa",
-      "title": "#neoswingarchive #SwingBox_vrc Swing Box in VRC たくさん踊らせていただきました、ありがとうございました！ neoswing archiveは今週…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "b6c10287d78a6a03f652",
-      "title": "#居酒屋和み #VRCカジュビリ #VRChat 前回好評だった「居酒屋なごみ」コラボ再び🍶🫛 🌻8月12日(水)21:00～ VRCイベント「居酒屋和み」さんとコラボイベントの開催が決定しま…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "b3816f75ae7ec0c24836",
-      "title": "【💡お盆も開催💡】 今夜8/12(水)21時〜VRchat内で、 第304回 #VRCバイク乗りの集会 を 開催いたします🏍💨 Group+インスタンスでの開催💡 集合写真撮影は22時📸 初参…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": "photography",
-      "score": 10,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:写真",
-        "keyword:title:撮影"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "d73f457c86f9ea18edd4",
-      "title": "♦️•♣•━━ VRChatキャバレー Casa Di Luce 営業のお知らせ ━━•♠•❤️ 👠8月12日(水) 22:00 OPEN 事前抽選エントリー枠をご用意できる予定でおります （…",
-      "category": "recruitment_deadline",
-      "label": "募集・締切",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:エントリー"
-      ],
-      "event_mode": "deadline",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "378bea29ee9e0e424264",
-      "title": "【開催日時】 8月12日 (水) 22:30〜23:45 【参加方法】 下記のVRCアカウントにフレンド申請の上、22:30になりましたらリクインお願いします。 「https://t.co/g…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "69b71a92363fc57d05e5",
       "title": "【📢告 知📢】そのに VRCアニソンコネクト #51 オープンやります！ 百合顔からアニメ顔に......戻らなかったらきみ死ぬ200回流すよ～ 8/13(木) 21:00~ at VRC(G…",
@@ -3531,6 +3459,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "37cd5f82677d4cd3b737",
+      "title": "【本日の注目イベント✨】 🕒8/13(木) 22:00～ 🟠【初心者歓迎！】VR射撃競技イベント「VRC射撃部｣ 精密射撃 第3回プレオープン【PCVR限定】🟠 現実にもあるスピード、精密、ア…",
+      "category": "game",
+      "label": "ゲーム・参加型",
+      "subcategory": "competition",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:競技"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "745122d979ce9583fafc",
@@ -3589,6 +3534,23 @@
       ]
     },
     {
+      "event_id": "e7130f681a78bf0a0bee",
+      "title": "START VRCイベント『Luminous Astrantia』 🍀グランドオープンのお知らせ🍀 明日8/14(金)22:55～グランドオープンです🫶 ゲストさんの演奏に合わせたpartic…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "music"
+      ]
+    },
+    {
       "event_id": "18f02f83b66f90f8b953",
       "title": "皆様お久しぶりです どうせやることも無い皆様 たまには夏だし業の深い昼にコンビニに行きましょう！ 📅 日時：08月15日（土） ⏰ 開始：13:00 頃〜 📍 会場：VRChat グループイン…",
       "category": "other",
@@ -3622,6 +3584,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "3066b032870d3d9757c7",
+      "title": "【📣VRCイベント告知】 8/15(土)22:45より 笑点風大喜利イベント 第171回 #にぎやか大喜利宴会 を開催します。 観るだけ・聴くだけ・笑うだけ歓迎！ 回答したい人大歓迎！ ※小さ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
