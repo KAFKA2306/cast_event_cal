@@ -1,10 +1,18 @@
 # cast_event_cal
 
+**VRChatイベントは、告知を見つけただけでは参加できる情報にならない。**
+
+日時、参加方法、募集締切、公式リンク、投稿時点が別々の場所に書かれ、定期集会と単発イベントでも扱いが違います。古い「本日開催」の投稿を検索日に読み替えたり、商品販売の投稿をイベントとして採用したりすると、公開カレンダーそのものが誤情報になります。
+
+cast_event_calは、公開イベント・定期集会・募集締切を、出典と判定理由を残したまま整理し、JSON、iCalendar、Web UIへ変換する正本リポジトリです。そのために正規化、重複除去、イベントオントロジー、検索シャード、fail-closed分類などの技術を後段で使います。
+
+READMEの入口は [`KAFKA2306/articles#34`](https://github.com/KAFKA2306/articles/issues/34) の「広い問題 → 具体例 → 技術」の編集原則を維持し、推測で採用せず、正本と配信repoの責務を混ぜません。
+
 **公開カレンダー:** https://kafka2306.github.io/vrc_cast_event_calender/  
 **JSON API:** https://kafka2306.github.io/vrc_cast_event_calender/events.json  
 **iCalendar:** https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics
 
-VRChatの公開イベント、定期集会、募集締切を、日時・参加方法・公式リンク・出典を保持したJSON、ICS、Web UIへ変換する正本リポジトリです。`vrc_cast_event_calender`は静的Pages配信先としてのみ使用します。
+`vrc_cast_event_calender`は静的Pages配信先としてのみ使用します。
 
 ## 正本データ
 
