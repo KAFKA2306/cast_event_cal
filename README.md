@@ -1,156 +1,162 @@
-# cast_event_cal
+# cast_event_cal — VRChat Event Intelligence
 
-**VRChatイベントは、告知を見つけただけでは参加できる情報にならない。**
+**告知を見つけただけでは、参加できるイベント情報にはならない。**
 
-日時、参加方法、募集締切、公式リンク、投稿時点が別々の場所に書かれ、定期集会と単発イベントでも扱いが違います。古い「本日開催」の投稿を検索日に読み替えたり、商品販売の投稿をイベントとして採用したりすると、公開カレンダーそのものが誤情報になります。
+日時、参加方法、募集締切、公式リンク、投稿時点は別々に書かれます。古い「本日開催」を検索日へ読み替えたり、商品販売をイベントとして採用したりすると、カレンダーは便利になるほど誤情報も増やします。
 
-cast_event_calは、公開イベント・定期集会・募集締切を、出典と判定理由を残したまま整理し、JSON、iCalendar、Web UIへ変換する正本リポジトリです。正規化、重複除去、イベントオントロジー、検索シャード、fail-closed分類を使い、推測で候補を採用せず、正本と配信repoの責務を分離します。
+`cast_event_cal` は、公開イベント・定期集会・募集締切を **出典・観測時刻・採否理由を残したまま正規化し、JSON / iCalendar / Web UIへ変換する正本repository** です。
 
-**公開カレンダー:** https://kafka2306.github.io/vrc_cast_event_calender/  
-**JSON API:** https://kafka2306.github.io/vrc_cast_event_calender/events.json  
-**iCalendar:** https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics
+- 公開カレンダー: https://kafka2306.github.io/vrc_cast_event_calender/
+- JSON: https://kafka2306.github.io/vrc_cast_event_calender/events.json
+- iCalendar: https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics
 
-`vrc_cast_event_calender`は静的Pages配信先としてのみ使用します。
+配信は `KAFKA2306/vrc_cast_event_calender` が担当し、このrepoは収集・正規化・分類・ontology・canonical snapshot生成だけを担います。
 
-## 正本データ
+## Vision
 
-- 定期系列: `data/recurring_events.json`
-- 単発イベント: `data/one_off_events.json`
-- VRChat公式カレンダー: `data/discovered_events.json`
-- X API採用結果: `data/x_events.json`
-- Yahoo当日観測スナップショット: `data/yahoo_realtime_candidates.json`
-- Yahoo採用結果: `data/yahoo_realtime_events.json`
-- Yahoo棄却記録: `data/yahoo_realtime_rejected.json`
-- Yahoo実行状態: `data/yahoo_realtime_health.json`
-- イベントオントロジー辞書: `config/event_ontology.json`
-- Yahoo検索シャード辞書: `config/yahoo_query_terms.json`
+VRChatイベント探しを「SNSを巡回して、それっぽい投稿を自分で解釈する作業」から、**今後参加できる候補を出典付きで比較し、主催者の公式情報へ短く到達できる体験**へ変えます。
 
-## 公開・監査データ
+利用者に届けたいのは件数ではなく、次の判断材料です。
 
-- 統合イベント: `public/events.json`
-- カレンダー: `public/calendar.ics`
-- 取得状態: `public/health.json`
-- Yahoo候補台帳: `public/yahoo-candidate-history.json`
-- Yahoo分類監査: `public/yahoo-classifier-audit.json`
-- 公開オントロジー: `public/event-ontology.json`
-- オントロジー照合監査: `public/ontology-match-audit.json`
-- 公開後監査: `audit/production-status.json`
+- いつ開催されるか
+- どう参加するか
+- 単発か定期か
+- どの告知を根拠にしたか
+- 情報がいつ観測されたか
+- 自動分類がなぜ採用・棄却したか
+- 公式Group / X / Web等へ戻れるか
 
-## Yahoo!リアルタイム検索
+## Design philosophy
 
-### 検索・選定ポリシー v1.8
+- **Evidence before coverage.** 候補数を増やすために日時・参加方法・event性を推測しない。
+- **Relative time belongs to the source post.** `本日` / `明日` / 曜日は収集日ではなく投稿時刻を基準に解釈する。
+- **Reject is a first-class result.** 棄却理由を捨てず、classifier改善と回帰検証に使う。
+- **Ontology does not guess.** alias / organizer / required patternが不足・競合する場合は`ambiguous`へ隔離する。
+- **Collection and projection are separate.** 正本生成とPages配信を別repoへ分け、deploy成功をcollection成功へ読み替えない。
+- **No hidden LLM judgment in daily classification.** 日常運用の採否は決定論的なPython処理で再実行可能にする。
+- **Official source wins.** calendarは発見を助けるが、最終的な日時・参加条件は主催者の最新公式情報を優先する。
 
-検索式は、明示的イベント種別、採用済みイベントに頻出した構造語、開催動詞とVRChat参加導線、具体的募集種別と締切の4系統で構成します。採用済みイベントからは「イベント告知」「営業告知」「通常営業」「開催決定」「Group+」「リクイン」「JOIN制」「フレンドインスタンス」「ご来店」「遊びに来て」「ステージ」などを候補化し、固有イベント名や「本日」「応募」のような汎用語は採用しません。
+## Why / 差別化
 
-リポスト3件以上は引き続き必須です。そのうえで、明示的イベント種別、または開催動詞と参加導線、または参加意思表現と参加導線を要求します。商品販売、プレゼント応募、常設ワールド紹介、過去イベントの感想は構造証拠がない限り棄却します。
+一般的なevent aggregatorでは、「見つかった投稿を一覧にする」ことが価値になりがちです。本repoはその一歩手前、**投稿をeventとして採用してよいかを説明できること**を中心に置きます。
 
-曜日と時刻だけの告知は、X投稿IDから復元した投稿日時を基準に次の該当曜日へ決定論的に変換します。正例語の採用状況は`public/yahoo-positive-vocabulary.json`へ出力します。
+差別化はYahoo検索、X API、ontology、ICS自体ではありません。
 
+- source post IDと観測履歴を残す
+- 相対日時をsource投稿時刻から復元する
+- 商品販売・プレゼント応募・過去eventを理由付きで落とす
+- 高反応投稿でもevent evidenceがなければ採用しない
+- classification rule変更後に過去候補を再判定できる
+- 正本snapshotと配信artifactをhashで結ぶ
 
-単一の巨大クエリだけでは同じ上位40件へ偏るため、検索空間を決定論的なシャードへ分割します。
+ことで、**「なぜ載っている／載っていない」を後から説明できるcalendar**を作ります。
 
-対象群:
-
-- 開催・参加・主催・集会などの中核語
-- JOIN、リクイン、Request Invite、Group Instanceなどの入場語
-- カフェ、バー、クラブ、居酒屋などの店舗型イベント語
-- DJ、ライブ、舞台、展示、撮影、ゲーム、謎解きなどの活動語
-- 言語交流、技術、研究、同期会、初心者案内などのコミュニティ語
-- キャスト、スタッフ、参加者、出展者などの募集語
-- 商品販売、衣装、アバター、プレゼントなどのノイズ監査語
-- 本日、明日、曜日、時刻などの相対日時語
-
-初回構築ではシャードを順番に取得し、候補台帳が1000件へ到達した時点で停止します。日次運用では基準クエリと16シャードをローテーションし、古い候補を保持したまま新しい検索領域を継続観測します。
-
-採用には、X投稿ID、VRChat/VRC関連性、開催または募集意図、明示日時、リポスト3件以上、未来180日以内が必要です。商品販売、配布、プレゼント応募、日時欠損、過去イベント、X APIとの重複、壊れたHTML断片は理由付きで棄却します。
-
-### 1000件以上の候補台帳
-
-Yahooの検索画面から投稿が消えた後でもロジック改善を反映できるよう、最大5000件・365日分を保持します。
+## Canonical flow
 
 ```text
-複数Yahoo検索シャード
-  → X投稿IDで重複排除
-  → 検索語、検索群、観測回数、最大リポスト数を保存
-  → X Snowflake投稿IDから投稿日時を復元
-  → 台帳全件を最新ルールで毎日再判定
-  → 採用・棄却・理由分布を分類監査へ保存
-  → 高リポスト棄却と商用疑義採用を監査対象として抽出
+recurring definitions
+VRChat official calendar
+X API observations
+Yahoo realtime search shards
+        │
+        ▼
+source identity / observed time
+        │
+        ▼
+normalization + deterministic classification
+        │
+        ├─ accepted event
+        └─ rejected candidate + reason
+        │
+        ▼
+deduplication + ontology match
+        │
+        ▼
+canonical public snapshot
+        │
+        ▼
+vrc_cast_event_calender projection
 ```
 
-台帳の主なフィールド:
+## Canonical data
 
-- `status_id`
-- `text` / `author` / `url`
-- `first_seen_at` / `last_seen_at`
-- `source_created_at`
-- `retweet_count` / `max_retweet_count`
-- `observation_count`
-- `query_keys` / `query_groups` / `query_terms`
-- `last_decision` / `last_reason`
+- `data/recurring_events.json` — 定期series
+- `data/one_off_events.json` — 単発event
+- `data/discovered_events.json` — VRChat公式calendar
+- `data/x_events.json` — X API採用結果
+- `data/yahoo_realtime_candidates.json` — Yahoo candidate ledger
+- `data/yahoo_realtime_events.json` — Yahoo採用結果
+- `data/yahoo_realtime_rejected.json` — 棄却record
+- `data/yahoo_realtime_health.json` — source health
+- `config/event_ontology.json` — event ontology
+- `config/yahoo_query_terms.json` — search shard vocabulary
 
-`本日`、`今日`、`明日`などは再処理日や初回観測日ではなく、X投稿IDから復元した`source_created_at`を基準に解釈します。投稿日時を復元できない場合だけ`first_seen_at`へフォールバックします。これにより、古い投稿がYahoo検索へ再浮上しても「本日開催」として再登録されません。
+Public artifact:
 
-### 分類ロジック
+- `public/events.json`
+- `public/calendar.ics`
+- `public/health.json`
+- `public/yahoo-candidate-history.json`
+- `public/yahoo-classifier-audit.json`
+- `public/event-ontology.json`
+- `public/ontology-match-audit.json`
 
-分類器はフェイルクローズです。
+## Candidate ledger / classification
 
-- リポスト数が取得できない候補は採用しない
-- 商品販売・無料配布・プレゼントだけの投稿は採用しない
-- 「参加方法」がフォロー、RP、いいね、リプだけの場合はイベント参加とみなさない
-- 商品抽選を通すには、具体的イベント種別またはJOIN、リクイン、Group Instance等のVRChat入場手段が必要
-- 誕生日・記念インスタンスは明示的な参加方法がなければ採用しない
-- 告知月と明示日付の月が矛盾する候補は採用しない
-- 相対日時を投稿日時基準で展開した後、現在時刻より過去なら`past_event_now`で棄却する
-- 判定変更は回帰テストと分類監査の両方で固定する
+単一queryの上位結果だけに依存せず、開催・参加・JOIN・店舗型・活動・募集・日時・noise監査等のsearch shardをローテーションします。candidateは検索画面から消えても再評価できるよう履歴を保持します。
 
-`public/yahoo-classifier-audit.json`には、採用率、棄却理由分布、高リポスト棄却、商用疑義採用、重複・日時欠損などの品質指標を保存します。
+```text
+query shards
+  → status_id dedupe
+  → source_created_at restore
+  → observation history
+  → latest deterministic rules
+  → accept / reject + reason
+  → classifier audit
+```
 
-## イベントオントロジー
+`本日`、`今日`、`明日`は再処理日ではなく`source_created_at`を基準に解釈します。投稿日時を復元できない場合だけ明示fallbackを使い、過去になったeventは`past_event_now`として棄却します。
 
-`config/event_ontology.json`はイベントごとの機械可読辞書です。
+fail-closeの代表例:
 
-登録可能な情報:
+- retweet数が取得できない → 採用しない
+- 商品販売 / 無料配布 / プレゼントだけ → 採用しない
+- follow / RP / likeだけが参加方法 → event参加とは扱わない
+- 日時欠損 → 採用しない
+- 告知月と明示日付が矛盾 → 採用しない
+- 過去event → 採用しない
+- ambiguous ontology match → 公開しない
 
-- `canonical_id` / 正式名称 / 別名
-- 正式主催者
-- 必須識別パターン
-- 公式サイト、VRChat Group、公式X、告知ページ
-- 参加方法
-- 開催形式
-- 対象者
-- 既定会場とタグ
+rule変更時は回帰testとclassifier auditの両方へ固定します。
 
-照合はフェイルクローズです。
+## Event ontology
 
-- あいまい検索を使わない
-- 必須パターンだけでは一致させない
-- 別名一致、または「正式主催者一致かつ必須パターン全一致」が必要
-- 同点候補は補完せず`ambiguous`として監査へ隔離
-- 辞書にない情報を推測しない
+`config/event_ontology.json` は、series / organizer / alias / official link / participation method / format / audienceを管理する機械可読辞書です。
 
-一致イベントには`ontology_id`、`official_links`、`participation_method`、`event_format`、`audience`を追加します。公開ページでは公式告知と主催者公式リンクを別ボタンで表示します。
+matchは単なるfuzzy searchでは成立しません。alias exact match、またはofficial organizer + required patternsが必要です。競合時は補完せず`ambiguous`です。
 
-## 自動運用
+## Automation
 
-`.github/workflows/update-calendar-v2.yml`は毎日05:17 JST、手動実行、主要ロジック変更時に起動します。
+`.github/workflows/update-calendar-v2.yml` は毎日05:17 JST、手動、主要logic変更時に起動します。
 
-1. 定期系列を未来120日まで展開
-2. VRChat公式カレンダーを取得
-3. X API候補を分類
-4. Yahoo基準クエリと日次16シャードを取得
-5. 1000件以上の候補台帳へ統合
-6. X投稿時刻を基準に台帳全件を再分類
-7. 4情報源をUTC正規化・重複排除
-8. オントロジー辞書で詳細と公式リンクを補完
-9. JSON、ICS、レスポンシブUIを生成
-10. 台帳件数、由来情報、分類理由、既知誤採用、一意性を品質ゲートで検証
-11. `pull --rebase`後に生成差分をcommit
-12. Pagesへ配信し、イベントAPI、1000件台帳、分類監査をHTTP検証
+主な流れ:
 
-日常運用ではLLM判定を使用しません。追加・棄却・再分類・辞書補完は決定論的なPython処理のみで行います。
+1. recurring seriesを未来へ展開
+2. official calendar取得
+3. X candidates分類
+4. Yahoo shards取得
+5. candidate ledger統合
+6. source投稿時刻を基準に再分類
+7. UTC正規化・dedupe
+8. ontology enrichment
+9. JSON / ICS / responsive UI生成
+10. quality gate
+11. canonical差分commit
+12. 配信repo / production HTTPを検証
 
-## ローカル検証
+日常分類ではLLM判定を使用しません。
+
+## Quick start
 
 ```bash
 python -m venv .venv
@@ -159,46 +165,49 @@ pip install -e '.[dev]'
 ruff check cast_event_cal scripts tests main_executor.py
 pytest tests
 python scripts/materialize_events.py
-python scripts/collect_yahoo_corpus.py --mode daily --target 1000
-python scripts/refine_yahoo_corpus.py
 python main_executor.py run --strict
 python scripts/render_frontend.py
 python -m http.server 8000 --directory public
 ```
 
-初回に1000件を構築する場合:
+## Quality gate
 
-```bash
-python scripts/collect_yahoo_corpus.py \
-  --mode bootstrap \
-  --target 1000 \
-  --max-queries 140 \
-  --delay-seconds 0.75 \
-  --require-target
-python scripts/refine_yahoo_corpus.py
-```
+- 日時・終了時刻・隔週基準を推測しない
+- source failureで正常cacheを空dataへ上書きしない
+- HTML構造不明なら候補を通さない
+- eventと商品販売を混ぜない
+- relative dateを収集日基準で復活させない
+- ontology ambiguityを公開しない
+- classification変更へregression testを追加する
+- Python 3.11 / 3.12 / 3.13 CI
+- production HTML / JSON / candidate ledger / audit / ontologyをread-backする
 
-## 品質原則
-
-- 日時、終了時刻、隔週基準を推測しない
-- 取得失敗時に正常キャッシュを空データで上書きしない
-- HTML構造不明時は候補を通さない
-- リポスト数不明のYahoo候補を採用しない
-- 商品販売や商品抽選をイベントとして混入させない
-- 古い相対日時告知を収集日のイベントとして復活させない
-- オントロジーの曖昧一致を公開しない
-- 採用条件変更には回帰テストを追加する
-- Python 3.11、3.12、3.13のCIを通過させる
-- 公開後にHTML、JSON、候補台帳、分類監査、オントロジーを監査する
-
-## 必要なSecrets
+## Secrets
 
 - `X_BEARER_TOKEN`
 - `VRCHAT_AUTH_COOKIE`
-- `PAGES_TOKEN`（初回設定時のみ）
+- `PAGES_TOKEN`（必要な初期設定のみ）
 
-Yahoo!リアルタイム検索にはSecretを使用しません。
+Yahoo realtime searchにはsecretを使いません。
 
-## ライセンス
+## Repository boundary
+
+```text
+cast_event_cal
+  canonical ingestion / classification / ontology
+        ↓ validated snapshot
+vrc_cast_event_calender
+  projection / parity / static delivery
+```
+
+MCPや別UIを増やす場合も、正本dataとclassification logicを二重実装しません。
+
+## Done
+
+成功指標はcandidate数や公開event数ではありません。
+
+**利用者が参加候補へ早く到達でき、運営側は各eventについて「どの投稿を、いつ観測し、なぜ採用し、どの公式情報へ戻れるか」を説明できること**をDoneとします。
+
+## License
 
 MIT
