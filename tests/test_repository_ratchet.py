@@ -39,3 +39,13 @@ def test_delivery_owned_cloudflare_routes_are_absent() -> None:
     assert not (ROOT / "public" / "_routes.json").exists()
     text = DOC.read_text(encoding="utf-8")
     assert "Cloudflare Pages routing such as `_routes.json` is owned by `KAFKA2306/vrc_cast_event_calender`" in text
+
+
+def test_yahoo_best_1000_is_read_only_benchmark() -> None:
+    workflow = (ROOT / ".github" / "workflows" / "yahoo-best-1000.yml").read_text(encoding="utf-8")
+    assert "name: Yahoo best 1000 benchmark" in workflow
+    assert "contents: read" in workflow
+    assert "--no-update-production" in workflow
+    assert "push:" not in workflow
+    assert "git push" not in workflow
+    assert "Commit empirical result and production ledger" not in workflow
