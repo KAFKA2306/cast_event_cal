@@ -25,6 +25,14 @@ def integer(value: Any) -> int:
     return int(value)
 
 
+def published_event_count(events: dict[str, Any]) -> int:
+    count = integer(events["count"])
+    rows = events.get("events")
+    if not isinstance(rows, list) or count != len(rows):
+        raise ValueError("public events count must match the events array")
+    return count
+
+
 def snapshot(
     calendar: dict[str, Any], yahoo: dict[str, Any], events: dict[str, Any]
 ) -> dict[str, Any]:
@@ -33,14 +41,12 @@ def snapshot(
         for row in calendar.get("sources", [])
         if isinstance(row, dict) and row.get("name")
     }
-    published_count = integer(events["count"])
-    rows = events.get("events")
-    if not isinstance(rows, list) or published_count != len(rows):
-        raise ValueError("public events count must match the events array")
     return {
         "generated_at": str(events.get("generated_at") or calendar["generated_at"]),
-        "calendar_event_count": published_count,
-        "normalized_event_count": integer(calendar["event_count"]),
+        "calendar_event_count": published_event_count(events),
+        "normalized_event_count": integer(
+            calendar.get("normalized_event_count", calendar["event_count"])
+        ),
         "source_counts": sources,
         "yahoo_candidate_count": integer(yahoo["history_candidate_count"]),
         "yahoo_accepted_count": integer(yahoo["history_accepted_count"]),
@@ -49,6 +55,21 @@ def snapshot(
         "yahoo_queries_succeeded": integer(yahoo.get("queries_succeeded", 0)),
         "yahoo_queries_failed": integer(yahoo.get("queries_failed", 0)),
     }
+
+
+def synchronize_public_health(
+    calendar: dict[str, Any], events: dict[str, Any]
+) -> dict[str, Any]:
+    result = dict(calendar)
+    normalized_count = integer(
+        result.get("normalized_event_count", result["event_count"])
+    )
+    result["normalized_event_count"] = normalized_count
+    result["event_count"] = published_event_count(events)
+    occurrence_dedup = events.get("occurrence_dedup")
+    if isinstance(occurrence_dedup, dict) and occurrence_dedup.get("policy_version"):
+        result["occurrence_dedup_policy"] = occurrence_dedup["policy_version"]
+    return result
 
 
 def delta(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any] | None:
@@ -142,6 +163,13 @@ def append_kpi_log(latest: dict[str, Any], path: Path = KPI_LOG) -> dict[str, An
 
 def main() -> int:
     payload = build()
+    events = read_json(EVENTS, {})
+    calendar = read_json(CALENDAR_HEALTH, {})
+    synchronized_health = synchronize_public_health(calendar, events)
+    CALENDAR_HEALTH.write_text(
+        json.dumps(synchronized_health, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     kpi = append_kpi_log(payload["latest"])
     print(json.dumps({"latest": payload["latest"], "kpi": kpi}, ensure_ascii=False))

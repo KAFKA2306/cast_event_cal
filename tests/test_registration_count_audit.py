@@ -130,6 +130,24 @@ def test_build_uses_post_dedup_public_count(tmp_path, monkeypatch):
     assert latest["normalized_event_count"] == 628
 
 
+def test_synchronize_public_health_preserves_pre_dedup_count():
+    events = {
+        "count": 623,
+        "events": [{"id": str(index)} for index in range(623)],
+        "occurrence_dedup": {"policy_version": "canonical-occurrence.v1"},
+    }
+    health = {"status": "ok", "event_count": 628}
+
+    first = audit.synchronize_public_health(health, events)
+    second = audit.synchronize_public_health(first, events)
+
+    assert first["event_count"] == 623
+    assert first["normalized_event_count"] == 628
+    assert first["occurrence_dedup_policy"] == "canonical-occurrence.v1"
+    assert second["event_count"] == 623
+    assert second["normalized_event_count"] == 628
+
+
 def test_append_kpi_log_keeps_only_cumulative_accepted_event_kpi(tmp_path):
     path = tmp_path / "accepted-event-kpi.jsonl"
 

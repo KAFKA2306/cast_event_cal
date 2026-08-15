@@ -10,7 +10,7 @@ from cast_event_cal import mcp_read_model
 ROOT = Path(__file__).resolve().parents[1]
 
 
-REQUIRED_PROVENANCE_KEYS = {
+REQUIRED_READ_MODEL_PROVENANCE_KEYS = {
     "canonical_id",
     "schema_version",
     "event_start",
@@ -35,17 +35,20 @@ def test_issue_47_event_provenance_contract_is_complete() -> None:
     item = mcp_read_model.get_event(first["id"])
 
     assert item is not None
-    provenance = item["provenance"]
-    assert REQUIRED_PROVENANCE_KEYS <= provenance.keys()
-    assert provenance["canonical_id"] == first["id"]
-    assert provenance["generated_at"] == payload["generated_at"]
-    assert provenance["source_type"] == first.get("source")
-    assert provenance["source_id"] == first.get("source_id")
-    assert provenance["classification_reason"] == (first.get("category_evidence") or [])
+    # Canonical occurrence provenance must round-trip without being overwritten
+    # by MCP/read-model metadata.
+    assert item.get("provenance") == first.get("provenance")
+    read_context = item["read_model_provenance"]
+    assert REQUIRED_READ_MODEL_PROVENANCE_KEYS <= read_context.keys()
+    assert read_context["canonical_id"] == first["id"]
+    assert read_context["generated_at"] == payload["generated_at"]
+    assert read_context["source_type"] == first.get("source")
+    assert read_context["source_id"] == first.get("source_id")
+    assert read_context["classification_reason"] == (first.get("category_evidence") or [])
 
     for key in ("source_created_at", "first_seen_at", "last_seen_at", "ontology_id"):
-        if provenance[key] is None:
-            assert provenance["null_reasons"][key] == "not_recorded_in_public_event"
+        if read_context[key] is None:
+            assert read_context["null_reasons"][key] == "not_recorded_in_public_event"
 
 
 def test_issue_47_search_pagination_is_fail_closed() -> None:

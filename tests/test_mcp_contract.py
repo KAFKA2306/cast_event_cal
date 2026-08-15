@@ -37,15 +37,16 @@ def test_public_events_and_mcp_search_are_same_records() -> None:
     page = mcp_read_model.search_events(limit=1)
     assert page["total"] == payload["count"] == len(payload["events"])
     projected = dict(page["items"][0])
-    provenance = projected.pop("provenance")
+    read_context = projected.pop("read_model_provenance")
     assert projected == first
-    assert provenance["canonical_id"] == first["id"]
-    assert provenance["schema_version"] == payload["schema_version"]
-    assert provenance["event_start"] == first.get("starts_at")
-    assert provenance["source_id"] == first.get("source_id")
-    assert provenance["source_url"] == first.get("url")
-    assert provenance["classification_rule"] == first.get("category_source")
-    assert provenance["classification_reason"] == (first.get("category_evidence") or [])
+    assert projected.get("provenance") == first.get("provenance")
+    assert read_context["canonical_id"] == first["id"]
+    assert read_context["schema_version"] == payload["schema_version"]
+    assert read_context["event_start"] == first.get("starts_at")
+    assert read_context["source_id"] == first.get("source_id")
+    assert read_context["source_url"] == first.get("url")
+    assert read_context["classification_rule"] == first.get("category_source")
+    assert read_context["classification_reason"] == (first.get("category_evidence") or [])
 
 
 def test_get_event_preserves_canonical_record() -> None:
@@ -54,8 +55,9 @@ def test_get_event_preserves_canonical_record() -> None:
     item = mcp_read_model.get_event(first["id"])
     assert item is not None
     projected = dict(item)
-    projected.pop("provenance")
+    projected.pop("read_model_provenance")
     assert projected == first
+    assert projected.get("provenance") == first.get("provenance")
 
 
 def test_tonight_replay_uses_explicit_jst_calendar_date() -> None:
@@ -66,7 +68,11 @@ def test_tonight_replay_uses_explicit_jst_calendar_date() -> None:
     result = mcp_read_model.tonight_events(date_jst=target, limit=100)
     assert result["date_jst"] == target
     assert all(
-        datetime.fromisoformat(item["starts_at"].replace("Z", "+00:00")).astimezone(JST).date().isoformat() == target
+        datetime.fromisoformat(item["starts_at"].replace("Z", "+00:00"))
+        .astimezone(JST)
+        .date()
+        .isoformat()
+        == target
         for item in result["items"]
     )
 
