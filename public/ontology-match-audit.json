@@ -2,15 +2,15 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 618,
-  "matched_events": 280,
+  "event_count": 624,
+  "matched_events": 281,
   "matched_series": {
     "asmr-gathering": 36,
     "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 35,
     "vrc-fit-boxing": 35,
     "personally-match": 18,
-    "zerozoku-auction": 2,
+    "zerozoku-auction": 3,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
@@ -20,7 +20,7 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 338,
+  "unmatched_events": 343,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -110,6 +110,18 @@
     {
       "event_id": "1f7566d3f86a1a581901",
       "title": "START VRCイベント 〜０属オークション〜 ✨第4回開催✨ 【RT招待キャンペーン！】 『開催日時』 8/15 (土) 22:00～ ✅リクイン抽選式 ✅参加条件は5万UC以上の所持条件…",
+      "status": "matched",
+      "ontology_id": "zerozoku-auction",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "4ba1973663bfa8149dbe",
+      "title": "START VRCオークションイベント 💰『０属オークション』💰 本日22:00~ 第4回開催 ～出品サキュバス公開～ 【参加方法】 時間になったらインスタンスリーダーに１回リクイン！ 🔔22…",
       "status": "matched",
       "ontology_id": "zerozoku-auction",
       "evidence": [
@@ -3386,11 +3398,11 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 618,
+    "event_count": 624,
     "category_breakdown": {
-      "art": 139,
-      "community": 169,
-      "game": 106,
+      "art": 141,
+      "community": 172,
+      "game": 107,
       "language_exchange": 35,
       "learning": 1,
       "music": 27,
@@ -3403,9 +3415,9 @@
     },
     "subcategory_breakdown": {
       "application_deadline": 1,
-      "auction": 2,
+      "auction": 3,
       "bar": 17,
-      "cafe": 18,
+      "cafe": 19,
       "cast_recruitment": 1,
       "cast_service": 2,
       "dance": 2,
@@ -3413,12 +3425,12 @@
       "engineering": 25,
       "exhibition": 1,
       "fitness": 35,
-      "hangout": 16,
+      "hangout": 18,
       "language_exchange": 35,
       "lecture": 1,
       "live_music": 2,
       "mystery": 34,
-      "photography": 123,
+      "photography": 124,
       "quiz": 1,
       "reading": 2,
       "research": 13,
@@ -3431,18 +3443,18 @@
     "event_mode_breakdown": {
       "deadline": 7,
       "hybrid": 8,
-      "in_world": 603
+      "in_world": 609
     },
     "classification_source_breakdown": {
-      "curated_ontology": 263,
+      "curated_ontology": 264,
       "fallback": 19,
-      "keyword_rules": 116,
+      "keyword_rules": 121,
       "legacy_and_keywords": 219,
       "legacy_category": 1
     },
     "organizer_profile_count": 26,
-    "low_confidence_event_count": 34,
-    "audit_event_count": 34
+    "low_confidence_event_count": 36,
+    "audit_event_count": 36
   },
   "category_review_queue": [
     {
@@ -3630,6 +3642,21 @@
       ]
     },
     {
+      "event_id": "7cf4f6b01acd89dd50d4",
+      "title": "イベント開催告知です。 今週のVRCイベント『Fighting Burst』は予約等なしの、フリー参加形式で本日8/15(土)22時より開催します！ JOIN先はリプに続ける店員へお願いします…",
+      "category": "community",
+      "label": "交流・カフェ",
+      "subcategory": "cafe",
+      "score": 3,
+      "confidence": 0.585,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:organizer:cafe"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "b6df39e6a5b3dd7dd76f",
       "title": "姫様へ 後夜も鬨を響かせ 酒宴の狼煙をあげていく VRCで1番ド派手なホスイベ 悪い男達が彩る祭典 『Attrazione』 今、扉が開く 8月度 姫救済特別営業は8月15日 22時始動 At…",
       "category": "other",
@@ -3654,6 +3681,24 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "5c70030bc55625c23515",
+      "title": "START 明日はAutonomy AfterParty！ 193でトップバッター出演します！ 初出しパフォーマンスもお楽しみに🎉 🗓 2026年8月16日（日） 📍 VRChat Auton…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "performance",
+        "community"
+      ]
     },
     {
       "event_id": "91ca3c9a2627a011e407",
