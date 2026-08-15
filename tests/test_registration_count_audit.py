@@ -70,6 +70,61 @@ def test_build_appends_snapshot_and_computes_deltas(tmp_path, monkeypatch):
     assert latest["delta_from_previous"]["source_counts"]["yahoo_realtime_events"] == 4
 
 
+def test_append_kpi_log_keeps_only_cumulative_accepted_event_kpi(tmp_path):
+    path = tmp_path / "accepted-event-kpi.jsonl"
+
+    first = audit.append_kpi_log(
+        {"generated_at": "2026-08-15T00:00:00Z", "yahoo_accepted_count": 701},
+        path,
+    )
+    second = audit.append_kpi_log(
+        {"generated_at": "2026-08-16T00:00:00Z", "yahoo_accepted_count": 708},
+        path,
+    )
+
+    assert first == {
+        "generated_at": "2026-08-15T00:00:00Z",
+        "accepted_event_cumulative": 701,
+        "delta": None,
+    }
+    assert second == {
+        "generated_at": "2026-08-16T00:00:00Z",
+        "accepted_event_cumulative": 708,
+        "delta": 7,
+    }
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert rows == [first, second]
+    assert set(rows[-1]) == {"generated_at", "accepted_event_cumulative", "delta"}
+
+
+def test_append_kpi_log_is_idempotent_for_same_snapshot(tmp_path):
+    path = tmp_path / "accepted-event-kpi.jsonl"
+    latest = {"generated_at": "2026-08-15T00:00:00Z", "yahoo_accepted_count": 701}
+
+    audit.append_kpi_log(latest, path)
+    audit.append_kpi_log(latest, path)
+
+    assert len(path.read_text(encoding="utf-8").splitlines()) == 1
+
+
+def test_append_kpi_log_rejects_cumulative_decrease(tmp_path):
+    path = tmp_path / "accepted-event-kpi.jsonl"
+    audit.append_kpi_log(
+        {"generated_at": "2026-08-15T00:00:00Z", "yahoo_accepted_count": 701},
+        path,
+    )
+
+    try:
+        audit.append_kpi_log(
+            {"generated_at": "2026-08-16T00:00:00Z", "yahoo_accepted_count": 700},
+            path,
+        )
+    except ValueError as exc:
+        assert "must not decrease" in str(exc)
+    else:
+        raise AssertionError("cumulative KPI decrease must fail closed")
+
+
 def test_build_rejects_unhealthy_inputs(tmp_path, monkeypatch):
     calendar = tmp_path / "health.json"
     yahoo = tmp_path / "yahoo.json"
