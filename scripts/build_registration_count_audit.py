@@ -8,6 +8,7 @@ from typing import Any
 CALENDAR_HEALTH = Path("public/health.json")
 YAHOO_HEALTH = Path("data/yahoo_realtime_health.json")
 OUTPUT = Path("public/registration-count-audit.json")
+KPI_LOG = Path("public/accepted-event-kpi.jsonl")
 MAX_SNAPSHOTS = 90
 
 
@@ -87,10 +88,52 @@ def build() -> dict[str, Any]:
     }
 
 
+def read_kpi_log(path: Path = KPI_LOG) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not raw.strip():
+            continue
+        row = json.loads(raw)
+        if not isinstance(row, dict):
+            raise ValueError(f"KPI log line {line_number} must be an object")
+        rows.append(row)
+    return rows
+
+
+def append_kpi_log(latest: dict[str, Any], path: Path = KPI_LOG) -> dict[str, Any]:
+    generated_at = str(latest["generated_at"])
+    accepted = integer(latest["yahoo_accepted_count"])
+    rows = read_kpi_log(path)
+
+    if rows and rows[-1].get("generated_at") == generated_at:
+        return rows[-1]
+
+    previous = rows[-1] if rows else None
+    previous_accepted = integer(previous["accepted_event_cumulative"]) if previous else None
+    if previous_accepted is not None and accepted < previous_accepted:
+        raise ValueError(
+            "accepted-event cumulative KPI must not decrease: "
+            f"{previous_accepted} -> {accepted}"
+        )
+
+    row = {
+        "generated_at": generated_at,
+        "accepted_event_cumulative": accepted,
+        "delta": None if previous_accepted is None else accepted - previous_accepted,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+    return row
+
+
 def main() -> int:
     payload = build()
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(payload["latest"], ensure_ascii=False))
+    kpi = append_kpi_log(payload["latest"])
+    print(json.dumps({"latest": payload["latest"], "kpi": kpi}, ensure_ascii=False))
     return 0
 
 
