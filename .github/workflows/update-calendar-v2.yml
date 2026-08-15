@@ -55,6 +55,7 @@ jobs:
           tests/test_vrchat_discovery_routes.py
           tests/test_category_ontology.py
           tests/test_registration_count_audit.py
+          tests/test_occurrence_dedup.py
       - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
       - name: Discover public VRChat calendar events
@@ -89,6 +90,8 @@ jobs:
         run: python scripts/discover_event_links.py
       - name: Enrich official VRChat group images
         run: python scripts/enrich_vrchat_group_assets.py
+      - name: Collapse duplicate source posts into canonical occurrences
+        run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
         run: python scripts/render_frontend.py
       - name: Build registration count audit
@@ -114,6 +117,7 @@ jobs:
           audit = json.loads(Path('public/yahoo-classifier-audit.json').read_text(encoding='utf-8'))
           registration = json.loads(Path('public/registration-count-audit.json').read_text(encoding='utf-8'))
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
+          duplicate_audit = json.loads(Path('public/event-duplicate-audit.json').read_text(encoding='utf-8'))
           assets = json.loads(Path('public/official-asset-audit.json').read_text(encoding='utf-8'))
           links = json.loads(Path('public/event-link-audit.json').read_text(encoding='utf-8'))
           groups = json.loads(Path('public/vrchat-group-asset-audit.json').read_text(encoding='utf-8'))
@@ -141,6 +145,27 @@ jobs:
           assert registration['latest']['yahoo_rejected_count'] == len(rejected)
           assert registration['latest']['yahoo_queries_failed'] == 0
           assert events['count'] == len(rows) and events['count'] > 555
+
+          assert duplicate_audit['schema_version'] == '1.0'
+          assert duplicate_audit['policy_version'] == 'canonical-occurrence.v1'
+          assert duplicate_audit['event_count_after'] == events['count']
+          assert duplicate_audit['event_count_before'] >= duplicate_audit['event_count_after']
+          assert duplicate_audit['duplicate_occurrence_count'] == (
+              duplicate_audit['event_count_before'] - duplicate_audit['event_count_after']
+          )
+          occurrence_ids = [row.get('occurrence_id') for row in rows]
+          source_record_ids = [row.get('source_record_id') for row in rows]
+          assert all(occurrence_ids)
+          assert all(source_record_ids)
+          assert len(occurrence_ids) == len(set(occurrence_ids))
+          ics_uids = [
+              line[4:]
+              for line in Path('public/calendar.ics').read_text(encoding='utf-8').splitlines()
+              if line.startswith('UID:')
+          ]
+          assert len(ics_uids) == events['count']
+          assert len(ics_uids) == len(set(ics_uids))
+
           assert assets['counts']['official_x'] > 0
           assert assets['counts']['webp_image'] > 0
           assert links['events_with_primary_action'] > 0
@@ -199,7 +224,7 @@ jobs:
           )
           if [ -n "$(git status --porcelain -- "${paths[@]}")" ]; then
             git config user.name github-actions[bot]
-            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git config user.email 41898282+KAFKA2306@users.noreply.github.com
             git add "${paths[@]}"
             git commit -m 'chore: refresh calendar links images and ontology [skip ci]'
             git pull --rebase --autostash origin main
