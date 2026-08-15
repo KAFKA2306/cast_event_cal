@@ -20,6 +20,8 @@ source observations
 - Acceptance/rejection decisions are produced by deterministic classifiers and recorded with reasons.
 - Event identity and ontology ownership live in this repository.
 - `public/` is a materialized projection from canonical state, not an independent source of truth.
+- Canonical UI materialization such as `public/index.html` remains here because it is generated from canonical state by the canonical renderer.
+- Delivery-platform runtime configuration is not canonical event state. Cloudflare Pages routing such as `_routes.json` is owned by `KAFKA2306/vrc_cast_event_calender` and must not be materialized under this repository's `public/` tree.
 - `vrc_cast_event_calender` may validate and distribute these outputs, but must not own a second collector, classifier, ontology, or event-state machine.
 
 ## Repository KPIs
@@ -41,4 +43,4 @@ Unknown or uninstrumented values are not converted to zero.
 
 ## CI contract
 
-CI must fail if the canonical ownership statement disappears, the KPI set expands beyond the three names above, or the obsolete weekly research workflow is reintroduced. Existing event, ontology, provenance, MCP, and publication tests remain the authoritative functional gates.
+CI must fail if the canonical ownership statement disappears, the KPI set expands beyond the three names above, an obsolete noncanonical workflow is reintroduced, or delivery-owned Cloudflare routing returns under `public/`. Existing event, ontology, provenance, MCP, and publication tests remain the authoritative functional gates.
