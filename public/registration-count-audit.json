@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-15T11:17:47Z",
+  "generated_at": "2026-08-15T11:27:15Z",
   "status": "ok",
-  "snapshot_count": 39,
+  "snapshot_count": 40,
   "latest": {
-    "generated_at": "2026-08-15T11:16:48Z",
+    "generated_at": "2026-08-15T11:25:47Z",
     "calendar_event_count": 623,
     "normalized_event_count": 628,
     "source_counts": {
@@ -21,18 +21,18 @@
     "yahoo_queries_succeeded": 22,
     "yahoo_queries_failed": 0,
     "delta_from_previous": {
-      "from_generated_at": "2026-08-15T10:01:32Z",
-      "calendar_event_count": -2,
+      "from_generated_at": "2026-08-15T11:16:48Z",
+      "calendar_event_count": 0,
       "source_counts": {
         "external_calendar_events": 0,
         "repository_manual_events": 0,
         "vrchat_calendar_discovery": 0,
         "x_curated_events": 0,
-        "yahoo_realtime_events": 4
+        "yahoo_realtime_events": 0
       },
-      "yahoo_candidate_count": 5,
-      "yahoo_accepted_count": 4,
-      "yahoo_rejected_count": 1
+      "yahoo_candidate_count": 0,
+      "yahoo_accepted_count": 0,
+      "yahoo_rejected_count": 0
     }
   },
   "snapshots": [
@@ -1231,6 +1231,38 @@
         "yahoo_candidate_count": 5,
         "yahoo_accepted_count": 4,
         "yahoo_rejected_count": 1
+      }
+    },
+    {
+      "generated_at": "2026-08-15T11:25:47Z",
+      "calendar_event_count": 623,
+      "normalized_event_count": 628,
+      "source_counts": {
+        "repository_manual_events": 500,
+        "vrchat_calendar_discovery": 0,
+        "x_curated_events": 2,
+        "yahoo_realtime_events": 706,
+        "external_calendar_events": 1
+      },
+      "yahoo_candidate_count": 4482,
+      "yahoo_accepted_count": 706,
+      "yahoo_rejected_count": 3776,
+      "yahoo_unique_candidates_this_run": 401,
+      "yahoo_queries_succeeded": 22,
+      "yahoo_queries_failed": 0,
+      "delta_from_previous": {
+        "from_generated_at": "2026-08-15T11:16:48Z",
+        "calendar_event_count": 0,
+        "source_counts": {
+          "external_calendar_events": 0,
+          "repository_manual_events": 0,
+          "vrchat_calendar_discovery": 0,
+          "x_curated_events": 0,
+          "yahoo_realtime_events": 0
+        },
+        "yahoo_candidate_count": 0,
+        "yahoo_accepted_count": 0,
+        "yahoo_rejected_count": 0
       }
     }
   ]
