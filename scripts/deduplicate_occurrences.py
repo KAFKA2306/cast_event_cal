@@ -9,6 +9,7 @@ from collections import defaultdict
 from copy import deepcopy
 from datetime import datetime
 from difflib import SequenceMatcher
+from itertools import combinations
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
@@ -64,9 +65,14 @@ def source_record_id(event: dict[str, Any]) -> str:
         return existing
     source = str(event.get("source") or "unknown").strip()
     source_id = str(event.get("source_id") or "").strip()
-    url = canonical_url(event.get("url")) or ""
+    url = canonical_url(event.get("url"))
     fallback = str(event.get("id") or "").strip()
-    payload = "|".join((source, source_id, url, fallback))
+    if source_id:
+        payload = f"{source}|source-id|{source_id}"
+    elif url:
+        payload = f"{source}|url|{url}"
+    else:
+        payload = f"{source}|event-id|{fallback}"
     return "src_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
 
 
@@ -79,7 +85,7 @@ def event_ordinal(event: dict[str, Any]) -> str | None:
     return match.group(1) if match else None
 
 
-def comparable_similarity(left: dict[str, Any], right: dict[str, Any]) -> float:
+def similarity(left: dict[str, Any], right: dict[str, Any]) -> float:
     left_text = normalize_text(event_text(left))
     right_text = normalize_text(event_text(right))
     if not left_text or not right_text:
@@ -87,7 +93,7 @@ def comparable_similarity(left: dict[str, Any], right: dict[str, Any]) -> float:
     return SequenceMatcher(None, left_text, right_text, autojunk=False).ratio()
 
 
-def same_occurrence_reason(
+def occurrence_match(
     left: dict[str, Any], right: dict[str, Any]
 ) -> tuple[str, float] | None:
     if str(left.get("starts_at") or "") != str(right.get("starts_at") or ""):
@@ -103,16 +109,8 @@ def same_occurrence_reason(
 
     left_description = normalize_text(left.get("description"))
     right_description = normalize_text(right.get("description"))
-    if (
-        len(left_description) >= 24
-        and left_description == right_description
-    ):
+    if len(left_description) >= 24 and left_description == right_description:
         return "exact_text_same_start", 0.99
-
-    left_title = normalize_text(left.get("title"))
-    right_title = normalize_text(right.get("title"))
-    if len(left_title) >= 20 and left_title == right_title:
-        return "exact_title_same_start", 0.97
 
     left_organizer = normalize_text(left.get("organizer"))
     right_organizer = normalize_text(right.get("organizer"))
@@ -124,42 +122,19 @@ def same_occurrence_reason(
     if (left_ordinal or right_ordinal) and left_ordinal != right_ordinal:
         return None
 
-    similarity = comparable_similarity(left, right)
-    if left_ordinal and right_ordinal and similarity >= 0.50:
+    score = similarity(left, right)
+    if left_ordinal and right_ordinal and score >= 0.50:
         return "same_organizer_same_start_ordinal", round(
-            min(0.96, 0.80 + similarity * 0.25), 4
+            min(0.96, 0.80 + score * 0.25), 4
         )
-    if similarity >= 0.72:
+    if score >= 0.75:
         return "same_organizer_same_start_high_similarity", round(
-            min(0.94, 0.74 + similarity * 0.25), 4
+            min(0.94, 0.74 + score * 0.25), 4
         )
     return None
 
 
-class UnionFind:
-    def __init__(self, size: int) -> None:
-        self.parent = list(range(size))
-        self.rank = [0] * size
-
-    def find(self, item: int) -> int:
-        while self.parent[item] != item:
-            self.parent[item] = self.parent[self.parent[item]]
-            item = self.parent[item]
-        return item
-
-    def union(self, left: int, right: int) -> None:
-        root_left = self.find(left)
-        root_right = self.find(right)
-        if root_left == root_right:
-            return
-        if self.rank[root_left] < self.rank[root_right]:
-            root_left, root_right = root_right, root_left
-        self.parent[root_right] = root_left
-        if self.rank[root_left] == self.rank[root_right]:
-            self.rank[root_left] += 1
-
-
-def completeness(event: dict[str, Any]) -> int:
+def representative_score(event: dict[str, Any]) -> tuple[Any, ...]:
     scalar_fields = (
         "organizer",
         "location",
@@ -171,37 +146,24 @@ def completeness(event: dict[str, Any]) -> int:
         "official_x_url",
         "official_website_url",
     )
-    score = sum(bool(event.get(field)) for field in scalar_fields)
-    score += min(3, len(event.get("official_links") or []))
-    score += min(2, len(event.get("related_links") or []))
-    return score
-
-
-def representative_score(event: dict[str, Any]) -> tuple[Any, ...]:
+    completeness = sum(bool(event.get(field)) for field in scalar_fields)
+    completeness += min(3, len(event.get("official_links") or []))
+    completeness += min(2, len(event.get("related_links") or []))
     return (
         SOURCE_PRIORITY.get(str(event.get("source") or ""), 0),
-        completeness(event),
+        completeness,
         float(event.get("confidence") or 0.0),
         str(event.get("fetched_at") or ""),
         source_record_id(event),
     )
 
 
-def unique_dicts(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    selected: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        key = canonical_url(row.get("url")) or json.dumps(
-            row, ensure_ascii=False, sort_keys=True
-        )
-        selected.setdefault(key, deepcopy(row))
-    return [selected[key] for key in sorted(selected)]
-
-
-def provenance_for(event: dict[str, Any]) -> list[dict[str, Any]]:
-    existing = event.get("provenance")
-    rows = [deepcopy(row) for row in existing or [] if isinstance(row, dict)]
+def provenance(event: dict[str, Any]) -> list[dict[str, Any]]:
+    rows = [
+        deepcopy(row)
+        for row in event.get("provenance") or []
+        if isinstance(row, dict)
+    ]
     rows.append(
         {
             "source_record_id": source_record_id(event),
@@ -222,7 +184,16 @@ def provenance_for(event: dict[str, Any]) -> list[dict[str, Any]]:
     return [selected[key] for key in sorted(selected)]
 
 
-def occurrence_id_for(
+def unique_link_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    selected: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        url = canonical_url(row.get("url"))
+        key = url or json.dumps(row, ensure_ascii=False, sort_keys=True)
+        selected.setdefault(key, deepcopy(row))
+    return [selected[key] for key in sorted(selected)]
+
+
+def occurrence_id(
     members: list[dict[str, Any]], reasons: list[str]
 ) -> str:
     existing = {
@@ -245,9 +216,7 @@ def occurrence_id_for(
 
     if len(urls) == 1 and "same_canonical_url" in reasons:
         payload = f"url|{start}|{next(iter(urls))}"
-    elif len(descriptions) == 1 and (
-        "exact_text_same_start" in reasons or "exact_title_same_start" in reasons
-    ):
+    elif len(descriptions) == 1 and "exact_text_same_start" in reasons:
         payload = f"text|{start}|{next(iter(descriptions))}"
     elif len(organizers) == 1 and len(ordinals) == 1:
         payload = (
@@ -255,34 +224,38 @@ def occurrence_id_for(
             f"{next(iter(ordinals))}"
         )
     else:
-        member_keys = "|".join(sorted(source_record_id(member) for member in members))
-        payload = f"members|{start}|{member_keys}"
+        payload = "members|" + start + "|" + "|".join(
+            sorted(source_record_id(member) for member in members)
+        )
     return "occ_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
 
 
-def merge_cluster(
-    members: list[dict[str, Any]], reasons: list[tuple[str, float]]
+def merge_members(
+    members: list[dict[str, Any]], matches: list[tuple[str, float]]
 ) -> dict[str, Any]:
-    representative = deepcopy(max(members, key=representative_score))
-    reason_names = sorted({reason for reason, _confidence in reasons})
-    occurrence_id = occurrence_id_for(members, reason_names)
+    row = deepcopy(max(members, key=representative_score))
+    representative_source_record_id = source_record_id(row)
+    reasons = sorted({reason for reason, _confidence in matches})
+    canonical_id = occurrence_id(members, reasons)
 
-    representative["id"] = occurrence_id
-    representative["occurrence_id"] = occurrence_id
-    representative["source_record_id"] = source_record_id(representative)
-    representative["provenance"] = []
-    for member in members:
-        representative["provenance"].extend(provenance_for(member))
-    representative["provenance"] = unique_dicts_by_source_record_id(
-        representative["provenance"]
-    )
-    representative["merged_source_count"] = len(representative["provenance"])
-    representative["merge_reason"] = reason_names
-    representative["merge_confidence"] = min(
-        (confidence for _reason, confidence in reasons), default=1.0
+    row["id"] = canonical_id
+    row["occurrence_id"] = canonical_id
+    row["source_record_id"] = representative_source_record_id
+    row["merge_reason"] = reasons
+    row["merge_confidence"] = min(
+        (confidence for _reason, confidence in matches), default=1.0
     )
 
-    representative["tags"] = sorted(
+    all_provenance = [entry for member in members for entry in provenance(member)]
+    selected_provenance: dict[str, dict[str, Any]] = {}
+    for entry in all_provenance:
+        selected_provenance.setdefault(str(entry["source_record_id"]), entry)
+    row["provenance"] = [
+        selected_provenance[key] for key in sorted(selected_provenance)
+    ]
+    row["merged_source_count"] = len(row["provenance"])
+
+    row["tags"] = sorted(
         {
             str(tag)
             for member in members
@@ -291,16 +264,17 @@ def merge_cluster(
         }
     )
     for field in ("official_links", "related_links"):
-        representative[field] = unique_dicts(
+        row[field] = unique_link_rows(
             [
-                row
+                link
                 for member in members
-                for row in member.get(field) or []
-                if isinstance(row, dict)
+                for link in member.get(field) or []
+                if isinstance(link, dict)
             ]
         )
 
-    fill_fields = (
+    ranked = sorted(members, key=representative_score, reverse=True)
+    for field in (
         "image_url",
         "image_kind",
         "primary_action_url",
@@ -311,98 +285,88 @@ def merge_cluster(
         "vrchat_group_image_url",
         "preferred_image_url",
         "preferred_image_kind",
-    )
-    ranked = sorted(members, key=representative_score, reverse=True)
-    for field in fill_fields:
-        if representative.get(field):
+    ):
+        if row.get(field):
             continue
-        for member in ranked:
-            if member.get(field):
-                representative[field] = deepcopy(member[field])
-                break
-    return representative
-
-
-def unique_dicts_by_source_record_id(
-    rows: list[dict[str, Any]],
-) -> list[dict[str, Any]]:
-    selected: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        key = str(row.get("source_record_id") or "") or json.dumps(
-            row, ensure_ascii=False, sort_keys=True
+        row[field] = next(
+            (deepcopy(member[field]) for member in ranked if member.get(field)),
+            None,
         )
-        selected.setdefault(key, deepcopy(row))
-    return [selected[key] for key in sorted(selected)]
+    return row
 
 
-def duplicate_groups(
+def cluster_events(
     events: list[dict[str, Any]],
 ) -> tuple[list[list[int]], dict[tuple[int, int], tuple[str, float]], list[dict[str, Any]]]:
-    union_find = UnionFind(len(events))
-    edges: dict[tuple[int, int], tuple[str, float]] = {}
-    ambiguous: list[dict[str, Any]] = []
+    parent = list(range(len(events)))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
     by_start: dict[str, list[int]] = defaultdict(list)
     for index, event in enumerate(events):
         by_start[str(event.get("starts_at") or "")].append(index)
 
+    matches: dict[tuple[int, int], tuple[str, float]] = {}
+    ambiguous: list[dict[str, Any]] = []
     for indexes in by_start.values():
-        for offset, left_index in enumerate(indexes):
-            for right_index in indexes[offset + 1 :]:
-                left = events[left_index]
-                right = events[right_index]
-                reason = same_occurrence_reason(left, right)
-                if reason:
-                    union_find.union(left_index, right_index)
-                    edges[(left_index, right_index)] = reason
-                    continue
-                left_organizer = normalize_text(left.get("organizer"))
-                right_organizer = normalize_text(right.get("organizer"))
-                similarity = comparable_similarity(left, right)
-                if (
-                    left_organizer
-                    and left_organizer == right_organizer
-                    and similarity >= 0.45
-                ):
-                    ambiguous.append(
-                        {
-                            "left_id": left.get("id"),
-                            "right_id": right.get("id"),
-                            "starts_at": left.get("starts_at"),
-                            "organizer": left.get("organizer"),
-                            "similarity": round(similarity, 4),
-                            "left_title": left.get("title"),
-                            "right_title": right.get("title"),
-                        }
-                    )
+        for left, right in combinations(indexes, 2):
+            result = occurrence_match(events[left], events[right])
+            if result:
+                matches[(left, right)] = result
+                union(left, right)
+                continue
+            left_organizer = normalize_text(events[left].get("organizer"))
+            right_organizer = normalize_text(events[right].get("organizer"))
+            score = similarity(events[left], events[right])
+            if left_organizer and left_organizer == right_organizer and score >= 0.45:
+                ambiguous.append(
+                    {
+                        "left_id": events[left].get("id"),
+                        "right_id": events[right].get("id"),
+                        "starts_at": events[left].get("starts_at"),
+                        "organizer": events[left].get("organizer"),
+                        "similarity": round(score, 4),
+                        "left_title": events[left].get("title"),
+                        "right_title": events[right].get("title"),
+                    }
+                )
 
-    grouped: dict[int, list[int]] = defaultdict(list)
+    groups: dict[int, list[int]] = defaultdict(list)
     for index in range(len(events)):
-        grouped[union_find.find(index)].append(index)
-    groups = sorted(
-        (sorted(indexes) for indexes in grouped.values()),
-        key=lambda indexes: indexes[0],
+        groups[find(index)].append(index)
+    return (
+        sorted((sorted(group) for group in groups.values()), key=lambda group: group[0]),
+        matches,
+        sorted(
+            ambiguous,
+            key=lambda row: (
+                str(row.get("starts_at")),
+                str(row.get("organizer")),
+                str(row.get("left_id")),
+                str(row.get("right_id")),
+            ),
+        )[:100],
     )
-    ambiguous.sort(
-        key=lambda row: (
-            str(row.get("starts_at")),
-            str(row.get("organizer")),
-            str(row.get("left_id")),
-            str(row.get("right_id")),
-        )
-    )
-    return groups, edges, ambiguous[:100]
 
 
 def deduplicate_events(
     events: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     working = [deepcopy(event) for event in events if isinstance(event, dict)]
-    groups, edges, ambiguous = duplicate_groups(working)
+    groups, matches, ambiguous = cluster_events(working)
     output: list[dict[str, Any]] = []
-    cluster_audit: list[dict[str, Any]] = []
-    negative_samples: list[dict[str, Any]] = []
+    clusters: list[dict[str, Any]] = []
+    merged_pairs: set[tuple[str, str]] = set()
 
     for indexes in groups:
         members = [working[index] for index in indexes]
@@ -410,91 +374,89 @@ def deduplicate_events(
             row = deepcopy(members[0])
             row["source_record_id"] = source_record_id(row)
             row["occurrence_id"] = str(row.get("occurrence_id") or row.get("id"))
+            row.setdefault("provenance", provenance(row))
+            row.setdefault("merged_source_count", len(row["provenance"]))
+            row.setdefault("merge_reason", [])
+            row.setdefault("merge_confidence", 1.0)
             output.append(row)
             continue
 
-        member_edges = [
-            reason
-            for (left, right), reason in edges.items()
+        member_matches = [
+            result
+            for (left, right), result in matches.items()
             if left in indexes and right in indexes
         ]
-        merged = merge_cluster(members, member_edges)
+        merged = merge_members(members, member_matches)
         output.append(merged)
-        cluster_audit.append(
+        member_ids = sorted(str(member.get("id")) for member in members)
+        merged_pairs.update(tuple(sorted(pair)) for pair in combinations(member_ids, 2))
+        clusters.append(
             {
                 "cluster_id": merged["occurrence_id"],
                 "starts_at": merged.get("starts_at"),
                 "title": merged.get("title"),
                 "member_count": len(members),
-                "member_ids": sorted(str(member.get("id")) for member in members),
+                "member_ids": member_ids,
                 "source_record_ids": sorted(source_record_id(member) for member in members),
                 "sources": sorted({str(member.get("source")) for member in members}),
-                "reasons": sorted({reason for reason, _confidence in member_edges}),
+                "reasons": sorted({reason for reason, _confidence in member_matches}),
                 "confidence": min(
-                    (confidence for _reason, confidence in member_edges), default=1.0
+                    (confidence for _reason, confidence in member_matches), default=1.0
                 ),
                 "representative_source_record_id": merged["source_record_id"],
             }
         )
 
-    merged_pairs = {
-        tuple(sorted((str(row["member_ids"][0]), str(member_id))))
-        for row in cluster_audit
-        for member_id in row["member_ids"][1:]
-    }
+    negative_samples: list[dict[str, Any]] = []
     by_start: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for event in working:
         by_start[str(event.get("starts_at") or "")].append(event)
     for rows in by_start.values():
-        for offset, left in enumerate(rows):
-            for right in rows[offset + 1 :]:
-                pair = tuple(sorted((str(left.get("id")), str(right.get("id")))))
-                if pair in merged_pairs:
-                    continue
-                negative_samples.append(
-                    {
-                        "left_id": left.get("id"),
-                        "right_id": right.get("id"),
-                        "starts_at": left.get("starts_at"),
-                        "left_organizer": left.get("organizer"),
-                        "right_organizer": right.get("organizer"),
-                        "similarity": round(comparable_similarity(left, right), 4),
-                        "left_title": left.get("title"),
-                        "right_title": right.get("title"),
-                    }
-                )
-                if len(negative_samples) >= 10:
-                    break
-            if len(negative_samples) >= 10:
+        for left, right in combinations(rows, 2):
+            pair = tuple(sorted((str(left.get("id")), str(right.get("id")))))
+            if pair in merged_pairs:
+                continue
+            negative_samples.append(
+                {
+                    "left_id": left.get("id"),
+                    "right_id": right.get("id"),
+                    "starts_at": left.get("starts_at"),
+                    "left_organizer": left.get("organizer"),
+                    "right_organizer": right.get("organizer"),
+                    "similarity": round(similarity(left, right), 4),
+                    "left_title": left.get("title"),
+                    "right_title": right.get("title"),
+                }
+            )
+            if len(negative_samples) == 10:
                 break
-        if len(negative_samples) >= 10:
+        if len(negative_samples) == 10:
             break
 
     output.sort(key=lambda row: (str(row.get("starts_at")), str(row.get("title"))))
     collapsed = len(working) - len(output)
-    exact_source_duplicate_count = sum(
-        "exact_source_record" in row["reasons"] for row in cluster_audit
-    )
     audit = {
         "schema_version": "1.0",
         "policy_version": "canonical-occurrence.v1",
         "event_count_before": len(working),
         "event_count_after": len(output),
-        "candidate_cluster_count": len(cluster_audit),
-        "duplicate_cluster_count": len(cluster_audit),
+        "candidate_cluster_count": len(clusters),
+        "duplicate_cluster_count": len(clusters),
         "duplicate_occurrence_count": collapsed,
         "duplicate_post_count": collapsed,
         "duplicate_rate": round(collapsed / len(working), 6) if working else 0.0,
-        "exact_source_duplicate_count": exact_source_duplicate_count,
+        "exact_source_duplicate_count": sum(
+            "exact_source_record" in cluster["reasons"] for cluster in clusters
+        ),
         "unresolved_ambiguous_cluster_count": len(ambiguous),
-        "clusters": sorted(cluster_audit, key=lambda row: str(row["cluster_id"])),
+        "clusters": sorted(clusters, key=lambda row: str(row["cluster_id"])),
         "ambiguous_candidates": ambiguous,
         "negative_samples": negative_samples,
     }
     return output, audit
 
 
-def event_from_public_row(row: dict[str, Any]) -> Event:
+def public_event(row: dict[str, Any]) -> Event:
     return Event(
         id=str(row.get("occurrence_id") or row.get("id")),
         title=str(row.get("title") or "VRChat event"),
@@ -516,12 +478,6 @@ def event_from_public_row(row: dict[str, Any]) -> Event:
     ).normalized()
 
 
-def rewrite_ics(rows: list[dict[str, Any]], generated_at: str, output: Path) -> None:
-    instant = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
-    events = [event_from_public_row(row) for row in rows]
-    output.write_text(render_ics(events, instant), encoding="utf-8", newline="")
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Collapse duplicate source posts into canonical event occurrences"
@@ -533,22 +489,25 @@ def main() -> int:
 
     document = json.loads(args.events.read_text(encoding="utf-8"))
     rows = document.get("events", [])
+    generated_at = str(document.get("generated_at") or "")
     if not isinstance(rows, list):
         raise ValueError("events document must contain an events array")
-    deduped, audit = deduplicate_events(rows)
-    generated_at = str(document.get("generated_at") or "")
     if not generated_at:
         raise ValueError("events document must contain generated_at")
 
+    deduped, audit = deduplicate_events(rows)
     audit["generated_at"] = generated_at
     document["events"] = deduped
     document["count"] = len(deduped)
     document["occurrence_dedup"] = {
-        "policy_version": audit["policy_version"],
-        "event_count_before": audit["event_count_before"],
-        "event_count_after": audit["event_count_after"],
-        "duplicate_occurrence_count": audit["duplicate_occurrence_count"],
-        "duplicate_cluster_count": audit["duplicate_cluster_count"],
+        key: audit[key]
+        for key in (
+            "policy_version",
+            "event_count_before",
+            "event_count_after",
+            "duplicate_occurrence_count",
+            "duplicate_cluster_count",
+        )
     }
 
     args.events.write_text(
@@ -557,7 +516,12 @@ def main() -> int:
     args.audit.write_text(
         json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    rewrite_ics(deduped, generated_at, args.ics)
+    generated = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+    args.ics.write_text(
+        render_ics([public_event(row) for row in deduped], generated),
+        encoding="utf-8",
+        newline="",
+    )
     print(
         "Occurrence dedup: "
         f"before={audit['event_count_before']} after={audit['event_count_after']} "
