@@ -5,16 +5,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_root_function_injects_only_first_party_assets() -> None:
-    source = (ROOT / "functions" / "index.js").read_text(encoding="utf-8")
-    assert "context.next()" in source
-    assert "HTMLRewriter" in source
-    assert "x-quality-view" in source
-    assert "2026-08-04-quality-view-v6" in source
-    assert 'href="/uiux-v4.css"' in source
-    assert 'src="/uiux-v4.js"' in source
-    assert 'src="/series-profile.js"' in source
-    assert "https://" not in source
+def test_cloudflare_worker_is_projection_owned() -> None:
+    assert not (ROOT / "functions").exists()
 
 
 def test_function_invocation_is_limited_to_root() -> None:
