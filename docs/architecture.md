@@ -1,56 +1,87 @@
 # Architecture
 
-## Overview
+## Canonical responsibility
 
-This project is designed to collect event data from various online sources, integrate and validate the data, enhance it with AI, and publish it to different platforms.
+`KAFKA2306/cast_event_cal` is the source of truth for collection, normalization, classification, event identity, occurrence deduplication, ontology, and the canonical `public/` snapshot.
 
-## Components
+`KAFKA2306/vrc_cast_event_calender` is projection/delivery only. It must not implement an independent collector, classifier, ontology, or semantic deduplicator.
 
-1.  **Data Collection:**
-    *   **Playwright Scraper:** Uses Playwright to scrape data from websites.
-    *   **List Collector:** Collects data from lists.
+## Canonical data flow
 
-2.  **Data Integration:**
-    *   **Event Deduplicator:** Deduplicates events from different sources.
-    *   **Recurring Event Handler:** Handles recurring events.
-    *   **Schema Validator:** Validates data against a predefined schema.
+```text
+source collection
+  -> normalization
+  -> exact source-record deduplication
+  -> source/link/asset enrichment
+  -> canonical occurrence deduplication
+  -> ontology/category enrichment
+  -> public JSON + ICS + audits
+  -> projection repository
+```
 
-3.  **Data Processing:**
-    *   **AI Event Enhancer:** Enhances event information using AI.
-    *   **Event Info Extractor:** Extracts event information from text.
-    *   **Text Normalizer:** Normalizes text data.
+### 1. Source collection
 
-4.  **Data Publishing:**
-    *   **Calendar File Generator:** Generates calendar files (e.g., iCalendar).
-    *   **JSON API Generator:** Generates a JSON API for accessing the data.
-    *   **Web Content Updater:** Updates web content with the data.
+Collectors write source-specific observations under `data/`. Each source record keeps a stable provider identity where available, such as an X status ID, VRChat calendar event ID, ICS UID, or curated manual source ID.
 
-## Data Flow
+### 2. Normalization and exact source-record deduplication
 
-1.  Data is collected from online sources using the Data Collection components.
-2.  The collected data is integrated and validated using the Data Integration components.
-3.  The integrated data is processed and enhanced using the Data Processing components.
-4.  The processed data is published to different platforms using the Data Publishing components.
+`cast_event_cal/core.py` owns normalization and exact event-ID deduplication during the normalized calendar build. This phase only removes duplicate representations of the same source record.
 
-## Configuration
+It does **not** decide that two different source posts describe one real-world event occurrence.
 
-The project uses a configuration file (`config/main_config.yaml`) to manage settings and parameters. Scraping targets are defined in `config/scraping_targets.yaml`.
+### 3. Canonical occurrence deduplication
 
-## Data Storage
+`scripts/deduplicate_occurrences.py` is the authority for semantic occurrence resolution after source/link/asset enrichment and before frontend/ontology publication.
 
-Raw scraped data is stored in the `data/raw_scraped_data/` directory. Integrated and validated events are stored in the `data/validated_events/` directory. Published outputs are stored in the `data/published_outputs/` directory.
+It separates:
 
-## Models
+- `source_record_id`: one provider/source observation;
+- `occurrence_id`: one user-visible event occurrence;
+- `provenance[]`: all source observations collapsed into the occurrence.
 
-Data schemas are defined in `models/data_schemas.py`. The event data model is defined in `models/event_data_model.py`.
+Automatic merging is intentionally conservative. High-confidence evidence includes:
 
-## Common
+- the same source record;
+- the same canonical event URL and start time;
+- the same normalized description and start time;
+- the same sufficiently specific title and start time;
+- the same organizer, start time, occurrence ordinal, and sufficiently similar announcement text;
+- the same organizer/start time with a high announcement-text similarity threshold.
 
-The `src/common/` directory contains common modules used throughout the project, such as:
+Title similarity alone is not sufficient. Different dates, different ordinal numbers, or different organizers remain separate unless stronger evidence exists.
 
-*   `web_structure_analyzer.py`: Analyzes the structure of web pages.
-*   `adaptive_selectors.py`: Provides adaptive selectors for web scraping.
-*   `configuration_manager.py`: Manages configuration settings.
-*   `data_storage_handler.py`: Handles data storage operations.
-*   `error_handling.py`: Handles errors.
-*   `logger_setup.py`: Sets up logging.
+The deduplicator writes `public/event-duplicate-audit.json` with before/after counts, duplicate clusters, merge reasons, confidence, ambiguous candidates, and negative-control samples.
+
+### 4. Publication gate
+
+`.github/workflows/update-calendar-v2.yml` runs the occurrence deduplicator before `scripts/render_frontend.py` and validates:
+
+- every published row has `source_record_id` and `occurrence_id`;
+- `occurrence_id` is unique in `public/events.json`;
+- ICS UID count equals the published event count;
+- ICS UIDs are unique;
+- duplicate-audit before/after counts reconcile exactly.
+
+This makes `1 occurrence = 1 JSON row = 1 VEVENT` a publish-time invariant.
+
+## Identity policy
+
+Source identity and occurrence identity are deliberately distinct.
+
+A new repost, reminder post, or alternate source does not automatically create a new public event if deterministic evidence shows it refers to an already-known occurrence. Conversely, events are not merged merely because their titles are similar.
+
+For merged occurrences, all original source IDs and URLs remain available through `provenance[]` so deduplication never destroys source traceability.
+
+## Generated artifacts
+
+The canonical publication surface is `public/`. Important artifacts include:
+
+- `public/events.json`
+- `public/calendar.ics`
+- `public/health.json`
+- `public/event-duplicate-audit.json`
+- `public/event-ontology.json`
+- `public/category-ontology.json`
+- other source/classification/link/asset audit files
+
+Generated artifacts are evidence of a specific canonical run; they are not stronger than the source records and deterministic rules that produced them.
