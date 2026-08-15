@@ -2,13 +2,11 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 623,
-  "matched_events": 280,
+  "event_count": 613,
+  "matched_events": 279,
   "matched_series": {
-    "asmr-gathering": 36,
-    "vrc-petting-zoo": 18,
-    "en-jp-language-exchange": 35,
-    "vrc-fit-boxing": 35,
+    "en-jp-language-exchange": 36,
+    "vrc-fit-boxing": 36,
     "personally-match": 18,
     "zerozoku-auction": 2,
     "vrc-goita": 17,
@@ -18,47 +16,13 @@
     "wednesday-quest-beginners": 17,
     "ml-gathering": 17,
     "vrc-idle-gathering": 17,
-    "vrc-beginner-world-tour": 17
+    "vrc-beginner-world-tour": 17,
+    "asmr-gathering": 34,
+    "vrc-petting-zoo": 17
   },
-  "unmatched_events": 343,
+  "unmatched_events": 334,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "19fd5d20c90ffb80ac16",
-      "title": "ASMR集会 初心者説明会",
-      "status": "matched",
-      "ontology_id": "asmr-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "9c12b53160622c37b274",
-      "title": "ASMR集会 本営業",
-      "status": "matched",
-      "ontology_id": "asmr-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "4a088465d6648743b5ad",
-      "title": "VRCふれあい動物園",
-      "status": "matched",
-      "ontology_id": "vrc-petting-zoo",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "7ad4451aa197a95daab4",
       "title": "EN-JP Language Exchange（土曜）",
@@ -3382,39 +3346,61 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "fd729747b80244b70cbf",
+      "title": "EN-JP Language Exchange（日曜）",
+      "status": "matched",
+      "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "b77c9d1eadb3383bd236",
+      "title": "VRCフィットボクシング集会（日曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 623,
+    "event_count": 613,
     "category_breakdown": {
-      "art": 141,
-      "community": 170,
+      "art": 138,
+      "community": 165,
       "game": 106,
-      "language_exchange": 35,
+      "language_exchange": 36,
       "learning": 1,
-      "music": 27,
-      "other": 20,
-      "performance": 6,
-      "recruitment_deadline": 7,
+      "music": 25,
+      "other": 22,
+      "performance": 5,
+      "recruitment_deadline": 5,
       "technology": 38,
-      "wellness": 52,
-      "world_tour": 20
+      "wellness": 53,
+      "world_tour": 19
     },
     "subcategory_breakdown": {
-      "application_deadline": 1,
       "auction": 2,
       "bar": 16,
       "cafe": 19,
-      "cast_recruitment": 1,
       "cast_service": 2,
       "dance": 2,
-      "dj": 15,
+      "dj": 14,
       "engineering": 25,
       "exhibition": 1,
-      "fitness": 35,
+      "fitness": 36,
       "hangout": 17,
-      "language_exchange": 35,
+      "language_exchange": 36,
       "lecture": 1,
       "live_music": 2,
       "mystery": 34,
@@ -3422,136 +3408,29 @@
       "quiz": 1,
       "reading": 2,
       "research": 13,
-      "show": 2,
-      "social": 116,
+      "show": 1,
+      "social": 111,
       "tabletop": 34,
       "theater": 1,
-      "world_tour": 20
+      "world_tour": 19
     },
     "event_mode_breakdown": {
-      "deadline": 7,
+      "deadline": 5,
       "hybrid": 8,
-      "in_world": 608
+      "in_world": 600
     },
     "classification_source_breakdown": {
-      "curated_ontology": 263,
-      "fallback": 20,
-      "keyword_rules": 120,
-      "legacy_and_keywords": 219,
+      "curated_ontology": 262,
+      "fallback": 22,
+      "keyword_rules": 111,
+      "legacy_and_keywords": 217,
       "legacy_category": 1
     },
     "organizer_profile_count": 24,
-    "low_confidence_event_count": 36,
-    "audit_event_count": 36
+    "low_confidence_event_count": 35,
+    "audit_event_count": 35
   },
   "category_review_queue": [
-    {
-      "event_id": "e8b9ae8df130eb2d22b3",
-      "title": "START 明日8/14(土)21時 「WiiFit バランスWiiボードで歩く会」をJapanStreetにて開催します みんな Nyamo までJoinしてVRCを練り歩こう！ https…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "745122d979ce9583fafc",
-      "title": "【月例イベントのお知らせ】 第65回VRCビリヤード大会（9ボール）開催！ 8/14（金）21:00～ 観戦のみも歓迎！ 9ft台でタイマーなし 参加受付は8/14(金) 18:00まで エン…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e3ae1e30dce3d279b36e",
-      "title": "START VRChat内イベント、BAR.零凛です。 ゆったりとしたひと時を談笑と共に。 営業日：毎週金曜日 時 間：22:00-23:00 Group+にて開催しております。 皆様のご来店…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "6c9e3832d45c158ab972",
-      "title": "【出演告知】 Jersey Clubが流れるVRCイベント、\"Dark Five Club\"に出演させていただきます！ #DFCJC の主催、#JerseyJunky の主催、そして #HAS…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "70419dd7cd59924b2720",
-      "title": "🐄✨お待たせいたしました！✨🐄 VRChat 1:1型RPイベント 『モーモー牧場』 8月の営業日をお知らせいたします！ モーモー牧場で特別なひとときをお楽しみください🐄💕 ━━━━━━━━━…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "2f213a9205d2e4fe7759",
-      "title": "START VRCイベント 『Luminous Astrantia』 🍀第1回オープンのお知らせ🍀 8/14(金)22:55~24:10 🎇リポストキャンペーン🎇 ゲストさんの生演奏parti…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "music"
-      ]
-    },
-    {
-      "event_id": "e7130f681a78bf0a0bee",
-      "title": "START VRCイベント『Luminous Astrantia』 🍀グランドオープンのお知らせ🍀 明日8/14(金)22:55～グランドオープンです🫶 ゲストさんの演奏に合わせたpartic…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "music"
-      ]
-    },
     {
       "event_id": "18f02f83b66f90f8b953",
       "title": "皆様お久しぶりです どうせやることも無い皆様 たまには夏だし業の深い昼にコンビニに行きましょう！ 📅 日時：08月15日（土） ⏰ 開始：13:00 頃〜 📍 会場：VRChat グループイン…",
@@ -3576,6 +3455,19 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "85604c896cfb72c889ef",
+      "title": "8/15日の21時からVRC喧嘩・型の大会出場させていただきます！ 自分のは喧嘩と言うよりかは ぼくがかんがえたさいきょーのしゃどーぼくしんぐ！！ みたいな感じの動きになるかもしれませんが頑張…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
@@ -3626,6 +3518,32 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "08dd5c576e3b77691345",
+      "title": "／ 本日 VRChatラジオ配信🎙️ ＼ 日時:8/15（土）21:00-21:30 会場:VRChat「月明かり商店街」ワールド内ラジオ局\"Moon Hertz963 ✳︎ジャンク市Vol.…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "476b00cbd0617bf9cb58",
+      "title": "おはようございます、今日の夜わたなべのVRCフォトコンの結果発表を22時からやります🙇 https://t.co/yEi0fVZMJP",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "7cf4f6b01acd89dd50d4",
       "title": "イベント開催告知です。 今週のVRCイベント『Fighting Burst』は予約等なしの、フリー参加形式で本日8/15(土)22時より開催します！ JOIN先はリプに続ける店員へお願いします…",
       "category": "community",
@@ -3643,6 +3561,19 @@
     {
       "event_id": "b6df39e6a5b3dd7dd76f",
       "title": "姫様へ 後夜も鬨を響かせ 酒宴の狼煙をあげていく VRCで1番ド派手なホスイベ 悪い男達が彩る祭典 『Attrazione』 今、扉が開く 8月度 姫救済特別営業は8月15日 22時始動 At…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fbe925b0b1452348b532",
+      "title": "お盆休みももうそろそろ終わりですね〜 というわけでお盆もやろうと思います 本日22時30分よりVRC水族館ツアーを行います 本日はいつものツアーと少々仕様が異なりますので、どのワールドからスタ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3771,6 +3702,19 @@
       ]
     },
     {
+      "event_id": "94bae4a0c3f613eb8bab",
+      "title": "＼第18回プルタブを開ける会／📷 プルタブ式飲料水を持ち寄って、プルタブを開ける音を聞くだけのVRC史上最もくだらないイベント 。 夏の音を＿＿＿奏に＿＿＿＿＿ 日時：8/20 22:00 ゲ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "b98ede11c71cf718a25d",
       "title": "【告知解禁 】VR サブカルイベントの フェス‼️ 総勢16人のDVJが集まって 2フロア開催のお祭り🎇 にてVJします！ 8/22(土）19:30～ at VRchatご予定くださいー ht…",
       "category": "other",
@@ -3851,6 +3795,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "ad2f0c47d6019e76c9cb",
+      "title": "START VRChat内のEvil fallグループで通知が合ったと思いますが、8/22にEoC集会開くので遊びましょ～ 当日の22時頃にグループインスタンスで開くので事前のグループ参加を忘…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:art"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "efa9d09d3c126b5e8f7d",
