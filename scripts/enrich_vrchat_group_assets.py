@@ -11,6 +11,8 @@ from urllib.parse import urlparse
 
 import httpx
 
+from scripts.validate_public_image_assets import sanitize_event_images, write_audit
+
 EVENTS = Path("public/events.json")
 AUDIT = Path("public/vrchat-group-asset-audit.json")
 GROUP_RE = re.compile(r"^https://(?:www\.)?vrchat\.com/home/group/(grp_[A-Za-z0-9-]+)(?:[/?#].*)?$", re.I)
@@ -88,17 +90,25 @@ def main() -> int:
             row["preferred_image_kind"] = row.get("image_kind")
         enriched.append(row)
 
+    enriched, image_audit = sanitize_event_images(enriched)
+    write_audit(image_audit)
     document["events"] = enriched
     document["vrchat_group_assets_enriched_at"] = now_iso()
+    document["image_reachability_validated_at"] = image_audit["generated_at"]
     EVENTS.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     audit = {
         "schema_version": "1.0",
         "generated_at": now_iso(),
         "group_url_count": len(urls),
-        "group_image_count": sum(bool(value) for value in images.values()),
+        "group_image_count": sum(bool(row.get("vrchat_group_image_url")) for row in enriched),
         "events_with_group_url": sum(bool(row.get("vrchat_group_url")) for row in enriched),
         "events_with_group_image": sum(bool(row.get("vrchat_group_image_url")) for row in enriched),
         "failures": dict(failures),
+        "image_reachability": {
+            "checked_url_count": image_audit["checked_url_count"],
+            "failed_url_count": image_audit["failed_url_count"],
+            "events_degraded": image_audit["events_degraded"],
+        },
         "sample": [
             {
                 "id": row.get("id"),
@@ -111,7 +121,16 @@ def main() -> int:
         ][:25],
     }
     AUDIT.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({key: audit[key] for key in ("group_url_count", "group_image_count", "events_with_group_url", "events_with_group_image")}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                key: audit[key]
+                for key in ("group_url_count", "group_image_count", "events_with_group_url", "events_with_group_image")
+            }
+            | {"image_reachability": audit["image_reachability"]},
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 
