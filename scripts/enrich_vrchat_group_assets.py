@@ -11,7 +11,12 @@ from urllib.parse import urlparse
 
 import httpx
 
-from scripts.validate_public_image_assets import sanitize_event_images, write_audit
+try:
+    from scripts.validate_public_image_assets import sanitize_event_images, write_audit
+except ModuleNotFoundError as exc:
+    if exc.name != "scripts":
+        raise
+    from validate_public_image_assets import sanitize_event_images, write_audit
 
 EVENTS = Path("public/events.json")
 AUDIT = Path("public/vrchat-group-asset-audit.json")
