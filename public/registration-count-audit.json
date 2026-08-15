@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-15T20:43:33Z",
+  "generated_at": "2026-08-15T21:04:21Z",
   "status": "ok",
-  "snapshot_count": 41,
+  "snapshot_count": 42,
   "latest": {
-    "generated_at": "2026-08-15T20:41:48Z",
+    "generated_at": "2026-08-15T21:03:25Z",
     "calendar_event_count": 613,
     "normalized_event_count": 618,
     "source_counts": {
@@ -21,18 +21,18 @@
     "yahoo_queries_succeeded": 22,
     "yahoo_queries_failed": 0,
     "delta_from_previous": {
-      "from_generated_at": "2026-08-15T11:25:47Z",
-      "calendar_event_count": -10,
+      "from_generated_at": "2026-08-15T20:41:48Z",
+      "calendar_event_count": 0,
       "source_counts": {
         "external_calendar_events": 0,
-        "repository_manual_events": -2,
+        "repository_manual_events": 0,
         "vrchat_calendar_discovery": 0,
         "x_curated_events": 0,
-        "yahoo_realtime_events": 17
+        "yahoo_realtime_events": 0
       },
-      "yahoo_candidate_count": 147,
-      "yahoo_accepted_count": 17,
-      "yahoo_rejected_count": 130
+      "yahoo_candidate_count": 0,
+      "yahoo_accepted_count": 0,
+      "yahoo_rejected_count": 0
     }
   },
   "snapshots": [
@@ -1295,6 +1295,38 @@
         "yahoo_candidate_count": 147,
         "yahoo_accepted_count": 17,
         "yahoo_rejected_count": 130
+      }
+    },
+    {
+      "generated_at": "2026-08-15T21:03:25Z",
+      "calendar_event_count": 613,
+      "normalized_event_count": 618,
+      "source_counts": {
+        "repository_manual_events": 498,
+        "vrchat_calendar_discovery": 0,
+        "x_curated_events": 2,
+        "yahoo_realtime_events": 723,
+        "external_calendar_events": 1
+      },
+      "yahoo_candidate_count": 4629,
+      "yahoo_accepted_count": 723,
+      "yahoo_rejected_count": 3906,
+      "yahoo_unique_candidates_this_run": 599,
+      "yahoo_queries_succeeded": 22,
+      "yahoo_queries_failed": 0,
+      "delta_from_previous": {
+        "from_generated_at": "2026-08-15T20:41:48Z",
+        "calendar_event_count": 0,
+        "source_counts": {
+          "external_calendar_events": 0,
+          "repository_manual_events": 0,
+          "vrchat_calendar_discovery": 0,
+          "x_curated_events": 0,
+          "yahoo_realtime_events": 0
+        },
+        "yahoo_candidate_count": 0,
+        "yahoo_accepted_count": 0,
+        "yahoo_rejected_count": 0
       }
     }
   ]
