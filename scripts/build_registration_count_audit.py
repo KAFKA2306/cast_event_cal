@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 CALENDAR_HEALTH = Path("public/health.json")
+EVENTS = Path("public/events.json")
 YAHOO_HEALTH = Path("data/yahoo_realtime_health.json")
 OUTPUT = Path("public/registration-count-audit.json")
 KPI_LOG = Path("public/accepted-event-kpi.jsonl")
@@ -24,15 +25,22 @@ def integer(value: Any) -> int:
     return int(value)
 
 
-def snapshot(calendar: dict[str, Any], yahoo: dict[str, Any]) -> dict[str, Any]:
+def snapshot(
+    calendar: dict[str, Any], yahoo: dict[str, Any], events: dict[str, Any]
+) -> dict[str, Any]:
     sources = {
         str(row.get("name")): integer(row.get("count", 0))
         for row in calendar.get("sources", [])
         if isinstance(row, dict) and row.get("name")
     }
+    published_count = integer(events["count"])
+    rows = events.get("events")
+    if not isinstance(rows, list) or published_count != len(rows):
+        raise ValueError("public events count must match the events array")
     return {
-        "generated_at": str(calendar["generated_at"]),
-        "calendar_event_count": integer(calendar["event_count"]),
+        "generated_at": str(events.get("generated_at") or calendar["generated_at"]),
+        "calendar_event_count": published_count,
+        "normalized_event_count": integer(calendar["event_count"]),
         "source_counts": sources,
         "yahoo_candidate_count": integer(yahoo["history_candidate_count"]),
         "yahoo_accepted_count": integer(yahoo["history_accepted_count"]),
@@ -63,13 +71,16 @@ def delta(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str,
 
 def build() -> dict[str, Any]:
     calendar = read_json(CALENDAR_HEALTH, {})
+    events = read_json(EVENTS, {})
     yahoo = read_json(YAHOO_HEALTH, {})
     if calendar.get("status") != "ok":
         raise ValueError("calendar health must be ok")
     if yahoo.get("status") != "ok":
         raise ValueError("Yahoo health must be ok")
+    if not isinstance(events, dict) or "count" not in events:
+        raise ValueError("public events snapshot is required")
 
-    current = snapshot(calendar, yahoo)
+    current = snapshot(calendar, yahoo, events)
     existing = read_json(OUTPUT, {})
     snapshots = [row for row in existing.get("snapshots", []) if isinstance(row, dict)]
     snapshots = [row for row in snapshots if row.get("generated_at") != current["generated_at"]]

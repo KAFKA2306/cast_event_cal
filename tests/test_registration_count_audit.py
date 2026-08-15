@@ -5,8 +5,22 @@ import json
 from scripts import build_registration_count_audit as audit
 
 
+def write_events(path, *, generated_at: str, count: int) -> None:
+    path.write_text(
+        json.dumps(
+            {
+                "generated_at": generated_at,
+                "count": count,
+                "events": [{"id": f"event-{index}"} for index in range(count)],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+
 def test_build_appends_snapshot_and_computes_deltas(tmp_path, monkeypatch):
     calendar = tmp_path / "health.json"
+    events = tmp_path / "events.json"
     yahoo = tmp_path / "yahoo.json"
     output = tmp_path / "audit.json"
     calendar.write_text(
@@ -23,6 +37,7 @@ def test_build_appends_snapshot_and_computes_deltas(tmp_path, monkeypatch):
         ),
         encoding="utf-8",
     )
+    write_events(events, generated_at="2026-08-05T00:00:00Z", count=610)
     yahoo.write_text(
         json.dumps(
             {
@@ -58,16 +73,61 @@ def test_build_appends_snapshot_and_computes_deltas(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     monkeypatch.setattr(audit, "CALENDAR_HEALTH", calendar)
+    monkeypatch.setattr(audit, "EVENTS", events)
     monkeypatch.setattr(audit, "YAHOO_HEALTH", yahoo)
     monkeypatch.setattr(audit, "OUTPUT", output)
 
     payload = audit.build()
     latest = payload["latest"]
+    assert latest["calendar_event_count"] == 610
+    assert latest["normalized_event_count"] == 610
     assert latest["delta_from_previous"]["calendar_event_count"] == 10
     assert latest["delta_from_previous"]["yahoo_candidate_count"] == 70
     assert latest["delta_from_previous"]["yahoo_accepted_count"] == 4
     assert latest["delta_from_previous"]["yahoo_rejected_count"] == 66
     assert latest["delta_from_previous"]["source_counts"]["yahoo_realtime_events"] == 4
+
+
+def test_build_uses_post_dedup_public_count(tmp_path, monkeypatch):
+    calendar = tmp_path / "health.json"
+    events = tmp_path / "events.json"
+    yahoo = tmp_path / "yahoo.json"
+    output = tmp_path / "audit.json"
+    calendar.write_text(
+        json.dumps(
+            {
+                "generated_at": "2026-08-15T11:10:49Z",
+                "status": "ok",
+                "event_count": 628,
+                "sources": [{"name": "yahoo_realtime_events", "count": 706}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    write_events(events, generated_at="2026-08-15T11:10:49Z", count=623)
+    yahoo.write_text(
+        json.dumps(
+            {
+                "status": "ok",
+                "history_candidate_count": 4482,
+                "history_accepted_count": 706,
+                "history_rejected_count": 3776,
+                "queries_succeeded": 22,
+                "queries_failed": 0,
+            }
+        ),
+        encoding="utf-8",
+    )
+    output.write_text(json.dumps({"snapshots": []}), encoding="utf-8")
+    monkeypatch.setattr(audit, "CALENDAR_HEALTH", calendar)
+    monkeypatch.setattr(audit, "EVENTS", events)
+    monkeypatch.setattr(audit, "YAHOO_HEALTH", yahoo)
+    monkeypatch.setattr(audit, "OUTPUT", output)
+
+    latest = audit.build()["latest"]
+
+    assert latest["calendar_event_count"] == 623
+    assert latest["normalized_event_count"] == 628
 
 
 def test_append_kpi_log_keeps_only_cumulative_accepted_event_kpi(tmp_path):
@@ -127,10 +187,13 @@ def test_append_kpi_log_rejects_cumulative_decrease(tmp_path):
 
 def test_build_rejects_unhealthy_inputs(tmp_path, monkeypatch):
     calendar = tmp_path / "health.json"
+    events = tmp_path / "events.json"
     yahoo = tmp_path / "yahoo.json"
     calendar.write_text(json.dumps({"status": "degraded"}), encoding="utf-8")
+    write_events(events, generated_at="2026-08-15T00:00:00Z", count=1)
     yahoo.write_text(json.dumps({"status": "ok"}), encoding="utf-8")
     monkeypatch.setattr(audit, "CALENDAR_HEALTH", calendar)
+    monkeypatch.setattr(audit, "EVENTS", events)
     monkeypatch.setattr(audit, "YAHOO_HEALTH", yahoo)
     try:
         audit.build()
