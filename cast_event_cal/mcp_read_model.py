@@ -51,12 +51,15 @@ def _series_id(row: dict[str, Any]) -> str | None:
     return None
 
 
-def event_provenance(row: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+def event_read_context(row: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
     generated = payload.get("generated_at")
     generated_dt = _parse_time(generated)
     freshness_seconds = None
     if generated_dt is not None:
-        freshness_seconds = max(0, int((datetime.now(UTC) - generated_dt.astimezone(UTC)).total_seconds()))
+        freshness_seconds = max(
+            0,
+            int((datetime.now(UTC) - generated_dt.astimezone(UTC)).total_seconds()),
+        )
 
     tracked = {
         "source_created_at": row.get("source_created_at"),
@@ -88,8 +91,10 @@ def event_provenance(row: dict[str, Any], payload: dict[str, Any]) -> dict[str, 
     }
 
 
-def with_provenance(row: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
-    return {**row, "provenance": event_provenance(row, payload)}
+def with_read_context(row: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+    # `provenance` belongs to the canonical occurrence and must round-trip
+    # unchanged through MCP. Read-model metadata therefore has its own field.
+    return {**row, "read_model_provenance": event_read_context(row, payload)}
 
 
 def search_events(
@@ -128,9 +133,17 @@ def search_events(
     if end_at and end_dt is None:
         raise ValueError("end_at must be ISO-8601")
     if start_dt is not None:
-        rows = [row for row in rows if (dt := _parse_time(row.get("starts_at"))) is not None and dt >= start_dt]
+        rows = [
+            row
+            for row in rows
+            if (dt := _parse_time(row.get("starts_at"))) is not None and dt >= start_dt
+        ]
     if end_dt is not None:
-        rows = [row for row in rows if (dt := _parse_time(row.get("starts_at"))) is not None and dt < end_dt]
+        rows = [
+            row
+            for row in rows
+            if (dt := _parse_time(row.get("starts_at"))) is not None and dt < end_dt
+        ]
 
     total = len(rows)
     page = rows[offset : offset + limit]
@@ -141,14 +154,21 @@ def search_events(
         "total": total,
         "offset": offset,
         "limit": limit,
-        "items": [with_provenance(row, payload) for row in page],
+        "items": [with_read_context(row, payload) for row in page],
     }
 
 
 def get_event(event_id: str) -> dict[str, Any] | None:
     payload = _events_payload()
-    row = next((row for row in payload["events"] if isinstance(row, dict) and row.get("id") == event_id), None)
-    return with_provenance(row, payload) if row is not None else None
+    row = next(
+        (
+            row
+            for row in payload["events"]
+            if isinstance(row, dict) and row.get("id") == event_id
+        ),
+        None,
+    )
+    return with_read_context(row, payload) if row is not None else None
 
 
 def tonight_events(date_jst: str | None = None, limit: int = 100, offset: int = 0) -> dict[str, Any]:
@@ -178,7 +198,9 @@ def tonight_events(date_jst: str | None = None, limit: int = 100, offset: int = 
         "total": total,
         "offset": offset,
         "limit": limit,
-        "items": [with_provenance(row, payload) for row in rows[offset : offset + limit]],
+        "items": [
+            with_read_context(row, payload) for row in rows[offset : offset + limit]
+        ],
     }
 
 
@@ -186,7 +208,11 @@ def get_series(series_id: str) -> dict[str, Any] | None:
     ontology = _load_json("event-ontology.json")
     entries = ontology.get("entries", []) if isinstance(ontology, dict) else []
     return next(
-        (entry for entry in entries if isinstance(entry, dict) and entry.get("canonical_id") == series_id),
+        (
+            entry
+            for entry in entries
+            if isinstance(entry, dict) and entry.get("canonical_id") == series_id
+        ),
         None,
     )
 
@@ -229,7 +255,10 @@ def data_quality() -> dict[str, Any]:
     ):
         path = PUBLIC / name
         raw = path.read_bytes()
-        artifacts[name] = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+        artifacts[name] = {
+            "bytes": len(raw),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        }
     return {
         "schema_version": "cast-event.data-quality.v1",
         "generated_at": payload.get("generated_at"),
@@ -239,7 +268,9 @@ def data_quality() -> dict[str, Any]:
         "duplicate_event_ids": duplicate_ids,
         "ontology_ambiguous_events": health.get("ontology", {}).get("ambiguous_events"),
         "ambiguous_match_action": ambiguous,
-        "low_confidence_event_count": health.get("category_classification", {}).get("low_confidence_event_count"),
+        "low_confidence_event_count": health.get("category_classification", {}).get(
+            "low_confidence_event_count"
+        ),
         "edinetdb_mode": "not_applicable",
         "canonical_repository": "KAFKA2306/cast_event_cal",
         "artifacts": artifacts,
