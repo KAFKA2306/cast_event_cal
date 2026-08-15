@@ -25,5 +25,11 @@ def test_ratchet_kpis_are_limited_to_three() -> None:
     assert text.count(" — ") >= 3
 
 
-def test_obsolete_weekly_research_workflow_is_absent() -> None:
-    assert not (ROOT / ".github" / "workflows" / "weekly-repo-research.yml").exists()
+def test_obsolete_noncanonical_workflows_are_absent() -> None:
+    obsolete = {
+        "weekly-repo-research.yml",
+        "materialize-yahoo-v19-once.yml",
+    }
+    workflow_dir = ROOT / ".github" / "workflows"
+    present = sorted(name for name in obsolete if (workflow_dir / name).exists())
+    assert present == []
