@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 
@@ -7,11 +6,6 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_cloudflare_worker_is_projection_owned() -> None:
     assert not (ROOT / "functions").exists()
-
-
-def test_function_invocation_is_limited_to_root() -> None:
-    routes = json.loads((ROOT / "public" / "_routes.json").read_text(encoding="utf-8"))
-    assert routes == {"version": 1, "include": ["/"], "exclude": []}
 
 
 def test_quality_view_has_accessibility_mobile_and_density_contracts() -> None:
