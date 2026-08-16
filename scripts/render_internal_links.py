@@ -26,8 +26,12 @@ def esc(value: object) -> str:
     return html.escape(str(value or ""), quote=True)
 
 
+def strip_block(text: str, start: str, end: str) -> str:
+    return re.sub(re.escape(start) + r".*?" + re.escape(end), "", text, flags=re.S)
+
+
 def replace_block(text: str, start: str, end: str, block: str, marker: str) -> str:
-    text = re.sub(re.escape(start) + r".*?" + re.escape(end), "", text, flags=re.S)
+    text = strip_block(text, start, end)
     if marker not in text:
         raise ValueError(f"HTML marker missing: {marker}")
     return text.replace(marker, f"{start}{block}{end}{marker}", 1)
@@ -84,6 +88,7 @@ def render(public_root: Path) -> dict[str, int]:
     )
     root = replace_block(root, ROOT_HUB_START, ROOT_HUB_END, hubs, "<footer>")
 
+    root = strip_block(root, ROOT_EVENTS_START, ROOT_EVENTS_END)
     existing_root_ids = set(re.findall(r'href="events/([^/]+)/"', root))
     remaining = [event_id for event_id in ordered_event_ids if event_id not in existing_root_ids]
     remaining_items = "".join(
