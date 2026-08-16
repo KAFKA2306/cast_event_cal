@@ -7,12 +7,6 @@ on:
       - scripts/render_search_pages.py
       - tests/test_search_pages.py
       - .github/workflows/render-search-pages.yml
-  push:
-    branches: [main]
-    paths:
-      - scripts/render_search_pages.py
-      - tests/test_search_pages.py
-      - .github/workflows/render-search-pages.yml
   workflow_run:
     workflows: ["Update calendar data"]
     types: [completed]
