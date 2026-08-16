@@ -1,0 +1,70 @@
+name: Search Console growth report
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 22 * * 0'
+  pull_request:
+    paths:
+      - scripts/search_console_growth.py
+      - tests/test_search_console_growth.py
+      - config/search_console_growth.json
+      - config/search_console_changes.json
+      - .github/workflows/search-console-growth.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e '.[dev]'
+      - run: ruff check scripts/search_console_growth.py tests/test_search_console_growth.py
+      - run: pytest tests/test_search_console_growth.py -q
+
+  collect:
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON: ${{ secrets.SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON }}
+      SEARCH_CONSOLE_ACCESS_TOKEN: ${{ secrets.SEARCH_CONSOLE_ACCESS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e . 'google-auth[requests]>=2,<3'
+      - name: Require Search Console authorization
+        run: |
+          if [ -z "$SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON" ] && [ -z "$SEARCH_CONSOLE_ACCESS_TOKEN" ]; then
+            echo 'Configure SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON (preferred for weekly runs) or SEARCH_CONSOLE_ACCESS_TOKEN.' >&2
+            exit 1
+          fi
+      - name: Collect finalized 28-day comparison
+        run: python scripts/search_console_growth.py
+      - name: Commit growth evidence
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add audit/growth/search-console
+          if git diff --cached --quiet; then
+            echo 'Search Console report is already current'
+          else
+            git commit -m 'chore: record Search Console growth report [skip ci]'
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
