@@ -28,9 +28,9 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
-      - run: ruff check cast_event_cal scripts tests main_executor.py
-      - run: pytest tests
-      - run: python main_executor.py validate
+      - run: ruff check cast_event_cal scripts tests
+      - run: pytest
+      - run: cast-event-cal validate
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
@@ -54,7 +54,7 @@ jobs:
           assert len(events) >= 60, f'event coverage too small: {len(events)}'
           assert len({item['source_id'] for item in events}) == len(events)
           PY
-      - run: python main_executor.py run --strict
+      - run: cast-event-cal run --strict
       - name: Verify clean checkout
         if: always()
         run: |
