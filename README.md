@@ -162,10 +162,11 @@ matchは単なるfuzzy searchでは成立しません。alias exact match、ま�
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e '.[dev]'
-ruff check cast_event_cal scripts tests main_executor.py
-pytest tests
+ruff check cast_event_cal scripts tests
+pytest
+cast-event-cal validate
 python scripts/materialize_events.py
-python main_executor.py run --strict
+cast-event-cal run --strict
 python scripts/render_frontend.py
 python -m http.server 8000 --directory public
 ```
