@@ -1,1 +1,0 @@
-# src/models/event_data_model.py
