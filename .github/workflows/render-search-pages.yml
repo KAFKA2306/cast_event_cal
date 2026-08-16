@@ -2,6 +2,15 @@ name: Render searchable event pages
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/render_search_pages.py
+      - scripts/render_category_pages.py
+      - tests/test_search_pages.py
+      - tests/test_category_pages.py
+      - public/category-ontology.json
+      - .github/workflows/render-search-pages.yml
   pull_request:
     paths:
       - scripts/render_search_pages.py
