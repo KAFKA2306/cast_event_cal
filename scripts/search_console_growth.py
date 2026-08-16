@@ -4,8 +4,9 @@ import argparse
 import json
 import os
 import re
+import unicodedata
 from collections import defaultdict
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
@@ -26,13 +27,7 @@ def load_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def normalize_query(value: str) -> str:
-    return " ".join(value.normalize("NFKC").lower().split()) if hasattr(value, "normalize") else " ".join(value.lower().split())
-
-
 def normalized(value: str) -> str:
-    import unicodedata
-
     return " ".join(unicodedata.normalize("NFKC", value).lower().split())
 
 
@@ -287,7 +282,7 @@ def build_report(
     )
     rows.sort(key=lambda row: (float(row["current"]["clicks"]), float(row["current"]["impressions"])), reverse=True)
     changes = changes_for_window(changes_doc, previous_start, current_end)
-    generated = generated_at or datetime.now(timezone.utc)
+    generated = generated_at or datetime.now(UTC)
     return {
         "schema_version": "search-console-growth.v1",
         "generated_at": generated.isoformat().replace("+00:00", "Z"),
@@ -336,7 +331,7 @@ def collect(config: dict[str, Any], changes_doc: dict[str, Any], today: date) ->
         if latest is None:
             return {
                 "schema_version": "search-console-growth.v1",
-                "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                "generated_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
                 "site_url": site_url,
                 "status": "no_finalized_rows",
                 "latest_finalized_date": None,
