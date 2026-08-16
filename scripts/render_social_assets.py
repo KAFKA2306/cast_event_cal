@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shutil
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -160,9 +161,69 @@ def share_controls(event: dict[str, object], base_url: str) -> str:
         f'<a class="action" href="{esc(intent)}" target="_blank" rel="noopener noreferrer" '
         f'data-track="share_click" data-event-id="{esc(event_id)}" data-category="{esc(category)}" '
         'data-destination-type="x">Xで共有</a>'
+        f'<a class="action" href="event.ics" download data-track="calendar_event_download" '
+        f'data-event-id="{esc(event_id)}" data-category="{esc(category)}" '
+        'data-destination-type="ics">カレンダーに追加</a>'
         '<span class="share-status" aria-live="polite"></span>'
         f'</div>{SHARE_END}'
     )
+
+
+def ical_escape(value: object) -> str:
+    return (
+        str(value or "")
+        .replace("\\", "\\\\")
+        .replace("\r\n", "\n")
+        .replace("\r", "\n")
+        .replace("\n", "\\n")
+        .replace(";", "\\;")
+        .replace(",", "\\,")
+    )
+
+
+def ical_datetime(value: object) -> str:
+    parsed = parse_time(value)
+    if parsed is None:
+        raise ValueError("calendar date-time is missing or invalid")
+    return parsed.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
+
+
+def fold_ical_line(line: str) -> str:
+    chunks: list[str] = []
+    current = ""
+    for char in line:
+        limit = 75 if not chunks else 74
+        if current and len((current + char).encode("utf-8")) > limit:
+            chunks.append(current)
+            current = char
+        else:
+            current += char
+    if current:
+        chunks.append(current)
+    return "\r\n ".join(chunks)
+
+
+def event_ics(event: dict[str, object], base_url: str, generated_at: datetime) -> bytes:
+    event_id = str(event["id"])
+    canonical = f"{base_url}/events/{event_id}/"
+    lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//KAFKA2306//VRChat Event Calendar//JA",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        f"UID:{event_id}@kafka2306.github.io",
+        f"DTSTAMP:{generated_at.astimezone(UTC).strftime('%Y%m%dT%H%M%SZ')}",
+        f"DTSTART:{ical_datetime(event.get('starts_at'))}",
+    ]
+    if event.get("ends_at"):
+        lines.append(f"DTEND:{ical_datetime(event.get('ends_at'))}")
+    lines.append(f"SUMMARY:{ical_escape(event_title(event))}")
+    description = str(event.get("description") or "").strip()
+    if description:
+        lines.append(f"DESCRIPTION:{ical_escape(description)}")
+    lines.extend([f"URL:{canonical}", "END:VEVENT", "END:VCALENDAR"])
+    return ("\r\n".join(fold_ical_line(line) for line in lines) + "\r\n").encode("utf-8")
 
 
 def patch_event_page(path: Path, event: dict[str, object], base_url: str) -> None:
@@ -239,20 +300,26 @@ def render(events_path: Path, public_root: Path, base_url: str = BASE_URL, font_
     og_root.mkdir(parents=True, exist_ok=True)
     for event in selected:
         event_id = str(event["id"])
-        page = public_root / "events" / event_id / "index.html"
+        event_root = public_root / "events" / event_id
+        page = event_root / "index.html"
         if not page.is_file():
             raise ValueError(f"indexable event page missing: {event_id}")
         draw_card(event, og_root / f"{event_id}.png", resolved_font)
+        (event_root / "event.ics").write_bytes(event_ics(event, base_url, generated_at))
         patch_event_page(page, event, base_url)
     write_share_script(public_root)
 
     images = list(og_root.glob("*.png"))
+    calendars = list((public_root / "events").glob("*/event.ics"))
     if len(images) != len(selected):
         raise ValueError("OG image coverage mismatch")
+    if len(calendars) != len(selected):
+        raise ValueError("event calendar coverage mismatch")
     return {
         "indexable_count": len(selected),
         "og_image_count": len(images),
         "share_enabled_count": len(selected),
+        "calendar_enabled_count": len(calendars),
     }
 
 
