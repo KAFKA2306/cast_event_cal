@@ -16,7 +16,6 @@ on:
       - scripts/**
       - tests/**
       - web/**
-      - main_executor.py
       - requirements.txt
       - pyproject.toml
       - .github/workflows/update-calendar-v2.yml
@@ -43,19 +42,7 @@ jobs:
       - name: Install dependencies
         run: pip install -e '.[dev]'
       - name: Regression tests
-        run: >-
-          pytest -q
-          tests/test_yahoo_archive_policy.py
-          tests/test_yahoo_corpus.py
-          tests/test_official_asset_enrichment.py
-          tests/test_event_link_discovery.py
-          tests/test_frontend_link_view.py
-          tests/test_vrchat_group_assets.py
-          tests/test_external_calendar_sources.py
-          tests/test_vrchat_discovery_routes.py
-          tests/test_category_ontology.py
-          tests/test_registration_count_audit.py
-          tests/test_occurrence_dedup.py
+        run: pytest
       - name: Materialize curated recurring events
         run: python scripts/materialize_events.py
       - name: Discover public VRChat calendar events
@@ -83,7 +70,7 @@ jobs:
           VRCEVE_ICS_URL: ${{ secrets.VRCEVE_ICS_URL }}
         run: python scripts/fetch_external_calendars.py
       - name: Build normalized calendar
-        run: python main_executor.py run --strict
+        run: cast-event-cal run --strict
       - name: Enrich official X Web and WebP assets
         run: python scripts/enrich_official_assets.py
       - name: Discover recruitment participation and related links
