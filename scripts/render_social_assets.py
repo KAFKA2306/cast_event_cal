@@ -36,7 +36,7 @@ def esc(value: object) -> str:
 
 
 def strip_block(text: str, start: str, end: str) -> str:
-    return re.sub(re.escape(start) + r".*?" + re.escape(end), "", text, flags=re.S)
+    return re.sub(re.escape(start) + r".*?" + re.escape(end) + r"\n?", "", text, flags=re.S)
 
 
 def resolve_font(explicit: Path | None = None) -> Path | None:
