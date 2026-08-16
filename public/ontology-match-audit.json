@@ -2,13 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 616,
-  "matched_events": 279,
+  "event_count": 618,
+  "matched_events": 280,
   "matched_series": {
     "en-jp-language-exchange": 36,
     "vrc-fit-boxing": 36,
     "personally-match": 18,
     "zerozoku-auction": 2,
+    "cafe-bar-for-light": 1,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
@@ -20,7 +21,7 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 337,
+  "unmatched_events": 338,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -100,6 +101,18 @@
       "title": "VRCフィットボクシング集会（日曜）",
       "status": "matched",
       "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "8ca7c0a4733b4bdb5021",
+      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日22:30〜23:35 OPEN 形式：20分×3ローテ 📌参加方法 JOIN制｜ILへフレンド申請→JOIN VRC初心者の方もイ…",
+      "status": "matched",
+      "ontology_id": "cafe-bar-for-light",
       "evidence": [
         "alias",
         "organizer",
@@ -3374,10 +3387,10 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 616,
+    "event_count": 618,
     "category_breakdown": {
       "art": 139,
-      "community": 166,
+      "community": 168,
       "game": 106,
       "language_exchange": 36,
       "learning": 1,
@@ -3391,8 +3404,8 @@
     },
     "subcategory_breakdown": {
       "auction": 2,
-      "bar": 16,
-      "cafe": 18,
+      "bar": 17,
+      "cafe": 19,
       "cast_service": 3,
       "dance": 2,
       "dj": 14,
@@ -3417,12 +3430,12 @@
     "event_mode_breakdown": {
       "deadline": 5,
       "hybrid": 7,
-      "in_world": 604
+      "in_world": 606
     },
     "classification_source_breakdown": {
-      "curated_ontology": 262,
+      "curated_ontology": 263,
       "fallback": 23,
-      "keyword_rules": 113,
+      "keyword_rules": 114,
       "legacy_and_keywords": 217,
       "legacy_category": 1
     },
