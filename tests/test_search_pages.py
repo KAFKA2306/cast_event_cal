@@ -70,6 +70,7 @@ def test_render_search_pages_is_truthful_bounded_and_idempotent(tmp_path: Path) 
     assert "https://example.test/project/" in sitemap
     assert "https://example.test/project/events/future-1/" in sitemap
     assert "past-1" not in sitemap
+    assert "<lastmod>" not in sitemap
 
     index = (root / "index.html").read_text(encoding="utf-8")
     assert index.count("searchable-events:start") == 1
