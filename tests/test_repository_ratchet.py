@@ -43,3 +43,9 @@ def test_delivery_owned_cloudflare_routes_are_absent() -> None:
 
 def test_tracked_backup_files_are_absent() -> None:
     assert list(ROOT.rglob("*.bak")) == []
+
+
+def test_obsolete_v1_scaffold_is_absent() -> None:
+    assert all(not (ROOT / path).exists() for path in ("pipelines", "src", "models", "web_frontend"))
+    assert all(not (ROOT / path).exists() for path in ("config/main_config.yaml", "config/scraping_targets.yaml"))
+    assert list(ROOT.rglob("*.log")) == []
