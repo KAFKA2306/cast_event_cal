@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 
 from scripts.search_console_growth import build_report, sensitive_query, write_report
 
@@ -55,7 +55,7 @@ def test_report_compares_equal_windows_and_prioritizes_ctr_gap(tmp_path) -> None
         previous_total={"clicks": 8, "impressions": 170, "ctr": 8 / 170, "position": 5.6},
         current_raw=current,
         previous_raw=previous,
-        generated_at=datetime(2026, 8, 16, 10, 0, tzinfo=timezone.utc),
+        generated_at=datetime(2026, 8, 16, 10, 0, tzinfo=UTC),
     )
 
     assert report["windows"]["current"] == {"start": "2026-07-18", "end": "2026-08-14", "days": 28}
