@@ -8,9 +8,12 @@ on:
       - scripts/render_search_pages.py
       - scripts/render_category_pages.py
       - scripts/render_series_pages.py
+      - scripts/render_internal_links.py
+      - scripts/verify_crawl_graph.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
       - tests/test_series_pages.py
+      - tests/test_crawl_graph.py
       - public/category-ontology.json
       - .github/workflows/render-search-pages.yml
   pull_request:
@@ -18,9 +21,12 @@ on:
       - scripts/render_search_pages.py
       - scripts/render_category_pages.py
       - scripts/render_series_pages.py
+      - scripts/render_internal_links.py
+      - scripts/verify_crawl_graph.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
       - tests/test_series_pages.py
+      - tests/test_crawl_graph.py
       - public/category-ontology.json
       - .github/workflows/render-search-pages.yml
   workflow_run:
@@ -28,7 +34,7 @@ on:
     types: [completed]
 
 concurrency:
-  group: cast-event-calendar-production
+  group: ${{ github.event_name == 'pull_request' && format('search-pr-{0}', github.event.pull_request.number) || 'cast-event-calendar-production' }}
   cancel-in-progress: false
 
 permissions:
@@ -47,10 +53,12 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -e '.[dev]'
-      - run: pytest tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py -q
+      - run: pytest tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
       - run: python scripts/render_series_pages.py
+      - run: python scripts/render_internal_links.py
+      - run: python scripts/verify_crawl_graph.py
 
   publish:
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
@@ -74,6 +82,10 @@ jobs:
         run: python scripts/render_category_pages.py
       - name: Render canonical series landing pages
         run: python scripts/render_series_pages.py
+      - name: Connect canonical search pages
+        run: python scripts/render_internal_links.py
+      - name: Verify crawl graph
+        run: python scripts/verify_crawl_graph.py
       - name: Verify real public snapshot
         run: |
           python - <<'PY'
@@ -89,23 +101,14 @@ jobs:
           ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls = [node.text for node in sitemap.findall('s:url/s:loc', ns)]
           assert events['count'] == len(events['events'])
-          assert event_pages
-          assert category_pages
-          assert series_pages
+          assert event_pages and category_pages and series_pages
           assert len(urls) == len(event_pages) + len(category_pages) + len(series_pages) + 1
           assert len(urls) == len(set(urls))
           assert urls[0] == 'https://kafka2306.github.io/vrc_cast_event_calender/'
           assert all('application/ld+json' not in page.read_text(encoding='utf-8') for page in event_pages)
-          for page in category_pages:
-              text = page.read_text(encoding='utf-8')
-              assert 'rel="canonical"' in text
-              assert '../../events/' in text
-          for page in series_pages:
-              text = page.read_text(encoding='utf-8')
-              assert 'rel="canonical"' in text
-              assert '<h2>公式情報</h2>' in text
           index = Path('public/index.html').read_text(encoding='utf-8')
           assert 'searchable-events:start' in index
+          assert 'crawl-hubs:start' in index
           assert 'analytics.js' in index
           print(json.dumps({
               'event_pages': len(event_pages),
