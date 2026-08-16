@@ -138,6 +138,24 @@ def test_crawl_link_render_is_idempotent(tmp_path: Path) -> None:
     assert result["orphan_count"] == 0
 
 
+def test_crawl_graph_ignores_download_links_but_not_page_links(tmp_path: Path) -> None:
+    root = _build_surface(tmp_path)
+    detail = root / "events/social-1/index.html"
+    text = detail.read_text(encoding="utf-8")
+    detail.write_text(
+        text.replace("</nav>", '<a href="event.ics" download>download</a></nav>', 1),
+        encoding="utf-8",
+    )
+    assert verify(root, "https://example.test/project")["broken_search_link_count"] == 0
+
+    detail.write_text(
+        detail.read_text(encoding="utf-8").replace(' download>download</a>', '>download</a>', 1),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="broken/non-canonical search links"):
+        verify(root, "https://example.test/project")
+
+
 def test_crawl_graph_rejects_broken_search_link(tmp_path: Path) -> None:
     root = _build_surface(tmp_path)
     index = root / "index.html"
