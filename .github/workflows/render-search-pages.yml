@@ -5,7 +5,10 @@ on:
   pull_request:
     paths:
       - scripts/render_search_pages.py
+      - scripts/render_category_pages.py
       - tests/test_search_pages.py
+      - tests/test_category_pages.py
+      - public/category-ontology.json
       - .github/workflows/render-search-pages.yml
   workflow_run:
     workflows: ["Update calendar data"]
@@ -31,7 +34,7 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -e '.[dev]'
-      - run: pytest tests/test_search_pages.py -q
+      - run: pytest tests/test_search_pages.py tests/test_category_pages.py -q
 
   publish:
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
@@ -51,6 +54,8 @@ jobs:
           python-version: '3.12'
       - name: Render current/future crawlable event pages
         run: python scripts/render_search_pages.py
+      - name: Render category landing pages
+        run: python scripts/render_category_pages.py
       - name: Verify real public snapshot
         run: |
           python - <<'PY'
@@ -59,26 +64,37 @@ jobs:
           from pathlib import Path
 
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
-          pages = sorted(Path('public/events').glob('*/index.html'))
+          event_pages = sorted(Path('public/events').glob('*/index.html'))
+          category_pages = sorted(Path('public/categories').glob('*/index.html'))
           sitemap = ET.parse('public/sitemap.xml').getroot()
           ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls = [node.text for node in sitemap.findall('s:url/s:loc', ns)]
           assert events['count'] == len(events['events'])
-          assert pages
-          assert len(urls) == len(pages) + 1
+          assert event_pages
+          assert category_pages
+          assert len(urls) == len(event_pages) + len(category_pages) + 1
           assert len(urls) == len(set(urls))
           assert urls[0] == 'https://kafka2306.github.io/vrc_cast_event_calender/'
-          assert all('application/ld+json' not in page.read_text(encoding='utf-8') for page in pages)
+          assert all('application/ld+json' not in page.read_text(encoding='utf-8') for page in event_pages)
+          for page in category_pages:
+              text = page.read_text(encoding='utf-8')
+              assert 'rel="canonical"' in text
+              assert '../../events/' in text
           index = Path('public/index.html').read_text(encoding='utf-8')
           assert 'searchable-events:start' in index
           assert 'analytics.js' in index
+          print(json.dumps({
+              'event_pages': len(event_pages),
+              'category_pages': len(category_pages),
+              'sitemap_urls': len(urls),
+          }, sort_keys=True))
           PY
       - name: Commit generated search surface
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/index.html public/events public/sitemap.xml public/analytics.js public/analytics-config.json
+          git add public/index.html public/events public/categories public/sitemap.xml public/analytics.js public/analytics-config.json
           if git diff --cached --quiet; then
             echo 'Search surface is already current'
           else
