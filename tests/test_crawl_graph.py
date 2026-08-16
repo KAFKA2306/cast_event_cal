@@ -125,6 +125,19 @@ def test_crawl_graph_has_zero_orphans_and_static_hub_links(tmp_path: Path) -> No
     assert 'href="../../series/weekly-social/"' in detail
 
 
+def test_crawl_link_render_is_idempotent(tmp_path: Path) -> None:
+    root = _build_surface(tmp_path)
+    first = (root / "index.html").read_text(encoding="utf-8")
+
+    render_links(root)
+
+    second = (root / "index.html").read_text(encoding="utf-8")
+    assert second == first
+    result = verify(root, "https://example.test/project")
+    assert result["max_depth"] == 1
+    assert result["orphan_count"] == 0
+
+
 def test_crawl_graph_rejects_broken_search_link(tmp_path: Path) -> None:
     root = _build_surface(tmp_path)
     index = root / "index.html"
