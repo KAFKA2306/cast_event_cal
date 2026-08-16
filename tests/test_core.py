@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from cast_event_cal.core import Event, deduplicate, parse_ics, render_ics, x_post_to_event
+from cast_event_cal.core import Event, deduplicate, parse_ics, render_ics, write_outputs, x_post_to_event
 
 
 def test_parse_ics_timezone_and_render_roundtrip():
@@ -30,3 +30,11 @@ def test_x_parser_rejects_ambiguous_post_and_accepts_explicit_datetime():
     assert event is not None
     assert event.starts_at == "2026-08-03T12:30:00Z"
     assert event.organizer == "@host"
+
+
+def test_core_outputs_leave_html_to_canonical_frontend_renderer(tmp_path):
+    generated_at = datetime(2026, 8, 16, tzinfo=UTC)
+    write_outputs([], {"status": "ok", "generated_at": "2026-08-16T00:00:00Z"}, tmp_path, generated_at)
+
+    assert {path.name for path in tmp_path.iterdir()} == {"events.json", "calendar.ics", "health.json", ".nojekyll"}
+    assert not (tmp_path / "index.html").exists()
