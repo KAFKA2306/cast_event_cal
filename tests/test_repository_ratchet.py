@@ -39,3 +39,7 @@ def test_delivery_owned_cloudflare_routes_are_absent() -> None:
     assert not (ROOT / "public" / "_routes.json").exists()
     text = DOC.read_text(encoding="utf-8")
     assert "Cloudflare Pages routing such as `_routes.json` is owned by `KAFKA2306/vrc_cast_event_calender`" in text
+
+
+def test_tracked_backup_files_are_absent() -> None:
+    assert list(ROOT.rglob("*.bak")) == []
