@@ -29,7 +29,15 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
       - run: ruff check cast_event_cal scripts tests
-      - run: pytest
+      - name: Run pytest
+        run: |
+          set +e
+          pytest -x -vv 2>&1 | tee /tmp/pytest.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            tail -40 /tmp/pytest.log | tr '\n' '|' | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' | while IFS= read -r line; do echo "::error title=pytest failure::$line"; done
+          fi
+          exit "$status"
       - run: cast-event-cal validate
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
