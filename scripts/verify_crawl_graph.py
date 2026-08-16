@@ -24,9 +24,12 @@ class AnchorParser(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag != "a":
             return
-        for name, value in attrs:
-            if name == "href" and value:
-                self.hrefs.append(value)
+        attributes = dict(attrs)
+        if "download" in attributes:
+            return
+        href = attributes.get("href")
+        if href:
+            self.hrefs.append(href)
 
 
 def canonicalize(url: str) -> str:
