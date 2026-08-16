@@ -217,12 +217,11 @@ def render_event_page(event: dict[str, object], base_url: str) -> str:
 '''
 
 
-def sitemap_xml(urls: list[str], lastmod: str) -> str:
+def sitemap_xml(urls: list[str]) -> str:
     root = Element("urlset", {"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"})
     for url in urls:
         node = SubElement(root, "url")
         SubElement(node, "loc").text = url
-        SubElement(node, "lastmod").text = lastmod
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + tostring(root, encoding="unicode") + "\n"
 
 
@@ -378,10 +377,9 @@ def render(events_path: Path, public_root: Path, base_url: str = BASE_URL) -> di
             render_event_page(event, base_url), encoding="utf-8"
         )
 
-    lastmod = generated_at.isoformat().replace("+00:00", "Z")
     urls = [base_url + "/"] + [f"{base_url}/events/{event_id}/" for event_id in ids]
     (public_root / "sitemap.xml").write_text(
-        sitemap_xml(urls, lastmod), encoding="utf-8"
+        sitemap_xml(urls), encoding="utf-8"
     )
     write_analytics(public_root)
     patch_root(public_root, selected)
