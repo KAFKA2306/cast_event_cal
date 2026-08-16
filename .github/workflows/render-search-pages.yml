@@ -44,6 +44,8 @@ jobs:
           cache: pip
       - run: pip install -e '.[dev]'
       - run: pytest tests/test_search_pages.py tests/test_category_pages.py -q
+      - run: python scripts/render_search_pages.py
+      - run: python scripts/render_category_pages.py
 
   publish:
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')

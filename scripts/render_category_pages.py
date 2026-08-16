@@ -8,7 +8,10 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from scripts.render_search_pages import BASE_URL, SAFE_ID, event_title, format_jst, indexable, parse_time
+try:
+    from scripts.render_search_pages import BASE_URL, SAFE_ID, event_title, format_jst, indexable, parse_time
+except ModuleNotFoundError:
+    from render_search_pages import BASE_URL, SAFE_ID, event_title, format_jst, indexable, parse_time
 
 
 KIND_LABELS = {
