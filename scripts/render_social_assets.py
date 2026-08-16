@@ -7,7 +7,7 @@ import json
 import os
 import re
 import shutil
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -185,7 +185,7 @@ def ical_datetime(value: object) -> str:
     parsed = parse_time(value)
     if parsed is None:
         raise ValueError("calendar date-time is missing or invalid")
-    return parsed.astimezone(datetime.UTC).strftime("%Y%m%dT%H%M%SZ")
+    return parsed.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
 
 
 def fold_ical_line(line: str) -> str:
@@ -213,7 +213,7 @@ def event_ics(event: dict[str, object], base_url: str, generated_at: datetime) -
         "CALSCALE:GREGORIAN",
         "BEGIN:VEVENT",
         f"UID:{event_id}@kafka2306.github.io",
-        f"DTSTAMP:{generated_at.astimezone(datetime.UTC).strftime('%Y%m%dT%H%M%SZ')}",
+        f"DTSTAMP:{generated_at.astimezone(UTC).strftime('%Y%m%dT%H%M%SZ')}",
         f"DTSTART:{ical_datetime(event.get('starts_at'))}",
     ]
     if event.get("ends_at"):
