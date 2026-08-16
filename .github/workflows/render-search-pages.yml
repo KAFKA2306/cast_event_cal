@@ -34,7 +34,7 @@ on:
     types: [completed]
 
 concurrency:
-  group: cast-event-calendar-production
+  group: ${{ github.event_name == 'pull_request' && format('search-pr-{0}', github.event.pull_request.number) || 'cast-event-calendar-production' }}
   cancel-in-progress: false
 
 permissions:
