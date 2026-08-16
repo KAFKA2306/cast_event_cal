@@ -8,26 +8,32 @@ on:
       - scripts/render_search_pages.py
       - scripts/render_category_pages.py
       - scripts/render_series_pages.py
+      - scripts/render_social_assets.py
       - scripts/render_internal_links.py
       - scripts/verify_crawl_graph.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
       - tests/test_series_pages.py
+      - tests/test_social_assets.py
       - tests/test_crawl_graph.py
       - public/category-ontology.json
+      - pyproject.toml
       - .github/workflows/render-search-pages.yml
   pull_request:
     paths:
       - scripts/render_search_pages.py
       - scripts/render_category_pages.py
       - scripts/render_series_pages.py
+      - scripts/render_social_assets.py
       - scripts/render_internal_links.py
       - scripts/verify_crawl_graph.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
       - tests/test_series_pages.py
+      - tests/test_social_assets.py
       - tests/test_crawl_graph.py
       - public/category-ontology.json
+      - pyproject.toml
       - .github/workflows/render-search-pages.yml
   workflow_run:
     workflows: ["Update calendar data"]
@@ -53,10 +59,16 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -e '.[dev]'
-      - run: pytest tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_crawl_graph.py -q
+      - name: Install Japanese font for deterministic OG rendering
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+      - run: pytest tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
       - run: python scripts/render_series_pages.py
+      - run: python scripts/render_social_assets.py
       - run: python scripts/render_internal_links.py
       - run: python scripts/verify_crawl_graph.py
 
@@ -76,12 +88,21 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+          cache: pip
+      - run: pip install -e .
+      - name: Install Japanese font for deterministic OG rendering
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
       - name: Render current/future crawlable event pages
         run: python scripts/render_search_pages.py
       - name: Render category landing pages
         run: python scripts/render_category_pages.py
       - name: Render canonical series landing pages
         run: python scripts/render_series_pages.py
+      - name: Render event OG images and share controls
+        run: python scripts/render_social_assets.py
       - name: Connect canonical search pages
         run: python scripts/render_internal_links.py
       - name: Verify crawl graph
@@ -92,28 +113,43 @@ jobs:
           import json
           import xml.etree.ElementTree as ET
           from pathlib import Path
+          from PIL import Image
 
           events = json.loads(Path('public/events.json').read_text(encoding='utf-8'))
           event_pages = sorted(Path('public/events').glob('*/index.html'))
           category_pages = sorted(Path('public/categories').glob('*/index.html'))
           series_pages = sorted(Path('public/series').glob('*/index.html'))
+          og_images = sorted(Path('public/og/events').glob('*.png'))
           sitemap = ET.parse('public/sitemap.xml').getroot()
           ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls = [node.text for node in sitemap.findall('s:url/s:loc', ns)]
           assert events['count'] == len(events['events'])
           assert event_pages and category_pages and series_pages
+          assert len(og_images) == len(event_pages)
           assert len(urls) == len(event_pages) + len(category_pages) + len(series_pages) + 1
           assert len(urls) == len(set(urls))
           assert urls[0] == 'https://kafka2306.github.io/vrc_cast_event_calender/'
           assert all('application/ld+json' not in page.read_text(encoding='utf-8') for page in event_pages)
+          for page in event_pages:
+              text = page.read_text(encoding='utf-8')
+              assert 'social-meta:start' in text
+              assert 'share-controls:start' in text
+              assert 'twitter:card" content="summary_large_image' in text
+              assert '../../share.js' in text
+          for path in og_images[:3]:
+              with Image.open(path) as image:
+                  assert image.format == 'PNG'
+                  assert image.size == (1200, 630)
           index = Path('public/index.html').read_text(encoding='utf-8')
           assert 'searchable-events:start' in index
           assert 'crawl-hubs:start' in index
           assert 'analytics.js' in index
+          assert Path('public/share.js').is_file()
           print(json.dumps({
               'event_pages': len(event_pages),
               'category_pages': len(category_pages),
               'series_pages': len(series_pages),
+              'og_images': len(og_images),
               'sitemap_urls': len(urls),
           }, sort_keys=True))
           PY
@@ -122,7 +158,7 @@ jobs:
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/index.html public/events public/categories public/series public/sitemap.xml public/analytics.js public/analytics-config.json
+          git add public/index.html public/events public/categories public/series public/og public/sitemap.xml public/analytics.js public/analytics-config.json public/share.js
           if git diff --cached --quiet; then
             echo 'Search surface is already current'
           else
