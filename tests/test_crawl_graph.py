@@ -138,6 +138,20 @@ def test_crawl_link_render_is_idempotent(tmp_path: Path) -> None:
     assert result["orphan_count"] == 0
 
 
+def test_full_search_surface_render_is_idempotent(tmp_path: Path) -> None:
+    root = _build_surface(tmp_path)
+    first = (root / "index.html").read_text(encoding="utf-8")
+    base = "https://example.test/project"
+
+    render_events(root / "events.json", root, base)
+    render_categories(root / "events.json", root / "category-ontology.json", root, base)
+    render_series(root / "events.json", root / "event-ontology.json", root, base)
+    render_links(root)
+
+    second = (root / "index.html").read_text(encoding="utf-8")
+    assert second == first
+
+
 def test_crawl_graph_ignores_download_links_but_not_page_links(tmp_path: Path) -> None:
     root = _build_surface(tmp_path)
     detail = root / "events/social-1/index.html"
