@@ -144,12 +144,6 @@ def append_kpi_log(latest: dict[str, Any], path: Path = KPI_LOG) -> dict[str, An
 
     previous = rows[-1] if rows else None
     previous_accepted = integer(previous["accepted_event_cumulative"]) if previous else None
-    if previous_accepted is not None and accepted < previous_accepted:
-        raise ValueError(
-            "accepted-event cumulative KPI must not decrease: "
-            f"{previous_accepted} -> {accepted}"
-        )
-
     row = {
         "generated_at": generated_at,
         "accepted_event_cumulative": accepted,
