@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 from xml.etree.ElementTree import Element, SubElement, tostring
 from zoneinfo import ZoneInfo
 
-BASE_URL = "https://kafka2306.github.io/vrc_cast_event_calender"
+BASE_URL = "https://kafka2306.github.io/cast_event_cal"
 JST = ZoneInfo("Asia/Tokyo")
 SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
 ROOT_PREVIEW_LIMIT = 24
