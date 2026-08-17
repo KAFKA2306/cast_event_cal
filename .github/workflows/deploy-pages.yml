@@ -61,6 +61,8 @@ jobs:
           fetch "$base/calendar.ics" > /tmp/calendar.ics
           fetch "$base/tonight/" > /tmp/tonight.html
           grep -q 'VRChat Event Calendar' /tmp/index.html
+          grep -q '<link rel="canonical" href="https://kafka2306.github.io/cast_event_cal/">' /tmp/index.html
+          ! grep -q 'https://kafka2306.github.io/vrc_cast_event_calender' /tmp/index.html
           python - <<'PY'
           import json
           from pathlib import Path
