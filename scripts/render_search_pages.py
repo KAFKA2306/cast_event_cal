@@ -255,7 +255,7 @@ def patch_root(root: Path, events: list[dict[str, object]]) -> None:
     text = path.read_text(encoding="utf-8")
     start_marker = "<!-- searchable-events:start -->"
     end_marker = "<!-- searchable-events:end -->"
-    text = re.sub(re.escape(start_marker) + r".*?" + re.escape(end_marker), "", text, flags=re.S)
+    text = re.sub(r"\n*" + re.escape(start_marker) + r".*?" + re.escape(end_marker) + r"\n*", "", text, flags=re.S)
     marker = "<footer>"
     if marker not in text:
         raise ValueError("root footer marker missing")
@@ -270,7 +270,7 @@ def patch_root(root: Path, events: list[dict[str, object]]) -> None:
     if ".search-entry{" not in text:
         text = text.replace("</style>", css + "\n</style>", 1)
     section = f"{start_marker}\n{root_preview(events)}\n{end_marker}"
-    text = text.replace(marker, section + "\n" + marker, 1)
+    text = text.replace(marker, "\n" + section + "\n" + marker, 1)
     text = text.replace(
         '<a class="button" href="calendar.ics">カレンダーを購読</a>',
         '<a class="button" href="calendar.ics" data-track="calendar_download">カレンダーを購読</a>',
