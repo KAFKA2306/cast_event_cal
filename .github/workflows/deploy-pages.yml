@@ -55,7 +55,16 @@ jobs:
           fetch() {
             curl --fail --location --silent --show-error --retry 8 --retry-delay 3 "$1"
           }
-          fetch "$base/" | grep -q 'VRChat Event Calendar'
-          fetch "$base/events.json" | python -c "import json,sys; d=json.load(sys.stdin); assert d['count'] == len(d['events']) and d['count'] > 0"
-          fetch "$base/calendar.ics" | grep -q '^BEGIN:VCALENDAR'
-          fetch "$base/tonight/" | grep -q '今夜のVRChat'
+          fetch "$base/" > /tmp/index.html
+          fetch "$base/events.json" > /tmp/events.json
+          fetch "$base/calendar.ics" > /tmp/calendar.ics
+          fetch "$base/tonight/" > /tmp/tonight.html
+          grep -q 'VRChat Event Calendar' /tmp/index.html
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/events.json').read_text(encoding='utf-8'))
+          assert data['count'] == len(data['events']) and data['count'] > 0
+          PY
+          grep -q '^BEGIN:VCALENDAR' /tmp/calendar.ics
+          grep -q '今夜のVRChat' /tmp/tonight.html
