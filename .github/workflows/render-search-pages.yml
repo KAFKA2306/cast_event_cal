@@ -1,4 +1,5 @@
 name: Render searchable event pages
+# Canonical pipeline: verify, publish, deploy, and production read-back.
 
 on:
   workflow_dispatch:
@@ -205,6 +206,9 @@ jobs:
           fetch "$base/events.json" > /tmp/events.json
           fetch "$base/calendar.ics" > /tmp/calendar.ics
           fetch "$base/tonight/" > /tmp/tonight.html
+          fetch "$base/use/" > /tmp/use.html
+          fetch "$base/media/poster-square.webp" > /tmp/poster-square.webp
+          fetch "$base/media/poster-portrait.webp" > /tmp/poster-portrait.webp
           grep -q 'VRChat Event Calendar' /tmp/index.html
           grep -q '<link rel="canonical" href="https://kafka2306.github.io/cast_event_cal/">' /tmp/index.html
           ! grep -q 'https://kafka2306.github.io/vrc_cast_event_calender' /tmp/index.html
@@ -216,3 +220,8 @@ jobs:
           PY
           grep -q '^BEGIN:VCALENDAR' /tmp/calendar.ics
           grep -q '今夜のVRChat' /tmp/tonight.html
+          grep -q '配布・紹介素材' /tmp/use.html
+          grep -q 'poster-square.webp' /tmp/use.html
+          grep -q '掲載・訂正' /tmp/use.html
+          test -s /tmp/poster-square.webp
+          test -s /tmp/poster-portrait.webp

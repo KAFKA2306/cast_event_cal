@@ -2,7 +2,14 @@ from pathlib import Path
 
 from PIL import Image
 
-from scripts.render_distribution_assets import QR_IMAGE, link_homepage, load_config, render_poster, render_use_page
+from scripts.render_distribution_assets import (
+    ISSUES_URL,
+    QR_IMAGE,
+    link_homepage,
+    load_config,
+    render_poster,
+    render_use_page,
+)
 
 
 def test_distribution_assets_render(tmp_path: Path) -> None:
@@ -24,6 +31,9 @@ def test_distribution_assets_render(tmp_path: Path) -> None:
     assert "poster-portrait.webp" in rendered
     assert "../events.json" in rendered
     assert "../calendar.ics" in rendered
+    assert "記事・ブログで紹介する" in rendered
+    assert "掲載・訂正" in rendered
+    assert ISSUES_URL in rendered
 
 
 def test_homepage_distribution_link_is_idempotent(tmp_path: Path) -> None:

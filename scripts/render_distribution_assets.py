@@ -12,6 +12,7 @@ PUBLIC_DIR = Path("public")
 MEDIA_DIR = PUBLIC_DIR / "media"
 USE_PAGE = PUBLIC_DIR / "use" / "index.html"
 HOME_PAGE = PUBLIC_DIR / "index.html"
+ISSUES_URL = "https://github.com/KAFKA2306/cast_event_cal/issues/new"
 
 COLORS = {
     "bg": "#fbfaf7",
@@ -115,6 +116,7 @@ def render_poster(config: dict, qr_path: Path, output: Path, width: int, height:
 def render_use_page(config: dict, output: Path) -> None:
     site = html.escape(config["site_url"], quote=True)
     repo = "https://github.com/KAFKA2306/cast_event_cal"
+    issues = html.escape(ISSUES_URL, quote=True)
     posters = "\n".join(
         (
             f'<li><a href="../media/{html.escape(item["filename"], quote=True)}">'
@@ -145,14 +147,19 @@ section{{margin-top:22px;padding:22px;border:1px solid var(--line);border-radius
 <p>固定URLの画像です。差し替え時もURLは変えません。VRChatのImage Loadingでは <code>*.github.io</code> が許可ドメインで、画像の最大解像度は2048 × 2048です。</p>
 <ul>{posters}</ul>
 </section>
+<section><h2>記事・ブログで紹介する</h2>
+<p>リンク先には <code>{site}</code> を使用してください。紹介画像には <a href="../media/poster-square.webp">poster-square.webp</a> をそのまま利用できます。</p>
+<p>紹介文: VRChatの公開イベントを、日時・カテゴリ・参加方法・公式リンクから探せる公開カレンダーです。</p>
+</section>
 <section><h2>正準リンク</h2><div class="actions">
 <a class="button primary" href="{site}">Web</a>
 <a class="button" href="../events.json">JSON</a>
 <a class="button" href="../calendar.ics">ICS</a>
 <a class="button" href="{repo}">GitHub</a>
 </div></section>
-<section><h2>紹介するとき</h2>
-<p>記事・SNS・ワールド内掲示からは <code>{site}</code> をリンク先として使用してください。イベント参加前は各イベントの公式リンクで最新情報を確認してください。</p>
+<section><h2>掲載・訂正</h2>
+<p>掲載候補の追加や既存情報の訂正はGitHub Issueから送れます。確認できない情報は推測で補完しません。</p>
+<p><a class="button" href="{issues}">掲載・訂正を送る</a></p>
 </section>
 </main></body></html>
 """
