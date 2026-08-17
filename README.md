@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml)
 [![Update calendar data](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml)
-[![Deploy GitHub Pages](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/deploy-pages.yml)
+[![Publish event pages](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/render-search-pages.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/render-search-pages.yml)
 [![Public feed integrity](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml)
 
 **告知を見つけただけでは、参加できるイベント情報にはならない。**
@@ -159,8 +159,9 @@ matchは単なるfuzzy searchでは成立しません。alias exact match、ま�
 9. JSON / ICS / responsive UI生成
 10. quality gate
 11. canonical差分commit
-12. 同repositoryのGitHub Pagesへ配信
-13. production HTML / JSON / ICS / tonightをread-back
+12. event / category / series / OG / search surface生成
+13. GitHub Pages配信
+14. production HTML / JSON / ICS / tonightをread-back
 
 日常分類ではLLM判定を使用しません。
 
