@@ -128,7 +128,7 @@ jobs:
           assert len(og_images) == len(event_pages)
           assert len(urls) == len(event_pages) + len(category_pages) + len(series_pages) + 1
           assert len(urls) == len(set(urls))
-          assert urls[0] == 'https://kafka2306.github.io/vrc_cast_event_calender/'
+          assert urls[0] == 'https://kafka2306.github.io/cast_event_cal/'
           assert all('application/ld+json' not in page.read_text(encoding='utf-8') for page in event_pages)
           for page in event_pages:
               text = page.read_text(encoding='utf-8')
