@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T09:58:52Z",
+  "generated_at": "2026-08-17T10:13:42Z",
   "status": "ok",
-  "snapshot_count": 55,
+  "snapshot_count": 56,
   "latest": {
-    "generated_at": "2026-08-17T09:57:53Z",
+    "generated_at": "2026-08-17T10:12:51Z",
     "calendar_event_count": 595,
     "normalized_event_count": 598,
     "source_counts": {
@@ -21,7 +21,7 @@
     "yahoo_queries_succeeded": 22,
     "yahoo_queries_failed": 0,
     "delta_from_previous": {
-      "from_generated_at": "2026-08-17T09:33:12Z",
+      "from_generated_at": "2026-08-17T09:57:53Z",
       "calendar_event_count": 0,
       "source_counts": {
         "external_calendar_events": 0,
@@ -30,9 +30,9 @@
         "x_curated_events": 0,
         "yahoo_realtime_events": 0
       },
-      "yahoo_candidate_count": 4,
+      "yahoo_candidate_count": 0,
       "yahoo_accepted_count": 0,
-      "yahoo_rejected_count": 4
+      "yahoo_rejected_count": 0
     }
   },
   "snapshots": [
@@ -1743,6 +1743,38 @@
         "yahoo_candidate_count": 4,
         "yahoo_accepted_count": 0,
         "yahoo_rejected_count": 4
+      }
+    },
+    {
+      "generated_at": "2026-08-17T10:12:51Z",
+      "calendar_event_count": 595,
+      "normalized_event_count": 598,
+      "source_counts": {
+        "repository_manual_events": 495,
+        "vrchat_calendar_discovery": 0,
+        "x_curated_events": 2,
+        "yahoo_realtime_events": 747,
+        "external_calendar_events": 1
+      },
+      "yahoo_candidate_count": 4956,
+      "yahoo_accepted_count": 747,
+      "yahoo_rejected_count": 4209,
+      "yahoo_unique_candidates_this_run": 372,
+      "yahoo_queries_succeeded": 22,
+      "yahoo_queries_failed": 0,
+      "delta_from_previous": {
+        "from_generated_at": "2026-08-17T09:57:53Z",
+        "calendar_event_count": 0,
+        "source_counts": {
+          "external_calendar_events": 0,
+          "repository_manual_events": 0,
+          "vrchat_calendar_discovery": 0,
+          "x_curated_events": 0,
+          "yahoo_realtime_events": 0
+        },
+        "yahoo_candidate_count": 0,
+        "yahoo_accepted_count": 0,
+        "yahoo_rejected_count": 0
       }
     }
   ]
