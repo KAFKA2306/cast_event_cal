@@ -81,6 +81,8 @@ jobs:
         run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
         run: python scripts/render_frontend.py
+      - name: Render Unity distribution assets
+        run: python scripts/render_distribution_assets.py
       - name: Build registration count audit
         run: python scripts/build_registration_count_audit.py
       - name: Validate generated data
@@ -92,6 +94,10 @@ jobs:
           grep -q 'preferredActionUrl' public/index.html
           grep -q 'category-ontology.json' public/index.html
           grep -q 'category_confidence' public/index.html
+          grep -q 'href="use/"' public/index.html
+          grep -q 'VRChatワールドへの掲示' public/use/index.html
+          test -s public/media/poster-square.webp
+          test -s public/media/poster-portrait.webp
           grep -q 'BEGIN:VCALENDAR' public/calendar.ics
           python - <<'PY'
           import json
