@@ -162,7 +162,7 @@ jobs:
           if git diff --cached --quiet; then
             echo 'Search surface is already current'
           else
-            git commit -m 'chore: refresh searchable event pages [skip ci]'
+            git commit -m 'chore: refresh searchable event pages'
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
