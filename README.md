@@ -2,19 +2,21 @@
 
 [![CI](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml)
 [![Update calendar data](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml)
+[![Deploy GitHub Pages](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/deploy-pages.yml)
 [![Public feed integrity](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml)
 
 **告知を見つけただけでは、参加できるイベント情報にはならない。**
 
 日時、参加方法、募集締切、公式リンク、投稿時点は別々に書かれます。古い「本日開催」を検索日へ読み替えたり、商品販売をイベントとして採用したりすると、カレンダーは便利になるほど誤情報も増やします。
 
-`cast_event_cal` は、公開イベント・定期集会・募集締切を **出典・観測時刻・採否理由を残したまま正規化し、JSON / iCalendar / Web UIへ変換する正本repository** です。
+`cast_event_cal` は、公開イベント・定期集会・募集締切を **出典・観測時刻・採否理由を残したまま正規化し、JSON / iCalendar / Web UIへ変換して公開する正本repository** です。
 
-- 公開カレンダー: https://kafka2306.github.io/vrc_cast_event_calender/
-- JSON: https://kafka2306.github.io/vrc_cast_event_calender/events.json
-- iCalendar: https://kafka2306.github.io/vrc_cast_event_calender/calendar.ics
+- 公開カレンダー: https://kafka2306.github.io/cast_event_cal/
+- 今夜のイベント: https://kafka2306.github.io/cast_event_cal/tonight/
+- JSON: https://kafka2306.github.io/cast_event_cal/events.json
+- iCalendar: https://kafka2306.github.io/cast_event_cal/calendar.ics
 
-配信は `KAFKA2306/vrc_cast_event_calender` が担当し、このrepoは収集・正規化・分類・ontology・canonical snapshot生成だけを担います。
+収集・正規化・分類・ontology・canonical snapshot生成・GitHub Pages配信をこのrepositoryで完結します。旧 `KAFKA2306/vrc_cast_event_calender` は既存URL互換性を確認した後にarchiveします。
 
 ## Vision
 
@@ -36,7 +38,7 @@ VRChatイベント探しを「SNSを巡回して、それっぽい投稿を自�
 - **Relative time belongs to the source post.** `本日` / `明日` / 曜日は収集日ではなく投稿時刻を基準に解釈する。
 - **Reject is a first-class result.** 棄却理由を捨てず、classifier改善と回帰検証に使う。
 - **Ontology does not guess.** alias / organizer / required patternが不足・競合する場合は`ambiguous`へ隔離する。
-- **Collection and projection are separate.** 正本生成とPages配信を別repoへ分け、deploy成功をcollection成功へ読み替えない。
+- **Validate before publish.** 収集・分類・生成を検証してから同じrepositoryの公開artifactを配信する。
 - **No hidden LLM judgment in daily classification.** 日常運用の採否は決定論的なPython処理で再実行可能にする。
 - **Official source wins.** calendarは発見を助けるが、最終的な日時・参加条件は主催者の最新公式情報を優先する。
 
@@ -51,7 +53,7 @@ VRChatイベント探しを「SNSを巡回して、それっぽい投稿を自�
 - 商品販売・プレゼント応募・過去eventを理由付きで落とす
 - 高反応投稿でもevent evidenceがなければ採用しない
 - classification rule変更後に過去候補を再判定できる
-- 正本snapshotと配信artifactをhashで結ぶ
+- 正本dataから生成した公開artifactをproductionで再検証する
 
 ことで、**「なぜ載っている／載っていない」を後から説明できるcalendar**を作ります。
 
@@ -76,10 +78,10 @@ normalization + deterministic classification
 deduplication + ontology match
         │
         ▼
-canonical public snapshot
+public/ canonical snapshot
         │
         ▼
-vrc_cast_event_calender projection
+GitHub Pages
 ```
 
 ## Canonical data
@@ -104,6 +106,7 @@ Public artifact:
 - `public/yahoo-classifier-audit.json`
 - `public/event-ontology.json`
 - `public/ontology-match-audit.json`
+- `public/tonight/`
 
 ## Candidate ledger / classification
 
@@ -156,7 +159,8 @@ matchは単なるfuzzy searchでは成立しません。alias exact match、ま�
 9. JSON / ICS / responsive UI生成
 10. quality gate
 11. canonical差分commit
-12. 配信repo / production HTTPを検証
+12. 同repositoryのGitHub Pagesへ配信
+13. production HTML / JSON / ICS / tonightをread-back
 
 日常分類ではLLM判定を使用しません。
 
@@ -191,7 +195,6 @@ python -m http.server 8000 --directory public
 
 - `X_BEARER_TOKEN`
 - `VRCHAT_AUTH_COOKIE`
-- `PAGES_TOKEN`（必要な初期設定のみ）
 
 Yahoo realtime searchにはsecretを使いません。
 
@@ -199,10 +202,11 @@ Yahoo realtime searchにはsecretを使いません。
 
 ```text
 cast_event_cal
-  canonical ingestion / classification / ontology
-        ↓ validated snapshot
-vrc_cast_event_calender
-  projection / parity / static delivery
+  data / collection / classification / ontology
+        ↓
+  public/ HTML / JSON / ICS
+        ↓
+  GitHub Pages / production verification
 ```
 
 MCPや別UIを増やす場合も、正本dataとclassification logicを二重実装しません。
