@@ -30,7 +30,6 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-
           path = Path('scripts/render_search_pages.py')
           text = path.read_text(encoding='utf-8')
           old = '    text = re.sub(re.escape(start_marker) + r".*?" + re.escape(end_marker), "", text, flags=re.S)'
@@ -38,22 +37,10 @@ jobs:
           if text.count(old) != 1:
               raise SystemExit('expected one patch_root replacement target')
           path.write_text(text.replace(old, new), encoding='utf-8')
-
           test_path = Path('tests/test_search_pages.py')
           test = test_path.read_text(encoding='utf-8')
-          old_test = '''    first = render(events, root, "https://example.test/project")
-    second = render(events, root, "https://example.test/project")
-
-    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}
-'''
-          new_test = '''    first = render(events, root, "https://example.test/project")
-    first_index = (root / "index.html").read_text(encoding="utf-8")
-    second = render(events, root, "https://example.test/project")
-    second_index = (root / "index.html").read_text(encoding="utf-8")
-
-    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}
-    assert first_index == second_index
-'''
+          old_test = '    first = render(events, root, "https://example.test/project")\n    second = render(events, root, "https://example.test/project")\n\n    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}\n'
+          new_test = '    first = render(events, root, "https://example.test/project")\n    first_index = (root / "index.html").read_text(encoding="utf-8")\n    second = render(events, root, "https://example.test/project")\n    second_index = (root / "index.html").read_text(encoding="utf-8")\n\n    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}\n    assert first_index == second_index\n'
           if test.count(old_test) != 1:
               raise SystemExit('expected one test replacement target')
           test_path.write_text(test.replace(old_test, new_test), encoding='utf-8')
