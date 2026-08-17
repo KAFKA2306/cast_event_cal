@@ -55,6 +55,51 @@ def test_structured_parser_accepts_explicit_event_and_rejects_product_only():
     assert reason == "product_only"
 
 
+def test_yahoo_boundary_markers_are_removed_but_event_start_text_is_preserved():
+    page = structured_page(
+        [
+            {
+                "id": "5234567890123456789",
+                "displayText": (
+                    "START 2026/8/7 22:00 VRChatイベントを開催。"
+                    "OPEN 21:50 / START 22:00 END"
+                ),
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/5234567890123456789",
+            }
+        ]
+    )
+    candidate = extract_candidates(page)[0]
+    assert candidate["text"].startswith("2026/8/7")
+    assert "START 22:00" in candidate["text"]
+    assert not candidate["text"].endswith(" END")
+
+    accepted, reason = candidate_to_event(
+        candidate, now=datetime(2026, 8, 2, tzinfo=UTC), min_retweets=3, x_ids=set()
+    )
+    assert reason is None
+    assert accepted is not None
+    assert not accepted["title"].startswith("START ")
+    assert not accepted["description"].startswith("START ")
+    assert "START 22:00" in accepted["description"]
+
+
+def test_merge_cache_cleans_legacy_yahoo_boundary_markers():
+    existing = [
+        {
+            "source_id": "yahoo:x:6234567890123456789",
+            "starts_at": "2026-08-08T12:00:00Z",
+            "title": "START cached event",
+            "description": "START 8/8 21:00 VRChatイベントを開催。参加方法はJoin END",
+        }
+    ]
+    merged = merge_cache(existing, [], datetime(2026, 8, 2, tzinfo=UTC))
+    assert len(merged) == 1
+    assert merged[0]["title"] == "cached event"
+    assert merged[0]["description"] == "8/8 21:00 VRChatイベントを開催。参加方法はJoin"
+
+
 def test_parser_requires_metrics_and_rejects_x_duplicate():
     base = {
         "status_id": "1234567890123456789",
