@@ -33,6 +33,8 @@ STATUS_RE = re.compile(
 )
 STATUS_ID_RE = re.compile(r"\d{10,25}")
 VRCHAT_RE = re.compile(r"(?i)(?:#?vrchat|#?vrc\b)")
+YAHOO_START_MARKER_RE = re.compile(r"^\s*START(?=\s)")
+YAHOO_END_MARKER_RE = re.compile(r"(?<=\s)END\s*$")
 TEXT_KEYS = ("displayText", "full_text", "fullText", "tweetText", "text")
 URL_KEYS = ("url", "tweetUrl", "statusUrl", "permalink")
 ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
@@ -159,12 +161,19 @@ def status_url(mapping: dict[str, Any], post_id: str) -> str:
     return f"https://x.com/i/web/status/{post_id}"
 
 
+def clean_yahoo_text(text: str) -> str:
+    cleaned = unescape(text).replace("\tSTART\t", " ").replace("\tEND\t", " ")
+    cleaned = YAHOO_START_MARKER_RE.sub("", cleaned, count=1)
+    cleaned = YAHOO_END_MARKER_RE.sub("", cleaned, count=1)
+    return cleaned.strip()
+
+
 def candidate_from_mapping(mapping: dict[str, Any]) -> dict[str, Any] | None:
     text = direct_string(mapping, TEXT_KEYS)
     post_id = status_id(mapping)
     if not text or not post_id:
         return None
-    text = unescape(text).replace("\tSTART\t", "").replace("\tEND\t", "")
+    text = clean_yahoo_text(text)
     return {
         "status_id": post_id,
         "url": status_url(mapping, post_id),
@@ -290,7 +299,7 @@ def candidate_to_event(
     candidate: dict[str, Any], *, now: datetime, min_retweets: int, x_ids: set[str]
 ) -> tuple[dict[str, Any] | None, str | None]:
     post_id = str(candidate.get("status_id") or "")
-    text = str(candidate.get("text") or "").strip()
+    text = clean_yahoo_text(str(candidate.get("text") or ""))
     if not STATUS_ID_RE.fullmatch(post_id):
         return None, "invalid_status_id"
     if post_id in x_ids:
@@ -345,6 +354,17 @@ def parse_instant(value: str) -> datetime | None:
     return parsed.astimezone(UTC)
 
 
+def clean_cached_event_text(event: dict[str, Any]) -> dict[str, Any]:
+    cleaned = dict(event)
+    title = clean_yahoo_text(str(cleaned.get("title") or ""))
+    description = clean_yahoo_text(str(cleaned.get("description") or ""))
+    if title:
+        cleaned["title"] = title
+    if description:
+        cleaned["description"] = re.sub(r"\s+", " ", description).strip()
+    return cleaned
+
+
 def cached_event_is_valid(event: dict[str, Any], now: datetime) -> bool:
     start = parse_instant(str(event.get("starts_at") or ""))
     source_id = str(event.get("source_id") or "")
@@ -362,10 +382,12 @@ def cached_event_is_valid(event: dict[str, Any], now: datetime) -> bool:
 
 def merge_cache(existing: list[dict[str, Any]], fresh: list[dict[str, Any]], now: datetime) -> list[dict[str, Any]]:
     selected: dict[str, dict[str, Any]] = {}
-    for event in existing:
+    for raw_event in existing:
+        event = clean_cached_event_text(raw_event)
         if cached_event_is_valid(event, now):
             selected[str(event["source_id"])] = event
-    for event in fresh:
+    for raw_event in fresh:
+        event = clean_cached_event_text(raw_event)
         if cached_event_is_valid(event, now):
             selected[str(event["source_id"])] = event
     return sorted(selected.values(), key=lambda item: (str(item.get("starts_at")), str(item.get("title"))))
