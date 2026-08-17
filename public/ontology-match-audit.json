@@ -2,15 +2,12 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 595,
-  "matched_events": 277,
+  "event_count": 583,
+  "matched_events": 275,
   "matched_series": {
-    "en-jp-language-exchange": 35,
-    "vrc-fit-boxing": 35,
-    "cafe-bar-for-light": 1,
     "vrc-goita": 18,
     "vrc-game-world-club": 18,
-    "exploit-club": 17,
+    "exploit-club": 18,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 17,
@@ -18,47 +15,13 @@
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
+    "en-jp-language-exchange": 34,
+    "vrc-fit-boxing": 34,
     "personally-match": 17
   },
-  "unmatched_events": 318,
+  "unmatched_events": 308,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "ffe2ff5bbf2bc59dc151",
-      "title": "EN-JP Language Exchange（日曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "38fc030a31cf1bd91de1",
-      "title": "VRCフィットボクシング集会（日曜）",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "8ca7c0a4733b4bdb5021",
-      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌 参加 方法 JOIN 制｜ILへ フレンド申請 → JOIN VRC…",
-      "status": "matched",
-      "ontology_id": "cafe-bar-for-light",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "cec86c2a43f112ea1ad5",
       "title": "VRCごいた会",
@@ -3346,98 +3309,79 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "c7ef2e53e26c96a1181e",
+      "title": "EXPLOIT部 定期対戦会",
+      "status": "matched",
+      "ontology_id": "exploit-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 595,
+    "event_count": 583,
     "category_breakdown": {
       "art": 129,
-      "community": 169,
-      "game": 106,
-      "language_exchange": 35,
+      "community": 158,
+      "game": 107,
+      "language_exchange": 34,
       "learning": 2,
-      "music": 19,
-      "other": 18,
+      "music": 18,
+      "other": 20,
       "performance": 3,
-      "recruitment_deadline": 5,
+      "recruitment_deadline": 4,
       "technology": 38,
-      "wellness": 52,
+      "wellness": 51,
       "world_tour": 19
     },
     "subcategory_breakdown": {
-      "bar": 20,
-      "cafe": 20,
+      "bar": 17,
+      "cafe": 18,
       "cast_recruitment": 1,
-      "cast_service": 4,
-      "dance": 1,
+      "cast_service": 3,
+      "class": 1,
       "dj": 11,
       "engineering": 25,
       "exhibition": 1,
-      "fitness": 35,
-      "hangout": 16,
-      "language_exchange": 35,
-      "lecture": 2,
+      "fitness": 34,
+      "hangout": 14,
+      "language_exchange": 34,
+      "lecture": 1,
       "mystery": 34,
       "photography": 123,
       "quiz": 1,
       "reading": 2,
       "research": 13,
-      "social": 109,
-      "tabletop": 35,
+      "social": 106,
+      "tabletop": 36,
       "world_tour": 19
     },
     "event_mode_breakdown": {
-      "deadline": 5,
+      "deadline": 4,
       "hybrid": 4,
-      "in_world": 586
+      "in_world": 575
     },
     "classification_source_breakdown": {
-      "curated_ontology": 260,
-      "fallback": 18,
-      "keyword_rules": 99,
+      "curated_ontology": 258,
+      "fallback": 20,
+      "keyword_rules": 87,
       "legacy_and_keywords": 217,
       "legacy_category": 1
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 26,
-    "audit_event_count": 26
+    "low_confidence_event_count": 28,
+    "audit_event_count": 28
   },
   "category_review_queue": [
     {
-      "event_id": "fd4803899e9c25dbad02",
-      "title": "本日 は VRChat にて VRアクロバットチーム『BlueHorizons』さんとの 開催 DJ x 大型エアショー #WOBH 2Dayです！ 本日 はP.I.G.さんとのタッグ回✈️ …",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": "dj",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:dj"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "performance",
-        "community"
-      ]
-    },
-    {
       "event_id": "325910d30f13dddb193c",
       "title": "明日の19:30~しりとり系ワールドを楽しもう！というイベントを開催致します！ 無言勢も､観戦だけという方も､実力問わず誰でも参加大歓迎です！ 参加方法 グループ:VRCしりとり協会に入った後…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "cbfba68a96595f14db5d",
-      "title": "#しゅがぱぴ からイベントのお知らせです🫶 2026年8月17日(月) 22時〜 23時 しゅがぱぴのVRCグループ+（PCOnly）にて、 「水着で遊ぼうの会」を開催致します！ ※ドレスコー…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3501,6 +3445,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "74e6d0d04d8f8470d7d8",
+      "title": "【#個人Vtuber 8月18日の配信 告知 】 8月18日(火)21時30分 開始 VRChatイベント を主催側でしている方向けで話をしんす イベント を長く続けておると様々な葛藤や行き詰…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "0a0fc9c975ece5c04500",
       "title": "# VRC にんおうきょう VRCイベント 「忍桜郷」 🌸8月18日(火)22時🌸 🌸過ぎゆく夏に、ひとときの名残を 今宵も忍桜郷にてお待ちしております 【タイムテーブル】 21:50~21:…",
       "category": "other",
@@ -3561,6 +3518,19 @@
       ]
     },
     {
+      "event_id": "0a02e0acda8ac044cc74",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第77回は8月19日(水) 『21:00〜22:30』 ※当 イベ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "94bae4a0c3f613eb8bab",
       "title": "＼第18回プルタブを開ける会／📷 プルタブ式飲料水を持ち寄って、プルタブを開ける音を聞くだけのVRC史上最もくだらないイベント 。 夏の音を＿＿＿奏に＿＿＿＿＿ 日時：8/20 22:00 ゲ…",
       "category": "other",
@@ -3602,19 +3572,6 @@
     {
       "event_id": "occ_9e1e05f1e9fbaf63412a",
       "title": "【🔥 開催 日迫る🔥】 👙🏄🏼‍♂️ 祭り だ 祭り 🛟⛱️ 去年に続き 夏のAPOP 祭り VRC A-POP FEAST 2026 やります！ 🗓️8/22 土曜日 19:30 OPEN …",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "57bf0f6963f1e9b90624",
-      "title": "大会告知！#GGST #VRChat 2026年8月22日（土曜）21時より、VRChatプレイヤー限定のGGST大会の第8回大会を開催します！ 参加条件は大会Tonamelをご確認ください。…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3700,6 +3657,19 @@
       ]
     },
     {
+      "event_id": "a7ae80a14a6f54a35b8d",
+      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 8月26日（水曜日）22時～ 開催 ！！ 今回は夏の水着回！いつもより色っぽい餌をぜひ食べに来てくださ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "b7e44c3ec6b914df3252",
       "title": "様々な竜や竜人の集いし場 VRC ドラゴンイベント 「竜の集いし世界」 第24回 開催 は 8月26日午後22時からの 開催 です VRCID:kingkazuma3022に フレンド申請 も…",
       "category": "other",
@@ -3724,6 +3694,36 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "902a6264a8786fbfd18d",
+      "title": "姫様へ 此月降りては二度上がる 絢爛優美に舞う胡蝶 VRC で1番ド派手なホスイベ 悪い男達が彩る祭典 『Attrazione』 今、扉が開く 8月度 通常 営業 は8月29日 22時始動 A…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "b6882d8b1e7ed18571e8",
+      "title": "🎧 VRC コスプレ喫茶。 開催 ！ 📅8/29(土) 22:00～ 🌻夏のアニソン DJ祭り ！3時間SP！ 🌐 Group + 開催 夏曲・アニソンで盛り上がろう！🎶 コスプレでの 参加 …",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": "dj",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:dj"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "38180768036546c87c4b",
