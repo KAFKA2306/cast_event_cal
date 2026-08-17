@@ -1,5 +1,9 @@
 # cast_event_cal — VRChat Event Intelligence
 
+[![CI](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml)
+[![Update calendar data](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml)
+[![Public feed integrity](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/public-feed-integrity.yml)
+
 **告知を見つけただけでは、参加できるイベント情報にはならない。**
 
 日時、参加方法、募集締切、公式リンク、投稿時点は別々に書かれます。古い「本日開催」を検索日へ読み替えたり、商品販売をイベントとして採用したりすると、カレンダーは便利になるほど誤情報も増やします。
