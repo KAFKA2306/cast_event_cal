@@ -32,11 +32,14 @@ jobs:
           from pathlib import Path
           path = Path('scripts/render_search_pages.py')
           text = path.read_text(encoding='utf-8')
-          old = '    text = re.sub(re.escape(start_marker) + r".*?" + re.escape(end_marker), "", text, flags=re.S)'
-          new = '    text = re.sub(r"\\n*" + re.escape(start_marker) + r".*?" + re.escape(end_marker) + r"\\n*", "\\n", text, flags=re.S)'
-          if text.count(old) != 1:
-              raise SystemExit('expected one patch_root replacement target')
-          path.write_text(text.replace(old, new), encoding='utf-8')
+          old_remove = '    text = re.sub(re.escape(start_marker) + r".*?" + re.escape(end_marker), "", text, flags=re.S)'
+          new_remove = '    text = re.sub(r"\\n*" + re.escape(start_marker) + r".*?" + re.escape(end_marker) + r"\\n*", "", text, flags=re.S)'
+          old_insert = '    text = text.replace(marker, section + "\\n" + marker, 1)'
+          new_insert = '    text = text.replace(marker, "\\n" + section + "\\n" + marker, 1)'
+          if text.count(old_remove) != 1 or text.count(old_insert) != 1:
+              raise SystemExit('expected patch_root replacement targets')
+          text = text.replace(old_remove, new_remove).replace(old_insert, new_insert)
+          path.write_text(text, encoding='utf-8')
           test_path = Path('tests/test_search_pages.py')
           test = test_path.read_text(encoding='utf-8')
           old_test = '    first = render(events, root, "https://example.test/project")\n    second = render(events, root, "https://example.test/project")\n\n    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}\n'
