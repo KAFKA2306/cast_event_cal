@@ -1,7 +1,7 @@
 {
-  "schema_version": "2.2",
-  "parser_version": "1.8",
-  "generated_at": "2026-08-17T09:13:51Z",
+  "schema_version": "2.3",
+  "parser_version": "1.9",
+  "generated_at": "2026-08-17T09:33:08Z",
   "status": "ok",
   "reason": null,
   "search_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88+OR+%E5%8F%82%E5%8A%A0%E6%96%B9%E6%B3%95+OR+%E5%8F%82%E5%8A%A0%E6%9D%A1%E4%BB%B6+OR+%E9%96%8B%E5%82%AC+OR+%E4%B8%BB%E5%82%AC+OR+join+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%A4%E3%83%B3%E3%83%90%E3%82%A4%E3%83%88+OR+%22request+invite%22+OR+%E6%9C%AC%E6%97%A5+OR+%E5%96%B6%E6%A5%AD+OR+%E5%BF%9C%E5%8B%9F%29+%28VRChat+OR+VRC%29&md=h",
@@ -12,35 +12,31 @@
   "accepted_candidates": 0,
   "rejected_candidates": 40,
   "retained_events": 0,
-  "event_count": 71,
+  "event_count": 747,
   "rejection_counts": {
     "conflicting_date_context": 1,
-    "giveaway_only": 204,
-    "missing_datetime": 469,
-    "missing_event_marker": 1940,
-    "missing_participation_method": 10,
-    "missing_text": 2,
-    "not_vrchat": 8,
-    "past_event": 5,
-    "past_event_now": 356,
-    "product_only": 572,
-    "retweet_below_threshold": 1304,
-    "too_far_future": 2
+    "giveaway_only": 119,
+    "missing_datetime": 3743,
+    "missing_event_marker": 286,
+    "missing_participation_method": 5,
+    "not_vrchat": 3,
+    "product_only": 39,
+    "too_far_future_now": 9
   },
   "history_replay_mode": "sharded_corpus",
   "history_retention_days": 365,
-  "history_candidate_count": 4944,
-  "history_accepted_count": 71,
-  "history_rejected_count": 4873,
+  "history_candidate_count": 4952,
+  "history_accepted_count": 747,
+  "history_rejected_count": 4205,
   "automatically_promoted_count": 3,
   "corpus_target_count": 1000,
   "corpus_target_reached": true,
   "queries_attempted": 22,
   "queries_succeeded": 22,
   "queries_failed": 0,
-  "raw_candidate_count": 536,
-  "unique_candidates_this_run": 380,
-  "duplicate_observations_removed": 156,
+  "raw_candidate_count": 538,
+  "unique_candidates_this_run": 373,
+  "duplicate_observations_removed": 165,
   "query_results": [
     {
       "key": "base-000",
@@ -49,10 +45,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88+OR+%E9%9B%86%E4%BC%9A+OR+%E4%BA%A4%E6%B5%81%E4%BC%9A+OR+%E5%96%B6%E6%A5%AD+OR+%E5%85%AC%E6%BC%94+OR+%E3%83%A9%E3%82%A4%E3%83%96+OR+DJ+OR+%E5%A4%A7%E4%BC%9A+OR+%E6%9C%97%E8%AA%AD%E4%BC%9A+OR+%E6%9C%97%E8%AA%AD%E5%8A%87+OR+%E6%9C%97%E8%AA%AD%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%B8%E3%82%AB%E3%83%AB+OR+%E8%88%9E%E5%8F%B0+OR+%E4%B8%8A%E6%98%A0%E4%BC%9A+OR+%E6%98%A0%E7%94%BB%E7%A5%AD+OR+%E5%B1%95%E7%A4%BA%E4%BC%9A+OR+%E6%92%AE%E5%BD%B1%E4%BC%9A+OR+%E3%83%95%E3%82%A7%E3%82%B9+OR+%E7%A5%AD%E3%82%8A+OR+%E3%82%AA%E3%83%95%E4%BC%9A+OR+%E8%AA%AC%E6%98%8E%E4%BC%9A+OR+%E4%BD%93%E9%A8%93%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 716221,
+      "html_bytes": 689413,
       "raw_candidates": 40,
       "unique_candidates_after_query": 40,
-      "duration_ms": 1453
+      "duration_ms": 1799
     },
     {
       "key": "base-001",
@@ -61,10 +57,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%91%8A%E7%9F%A5+OR+%E5%96%B6%E6%A5%AD%E5%91%8A%E7%9F%A5+OR+%E9%80%9A%E5%B8%B8%E5%96%B6%E6%A5%AD+OR+%E9%96%8B%E5%82%AC%E6%B1%BA%E5%AE%9A+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%29+%28JOIN+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+Group%2B+OR+%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E5%8F%82%E5%8A%A0%E6%96%B9%E6%B3%95%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 665003,
+      "html_bytes": 664664,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 80,
-      "duration_ms": 1158
+      "unique_candidates_after_query": 78,
+      "duration_ms": 1345
     },
     {
       "key": "base-002",
@@ -73,10 +69,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28JOIN+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%A4%E3%83%B3%E3%83%90%E3%82%A4%E3%83%88+OR+%22request+invite%22+OR+Group%2B+OR+%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E7%94%B3%E8%AB%8B%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 680169,
+      "html_bytes": 661934,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 106,
-      "duration_ms": 1136
+      "unique_candidates_after_query": 104,
+      "duration_ms": 1463
     },
     {
       "key": "base-003",
@@ -85,10 +81,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E5%8B%9F%E9%9B%86+OR+%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95%E5%8B%9F%E9%9B%86+OR+%E5%BA%97%E5%93%A1%E5%8B%9F%E9%9B%86+OR+%E6%BC%94%E8%80%85%E5%8B%9F%E9%9B%86+OR+%E3%83%86%E3%82%B9%E3%82%BF%E3%83%BC%E5%8B%9F%E9%9B%86+OR+%E5%8F%82%E5%8A%A0%E8%80%85%E5%8B%9F%E9%9B%86+OR+%E5%87%BA%E5%B1%95%E5%8B%9F%E9%9B%86+OR+%E5%85%AC%E5%8B%9F%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 261689,
+      "html_bytes": 262871,
       "raw_candidates": 10,
-      "unique_candidates_after_query": 116,
-      "duration_ms": 995
+      "unique_candidates_after_query": 114,
+      "duration_ms": 1026
     },
     {
       "key": "access-004-リクイン",
@@ -97,10 +93,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 578198,
+      "html_bytes": 578556,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 151,
-      "duration_ms": 1031
+      "unique_candidates_after_query": 149,
+      "duration_ms": 1453
     },
     {
       "key": "access-005-reqin",
@@ -109,10 +105,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28reqin%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 152750,
+      "html_bytes": 152416,
       "raw_candidates": 3,
-      "unique_candidates_after_query": 154,
-      "duration_ms": 850
+      "unique_candidates_after_query": 152,
+      "duration_ms": 1032
     },
     {
       "key": "access-006-リクエストインバイト",
@@ -121,10 +117,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%A4%E3%83%B3%E3%83%90%E3%82%A4%E3%83%88%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 212891,
-      "raw_candidates": 8,
-      "unique_candidates_after_query": 162,
-      "duration_ms": 962
+      "html_bytes": 236438,
+      "raw_candidates": 10,
+      "unique_candidates_after_query": 160,
+      "duration_ms": 1128
     },
     {
       "key": "access-007-request-invite",
@@ -133,10 +129,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28request+invite%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 221631,
+      "html_bytes": 218751,
       "raw_candidates": 8,
-      "unique_candidates_after_query": 170,
-      "duration_ms": 2017
+      "unique_candidates_after_query": 168,
+      "duration_ms": 1166
     },
     {
       "key": "access-008-group-instance",
@@ -145,10 +141,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28Group+Instance%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 645222,
+      "html_bytes": 644041,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 192,
-      "duration_ms": 1015
+      "unique_candidates_after_query": 191,
+      "duration_ms": 1387
     },
     {
       "key": "access-009-グル-プインスタンス",
@@ -157,10 +153,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 614315,
+      "html_bytes": 616625,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 221,
-      "duration_ms": 999
+      "unique_candidates_after_query": 218,
+      "duration_ms": 1322
     },
     {
       "key": "access-010-フレンドインスタンス",
@@ -169,10 +165,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 179767,
+      "html_bytes": 182577,
       "raw_candidates": 5,
-      "unique_candidates_after_query": 226,
-      "duration_ms": 1005
+      "unique_candidates_after_query": 223,
+      "duration_ms": 970
     },
     {
       "key": "access-011-フレンド申請",
@@ -181,10 +177,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E7%94%B3%E8%AB%8B%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 629746,
+      "html_bytes": 629815,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 245,
-      "duration_ms": 1051
+      "unique_candidates_after_query": 243,
+      "duration_ms": 1174
     },
     {
       "key": "access-012-フレリク",
@@ -193,10 +189,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%95%E3%83%AC%E3%83%AA%E3%82%AF%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 184416,
+      "html_bytes": 183404,
       "raw_candidates": 5,
-      "unique_candidates_after_query": 249,
-      "duration_ms": 862
+      "unique_candidates_after_query": 247,
+      "duration_ms": 985
     },
     {
       "key": "access-013-インスタンスオ-プン",
@@ -205,10 +201,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 281441,
+      "html_bytes": 282899,
       "raw_candidates": 13,
-      "unique_candidates_after_query": 260,
-      "duration_ms": 861
+      "unique_candidates_after_query": 258,
+      "duration_ms": 989
     },
     {
       "key": "access-014-group-public",
@@ -217,10 +213,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28Group+Public%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 647556,
+      "html_bytes": 643589,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 261,
-      "duration_ms": 1010
+      "unique_candidates_after_query": 259,
+      "duration_ms": 1309
     },
     {
       "key": "venues-000-カフェ営業",
@@ -229,10 +225,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AB%E3%83%95%E3%82%A7%E5%96%B6%E6%A5%AD%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 163561,
+      "html_bytes": 161823,
       "raw_candidates": 3,
-      "unique_candidates_after_query": 264,
-      "duration_ms": 829
+      "unique_candidates_after_query": 262,
+      "duration_ms": 974
     },
     {
       "key": "venues-001-cafe-open",
@@ -241,10 +237,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28Cafe+OPEN%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 660236,
+      "html_bytes": 665074,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 292,
-      "duration_ms": 2055
+      "unique_candidates_after_query": 289,
+      "duration_ms": 1224
     },
     {
       "key": "venues-002-バ-営業",
@@ -253,10 +249,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%90%E3%83%BC%E5%96%B6%E6%A5%AD%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 131042,
+      "html_bytes": 130147,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 293,
-      "duration_ms": 842
+      "unique_candidates_after_query": 290,
+      "duration_ms": 843
     },
     {
       "key": "venues-003-bar-open",
@@ -265,10 +261,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28Bar+OPEN%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 668792,
+      "html_bytes": 666899,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 305,
-      "duration_ms": 1127
+      "unique_candidates_after_query": 301,
+      "duration_ms": 1380
     },
     {
       "key": "venues-004-クラブ営業",
@@ -277,10 +273,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AF%E3%83%A9%E3%83%96%E5%96%B6%E6%A5%AD%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 148901,
+      "html_bytes": 146678,
       "raw_candidates": 0,
-      "unique_candidates_after_query": 305,
-      "duration_ms": 739
+      "unique_candidates_after_query": 301,
+      "duration_ms": 864
     },
     {
       "key": "temporal_audit-015-23時",
@@ -289,10 +285,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%2823%E6%99%82%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 615689,
+      "html_bytes": 615130,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 340,
-      "duration_ms": 1006
+      "unique_candidates_after_query": 333,
+      "duration_ms": 1322
     },
     {
       "key": "temporal_audit-016-0時",
@@ -301,18 +297,18 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%280%E6%99%82%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 522728,
+      "html_bytes": 524929,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 380,
-      "duration_ms": 883
+      "unique_candidates_after_query": 373,
+      "duration_ms": 1160
     }
   ],
-  "source_timestamp_count": 4944,
+  "source_timestamp_count": 4952,
   "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
   "giveaway_policy": "require_specific_event_or_vrchat_access_method",
   "engagement_policy": "retweet_count_required_but_no_minimum",
   "temporal_policy": "retain_past_events_for_365_day_candidate_history",
   "date_resolution_policy": "calendar-week-relative-date.v1",
-  "date_resolution_evidence_count": 71,
-  "date_resolution_changed_event_count": 3
+  "date_resolution_evidence_count": 69,
+  "date_resolution_changed_event_count": 0
 }
