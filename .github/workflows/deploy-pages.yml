@@ -5,6 +5,10 @@ on:
   workflow_run:
     workflows: ["Update calendar data"]
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/deploy-pages.yml
 
 permissions:
   contents: read
@@ -18,7 +22,7 @@ concurrency:
 jobs:
   deploy:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      github.event_name != 'workflow_run' ||
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
@@ -41,3 +45,17 @@ jobs:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed public surface
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${PAGE_URL%/}"
+          fetch() {
+            curl --fail --location --silent --show-error --retry 8 --retry-delay 3 "$1"
+          }
+          fetch "$base/" | grep -q 'VRChat Event Calendar'
+          fetch "$base/events.json" | python -c "import json,sys; d=json.load(sys.stdin); assert d['count'] == len(d['events']) and d['count'] > 0"
+          fetch "$base/calendar.ics" | grep -q '^BEGIN:VCALENDAR'
+          fetch "$base/tonight/" | grep -q '今夜のVRChat'
