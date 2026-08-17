@@ -36,7 +36,6 @@ jobs:
           paths = [
               Path('web/index.template.html'),
               Path('scripts/render_search_pages.py'),
-              Path('.github/workflows/render-search-pages.yml'),
           ]
           counts = {}
           for path in paths:
@@ -91,19 +90,16 @@ jobs:
               for path in Path(root_dir).rglob('*'):
                   if path.is_file() and path.suffix in {'.py', '.html', '.js', '.css', '.json', '.xml'}:
                       assert old not in path.read_text(encoding='utf-8', errors='ignore'), path
-          workflow = Path('.github/workflows/render-search-pages.yml').read_text(encoding='utf-8')
-          assert old not in workflow
-          assert new in workflow
           print({'sitemap_urls': len(urls), 'canonical': new + '/'})
           PY
-      - name: Commit migration and remove one-time workflow
+      - name: Commit canonical source and generated surface
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git rm .github/workflows/migrate-canonical-url.yml
-          git add -A
-          git diff --cached --check -- web/index.template.html scripts/render_search_pages.py .github/workflows/render-search-pages.yml
+          rm -rf cast_event_cal.egg-info
+          git add web/index.template.html scripts/render_search_pages.py public
+          git diff --cached --check -- web/index.template.html scripts/render_search_pages.py
           git commit -m 'fix: move canonical public URL to cast_event_cal'
           git pull --rebase --autostash origin main
           git push origin HEAD:main
