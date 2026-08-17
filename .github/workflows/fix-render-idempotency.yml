@@ -1,0 +1,82 @@
+name: One-time render idempotency fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-render-idempotency.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cast-event-calendar-production
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e '.[dev]'
+      - name: Make root search section rendering idempotent
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/render_search_pages.py')
+          text = path.read_text(encoding='utf-8')
+          old = '    text = re.sub(re.escape(start_marker) + r".*?" + re.escape(end_marker), "", text, flags=re.S)'
+          new = '    text = re.sub(r"\\n*" + re.escape(start_marker) + r".*?" + re.escape(end_marker) + r"\\n*", "\\n", text, flags=re.S)'
+          if text.count(old) != 1:
+              raise SystemExit('expected one patch_root replacement target')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+
+          test_path = Path('tests/test_search_pages.py')
+          test = test_path.read_text(encoding='utf-8')
+          old_test = '''    first = render(events, root, "https://example.test/project")
+    second = render(events, root, "https://example.test/project")
+
+    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}
+'''
+          new_test = '''    first = render(events, root, "https://example.test/project")
+    first_index = (root / "index.html").read_text(encoding="utf-8")
+    second = render(events, root, "https://example.test/project")
+    second_index = (root / "index.html").read_text(encoding="utf-8")
+
+    assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}
+    assert first_index == second_index
+'''
+          if test.count(old_test) != 1:
+              raise SystemExit('expected one test replacement target')
+          test_path.write_text(test.replace(old_test, new_test), encoding='utf-8')
+          PY
+      - name: Run focused regression test
+        run: pytest tests/test_search_pages.py -q
+      - name: Prove real public root is byte-idempotent
+        run: |
+          set -euo pipefail
+          python scripts/render_search_pages.py
+          sha256sum public/index.html | cut -d' ' -f1 > /tmp/first.sha
+          python scripts/render_search_pages.py
+          sha256sum public/index.html | cut -d' ' -f1 > /tmp/second.sha
+          diff -u /tmp/first.sha /tmp/second.sha
+          grep -q '<!-- searchable-events:start -->' public/index.html
+          test "$(grep -c '<!-- searchable-events:start -->' public/index.html)" -eq 1
+      - name: Commit source, regression test, and normalized root
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add scripts/render_search_pages.py tests/test_search_pages.py public/index.html
+          git diff --cached --check -- scripts/render_search_pages.py tests/test_search_pages.py public/index.html
+          git commit -m 'fix: make search page rendering idempotent'
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
