@@ -185,22 +185,23 @@ def test_append_kpi_log_is_idempotent_for_same_snapshot(tmp_path):
     assert len(path.read_text(encoding="utf-8").splitlines()) == 1
 
 
-def test_append_kpi_log_rejects_cumulative_decrease(tmp_path):
+def test_append_kpi_log_records_reclassification_decrease(tmp_path):
     path = tmp_path / "accepted-event-kpi.jsonl"
     audit.append_kpi_log(
         {"generated_at": "2026-08-15T00:00:00Z", "yahoo_accepted_count": 701},
         path,
     )
 
-    try:
-        audit.append_kpi_log(
-            {"generated_at": "2026-08-16T00:00:00Z", "yahoo_accepted_count": 700},
-            path,
-        )
-    except ValueError as exc:
-        assert "must not decrease" in str(exc)
-    else:
-        raise AssertionError("cumulative KPI decrease must fail closed")
+    row = audit.append_kpi_log(
+        {"generated_at": "2026-08-16T00:00:00Z", "yahoo_accepted_count": 700},
+        path,
+    )
+
+    assert row == {
+        "generated_at": "2026-08-16T00:00:00Z",
+        "accepted_event_cumulative": 700,
+        "delta": -1,
+    }
 
 
 def test_build_rejects_unhealthy_inputs(tmp_path, monkeypatch):
