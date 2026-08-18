@@ -1,50 +1,28 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 585,
-  "event_count_after": 583,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.003419,
+  "event_count_before": 571,
+  "event_count_after": 570,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.001751,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 3,
+  "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
     {
-      "cluster_id": "occ_3882085e706a7ac2abad",
-      "starts_at": "2026-08-30T11:00:00Z",
-      "title": "【 VRChat イベント 告知 】 ｢沖縄料理集会｣を 開催 します。 今回は # VRC 沖縄集会 #バーチャル沖縄観光案内 とのコラボイベント！沖縄料理をみんなで食べるイベントです。 日…",
+      "cluster_id": "occ_de2ac4c4a010a4a4c98a",
+      "starts_at": "2026-08-18T12:30:00Z",
+      "title": "【#個人Vtuber 8月18日の配信 告知 】 8月18日(火)21時30分 開始 VRChatイベント を主催側でしている方向けで話をしんす イベント を長く続けておると様々な葛藤や行き詰…",
       "member_count": 2,
       "member_ids": [
-        "aabd9626adfc8afdc5eb",
-        "f284a804ccf15c0e3509"
+        "68e5871070e84dac3039",
+        "74e6d0d04d8f8470d7d8"
       ],
       "source_record_ids": [
-        "src_a7895f898d5db5ad2358",
-        "src_d3427f0e0951e6a7809b"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_d3427f0e0951e6a7809b"
-    },
-    {
-      "cluster_id": "occ_9e1e05f1e9fbaf63412a",
-      "starts_at": "2026-08-22T10:30:00Z",
-      "title": "【🔥 開催 日迫る🔥】 👙🏄🏼‍♂️ 祭り だ 祭り 🛟⛱️ 去年に続き 夏のAPOP 祭り VRC A-POP FEAST 2026 やります！ 🗓️8/22 土曜日 19:30 OPEN …",
-      "member_count": 2,
-      "member_ids": [
-        "50aba76752ea7459fc49",
-        "ea768aac82c1df094724"
-      ],
-      "source_record_ids": [
-        "src_4718e006ec580abe4e76",
-        "src_954f358c131d3934550f"
+        "src_05e8f0701cfedf67ae84",
+        "src_3be7e9a8e452a2f8f3a1"
       ],
       "sources": [
         "yahoo_realtime_events"
@@ -53,139 +31,111 @@
         "same_organizer_same_start_high_similarity"
       ],
       "confidence": 0.94,
-      "representative_source_record_id": "src_954f358c131d3934550f"
+      "representative_source_record_id": "src_3be7e9a8e452a2f8f3a1"
     }
   ],
-  "ambiguous_candidates": [
-    {
-      "left_id": "7c7a914baeceb73894c1",
-      "right_id": "1324b233d3b177ccf619",
-      "starts_at": "2026-08-22T10:30:00Z",
-      "organizer": "@rhinohornVR",
-      "similarity": 0.6483,
-      "left_title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! VRアニソンDJ出来るマンが集まる夏の祭典です。 良い時間もらってますので遊…",
-      "right_title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! アニメだアニメ！よろしくどうぞ！ #VRC_APOP_FEAST https…"
-    },
-    {
-      "left_id": "ad0851435ee5b0535cae",
-      "right_id": "1324b233d3b177ccf619",
-      "starts_at": "2026-08-22T10:30:00Z",
-      "organizer": "@rhinohornVR",
-      "similarity": 0.7218,
-      "left_title": "【👙🏄🏼‍♂️ 祭り だ 祭り 🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN !! アニソンDJ大集結のやつ！楽しいとこに来ちゃって下さい！ID-0 …",
-      "right_title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! アニメだアニメ！よろしくどうぞ！ #VRC_APOP_FEAST https…"
-    },
-    {
-      "left_id": "ad0851435ee5b0535cae",
-      "right_id": "7c7a914baeceb73894c1",
-      "starts_at": "2026-08-22T10:30:00Z",
-      "organizer": "@rhinohornVR",
-      "similarity": 0.7125,
-      "left_title": "【👙🏄🏼‍♂️ 祭り だ 祭り 🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN !! アニソンDJ大集結のやつ！楽しいとこに来ちゃって下さい！ID-0 …",
-      "right_title": "【👙🏄🏼‍♂️祭りだ祭り🛟⛱️】 VRC A-POP FEAST 2026 8/22(土)19:30 OPEN!! VRアニソンDJ出来るマンが集まる夏の祭典です。 良い時間もらってますので遊…"
-    }
-  ],
+  "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "cec86c2a43f112ea1ad5",
-      "right_id": "d568153633f309ae2821",
-      "starts_at": "2026-08-17T12:00:00Z",
-      "left_organizer": "VRCごいた会",
-      "right_organizer": "VRCゲームワールド部",
-      "similarity": 0.4828,
-      "left_title": "VRCごいた会",
-      "right_title": "VRCゲームワールド部 月曜イベント"
+      "left_id": "447ed3c34de08479cc32",
+      "right_id": "50db74eeae9762b3c775",
+      "starts_at": "2026-08-18T11:00:00Z",
+      "left_organizer": "@CheddaraddehC",
+      "right_organizer": "@vrlife_magazine",
+      "similarity": 0.2366,
+      "left_title": "VRC ニコニコ 集会 (vR)というイベントを VRChat で毎週火曜20時より 開催 しています！ ニコニコ動画のユーザーや興味や思い出のある方で集まり、専用ワールドで動画を見たり会話や…",
+      "right_title": "🔻【 VRChat イベント紹介】あの頃のニコニコ動画の空気をもう一度！『 VRC ニコニコ 集会 (vR)』 毎週火曜20:00に 開催 し続けて2年。ニコニコ動画が20周年を迎える年に、本…"
     },
     {
-      "left_id": "fbe9374dbd39fe7ab610",
-      "right_id": "404f760b26ac3aae8a1f",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@yukikano1192",
-      "right_organizer": "SW_Arch",
-      "similarity": 0.0757,
-      "left_title": "#愛すべきクセすごツアー #VRChatイベント #VRChat_world紹介 VRChatイベント「愛すべきクセすごワールドツアー」 世界名：ヴァリアライド-Varea'Ride- 悪役結…",
-      "right_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）"
+      "left_id": "68e54f3d8b22ea0a4d00",
+      "right_id": "f2c4c1c43418edf46021",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@Akutsu_VRC",
+      "right_organizer": null,
+      "similarity": 0.0619,
+      "left_title": "8/18(火)の21時から飲酒 VRC やるよー！！ 21時に インスタンスオープン 、10分ごろに乾杯の音頭をとります",
+      "right_title": "C# Tokyo VRもくもく会"
     },
     {
-      "left_id": "fbe9374dbd39fe7ab610",
-      "right_id": "ad1b10768f794578d6ff",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@yukikano1192",
-      "right_organizer": "@akaiheya_vrc",
-      "similarity": 0.1469,
-      "left_title": "#愛すべきクセすごツアー #VRChatイベント #VRChat_world紹介 VRChatイベント「愛すべきクセすごワールドツアー」 世界名：ヴァリアライド-Varea'Ride- 悪役結…",
-      "right_title": "VRC 怪談 集会 赤い部屋 第144回 ◎ 開催日時 ：8/17(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bD…"
+      "left_id": "68e54f3d8b22ea0a4d00",
+      "right_id": "3e8479cd2b3f95a9f7ba",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@Akutsu_VRC",
+      "right_organizer": "@KMID_Numanidive",
+      "similarity": 0.2832,
+      "left_title": "8/18(火)の21時から飲酒 VRC やるよー！！ 21時に インスタンスオープン 、10分ごろに乾杯の音頭をとります",
+      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…"
     },
     {
-      "left_id": "fbe9374dbd39fe7ab610",
-      "right_id": "d96463a38c5b995a0c83",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@yukikano1192",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.163,
-      "left_title": "#愛すべきクセすごツアー #VRChatイベント #VRChat_world紹介 VRChatイベント「愛すべきクセすごワールドツアー」 世界名：ヴァリアライド-Varea'Ride- 悪役結…",
-      "right_title": "VRC 茶道部の新 イベント 『抹茶bar ～by VRC 茶道部～』が 本日 17日の22時から 開催 ！ バーカウンターでお抹茶をいただきながら茶道やVRの話を楽しみましょう。茶道未経験者…"
+      "left_id": "68e54f3d8b22ea0a4d00",
+      "right_id": "e6d7b86671a378681d6b",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@Akutsu_VRC",
+      "right_organizer": "@zunda_vrc",
+      "similarity": 0.1765,
+      "left_title": "8/18(火)の21時から飲酒 VRC やるよー！！ 21時に インスタンスオープン 、10分ごろに乾杯の音頭をとります",
+      "right_title": "おはようなのだ！ 明日 21時より VRChat イベント #ずんだもんカフェ オープン なのだ！ もう8月が半分終わったのだ〜 あっという間に時間が過ぎるのだ！ カフェでもよく、もう閉店時間…"
     },
     {
-      "left_id": "fbe9374dbd39fe7ab610",
-      "right_id": "f58fe2d3fabb6a9c287a",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@yukikano1192",
-      "right_organizer": "@deathgameVRC",
-      "similarity": 0.1753,
-      "left_title": "#愛すべきクセすごツアー #VRChatイベント #VRChat_world紹介 VRChatイベント「愛すべきクセすごワールドツアー」 世界名：ヴァリアライド-Varea'Ride- 悪役結…",
-      "right_title": "🔔第15回 開催告知 ☠️デスゲームロールプレイイベントです 💎優勝賞品 VRC 甘えっ娘 Club 【Carino】 @carino_ vrc 参加 チケット 🗓️8/17(月) 22:00…"
+      "left_id": "68e54f3d8b22ea0a4d00",
+      "right_id": "e231bd1ab98a4ada138d",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@Akutsu_VRC",
+      "right_organizer": "@CheddaraddehC",
+      "similarity": 0.2197,
+      "left_title": "8/18(火)の21時から飲酒 VRC やるよー！！ 21時に インスタンスオープン 、10分ごろに乾杯の音頭をとります",
+      "right_title": "本日 21時より、「 VRC ニコニコ 集会 （vR）二周年記念超前夜祭」を 開催 します！ とうとうこの日がやって来ました！皆様のおかげでここまでやって来れました、本当にありがとうございます…"
     },
     {
-      "left_id": "404f760b26ac3aae8a1f",
-      "right_id": "ad1b10768f794578d6ff",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "SW_Arch",
-      "right_organizer": "@akaiheya_vrc",
-      "similarity": 0.1026,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
-      "right_title": "VRC 怪談 集会 赤い部屋 第144回 ◎ 開催日時 ：8/17(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bD…"
+      "left_id": "f2c4c1c43418edf46021",
+      "right_id": "3e8479cd2b3f95a9f7ba",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@KMID_Numanidive",
+      "similarity": 0.0911,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…"
     },
     {
-      "left_id": "404f760b26ac3aae8a1f",
-      "right_id": "d96463a38c5b995a0c83",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "SW_Arch",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.1326,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
-      "right_title": "VRC 茶道部の新 イベント 『抹茶bar ～by VRC 茶道部～』が 本日 17日の22時から 開催 ！ バーカウンターでお抹茶をいただきながら茶道やVRの話を楽しみましょう。茶道未経験者…"
+      "left_id": "f2c4c1c43418edf46021",
+      "right_id": "e6d7b86671a378681d6b",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@zunda_vrc",
+      "similarity": 0.1129,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "おはようなのだ！ 明日 21時より VRChat イベント #ずんだもんカフェ オープン なのだ！ もう8月が半分終わったのだ〜 あっという間に時間が過ぎるのだ！ カフェでもよく、もう閉店時間…"
     },
     {
-      "left_id": "404f760b26ac3aae8a1f",
-      "right_id": "f58fe2d3fabb6a9c287a",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "SW_Arch",
-      "right_organizer": "@deathgameVRC",
-      "similarity": 0.0741,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
-      "right_title": "🔔第15回 開催告知 ☠️デスゲームロールプレイイベントです 💎優勝賞品 VRC 甘えっ娘 Club 【Carino】 @carino_ vrc 参加 チケット 🗓️8/17(月) 22:00…"
+      "left_id": "f2c4c1c43418edf46021",
+      "right_id": "e231bd1ab98a4ada138d",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@CheddaraddehC",
+      "similarity": 0.1242,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "本日 21時より、「 VRC ニコニコ 集会 （vR）二周年記念超前夜祭」を 開催 します！ とうとうこの日がやって来ました！皆様のおかげでここまでやって来れました、本当にありがとうございます…"
     },
     {
-      "left_id": "ad1b10768f794578d6ff",
-      "right_id": "d96463a38c5b995a0c83",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@akaiheya_vrc",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.2407,
-      "left_title": "VRC 怪談 集会 赤い部屋 第144回 ◎ 開催日時 ：8/17(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bD…",
-      "right_title": "VRC 茶道部の新 イベント 『抹茶bar ～by VRC 茶道部～』が 本日 17日の22時から 開催 ！ バーカウンターでお抹茶をいただきながら茶道やVRの話を楽しみましょう。茶道未経験者…"
+      "left_id": "3e8479cd2b3f95a9f7ba",
+      "right_id": "e6d7b86671a378681d6b",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@KMID_Numanidive",
+      "right_organizer": "@zunda_vrc",
+      "similarity": 0.1058,
+      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…",
+      "right_title": "おはようなのだ！ 明日 21時より VRChat イベント #ずんだもんカフェ オープン なのだ！ もう8月が半分終わったのだ〜 あっという間に時間が過ぎるのだ！ カフェでもよく、もう閉店時間…"
     },
     {
-      "left_id": "ad1b10768f794578d6ff",
-      "right_id": "f58fe2d3fabb6a9c287a",
-      "starts_at": "2026-08-17T13:00:00Z",
-      "left_organizer": "@akaiheya_vrc",
-      "right_organizer": "@deathgameVRC",
-      "similarity": 0.1351,
-      "left_title": "VRC 怪談 集会 赤い部屋 第144回 ◎ 開催日時 ：8/17(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bD…",
-      "right_title": "🔔第15回 開催告知 ☠️デスゲームロールプレイイベントです 💎優勝賞品 VRC 甘えっ娘 Club 【Carino】 @carino_ vrc 参加 チケット 🗓️8/17(月) 22:00…"
+      "left_id": "3e8479cd2b3f95a9f7ba",
+      "right_id": "e231bd1ab98a4ada138d",
+      "starts_at": "2026-08-18T12:00:00Z",
+      "left_organizer": "@KMID_Numanidive",
+      "right_organizer": "@CheddaraddehC",
+      "similarity": 0.25,
+      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…",
+      "right_title": "本日 21時より、「 VRC ニコニコ 集会 （vR）二周年記念超前夜祭」を 開催 します！ とうとうこの日がやって来ました！皆様のおかげでここまでやって来れました、本当にありがとうございます…"
     }
   ],
-  "generated_at": "2026-08-17T21:09:08Z"
+  "generated_at": "2026-08-18T20:42:57Z"
 }
