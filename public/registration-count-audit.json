@@ -1,38 +1,38 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-18T21:05:39Z",
+  "generated_at": "2026-08-19T20:48:50Z",
   "status": "ok",
-  "snapshot_count": 60,
+  "snapshot_count": 61,
   "latest": {
-    "generated_at": "2026-08-18T21:05:01Z",
-    "calendar_event_count": 570,
-    "normalized_event_count": 571,
+    "generated_at": "2026-08-19T20:48:04Z",
+    "calendar_event_count": 567,
+    "normalized_event_count": 567,
     "source_counts": {
-      "repository_manual_events": 498,
+      "repository_manual_events": 501,
       "vrchat_calendar_discovery": 0,
       "x_curated_events": 2,
-      "yahoo_realtime_events": 582,
+      "yahoo_realtime_events": 474,
       "external_calendar_events": 1
     },
     "yahoo_candidate_count": 5000,
-    "yahoo_accepted_count": 582,
-    "yahoo_rejected_count": 4418,
-    "yahoo_unique_candidates_this_run": 392,
+    "yahoo_accepted_count": 474,
+    "yahoo_rejected_count": 4526,
+    "yahoo_unique_candidates_this_run": 245,
     "yahoo_queries_succeeded": 22,
     "yahoo_queries_failed": 0,
     "delta_from_previous": {
-      "from_generated_at": "2026-08-18T20:42:57Z",
-      "calendar_event_count": 0,
+      "from_generated_at": "2026-08-18T21:05:01Z",
+      "calendar_event_count": -3,
       "source_counts": {
         "external_calendar_events": 0,
-        "repository_manual_events": 0,
+        "repository_manual_events": 3,
         "vrchat_calendar_discovery": 0,
         "x_curated_events": 0,
-        "yahoo_realtime_events": 0
+        "yahoo_realtime_events": -108
       },
       "yahoo_candidate_count": 0,
-      "yahoo_accepted_count": 0,
-      "yahoo_rejected_count": 0
+      "yahoo_accepted_count": -108,
+      "yahoo_rejected_count": 108
     }
   },
   "snapshots": [
@@ -1903,6 +1903,38 @@
         "yahoo_candidate_count": 0,
         "yahoo_accepted_count": 0,
         "yahoo_rejected_count": 0
+      }
+    },
+    {
+      "generated_at": "2026-08-19T20:48:04Z",
+      "calendar_event_count": 567,
+      "normalized_event_count": 567,
+      "source_counts": {
+        "repository_manual_events": 501,
+        "vrchat_calendar_discovery": 0,
+        "x_curated_events": 2,
+        "yahoo_realtime_events": 474,
+        "external_calendar_events": 1
+      },
+      "yahoo_candidate_count": 5000,
+      "yahoo_accepted_count": 474,
+      "yahoo_rejected_count": 4526,
+      "yahoo_unique_candidates_this_run": 245,
+      "yahoo_queries_succeeded": 22,
+      "yahoo_queries_failed": 0,
+      "delta_from_previous": {
+        "from_generated_at": "2026-08-18T21:05:01Z",
+        "calendar_event_count": -3,
+        "source_counts": {
+          "external_calendar_events": 0,
+          "repository_manual_events": 3,
+          "vrchat_calendar_discovery": 0,
+          "x_curated_events": 0,
+          "yahoo_realtime_events": -108
+        },
+        "yahoo_candidate_count": 0,
+        "yahoo_accepted_count": -108,
+        "yahoo_rejected_count": 108
       }
     }
   ]
