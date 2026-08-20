@@ -2,74 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 568,
-  "matched_events": 277,
+  "event_count": 562,
+  "matched_events": 276,
   "matched_series": {
-    "yuruge-meet": 18,
-    "wednesday-quest-beginners": 18,
-    "ml-gathering": 18,
-    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 34,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
-    "exploit-club": 17
+    "exploit-club": 17,
+    "yuruge-meet": 17,
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 17,
+    "vrc-idle-gathering": 17
   },
-  "unmatched_events": 291,
+  "unmatched_events": 286,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "16dda9f426a88a34983d",
-      "title": "ゆるゲMEET定期開催日",
-      "status": "matched",
-      "ontology_id": "yuruge-meet",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "cc1f3c1e1676a0dfa509",
-      "title": "水曜Quest初心者の集い",
-      "status": "matched",
-      "ontology_id": "wednesday-quest-beginners",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "808892671d038210d4fa",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "ed4b7f3b337613398aad",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "80250a9f85f94f0ec777",
       "title": "VRC初心者ワールドツアー",
@@ -3345,67 +3297,102 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "c5c31ec23f7f49129f05",
+      "title": "ASMR集会 初心者説明会",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "ea665a08ec17ddb0bad1",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "128b903ac15c77ad06a3",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 568,
+    "event_count": 562,
     "category_breakdown": {
-      "art": 125,
-      "community": 159,
-      "game": 107,
+      "art": 126,
+      "community": 157,
+      "game": 105,
       "language_exchange": 34,
-      "learning": 1,
-      "music": 10,
-      "other": 8,
-      "performance": 7,
-      "recruitment_deadline": 5,
-      "technology": 39,
-      "wellness": 53,
-      "world_tour": 20
+      "music": 14,
+      "other": 11,
+      "performance": 3,
+      "recruitment_deadline": 6,
+      "technology": 37,
+      "wellness": 51,
+      "world_tour": 18
     },
     "subcategory_breakdown": {
       "application_deadline": 3,
-      "bar": 17,
-      "cafe": 16,
+      "bar": 16,
+      "cafe": 17,
       "cast_recruitment": 1,
-      "cast_service": 5,
-      "class": 1,
-      "dj": 6,
-      "engineering": 25,
-      "fitness": 35,
-      "hangout": 9,
+      "cast_service": 4,
+      "dj": 7,
+      "engineering": 24,
+      "fitness": 34,
+      "hangout": 7,
       "language_exchange": 34,
-      "mystery": 36,
-      "photography": 124,
+      "live_music": 1,
+      "mystery": 35,
+      "participant_recruitment": 1,
+      "photography": 125,
       "quiz": 1,
-      "reading": 4,
-      "research": 14,
+      "research": 13,
       "show": 1,
-      "social": 112,
+      "social": 113,
       "tabletop": 34,
-      "world_tour": 20
+      "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 3,
-      "in_world": 560
+      "deadline": 6,
+      "hybrid": 1,
+      "in_world": 555
     },
     "classification_source_breakdown": {
-      "curated_ontology": 259,
-      "fallback": 8,
-      "keyword_rules": 79,
+      "curated_ontology": 258,
+      "fallback": 11,
+      "keyword_rules": 71,
       "legacy_and_keywords": 221,
       "legacy_category": 1
     },
-    "organizer_profile_count": 22,
-    "low_confidence_event_count": 12,
-    "audit_event_count": 12
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 16,
+    "audit_event_count": 16
   },
   "category_review_queue": [
     {
-      "event_id": "0a02e0acda8ac044cc74",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第77回は8月19日(水) 『21:00〜22:30』 ※当イベントは…",
+      "event_id": "cf2ca23ec031d94126c2",
+      "title": "VRChatイベント 「休憩処 キツネコタン」 今日 、8/20(木) 22:00～23:00 開店します 🦊 間に合えば更新あります🦊💦きつねたちががんばってます ご来店お待ちしております🦊…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3435,6 +3422,24 @@
       ]
     },
     {
+      "event_id": "63d90daeb1a1539e1f7f",
+      "title": "🌟 VRChatライブ 出演のお知らせ🌟 明日 8月21日(金)22:00～『MusicBar pianoforte』 しっとりバラードが聴ける イベント ( *´ `) 歌わせていただきます…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 10,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ライブ",
+        "keyword:title:music"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "be9e9fd508bc7322cbab",
       "title": "☄️☄️飛び込みOKになりました！☄️☄️ ・XyberDraw ( VRChat 上で 開催 ) 残り7枠 ・ネジクレネジマキ ( VRChat 上で 開催 ) 残り7枠 8/22(土)13…",
       "category": "other",
@@ -3450,6 +3455,32 @@
     {
       "event_id": "ea768aac82c1df094724",
       "title": "【🔥 開催 日迫る🔥】 👙🏄🏼‍♂️ 祭り だ 祭り 🛟⛱️ 去年に続き 夏のAPOP 祭り VRC A-POP FEAST 2026 やります！ 🗓️8/22 土曜日 19:30 OPEN …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "909a40ef11be1f6ceeea",
+      "title": "告知 キプ！「splash bird!」の 体験会 は🦆💦 今週8/22（土）21:00〜21:30だよ🕘✨ 気軽にフラ～っと立ち寄ってくれたら嬉キプ！ 短い時間だけど途中入退室もOKでゆる～…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "36d5c12d7fc0981c19bb",
+      "title": "🌙【#ClubMorceau】#34🌙 ～ モルソ 第34回 通常営業 ～ ⏰8月23日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) 🎉Pe…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3511,6 +3542,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "72548054bcfa76ed8595",
+      "title": "第14回 VRC 射撃部定例 イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日 はAPS定例会 1位 Jade Ross様 2位 ぼうし_12ga様 3位 アスト・…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
