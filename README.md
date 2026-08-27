@@ -1,5 +1,7 @@
 # cast_event_cal — VRChat Event Intelligence
 
+https://vrc-cast-event-calender.pages.dev/
+
 [![CI](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml)
 [![Update calendar data](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml)
 [![Publish event pages](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/render-search-pages.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/render-search-pages.yml)
