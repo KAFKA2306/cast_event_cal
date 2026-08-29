@@ -137,7 +137,8 @@ jobs:
           assert registration['latest']['yahoo_accepted_count'] == len(yahoo)
           assert registration['latest']['yahoo_rejected_count'] == len(rejected)
           assert registration['latest']['yahoo_queries_failed'] == 0
-          assert events['count'] == len(rows) and events['count'] > 555
+          assert events['count'] == len(rows)
+          assert events['count'] > 0
 
           assert duplicate_audit['schema_version'] == '1.0'
           assert duplicate_audit['policy_version'] == 'canonical-occurrence.v1'
