@@ -1,126 +1,40 @@
-# AGENTS.md — cast_event_cal Agent Operating Contract
+# cast_event_cal Agent Contract
 
-This file is the canonical operating contract for coding and repository agents working in `KAFKA2306/cast_event_cal`.
+## Short-context start
 
-## 1. Mission
+Read this file, then only the canonical files and source evidence needed for the current task. Do not preload all event data, Issues, PR history, docs, audits, or source archives.
 
-Improve the VRChat event intelligence system through the smallest evidence-backed change that makes the canonical event state more correct, reproducible, inspectable, and resumable.
+For non-trivial work keep one bounded workline:
 
-Optimize for:
+- **Goal** — observable outcome
+- **Contract** — what may/may not change
+- **Acceptance** — deterministic completion conditions
+- **Evidence** — current source/files/tests/audits/CI/production receipts
+- **Next action** — one exact action if unfinished
 
-1. evidence before coverage;
-2. deterministic classification and replay;
-3. one canonical workline per outcome;
-4. explicit source/provenance boundaries;
-5. verification before completion claims;
-6. durable continuation after interruption;
-7. cleanup at the fixed point.
+Continue an existing Issue/PR when it owns the same outcome. Durable state belongs in canonical data/audits or that workline, not chat memory.
 
-Candidate count, event count, scraped page count, or tool activity is not the goal.
+## Mission and authority
 
-## 2. Source-of-truth precedence
+This repository owns VRChat event source collection, source identity/timestamps, normalization/classification, accepted/rejected candidate state, ontology, canonical `public/` snapshot generation, and their audits.
 
-When information conflicts, use this order:
+`KAFKA2306/vrc_cast_event_calender` is projection/delivery only; do not duplicate collectors, classifiers, ontology ownership, or the canonical event database there.
 
-1. current user request and explicit acceptance criteria;
-2. current canonical data, schemas, code, and deterministic audit logic in this repository;
-3. current primary/official source response and preserved source observation metadata;
-4. exact-head test/CI results and generated audit artifacts;
-5. current architecture/methodology documentation;
-6. Issue/PR prose and historical reports;
-7. previous conversation context, memory, or inference.
+Priority: current user request > current canonical data/schema/code/audits > current primary source evidence > exact-head tests/CI > current architecture docs > Issue/PR history > conversation memory/inference.
 
-Stale prose is a hypothesis, not ground truth. Never rewrite historical evidence merely to make it agree with a newer interpretation.
+## Evidence rules
 
-## 3. Contract before change
+Classify material claims as `VERIFIED`, `OBSERVED`, `INFERRED`, or `UNVERIFIED`. Fabrication is forbidden.
 
-For non-trivial work define before editing:
+- never infer missing dates, participation methods, metrics, organizer identity, ontology matches, or source timestamps.
+- relative dates such as `今日` / `明日` are interpreted from the source post timestamp, not collection time.
+- prefer organizer/official first-party sources for current event facts.
+- unresolved contradictory evidence narrows/rejects a claim; it is not guessed through.
+- rejection is a valid result and must preserve the reason needed for replay/improvement.
 
-- **Goal** — the observable repository or product outcome;
-- **Contract** — what may change and what must remain unchanged;
-- **Acceptance Criteria** — deterministic conditions that can falsify completion;
-- **Evidence** — source records, files, tests, audits, CI runs, hashes, or production receipts;
-- **Stopping Condition** — the fixed point after which further work is a separate outcome.
+## Canonical verification
 
-The Contract is both the minimum required result and the maximum allowed scope.
-
-## 4. Canonical responsibility boundary
-
-This repository owns:
-
-- source collection and source identity;
-- observation timestamps;
-- normalization and deterministic classification;
-- accepted and rejected candidate ledgers;
-- event/category ontology;
-- canonical `public/` snapshot generation;
-- quality/audit evidence for those responsibilities.
-
-`KAFKA2306/vrc_cast_event_calender` is a projection/delivery repository. Do not duplicate collectors, classifiers, ontology ownership, or an alternate canonical event database there.
-
-Generated/public projections are not stronger evidence than the canonical source state that produced them.
-
-## 5. Goal-driven execution loop
-
-For work that needs more than one edit, keep one Goal active and iterate:
-
-```text
-inspect current state
-  -> define smallest change
-  -> implement
-  -> run the cheapest relevant verifier
-  -> inspect evidence
-  -> repair if falsified
-  -> escalate verification only as needed
-  -> stop at the fixed point
-```
-
-A failed check is input to the next repair, not a reason to relabel the task successful. Do not stop after a plausible patch when the owning postcondition is inspectable.
-
-## 6. Durable continuation and canonical workline
-
-Before creating work:
-
-1. inspect current `main`, relevant Issues, open PRs, branches, workflows, and canonical data/audits;
-2. continue the existing Issue/branch/PR when it already owns the same outcome;
-3. otherwise create one bounded workline;
-4. do not create competing branches, alternate ledgers, duplicate manifests, or second pipelines for the same Goal.
-
-When work cannot finish, leave the canonical workline resumable. Record the last verified revision, failing stage or unresolved evidence, exact blocker, and next action in the owning Issue/PR or existing canonical state surface. Do not invent a second state database solely for agent memory.
-
-Persistent event observations, accepted/rejected decisions, source timestamps, and audits belong in the repository's existing canonical ledgers/artifacts, not in chat history.
-
-## 7. Evidence and claim discipline
-
-Material operational claims must be treated as one of:
-
-- **VERIFIED** — directly supported by current source/repository/test/audit/CI evidence;
-- **OBSERVED** — explicitly supplied as an observation;
-- **INFERRED** — derived from evidence and reported as inference;
-- **UNVERIFIED** — not yet inspected and never stated as fact;
-- **FABRICATED** — forbidden.
-
-Do not infer missing event dates, participation methods, retweet counts, organizer identity, ontology matches, or source timestamps. Preserve unknown/ambiguous states and fail closed where the owning contract requires evidence.
-
-Relative dates such as `今日`, `本日`, and `明日` belong to the source post timestamp, not the collection/reprocessing date.
-
-Reject is a first-class result. Preserve the reason needed for later classifier improvement and replay.
-
-## 8. External-source rule
-
-For current externally verifiable event facts:
-
-- prefer organizer/official first-party sources;
-- retain source identity and observation time required by the canonical schema;
-- do not upgrade a search snippet or community summary into primary evidence when the official source is available;
-- when source semantics or provider behavior changes, verify the current response before changing canonical parsing/classification;
-- if contradictory evidence cannot be resolved, narrow or reject the claim rather than guessing.
-
-## 9. Verification ladder
-
-Use the narrowest relevant check first, then escalate when the affected contract requires it.
-
-Current canonical local checks include:
+Run the narrowest relevant check first:
 
 ```bash
 ruff check cast_event_cal scripts tests main_executor.py
@@ -130,66 +44,24 @@ python main_executor.py run --strict
 python scripts/render_frontend.py
 ```
 
-For workflow/publication changes, verify the exact workflow head and the applicable production read-back. A command that did not run is not PASS. A build or dispatch is not proof that the public artifact is correct.
+Escalate only when the affected contract requires it. A command not run is not PASS. Build/collection/dispatch success is not proof that the public artifact is correct.
 
-## 10. Automation contract
+## Change and automation rules
 
-Scheduled collection/classification must use the same canonical rules and evidence boundaries as manual work.
+- one outcome, one canonical workline/ledger/pipeline/authority.
+- `DELETE > MERGE > REPLACE > ADD`; remove superseded paths only after current references prove them unused.
+- do not silently replace healthy state with empty/partial data after a source failure.
+- do not turn unavailable fields into plausible defaults or hide rejects/failure reasons.
+- do not use LLM-only judgment as the deterministic daily acceptance path without an explicit contract change.
+- generated/public projections are weaker evidence than the canonical source state that produced them.
+- comments should explain non-obvious rationale/external constraints, not narrate code.
 
-Automations must not:
+## PR, publication, continuation
 
-- silently replace a healthy cache with empty/partial data after source failure;
-- convert unavailable fields into plausible values;
-- hide rejected candidates or failure reasons;
-- claim delivery success from collection success alone;
-- introduce LLM-only judgment into the deterministic daily acceptance path without an explicit contract change.
+Use one reviewable PR workline and verify the exact head for the changed surface. Merge requires the bounded repository-local acceptance criteria and relevant deterministic checks, not unrelated external claims.
 
-## 11. Builder / Auditor separation
+Publication is separate: when a public surface changes, verify the merged revision and applicable production read-back directly. CI or workflow dispatch alone is not production evidence.
 
-Treat implementation and acceptance as separate phases even when one agent performs both sequentially.
+If work stops, record the last verified revision, evidence already acquired, unresolved evidence/failing stage, blocker, and one exact next action in the existing Issue/PR or canonical state surface. Do not create a second agent-state database.
 
-### Builder
-
-May change code, tests, schemas, ontology, canonical data, workflows, and docs within the bounded Contract.
-
-### Auditor
-
-Independently verifies:
-
-- the requested Goal exists;
-- source/provenance boundaries were preserved;
-- accepted/rejected semantics remain truthful;
-- deterministic checks pass on the relevant revision;
-- generated snapshots match their owning canonical inputs;
-- no stronger completion claim is made than the evidence supports;
-- task-created residue is removed.
-
-Implementation intent is never acceptance evidence.
-
-## 12. Fixed point
-
-Stop when all are true:
-
-- the requested Goal is satisfied;
-- acceptance criteria are evidenced;
-- the smallest relevant tests/audits pass, plus broader required gates when applicable;
-- the canonical data/audit state is truthful and replayable;
-- exact-head CI is verified when the change uses a PR gate;
-- required production postconditions are verified when publication is in scope;
-- the owning Issue/PR state is correct;
-- temporary files, duplicate worklines, and superseded task artifacts are gone;
-- remaining ideas are separate outcomes rather than necessary repairs.
-
-## 13. Final report
-
-Report verified state, not activity theater. Include as applicable:
-
-- Issue/PR/commit URL;
-- bounded change;
-- tests/audits and exact result;
-- canonical data or snapshot consequence;
-- production verification receipt;
-- cleanup result;
-- exact blocker and next action when unfinished.
-
-Never claim event correctness, CI success, merge, deployment, or production parity without inspecting the corresponding evidence.
+Complete only when the requested Goal is directly inspected, canonical state remains truthful/replayable, required checks and exact-head CI pass, required production postconditions are verified, and task-created duplicate/superseded residue is removed.
