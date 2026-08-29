@@ -1,49 +1,27 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 550,
-  "event_count_after": 548,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.003636,
+  "event_count_before": 538,
+  "event_count_after": 537,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.001859,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
-      "cluster_id": "occ_3882085e706a7ac2abad",
-      "starts_at": "2026-08-30T11:00:00Z",
-      "title": "【 VRChat イベント 告知 】 ｢沖縄料理集会｣を 開催 します。 今回は # VRC 沖縄集会 #バーチャル沖縄観光案内 とのコラボイベント！沖縄料理をみんなで食べるイベントです。 日…",
-      "member_count": 2,
-      "member_ids": [
-        "aabd9626adfc8afdc5eb",
-        "f284a804ccf15c0e3509"
-      ],
-      "source_record_ids": [
-        "src_a7895f898d5db5ad2358",
-        "src_d3427f0e0951e6a7809b"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_d3427f0e0951e6a7809b"
-    },
-    {
-      "cluster_id": "occ_3e9f8d2105b979f50d2c",
+      "cluster_id": "occ_1b460d4cb3f863f0b4c9",
       "starts_at": "2026-08-29T13:00:00Z",
       "title": "🍻やりたい放題チャンネル「はじめまして飲み会」 開催 ！🍻 📅8/29(土) 22:00〜23:00 📍 VRChatグループインスタンス 初参加歓迎！お酒・ソフトドリンクどちらでもOK。 途…",
       "member_count": 2,
       "member_ids": [
-        "5e5a2d588cedcc94287c",
+        "235b00485b581c11cf97",
         "e3709df5185d4eb96f73"
       ],
       "source_record_ids": [
-        "src_3cd6f580759497a6d94b",
+        "src_d202538defe5c8b2b525",
         "src_dfc857a651128141fd2f"
       ],
       "sources": [
@@ -69,105 +47,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "70a1ac443d160097cdff",
-      "right_id": "c246bb42a7bff98658e8",
-      "starts_at": "2026-08-28T12:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "033a284ed1b8cd663c76",
+      "right_id": "af5f1355cc102094f388",
+      "starts_at": "2026-08-29T11:00:00Z",
+      "left_organizer": "@vrsf_vrc",
+      "right_organizer": "@VrcYss",
+      "similarity": 0.4146,
+      "left_title": "🎆 バーチャル河川敷夏祭り2026、ついに 明日 開幕！ 音楽、ダンス、お笑い 今年も2日間、河川敷で皆さんをお待ちしています。 📅 8月29日（土）20:00〜 📅 8月30日（日）19:3…",
+      "right_title": "🎧8/29 Fri｜ 本日 のYSS✨ 2⃣ 🕗20:00〜 🏮#バーチャル河川敷夏祭り 2026 🌐 VRChat ／PC Only・ Group +[VRSF.4334] 📺 Twitch…"
+    },
+    {
+      "left_id": "033a284ed1b8cd663c76",
+      "right_id": "ad59a9ed16a405c49eeb",
+      "starts_at": "2026-08-29T11:00:00Z",
+      "left_organizer": "@vrsf_vrc",
+      "right_organizer": "@VrcYss",
+      "similarity": 0.4622,
+      "left_title": "🎆 バーチャル河川敷夏祭り2026、ついに 明日 開幕！ 音楽、ダンス、お笑い 今年も2日間、河川敷で皆さんをお待ちしています。 📅 8月29日（土）20:00〜 📅 8月30日（日）19:3…",
+      "right_title": "💫 明日 のYSS2⃣｜8/29 Fri 🏮#バーチャル河川敷夏祭り 2026 🕗20:00〜 🌐 VRChat ／PC Only・ Group + 📺 Twitch配信あり バーチャル河川敷…"
+    },
+    {
+      "left_id": "af5f1355cc102094f388",
+      "right_id": "ad59a9ed16a405c49eeb",
+      "starts_at": "2026-08-29T11:00:00Z",
+      "left_organizer": "@VrcYss",
+      "right_organizer": "@VrcYss",
+      "similarity": 0.6807,
+      "left_title": "🎧8/29 Fri｜ 本日 のYSS✨ 2⃣ 🕗20:00〜 🏮#バーチャル河川敷夏祭り 2026 🌐 VRChat ／PC Only・ Group +[VRSF.4334] 📺 Twitch…",
+      "right_title": "💫 明日 のYSS2⃣｜8/29 Fri 🏮#バーチャル河川敷夏祭り 2026 🕗20:00〜 🌐 VRChat ／PC Only・ Group + 📺 Twitch配信あり バーチャル河川敷…"
+    },
+    {
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "dff4fea0b45efae35c43",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@Touka_Hutame",
+      "similarity": 0.2009,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "VRChat カフェイベント [ALiceCafe] オープン のお知らせ！🔔 [ オープン 日時] 8/29(土)21:00~23:00 21:00~22:00 カフェ☕ 22:00~23:…"
+    },
+    {
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "15d038c1142e9d4d8c67",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0565,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "VRCフィットボクシング集会（土曜）"
+    },
+    {
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "22862e6e6961ff8a5471",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
       "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
+      "similarity": 0.0769,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "VRホビーロボット集会"
     },
     {
-      "left_id": "70a1ac443d160097cdff",
-      "right_id": "548e46ccc2629ae134e7",
-      "starts_at": "2026-08-28T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@F_Terry3",
-      "similarity": 0.0968,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【まほろばのれん街×仮想儀屋】 🕯️8/28(金)21:00〜23:00 🕯️まほろばのれん街 Group + 本日 はフジヤマ納涼祭2026。 お祭り会場にて特別 営業 です。 現葬儀屋と人…"
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "805922f7e7f69362f3f5",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@6vmetamon",
+      "similarity": 0.1961,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "【 イベント告知 】幻想郷の中の幻想 8/29(Sat) 21:00～23:00 VRC 東方Projectオンリー DJイベント やります！！ フレプラ 開催 なのでフレンドから join …"
     },
     {
-      "left_id": "c246bb42a7bff98658e8",
-      "right_id": "548e46ccc2629ae134e7",
-      "starts_at": "2026-08-28T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@F_Terry3",
-      "similarity": 0.1101,
-      "left_title": "VRC Blender集会",
-      "right_title": "【まほろばのれん街×仮想儀屋】 🕯️8/28(金)21:00〜23:00 🕯️まほろばのれん街 Group + 本日 はフジヤマ納涼祭2026。 お祭り会場にて特別 営業 です。 現葬儀屋と人…"
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "eadfadd35a62010a1b87",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@wondernote_info",
+      "similarity": 0.1736,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "【 本日 の注目イベント✨】 🕒8/29(土) 21:00～ 🟠FÜNNY-サブカル多めのDJイベント🟠 8/29(土)21時から24時まで、 VRChat でDJイベント「FÜNNY」やりま…"
     },
     {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "1f80da20ad2e9aea28d3",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.4,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "160e8dc0f824cb8bd919",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@namibito7",
+      "similarity": 0.1538,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "【来たる今週末】 🔥🔥 音 樂 京 -夏の陣- 🔥🔥 📅 2026.08.29 21:00〜 OPEN 📍SecondLife HANARAKUKYO SPECIAL STAGE 今回は VR…"
     },
     {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "d990bc6f4e9f4fe2982f",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@O_yashiro_VRC",
-      "similarity": 0.0782,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRC 大社より、８月の大 祭り のお知らせです。 先日お知らせしたとおり、「フジヤマ納涼祭2026」へ 参加 しておりますが、２８日金曜日22：00より、第１３回 VRC 巫女服集会を行いま…"
-    },
-    {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "dee591ddd4f7c2722220",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.3333,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRCふれあい動物園"
-    },
-    {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "e3af74afce1bead29cca",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRHeel",
-      "similarity": 0.1548,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRC イベント 告知 】 8月28日(金)22時より #悪役結社ヴァリアール 定例交流イベント 《ヴァリトーク！》を実施する。 残暑の残る今の時期にこそ相応しい舞台、海辺のヴァルボルディ…"
-    },
-    {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "25241270306043aa9813",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@Luke_LuLuLu",
-      "similarity": 0.1752,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRC イベントお知らせ】 ついに 本日 ！22時から #フジヤマ納涼祭2026 でオカルト フェス だよ！ あんま怖くない不思議な話から、怖い話までいろんなお話をするので良ければきてねー…"
-    },
-    {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "1148968d8e659f0e9cdc",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@Pecheur_VRC",
-      "similarity": 0.0925,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRC ホストイベント】 ✯Pécheur✯ 第7回 Open ▶開催日時8/28(金)22時〜 ▶ 参加方法 ・Xのフォロー ・pécheurのグループ参加 ・下記抽選応募フォーム記入 …"
-    },
-    {
-      "left_id": "70819c5fdc183893bafc",
-      "right_id": "b988c7cc132673d4150c",
-      "starts_at": "2026-08-28T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@ThisIsAkyo",
-      "similarity": 0.1045,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRChatイベント告知 】 あるひ目を覚ますと、季節は夏になっていた！？ #Akyoのなつやすみ2 8/28(金) 22:00～23:00 https://t.co/5GPiyxTqCc…"
+      "left_id": "08dfbda7d89ba098d61b",
+      "right_id": "d1ca687d7807aaa0c6d0",
+      "starts_at": "2026-08-29T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@ttracingbr8h",
+      "similarity": 0.1386,
+      "left_title": "VRC イベント メイド喫茶めろてぃ ☆浴衣 営業 デー☆ 【最大8名様】をご招待します！ 開催 8/29 21:00 OPEN 20:40 Reqin 参加 方法 ①@ vrc _merot…",
+      "right_title": "告知 していました通り 本日 21:00より VRC でのカートタイムアタック 大会 を 開催 します！！ タイムスケジュールになります。 参加 予定の方はよろしくお願いします✨ https:…"
     }
   ],
-  "generated_at": "2026-08-29T10:40:20Z"
+  "generated_at": "2026-08-29T22:41:29Z"
 }
