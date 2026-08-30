@@ -109,6 +109,8 @@ jobs:
         run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
         run: python scripts/render_frontend.py
+      - name: Order home view by user decision value
+        run: python scripts/reorder_home_view.py
       - name: Render Unity distribution assets
         run: python scripts/render_distribution_assets.py
       - name: Build registration count audit
