@@ -2,14 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 537,
+  "event_count": 523,
   "matched_events": 277,
   "matched_series": {
-    "en-jp-language-exchange": 36,
-    "vrc-fit-boxing": 36,
-    "personally-match": 18,
-    "vrc-goita": 17,
-    "vrc-game-world-club": 17,
+    "en-jp-language-exchange": 35,
+    "vrc-fit-boxing": 35,
+    "cafe-bar-for-light": 1,
+    "vrc-goita": 18,
+    "vrc-game-world-club": 18,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
@@ -17,47 +17,12 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
-    "vrc-petting-zoo": 17
+    "vrc-petting-zoo": 17,
+    "personally-match": 17
   },
-  "unmatched_events": 260,
+  "unmatched_events": 246,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "c6136dcff9308366ea4f",
-      "title": "EN-JP Language Exchange（土曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "15d038c1142e9d4d8c67",
-      "title": "VRCフィットボクシング集会（土曜）",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "c58e5157fb617121fe99",
-      "title": "Personally match",
-      "status": "matched",
-      "ontology_id": "personally-match",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "6397ef1aad7083960e66",
       "title": "EN-JP Language Exchange（日曜）",
@@ -75,6 +40,18 @@
       "title": "VRCフィットボクシング集会（日曜）",
       "status": "matched",
       "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "ed913f6f542c5b99a0c2",
+      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌 参加 方法 JOIN 制｜ILへフレンド申請→ JOIN VRC 初…",
+      "status": "matched",
+      "ontology_id": "cafe-bar-for-light",
       "evidence": [
         "alias",
         "organizer",
@@ -3345,18 +3322,42 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "18ae5e2081d45ded8483",
+      "title": "VRCごいた会",
+      "status": "matched",
+      "ontology_id": "vrc-goita",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "129d45c29377000b5069",
+      "title": "VRCゲームワールド部 月曜イベント",
+      "status": "matched",
+      "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 537,
+    "event_count": 523,
     "category_breakdown": {
-      "art": 125,
-      "community": 147,
-      "game": 102,
-      "language_exchange": 36,
-      "music": 9,
-      "other": 8,
+      "art": 126,
+      "community": 142,
+      "game": 104,
+      "language_exchange": 35,
+      "music": 3,
+      "other": 3,
       "performance": 1,
       "recruitment_deadline": 1,
       "technology": 38,
@@ -3364,97 +3365,40 @@
       "world_tour": 17
     },
     "subcategory_breakdown": {
-      "bar": 17,
-      "cafe": 21,
-      "cast_service": 1,
-      "dance": 1,
-      "dj": 5,
+      "bar": 10,
+      "cafe": 20,
+      "cast_service": 3,
+      "dj": 2,
       "engineering": 25,
       "fitness": 36,
-      "hangout": 3,
-      "language_exchange": 36,
+      "hangout": 4,
+      "language_exchange": 35,
       "mystery": 34,
       "photography": 121,
       "research": 13,
       "social": 105,
-      "staff_recruitment": 1,
-      "tabletop": 34,
+      "tabletop": 35,
       "world_tour": 17
     },
     "event_mode_breakdown": {
       "deadline": 1,
-      "hybrid": 6,
-      "in_world": 530
+      "in_world": 522
     },
     "classification_source_breakdown": {
       "curated_ontology": 260,
-      "fallback": 8,
-      "keyword_rules": 51,
-      "legacy_and_keywords": 217,
-      "legacy_category": 1
+      "fallback": 3,
+      "keyword_rules": 42,
+      "legacy_and_keywords": 216,
+      "legacy_category": 2
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 14,
-    "audit_event_count": 14
+    "low_confidence_event_count": 6,
+    "audit_event_count": 6
   },
   "category_review_queue": [
     {
-      "event_id": "c5585bc17656bb4e482a",
-      "title": "本日 、決勝ステージを 開催 🎤🎀 📅 8/29(土) 開場 20:45 / 開演21:00 🎟️ チケット VRChat 会場での視聴にはチケットが必要です 📺 配信 サンリオキャラクターズ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d1ca687d7807aaa0c6d0",
-      "title": "告知 していました通り 本日 21:00より VRC でのカートタイムアタック 大会 を 開催 します！！ タイムスケジュールになります。 参加 予定の方はよろしくお願いします✨ https:…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "4383eeac134d85968906",
-      "title": "踏みたい人と踏まれたい人が集まる イベント 足蹴屋です。 本日 21時より第245回目を 開催 します。 参加 したい方は VRC アカウントにTwitterアカウント紐付けの上、グループ申請…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "fc0b94c92ef73b371dde",
-      "title": "イベント 開催告知 です。 今週の VRC イベント『Fighting Burst』は予約等なしの、フリー参加形式で 本日 8/29(土)22時より 開催 します！ JOIN 先はリプに続ける…",
-      "category": "community",
-      "label": "交流・カフェ",
-      "subcategory": "cafe",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:cafe"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "3709a3e21679f4304f5d",
-      "title": "VRC イベント『Luminous Astrantia』 🍀第２回 オープン のお知らせ🍀 明日 8/29(土)22:55～グランド オープン です🫶 ゲストさんの演奏に合わせたparticl…",
+      "title": "VRC イベント『Luminous Astrantia』 🍀第２回 オープン のお知らせ🍀 明日8/29(土)22:55～グランド オープン です🫶 ゲストさんの演奏に合わせたparticle…",
       "category": "art",
       "label": "アート・展示・撮影",
       "subcategory": null,
@@ -3471,7 +3415,7 @@
     },
     {
       "event_id": "febc22eb7dfba79c37bb",
-      "title": "VRCイベント 「ふぇむふぇむもくもく」 #fem_moku 8/29（土）23:00に リクイン 受付 開始 です 今夜 は個室コンテナ３回での 開催 です 連続の絶え間ない可愛さですので、…",
+      "title": "VRC イベント「ふぇむふぇむもくもく」 #fem_moku 8/29（土）23:00に リクイン 受付 開始 です 今夜 は個室コンテナ３回での 開催 です 連続の絶え間ない可愛さですので、…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3483,64 +3427,32 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "e002fc40009cb8ced9ca",
-      "title": "【お知らせ】 #Elychiffon自習室 第２回発表会を 開催 します！ 創作・ VRChat イベント・食事など、 いろんな「スキ」や「得意」を聞きに来ませんか？ 聞くだけ・途中 参加 も…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "832c3479ce9cb0fb037e",
-      "title": "┏━━━━━━━━━━━━━┓ ♥️MOOMOO PARTY! 2026♥️ˎˊ˗ ┗━━━━━━━━━━━━━┛ 誕生日& VRChat 2周年を迎えました🎉 今年も生誕ライブイベントやるよ…",
+      "event_id": "3e18fafd69548c695aea",
+      "title": "こちらの 大会 は 本日 21:00から！！！！🎯 参戦・観戦共に、お気軽にお越しください🙏 VRC ダーツを知らない方や、最近始めた方も、ぜひ 大会 の雰囲気を感じてみてください！ #放課後…",
       "category": "art",
       "label": "アート・展示・撮影",
       "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
+      "score": 3,
+      "confidence": 0.585,
       "source": "keyword_rules",
       "evidence": [
-        "keyword:title:art"
+        "keyword:organizer:art"
       ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "music"
-      ]
-    },
-    {
-      "event_id": "3f01b3b8b6e9b8467824",
-      "title": "【SanrioVfes回 開催告知 】 日時 ：8/31(月)22時～ 次回の 開催 は、サンリオ様主催[Sanrio Virtual Festival 2026 Summer Edition…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
-      "event_id": "b0cf897fb522614290df",
-      "title": "【 開催 のお知らせ】 9/1(火) 23:00～ MDJが オープン いたします！ 今回個別接客を行うキャストはこちらです！ zofal（ぞふぁる） Viola_ vrc 霊柩ファントム シ…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": "dj",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:dj"
-      ],
+      "event_id": "bbcd15d1275ddfddbbf2",
+      "title": "VRC 吟行句会 第89回 開催 します。 Quest対応のworldです。 ■ 日時 9/1（火）21:30～24:00 ■ 参加 方法 ・「 VRC 吟行句会」グループに 参加 （http…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
       "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
+      "ambiguous_with": []
     },
     {
       "event_id": "fb24af00aa700e5e0446",
@@ -3554,23 +3466,6 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "3709e3a2b63b45acfecc",
-      "title": "【リアル イベント告知 】 🕺VRDJぶち上げ 集会 🕺 📍 大阪 梅田 MEMEME 🕐 9/5 13:00〜20:30 🎫 ¥1,600(DOOR+1D) 関西住みの VRChat DJ …",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": "dj",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:dj"
-      ],
-      "event_mode": "hybrid",
-      "ambiguous_with": [
-        "community"
-      ]
     },
     {
       "event_id": "5392d54621fd5d3b009f",
@@ -3588,19 +3483,6 @@
       "ambiguous_with": [
         "community"
       ]
-    },
-    {
-      "event_id": "589d9bfd8813ffb42dd7",
-      "title": "🐙 VRC イベント『Mouth of Madness』 第2木曜・第4日曜の22:00より 開催 。 9月は【9/10(木)】と【9/27(日)】に 開催 予定です。 ※次回から 開催 時間…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
     }
   ]
 }
