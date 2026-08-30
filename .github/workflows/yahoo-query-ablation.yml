@@ -3,7 +3,7 @@ name: Yahoo query ablation
 on:
   workflow_dispatch:
   schedule:
-    - cron: '47 20 * * *'
+    - cron: '10 21 * * *'
   pull_request:
     paths:
       - config/yahoo_query_ablation.json
@@ -98,7 +98,7 @@ jobs:
             git push origin HEAD:main
           fi
       - name: Redeploy production Pages with evidence
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run render-search-pages.yml --ref main
