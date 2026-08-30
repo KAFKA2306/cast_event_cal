@@ -6,19 +6,6 @@ on:
   push:
     branches: [main]
     paths:
-      - scripts/render_search_pages.py
-      - scripts/render_category_pages.py
-      - scripts/render_series_pages.py
-      - scripts/render_social_assets.py
-      - scripts/render_internal_links.py
-      - scripts/verify_crawl_graph.py
-      - tests/test_search_pages.py
-      - tests/test_category_pages.py
-      - tests/test_series_pages.py
-      - tests/test_social_assets.py
-      - tests/test_crawl_graph.py
-      - public/category-ontology.json
-      - pyproject.toml
       - .github/workflows/render-search-pages.yml
   pull_request:
     paths:
