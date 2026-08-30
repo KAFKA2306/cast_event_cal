@@ -114,7 +114,7 @@ jobs:
             data/yahoo-best-1000-raw.json
             data/yahoo-best-1000-events.json
           retention-days: 30
-      - name: Commit empirical result and production ledger
+      - name: Commit benchmark evidence only
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           set -euo pipefail
@@ -122,12 +122,6 @@ jobs:
             data/yahoo-best-1000-raw.json
             data/yahoo-best-1000-events.json
             public/yahoo-best-1000-audit.json
-            data/yahoo_realtime_events.json
-            data/yahoo_realtime_rejected.json
-            data/yahoo_realtime_health.json
-            public/yahoo-candidate-history.json
-            public/yahoo-classifier-audit.json
-            public/yahoo-positive-vocabulary.json
           )
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com

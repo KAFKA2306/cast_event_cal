@@ -69,6 +69,33 @@ jobs:
           VRCEVE_DATA_USE_APPROVED: ${{ secrets.VRCEVE_DATA_USE_APPROVED }}
           VRCEVE_ICS_URL: ${{ secrets.VRCEVE_ICS_URL }}
         run: python scripts/fetch_external_calendars.py
+      - name: Gate collection health before build
+        run: |
+          python - <<'PY'
+          from scripts.validate_update_snapshot import (
+              OPTIONAL_COLLECTION_SOURCES,
+              ROOT,
+              require,
+              sync_collection_health,
+          )
+
+          health = sync_collection_health(ROOT)
+          statuses = {
+              str(row.get('name')): str(row.get('status'))
+              for row in health.get('sources', [])
+              if isinstance(row, dict)
+          }
+          require(
+              statuses.get('yahoo_realtime_events') == 'ok',
+              f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}",
+          )
+          for name in OPTIONAL_COLLECTION_SOURCES:
+              require(
+                  statuses.get(name) in {'ok', 'degraded', 'skipped'},
+                  f"optional collection source has invalid status: {name}={statuses.get(name)}",
+              )
+          print(f"collection health gate passed: {health.get('status')}")
+          PY
       - name: Build normalized calendar
         run: cast-event-cal run --strict
       - name: Enrich official X Web and WebP assets
@@ -85,6 +112,8 @@ jobs:
         run: python scripts/render_distribution_assets.py
       - name: Build registration count audit
         run: python scripts/build_registration_count_audit.py
+      - name: Audit canonical public feed
+        run: python scripts/audit_public_feed.py public/events.json --report /tmp/public-feed-audit.json
       - name: Validate generated data and collection health
         run: python scripts/validate_update_snapshot.py
       - name: Commit generated data safely
