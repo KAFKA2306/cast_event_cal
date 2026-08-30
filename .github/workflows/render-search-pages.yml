@@ -3,10 +3,6 @@ name: Render searchable event pages
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/render-search-pages.yml
   pull_request:
     paths:
       - scripts/render_search_pages.py
@@ -28,7 +24,7 @@ on:
     types: [completed]
 
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('search-pr-{0}', github.event.pull_request.number) || 'cast-event-calendar-production' }}
+  group: ${{ github.event_name == 'pull_request' && format('search-pr-{0}', github.event.pull_request.number) || 'cast-event-calendar-publication' }}
   cancel-in-progress: false
 
 permissions:
