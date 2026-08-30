@@ -11,11 +11,10 @@ on:
   push:
     branches: [main]
     paths:
-      - "public/events.json"
-      - "scripts/build_public_api.py"
-      - "tests/test_build_public_api.py"
-      - "scripts/audit_public_feed.py"
       - ".github/workflows/public-api-v1.yml"
+  workflow_run:
+    workflows: ["Update calendar data"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -27,10 +26,13 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'main' }}
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
