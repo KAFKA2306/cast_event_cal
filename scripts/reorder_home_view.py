@@ -5,7 +5,7 @@ from pathlib import Path
 OUTPUT = Path("public/index.html")
 VIEW_ORDER_MARKER = 'data-view-order="decision-first-v2"'
 LEGACY_VIEW_ORDER_MARKER = 'data-view-order="decision-first-v1"'
-CARD_ORDER_MARKER = 'data-card-order="decision-first-v1"'
+CARD_ORDER_MARKER = 'data-card-order="decision-first-v2"'
 
 CARD_CSS = """
 .event{grid-template-columns:92px minmax(0,1fr)}
@@ -17,9 +17,13 @@ CARD_CSS = """
 .event-primary-action{min-width:150px;align-self:stretch;padding-inline:16px}
 .decision-meta{margin-bottom:10px}
 .event-media-link{margin-top:10px;margin-bottom:10px}
-.provenance{margin-top:10px;color:var(--muted);font-size:.72rem;line-height:1.5}
-.event-secondary-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.event-evidence{margin-top:12px;padding-top:9px;border-top:1px solid var(--line)}
+.event-evidence summary{width:max-content;max-width:100%;cursor:pointer;color:var(--muted);font-size:.74rem;font-weight:750;line-height:1.5}
+.event-evidence-body{margin-top:8px;padding:10px 11px;border-radius:12px;background:#f7f8fb;color:var(--muted);font-size:.72rem;line-height:1.55}
+.evidence-line{overflow-wrap:anywhere}
+.event-secondary-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
 .event-secondary-links .event-link{background:#fff}
+.event-evidence .asset-proof{margin-top:8px}
 .recommendation-card .event-link{margin-top:10px;align-self:flex-start}
 @media(max-width:920px){.event{grid-template-columns:76px minmax(0,1fr)}}
 @media(max-width:680px){.decision-row{grid-template-columns:1fr}.event-primary-action{width:100%;min-width:0}}
@@ -30,8 +34,10 @@ CARD_JS = r"""
 function participationHtml(event){const method=String(event.participation_method||'').trim();return method?`<div class="participation"><b>参加方法</b><span>${esc(method)}</span></div>`:''}
 function primaryActionHtml(event){const link=eventLinks(event)[0];return link?`<a class="event-link primary event-primary-action" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"${historyAttr(event)}>${esc(link.label)}</a>`:''}
 function secondaryActionsHtml(event){const rows=eventLinks(event).slice(1);return rows.length?`<div class="event-secondary-links">${rows.map(link=>`<a class="event-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"${historyAttr(event)}>${esc(link.label)}</a>`).join('')}</div>`:''}
-function detailsHtml(event){const evidence=(event.category_evidence||[]).slice(0,2).map(value=>String(value).replace(/^keyword:[^:]+:/,'')).join(' / ');const rows=[['開催形式',event.event_format],['対象',event.audience],['分類根拠',evidence]].filter(([,value])=>value);return rows.length?`<div class="details">${rows.map(([key,value])=>`<div class="detail"><b>${esc(key)}</b>${esc(value)}</div>`).join('')}</div>`:''}
-function eventHtml(event){const category=categoryKey(event.category),end=event.ends_at?`–${timeLabel(event.ends_at)}`:'',tags=(event.tags||[]).slice(0,7).map(tag=>`<span class="tag">${esc(tag)}</span>`).join(''),detail=event.category_detail?detailLabels[event.category_detail]||event.category_detail:null,mode=modeLabels[event.event_mode]||event.event_mode,confidence=Number(event.category_confidence),metaParts=[event.organizer?`主催 ${esc(event.organizer)}`:'',event.location?esc(event.location):''].filter(Boolean).join(' · ');const classes=['event',confidence&&confidence<.6?'low-confidence':'',event.event_mode==='offline'?'offline':''].filter(Boolean).join(' ');return `<article class="${classes}"><div class="time">${timeLabel(event.starts_at)}<small>${esc(end)}</small></div><div class="event-main"><h2>${esc(event.canonical_name||event.title)}</h2><div class="event-top"><span class="badge ${esc(category)}">${esc(categoryLabel(event))}</span>${detail?`<span class="badge">${esc(detail)}</span>`:''}${mode?`<span class="badge mode ${event.event_mode==='offline'?'offline':''}">${esc(mode)}</span>`:''}${event.ontology_id?'<span class="badge">辞書照合済み</span>':''}${confidence?`<span class="badge mode">分類 ${Math.round(confidence*100)}%</span>`:''}</div><div class="decision-row">${participationHtml(event)}${primaryActionHtml(event)}</div>${metaParts?`<div class="meta decision-meta">${metaParts}</div>`:''}${mediaHtml(event)}${event.description?`<p class="description">${esc(event.description)}</p>`:''}${detailsHtml(event)}${event.source?`<div class="provenance">出典 ${esc(event.source)}</div>`:''}${secondaryActionsHtml(event)}${assetProofHtml(event)}${tags?`<div class="tags">${tags}</div>`:''}</div></article>`}
+function detailsHtml(event){const rows=[['開催形式',event.event_format],['対象',event.audience]].filter(([,value])=>value);return rows.length?`<div class="details">${rows.map(([key,value])=>`<div class="detail"><b>${esc(key)}</b>${esc(value)}</div>`).join('')}</div>`:''}
+function classificationEvidenceHtml(event){const rows=[],confidence=Number(event.category_confidence),evidence=(event.category_evidence||[]).slice(0,2).map(value=>String(value).replace(/^keyword:[^:]+:/,'')).join(' / ');if(event.ontology_id)rows.push('<div class="evidence-line">カテゴリ辞書照合済み</div>');if(Number.isFinite(confidence)&&confidence>0)rows.push(`<div class="evidence-line">分類信頼度 ${Math.round(confidence*100)}%</div>`);if(evidence)rows.push(`<div class="evidence-line">分類根拠 ${esc(evidence)}</div>`);return rows.join('')}
+function evidenceHtml(event){const source=event.source?`<div class="evidence-line">出典 ${esc(event.source)}</div>`:'',classification=classificationEvidenceHtml(event),secondary=secondaryActionsHtml(event),assets=assetProofHtml(event);return source||classification||secondary||assets?`<details class="event-evidence"><summary>出典・確認情報</summary><div class="event-evidence-body">${source}${classification}${secondary}${assets}</div></details>`:''}
+function eventHtml(event){const category=categoryKey(event.category),end=event.ends_at?`–${timeLabel(event.ends_at)}`:'',tags=(event.tags||[]).slice(0,3).map(tag=>`<span class="tag">${esc(tag)}</span>`).join(''),detail=event.category_detail?detailLabels[event.category_detail]||event.category_detail:null,mode=modeLabels[event.event_mode]||event.event_mode,metaParts=[event.organizer?`主催 ${esc(event.organizer)}`:'',event.location?esc(event.location):''].filter(Boolean).join(' · ');const classes=['event',event.event_mode==='offline'?'offline':''].filter(Boolean).join(' ');return `<article class="${classes}"><div class="time">${timeLabel(event.starts_at)}<small>${esc(end)}</small></div><div class="event-main"><h2>${esc(event.canonical_name||event.title)}</h2><div class="event-top"><span class="badge ${esc(category)}">${esc(categoryLabel(event))}</span>${detail?`<span class="badge">${esc(detail)}</span>`:''}${mode?`<span class="badge mode ${event.event_mode==='offline'?'offline':''}">${esc(mode)}</span>`:''}</div><div class="decision-row">${participationHtml(event)}${primaryActionHtml(event)}</div>${metaParts?`<div class="meta decision-meta">${metaParts}</div>`:''}${mediaHtml(event)}${event.description?`<p class="description">${esc(event.description)}</p>`:''}${detailsHtml(event)}${tags?`<div class="tags">${tags}</div>`:''}${evidenceHtml(event)}</div></article>`}
 """.strip()
 
 RECOMMENDATION_JS = r"""function recommendationHtml(row){const e=row.event,link=eventLinks(e)[0],tags=(e.tags||[]).filter(tag=>!STOP_TAGS.has(normalize(tag))).slice(0,3).map(tag=>`<span class="tag">${esc(tag)}</span>`).join('');return `<article class="recommendation-card"><h3>${esc(eventTitle(e))}</h3><div class="event-top"><span class="badge ${esc(categoryKey(e.category))}">${esc(categoryLabel(e))}</span><span class="badge">${esc(dayLabel(e.starts_at))} ${esc(timeLabel(e.starts_at))}</span></div><div class="meta">${e.organizer?`主催 ${esc(e.organizer)} · `:''}${esc(e.location||'VRChat')}</div><p class="recommendation-reason">${esc(row.reason)}</p><a class="event-link primary" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"${historyAttr(e)}>${esc(link.label)}</a>${tags?`<div class="tags">${tags}</div>`:''}</article>`}"""
@@ -123,7 +129,7 @@ def _apply_card_order(html: str) -> str:
 
 
 def reorder_home_view(html: str) -> str:
-    """Apply decision-first information order to the home view and event cards."""
+    """Apply decision-first information order and progressive evidence disclosure."""
     if VIEW_ORDER_MARKER in html and CARD_ORDER_MARKER in html:
         return html
 
