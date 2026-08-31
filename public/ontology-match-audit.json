@@ -2,13 +2,12 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 520,
+  "event_count": 532,
   "matched_events": 275,
   "matched_series": {
-    "cafe-bar-for-light": 1,
     "vrc-goita": 18,
     "vrc-game-world-club": 18,
-    "exploit-club": 17,
+    "exploit-club": 18,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 17,
@@ -20,21 +19,9 @@
     "vrc-fit-boxing": 34,
     "personally-match": 17
   },
-  "unmatched_events": 245,
+  "unmatched_events": 257,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "ed913f6f542c5b99a0c2",
-      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌参加方法 JOIN 制｜ILへ フレンド申請 → JOIN VRC 初…",
-      "status": "matched",
-      "ontology_id": "cafe-bar-for-light",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "d8f11c36cb679a58d73f",
       "title": "VRCごいた会",
@@ -3322,58 +3309,88 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "bf40a3b8b942e01d6d13",
+      "title": "EXPLOIT部 定期対戦会",
+      "status": "matched",
+      "ontology_id": "exploit-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 520,
+    "event_count": 532,
     "category_breakdown": {
-      "art": 121,
-      "community": 140,
-      "game": 104,
+      "art": 124,
+      "community": 143,
+      "game": 106,
       "language_exchange": 34,
       "learning": 1,
       "music": 7,
-      "other": 7,
+      "other": 10,
       "performance": 1,
       "technology": 37,
       "wellness": 51,
-      "world_tour": 17
+      "world_tour": 18
     },
     "subcategory_breakdown": {
-      "bar": 10,
-      "cafe": 19,
+      "bar": 11,
+      "cafe": 18,
       "cast_service": 2,
       "dj": 5,
       "engineering": 25,
       "fitness": 34,
-      "hangout": 6,
+      "hangout": 9,
       "language_exchange": 34,
       "live_music": 1,
       "mystery": 34,
       "orientation": 1,
-      "photography": 121,
+      "photography": 123,
+      "quiz": 1,
       "research": 12,
       "social": 103,
-      "tabletop": 35,
-      "world_tour": 17
+      "tabletop": 36,
+      "world_tour": 18
     },
     "event_mode_breakdown": {
-      "hybrid": 1,
-      "in_world": 519
+      "hybrid": 2,
+      "in_world": 530
     },
     "classification_source_breakdown": {
       "curated_ontology": 258,
-      "fallback": 7,
-      "keyword_rules": 39,
+      "fallback": 10,
+      "keyword_rules": 48,
       "legacy_and_keywords": 215,
       "legacy_category": 1
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 7,
-    "audit_event_count": 7
+    "low_confidence_event_count": 13,
+    "audit_event_count": 13
   },
   "category_review_queue": [
+    {
+      "event_id": "c5ec9f12707e9920f1f0",
+      "title": "本日、 22時 からLT大会です！ 登壇順が決まりましたので、共有します！（敬称略） YANKI0326 「バイクの話(仮)」 ↓ あっさー！ 「 VRC の写真に嘘を重ねてリアルにする」 ↓…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": "photography",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:写真"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
     {
       "event_id": "bbcd15d1275ddfddbbf2",
       "title": "VRC 吟行句会 第89回 開催 します。 Quest対応のworldです。 ■ 日時 9/1（火）21:30～24:00 ■参加方法 ・「 VRC 吟行句会」グループに参加 （https:/…",
@@ -3401,6 +3418,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "b9e6694fe0f03781c772",
+      "title": "✨💃✨今週はこう✨🐈‍⬛✨ 9/1火 22時 VRC ジビエトの夏は終わらない。 2水23時 今宵、シャーチャとおやすみ酒。188夜鏡洲GINGER 4金 22時 残暑のホラゲ祭り2026「I…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "aa009cf25f883f724175",
       "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベントはP…",
       "category": "other",
@@ -3412,6 +3442,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "f6b358303692f51c9551",
+      "title": "第30回虜ロール集会を VRC で行います 9月2日(水)22時～ 23時 22時50分に集合写真を撮ります 参加される方は「虜ロール集会」グループにJoinをお願いします #虜ロール集会 ロ…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": "photography",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:写真"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "e9bc44b3370ec43580c6",
@@ -3453,6 +3500,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "47af52ddb0784ad2142c",
+      "title": "9月6日（日）の 22時 から、『ワルプルギスの廻天』感想会を VRC で行います。 最近、まどか☆マギカのファンになった方も、リアタイ勢の方も、暁美ほむらの共犯者の方も、美樹さやかに人生を変…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "27b922df0d583d4cd387",
       "title": "【ご報告】 ㊗️じ ん ３ D 化 決 定㊗️ 楽曲MV公開と合わせて、なんと！ 9月7日21時から、 VRChat アドホックで 開催 される特別トーク イベント 「CROSSOVER」にて…",
       "category": "other",
@@ -3464,6 +3524,36 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "743d8e66e1ce53370427",
+      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 9月7日（月曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください！ …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d04474fdfb2c1e37b4d8",
+      "title": "VRChat アクロバット飛行チーム「BLUE STARS」は、展示飛行 イベント を行います。 9/12（土） 開場 22:00～ 9/13（日） 開場 21:00～ 「Oppailot」他…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:展示"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     }
   ]
 }
