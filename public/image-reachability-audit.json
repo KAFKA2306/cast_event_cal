@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-30T23:41:16Z",
+  "generated_at": "2026-08-31T12:21:33Z",
   "policy": "fail-closed-for-unreachable-optional-image-assets",
-  "checked_url_count": 29,
-  "reachable_url_count": 22,
-  "failed_url_count": 7,
+  "checked_url_count": 37,
+  "reachable_url_count": 29,
+  "failed_url_count": 8,
   "events_degraded": 7,
-  "stripped_image_fields": 14,
+  "stripped_image_fields": 15,
   "failures": {
     "http_404": 6,
-    "unexpected_content_type:application/octet-stream": 1
+    "unexpected_content_type:application/octet-stream": 2
   },
   "failed_urls": [
     {
@@ -17,19 +17,19 @@
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1938140346825023488/xRZOHv88.jpg?format=webp&name=200x200",
+      "url": "https://api.vrchat.cloud/api/1/file/file_02668459-0ad7-4508-9cd1-49a5aec786d9/1/file",
+      "reason": "unexpected_content_type:application/octet-stream"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1535469351356477441/z_28Yk5o.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1748591497006731264/AySuj7MN.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1575059484556533760/1aX2bSIw.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/2028787744768733184/AMEz6rX2.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1818982803717095424/wssocIjZ.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1872268822637658112/CIR2ceRl.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
@@ -37,7 +37,11 @@
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1535469351356477441/z_28Yk5o.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1980823343373725696/xiTeGlVV.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2076125802048221184/xakA8V2s.jpg?format=webp&name=200x200",
       "reason": "http_404"
     }
   ]
