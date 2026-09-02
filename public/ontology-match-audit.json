@@ -2,38 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 533,
+  "event_count": 552,
   "matched_events": 277,
   "matched_series": {
-    "exploit-club": 18,
     "yuruge-meet": 18,
     "wednesday-quest-beginners": 18,
     "ml-gathering": 18,
     "vrc-idle-gathering": 18,
-    "vrc-beginner-world-tour": 17,
+    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
-    "vrc-game-world-club": 17
+    "vrc-game-world-club": 17,
+    "exploit-club": 17
   },
-  "unmatched_events": 256,
+  "unmatched_events": 275,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "d12830a1f3cac99f6a0a",
-      "title": "EXPLOIT部 定期対戦会",
-      "status": "matched",
-      "ontology_id": "exploit-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "082990e8e4de51a3649f",
       "title": "ゆるゲMEET定期開催日",
@@ -3345,63 +3333,74 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "c7555593a483e2efc0c0",
+      "title": "VRC初心者ワールドツアー",
+      "status": "matched",
+      "ontology_id": "vrc-beginner-world-tour",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 533,
+    "event_count": 552,
     "category_breakdown": {
       "art": 123,
-      "community": 144,
-      "game": 105,
+      "community": 157,
+      "game": 107,
       "language_exchange": 34,
-      "music": 8,
-      "other": 4,
-      "performance": 2,
-      "recruitment_deadline": 4,
-      "technology": 39,
-      "wellness": 53,
-      "world_tour": 17
+      "music": 12,
+      "other": 6,
+      "performance": 1,
+      "recruitment_deadline": 2,
+      "technology": 40,
+      "wellness": 52,
+      "world_tour": 18
     },
     "subcategory_breakdown": {
-      "application_deadline": 1,
-      "bar": 11,
+      "bar": 15,
       "cafe": 18,
       "cast_service": 2,
       "dj": 5,
       "engineering": 26,
-      "fitness": 35,
-      "hangout": 7,
+      "fitness": 34,
+      "hangout": 10,
       "language_exchange": 34,
-      "live_music": 1,
-      "mystery": 35,
+      "live_music": 4,
+      "mystery": 37,
       "photography": 121,
-      "research": 13,
-      "show": 1,
-      "social": 106,
-      "tabletop": 35,
-      "world_tour": 17
+      "quiz": 1,
+      "research": 14,
+      "social": 112,
+      "tabletop": 34,
+      "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 4,
+      "deadline": 2,
       "hybrid": 1,
-      "in_world": 528
+      "in_world": 549
     },
     "classification_source_breakdown": {
-      "curated_ontology": 260,
-      "fallback": 4,
-      "keyword_rules": 51,
-      "legacy_and_keywords": 217,
+      "curated_ontology": 259,
+      "fallback": 6,
+      "keyword_rules": 67,
+      "legacy_and_keywords": 219,
       "legacy_category": 1
     },
-    "organizer_profile_count": 21,
-    "low_confidence_event_count": 8,
-    "audit_event_count": 8
+    "organizer_profile_count": 23,
+    "low_confidence_event_count": 10,
+    "audit_event_count": 10
   },
   "category_review_queue": [
     {
       "event_id": "aa009cf25f883f724175",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベントはP…",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベント…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3413,21 +3412,51 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "10952dec8c6b5be300b3",
-      "title": "VRChatイベント フェティッシュバー「オムファタル」 2026年9月3日（木）22:00～24:00 開催 ！ 性癖トークとSMショーの イベント です。 イベント参加 時は事前にJams…",
-      "category": "performance",
-      "label": "公演・ショー",
-      "subcategory": "show",
+      "event_id": "77cca67dcb220e282f43",
+      "title": "# VRChat # VRChat イベント 会員の 開催 イベントについて 告知 します。 【 VRC 芸術 集会 （仮）】木曜２２時～ 美術や建築、考古、陶磁器といった芸術に関するプレゼン…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
       "score": 5,
       "confidence": 0.58,
       "source": "keyword_rules",
       "evidence": [
-        "keyword:title:ショー"
+        "keyword:title:美術"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "3709e3a2b63b45acfecc",
+      "title": "【リアル イベント告知 】 🕺VRDJぶち上げ集会🕺 📍 大阪 梅田 MEMEME 🕐 9/5 13:00〜20:30 🎫 ¥1,600(DOOR+1D) 関西住みの VRChat DJが 梅…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": "dj",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:dj"
+      ],
+      "event_mode": "hybrid",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "2844c8ea8e095a1c9573",
+      "title": "📢 VRChat で、GeoGuessr協力のもと、GeoGuessr World Championships 2026のパブリックビューイングを 開催 します‼️ イベント は 開催 地「ベ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "11d3a663541a340ed2bb",
@@ -3456,7 +3485,7 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "occ_65d86c36c7ea10bb7047",
+      "event_id": "e19bfb362e3b2a392bef",
       "title": "【 開始 時刻変更のお知らせ】 いいね・RPなど多くの反応ありがとうございます！ この度、 VRC くりえいてぃ部様のご協力により、同部ワールドをお借りして 開催 させていただくこととなりまし…",
       "category": "other",
       "label": "その他",
@@ -3470,7 +3499,7 @@
     },
     {
       "event_id": "d04474fdfb2c1e37b4d8",
-      "title": "VRChat アクロバット飛行チーム「BLUE STARS」は、展示飛行 イベント を行います。 9/12（土） 開場 22:00～ 9/13（日） 開場 21:00～ 「Oppailot」他…",
+      "title": "VRChat アクロバット飛行チーム「BLUE STARS」は、展示飛行イベントを行います。 9/12（土） 開場 22:00～ 9/13（日） 開場 21:00～ 「Oppailot」他関係…",
       "category": "art",
       "label": "アート・展示・撮影",
       "subcategory": null,
@@ -3483,23 +3512,6 @@
       "event_mode": "in_world",
       "ambiguous_with": [
         "community"
-      ]
-    },
-    {
-      "event_id": "0961884097aaa59d0e09",
-      "title": "VRCイベント 『Luminous Astrantia』 🍀第3回 オープン のお知らせ🍀 9/12(土)22:55~24:10 🌟リポストキャンペーン🌟 ゲストさんの生演奏particlel…",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "music"
       ]
     },
     {
@@ -3518,6 +3530,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "3720dc3cf8c89dafd4b2",
+      "title": "🌐:. 🐰 🫧 .:🌐 あーしのともだち VRChat 編 ✨:.｡🩵 🎶 .:✨ 📅 2026.10.10 (sat) 📍 ときわ台Cave 🕒 18:00 OP / 18:20 ST 🎫 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     }
   ]
 }

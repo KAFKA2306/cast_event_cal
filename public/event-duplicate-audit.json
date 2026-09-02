@@ -1,102 +1,110 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 535,
-  "event_count_after": 533,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.003738,
+  "event_count_before": 553,
+  "event_count_after": 552,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.001808,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
     {
-      "cluster_id": "occ_5c65ebe8e898e5eb2c2f",
-      "starts_at": "2026-09-26T12:00:00Z",
-      "title": "### 大会 日時 ：9/26(土) 21:00~ ### エントリー期限：9/12(土) 今回も 同期会 の枠を超えて、色んな月とバレーで楽しもう！ エントリー方法は、以下の「 VRC同期会…",
+      "cluster_id": "occ_65cc6a02eb7e00856d97",
+      "starts_at": "2026-09-13T11:00:00Z",
+      "title": "【 VRChat イベント 告知 】 ブイチャで! パクパク! 月見バーガー!! 説明!! ｢月見バーガー 集会 ｣ 月見バーガーを用意して、みんなで食べる 集会 です。 日時 :9/13(日…",
       "member_count": 2,
       "member_ids": [
-        "3de182eb5b2c6146363d",
-        "8f5d6a331d2d18ba1982"
+        "082cda75f9119e64e4cb",
+        "e9f079b0aeb8c91dbc36"
       ],
       "source_record_ids": [
-        "src_b26a2e99cab5e3ebd81d",
-        "src_cf4a9f84022f039f6b97"
+        "src_32925d45b68fd90d0f6c",
+        "src_6e604e85cbb5e0e27058"
       ],
       "sources": [
         "yahoo_realtime_events"
       ],
       "reasons": [
-        "exact_text_same_start"
+        "same_organizer_same_start_high_similarity"
       ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_cf4a9f84022f039f6b97"
-    },
-    {
-      "cluster_id": "occ_65d86c36c7ea10bb7047",
-      "starts_at": "2026-09-12T11:00:00Z",
-      "title": "【 開始 時刻変更のお知らせ】 いいね・RPなど多くの反応ありがとうございます！ この度、 VRC くりえいてぃ部様のご協力により、同部ワールドをお借りして 開催 させていただくこととなりまし…",
-      "member_count": 2,
-      "member_ids": [
-        "836d01bc69cacdbac1ea",
-        "e19bfb362e3b2a392bef"
-      ],
-      "source_record_ids": [
-        "src_80112cdde9995e52cb55",
-        "src_bb3a4a41c4f7a4eb1844"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_bb3a4a41c4f7a4eb1844"
+      "confidence": 0.94,
+      "representative_source_record_id": "src_6e604e85cbb5e0e27058"
     }
   ],
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "f4e8e546fff742b549d3",
-      "right_id": "67c3f9d85946795f4754",
-      "starts_at": "2026-09-01T12:00:00Z",
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "86427120fe8e055a6760",
+      "starts_at": "2026-09-02T12:00:00Z",
       "left_organizer": null,
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.0957,
-      "left_title": "C# Tokyo VRもくもく会",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 なお、今回のワ…"
+      "right_organizer": "@yossy222_VRC",
+      "similarity": 0.1107,
+      "left_title": "VRC数学談話会",
+      "right_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…"
     },
     {
-      "left_id": "f4e8e546fff742b549d3",
-      "right_id": "f6bb25aa80f38e90b0fc",
-      "starts_at": "2026-09-01T12:00:00Z",
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "aa009cf25f883f724175",
+      "starts_at": "2026-09-02T12:00:00Z",
       "left_organizer": null,
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.0779,
-      "left_title": "C# Tokyo VRもくもく会",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 第106回 静岡ケンミン 集会 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加 方法 ① 主催…"
+      "right_organizer": "@VRC_nayameeting",
+      "similarity": 0.2273,
+      "left_title": "VRC数学談話会",
+      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベント…"
     },
     {
-      "left_id": "67c3f9d85946795f4754",
-      "right_id": "f6bb25aa80f38e90b0fc",
-      "starts_at": "2026-09-01T12:00:00Z",
-      "left_organizer": "@KMID_Numanidive",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1782,
-      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 なお、今回のワ…",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 第106回 静岡ケンミン 集会 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加 方法 ① 主催…"
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "5bde7fc035919e0cd271",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@NarratographVRC",
+      "similarity": 0.1767,
+      "left_title": "VRC数学談話会",
+      "right_title": "【第33回 VRC 東方TRPG幻ナラ 集会 】 第33回は半年記念でクイズ大会企画を持ってきてます！ 本日 21:00より 開催 します！ ご参加お待ちしております。"
     },
     {
-      "left_id": "b63671fdc13185c0bd08",
-      "right_id": "c59df7e676d004a0eaf2",
-      "starts_at": "2026-09-01T13:00:00Z",
-      "left_organizer": "@cercle630",
-      "right_organizer": "@mmpp_yurufuwa",
-      "similarity": 0.1009,
-      "left_title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 : 本日 22:00〜 VRC ボクシングに興味がある方、楽しみたい方…",
-      "right_title": "本日 (火)22時、 VRChat で 子育てママパパゆるふわ交流会！ 今日 から9月、新学期ですね🍁 夏休みの思い出や新学期の様子など、 のんびりおしゃべりしましょう♪ 子育て以外の雑談も大…"
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "082990e8e4de51a3649f",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "ゆるゲMEET",
+      "similarity": 0.1156,
+      "left_title": "VRC数学談話会",
+      "right_title": "ゆるゲMEET定期開催日"
+    },
+    {
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "d3402125bb37ad59ccc8",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@HSKZ2946",
+      "similarity": 0.1504,
+      "left_title": "VRC数学談話会",
+      "right_title": "本日 21時から接客型ロールプレイイベント「ほしくず教室」 開催 です！ 参加する際は VRC グループ「ほしくず教室」（https://t.co/vez1XI3ZjS) にて20時55分から…"
+    },
+    {
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "8f81eab75cbde8ec4f55",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "水曜Quest初心者の集い",
+      "similarity": 0.068,
+      "left_title": "VRC数学談話会",
+      "right_title": "水曜Quest初心者の集い"
+    },
+    {
+      "left_id": "f6df97ee2b7945a51d82",
+      "right_id": "62261f2a0acd6c8b75c1",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "謎めぐり",
+      "similarity": 0.0829,
+      "left_title": "VRC数学談話会",
+      "right_title": "謎めぐり"
     },
     {
       "left_id": "86427120fe8e055a6760",
@@ -106,7 +114,17 @@
       "right_organizer": "@VRC_nayameeting",
       "similarity": 0.0866,
       "left_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…",
-      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベントはP…"
+      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベント…"
+    },
+    {
+      "left_id": "86427120fe8e055a6760",
+      "right_id": "5bde7fc035919e0cd271",
+      "starts_at": "2026-09-02T12:00:00Z",
+      "left_organizer": "@yossy222_VRC",
+      "right_organizer": "@NarratographVRC",
+      "similarity": 0.1053,
+      "left_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…",
+      "right_title": "【第33回 VRC 東方TRPG幻ナラ 集会 】 第33回は半年記念でクイズ大会企画を持ってきてます！ 本日 21:00より 開催 します！ ご参加お待ちしております。"
     },
     {
       "left_id": "86427120fe8e055a6760",
@@ -117,47 +135,7 @@
       "similarity": 0.0323,
       "left_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…",
       "right_title": "ゆるゲMEET定期開催日"
-    },
-    {
-      "left_id": "86427120fe8e055a6760",
-      "right_id": "8f81eab75cbde8ec4f55",
-      "starts_at": "2026-09-02T12:00:00Z",
-      "left_organizer": "@yossy222_VRC",
-      "right_organizer": "水曜Quest初心者の集い",
-      "similarity": 0.0548,
-      "left_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…",
-      "right_title": "水曜Quest初心者の集い"
-    },
-    {
-      "left_id": "86427120fe8e055a6760",
-      "right_id": "62261f2a0acd6c8b75c1",
-      "starts_at": "2026-09-02T12:00:00Z",
-      "left_organizer": "@yossy222_VRC",
-      "right_organizer": "謎めぐり",
-      "similarity": 0.068,
-      "left_title": "【 VRChat DJ イベント告知 】 9/2(水)はMAGENTAでサイケをします！ 👉 Wednesday Night MAGENTA : Trance Exclusive 👉2026/…",
-      "right_title": "謎めぐり"
-    },
-    {
-      "left_id": "aa009cf25f883f724175",
-      "right_id": "082990e8e4de51a3649f",
-      "starts_at": "2026-09-02T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": "ゆるゲMEET",
-      "similarity": 0.0559,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベントはP…",
-      "right_title": "ゆるゲMEET定期開催日"
-    },
-    {
-      "left_id": "aa009cf25f883f724175",
-      "right_id": "8f81eab75cbde8ec4f55",
-      "starts_at": "2026-09-02T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": "水曜Quest初心者の集い",
-      "similarity": 0.0455,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第79回は9月2日(水) 『21:00〜22:30』 ※当イベントはP…",
-      "right_title": "水曜Quest初心者の集い"
     }
   ],
-  "generated_at": "2026-09-01T22:38:29Z"
+  "generated_at": "2026-09-02T22:41:14Z"
 }
