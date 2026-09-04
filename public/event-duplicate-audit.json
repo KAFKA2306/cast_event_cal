@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 551,
-  "event_count_after": 548,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 3,
-  "duplicate_post_count": 3,
-  "duplicate_rate": 0.005445,
+  "event_count_before": 543,
+  "event_count_after": 541,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.003683,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
@@ -54,111 +54,29 @@
       ],
       "confidence": 0.99,
       "representative_source_record_id": "src_bb3a4a41c4f7a4eb1844"
-    },
-    {
-      "cluster_id": "occ_69cd4b368d168b9b4346",
-      "starts_at": "2026-09-10T11:00:00Z",
-      "title": "京セラのメタバース第６弾です。 またガイドツアー実施します。 9/10(木) 20時・21時・22時 9/11(金) 20時・21時・22時 の６回となってます。 京セラ社員とカワサキモーター…",
-      "member_count": 2,
-      "member_ids": [
-        "8db818e05158e6f7bd51",
-        "c830d74622d5519e21fd"
-      ],
-      "source_record_ids": [
-        "src_9b16d49c422f1228e66d",
-        "src_cb0825b2229c678681e8"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_cb0825b2229c678681e8"
     }
   ],
   "ambiguous_candidates": [
     {
-      "left_id": "b9ab3b6f88f27bfca040",
-      "right_id": "74b8e0fb975804d33dcc",
+      "left_id": "74b8e0fb975804d33dcc",
+      "right_id": "b9ab3b6f88f27bfca040",
       "starts_at": "2026-09-04T12:00:00Z",
       "organizer": "@rhinohornVR",
       "similarity": 0.6603,
-      "left_title": "【 告知 】第7話 VRchat アニソン DJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロ…",
-      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きなアニメーターは一人原画国宝の佐々門信芳さんです！アニソン流れるV…"
+      "left_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きなアニメーターは一人原画国宝の佐々門信芳さんです！アニソン流れるV…",
+      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロハ…"
     }
   ],
   "negative_samples": [
     {
-      "left_id": "e148fcb1f0b7de291b9f",
-      "right_id": "6f61c68efcad2002e7ee",
-      "starts_at": "2026-09-03T12:00:00Z",
-      "left_organizer": "VRC初心者ワールドツアー",
-      "right_organizer": null,
-      "similarity": 0.0656,
-      "left_title": "VRC初心者ワールドツアー",
-      "right_title": "データサイエンティスト集会"
-    },
-    {
-      "left_id": "e148fcb1f0b7de291b9f",
-      "right_id": "2fef9d0c0b1c8282a1ed",
-      "starts_at": "2026-09-03T12:00:00Z",
-      "left_organizer": "VRC初心者ワールドツアー",
-      "right_organizer": "@dadaokashi",
-      "similarity": 0.141,
-      "left_title": "VRC初心者ワールドツアー",
-      "right_title": "📢 今日 の配信｜21:00~ 【3D飲酒雑談】ヴェネツィア国際 映画祭 XR部門で選出された VRChat ワールド『Nel Blu』を巡るhttps://t.co/cDt3k8Rt0q @…"
-    },
-    {
-      "left_id": "6f61c68efcad2002e7ee",
-      "right_id": "2fef9d0c0b1c8282a1ed",
-      "starts_at": "2026-09-03T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@dadaokashi",
-      "similarity": 0.0743,
-      "left_title": "データサイエンティスト集会",
-      "right_title": "📢 今日 の配信｜21:00~ 【3D飲酒雑談】ヴェネツィア国際 映画祭 XR部門で選出された VRChat ワールド『Nel Blu』を巡るhttps://t.co/cDt3k8Rt0q @…"
-    },
-    {
-      "left_id": "4a6e23a3211c0c9d96a0",
-      "right_id": "0e29b4eb6f6b16f0c6c1",
-      "starts_at": "2026-09-03T13:00:00Z",
-      "left_organizer": "@hakachankunsan",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.2012,
-      "left_title": "【 本日 22時】 VRChat で 開催 できる、ほとんどの形式の イベント (非営利)を運営してきたと思われる者による、「この イベント 形式って実際どうなの？」というお話をひたすらします…",
-      "right_title": "【 本日 の注目イベント✨】 🕒9/3(木) 22:00～ 🟠【初心者歓迎！】VR射撃競技イベント「 VRC 射撃部｣ 精密射撃 第3回プレ オープン 【PCVR限定】🟠 現実にもあるスピード…"
-    },
-    {
-      "left_id": "4a6e23a3211c0c9d96a0",
-      "right_id": "29624a44a53c188dd285",
-      "starts_at": "2026-09-03T13:00:00Z",
-      "left_organizer": "@hakachankunsan",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.1592,
-      "left_title": "【 本日 22時】 VRChat で 開催 できる、ほとんどの形式の イベント (非営利)を運営してきたと思われる者による、「この イベント 形式って実際どうなの？」というお話をひたすらします…",
-      "right_title": "【 本日 の注目イベント✨】 🕒9/3(木) 22:00～ 🟠【講師：HakaStLaurent】コラボ授業：VR活動の選択肢【私立 VRC 学園×サンリオVfes】🟠 VRChat の一文化…"
-    },
-    {
-      "left_id": "0e29b4eb6f6b16f0c6c1",
-      "right_id": "29624a44a53c188dd285",
-      "starts_at": "2026-09-03T13:00:00Z",
-      "left_organizer": "@wondernote_info",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.2685,
-      "left_title": "【 本日 の注目イベント✨】 🕒9/3(木) 22:00～ 🟠【初心者歓迎！】VR射撃競技イベント「 VRC 射撃部｣ 精密射撃 第3回プレ オープン 【PCVR限定】🟠 現実にもあるスピード…",
-      "right_title": "【 本日 の注目イベント✨】 🕒9/3(木) 22:00～ 🟠【講師：HakaStLaurent】コラボ授業：VR活動の選択肢【私立 VRC 学園×サンリオVfes】🟠 VRChat の一文化…"
-    },
-    {
       "left_id": "a14f20fe7094aa15a92f",
-      "right_id": "b9ab3b6f88f27bfca040",
+      "right_id": "57e47ea6ba857c92fe08",
       "starts_at": "2026-09-04T12:00:00Z",
       "left_organizer": "ASMR集会",
-      "right_organizer": "@rhinohornVR",
-      "similarity": 0.1019,
+      "right_organizer": null,
+      "similarity": 0.0701,
       "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【 告知 】第7話 VRchat アニソン DJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロ…"
+      "right_title": "VRC Blender集会"
     },
     {
       "left_id": "a14f20fe7094aa15a92f",
@@ -172,24 +90,84 @@
     },
     {
       "left_id": "a14f20fe7094aa15a92f",
+      "right_id": "b9ab3b6f88f27bfca040",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@rhinohornVR",
+      "similarity": 0.1019,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロハ…"
+    },
+    {
+      "left_id": "a14f20fe7094aa15a92f",
+      "right_id": "e21672ed393ea4c2f533",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@VrcYss",
+      "similarity": 0.1095,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "🎧9/4 Thu｜ 本日 のYSS✨ 💫「JPTOWN夏祭り2026本 祭り 」🎆 🕘21：00 Open 🕙22：00 YSS出演 🌐 VRChat ▷ YSSの二人、または Publicイ…"
+    },
+    {
+      "left_id": "a14f20fe7094aa15a92f",
       "right_id": "165c0886ef6b95b5947b",
       "starts_at": "2026-09-04T12:00:00Z",
       "left_organizer": "ASMR集会",
       "right_organizer": "@immersivecloud",
       "similarity": 0.0863,
       "left_title": "ASMR集会 初心者説明会",
-      "right_title": "📢VRマーダーミステリー「交錯された一室にて」配信視聴会 開催 🎉 📅 開催日時 ：9/4(木) 21:00〜24:00 📮参加方法： VRChat で「イマーシブクラウド」グループに入って、…"
+      "right_title": "📢VRマーダーミステリー「交錯された一室にて」配信視聴会 開催 🎉 📅 開催日時 ：9/4(木) 21:00〜24:00 📮 参加 方法： VRChat で「イマーシブクラウド」グループに入っ…"
     },
     {
-      "left_id": "b9ab3b6f88f27bfca040",
+      "left_id": "57e47ea6ba857c92fe08",
       "right_id": "74b8e0fb975804d33dcc",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@rhinohornVR",
+      "similarity": 0.0559,
+      "left_title": "VRC Blender集会",
+      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きなアニメーターは一人原画国宝の佐々門信芳さんです！アニソン流れるV…"
+    },
+    {
+      "left_id": "57e47ea6ba857c92fe08",
+      "right_id": "b9ab3b6f88f27bfca040",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@rhinohornVR",
+      "similarity": 0.0524,
+      "left_title": "VRC Blender集会",
+      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロハ…"
+    },
+    {
+      "left_id": "57e47ea6ba857c92fe08",
+      "right_id": "e21672ed393ea4c2f533",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@VrcYss",
+      "similarity": 0.1038,
+      "left_title": "VRC Blender集会",
+      "right_title": "🎧9/4 Thu｜ 本日 のYSS✨ 💫「JPTOWN夏祭り2026本 祭り 」🎆 🕘21：00 Open 🕙22：00 YSS出演 🌐 VRChat ▷ YSSの二人、または Publicイ…"
+    },
+    {
+      "left_id": "57e47ea6ba857c92fe08",
+      "right_id": "165c0886ef6b95b5947b",
+      "starts_at": "2026-09-04T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@immersivecloud",
+      "similarity": 0.093,
+      "left_title": "VRC Blender集会",
+      "right_title": "📢VRマーダーミステリー「交錯された一室にて」配信視聴会 開催 🎉 📅 開催日時 ：9/4(木) 21:00〜24:00 📮 参加 方法： VRChat で「イマーシブクラウド」グループに入っ…"
+    },
+    {
+      "left_id": "74b8e0fb975804d33dcc",
+      "right_id": "b9ab3b6f88f27bfca040",
       "starts_at": "2026-09-04T12:00:00Z",
       "left_organizer": "@rhinohornVR",
       "right_organizer": "@rhinohornVR",
       "similarity": 0.6603,
-      "left_title": "【 告知 】第7話 VRchat アニソン DJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロ…",
-      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きなアニメーターは一人原画国宝の佐々門信芳さんです！アニソン流れるV…"
+      "left_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きなアニメーターは一人原画国宝の佐々門信芳さんです！アニソン流れるV…",
+      "right_title": "【 告知 】第7話 VRchat アニソンDJイベント 9/4(金)21:00～ Group ＋ VMOTIO.8042 好きな音響監督は岩浪美和氏です！ガルパンの爆音上映も行きました！アロハ…"
     }
   ],
-  "generated_at": "2026-09-03T22:37:30Z"
+  "generated_at": "2026-09-04T22:23:07Z"
 }
