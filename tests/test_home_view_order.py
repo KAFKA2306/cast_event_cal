@@ -34,6 +34,20 @@ def test_home_primary_action_is_tonight_and_subscription_remains_available() -> 
     assert 'data-card-order="decision-first-v2"' in html
 
 
+def test_home_filter_state_is_shareable_and_restorable() -> None:
+    html = rendered_home()
+    assert 'data-filter-url="shareable-v1"' in html
+    assert '<button id="copy-filter-url" class="button" type="button">絞り込みURLをコピー</button>' in html
+    assert "new URLSearchParams(location.search)" in html
+    assert "history.replaceState" in html
+    assert "['q','category','source','range','deadlines']" in html
+    assert "restoreSelectFilter('category',params.get('category'))" in html
+    assert "restoreSelectFilter('source',params.get('source'))" in html
+    assert "new MutationObserver" in html
+    assert "navigator.clipboard.writeText(location.href)" in html
+    assert "window.prompt('このURLをコピーしてください',location.href)" in html
+
+
 def test_event_card_keeps_decision_information_above_optional_evidence() -> None:
     html = rendered_home()
     start = html.index("function eventHtml(event){")

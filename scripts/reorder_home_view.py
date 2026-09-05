@@ -6,6 +6,7 @@ OUTPUT = Path("public/index.html")
 VIEW_ORDER_MARKER = 'data-view-order="decision-first-v2"'
 LEGACY_VIEW_ORDER_MARKER = 'data-view-order="decision-first-v1"'
 CARD_ORDER_MARKER = 'data-card-order="decision-first-v2"'
+FILTER_URL_MARKER = 'data-filter-url="shareable-v1"'
 
 CARD_CSS = """
 .event{grid-template-columns:92px minmax(0,1fr)}
@@ -41,6 +42,18 @@ function eventHtml(event){const category=categoryKey(event.category),end=event.e
 """.strip()
 
 RECOMMENDATION_JS = r"""function recommendationHtml(row){const e=row.event,link=eventLinks(e)[0],tags=(e.tags||[]).filter(tag=>!STOP_TAGS.has(normalize(tag))).slice(0,3).map(tag=>`<span class="tag">${esc(tag)}</span>`).join('');return `<article class="recommendation-card"><h3>${esc(eventTitle(e))}</h3><div class="event-top"><span class="badge ${esc(categoryKey(e.category))}">${esc(categoryLabel(e))}</span><span class="badge">${esc(dayLabel(e.starts_at))} ${esc(timeLabel(e.starts_at))}</span></div><div class="meta">${e.organizer?`主催 ${esc(e.organizer)} · `:''}${esc(e.location||'VRChat')}</div><p class="recommendation-reason">${esc(row.reason)}</p><a class="event-link primary" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer"${historyAttr(e)}>${esc(link.label)}</a>${tags?`<div class="tags">${tags}</div>`:''}</article>`}"""
+
+FILTER_URL_JS = r"""
+const FILTER_QUERY_KEYS=['q','category','source','range','deadlines'];
+function syncFilterUrl(){const params=new URLSearchParams(location.search),q=$('#q').value.trim(),category=$('#category').value,source=$('#source').value,range=document.querySelector('.chip[data-range][aria-pressed="true"]')?.dataset.range||state.range||'week';q?params.set('q',q):params.delete('q');category&&category!=='all'?params.set('category',category):params.delete('category');source&&source!=='all'?params.set('source',source):params.delete('source');range&&range!=='week'?params.set('range',range):params.delete('range');$('#include-deadlines').checked?params.set('deadlines','1'):params.delete('deadlines');for(const key of [...params.keys()])if(FILTER_QUERY_KEYS.includes(key)&&!params.get(key))params.delete(key);const query=params.toString();history.replaceState(null,'',`${location.pathname}${query?`?${query}`:''}${location.hash}`)}
+function restoreSelectFilter(id,value){if(!value||value==='all')return;const select=$(`#${id}`),apply=()=>{if(![...select.options].some(option=>option.value===value))return false;select.value=value;select.dispatchEvent(new Event('change',{bubbles:true}));return true};if(apply())return;const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});observer.observe(select,{childList:true});window.setTimeout(()=>observer.disconnect(),10000)}
+function restoreFilterUrl(){const params=new URLSearchParams(location.search),q=params.get('q'),range=params.get('range'),deadlines=params.get('deadlines');if(q!==null){$('#q').value=q;$('#q').dispatchEvent(new Event('input',{bubbles:true}))}if(range&&['today','week','month','all'].includes(range)){const chip=document.querySelector(`.chip[data-range="${CSS.escape(range)}"]`);if(chip)chip.click()}if(deadlines==='1'){const input=$('#include-deadlines');input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}))}restoreSelectFilter('category',params.get('category'));restoreSelectFilter('source',params.get('source'))}
+function isFilterControl(target){return target instanceof Element&&(target.matches('#q,#category,#source,#include-deadlines')||target.matches('.chip[data-range]'))}
+function syncTrustedFilterEvent(event){if(event.isTrusted&&isFilterControl(event.target))queueMicrotask(syncFilterUrl)}
+document.addEventListener('input',syncTrustedFilterEvent);document.addEventListener('change',syncTrustedFilterEvent);document.addEventListener('click',syncTrustedFilterEvent);
+$('#copy-filter-url').addEventListener('click',async()=>{syncFilterUrl();const button=$('#copy-filter-url'),label=button.textContent;try{if(!navigator.clipboard?.writeText)throw new Error('Clipboard API unavailable');await navigator.clipboard.writeText(location.href);button.textContent='URLをコピーしました'}catch{window.prompt('このURLをコピーしてください',location.href);button.textContent='URLを表示しました'}window.setTimeout(()=>{button.textContent=label},1800)});
+restoreFilterUrl();
+""".strip()
 
 
 def _replace_once(html: str, old: str, new: str, error: str) -> str:
@@ -128,13 +141,39 @@ def _apply_card_order(html: str) -> str:
     return html
 
 
+def _apply_filter_url(html: str) -> str:
+    if FILTER_URL_MARKER in html:
+        return html
+
+    html = _replace_once(
+        html,
+        CARD_ORDER_MARKER,
+        f"{CARD_ORDER_MARKER} {FILTER_URL_MARKER}",
+        "card-order marker missing before filter URL integration",
+    )
+    html = _replace_once(
+        html,
+        '<label class="toggle"><input id="include-deadlines" type="checkbox"> 募集・締切も通常一覧に含める</label>',
+        '<label class="toggle"><input id="include-deadlines" type="checkbox"> 募集・締切も通常一覧に含める</label><button id="copy-filter-url" class="button" type="button">絞り込みURLをコピー</button>',
+        "filter controls marker missing",
+    )
+    html = _replace_once(
+        html,
+        "</script>",
+        f"{FILTER_URL_JS}\n</script>",
+        "frontend script closing marker missing",
+    )
+    return html
+
+
 def reorder_home_view(html: str) -> str:
-    """Apply decision-first information order and progressive evidence disclosure."""
-    if VIEW_ORDER_MARKER in html and CARD_ORDER_MARKER in html:
+    """Apply decision-first information order, progressive evidence, and shareable filter state."""
+    if VIEW_ORDER_MARKER in html and CARD_ORDER_MARKER in html and FILTER_URL_MARKER in html:
         return html
 
     html = _apply_home_order(html)
     html = _apply_card_order(html)
+    html = _apply_filter_url(html)
 
     ordered_markers = (
         '<section class="hero">',
