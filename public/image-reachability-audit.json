@@ -1,30 +1,43 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-06T22:10:20Z",
+  "generated_at": "2026-09-07T22:53:17Z",
   "policy": "fail-closed-for-unreachable-optional-image-assets",
-  "checked_url_count": 37,
-  "reachable_url_count": 33,
-  "failed_url_count": 4,
-  "events_degraded": 4,
-  "stripped_image_fields": 8,
+  "checked_url_count": 43,
+  "reachable_url_count": 36,
+  "failed_url_count": 7,
+  "events_degraded": 6,
+  "stripped_image_fields": 12,
   "failures": {
-    "http_404": 4
+    "http_404": 6,
+    "unexpected_content_type:application/octet-stream": 1
   },
   "failed_urls": [
     {
-      "url": "https://pbs.twimg.com/profile_images/1728575042278289409/8pkRZEta.jpg?format=webp&name=200x200",
+      "url": "https://api.vrchat.cloud/api/1/file/file_02668459-0ad7-4508-9cd1-49a5aec786d9/1/file",
+      "reason": "unexpected_content_type:application/octet-stream"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1575059484556533760/1aX2bSIw.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1838164310729859072/i-9iu0nG.png?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1915990590149562368/Y7JtrgPr.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1950067699780112385/3U0PsvAh.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1926538293199441920/1t4el7uC.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2041726898204766210/lyuQwaxZ.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
       "url": "https://pbs.twimg.com/profile_images/2096144088127201280/vesOBVJs.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2054082312888102912/xQMpQNdF.jpg?format=webp&name=200x200",
       "reason": "http_404"
     }
   ]

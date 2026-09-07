@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 527,
-  "event_count_after": 526,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.001898,
+  "event_count_before": 530,
+  "event_count_after": 528,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.003774,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
+    {
+      "cluster_id": "occ_5c65ebe8e898e5eb2c2f",
+      "starts_at": "2026-09-26T12:00:00Z",
+      "title": "### 大会 日時 ：9/26(土) 21:00~ ### エントリー期限：9/12(土) 今回も 同期会 の枠を超えて、色んな月とバレーで楽しもう！ エントリー方法は、以下の「 VRC同期会…",
+      "member_count": 2,
+      "member_ids": [
+        "3de182eb5b2c6146363d",
+        "8f5d6a331d2d18ba1982"
+      ],
+      "source_record_ids": [
+        "src_b26a2e99cab5e3ebd81d",
+        "src_cf4a9f84022f039f6b97"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_cf4a9f84022f039f6b97"
+    },
     {
       "cluster_id": "occ_65cc6a02eb7e00856d97",
       "starts_at": "2026-09-13T11:00:00Z",
@@ -37,105 +59,105 @@
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "5b9f5ffba113b5e35368",
-      "right_id": "11f9e9286dbc0ade0797",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
+      "left_id": "cb9b31c0bec00334ba6e",
+      "right_id": "58ee99ed3bc2065df5e1",
+      "starts_at": "2026-09-07T12:00:00Z",
+      "left_organizer": "VRCごいた会",
+      "right_organizer": "VRCゲームワールド部",
+      "similarity": 0.4828,
+      "left_title": "VRCごいた会",
+      "right_title": "VRCゲームワールド部 月曜イベント"
+    },
+    {
+      "left_id": "99e45ed6a30252f9f71d",
+      "right_id": "a8fff7c5cd1f8f28a209",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@0zoku_vrc",
+      "similarity": 0.0784,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
+      "right_title": "VRC イベント 〜０属オークション〜 ✨第5回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 9/7(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5万UC以上の所持条件 …"
+    },
+    {
+      "left_id": "99e45ed6a30252f9f71d",
+      "right_id": "fc427753a4d40abccbf3",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@0zoku_vrc",
+      "similarity": 0.0617,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
+      "right_title": "VRC オークション イベント 💰『０属オークション』💰 本日 22:00~ 第5回 開催 ～出品サキュバス公開～ 【 参加 方法】 時間になったらインスタンスリーダーに１回 リクイン ！ 🔔…"
+    },
+    {
+      "left_id": "99e45ed6a30252f9f71d",
+      "right_id": "0546430fac564a7d2239",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@akaiheya_vrc",
+      "similarity": 0.129,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
+      "right_title": "VRC 怪談 集会 赤い部屋 第147回 ◎ 開催日時 ：9/7(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bEm…"
+    },
+    {
+      "left_id": "99e45ed6a30252f9f71d",
+      "right_id": "36363733beabc9f51198",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "SW_Arch",
       "right_organizer": null,
-      "similarity": 0.09,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "ITエンジニア キャリア相談・雑談集会"
+      "similarity": 0.1205,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
+      "right_title": "VRC歴史集会"
     },
     {
-      "left_id": "5b9f5ffba113b5e35368",
-      "right_id": "141d07f9e049e8c7c75c",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "VRCフィットボクシング集会",
-      "similarity": 0.4286,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "VRCフィットボクシング集会（日曜）"
+      "left_id": "99e45ed6a30252f9f71d",
+      "right_id": "9138c7f5c515c728713d",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@hanamizuki__VRC",
+      "similarity": 0.0578,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第1月曜）",
+      "right_title": "🌸 VRChat 新イベント OPEN 🌸 和服メイド喫茶「喫茶華瑞季」 メイドそれぞれにモチーフのお花と、 個性に合わせた紅茶をご用意しています☕️ お気に入りのメイドと一緒に、 あなた好み…"
     },
     {
-      "left_id": "5b9f5ffba113b5e35368",
-      "right_id": "56bf95088ae4023f0e09",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "@terakoya_vrc",
-      "similarity": 0.1132,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "今日 もこのあと21時～茶屋若葉開店します。 VRC 初心者さんメインの交流イベント。上級者も歓迎です。 店員が交流サポート、話下手の方もお気軽に♪ 「wakaba0214_茶屋若葉」へ フレ…"
+      "left_id": "a8fff7c5cd1f8f28a209",
+      "right_id": "fc427753a4d40abccbf3",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "@0zoku_vrc",
+      "right_organizer": "@0zoku_vrc",
+      "similarity": 0.3288,
+      "left_title": "VRC イベント 〜０属オークション〜 ✨第5回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 9/7(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5万UC以上の所持条件 …",
+      "right_title": "VRC オークション イベント 💰『０属オークション』💰 本日 22:00~ 第5回 開催 ～出品サキュバス公開～ 【 参加 方法】 時間になったらインスタンスリーダーに１回 リクイン ！ 🔔…"
     },
     {
-      "left_id": "5b9f5ffba113b5e35368",
-      "right_id": "f4c5a38da98c02efbd7e",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "@ClubMorceau_VRC",
-      "similarity": 0.1134,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "🌙【#ClubMorceau】#36🌙 ～ モルソ 第36回 通常営業 ～ ⏰9月6日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) 🎉Per…"
+      "left_id": "a8fff7c5cd1f8f28a209",
+      "right_id": "0546430fac564a7d2239",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "@0zoku_vrc",
+      "right_organizer": "@akaiheya_vrc",
+      "similarity": 0.1792,
+      "left_title": "VRC イベント 〜０属オークション〜 ✨第5回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 9/7(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5万UC以上の所持条件 …",
+      "right_title": "VRC 怪談 集会 赤い部屋 第147回 ◎ 開催日時 ：9/7(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bEm…"
     },
     {
-      "left_id": "5b9f5ffba113b5e35368",
-      "right_id": "92b6309e3b3db2c25755",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "@b2b_60oth",
-      "similarity": 0.0457,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "🔥 #Booth2Booth vol.06 開催決定 🔥 ◤◢◤◢ NEXT STAGE ◤◢◤◢ リアル × VR、その境界を繋ぐ REAL の熱狂から VRChat へ帰ってきた！ CCS…"
+      "left_id": "a8fff7c5cd1f8f28a209",
+      "right_id": "36363733beabc9f51198",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "@0zoku_vrc",
+      "right_organizer": null,
+      "similarity": 0.2,
+      "left_title": "VRC イベント 〜０属オークション〜 ✨第5回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 9/7(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5万UC以上の所持条件 …",
+      "right_title": "VRC歴史集会"
     },
     {
-      "left_id": "11f9e9286dbc0ade0797",
-      "right_id": "141d07f9e049e8c7c75c",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "VRCフィットボクシング集会",
-      "similarity": 0.0833,
-      "left_title": "ITエンジニア キャリア相談・雑談集会",
-      "right_title": "VRCフィットボクシング集会（日曜）"
-    },
-    {
-      "left_id": "11f9e9286dbc0ade0797",
-      "right_id": "56bf95088ae4023f0e09",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@terakoya_vrc",
-      "similarity": 0.0632,
-      "left_title": "ITエンジニア キャリア相談・雑談集会",
-      "right_title": "今日 もこのあと21時～茶屋若葉開店します。 VRC 初心者さんメインの交流イベント。上級者も歓迎です。 店員が交流サポート、話下手の方もお気軽に♪ 「wakaba0214_茶屋若葉」へ フレ…"
-    },
-    {
-      "left_id": "11f9e9286dbc0ade0797",
-      "right_id": "f4c5a38da98c02efbd7e",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@ClubMorceau_VRC",
-      "similarity": 0.125,
-      "left_title": "ITエンジニア キャリア相談・雑談集会",
-      "right_title": "🌙【#ClubMorceau】#36🌙 ～ モルソ 第36回 通常営業 ～ ⏰9月6日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) 🎉Per…"
-    },
-    {
-      "left_id": "11f9e9286dbc0ade0797",
-      "right_id": "92b6309e3b3db2c25755",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@b2b_60oth",
-      "similarity": 0.1041,
-      "left_title": "ITエンジニア キャリア相談・雑談集会",
-      "right_title": "🔥 #Booth2Booth vol.06 開催決定 🔥 ◤◢◤◢ NEXT STAGE ◤◢◤◢ リアル × VR、その境界を繋ぐ REAL の熱狂から VRChat へ帰ってきた！ CCS…"
-    },
-    {
-      "left_id": "141d07f9e049e8c7c75c",
-      "right_id": "56bf95088ae4023f0e09",
-      "starts_at": "2026-09-06T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@terakoya_vrc",
-      "similarity": 0.1457,
-      "left_title": "VRCフィットボクシング集会（日曜）",
-      "right_title": "今日 もこのあと21時～茶屋若葉開店します。 VRC 初心者さんメインの交流イベント。上級者も歓迎です。 店員が交流サポート、話下手の方もお気軽に♪ 「wakaba0214_茶屋若葉」へ フレ…"
+      "left_id": "a8fff7c5cd1f8f28a209",
+      "right_id": "9138c7f5c515c728713d",
+      "starts_at": "2026-09-07T13:00:00Z",
+      "left_organizer": "@0zoku_vrc",
+      "right_organizer": "@hanamizuki__VRC",
+      "similarity": 0.1739,
+      "left_title": "VRC イベント 〜０属オークション〜 ✨第5回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 9/7(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5万UC以上の所持条件 …",
+      "right_title": "🌸 VRChat 新イベント OPEN 🌸 和服メイド喫茶「喫茶華瑞季」 メイドそれぞれにモチーフのお花と、 個性に合わせた紅茶をご用意しています☕️ お気に入りのメイドと一緒に、 あなた好み…"
     }
   ],
-  "generated_at": "2026-09-06T22:09:59Z"
+  "generated_at": "2026-09-07T22:52:31Z"
 }
