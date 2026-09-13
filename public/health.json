@@ -1,16 +1,16 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-09-12T22:20:53Z",
+  "generated_at": "2026-09-13T22:26:43Z",
   "status": "degraded",
   "enabled_sources": 5,
   "successful_sources": 3,
   "failed_sources": 0,
-  "event_count": 530,
+  "event_count": 518,
   "sources": [
     {
       "name": "repository_manual_events",
       "status": "ok",
-      "count": 499,
+      "count": 495,
       "duration_ms": 0
     },
     {
@@ -18,7 +18,7 @@
       "status": "skipped",
       "count": 0,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-12T22:20:07Z",
+      "collection_generated_at": "2026-09-13T22:25:55Z",
       "reason": "VRCHAT_AUTH_COOKIE is not configured",
       "collection_event_count": 0
     },
@@ -27,24 +27,24 @@
       "status": "skipped",
       "count": 2,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-12T22:20:07Z",
+      "collection_generated_at": "2026-09-13T22:25:55Z",
       "reason": "X_BEARER_TOKEN is not configured; retained existing cache",
       "collection_event_count": 2
     },
     {
       "name": "yahoo_realtime_events",
       "status": "ok",
-      "count": 90,
+      "count": 60,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-12T22:20:50Z",
-      "collection_event_count": 90
+      "collection_generated_at": "2026-09-13T22:26:39Z",
+      "collection_event_count": 60
     },
     {
       "name": "external_calendar_events",
       "status": "ok",
       "count": 1,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-12T22:20:50Z",
+      "collection_generated_at": "2026-09-13T22:26:40Z",
       "collection_event_count": 1
     }
   ],
@@ -53,66 +53,65 @@
     "curation_mode": "human_only",
     "entries": 15,
     "matched_events": 277,
-    "matched_series": 13,
-    "unmatched_events": 253,
+    "matched_series": 14,
+    "unmatched_events": 241,
     "ambiguous_events": 0,
     "status": "ok"
   },
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 530,
+    "event_count": 518,
     "category_breakdown": {
-      "art": 125,
-      "community": 138,
-      "game": 102,
-      "language_exchange": 36,
+      "art": 122,
+      "community": 137,
+      "game": 104,
+      "language_exchange": 35,
       "learning": 1,
-      "music": 5,
-      "other": 10,
+      "music": 6,
+      "other": 3,
       "performance": 1,
-      "recruitment_deadline": 3,
+      "recruitment_deadline": 1,
       "technology": 38,
-      "wellness": 54,
+      "wellness": 53,
       "world_tour": 17
     },
     "subcategory_breakdown": {
-      "bar": 11,
-      "cafe": 20,
-      "cast_recruitment": 1,
-      "class": 1,
-      "dance": 1,
+      "bar": 10,
+      "cafe": 17,
+      "dance": 2,
       "dj": 1,
       "engineering": 25,
-      "exhibition": 2,
-      "fitness": 36,
+      "exhibition": 1,
+      "fitness": 35,
       "hangout": 3,
-      "language_exchange": 36,
+      "language_exchange": 35,
       "live_music": 1,
       "mystery": 34,
-      "photography": 122,
+      "orientation": 1,
+      "photography": 121,
       "relaxation": 1,
       "research": 13,
-      "social": 104,
-      "tabletop": 34,
+      "social": 107,
+      "tabletop": 35,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 3,
-      "hybrid": 4,
-      "in_world": 523
+      "deadline": 1,
+      "hybrid": 2,
+      "in_world": 515
     },
     "classification_source_breakdown": {
       "curated_ontology": 260,
-      "fallback": 10,
-      "keyword_rules": 40,
-      "legacy_and_keywords": 219,
+      "fallback": 3,
+      "keyword_rules": 38,
+      "legacy_and_keywords": 216,
       "legacy_category": 1
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 15,
-    "audit_event_count": 15
+    "low_confidence_event_count": 3,
+    "audit_event_count": 3
   },
-  "normalized_event_count": 531,
+  "normalized_event_count": 519,
   "occurrence_dedup_policy": "canonical-occurrence.v1",
   "skipped_sources": 2,
   "degraded_sources": 0
