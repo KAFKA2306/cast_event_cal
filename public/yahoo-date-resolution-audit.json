@@ -1,32 +1,39 @@
 {
   "schema_version": "1.0",
   "policy_version": "calendar-week-relative-date.v1",
-  "generated_at": "2026-09-17T22:52:51Z",
+  "generated_at": "2026-09-18T22:36:51Z",
   "timezone": "Asia/Tokyo",
   "week_start": "monday",
-  "previous_event_count": 32,
-  "current_event_count": 29,
-  "events_with_resolution_evidence": 29,
+  "previous_event_count": 30,
+  "current_event_count": 24,
+  "events_with_resolution_evidence": 24,
   "resolution_method_counts": {
-    "explicit_calendar_date": 25,
+    "explicit_calendar_date": 17,
     "next_occurrence_unprefixed": 1,
-    "relative_day_from_source_timestamp": 3
+    "relative_day_from_source_timestamp": 6
   },
-  "changed_event_count": 2,
+  "changed_event_count": 3,
   "changed_events": [
     {
-      "source_id": "yahoo:x:2099425440096211423",
-      "previous_starts_at": "2026-09-24T13:00:00Z",
-      "current_starts_at": "2026-09-17T13:00:00Z",
-      "date_resolution_method": "next_occurrence_unprefixed",
-      "date_resolution_anchor": "2026-09-14T09:10:05Z"
+      "source_id": "yahoo:x:2100783232233222553",
+      "previous_starts_at": "2026-09-19T12:45:00Z",
+      "current_starts_at": "2026-09-18T12:45:00Z",
+      "date_resolution_method": "relative_day_from_source_timestamp",
+      "date_resolution_anchor": "2026-09-18T03:05:27Z"
     },
     {
-      "source_id": "yahoo:x:2100435583021785592",
-      "previous_starts_at": "2026-09-18T12:00:00Z",
-      "current_starts_at": "2026-09-17T12:00:00Z",
+      "source_id": "yahoo:x:2100783534596345942",
+      "previous_starts_at": "2026-09-19T12:00:00Z",
+      "current_starts_at": "2026-09-18T12:00:00Z",
       "date_resolution_method": "relative_day_from_source_timestamp",
-      "date_resolution_anchor": "2026-09-17T04:04:01Z"
+      "date_resolution_anchor": "2026-09-18T03:06:39Z"
+    },
+    {
+      "source_id": "yahoo:x:2100872464419229854",
+      "previous_starts_at": "2026-09-25T13:00:00Z",
+      "current_starts_at": "2026-09-18T13:00:00Z",
+      "date_resolution_method": "next_occurrence_unprefixed",
+      "date_resolution_anchor": "2026-09-18T09:00:02Z"
     }
   ]
 }
