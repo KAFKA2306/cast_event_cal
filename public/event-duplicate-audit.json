@@ -2,117 +2,162 @@
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
   "event_count_before": 523,
-  "event_count_after": 523,
-  "candidate_cluster_count": 0,
-  "duplicate_cluster_count": 0,
-  "duplicate_occurrence_count": 0,
-  "duplicate_post_count": 0,
-  "duplicate_rate": 0.0,
+  "event_count_after": 521,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.003824,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
-  "clusters": [],
+  "clusters": [
+    {
+      "cluster_id": "occ_2b19df76c9fc31cc38a8",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "title": "明日 は学生学際集会！ 【タイムスケジュール】 9月19日(土) 21:00～ 開場 21:15～ ichi-hさん 『#3「哲学とは何か？」 という問いはなぜ難しいのか？ - 「西洋哲学入門…",
+      "member_count": 2,
+      "member_ids": [
+        "c504044fb9779569f175",
+        "cc30567ba5633fd6320e"
+      ],
+      "source_record_ids": [
+        "src_1fe011d437e0bfb1cd6e",
+        "src_f817979026a313bdc54d"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_f817979026a313bdc54d"
+    },
+    {
+      "cluster_id": "occ_7773cb6c9da27861f1dc",
+      "starts_at": "2026-09-21T13:00:00Z",
+      "title": "【 開催告知 】 📅 9/21（月・祝）22:00 JST〜 📍 VRChat Group + Event テカピタサロンMELTALLICが おかげさまで、5周年を迎えます🎉✨ 今回は特別な…",
+      "member_count": 2,
+      "member_ids": [
+        "3c26613b5c4891a91891",
+        "752537e2e39476e21ab5"
+      ],
+      "source_record_ids": [
+        "src_43ac723cac82a33177b7",
+        "src_85c393362bc34bae070b"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_85c393362bc34bae070b"
+    }
+  ],
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "8147443675202ba90230",
-      "right_id": "454d27d161c73282a481",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": "@CHESED___",
-      "right_organizer": "ASMR集会",
-      "similarity": 0.129,
-      "left_title": "#ワールド制作初心者 交流会 本日 21：00〜22：00 ワールド制作に関して誰かと話したい・相談したい方むけの気軽に 参加 できる雑談形式の交流 イベント です✨ 参加 方法 ケセドCHE…",
-      "right_title": "ASMR集会 初心者説明会"
+      "left_id": "0bd1408934b178002784",
+      "right_id": "c173fc47fc9064c5c3a7",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0581,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "VRCフィットボクシング集会（土曜）"
     },
     {
-      "left_id": "8147443675202ba90230",
-      "right_id": "fa0ee866edb15e07c2f3",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": "@CHESED___",
+      "left_id": "0bd1408934b178002784",
+      "right_id": "4d1b0abeabb3da403c31",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@Vanp_Melty",
+      "similarity": 0.0865,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "✨VR ライブ 出演のお知らせ✨ 今日 は21時から VRCHAT にて お祭りがテーマの ライブ があります！！ みんなと一緒に楽しく全力で楽しめる歌をうたいます！！ 会いに来てくれると嬉し…"
+    },
+    {
+      "left_id": "0bd1408934b178002784",
+      "right_id": "2283b92c781f60f4dea7",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@VRCHAT_FoxABC",
+      "similarity": 0.1745,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "【生誕祭 イベント告知 】 今年も開催！ちはや生誕祭2026！ 9月19日21:00 開場～ FUJIYAMA公式 Group +で開催！ FUJIYAMAや VRC 瞑想会を運営する あのC…"
+    },
+    {
+      "left_id": "0bd1408934b178002784",
+      "right_id": "c504044fb9779569f175",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1256,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 9月19日(土) 21:00～ 開場 21:15～ ichi-hさん 『#3 「哲学とは何か？」 という問いはなぜ難しいのか？ - 「西洋哲…"
+    },
+    {
+      "left_id": "0bd1408934b178002784",
+      "right_id": "4cde0e98223276688b99",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
       "right_organizer": null,
-      "similarity": 0.0817,
-      "left_title": "#ワールド制作初心者 交流会 本日 21：00〜22：00 ワールド制作に関して誰かと話したい・相談したい方むけの気軽に 参加 できる雑談形式の交流 イベント です✨ 参加 方法 ケセドCHE…",
-      "right_title": "VRC Blender集会"
+      "similarity": 0.0968,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "学生学際集会"
     },
     {
-      "left_id": "8147443675202ba90230",
-      "right_id": "c7343c9a5e873141d20c",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": "@CHESED___",
-      "right_organizer": "@i_ruka_i",
-      "similarity": 0.0565,
-      "left_title": "#ワールド制作初心者 交流会 本日 21：00〜22：00 ワールド制作に関して誰かと話したい・相談したい方むけの気軽に 参加 できる雑談形式の交流 イベント です✨ 参加 方法 ケセドCHE…",
-      "right_title": "【配信 告知 】 ！9月18日土曜21時！ VRCワールド巡り しよ～うよ https://t.co/HfgTlBDEER @YouTubeより 久しぶりに配信。きてね https://t.c…"
+      "left_id": "0bd1408934b178002784",
+      "right_id": "cc30567ba5633fd6320e",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1256,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "明日 は学生学際集会！ 【タイムスケジュール】 9月19日(土) 21:00～ 開場 21:15～ ichi-hさん 『#3「哲学とは何か？」 という問いはなぜ難しいのか？ - 「西洋哲学入門…"
     },
     {
-      "left_id": "454d27d161c73282a481",
-      "right_id": "fa0ee866edb15e07c2f3",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
+      "left_id": "0bd1408934b178002784",
+      "right_id": "0da9f24a943f5561f373",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "@vrc_meroty",
+      "right_organizer": "@sono_info",
+      "similarity": 0.1673,
+      "left_title": "VRC イベント メイド喫茶めろてぃ 【最大8名様】をご招待します！ 開催 9/19 21:00 OPEN 20:40 Reqin 参加方法 ①@ vrc _meroty 当アカウントのフォロ…",
+      "right_title": "本日開催 ！ ( VRChat ) Virtual Junction from Sapporo IN VRCHAT SBR-Riot@そぼろ @sbr_riot 日程: 2026.09.19 …"
     },
     {
-      "left_id": "454d27d161c73282a481",
-      "right_id": "c7343c9a5e873141d20c",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@i_ruka_i",
-      "similarity": 0.1212,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【配信 告知 】 ！9月18日土曜21時！ VRCワールド巡り しよ～うよ https://t.co/HfgTlBDEER @YouTubeより 久しぶりに配信。きてね https://t.c…"
+      "left_id": "c173fc47fc9064c5c3a7",
+      "right_id": "4d1b0abeabb3da403c31",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@Vanp_Melty",
+      "similarity": 0.0952,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "✨VR ライブ 出演のお知らせ✨ 今日 は21時から VRCHAT にて お祭りがテーマの ライブ があります！！ みんなと一緒に楽しく全力で楽しめる歌をうたいます！！ 会いに来てくれると嬉し…"
     },
     {
-      "left_id": "fa0ee866edb15e07c2f3",
-      "right_id": "c7343c9a5e873141d20c",
-      "starts_at": "2026-09-18T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@i_ruka_i",
-      "similarity": 0.0672,
-      "left_title": "VRC Blender集会",
-      "right_title": "【配信 告知 】 ！9月18日土曜21時！ VRCワールド巡り しよ～うよ https://t.co/HfgTlBDEER @YouTubeより 久しぶりに配信。きてね https://t.c…"
+      "left_id": "c173fc47fc9064c5c3a7",
+      "right_id": "2283b92c781f60f4dea7",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@VRCHAT_FoxABC",
+      "similarity": 0.0829,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【生誕祭 イベント告知 】 今年も開催！ちはや生誕祭2026！ 9月19日21:00 開場～ FUJIYAMA公式 Group +で開催！ FUJIYAMAや VRC 瞑想会を運営する あのC…"
     },
     {
-      "left_id": "82f34246a6fc5647bef0",
-      "right_id": "812cd4c577e8585cb0d7",
-      "starts_at": "2026-09-18T13:00:00Z",
-      "left_organizer": "@denno_kouga_VRC",
-      "right_organizer": "ASMR集会",
-      "similarity": 0.0795,
-      "left_title": "# VRC 投稿写真 展示会 現在 開催 中の VRC 投稿写真 展示会 に投稿頂いた皆さんとの座談会を 開催 いたします。 投稿者様以外でも、お写真についてお話をされたい方であればお気軽にご…",
-      "right_title": "ASMR集会 本営業"
-    },
-    {
-      "left_id": "82f34246a6fc5647bef0",
-      "right_id": "239e180d20e0b80673cb",
-      "starts_at": "2026-09-18T13:00:00Z",
-      "left_organizer": "@denno_kouga_VRC",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.0678,
-      "left_title": "# VRC 投稿写真 展示会 現在 開催 中の VRC 投稿写真 展示会 に投稿頂いた皆さんとの座談会を 開催 いたします。 投稿者様以外でも、お写真についてお話をされたい方であればお気軽にご…",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
-    },
-    {
-      "left_id": "82f34246a6fc5647bef0",
-      "right_id": "307618f4e19c079a3a39",
-      "starts_at": "2026-09-18T13:00:00Z",
-      "left_organizer": "@denno_kouga_VRC",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.1084,
-      "left_title": "# VRC 投稿写真 展示会 現在 開催 中の VRC 投稿写真 展示会 に投稿頂いた皆さんとの座談会を 開催 いたします。 投稿者様以外でも、お写真についてお話をされたい方であればお気軽にご…",
-      "right_title": "VRCふれあい動物園"
-    },
-    {
-      "left_id": "82f34246a6fc5647bef0",
-      "right_id": "0c68d3a3156d328b59ff",
-      "starts_at": "2026-09-18T13:00:00Z",
-      "left_organizer": "@denno_kouga_VRC",
-      "right_organizer": "@vrc_furuyoni",
-      "similarity": 0.1116,
-      "left_title": "# VRC 投稿写真 展示会 現在 開催 中の VRC 投稿写真 展示会 に投稿頂いた皆さんとの座談会を 開催 いたします。 投稿者様以外でも、お写真についてお話をされたい方であればお気軽にご…",
-      "right_title": "今日 は9月第3金曜日 初心者講習会の日です！ ふるよにを始めてみたいけどルールがわからない！という方におすすめの イベント となっております！ 22時から VRC ふるよに部の Group …"
+      "left_id": "c173fc47fc9064c5c3a7",
+      "right_id": "c504044fb9779569f175",
+      "starts_at": "2026-09-19T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1135,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 9月19日(土) 21:00～ 開場 21:15～ ichi-hさん 『#3 「哲学とは何か？」 という問いはなぜ難しいのか？ - 「西洋哲…"
     }
   ],
-  "generated_at": "2026-09-18T22:36:55Z"
+  "generated_at": "2026-09-19T22:21:01Z"
 }
