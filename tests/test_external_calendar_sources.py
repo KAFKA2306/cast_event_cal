@@ -127,7 +127,6 @@ def test_cross_source_dedup_uses_url_or_exact_title_and_minute():
     assert [row["title"] for row in selected] == ["別イベント"]
 
 
-
 def test_shared_source_page_does_not_collapse_distinct_events_at_same_minute():
     module = load_module()
     source_page = "https://vrc-ta-hub.com/event/list/"
