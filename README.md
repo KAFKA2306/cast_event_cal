@@ -158,6 +158,29 @@ rule変更時は回帰testとclassifier auditの両方へ固定します。
 
 matchは単なるfuzzy searchでは成立しません。alias exact match、またはofficial organizer + required patternsが必要です。競合時は補完せず`ambiguous`です。
 
+## Featured Event monetization
+
+有料掲載はcanonical event dataへ直接書き込まず、`config/promotions.json` のpromotion overlayとして管理します。課金の有無で日時・分類・公式リンク・採否判定は変わりません。
+
+```json
+{
+  "promotion_id": "promo-example",
+  "campaign_id": "campaign-example",
+  "event_id": "canonical-event-id",
+  "type": "featured",
+  "label": "Featured",
+  "starts_at": "2026-09-20T00:00:00Z",
+  "ends_at": "2026-09-27T00:00:00Z",
+  "destination_url": "https://official.example/event",
+  "placements": ["home", "tonight", "category"],
+  "status": "approved"
+}
+```
+
+`python scripts/build_promotions.py` がevent ID、期間、placement、HTTPS、遷移先がcanonical eventの公式URLであることを検証し、`public/promotions.json` へ投影します。表示側でも `ends_at` を判定するため、期限を過ぎたFeaturedは次回の日次更新を待たず非表示になります。
+
+キャンペーン停止は `status` を `paused` に変更して再生成するだけで、HTML編集は不要です。クリックは `featured_event_click` として `campaign_id` / `promotion_type` / event / category 単位で計測できます。
+
 ## Automation
 
 `.github/workflows/update-calendar-v2.yml` は毎日05:17 JST、手動、主要logic変更時に起動します。

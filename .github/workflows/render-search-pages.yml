@@ -12,6 +12,11 @@ on:
       - scripts/render_internal_links.py
       - scripts/verify_crawl_graph.py
       - scripts/write_snapshot_identity.py
+      - scripts/build_promotions.py
+      - config/promotions.json
+      - web/promotions.js
+      - public/tonight/index.html
+      - tests/test_promotions.py
       - tests/test_snapshot_identity.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
@@ -50,12 +55,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
           test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
-      - run: pytest tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
+      - run: pytest tests/test_promotions.py tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
       - run: python scripts/render_series_pages.py
       - run: python scripts/render_social_assets.py
       - run: python scripts/render_internal_links.py
+      - run: python scripts/build_promotions.py
       - run: python scripts/verify_crawl_graph.py
 
   publish:
@@ -91,6 +97,8 @@ jobs:
         run: python scripts/render_social_assets.py
       - name: Connect canonical search pages
         run: python scripts/render_internal_links.py
+      - name: Build validated promotion overlay
+        run: python scripts/build_promotions.py
       - name: Verify crawl graph
         run: python scripts/verify_crawl_graph.py
       - name: Verify canonical snapshot identity
@@ -132,6 +140,13 @@ jobs:
           assert 'searchable-events:start' in index
           assert 'crawl-hubs:start' in index
           assert 'analytics.js' in index
+          assert 'promotions.js' in index
+          promotions = json.loads(Path('public/promotions.json').read_text(encoding='utf-8'))
+          assert promotions['schema_version'] == '1.0'
+          assert isinstance(promotions['promotions'], list)
+          promotion_script = Path('public/promotions.js').read_text(encoding='utf-8')
+          assert 'featured_event_click' in promotion_script
+          assert 'スポンサー掲載' in promotion_script
           assert Path('public/share.js').is_file()
           print(json.dumps({
               'event_pages': len(event_pages),
@@ -146,7 +161,7 @@ jobs:
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/index.html public/events public/categories public/series public/og public/sitemap.xml public/analytics.js public/analytics-config.json public/share.js
+          git add public/index.html public/events public/categories public/series public/og public/sitemap.xml public/analytics.js public/analytics-config.json public/promotions.json public/promotions.js public/share.js
           if git diff --cached --quiet; then
             echo 'Search surface is already current'
           else
@@ -193,6 +208,8 @@ jobs:
           fetch "$base/events.json" > /tmp/events.json
           fetch "$base/snapshot.json" > /tmp/snapshot.json
           fetch "$base/calendar.ics" > /tmp/calendar.ics
+          fetch "$base/promotions.json" > /tmp/promotions.json
+          fetch "$base/promotions.js" > /tmp/promotions.js
           fetch "$base/tonight/" > /tmp/tonight.html
           fetch "$base/use/" > /tmp/use.html
           fetch "$base/media/poster-square.webp" > /tmp/poster-square.webp
@@ -213,7 +230,18 @@ jobs:
           assert snapshot['latest_event_id']
           PY
           grep -q '^BEGIN:VCALENDAR' /tmp/calendar.ics
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          promotions = json.loads(Path('/tmp/promotions.json').read_text(encoding='utf-8'))
+          assert promotions['schema_version'] == '1.0'
+          assert isinstance(promotions['promotions'], list)
+          PY
+          grep -q 'featured_event_click' /tmp/promotions.js
+          grep -q 'スポンサー掲載' /tmp/promotions.js
+          grep -q 'promotions.js' /tmp/index.html
           grep -q '今夜のVRChat' /tmp/tonight.html
+          grep -q 'promotions.js' /tmp/tonight.html
           grep -q '配布・紹介素材' /tmp/use.html
           grep -q 'poster-square.webp' /tmp/use.html
           grep -q '掲載・訂正' /tmp/use.html
