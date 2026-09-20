@@ -18,6 +18,19 @@ Canonical production: https://kafka2306.github.io/cast_event_cal/
 - JSON: https://kafka2306.github.io/cast_event_cal/events.json
 - iCalendar: https://kafka2306.github.io/cast_event_cal/calendar.ics
 
+## Creative gallery
+
+用途の違うプロモーション素材10案です。バナー、縦長告知、今夜向け、技術・データ訴求、コミュニティ向けなどの方向性をまとめています。
+
+<p align="center">
+  <a href="https://kafka2306.github.io/cast_event_cal/">
+    <img src="docs/media/readme/creative-gallery.webp" alt="cast_event_cal promotional creative gallery with 10 visual directions" width="640">
+  </a>
+</p>
+
+> [!NOTE]
+> 画像内のイベント名、日付、画面、一部URLはプロモーション用のイメージ表現を含みます。正本URLは **https://kafka2306.github.io/cast_event_cal/**、実際の掲載内容は公開データを参照してください。
+
 収集・正規化・分類・ontology・canonical snapshot生成・GitHub Pages配信をこのrepositoryで完結します。旧 `KAFKA2306/vrc_cast_event_calender` は既存URL互換性を確認した後にarchiveします。
 
 ## Vision
