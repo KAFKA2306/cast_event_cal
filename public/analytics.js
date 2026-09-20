@@ -28,6 +28,8 @@
       event_id: safe(target.dataset.eventId),
       category: safe(target.dataset.category),
       destination_type: safe(target.dataset.destinationType),
+      campaign_id: safe(target.dataset.campaignId),
+      promotion_type: safe(target.dataset.promotionType),
     });
   });
   document.addEventListener('change', event => {
