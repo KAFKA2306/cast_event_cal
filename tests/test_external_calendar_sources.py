@@ -42,6 +42,7 @@ def test_parse_ics_expands_rrule_inside_window():
     assert events[0]["starts_at"] == "2026-08-04T13:00:00Z"
     assert events[0]["ends_at"] == "2026-08-04T14:00:00Z"
     assert events[0]["organizer"] == "いとじゅん"
+    assert events[0]["source_page"] == "https://example.com/"
     assert events[0]["tags"] == ["技術"]
 
 
@@ -124,3 +125,52 @@ def test_cross_source_dedup_uses_url_or_exact_title_and_minute():
     selected, excluded = module.deduplicate_external(incoming, existing)
     assert excluded == 1
     assert [row["title"] for row in selected] == ["別イベント"]
+
+
+
+def test_shared_source_page_does_not_collapse_distinct_events_at_same_minute():
+    module = load_module()
+    source_page = "https://vrc-ta-hub.com/event/list/"
+    incoming = [
+        {
+            "title": "VR研究Cafe",
+            "starts_at": "2026-09-20T12:00:00Z",
+            "url": source_page,
+            "source_page": source_page,
+        },
+        {
+            "title": "分散システム集会",
+            "starts_at": "2026-09-20T12:00:00Z",
+            "url": source_page,
+            "source_page": source_page,
+        },
+    ]
+    selected, excluded = module.deduplicate_external(incoming, [])
+    assert excluded == 0
+    assert [row["title"] for row in selected] == ["VR研究Cafe", "分散システム集会"]
+
+
+def test_event_specific_url_only_deduplicates_same_occurrence_minute():
+    module = load_module()
+    existing = [
+        {
+            "title": "Original title",
+            "starts_at": "2026-09-20T12:00:00Z",
+            "url": "https://vrchat.com/home/group/grp_example",
+        }
+    ]
+    incoming = [
+        {
+            "title": "Renamed event",
+            "starts_at": "2026-09-20T12:00:30Z",
+            "url": "https://vrchat.com/home/group/grp_example",
+        },
+        {
+            "title": "Next occurrence",
+            "starts_at": "2026-09-27T12:00:00Z",
+            "url": "https://vrchat.com/home/group/grp_example",
+        },
+    ]
+    selected, excluded = module.deduplicate_external(incoming, existing)
+    assert excluded == 1
+    assert [row["title"] for row in selected] == ["Next occurrence"]
