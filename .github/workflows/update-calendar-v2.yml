@@ -12,7 +12,7 @@ on:
       - config/**
       - data/recurring_events.json
       - data/one_off_events.json
-      - data/x_events.json
+      # Generated discovery outputs are intentionally excluded to avoid self-trigger loops.
       - scripts/**
       - tests/**
       - web/**
