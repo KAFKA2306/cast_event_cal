@@ -4,7 +4,7 @@ import argparse
 import json
 import re
 import shutil
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -104,8 +104,8 @@ def validate_promotion(
         "event_id": event_id,
         "type": promotion_type,
         "label": label,
-        "starts_at": starts_at.isoformat(),
-        "ends_at": ends_at.isoformat(),
+        "starts_at": starts_at.astimezone(UTC).isoformat().replace("+00:00", "Z"),
+        "ends_at": ends_at.astimezone(UTC).isoformat().replace("+00:00", "Z"),
         "destination_url": destination_url,
         "placements": placements,
         "status": status,
