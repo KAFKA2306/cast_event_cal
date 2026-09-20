@@ -246,6 +246,7 @@ def parse_ics_events(
                 "location": decode_ics_value(location_item[1]) if location_item else None,
                 "description": decode_ics_value(description_item[1]) if description_item else None,
                 "url": event_url or None,
+                "source_page": source_page,
                 "status": "cancelled" if status_item and status_item[1].upper() == "CANCELLED" else "scheduled",
                 "source": source_name,
                 "fetched_at": fetched_at,
@@ -397,16 +398,20 @@ def title_key(value: Any) -> str:
 
 def event_keys(event: dict[str, Any]) -> set[tuple[str, str]]:
     keys: set[tuple[str, str]] = set()
-    if url := canonical_url(event.get("url")):
-        keys.add(("url", url))
     title = title_key(event.get("title"))
     starts_at = clean_text(event.get("starts_at") or event.get("startsAt"))
-    if title and starts_at:
+    minute: str | None = None
+    if starts_at:
         try:
             minute = parse_datetime(starts_at).replace(second=0, microsecond=0).isoformat()
-            keys.add(("semantic", f"{title}|{minute}"))
         except (ValueError, TypeError, OverflowError):
             pass
+    if title and minute:
+        keys.add(("semantic", f"{title}|{minute}"))
+    url = canonical_url(event.get("url"))
+    source_page = canonical_url(event.get("source_page"))
+    if url and minute and url != source_page:
+        keys.add(("url_time", f"{url}|{minute}"))
     return keys
 
 
