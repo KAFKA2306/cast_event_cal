@@ -11,6 +11,8 @@ on:
       - scripts/render_social_assets.py
       - scripts/render_internal_links.py
       - scripts/verify_crawl_graph.py
+      - scripts/write_snapshot_identity.py
+      - tests/test_snapshot_identity.py
       - tests/test_search_pages.py
       - tests/test_category_pages.py
       - tests/test_series_pages.py
@@ -48,7 +50,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
           test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
-      - run: pytest tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
+      - run: pytest tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
       - run: python scripts/render_series_pages.py
@@ -91,6 +93,8 @@ jobs:
         run: python scripts/render_internal_links.py
       - name: Verify crawl graph
         run: python scripts/verify_crawl_graph.py
+      - name: Verify canonical snapshot identity
+        run: python scripts/write_snapshot_identity.py --check public/snapshot.json
       - name: Verify real public snapshot
         run: |
           python - <<'PY'
@@ -187,6 +191,7 @@ jobs:
           }
           fetch "$base/" > /tmp/index.html
           fetch "$base/events.json" > /tmp/events.json
+          fetch "$base/snapshot.json" > /tmp/snapshot.json
           fetch "$base/calendar.ics" > /tmp/calendar.ics
           fetch "$base/tonight/" > /tmp/tonight.html
           fetch "$base/use/" > /tmp/use.html
@@ -195,11 +200,17 @@ jobs:
           grep -q 'VRChat Event Calendar' /tmp/index.html
           grep -q '<link rel="canonical" href="https://kafka2306.github.io/cast_event_cal/">' /tmp/index.html
           ! grep -q 'https://kafka2306.github.io/vrc_cast_event_calender' /tmp/index.html
+          cmp -s public/snapshot.json /tmp/snapshot.json
+          python scripts/write_snapshot_identity.py --events /tmp/events.json --check /tmp/snapshot.json
           python - <<'PY'
           import json
           from pathlib import Path
           data = json.loads(Path('/tmp/events.json').read_text(encoding='utf-8'))
+          snapshot = json.loads(Path('/tmp/snapshot.json').read_text(encoding='utf-8'))
           assert data['count'] == len(data['events']) and data['count'] > 0
+          assert snapshot['event_count'] == data['count']
+          assert snapshot['events_sha256']
+          assert snapshot['latest_event_id']
           PY
           grep -q '^BEGIN:VCALENDAR' /tmp/calendar.ics
           grep -q '今夜のVRChat' /tmp/tonight.html
