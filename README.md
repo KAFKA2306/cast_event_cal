@@ -1,6 +1,6 @@
 # cast_event_cal — VRChat Event Intelligence
 
-https://vrc-cast-event-calender.pages.dev/
+Canonical production: https://kafka2306.github.io/cast_event_cal/
 
 [![CI](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/ci.yml)
 [![Update calendar data](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml/badge.svg)](https://github.com/KAFKA2306/cast_event_cal/actions/workflows/update-calendar-v2.yml)
@@ -104,6 +104,7 @@ Public artifact:
 - `public/events.json`
 - `public/calendar.ics`
 - `public/health.json`
+- `public/snapshot.json` — `events.json` のSHA-256・件数・latest event identity
 - `public/yahoo-candidate-history.json`
 - `public/yahoo-classifier-audit.json`
 - `public/event-ontology.json`
@@ -162,8 +163,9 @@ matchは単なるfuzzy searchでは成立しません。alias exact match、ま�
 10. quality gate
 11. canonical差分commit
 12. event / category / series / OG / search surface生成
-13. GitHub Pages配信
-14. production HTML / JSON / ICS / tonightをread-back
+13. `events.json` のdeterministic snapshot identity生成
+14. GitHub Pages配信
+15. production snapshot / HTML / JSON / ICS / tonightをread-backし、repository snapshotと一致確認
 
 日常分類ではLLM判定を使用しません。
 
