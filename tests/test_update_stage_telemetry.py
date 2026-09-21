@@ -21,6 +21,15 @@ def test_fingerprint_is_stable_and_changes_with_content(tmp_path: Path) -> None:
     changed = run_stage.fingerprint_paths(tmp_path, [str(source)])
     assert changed["sha256"] != first["sha256"]
 
+    package = tmp_path / "package"
+    package.mkdir()
+    (package / "module.py").write_text("VALUE = 1\n", encoding="utf-8")
+    stable = run_stage.fingerprint_paths(tmp_path, [str(package)])
+    cache = package / "__pycache__"
+    cache.mkdir()
+    (cache / "module.cpython-312.pyc").write_bytes(b"runtime-only")
+    assert run_stage.fingerprint_paths(tmp_path, [str(package)]) == stable
+
 
 def test_stage_records_output_change_and_propagates_exit_code(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.chdir(tmp_path)
