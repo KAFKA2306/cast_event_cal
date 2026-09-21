@@ -108,12 +108,43 @@ def json_measurements(root: Path, paths: Iterable[str]) -> dict[str, Any]:
                         "candidate_count",
                         "accepted_count",
                         "rejected_count",
+                        "query_count",
+                        "queries_attempted",
                         "queries_succeeded",
                         "queries_failed",
                         "request_count",
                         "requests",
+                        "fetched_posts",
+                        "accepted_posts",
+                        "fetched_candidates",
+                        "accepted_candidates",
+                        "rejected_candidates",
+                        "retained_events",
+                        "raw_candidate_count",
+                        "unique_candidates_this_run",
+                        "duplicate_observations_removed",
+                        "deduplicated_against_existing",
+                        "history_candidate_count",
+                        "history_accepted_count",
+                        "history_rejected_count",
+                        "source_timestamp_count",
                     }:
                         metrics[field] = value
+            if isinstance(payload.get("query_count"), int):
+                metrics["reported_request_count"] = payload["query_count"]
+            elif isinstance(payload.get("queries_attempted"), int):
+                metrics["reported_request_count"] = payload["queries_attempted"]
+            elif isinstance(payload.get("request_count"), int):
+                metrics["reported_request_count"] = payload["request_count"]
+            elif isinstance(payload.get("requests"), int):
+                metrics["reported_request_count"] = payload["requests"]
+            elif isinstance(payload.get("queries_succeeded"), int) and isinstance(payload.get("queries_failed"), int):
+                metrics["reported_request_count"] = payload["queries_succeeded"] + payload["queries_failed"]
+
+            for fetched_field in ("fetched_posts", "fetched_candidates", "raw_candidate_count"):
+                if isinstance(payload.get(fetched_field), int):
+                    metrics["reported_fetched_records"] = payload[fetched_field]
+                    break
         result[key] = metrics
     return result
 
