@@ -86,15 +86,26 @@ def source_urls(event: dict[str, Any]) -> list[tuple[str, str]]:
     return rows
 
 
-def resolve(client: httpx.Client, url: str, cache: dict[str, tuple[str, str]] | None = None) -> tuple[str, str]:
+def resolve(
+    client: httpx.Client,
+    url: str,
+    cache: dict[str, tuple[str, str]] | None = None,
+    stats: Counter[str] | None = None,
+) -> tuple[str, str]:
     if cache is not None and url in cache:
+        if stats is not None:
+            stats["resolution_cache_hits"] += 1
         return cache[url]
     host = (urlparse(url).hostname or "").lower()
     if host not in SHORTENERS:
         result = (url, "direct")
     elif os.getenv("EVENT_LINK_SKIP_SHORTENER_RESOLUTION") == "1":
+        if stats is not None:
+            stats["shortener_resolution_skipped"] += 1
         result = (url, "unresolved_shortener")
     else:
+        if stats is not None:
+            stats["shortener_resolution_attempts"] += 1
         try:
             response = client.head(url, follow_redirects=True)
             if response.status_code >= 400:
@@ -102,17 +113,24 @@ def resolve(client: httpx.Client, url: str, cache: dict[str, tuple[str, str]] | 
             target = canonical(str(response.url))
             result = ((target or url), "redirect")
         except httpx.HTTPError:
+            if stats is not None:
+                stats["resolution_errors"] += 1
             result = (url, "unresolved_shortener")
     if cache is not None:
         cache[url] = result
     return result
 
 
-def enrich(event: dict[str, Any], client: httpx.Client, resolution_cache: dict[str, tuple[str, str]] | None = None) -> dict[str, Any]:
+def enrich(
+    event: dict[str, Any],
+    client: httpx.Client,
+    resolution_cache: dict[str, tuple[str, str]] | None = None,
+    resolution_stats: Counter[str] | None = None,
+) -> dict[str, Any]:
     output = dict(event)
     discovered: dict[str, dict[str, str]] = {}
     for raw, evidence in source_urls(event):
-        resolved, resolution = resolve(client, raw, resolution_cache)
+        resolved, resolution = resolve(client, raw, resolution_cache, resolution_stats)
         host = (urlparse(resolved).hostname or "").lower()
         if host in BLOCKED:
             continue
@@ -144,9 +162,19 @@ def main() -> int:
     counts: Counter[str] = Counter()
     rows = []
     resolution_cache: dict[str, tuple[str, str]] = {}
-    with httpx.Client(timeout=3, follow_redirects=True, headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"}) as client:
+    resolution_stats: Counter[str] = Counter()
+
+    def count_network_request(_request: httpx.Request) -> None:
+        resolution_stats["network_requests"] += 1
+
+    with httpx.Client(
+        timeout=3,
+        follow_redirects=True,
+        headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"},
+        event_hooks={"request": [count_network_request]},
+    ) as client:
         for event in doc.get("events", []):
-            row = enrich(event, client, resolution_cache)
+            row = enrich(event, client, resolution_cache, resolution_stats)
             rows.append(row)
             for link in row.get("official_links", []) + row.get("related_links", []):
                 counts[str(link.get("kind"))] += 1
@@ -163,6 +191,11 @@ def main() -> int:
         "events_with_application": sum(any(link.get("kind") == "application" for link in row.get("official_links", [])) for row in rows),
         "events_with_vrchat_group": sum(any(link.get("kind") == "vrchat_group" for link in row.get("official_links", [])) for row in rows),
         "resolution_cache_size": len(resolution_cache),
+        "network_request_count": resolution_stats["network_requests"],
+        "resolution_cache_hits": resolution_stats["resolution_cache_hits"],
+        "shortener_resolution_attempts": resolution_stats["shortener_resolution_attempts"],
+        "shortener_resolution_skip_count": resolution_stats["shortener_resolution_skipped"],
+        "resolution_error_count": resolution_stats["resolution_errors"],
         "shortener_resolution_skipped": os.getenv("EVENT_LINK_SKIP_SHORTENER_RESOLUTION") == "1",
         "sample": [
             {
