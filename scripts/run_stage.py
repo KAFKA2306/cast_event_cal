@@ -12,6 +12,12 @@ from pathlib import Path
 from typing import Any, Iterable
 
 SCHEMA_VERSION = "1.0"
+IGNORED_PATH_PARTS = {".git", ".pytest_cache", ".ruff_cache", ".mypy_cache", "__pycache__", ".venv", "node_modules"}
+IGNORED_SUFFIXES = {".pyc", ".pyo"}
+
+
+def is_ephemeral(path: Path) -> bool:
+    return bool(IGNORED_PATH_PARTS.intersection(path.parts)) or path.suffix in IGNORED_SUFFIXES
 
 
 def utc_now() -> datetime:
@@ -36,8 +42,8 @@ def _iter_files(root: Path, specs: Iterable[str]) -> list[tuple[str, Path | None
             continue
         for match in matches:
             if match.is_dir():
-                candidates = sorted(path for path in match.rglob("*") if path.is_file())
-            elif match.is_file():
+                candidates = sorted(path for path in match.rglob("*") if path.is_file() and not is_ephemeral(path))
+            elif match.is_file() and not is_ephemeral(match):
                 candidates = [match]
             else:
                 continue
