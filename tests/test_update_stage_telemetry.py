@@ -101,3 +101,32 @@ def test_finalize_reports_git_churn_and_stage_totals(tmp_path: Path, monkeypatch
     assert summary["stages"]["kind_seconds"]["projection"] == 1.25
     assert summary["git"]["changed_file_count"] == 1
     assert summary["git"]["git_patch_bytes"] > 0
+
+
+def test_network_measurements_capture_reported_costs(tmp_path: Path) -> None:
+    health = tmp_path / "health.json"
+    health.write_text(
+        json.dumps(
+            {
+                "queries_attempted": 22,
+                "queries_succeeded": 22,
+                "queries_failed": 0,
+                "raw_candidate_count": 350,
+            }
+        ),
+        encoding="utf-8",
+    )
+    measurements = run_stage.json_measurements(tmp_path, ["health.json"])
+    assert measurements["health.json"]["reported_request_count"] == 22
+    assert measurements["health.json"]["reported_fetched_records"] == 350
+
+    aggregate = finalize_update_telemetry.network_metrics(
+        [
+            {
+                "kind": "network",
+                "measurements_after": measurements,
+            }
+        ]
+    )
+    assert aggregate["reported_request_count"] == 22
+    assert aggregate["reported_fetched_records"] == 350
