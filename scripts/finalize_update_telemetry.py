@@ -76,6 +76,45 @@ def git_metrics(root: Path) -> dict[str, Any]:
     }
 
 
+def network_metrics(records: list[dict[str, Any]]) -> dict[str, Any]:
+    stage_count = 0
+    stages_with_request_count = 0
+    stages_with_fetched_records = 0
+    reported_requests = 0
+    reported_fetched_records = 0
+    for record in records:
+        if record.get("kind") != "network":
+            continue
+        stage_count += 1
+        measurements = record.get("measurements_after")
+        if not isinstance(measurements, dict):
+            continue
+        request_values: list[int] = []
+        fetched_values: list[int] = []
+        for payload in measurements.values():
+            if not isinstance(payload, dict):
+                continue
+            request_count = payload.get("reported_request_count")
+            fetched_count = payload.get("reported_fetched_records")
+            if isinstance(request_count, int):
+                request_values.append(request_count)
+            if isinstance(fetched_count, int):
+                fetched_values.append(fetched_count)
+        if request_values:
+            stages_with_request_count += 1
+            reported_requests += max(request_values)
+        if fetched_values:
+            stages_with_fetched_records += 1
+            reported_fetched_records += max(fetched_values)
+    return {
+        "stage_count": stage_count,
+        "stages_with_reported_request_count": stages_with_request_count,
+        "reported_request_count": reported_requests,
+        "stages_with_reported_fetched_records": stages_with_fetched_records,
+        "reported_fetched_records": reported_fetched_records,
+    }
+
+
 def summarize(records: list[dict[str, Any]], root: Path) -> dict[str, Any]:
     now = datetime.now(UTC)
     started = parse_instant(os.environ.get("UPDATE_RUN_STARTED_AT"))
@@ -109,6 +148,7 @@ def summarize(records: list[dict[str, Any]], root: Path) -> dict[str, Any]:
             "kind_seconds": kind_seconds,
             "records": records,
         },
+        "network": network_metrics(records),
         "git": git_metrics(root),
     }
 
@@ -123,6 +163,7 @@ def write_step_summary(summary: dict[str, Any]) -> None:
         "",
         f"Measured wall clock: **{summary['run']['measured_pipeline_wall_clock_seconds']:.2f}s**",
         f"Changed files: **{summary['git']['changed_file_count']}** / Git patch: **{summary['git']['git_patch_bytes']} bytes**",
+        f"Reported network requests: **{summary['network']['reported_request_count']}** across **{summary['network']['stages_with_reported_request_count']}** stages",
         "",
         "| Stage | Kind | Status | Seconds | Output changed |",
         "| --- | --- | --- | ---: | --- |",
