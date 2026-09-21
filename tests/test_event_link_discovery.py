@@ -45,4 +45,4 @@ def test_shortener_resolution_counts_actual_requests() -> None:
 
     assert stats["shortener_resolution_attempts"] == 1
     assert stats["network_requests"] == 2
-    assert result["primary_action_url"] == "https://example.com/event"
+    assert result["related_links"][0]["url"] == "https://example.com/event"
