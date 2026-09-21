@@ -37,7 +37,7 @@ def read_records(path: Path) -> list[dict[str, Any]]:
 
 
 def run_git(root: Path, args: list[str]) -> bytes:
-    completed = subprocess.run(["git", *args], cwd=root, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    completed = subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)
     return completed.stdout
 
 
