@@ -157,6 +157,13 @@ def enrich(
     return output
 
 
+def request_counter(stats: Counter[str]):
+    def count(_request: httpx.Request) -> None:
+        stats["network_requests"] += 1
+
+    return count
+
+
 def main() -> int:
     doc = json.loads(EVENTS.read_text(encoding="utf-8"))
     counts: Counter[str] = Counter()
@@ -164,14 +171,11 @@ def main() -> int:
     resolution_cache: dict[str, tuple[str, str]] = {}
     resolution_stats: Counter[str] = Counter()
 
-    def count_network_request(_request: httpx.Request) -> None:
-        resolution_stats["network_requests"] += 1
-
     with httpx.Client(
         timeout=3,
         follow_redirects=True,
         headers={"User-Agent": "Mozilla/5.0 cast-event-cal/2"},
-        event_hooks={"request": [count_network_request]},
+        event_hooks={"request": [request_counter(resolution_stats)]},
     ) as client:
         for event in doc.get("events", []):
             row = enrich(event, client, resolution_cache, resolution_stats)
