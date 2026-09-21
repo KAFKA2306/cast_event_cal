@@ -113,6 +113,7 @@ def json_measurements(root: Path, paths: Iterable[str]) -> dict[str, Any]:
                         "queries_succeeded",
                         "queries_failed",
                         "request_count",
+                        "network_request_count",
                         "requests",
                         "fetched_posts",
                         "accepted_posts",
@@ -134,6 +135,8 @@ def json_measurements(root: Path, paths: Iterable[str]) -> dict[str, Any]:
                 metrics["reported_request_count"] = payload["query_count"]
             elif isinstance(payload.get("queries_attempted"), int):
                 metrics["reported_request_count"] = payload["queries_attempted"]
+            elif isinstance(payload.get("network_request_count"), int):
+                metrics["reported_request_count"] = payload["network_request_count"]
             elif isinstance(payload.get("request_count"), int):
                 metrics["reported_request_count"] = payload["request_count"]
             elif isinstance(payload.get("requests"), int):
