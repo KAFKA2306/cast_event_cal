@@ -7,6 +7,7 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 SCHEMA_VERSION = "cast-event-cal.public-feed-audit.v1"
 
@@ -50,6 +51,39 @@ def _parse_datetime(value: str) -> bool:
     return True
 
 
+def _is_safe_public_url(value: Any) -> bool:
+    if not isinstance(value, str) or not value.strip():
+        return False
+    parsed = urlparse(value.strip())
+    return parsed.scheme == "https" and bool(parsed.netloc)
+
+
+def _public_links(event: dict[str, Any]) -> list[tuple[str, Any]]:
+    links: list[tuple[str, Any]] = []
+    for key in (
+        "url",
+        "source_url",
+        "official_url",
+        "announcement_url",
+        "join_url",
+        "participation_url",
+        "group_url",
+        "request_url",
+        "primary_action_url",
+    ):
+        if key in event and event[key] is not None:
+            links.append((key, event[key]))
+    for key in ("official_links", "proof_links", "evidence_links"):
+        values = event.get(key)
+        if not isinstance(values, list):
+            continue
+        for offset, item in enumerate(values):
+            value = item.get("url") if isinstance(item, dict) else item
+            if value is not None:
+                links.append((f"{key}[{offset}]", value))
+    return links
+
+
 def audit(path: Path) -> dict[str, Any]:
     payload = _load(path)
     events = _event_list(payload)
@@ -74,11 +108,16 @@ def audit(path: Path) -> dict[str, Any]:
                     errors.append({"index": index, "code": "invalid_datetime", "field": key, "message": "datetime is not ISO-8601"})
                 break
 
-        for key in ("url", "source_url", "official_url"):
-            if key in event:
-                value = event[key]
-                if value is not None and (not isinstance(value, str) or not value.startswith(("https://", "http://"))):
-                    errors.append({"index": index, "code": "invalid_url", "field": key, "message": "URL must be absolute HTTP(S)"})
+        for field, value in _public_links(event):
+            if not _is_safe_public_url(value):
+                errors.append(
+                    {
+                        "index": index,
+                        "code": "invalid_url",
+                        "field": field,
+                        "message": "public navigation URL must be absolute HTTPS",
+                    }
+                )
 
     for identity, count in sorted(Counter(identities).items()):
         if count > 1:
