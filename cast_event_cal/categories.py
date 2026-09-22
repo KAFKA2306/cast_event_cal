@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 CATEGORY_ONTOLOGY_PATH = Path("config/category_ontology.json")
+TRUSTED_ORGANIZER_SEED_SOURCES = frozenset({"curated_ontology", "legacy_category", "legacy_and_keywords"})
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,9 +55,7 @@ def event_fields(event: dict[str, Any]) -> list[tuple[str, str, int]]:
     ]
 
 
-def best_term_match(
-    fields: list[tuple[str, str, int]], terms: list[Any], *, base_weight: int
-) -> tuple[int, list[str]]:
+def best_term_match(fields: list[tuple[str, str, int]], terms: list[Any], *, base_weight: int) -> tuple[int, list[str]]:
     score = 0
     evidence: list[str] = []
     seen: set[str] = set()
@@ -132,14 +131,7 @@ def direct_decision(event: dict[str, Any], ontology: dict[str, Any]) -> Category
             scores[category_id] = scores.get(category_id, 0) + total
             evidence_by_id[category_id].extend(strong_evidence + keyword_evidence)
 
-    ranked = sorted(
-        (
-            (score, int(by_id[category_id].get("priority") or 0), category_id)
-            for category_id, score in scores.items()
-            if category_id in by_id
-        ),
-        key=lambda item: (-item[0], -item[1], item[2]),
-    )
+    ranked = sorted(((score, int(by_id[category_id].get("priority") or 0), category_id) for category_id, score in scores.items() if category_id in by_id), key=lambda item: (-item[0], -item[1], item[2]))
     if not ranked or ranked[0][0] < minimum_score:
         category_id = default_id
         score = ranked[0][0] if ranked else 0
@@ -175,34 +167,23 @@ def direct_decision(event: dict[str, Any], ontology: dict[str, Any]) -> Category
         confidence = min(0.96, 0.48 + score * 0.035)
         if ambiguous:
             confidence = min(confidence, 0.58)
-    return CategoryDecision(
-        category=category_id,
-        label=str(row.get("label") or category_id),
-        subcategory=subcategory,
-        score=score,
-        confidence=round(confidence, 3),
-        source=source,
-        evidence=tuple(evidence),
-        event_mode=modality(event, ontology, category_id),
-        ambiguous_with=ambiguous,
-    )
+    return CategoryDecision(category=category_id, label=str(row.get("label") or category_id), subcategory=subcategory, score=score, confidence=round(confidence, 3), source=source, evidence=tuple(evidence), event_mode=modality(event, ontology, category_id), ambiguous_with=ambiguous)
 
 
-def organizer_profiles(
-    events: list[dict[str, Any]], decisions: list[CategoryDecision], ontology: dict[str, Any]
-) -> dict[str, dict[str, Any]]:
+def organizer_profiles(events: list[dict[str, Any]], decisions: list[CategoryDecision], ontology: dict[str, Any]) -> dict[str, dict[str, Any]]:
     policy = ontology.get("organizer_prior", {})
     minimum_seed_events = int(policy.get("minimum_seed_events") or 2)
     minimum_dominance = float(policy.get("minimum_dominance") or 0.75)
-    minimum_score = int(ontology.get("minimum_keyword_score") or 3) + 3
     counts: dict[str, Counter[str]] = defaultdict(Counter)
+    seeds: dict[str, list[dict[str, str]]] = defaultdict(list)
     for event, decision in zip(events, decisions, strict=True):
         key = organizer_key(event)
-        if not key or decision.category == ontology.get("default_category", "other") or decision.score < minimum_score:
+        if not key or decision.category == ontology.get("default_category", "other"):
             continue
-        if decision.ambiguous_with:
+        if decision.source not in TRUSTED_ORGANIZER_SEED_SOURCES or decision.ambiguous_with:
             continue
         counts[key][decision.category] += 1
+        seeds[key].append({"event_id": str(event.get("id") or ""), "category": decision.category, "source": decision.source})
 
     profiles: dict[str, dict[str, Any]] = {}
     for key, counter in counts.items():
@@ -210,12 +191,7 @@ def organizer_profiles(
         category, count = counter.most_common(1)[0]
         dominance = count / total if total else 0.0
         if count >= minimum_seed_events and dominance >= minimum_dominance:
-            profiles[key] = {
-                "category": category,
-                "seed_events": count,
-                "classified_seed_events": total,
-                "dominance": round(dominance, 3),
-            }
+            profiles[key] = {"category": category, "seed_events": count, "classified_seed_events": total, "dominance": round(dominance, 3), "seed_evidence": [seed for seed in seeds[key] if seed["category"] == category]}
     return profiles
 
 
@@ -238,37 +214,20 @@ def attach_decision(event: dict[str, Any], decision: CategoryDecision) -> dict[s
     return result
 
 
-def classify_events(
-    events: list[dict[str, Any]], ontology: dict[str, Any]
-) -> tuple[list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
+def classify_events(events: list[dict[str, Any]], ontology: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
     direct = [direct_decision(event, ontology) for event in events]
     profiles = organizer_profiles(events, direct, ontology)
     policy = ontology.get("organizer_prior", {})
     maximum_direct_score = int(policy.get("maximum_direct_score") or 2)
-    category_rows = {
-        str(row.get("id")): row for row in ontology.get("categories", []) if isinstance(row, dict) and row.get("id")
-    }
+    category_rows = {str(row.get("id")): row for row in ontology.get("categories", []) if isinstance(row, dict) and row.get("id")}
     final: list[CategoryDecision] = []
     for event, decision in zip(events, direct, strict=True):
         profile = profiles.get(organizer_key(event) or "")
         if profile and decision.score <= maximum_direct_score:
             category = str(profile["category"])
             row = category_rows[category]
-            decision = replace(
-                decision,
-                category=category,
-                label=str(row.get("label") or category),
-                subcategory=None,
-                score=max(decision.score, 3),
-                confidence=round(min(0.86, 0.58 + float(profile["dominance"]) * 0.28), 3),
-                source="organizer_prior",
-                evidence=(
-                    f"organizer_prior:{organizer_key(event)}",
-                    f"dominance:{profile['dominance']}",
-                    f"seed_events:{profile['seed_events']}",
-                ),
-                ambiguous_with=(),
-            )
+            seed_ids = ",".join(seed["event_id"] for seed in profile["seed_evidence"][:6])
+            decision = replace(decision, category=category, label=str(row.get("label") or category), subcategory=None, score=max(decision.score, 3), confidence=round(min(0.86, 0.58 + float(profile["dominance"]) * 0.28), 3), source="organizer_prior", evidence=(f"organizer_prior:{organizer_key(event)}", f"dominance:{profile['dominance']}", f"seed_events:{profile['seed_events']}", f"seed_event_ids:{seed_ids}"), ambiguous_with=())
         final.append(decision)
 
     classified = [attach_decision(event, decision) for event, decision in zip(events, final, strict=True)]
@@ -277,28 +236,6 @@ def classify_events(
     mode_breakdown = Counter(decision.event_mode for decision in final)
     source_breakdown = Counter(decision.source for decision in final)
     low_confidence = sum(decision.confidence < 0.6 for decision in final)
-    audit = [
-        {
-            "event_id": event.get("id"),
-            "title": event.get("title"),
-            **asdict(decision),
-        }
-        for event, decision in zip(events, final, strict=True)
-        if decision.category == ontology.get("default_category", "other")
-        or decision.confidence < 0.6
-        or decision.ambiguous_with
-        or decision.event_mode == "offline"
-    ]
-    summary = {
-        "schema_version": str(ontology.get("schema_version") or "2.0"),
-        "event_count": len(events),
-        "category_breakdown": dict(sorted(category_breakdown.items())),
-        "subcategory_breakdown": dict(sorted(detail_breakdown.items())),
-        "event_mode_breakdown": dict(sorted(mode_breakdown.items())),
-        "classification_source_breakdown": dict(sorted(source_breakdown.items())),
-        "organizer_profile_count": len(profiles),
-        "low_confidence_event_count": low_confidence,
-        "audit_event_count": len(audit),
-        "organizer_profiles": profiles,
-    }
+    audit = [{"event_id": event.get("id"), "title": event.get("title"), **asdict(decision)} for event, decision in zip(events, final, strict=True) if decision.category == ontology.get("default_category", "other") or decision.confidence < 0.6 or decision.ambiguous_with or decision.event_mode == "offline"]
+    summary = {"schema_version": str(ontology.get("schema_version") or "2.0"), "event_count": len(events), "category_breakdown": dict(sorted(category_breakdown.items())), "subcategory_breakdown": dict(sorted(detail_breakdown.items())), "event_mode_breakdown": dict(sorted(mode_breakdown.items())), "classification_source_breakdown": dict(sorted(source_breakdown.items())), "organizer_profile_count": len(profiles), "low_confidence_event_count": low_confidence, "audit_event_count": len(audit), "organizer_profiles": profiles}
     return classified, summary, audit
