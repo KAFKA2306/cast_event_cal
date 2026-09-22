@@ -31,20 +31,14 @@ def test_actual_display_examples_get_semantic_categories():
 
 def test_stream_is_modality_not_genre():
     ontology = load_category_ontology()
-    decision = direct_decision(
-        event("技術学術イベント配信", "VRChat会場とYouTube配信で研究発表を行います"),
-        ontology,
-    )
+    decision = direct_decision(event("技術学術イベント配信", "VRChat会場とYouTube配信で研究発表を行います"), ontology)
     assert decision.category == "technology"
     assert decision.event_mode == "hybrid"
 
 
 def test_offline_vrc_adjacent_post_is_flagged_as_offline():
     ontology = load_category_ontology()
-    decision = direct_decision(
-        event("渋谷でDJします", "VRCとは関係ないイベントです。渋谷でJPOPパーティを開催します"),
-        ontology,
-    )
+    decision = direct_decision(event("渋谷でDJします", "VRCとは関係ないイベントです。渋谷でJPOPパーティを開催します"), ontology)
     assert decision.category == "music"
     assert decision.event_mode == "offline"
 
@@ -58,40 +52,45 @@ def test_generic_event_does_not_default_to_performance():
 
 def test_curated_ontology_override_wins():
     ontology = load_category_ontology()
-    decision = direct_decision(
-        event(
-            "0属オークション",
-            "参加条件あり",
-            ontology_id="zerozoku-auction",
-            ontology_category="game",
-        ),
-        ontology,
-    )
+    decision = direct_decision(event("0属オークション", "参加条件あり", ontology_id="zerozoku-auction", ontology_category="game"), ontology)
     assert decision.category == "game"
     assert decision.source == "curated_ontology"
     assert decision.confidence == 0.99
 
 
-def test_repeated_organizer_profile_only_fills_weak_rows():
+def test_keyword_predictions_do_not_train_organizer_prior():
     ontology = load_category_ontology()
     rows = [
         event("DJイベント NIGHT ONE", "VRChatクラブでDJ party", organizer="@nightone", id="one"),
         event("クラブイベント NIGHT ONE", "DJとダンスの夜", organizer="@nightone", id="two"),
         event("今週も開催します", "22時にGroup+へJoin", organizer="@nightone", id="three"),
     ]
-    classified, summary, audit = classify_events(rows, ontology)
-    assert [row["category"] for row in classified] == ["music", "music", "music"]
+    classified, summary, _ = classify_events(rows, ontology)
+    assert [row["category"] for row in classified] == ["music", "music", "other"]
+    assert classified[2]["category_source"] == "fallback"
+    assert summary["organizer_profile_count"] == 0
+
+
+def test_curated_seeds_fill_weak_rows_and_preserve_seed_provenance():
+    ontology = load_category_ontology()
+    rows = [
+        event("ONE", organizer="@trusted", id="one", ontology_id="one", ontology_category="music"),
+        event("TWO", organizer="@trusted", id="two", ontology_id="two", ontology_category="music"),
+        event("今週も開催します", "22時にGroup+へJoin", organizer="@trusted", id="three"),
+    ]
+    classified, summary, _ = classify_events(rows, ontology)
+    assert classified[2]["category"] == "music"
     assert classified[2]["category_source"] == "organizer_prior"
-    assert summary["organizer_profile_count"] == 1
-    assert not [row for row in audit if row["event_id"] == "three"]
+    assert "seed_event_ids:one,two" in classified[2]["category_evidence"]
+    assert summary["organizer_profiles"]["trusted"]["seed_evidence"] == [
+        {"event_id": "one", "category": "music", "source": "curated_ontology"},
+        {"event_id": "two", "category": "music", "source": "curated_ontology"},
+    ]
 
 
 def test_recruitment_deadline_keeps_explicit_category():
     ontology = load_category_ontology()
-    decision = direct_decision(
-        event("キャスト募集締切", "応募期限は8月10日", category="recruitment_deadline"),
-        ontology,
-    )
+    decision = direct_decision(event("キャスト募集締切", "応募期限は8月10日", category="recruitment_deadline"), ontology)
     assert decision.category == "recruitment_deadline"
     assert decision.event_mode == "deadline"
 
