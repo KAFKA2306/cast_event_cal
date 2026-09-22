@@ -61,6 +61,10 @@ def test_frontend_search_normalizes_query_and_document_consistently() -> None:
     assert "normalize('NFKC')" in rendered
     assert "const query=searchNormalize($('#q').value)" in rendered
     assert "const haystack=searchNormalize(" in rendered
+    search_block = rendered.split("function filtered(){", 1)[1].split("function metrics(){", 1)[0]
+    assert "event.category_evidence" not in search_block
+    assert "event.category_source" not in search_block
+    assert "event.source,links" not in search_block
 
 
 def test_frontend_today_range_uses_jst_calendar_day_and_stable_tie_break() -> None:
