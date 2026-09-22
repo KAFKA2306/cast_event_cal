@@ -53,3 +53,19 @@ def test_frontend_preserves_ontology_features_and_explanations() -> None:
     assert "matchedReasons" in rendered
     assert "閲覧傾向" in rendered
     assert "renderAgenda();renderRecommendations()" in rendered
+
+
+def test_frontend_search_normalizes_query_and_document_consistently() -> None:
+    rendered = rendered_frontend()
+    assert "function searchNormalize(value)" in rendered
+    assert "normalize('NFKC')" in rendered
+    assert "const query=searchNormalize($('#q').value)" in rendered
+    assert "const haystack=searchNormalize(" in rendered
+
+
+def test_frontend_today_range_uses_jst_calendar_day_and_stable_tie_break() -> None:
+    rendered = rendered_frontend()
+    assert "function jstDateParts(date)" in rendered
+    assert "timeZone:'Asia/Tokyo'" in rendered
+    assert "Date.UTC(year,month-1,day+1)-9*60*60*1000-1" in rendered
+    assert "stableEventKey(left).localeCompare(stableEventKey(right))" in rendered
