@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import argparse
 import json
-from collections import defaultdict
 from pathlib import Path
 
 STATUSES = {"found", "not_found", "unsupported", "source_unavailable"}
