@@ -53,6 +53,7 @@ def test_frontend_preserves_ontology_features_and_explanations() -> None:
     assert "matchedReasons" in rendered
     assert "閲覧傾向" in rendered
     assert "renderAgenda();renderRecommendations()" in rendered
+    assert "eventId(a.event).localeCompare(eventId(b.event))" in rendered
 
 
 def test_frontend_search_normalizes_query_and_document_consistently() -> None:
