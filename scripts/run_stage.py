@@ -12,15 +12,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Iterable
 
-SCHEMA_VERSION = "1.1"
+SCHEMA_VERSION = "1.2"
 IGNORED_PATH_PARTS = {
-    ".git",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".mypy_cache",
-    "__pycache__",
-    ".venv",
-    "node_modules",
+    ".git", ".pytest_cache", ".ruff_cache", ".mypy_cache", "__pycache__", ".venv", "node_modules",
 }
 IGNORED_SUFFIXES = {".pyc", ".pyo"}
 
@@ -51,11 +45,7 @@ def _iter_files(root: Path, specs: Iterable[str]) -> list[tuple[str, Path | None
             continue
         for match in matches:
             if match.is_dir():
-                candidates = sorted(
-                    path
-                    for path in match.rglob("*")
-                    if path.is_file() and not is_ephemeral(path)
-                )
+                candidates = sorted(path for path in match.rglob("*") if path.is_file() and not is_ephemeral(path))
             elif match.is_file() and not is_ephemeral(match):
                 candidates = [match]
             else:
@@ -91,12 +81,7 @@ def fingerprint_paths(root: Path, specs: Iterable[str]) -> dict[str, Any]:
         hasher.update(b"\0")
     if not files:
         hasher.update(b"<empty>")
-    return {
-        "sha256": hasher.hexdigest(),
-        "file_count": sum(path is not None for _, path in files),
-        "missing_spec_count": missing,
-        "bytes": total_bytes,
-    }
+    return {"sha256": hasher.hexdigest(), "file_count": sum(path is not None for _, path in files), "missing_spec_count": missing, "bytes": total_bytes}
 
 
 def json_measurements(root: Path, paths: Iterable[str]) -> dict[str, Any]:
@@ -116,13 +101,7 @@ def json_measurements(root: Path, paths: Iterable[str]) -> dict[str, Any]:
         if isinstance(payload, list):
             metrics["root_items"] = len(payload)
         elif isinstance(payload, dict):
-            for field in (
-                "query_count",
-                "queries_attempted",
-                "network_request_count",
-                "request_count",
-                "requests",
-            ):
+            for field in ("query_count", "queries_attempted", "network_request_count", "request_count", "requests"):
                 if isinstance(payload.get(field), int):
                     metrics["reported_request_count"] = payload[field]
                     break
@@ -142,12 +121,14 @@ def restore_cache(root: Path, cache_dir: Path, outputs: list[str]) -> bool:
     manifest = cache_dir / "manifest.json"
     if not manifest.exists():
         return False
-    payload = json.loads(manifest.read_text(encoding="utf-8"))
-    if payload.get("successful") is not True:
+    try:
+        payload = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    if payload.get("successful") is not True or not isinstance(payload.get("output_sha256"), str):
         return False
     for output in outputs:
-        source = cache_dir / "outputs" / output
-        if not source.exists():
+        if not (cache_dir / "outputs" / output).exists():
             return False
     for output in outputs:
         source = cache_dir / "outputs" / output
@@ -159,11 +140,21 @@ def restore_cache(root: Path, cache_dir: Path, outputs: list[str]) -> bool:
             shutil.copytree(source, target)
         else:
             shutil.copy2(source, target)
+    if fingerprint_paths(root, outputs)["sha256"] != payload["output_sha256"]:
+        for output in outputs:
+            target = root / output
+            if target.is_dir():
+                shutil.rmtree(target)
+            elif target.exists():
+                target.unlink()
+        return False
     return True
 
 
 def save_cache(root: Path, cache_dir: Path, outputs: list[str]) -> None:
     output_root = cache_dir / "outputs"
+    if output_root.exists():
+        shutil.rmtree(output_root)
     output_root.mkdir(parents=True, exist_ok=True)
     for output in outputs:
         source = root / output
@@ -172,12 +163,11 @@ def save_cache(root: Path, cache_dir: Path, outputs: list[str]) -> None:
         target = output_root / output
         target.parent.mkdir(parents=True, exist_ok=True)
         if source.is_dir():
-            shutil.copytree(source, target, dirs_exist_ok=True)
+            shutil.copytree(source, target)
         else:
             shutil.copy2(source, target)
-    (cache_dir / "manifest.json").write_text(
-        json.dumps({"successful": True}), encoding="utf-8"
-    )
+    output_sha = fingerprint_paths(root, outputs)["sha256"]
+    (cache_dir / "manifest.json").write_text(json.dumps({"successful": True, "output_sha256": output_sha}), encoding="utf-8")
 
 
 def append_record(path: Path, record: dict[str, Any]) -> None:
@@ -190,9 +180,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", required=True)
     parser.add_argument("--name", required=True)
-    parser.add_argument(
-        "--kind", choices=("setup", "network", "projection", "validation"), required=True
-    )
+    parser.add_argument("--kind", choices=("setup", "network", "projection", "validation"), required=True)
     parser.add_argument("--input", action="append", default=[])
     parser.add_argument("--code-input", action="append", default=[])
     parser.add_argument("--output", action="append", default=[])
@@ -215,12 +203,7 @@ def main(argv: list[str] | None = None) -> int:
     command = [str(part) for part in args.command]
     input_specs = list(args.input)
     code_specs = list(args.code_input)
-    if (
-        len(command) > 1
-        and Path(command[0]).name.startswith("python")
-        and command[1].endswith(".py")
-        and Path(command[1]).exists()
-    ):
+    if len(command) > 1 and Path(command[0]).name.startswith("python") and command[1].endswith(".py") and Path(command[1]).exists():
         code_specs.append(command[1])
     inputs = fingerprint_paths(root, input_specs)
     code = fingerprint_paths(root, code_specs)
@@ -230,11 +213,7 @@ def main(argv: list[str] | None = None) -> int:
     reused = False
     cache_dir = None
     if args.cache_root:
-        cache_dir = (
-            Path(args.cache_root)
-            / args.name
-            / cache_key(inputs["sha256"], code["sha256"])
-        )
+        cache_dir = Path(args.cache_root) / args.name / cache_key(inputs["sha256"], code["sha256"])
         reused = restore_cache(root, cache_dir, args.output)
     if reused:
         return_code = 0
@@ -252,7 +231,7 @@ def main(argv: list[str] | None = None) -> int:
         "stage": args.name,
         "kind": args.kind,
         "status": "reused" if reused else ("executed" if return_code == 0 else "failed"),
-        "reuse_reason": "matching_input_and_code_fingerprint" if reused else None,
+        "reuse_reason": "matching_input_code_and_verified_output_fingerprint" if reused else None,
         "return_code": return_code,
         "command": command,
         "started_at": isoformat(started_at),
