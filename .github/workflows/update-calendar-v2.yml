@@ -4,7 +4,7 @@ name: Update calendar data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 20 * * *'
+    # Hourly refresh keeps the public calendar bounded in age even without code changes.\n    - cron: '17 * * * *'
   push:
     branches: [main]
     paths:
