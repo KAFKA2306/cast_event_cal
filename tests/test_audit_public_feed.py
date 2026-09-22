@@ -21,6 +21,9 @@ def test_valid_feed_has_no_errors(tmp_path: Path) -> None:
                 "title": "Event One",
                 "start": "2026-08-06T20:00:00+09:00",
                 "url": "https://example.com/event-1",
+                "primary_action_url": "https://example.com/join",
+                "official_links": [{"url": "https://example.com/official"}],
+                "proof_links": ["https://example.com/proof"],
             }
         ],
     )
@@ -50,3 +53,28 @@ def test_missing_identity_and_bad_fields_are_reported(tmp_path: Path) -> None:
     )
     codes = {error["code"] for error in audit(path)["errors"]}
     assert {"missing_identity", "missing_title", "invalid_datetime", "invalid_url"} <= codes
+
+
+def test_all_public_navigation_links_fail_closed_on_unsafe_schemes(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path,
+        [
+            {
+                "id": "unsafe-links",
+                "title": "Unsafe links",
+                "primary_action_url": "javascript:alert(1)",
+                "join_url": "http://example.com/join",
+                "official_links": [{"url": "data:text/html,bad"}],
+                "proof_links": ["//example.com/proof"],
+                "evidence_links": [{"url": "/relative"}],
+            }
+        ],
+    )
+    fields = {error.get("field") for error in audit(path)["errors"] if error["code"] == "invalid_url"}
+    assert fields == {
+        "primary_action_url",
+        "join_url",
+        "official_links[0]",
+        "proof_links[0]",
+        "evidence_links[0]",
+    }
