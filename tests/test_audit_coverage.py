@@ -20,7 +20,10 @@ def gold():
 def test_found_is_counted_by_category_and_source():
     result = audit(
         gold(),
-        {"events": [{"event_identity": "known-1"}], "supported_sources": ["source-a"]},
+        {
+            "events": [{"event_identity": "known-1"}],
+            "supported_sources": ["source-a"],
+        },
     )
     assert result["items"][0]["status"] == "found"
     assert result["by_category"]["world_tour"]["recall"] == 1.0
