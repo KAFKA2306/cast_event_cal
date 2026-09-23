@@ -4,7 +4,6 @@ name: Update calendar data
 on:
   workflow_dispatch:
   schedule:
-    # Hourly refresh keeps the public calendar bounded in age even without code changes.
     - cron: '17 * * * *'
   push:
     branches: [main]
@@ -13,7 +12,6 @@ on:
       - config/**
       - data/recurring_events.json
       - data/one_off_events.json
-      # Generated discovery outputs are intentionally excluded to avoid self-trigger loops.
       - scripts/**
       - tests/**
       - web/**
@@ -60,7 +58,10 @@ jobs:
       - name: Extend Yahoo candidate corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
-        run: python scripts/collect_yahoo_corpus.py --mode daily --target 1000
+        run: >-
+          python scripts/stage_metrics.py --name yahoo-collection --class network
+          --output data/yahoo_realtime_candidates.json --
+          python scripts/collect_yahoo_corpus.py --mode daily --target 1000
       - name: Replay retained Yahoo corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
@@ -75,32 +76,19 @@ jobs:
       - name: Gate collection health before build
         run: |
           python - <<'PY'
-          from scripts.validate_update_snapshot import (
-              OPTIONAL_COLLECTION_SOURCES,
-              ROOT,
-              require,
-              sync_collection_health,
-          )
-
+          from scripts.validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, ROOT, require, sync_collection_health
           health = sync_collection_health(ROOT)
-          statuses = {
-              str(row.get('name')): str(row.get('status'))
-              for row in health.get('sources', [])
-              if isinstance(row, dict)
-          }
-          require(
-              statuses.get('yahoo_realtime_events') == 'ok',
-              f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}",
-          )
+          statuses = {str(row.get('name')): str(row.get('status')) for row in health.get('sources', []) if isinstance(row, dict)}
+          require(statuses.get('yahoo_realtime_events') == 'ok', f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}")
           for name in OPTIONAL_COLLECTION_SOURCES:
-              require(
-                  statuses.get(name) in {'ok', 'degraded', 'skipped'},
-                  f"optional collection source has invalid status: {name}={statuses.get(name)}",
-              )
+              require(statuses.get(name) in {'ok', 'degraded', 'skipped'}, f"optional collection source has invalid status: {name}={statuses.get(name)}")
           print(f"collection health gate passed: {health.get('status')}")
           PY
       - name: Build normalized calendar
-        run: cast-event-cal run --strict
+        run: >-
+          python scripts/stage_metrics.py --name normalized-calendar --class projection
+          --input data --output public/events.json --
+          cast-event-cal run --strict
       - name: Enrich official X Web and WebP assets
         run: python scripts/enrich_official_assets.py
       - name: Discover recruitment participation and related links
@@ -110,7 +98,10 @@ jobs:
       - name: Collapse duplicate source posts into canonical occurrences
         run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
-        run: python scripts/render_frontend.py
+        run: >-
+          python scripts/stage_metrics.py --name frontend-render --class publication
+          --input public/events.json --output public/index.html --
+          python scripts/render_frontend.py
       - name: Build validated promotion overlay
         run: python scripts/build_promotions.py
       - name: Order home view by user decision value
@@ -120,7 +111,10 @@ jobs:
       - name: Build registration count audit
         run: python scripts/build_registration_count_audit.py
       - name: Audit canonical public feed
-        run: python scripts/audit_public_feed.py public/events.json --report /tmp/public-feed-audit.json
+        run: >-
+          python scripts/stage_metrics.py --name public-feed-audit --class validation
+          --input public/events.json --output /tmp/public-feed-audit.json --
+          python scripts/audit_public_feed.py public/events.json --report /tmp/public-feed-audit.json
       - name: Validate generated data and collection health
         run: python scripts/validate_update_snapshot.py
       - name: Write canonical snapshot identity
@@ -129,6 +123,13 @@ jobs:
         run: python scripts/write_snapshot_identity.py --check public/snapshot.json
       - name: Gate generated snapshot freshness
         run: python scripts/audit_freshness.py --max-age-minutes 180
+      - name: Upload stage metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-stage-metrics
+          path: artifacts/stage-metrics.json
+          if-no-files-found: error
       - name: Commit generated data safely
         run: |
           set -euo pipefail
