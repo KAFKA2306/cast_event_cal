@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -28,11 +28,8 @@ def build_query_yield_audit(
     candidates: list[dict[str, Any]], query_results: list[dict[str, Any]]
 ) -> dict[str, Any]:
     by_query: dict[str, dict[str, Any]] = {}
-    candidate_queries: dict[str, set[str]] = {}
     for row in candidates:
-        status_id = str(row.get("status_id") or "")
         keys = {str(key) for key in row.get("query_keys", []) if str(key)}
-        candidate_queries[status_id] = keys
         for key in keys:
             bucket = by_query.setdefault(key, {
                 "observed_candidates": 0,
