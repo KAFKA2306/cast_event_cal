@@ -28,6 +28,9 @@ PRIORITY = {
     "official_x": 8,
     "related_web": 9,
 }
+PRIMARY_ACTION_KINDS = frozenset({
+    "application", "vrchat_group", "vrchat_world", "join", "announcement", "official_web"
+})
 
 
 def now_iso() -> str:
@@ -50,6 +53,8 @@ def classify(url: str) -> tuple[str, str]:
     path = parsed.path.lower()
     if host in {"forms.gle", "docs.google.com"} and ("form" in path or host == "forms.gle"):
         return "application", "応募・申込"
+    if host == "vrc.group":
+        return "vrchat_group", "VRChat Group"
     if host in {"vrchat.com", "www.vrchat.com"} and "/home/group/" in path:
         return "vrchat_group", "VRChat Group"
     if host in {"vrchat.com", "www.vrchat.com"} and "/home/world/" in path:
@@ -108,6 +113,24 @@ def resolve(client: httpx.Client, url: str, cache: dict[str, tuple[str, str]] | 
     return result
 
 
+def select_primary_action(
+    links: list[dict[str, str]], existing_url: Any = None
+) -> tuple[str | None, str | None]:
+    candidates = [
+        row for row in links
+        if row.get("kind") in PRIMARY_ACTION_KINDS and canonical(row.get("url"))
+    ]
+    if candidates:
+        selected = min(candidates, key=lambda row: (PRIORITY[row["kind"]], row["url"]))
+        return canonical(selected["url"]), selected["kind"]
+    fallback = canonical(existing_url)
+    if fallback:
+        kind, _ = classify(fallback)
+        if kind in PRIMARY_ACTION_KINDS:
+            return fallback, kind
+    return None, None
+
+
 def enrich(event: dict[str, Any], client: httpx.Client, resolution_cache: dict[str, tuple[str, str]] | None = None) -> dict[str, Any]:
     output = dict(event)
     discovered: dict[str, dict[str, str]] = {}
@@ -132,9 +155,9 @@ def enrich(event: dict[str, Any], client: httpx.Client, resolution_cache: dict[s
     related = [row for row in links if row not in official]
     output["official_links"] = official[:10]
     output["related_links"] = related[:10]
-    click = next((row for row in links if row["kind"] in {"application", "vrchat_group", "vrchat_world", "join", "announcement", "official_web"}), None)
-    output["primary_action_url"] = click["url"] if click else canonical(event.get("url"))
-    output["primary_action_kind"] = click["kind"] if click else "announcement"
+    action_url, action_kind = select_primary_action(links, event.get("url"))
+    output["primary_action_url"] = action_url
+    output["primary_action_kind"] = action_kind
     output["link_discovery"] = {"count": len(links), "generated_at": now_iso()}
     return output
 
