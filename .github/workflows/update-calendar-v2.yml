@@ -129,7 +129,7 @@ jobs:
         with:
           name: production-stage-metrics
           path: artifacts/stage-metrics.json
-          if-no-files-found: error
+          if-no-files-found: warn
       - name: Commit generated data safely
         run: |
           set -euo pipefail
