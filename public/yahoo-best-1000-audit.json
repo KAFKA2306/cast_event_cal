@@ -1,34 +1,34 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-30T22:43:09Z",
+  "generated_at": "2026-09-24T10:37:51Z",
   "classifier_version": "1.8",
   "strategy_version": "ablation-informed-1.0",
   "status": "ok",
   "target_count": 1000,
   "target_reached": true,
   "candidate_count": 1000,
-  "raw_candidate_observations": 1488,
-  "duplicate_observations_removed": 471,
+  "raw_candidate_observations": 1499,
+  "duplicate_observations_removed": 478,
   "queries_planned": 180,
   "queries_attempted": 90,
   "queries_succeeded": 90,
   "queries_failed": 0,
-  "content_accepted_count": 41,
-  "content_acceptance_rate": 0.041,
-  "production_accepted_count": 41,
-  "production_acceptance_rate": 0.041,
+  "content_accepted_count": 48,
+  "content_acceptance_rate": 0.048,
+  "production_accepted_count": 48,
+  "production_acceptance_rate": 0.048,
   "new_to_existing_ledger_count": 399,
-  "new_accepted_to_existing_ledger_count": 23,
+  "new_accepted_to_existing_ledger_count": 24,
   "rejection_reason_counts": {
-    "giveaway_only": 7,
-    "missing_datetime": 136,
-    "missing_event_marker": 180,
-    "missing_participation_method": 2,
-    "not_vrchat": 4,
-    "past_event": 1,
-    "past_event_now": 148,
-    "product_only": 19,
-    "retweet_below_threshold": 462
+    "giveaway_only": 18,
+    "missing_datetime": 150,
+    "missing_event_marker": 199,
+    "missing_participation_method": 1,
+    "not_vrchat": 1,
+    "past_event": 3,
+    "past_event_now": 139,
+    "product_only": 17,
+    "retweet_below_threshold": 424
   },
   "strategy": {
     "primary": "A+B+C full query",
@@ -63,9 +63,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 1,
-      "accepted": 5,
-      "accepted_rate": 0.125
+      "new_to_ledger": 7,
+      "accepted": 6,
+      "accepted_rate": 0.15
     },
     {
       "key": "best-001-ac-complement",
@@ -74,9 +74,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 18,
-      "accepted": 8,
-      "accepted_rate": 0.2
+      "new_to_ledger": 32,
+      "accepted": 6,
+      "accepted_rate": 0.15
     },
     {
       "key": "best-002-bc-complement",
@@ -85,9 +85,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 15,
-      "accepted": 10,
-      "accepted_rate": 0.25
+      "new_to_ledger": 39,
+      "accepted": 8,
+      "accepted_rate": 0.2
     },
     {
       "key": "best-003-event-announcement-access",
@@ -96,9 +96,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 21,
-      "accepted": 7,
-      "accepted_rate": 0.175
+      "new_to_ledger": 18,
+      "accepted": 8,
+      "accepted_rate": 0.2
     },
     {
       "key": "best-004-business-open-access",
@@ -107,9 +107,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 9,
-      "accepted": 3,
-      "accepted_rate": 0.075
+      "new_to_ledger": 5,
+      "accepted": 2,
+      "accepted_rate": 0.05
     },
     {
       "key": "best-005-participation-method",
@@ -118,9 +118,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 5,
-      "accepted": 10,
-      "accepted_rate": 0.25
+      "new_to_ledger": 32,
+      "accepted": 7,
+      "accepted_rate": 0.175
     },
     {
       "key": "best-structured-core-000-イベント告知",
@@ -129,7 +129,7 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 21,
+      "new_to_ledger": 5,
       "accepted": 7,
       "accepted_rate": 0.175
     },
@@ -138,22 +138,22 @@
       "group": "structured_core",
       "term": "営業告知",
       "status": "ok",
-      "raw_candidates": 12,
-      "target_candidates": 12,
-      "new_to_ledger": 9,
-      "accepted": 1,
-      "accepted_rate": 0.083333
+      "raw_candidates": 7,
+      "target_candidates": 7,
+      "new_to_ledger": 0,
+      "accepted": 0,
+      "accepted_rate": 0.0
     },
     {
       "key": "best-structured-core-002-通常営業",
       "group": "structured_core",
       "term": "通常営業",
       "status": "ok",
-      "raw_candidates": 19,
-      "target_candidates": 19,
-      "new_to_ledger": 9,
+      "raw_candidates": 25,
+      "target_candidates": 25,
+      "new_to_ledger": 1,
       "accepted": 1,
-      "accepted_rate": 0.052632
+      "accepted_rate": 0.04
     },
     {
       "key": "best-structured-core-003-開催決定",
@@ -162,9 +162,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 11,
-      "accepted": 5,
-      "accepted_rate": 0.125
+      "new_to_ledger": 3,
+      "accepted": 2,
+      "accepted_rate": 0.05
     },
     {
       "key": "best-structured-core-004-集会",
@@ -173,7 +173,7 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 26,
+      "new_to_ledger": 35,
       "accepted": 6,
       "accepted_rate": 0.15
     },
@@ -184,20 +184,20 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 21,
-      "accepted": 3,
-      "accepted_rate": 0.075
+      "new_to_ledger": 7,
+      "accepted": 4,
+      "accepted_rate": 0.1
     },
     {
       "key": "best-structured-core-006-公演",
       "group": "structured_core",
       "term": "公演",
       "status": "ok",
-      "raw_candidates": 28,
-      "target_candidates": 28,
-      "new_to_ledger": 11,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "raw_candidates": 35,
+      "target_candidates": 35,
+      "new_to_ledger": 10,
+      "accepted": 2,
+      "accepted_rate": 0.057143
     },
     {
       "key": "best-structured-core-007-ライブイベント",
@@ -206,9 +206,9 @@
       "status": "ok",
       "raw_candidates": 17,
       "target_candidates": 17,
-      "new_to_ledger": 8,
-      "accepted": 3,
-      "accepted_rate": 0.176471
+      "new_to_ledger": 1,
+      "accepted": 2,
+      "accepted_rate": 0.117647
     },
     {
       "key": "best-structured-core-008-開場",
@@ -217,9 +217,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 26,
-      "accepted": 2,
-      "accepted_rate": 0.05
+      "new_to_ledger": 9,
+      "accepted": 5,
+      "accepted_rate": 0.125
     },
     {
       "key": "best-structured-core-009-オ-プン",
@@ -228,20 +228,20 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 27,
-      "accepted": 4,
-      "accepted_rate": 0.1
+      "new_to_ledger": 20,
+      "accepted": 3,
+      "accepted_rate": 0.075
     },
     {
       "key": "best-structured-core-010-説明会",
       "group": "structured_core",
       "term": "説明会",
       "status": "ok",
-      "raw_candidates": 20,
-      "target_candidates": 20,
-      "new_to_ledger": 10,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "raw_candidates": 22,
+      "target_candidates": 22,
+      "new_to_ledger": 2,
+      "accepted": 1,
+      "accepted_rate": 0.045455
     },
     {
       "key": "best-structured-core-011-体験会",
@@ -250,18 +250,18 @@
       "status": "ok",
       "raw_candidates": 12,
       "target_candidates": 12,
-      "new_to_ledger": 7,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "new_to_ledger": 1,
+      "accepted": 1,
+      "accepted_rate": 0.083333
     },
     {
       "key": "best-structured-core-012-試写会",
       "group": "structured_core",
       "term": "試写会",
       "status": "ok",
-      "raw_candidates": 1,
-      "target_candidates": 1,
-      "new_to_ledger": 1,
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -272,7 +272,7 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 2,
+      "new_to_ledger": 21,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -283,7 +283,7 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 9,
+      "new_to_ledger": 10,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -292,22 +292,22 @@
       "group": "structured_core",
       "term": "フェス",
       "status": "ok",
-      "raw_candidates": 36,
-      "target_candidates": 36,
-      "new_to_ledger": 16,
+      "raw_candidates": 31,
+      "target_candidates": 31,
+      "new_to_ledger": 14,
       "accepted": 1,
-      "accepted_rate": 0.027778
+      "accepted_rate": 0.032258
     },
     {
       "key": "best-structured-access-000-join制",
       "group": "structured_access",
       "term": "JOIN制",
       "status": "ok",
-      "raw_candidates": 8,
-      "target_candidates": 8,
-      "new_to_ledger": 3,
-      "accepted": 1,
-      "accepted_rate": 0.125
+      "raw_candidates": 6,
+      "target_candidates": 6,
+      "new_to_ledger": 2,
+      "accepted": 0,
+      "accepted_rate": 0.0
     },
     {
       "key": "best-structured-access-001-group-instance",
@@ -316,9 +316,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 1,
-      "accepted": 6,
-      "accepted_rate": 0.15
+      "new_to_ledger": 23,
+      "accepted": 7,
+      "accepted_rate": 0.175
     },
     {
       "key": "best-structured-access-002-group-インスタンス",
@@ -327,20 +327,20 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 11,
-      "accepted": 4,
-      "accepted_rate": 0.1
+      "new_to_ledger": 9,
+      "accepted": 3,
+      "accepted_rate": 0.075
     },
     {
       "key": "best-structured-access-003-ジョイン",
       "group": "structured_access",
       "term": "ジョイン",
       "status": "ok",
-      "raw_candidates": 19,
-      "target_candidates": 19,
-      "new_to_ledger": 7,
-      "accepted": 1,
-      "accepted_rate": 0.052632
+      "raw_candidates": 22,
+      "target_candidates": 22,
+      "new_to_ledger": 10,
+      "accepted": 0,
+      "accepted_rate": 0.0
     },
     {
       "key": "best-structured-access-004-リクイン",
@@ -349,18 +349,18 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 15,
-      "accepted": 2,
-      "accepted_rate": 0.05
+      "new_to_ledger": 26,
+      "accepted": 1,
+      "accepted_rate": 0.025
     },
     {
       "key": "best-structured-access-005-reqin",
       "group": "structured_access",
       "term": "reqin",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
-      "new_to_ledger": 1,
+      "raw_candidates": 6,
+      "target_candidates": 6,
+      "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -371,18 +371,18 @@
       "status": "ok",
       "raw_candidates": 10,
       "target_candidates": 10,
-      "new_to_ledger": 4,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "new_to_ledger": 6,
+      "accepted": 1,
+      "accepted_rate": 0.1
     },
     {
       "key": "best-structured-access-007-request-invite",
       "group": "structured_access",
       "term": "request invite",
       "status": "ok",
-      "raw_candidates": 8,
-      "target_candidates": 8,
-      "new_to_ledger": 1,
+      "raw_candidates": 13,
+      "target_candidates": 13,
+      "new_to_ledger": 6,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -393,9 +393,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 1,
-      "accepted": 6,
-      "accepted_rate": 0.15
+      "new_to_ledger": 23,
+      "accepted": 7,
+      "accepted_rate": 0.175
     },
     {
       "key": "best-structured-access-009-グル-プインスタンス",
@@ -404,18 +404,18 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 14,
-      "accepted": 1,
-      "accepted_rate": 0.025
+      "new_to_ledger": 19,
+      "accepted": 2,
+      "accepted_rate": 0.05
     },
     {
       "key": "best-structured-access-010-フレンドインスタンス",
       "group": "structured_access",
       "term": "フレンドインスタンス",
       "status": "ok",
-      "raw_candidates": 6,
-      "target_candidates": 6,
-      "new_to_ledger": 1,
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -426,29 +426,29 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 16,
-      "accepted": 1,
-      "accepted_rate": 0.025
+      "new_to_ledger": 26,
+      "accepted": 5,
+      "accepted_rate": 0.125
     },
     {
       "key": "best-structured-access-012-フレリク",
       "group": "structured_access",
       "term": "フレリク",
       "status": "ok",
-      "raw_candidates": 9,
-      "target_candidates": 9,
-      "new_to_ledger": 0,
-      "accepted": 1,
-      "accepted_rate": 0.111111
+      "raw_candidates": 12,
+      "target_candidates": 12,
+      "new_to_ledger": 2,
+      "accepted": 0,
+      "accepted_rate": 0.0
     },
     {
       "key": "best-structured-access-013-インスタンスオ-プン",
       "group": "structured_access",
       "term": "インスタンスオープン",
       "status": "ok",
-      "raw_candidates": 10,
-      "target_candidates": 10,
-      "new_to_ledger": 0,
+      "raw_candidates": 5,
+      "target_candidates": 5,
+      "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -459,17 +459,17 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 0,
-      "accepted": 6,
-      "accepted_rate": 0.15
+      "new_to_ledger": 28,
+      "accepted": 8,
+      "accepted_rate": 0.2
     },
     {
       "key": "best-structured-venues-000-カフェ営業",
       "group": "structured_venues",
       "term": "カフェ営業",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
+      "raw_candidates": 0,
+      "target_candidates": 0,
       "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -481,17 +481,17 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 0,
-      "accepted": 4,
-      "accepted_rate": 0.1
+      "new_to_ledger": 24,
+      "accepted": 3,
+      "accepted_rate": 0.075
     },
     {
       "key": "best-structured-venues-002-バ-営業",
       "group": "structured_venues",
       "term": "バー営業",
       "status": "ok",
-      "raw_candidates": 0,
-      "target_candidates": 0,
+      "raw_candidates": 1,
+      "target_candidates": 1,
       "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -503,7 +503,7 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 1,
+      "new_to_ledger": 29,
       "accepted": 3,
       "accepted_rate": 0.075
     },
@@ -525,9 +525,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 0,
-      "accepted": 6,
-      "accepted_rate": 0.15
+      "new_to_ledger": 24,
+      "accepted": 3,
+      "accepted_rate": 0.075
     },
     {
       "key": "best-structured-venues-006-居酒屋営業",
@@ -567,11 +567,11 @@
       "group": "structured_venues",
       "term": "ホストイベント",
       "status": "ok",
-      "raw_candidates": 9,
-      "target_candidates": 9,
-      "new_to_ledger": 0,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "raw_candidates": 6,
+      "target_candidates": 6,
+      "new_to_ledger": 2,
+      "accepted": 1,
+      "accepted_rate": 0.166667
     },
     {
       "key": "best-structured-venues-010-喫茶営業",
@@ -589,11 +589,11 @@
       "group": "structured_venues",
       "term": "交流イベント",
       "status": "ok",
-      "raw_candidates": 21,
-      "target_candidates": 21,
-      "new_to_ledger": 0,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "raw_candidates": 19,
+      "target_candidates": 19,
+      "new_to_ledger": 10,
+      "accepted": 1,
+      "accepted_rate": 0.052632
     },
     {
       "key": "best-structured-venues-012-初心者案内イベント",
@@ -613,9 +613,9 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 28,
-      "accepted": 1,
-      "accepted_rate": 0.025
+      "new_to_ledger": 11,
+      "accepted": 3,
+      "accepted_rate": 0.075
     },
     {
       "key": "best-structured-activities-001-vjイベント",
@@ -633,9 +633,9 @@
       "group": "structured_activities",
       "term": "ダンスイベント",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
-      "new_to_ledger": 0,
+      "raw_candidates": 1,
+      "target_candidates": 1,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -644,9 +644,9 @@
       "group": "structured_activities",
       "term": "演奏会",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
-      "new_to_ledger": 1,
+      "raw_candidates": 1,
+      "target_candidates": 1,
+      "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -655,8 +655,8 @@
       "group": "structured_activities",
       "term": "音楽会",
       "status": "ok",
-      "raw_candidates": 1,
-      "target_candidates": 1,
+      "raw_candidates": 0,
+      "target_candidates": 0,
       "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -679,7 +679,7 @@
       "status": "ok",
       "raw_candidates": 3,
       "target_candidates": 3,
-      "new_to_ledger": 2,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -688,9 +688,9 @@
       "group": "structured_activities",
       "term": "朗読劇",
       "status": "ok",
-      "raw_candidates": 4,
-      "target_candidates": 4,
-      "new_to_ledger": 2,
+      "raw_candidates": 3,
+      "target_candidates": 3,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -699,9 +699,9 @@
       "group": "structured_activities",
       "term": "朗読ミュージカル",
       "status": "ok",
-      "raw_candidates": 9,
-      "target_candidates": 9,
-      "new_to_ledger": 5,
+      "raw_candidates": 0,
+      "target_candidates": 0,
+      "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -710,9 +710,9 @@
       "group": "structured_activities",
       "term": "映画祭",
       "status": "ok",
-      "raw_candidates": 7,
-      "target_candidates": 7,
-      "new_to_ledger": 2,
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -721,9 +721,9 @@
       "group": "structured_activities",
       "term": "上映会",
       "status": "ok",
-      "raw_candidates": 5,
-      "target_candidates": 5,
-      "new_to_ledger": 2,
+      "raw_candidates": 10,
+      "target_candidates": 10,
+      "new_to_ledger": 6,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -743,9 +743,9 @@
       "group": "structured_activities",
       "term": "展示会",
       "status": "ok",
-      "raw_candidates": 17,
-      "target_candidates": 17,
-      "new_to_ledger": 5,
+      "raw_candidates": 20,
+      "target_candidates": 20,
+      "new_to_ledger": 4,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -754,9 +754,9 @@
       "group": "structured_activities",
       "term": "展覧会",
       "status": "ok",
-      "raw_candidates": 7,
-      "target_candidates": 7,
-      "new_to_ledger": 1,
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -765,9 +765,9 @@
       "group": "structured_activities",
       "term": "撮影会",
       "status": "ok",
-      "raw_candidates": 33,
-      "target_candidates": 33,
-      "new_to_ledger": 12,
+      "raw_candidates": 17,
+      "target_candidates": 17,
+      "new_to_ledger": 5,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -776,9 +776,9 @@
       "group": "structured_activities",
       "term": "フォトコン",
       "status": "ok",
-      "raw_candidates": 33,
-      "target_candidates": 33,
-      "new_to_ledger": 9,
+      "raw_candidates": 38,
+      "target_candidates": 38,
+      "new_to_ledger": 12,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -789,18 +789,18 @@
       "status": "ok",
       "raw_candidates": 40,
       "target_candidates": 40,
-      "new_to_ledger": 37,
-      "accepted": 0,
-      "accepted_rate": 0.0
+      "new_to_ledger": 26,
+      "accepted": 1,
+      "accepted_rate": 0.025
     },
     {
       "key": "best-structured-activities-018-ワ-ルドツア",
       "group": "structured_activities",
       "term": "ワールドツアー",
       "status": "ok",
-      "raw_candidates": 17,
-      "target_candidates": 17,
-      "new_to_ledger": 13,
+      "raw_candidates": 28,
+      "target_candidates": 28,
+      "new_to_ledger": 8,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -809,9 +809,9 @@
       "group": "structured_activities",
       "term": "謎解きイベント",
       "status": "ok",
-      "raw_candidates": 1,
-      "target_candidates": 1,
-      "new_to_ledger": 1,
+      "raw_candidates": 0,
+      "target_candidates": 0,
+      "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -820,8 +820,8 @@
       "group": "structured_activities",
       "term": "ゲーム大会",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
+      "raw_candidates": 0,
+      "target_candidates": 0,
       "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -833,7 +833,7 @@
       "status": "ok",
       "raw_candidates": 2,
       "target_candidates": 2,
-      "new_to_ledger": 0,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -842,9 +842,9 @@
       "group": "structured_activities",
       "term": "麻雀大会",
       "status": "ok",
-      "raw_candidates": 3,
-      "target_candidates": 3,
-      "new_to_ledger": 0,
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -886,19 +886,19 @@
       "group": "structured_activities",
       "term": "クイズ大会",
       "status": "ok",
-      "raw_candidates": 2,
-      "target_candidates": 2,
-      "new_to_ledger": 1,
-      "accepted": 1,
-      "accepted_rate": 0.5
+      "raw_candidates": 4,
+      "target_candidates": 4,
+      "new_to_ledger": 3,
+      "accepted": 0,
+      "accepted_rate": 0.0
     },
     {
       "key": "best-structured-activities-027-オ-クションイベント",
       "group": "structured_activities",
       "term": "オークションイベント",
       "status": "ok",
-      "raw_candidates": 1,
-      "target_candidates": 1,
+      "raw_candidates": 2,
+      "target_candidates": 2,
       "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -985,9 +985,9 @@
       "group": "structured_communities",
       "term": "勉強会",
       "status": "ok",
-      "raw_candidates": 3,
-      "target_candidates": 3,
-      "new_to_ledger": 1,
+      "raw_candidates": 13,
+      "target_candidates": 13,
+      "new_to_ledger": 7,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -996,9 +996,9 @@
       "group": "structured_communities",
       "term": "講演会",
       "status": "ok",
-      "raw_candidates": 0,
-      "target_candidates": 0,
-      "new_to_ledger": 0,
+      "raw_candidates": 1,
+      "target_candidates": 1,
+      "new_to_ledger": 1,
       "accepted": 0,
       "accepted_rate": 0.0
     },
@@ -1007,8 +1007,8 @@
       "group": "structured_communities",
       "term": "セミナー",
       "status": "ok",
-      "raw_candidates": 4,
-      "target_candidates": 4,
+      "raw_candidates": 2,
+      "target_candidates": 2,
       "new_to_ledger": 2,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -1029,8 +1029,8 @@
       "group": "structured_communities",
       "term": "学校説明会",
       "status": "ok",
-      "raw_candidates": 0,
-      "target_candidates": 0,
+      "raw_candidates": 4,
+      "target_candidates": 4,
       "new_to_ledger": 0,
       "accepted": 0,
       "accepted_rate": 0.0
@@ -1041,10 +1041,10 @@
       "term": "同期会",
       "status": "ok",
       "raw_candidates": 40,
-      "target_candidates": 23,
-      "new_to_ledger": 11,
-      "accepted": 1,
-      "accepted_rate": 0.043478
+      "target_candidates": 19,
+      "new_to_ledger": 7,
+      "accepted": 3,
+      "accepted_rate": 0.157895
     }
   ],
   "quality": {
