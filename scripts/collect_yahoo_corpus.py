@@ -30,13 +30,15 @@ HISTORY_MAX_COUNT = 5000
 PARTICIPATION_TERMS = {
     "参加方法", "参加条件", "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト",
     "request invite", "招待", "フレンド申請", "フレリク", "グループインスタンス",
-    "group instance", "group+", "group public", "フレンドインスタンス", "join制",
-    "インスタンスへ", "インスタンスに", "インスタンスオープン",
+    "group instance", "groupインスタンス", "group インスタンス", "group+", "group +",
+    "group ＋", "group public", "グループプラスインスタンス", "フレンドインスタンス",
+    "join制", "インスタンスへ", "インスタンスに", "インスタンスオープン",
 }
 VR_ACCESS_TERMS = {
     "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",
-    "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",
-    "グループ＋", "group public", "フレンドインスタンス", "join制",
+    "フレンド申請", "フレリク", "グループインスタンス", "group instance",
+    "groupインスタンス", "group インスタンス", "group+", "group +", "group ＋",
+    "グループ＋", "グループプラスインスタンス", "group public", "フレンドインスタンス", "join制",
     "インスタンスへ", "インスタンスに", "インスタンスオープン",
 }
 GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}
