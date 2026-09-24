@@ -299,7 +299,7 @@ def test_access_evidence_can_anchor_relative_datetime_without_announcement_word(
     assert result.event_at == datetime(2026, 9, 19, 22, 0, tzinfo=JST)
 
 
-def test_personal_join_without_event_structure_is_not_enough_for_archive_publication() -> None:
+def test_parser_can_resolve_access_clock_before_semantic_classifier_gate() -> None:
     anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
     result = resolve(
         "今夜22:00にVRChatへJOINして遊びます。",
