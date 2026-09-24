@@ -35,3 +35,15 @@ def test_missing_timestamp_is_unknown_and_fails():
     assert report["status"] == "stale"
     assert report["snapshot_age_minutes"] is None
     assert report["reasons"] == ["missing_publication_timestamp"]
+
+def test_fresh_degraded_snapshot_is_not_stale() -> None:
+    report = audit(
+        {"status": "degraded", "generated_at": "2026-09-22T11:30:00Z"},
+        {},
+        now=datetime(2026, 9, 22, 12, 0, tzinfo=UTC),
+        max_snapshot_age_minutes=180,
+    )
+    assert report["status"] == "ok"
+    assert report["snapshot_age_minutes"] == 30.0
+    assert report["reasons"] == []
+

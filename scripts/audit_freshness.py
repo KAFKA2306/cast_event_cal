@@ -62,10 +62,10 @@ def audit(
     elif age_minutes is not None and age_minutes > max_snapshot_age_minutes:
         reasons.append("stale_public_snapshot")
 
-    health_status = str(health.get("status") or "").lower()
-    if health_status and health_status not in {"ok", "healthy"}:
-        reasons.append(f"public_health_{health_status}")
-
+    # Freshness and collection health are separate contracts. A newly generated
+    # snapshot may be degraded because an optional source is unavailable; that
+    # must not prevent publishing a fresh last-known-good projection. Collection
+    # health is validated separately before this audit.
     return {
         "schema_version": "1.0",
         "checked_at": now.replace(microsecond=0).isoformat().replace("+00:00", "Z"),
