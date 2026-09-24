@@ -17,6 +17,19 @@ WEEKDAY_PATTERN = re.compile(
     r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
     flags=re.IGNORECASE | re.DOTALL,
 )
+ORDINAL_RECURRING_WEEKDAY_PATTERN = re.compile(
+    r"(?:毎月\s*)?第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜(?:日)?",
+    flags=re.IGNORECASE,
+)
+MULTI_EVENT_CLOCK_PATTERN = re.compile(
+    r"(?:[01]?\d|2[0-3])時(?:半)?\s*からは.{0,240}?"
+    r"(?:[01]?\d|2[0-3])時(?:半)?\s*からは",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+UNPREFIXED_WEEKDAY_PAST_CONTEXT_RE = re.compile(
+    r"昨日|先日|参加してき|行ってき|営業してました",
+    flags=re.IGNORECASE,
+)
 CLOCK_PATTERN = re.compile(
     r"(?<!\d)(?P<hour>[01]?\d|2[0-3])(?:[:：時]\s*(?P<minute>\d{0,2}))(?!\d)"
 )
@@ -297,6 +310,9 @@ def resolve_event_datetime(
     semantics.
     """
     anchor_jst = _jst(anchor)
+    if RELATIVE_DAY_PATTERN.search(text) and MULTI_EVENT_CLOCK_PATTERN.search(text):
+        return None
+
     explicit = explicit_parser(text, anchor_jst)
     if explicit is not None:
         if RELATIVE_DAY_PATTERN.search(text):
@@ -320,12 +336,17 @@ def resolve_event_datetime(
         .replace("〜", "~")
         .replace("～", "~")
     )
+    if ORDINAL_RECURRING_WEEKDAY_PATTERN.search(normalized):
+        return None
+
     match = WEEKDAY_PATTERN.search(normalized)
     if not match:
         return _resolve_evidence_span_datetime(text, anchor_jst)
 
     target_weekday = WEEKDAY_INDEX[match.group("weekday")]
     prefix = (match.group("prefix") or "").strip()
+    if not prefix and UNPREFIXED_WEEKDAY_PAST_CONTEXT_RE.search(text):
+        return None
     hour = int(match.group("hour"))
     minute = int(match.group("minute") or 0)
     week_start = anchor_jst.date() - timedelta(days=anchor_jst.weekday())
