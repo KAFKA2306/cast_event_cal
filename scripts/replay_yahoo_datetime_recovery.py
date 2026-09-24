@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import reclassify_yahoo_archive as archive
-from scripts import run_yahoo_realtime as ledger
 
 HISTORY_PATH = Path("public/yahoo-candidate-history.json")
 MIN_HISTORY_COUNT = 5000
