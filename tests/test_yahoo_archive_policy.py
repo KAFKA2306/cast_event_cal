@@ -179,3 +179,20 @@ def test_archive_materializes_recurring_event_with_provenance():
     assert accepted[0]["recurrence_rule"]["weekday"] == 4
     assert accepted[0]["temporal_status"] == "upcoming"
     assert evaluated[0]["last_decision"] == "accepted"
+
+
+def test_access_clock_without_event_structure_remains_rejected():
+    configure_archive_classifier()
+    accepted, rejected, _ = reclassify(
+        [
+            row(
+                "今夜22:00にVRChatへJOINして遊びます。",
+                retweets=5,
+                status_id="2080000000000000004",
+            )
+        ],
+        actual_now=datetime(2026, 9, 19, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert accepted == []
+    assert rejected[0]["reason"] == "missing_event_marker"
