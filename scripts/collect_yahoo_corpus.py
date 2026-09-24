@@ -80,6 +80,10 @@ NEXT_MONTH_CONFLICT_RE = re.compile(
     r"(?P<date_month>1[0-2]|0?[1-9])[./月-]",
     re.IGNORECASE | re.DOTALL,
 )
+OFF_PLATFORM_GAME_RE = re.compile(
+    r"(?:fall\s*guys.{0,160}epic\s*games|epic\s*games.{0,160}fall\s*guys)",
+    re.IGNORECASE | re.DOTALL,
+)
 _ORIGINAL_CANDIDATE_TO_EVENT = implementation.candidate_to_event
 _ORIGINAL_PARSE_EVENT_DATETIME = implementation.parse_event_datetime
 
@@ -152,6 +156,8 @@ def structured_classify(text: str) -> tuple[str | None, str | None]:
     has_broadcast = has_any(text, BROADCAST_ONLY_TERMS)
     has_social_entry = has_any(text, SOCIAL_ENTRY_TERMS)
     looks_like_world_description = has_any(text, WORLD_DESCRIPTION_TERMS)
+    if OFF_PLATFORM_GAME_RE.search(text) and not has_access:
+        return None, "missing_event_marker"
     event_structure = (
         has_specific_event
         or (has_generic_event and has_action)

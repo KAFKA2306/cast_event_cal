@@ -90,6 +90,23 @@ def test_action_and_attendance_do_not_promote_product_or_giveaway_noise():
     assert {item["reason"] for item in rejected} == {"product_only", "giveaway_only"}
 
 
+def test_off_platform_game_is_not_promoted_by_vrc_community_context():
+    configure_classifier()
+    accepted, rejected, _ = reclassify(
+        [
+            row(
+                "8/28 22:00 Fall Guys酒場を開催。PC参加はEpic Games版から。"
+                "連絡は2024年9月VRC同期会Discordにて。",
+                retweets=10,
+            )
+        ],
+        actual_now=datetime(2026, 8, 20, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert accepted == []
+    assert rejected[0]["reason"] == "missing_event_marker"
+
+
 def test_missing_datetime_remains_rejected():
     configure_classifier()
     accepted, rejected, _ = reclassify(
