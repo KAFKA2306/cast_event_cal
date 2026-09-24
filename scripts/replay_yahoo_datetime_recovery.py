@@ -61,6 +61,12 @@ def replay() -> dict[str, Any]:
     lost = sorted(accepted_before - accepted_after)
     promoted = sorted(accepted_after - accepted_before)
     promoted_missing = sorted(set(promoted) & missing_before)
+    promoted_previous_reason_counts: dict[str, int] = {}
+    for status_id in promoted:
+        reason = str(before_by_id[status_id].get("last_reason") or "none")
+        promoted_previous_reason_counts[reason] = (
+            promoted_previous_reason_counts.get(reason, 0) + 1
+        )
     promoted_without_evidence = sorted(
         status_id
         for status_id in promoted_missing
@@ -110,6 +116,7 @@ def replay() -> dict[str, Any]:
         "existing_accepted_lost": len(lost),
         "lost_status_ids": lost,
         "newly_promoted": len(promoted),
+        "promoted_previous_reason_counts": dict(sorted(promoted_previous_reason_counts.items())),
         "promoted_from_missing_datetime": len(promoted_missing),
         "promoted_without_resolution_evidence": len(promoted_without_evidence),
         "promoted_method_counts": dict(sorted(method_counts.items())),
