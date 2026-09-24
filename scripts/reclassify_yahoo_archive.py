@@ -13,6 +13,10 @@ from scripts import collect_yahoo_corpus as corpus
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
+from scripts.yahoo_evidence_graph import (
+    build_evidence_graph,
+    resolve_corroborated_datetime,
+)
 from scripts.relative_datetime import (
     EXPLICIT_DATE_PATTERN,
     install_classifier_datetime,
@@ -31,6 +35,17 @@ def configure_archive_classifier() -> None:
 
 def temporal_status(start: datetime, now: datetime) -> str:
     return "past" if start < now else "upcoming"
+
+
+def source_anchor(row: dict[str, Any], actual_now: datetime) -> datetime:
+    status_id = str(row.get("status_id") or "")
+    created_at = refinement.twitter_snowflake_created_at(status_id)
+    if created_at and created_at <= actual_now + timedelta(days=1):
+        return created_at
+    return (
+        implementation.parse_instant(str(row.get("first_seen_at") or ""))
+        or actual_now
+    )
 
 
 def adjusted_candidate(row: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
@@ -63,20 +78,18 @@ def reclassify(
     accepted: list[dict[str, Any]] = []
     rejected: list[dict[str, Any]] = []
     evaluated: list[dict[str, Any]] = []
+    evidence_graph = build_evidence_graph(
+        history,
+        anchor_for=lambda row: source_anchor(row, actual_now),
+    )
 
     for original in history:
         row = dict(original)
         status_id = str(row.get("status_id") or "")
+        anchor = source_anchor(row, actual_now)
         source_created_at = refinement.twitter_snowflake_created_at(status_id)
         if source_created_at and source_created_at <= actual_now + timedelta(days=1):
             row["source_created_at"] = implementation.utc_text(source_created_at)
-        else:
-            source_created_at = None
-        anchor = (
-            source_created_at
-            or implementation.parse_instant(str(row.get("first_seen_at") or ""))
-            or actual_now
-        )
 
         candidate, reason = adjusted_candidate(row)
         event = None
@@ -93,7 +106,31 @@ def reclassify(
                         materialize_after=actual_now,
                     )
                     if recurrence is None:
-                        reason = "missing_datetime"
+                        corroborated = resolve_corroborated_datetime(
+                            row,
+                            graph=evidence_graph,
+                            anchor=anchor,
+                            actual_now=actual_now,
+                        )
+                        if corroborated is None:
+                            reason = "missing_datetime"
+                        else:
+                            event, reason = corpus.refined_candidate_to_event_at(
+                                candidate,
+                                event_at=corroborated.event_at,
+                                now=actual_now,
+                                min_retweets=3,
+                                x_ids=x_ids,
+                            )
+                            if event:
+                                evidence = corroborated.evidence(implementation.utc_text)
+                                event["date_resolution_method"] = evidence["method"]
+                                event["date_resolution_anchor"] = evidence["anchor"]
+                                event["date_resolution_evidence"] = evidence
+                                event["event_fingerprint"] = corroborated.event_fingerprint
+                                event["corroborating_source_ids"] = list(
+                                    corroborated.corroborating_source_ids
+                                )
                     else:
                         event, reason = corpus.refined_candidate_to_event_at(
                             candidate,
@@ -237,6 +274,11 @@ def main() -> int:
         "promoted_from_missing_datetime": len(promoted_from_missing),
         "promoted_status_ids": promoted_from_missing,
         "recurrence_materialized_count": len(recurrence_materialized),
+        "corroborated_materialized_count": sum(
+            event.get("date_resolution_method")
+            == "corroborated_event_fingerprint_date_clock"
+            for event in accepted
+        ),
         "resolution_method_counts": dict(sorted(resolution_method_counts.items())),
         "promotions_without_provenance": sum(
             not bool(accepted_by_status[status_id].get("date_resolution_evidence"))
@@ -289,6 +331,7 @@ def main() -> int:
             "publishability_backlog_before": publishability_report["publishability_backlog_before"],
             "promoted_from_missing_datetime": publishability_report["promoted_from_missing_datetime"],
             "recurrence_materialized_count": publishability_report["recurrence_materialized_count"],
+            "corroborated_materialized_count": publishability_report["corroborated_materialized_count"],
             "promotions_without_provenance": publishability_report["promotions_without_provenance"],
         }
     )
