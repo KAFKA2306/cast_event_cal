@@ -30,15 +30,13 @@ HISTORY_MAX_COUNT = 5000
 PARTICIPATION_TERMS = {
     "参加方法", "参加条件", "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト",
     "request invite", "招待", "フレンド申請", "フレリク", "グループインスタンス",
-    "group instance", "groupインスタンス", "group インスタンス", "group+", "group +",
-    "group ＋", "group public", "グループプラスインスタンス", "フレンドインスタンス",
-    "join制", "インスタンスへ", "インスタンスに", "インスタンスオープン",
+    "group instance", "group+", "group public", "フレンドインスタンス", "join制",
+    "インスタンスへ", "インスタンスに", "インスタンスオープン",
 }
 VR_ACCESS_TERMS = {
     "join", "ジョイン", "リクイン", "reqin", "リクエストインバイト", "request invite",
-    "フレンド申請", "フレリク", "グループインスタンス", "group instance",
-    "groupインスタンス", "group インスタンス", "group+", "group +", "group ＋",
-    "グループ＋", "グループプラスインスタンス", "group public", "フレンドインスタンス", "join制",
+    "フレンド申請", "フレリク", "グループインスタンス", "group instance", "group+",
+    "グループ＋", "group public", "フレンドインスタンス", "join制",
     "インスタンスへ", "インスタンスに", "インスタンスオープン",
 }
 GENERIC_EVENT_NOUN_TERMS = {"イベント", "event"}
@@ -55,14 +53,13 @@ SPECIFIC_EVENT_TERMS = {
     "講演会", "講演", "セミナー", "上映会", "映画祭", "朗読会", "朗読劇",
     "朗読ミュージカル", "舞台公演", "演奏会", "音楽会", "撮影会", "展示会", "展覧会",
     "フェス", "festival", "祭り", "オフ会", "説明会", "体験会", "試写会", "フォトコン",
-    "vrchatライブ", "performance live", "講習会", "dj営業",
+    "vrchatライブ", "performance live", "講習会",
 }
 EVENT_ACTION_TERMS = {"開催", "open", "オープン", "開場", "開始", "営業", "公演", "実施", "開演"}
 ATTENDANCE_TERMS = {
     "参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",
-    "ご来店", "遊びに来て", "遊びにきて", "遊びにいらして", "お越し", "見に来て",
-    "聴きに来て", "聴きにきて", "参加してください", "参加希望", "ぜひ来て",
-    "来てね", "待ってる", "入退場自由", "お待ちしております", "お待ちしてます", "入場",
+    "ご来店", "遊びに来て", "遊びにきて", "お越し", "見に来て", "聴きに来て",
+    "お待ちしております", "お待ちしてます", "入場",
 }
 SPECIFIC_RECRUITMENT_TERMS = {
     "キャスト募集", "スタッフ募集", "店員募集", "演者募集", "テスター募集", "参加者募集",
@@ -157,7 +154,6 @@ def structured_classify(text: str) -> tuple[str | None, str | None]:
         or (has_generic_event and has_action)
         or (has_generic_event and has_attendance)
         or (has_action and has_access)
-        or (has_action and has_attendance and not has_product and not has_giveaway)
         or (has_access and has_attendance)
     )
     recruitment_structure = has_recruitment or (has_deadline and has_access)
