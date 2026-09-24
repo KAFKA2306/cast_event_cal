@@ -297,9 +297,15 @@ def known_x_ids(events: Iterable[dict[str, Any]]) -> set[str]:
     return result
 
 
-def candidate_to_event(
-    candidate: dict[str, Any], *, now: datetime, min_retweets: int, x_ids: set[str]
+def candidate_to_event_at(
+    candidate: dict[str, Any],
+    *,
+    event_at: datetime | None,
+    now: datetime,
+    min_retweets: int,
+    x_ids: set[str],
 ) -> tuple[dict[str, Any] | None, str | None]:
+    """Build an event from a resolver-supplied timestamp after normal policy checks."""
     post_id = str(candidate.get("status_id") or "")
     text = clean_yahoo_text(str(candidate.get("text") or ""))
     if not STATUS_ID_RE.fullmatch(post_id):
@@ -322,9 +328,9 @@ def candidate_to_event(
         return None, "retweet_count_invalid"
     if retweets < min_retweets:
         return None, "retweet_below_threshold"
-    event_at = parse_event_datetime(text, now.astimezone(JST))
     if event_at is None:
         return None, "missing_datetime"
+    event_at = event_at.astimezone(JST)
     if event_at < now.astimezone(JST) - timedelta(hours=12):
         return None, "past_event"
     if event_at > now.astimezone(JST) + timedelta(days=180):
@@ -345,6 +351,19 @@ def candidate_to_event(
     }
     return {key: value for key, value in event.items() if value is not None}, None
 
+
+def candidate_to_event(
+    candidate: dict[str, Any], *, now: datetime, min_retweets: int, x_ids: set[str]
+) -> tuple[dict[str, Any] | None, str | None]:
+    text = clean_yahoo_text(str(candidate.get("text") or ""))
+    event_at = parse_event_datetime(text, now.astimezone(JST))
+    return candidate_to_event_at(
+        candidate,
+        event_at=event_at,
+        now=now,
+        min_retweets=min_retweets,
+        x_ids=x_ids,
+    )
 
 def parse_instant(value: str) -> datetime | None:
     try:
