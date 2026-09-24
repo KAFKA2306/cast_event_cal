@@ -141,10 +141,15 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--assert-targets", action="store_true")
     parser.add_argument("--min-promoted", type=int, default=MIN_PROMOTED_MISSING_DATETIME)
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
 
     report = replay()
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    rendered = json.dumps(report, ensure_ascii=False, indent=2)
+    print(rendered)
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(rendered + "\n", encoding="utf-8")
 
     if args.assert_targets:
         assert report["existing_accepted_lost"] == 0, report["lost_status_ids"]
