@@ -53,3 +53,11 @@ def test_frontend_preserves_ontology_features_and_explanations() -> None:
     assert "matchedReasons" in rendered
     assert "閲覧傾向" in rendered
     assert "renderAgenda();renderRecommendations()" in rendered
+
+
+def test_rendered_frontend_keeps_datetime_provenance_ui() -> None:
+    rendered = rendered_frontend()
+    assert 'id="metric-evidence"' in rendered
+    assert "日時根拠あり" in rendered
+    assert "resolutionText(event)" in rendered
+    assert "date_resolution_evidence?.matched_text" in rendered

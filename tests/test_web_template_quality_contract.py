@@ -21,3 +21,13 @@ def test_template_preserves_browser_quality_fixes() -> None:
     assert '<link rel="icon" href="data:,">' in source
     assert '.detail b{display:block;color:#52627a;' in source
     assert '.detail b{display:block;color:var(--muted);' not in source
+
+
+def test_template_exposes_datetime_provenance_without_changing_default_future_view() -> None:
+    source = template_text()
+    assert 'id="metric-evidence"' in source
+    assert "日時根拠あり" in source
+    assert "date_resolution_method" in source
+    assert "date_resolution_evidence?.matched_text" in source
+    assert "['日時根拠',datetimeEvidence]" in source
+    assert "new Date(event.starts_at)>=now" in source

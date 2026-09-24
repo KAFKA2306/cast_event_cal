@@ -45,6 +45,11 @@ class Event:
     tags: list[str] = field(default_factory=list)
     confidence: float = 1.0
     review_required: bool = False
+    date_resolution_method: str | None = None
+    date_resolution_anchor: str | None = None
+    date_resolution_evidence: dict[str, Any] | None = None
+    temporal_status: str | None = None
+    is_archived: bool = False
 
     def normalized(self) -> "Event":
         self.title = clean_text(self.title)
@@ -54,6 +59,9 @@ class Event:
         self.url = clean_optional(self.url)
         self.image_url = clean_optional(self.image_url)
         self.category = clean_optional(self.category)
+        self.date_resolution_method = clean_optional(self.date_resolution_method)
+        self.date_resolution_anchor = clean_optional(self.date_resolution_anchor)
+        self.temporal_status = clean_optional(self.temporal_status)
         self.tags = sorted({clean_text(tag) for tag in self.tags if clean_text(tag)})
         self.starts_at = normalize_datetime(self.starts_at)
         self.ends_at = normalize_datetime(self.ends_at) if self.ends_at else None
@@ -146,6 +154,15 @@ def build_event(raw: dict[str, Any], source: str, fetched_at: str) -> Event:
         tags=list(raw.get("tags") or []),
         confidence=float(raw.get("confidence", 1.0)),
         review_required=bool(raw.get("review_required", False)),
+        date_resolution_method=raw.get("date_resolution_method"),
+        date_resolution_anchor=raw.get("date_resolution_anchor"),
+        date_resolution_evidence=(
+            dict(raw["date_resolution_evidence"])
+            if isinstance(raw.get("date_resolution_evidence"), dict)
+            else None
+        ),
+        temporal_status=raw.get("temporal_status"),
+        is_archived=bool(raw.get("is_archived", False)),
     )
     return event.normalized()
 
