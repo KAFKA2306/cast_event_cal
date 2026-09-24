@@ -203,7 +203,17 @@ def reclassify(
                 row["publishability_state"] = datetime_audit.publishability_state(occurrence)
             else:
                 row["publishability_decision"] = resolved
-                row["publishability_state"] = "confirmed_non_event"
+                if resolved in {
+                    "missing_event_marker",
+                    "product_only",
+                    "giveaway_only",
+                    "not_vrchat",
+                }:
+                    row["publishability_state"] = "confirmed_non_event"
+                elif resolved in {"past_event", "past_event_now"}:
+                    row["publishability_state"] = "past_only"
+                else:
+                    row["publishability_state"] = "policy_rejected"
             rejected.append(refinement.rejection_row(row, resolved))
         evaluated.append(row)
 
