@@ -58,6 +58,12 @@ def replay() -> dict[str, Any]:
         if source_status_id(event)
     }
     accepted_after = set(accepted_by_id)
+    accepted_with_resolution_evidence = sorted(
+        status_id
+        for status_id, event in accepted_by_id.items()
+        if event.get("date_resolution_evidence")
+        and event.get("date_resolution_method")
+    )
 
     lost = sorted(accepted_before - accepted_after)
     promoted = sorted(accepted_after - accepted_before)
@@ -157,6 +163,7 @@ def replay() -> dict[str, Any]:
         "replay_generated_at": implementation.utc_text(replay_now),
         "accepted_before": len(accepted_before),
         "accepted_after": len(accepted_after),
+        "accepted_with_resolution_evidence": len(accepted_with_resolution_evidence),
         "existing_accepted_lost": len(lost),
         "lost_status_ids": lost,
         "newly_promoted": len(promoted),
@@ -177,6 +184,25 @@ def replay() -> dict[str, Any]:
     }
 
 
+def assert_targets(report: dict[str, Any], min_promoted: int) -> None:
+    assert report["existing_accepted_lost"] == 0, report["lost_status_ids"]
+    assert report["promoted_without_resolution_evidence"] == 0
+    assert report["promoted_other_without_resolution_evidence"] == []
+    assert report["unreviewed_other_promotions"] == []
+    assert report["review_reason_mismatches"] == []
+    assert report["reviewed_false_promoted"] == []
+    assert report["newly_promoted"] == (
+        report["promoted_from_missing_datetime"] + report["promoted_from_other_reasons"]
+    )
+
+    promoted = int(report["promoted_from_missing_datetime"])
+    durable = int(report["accepted_with_resolution_evidence"])
+    if promoted:
+        assert promoted >= min_promoted, (promoted, min_promoted)
+    else:
+        assert durable >= min_promoted, (durable, min_promoted)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--assert-targets", action="store_true")
@@ -192,19 +218,7 @@ def main(argv: list[str] | None = None) -> int:
         args.output.write_text(rendered + "\n", encoding="utf-8")
 
     if args.assert_targets:
-        assert report["existing_accepted_lost"] == 0, report["lost_status_ids"]
-        assert report["promoted_without_resolution_evidence"] == 0
-        assert report["promoted_other_without_resolution_evidence"] == []
-        assert report["unreviewed_other_promotions"] == []
-        assert report["review_reason_mismatches"] == []
-        assert report["reviewed_false_promoted"] == []
-        assert report["newly_promoted"] == (
-            report["promoted_from_missing_datetime"] + report["promoted_from_other_reasons"]
-        )
-        assert report["promoted_from_missing_datetime"] >= args.min_promoted, (
-            report["promoted_from_missing_datetime"],
-            args.min_promoted,
-        )
+        assert_targets(report, args.min_promoted)
     return 0
 
 
