@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from calendar import monthrange
 from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -20,6 +21,26 @@ WEEKDAY_PATTERN = re.compile(
 ORDINAL_RECURRING_WEEKDAY_PATTERN = re.compile(
     r"(?:毎月\s*)?第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜(?:日)?",
     flags=re.IGNORECASE,
+)
+WEEKLY_RECURRENCE_PATTERN = re.compile(
+    r"毎週\s*(?P<weekday>[月火水木金土日])(?:曜(?:日)?)?.{0,100}?"
+    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+DAILY_RECURRENCE_PATTERN = re.compile(
+    r"毎日.{0,100}?(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+MONTHLY_DAY_RECURRENCE_PATTERN = re.compile(
+    r"毎月\s*(?P<day>3[01]|[12]?\d)日.{0,100}?"
+    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+ORDINAL_MONTHLY_RECURRENCE_PATTERN = re.compile(
+    r"(?:毎月\s*)?第\s*(?P<ordinals>\d+(?:\s*[、,・/]\s*第?\s*\d+)*)\s*"
+    r"(?P<weekday>[月火水木金土日])曜(?:日)?.{0,100}?"
+    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    flags=re.IGNORECASE | re.DOTALL,
 )
 MULTI_EVENT_CLOCK_PATTERN = re.compile(
     r"(?:[01]?\d|2[0-3])時(?:半)?\s*からは.{0,240}?"
@@ -104,9 +125,10 @@ class DateResolution:
     method: str
     anchor: datetime
     matched_text: str
+    recurrence_rule: dict[str, Any] | None = None
 
-    def evidence(self, utc_text: Callable[[datetime], str]) -> dict[str, str]:
-        return {
+    def evidence(self, utc_text: Callable[[datetime], str]) -> dict[str, Any]:
+        payload: dict[str, Any] = {
             "method": self.method,
             "anchor": utc_text(self.anchor),
             "resolved_at": utc_text(self.event_at),
@@ -114,6 +136,9 @@ class DateResolution:
             "week_start": "monday",
             "matched_text": self.matched_text,
         }
+        if self.recurrence_rule:
+            payload["recurrence_rule"] = self.recurrence_rule
+        return payload
 
 
 def _jst(value: datetime) -> datetime:
@@ -295,6 +320,160 @@ def _resolve_evidence_span_datetime(text: str, anchor: datetime) -> DateResoluti
         return None
     choices.sort(key=lambda item: (item[0], item[1], item[2].event_at))
     return choices[0][2]
+
+
+def _recurrence_resolution(
+    *,
+    event_at: datetime,
+    source_anchor: datetime,
+    method: str,
+    matched_text: str,
+    recurrence_rule: dict[str, Any],
+) -> DateResolution:
+    return DateResolution(
+        event_at=event_at,
+        method=method,
+        anchor=source_anchor,
+        matched_text=matched_text[:160],
+        recurrence_rule=recurrence_rule,
+    )
+
+
+def resolve_recurring_event(
+    text: str,
+    source_anchor: datetime,
+    *,
+    materialize_after: datetime,
+) -> DateResolution | None:
+    """Materialize the next occurrence from an explicit recurring rule.
+
+    The source timestamp remains provenance; materialize_after only selects
+    the next occurrence. No recurrence is accepted without the same event and
+    announcement safety evidence used by the one-off recovery path.
+    """
+    if not _recovery_text_is_safe(text):
+        return None
+
+    normalized = _normalize_recovery_text(text)
+    anchor_jst = _jst(source_anchor)
+    after = _jst(materialize_after)
+
+    match = DAILY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        hour = int(match.group("hour"))
+        minute = int(match.group("minute") or 0)
+        event_at = datetime(after.year, after.month, after.day, hour, minute, tzinfo=JST)
+        if event_at < after:
+            event_at += timedelta(days=1)
+        return _recurrence_resolution(
+            event_at=event_at,
+            source_anchor=anchor_jst,
+            method="recurrence_daily_materialized",
+            matched_text=match.group(0),
+            recurrence_rule={
+                "frequency": "daily",
+                "hour": hour,
+                "minute": minute,
+                "timezone": "Asia/Tokyo",
+            },
+        )
+
+    match = WEEKLY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        weekday = WEEKDAY_INDEX[match.group("weekday")]
+        hour = int(match.group("hour"))
+        minute = int(match.group("minute") or 0)
+        days_ahead = (weekday - after.weekday()) % 7
+        target = after.date() + timedelta(days=days_ahead)
+        event_at = datetime(target.year, target.month, target.day, hour, minute, tzinfo=JST)
+        if event_at < after:
+            event_at += timedelta(days=7)
+        return _recurrence_resolution(
+            event_at=event_at,
+            source_anchor=anchor_jst,
+            method="recurrence_weekly_materialized",
+            matched_text=match.group(0),
+            recurrence_rule={
+                "frequency": "weekly",
+                "weekday": weekday,
+                "hour": hour,
+                "minute": minute,
+                "timezone": "Asia/Tokyo",
+            },
+        )
+
+    match = MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        day = int(match.group("day"))
+        hour = int(match.group("hour"))
+        minute = int(match.group("minute") or 0)
+        for offset in range(14):
+            month_index = after.month - 1 + offset
+            year = after.year + month_index // 12
+            month = month_index % 12 + 1
+            if day > monthrange(year, month)[1]:
+                continue
+            event_at = datetime(year, month, day, hour, minute, tzinfo=JST)
+            if event_at < after:
+                continue
+            return _recurrence_resolution(
+                event_at=event_at,
+                source_anchor=anchor_jst,
+                method="recurrence_monthly_day_materialized",
+                matched_text=match.group(0),
+                recurrence_rule={
+                    "frequency": "monthly",
+                    "day": day,
+                    "hour": hour,
+                    "minute": minute,
+                    "timezone": "Asia/Tokyo",
+                },
+            )
+
+    match = ORDINAL_MONTHLY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        ordinals = sorted({
+            int(value)
+            for value in re.findall(r"\d+", match.group("ordinals"))
+            if 1 <= int(value) <= 5
+        })
+        weekday = WEEKDAY_INDEX[match.group("weekday")]
+        hour = int(match.group("hour"))
+        minute = int(match.group("minute") or 0)
+        candidates: list[datetime] = []
+        for offset in range(14):
+            month_index = after.month - 1 + offset
+            year = after.year + month_index // 12
+            month = month_index % 12 + 1
+            first_weekday = datetime(year, month, 1, tzinfo=JST).weekday()
+            for ordinal in ordinals:
+                day = 1 + (weekday - first_weekday) % 7 + 7 * (ordinal - 1)
+                if day > monthrange(year, month)[1]:
+                    continue
+                event_at = datetime(year, month, day, hour, minute, tzinfo=JST)
+                if event_at >= after:
+                    candidates.append(event_at)
+            if candidates:
+                break
+        if candidates:
+            event_at = min(candidates)
+            return _recurrence_resolution(
+                event_at=event_at,
+                source_anchor=anchor_jst,
+                method="recurrence_ordinal_monthly_materialized",
+                matched_text=match.group(0),
+                recurrence_rule={
+                    "frequency": "monthly_ordinal_weekday",
+                    "ordinals": ordinals,
+                    "weekday": weekday,
+                    "hour": hour,
+                    "minute": minute,
+                    "timezone": "Asia/Tokyo",
+                },
+            )
+
+    return None
+
 
 def resolve_event_datetime(
     text: str,
