@@ -189,6 +189,30 @@ def test_accepts_stream_when_vrchat_venue_is_explicit() -> None:
     assert result.event_at == datetime(2026, 8, 20, 22, 30, tzinfo=JST)
 
 
+def test_rejects_ordinal_recurring_weekday_without_occurrence_date() -> None:
+    anchor = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    assert resolve(
+        "毎月第2、第4 日曜日 13:00~22:00開催。VRChat Groupで参加できます。",
+        anchor,
+    ) is None
+
+
+def test_rejects_unprefixed_weekday_clock_from_past_report_context() -> None:
+    anchor = datetime(2026, 9, 15, 12, 0, tzinfo=JST)
+    assert resolve(
+        "今日は火曜日。昨日はVRCのBAR営業でしたが、今回は20時から別ゲームを配信します。",
+        anchor,
+    ) is None
+
+
+def test_rejects_relative_day_when_multiple_distinct_event_clocks_are_listed() -> None:
+    anchor = datetime(2026, 8, 29, 9, 0, tzinfo=JST)
+    assert resolve(
+        "今日は盛りだくさん。19時からは別企画、20時半からVRC、22時からは別イベント。",
+        anchor,
+    ) is None
+
+
 def test_resolution_audit_records_changed_existing_events() -> None:
     previous = [
         {
