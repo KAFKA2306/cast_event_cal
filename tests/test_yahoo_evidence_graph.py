@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 
 from scripts.yahoo_evidence_graph import (
     build_evidence_graph,
+    corroboration_blocker,
     event_fingerprints,
     resolve_corroborated_datetime,
 )
@@ -114,3 +115,45 @@ def test_generic_vrchat_hashtag_is_not_an_event_fingerprint() -> None:
         anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
     )
     assert event_fingerprints(item) == set()
+
+
+def test_blocker_explains_missing_peer_evidence() -> None:
+    item = row(
+        "1",
+        "VRChat交流会 #VRC夜会 9/27 開催します。",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    graph = build_evidence_graph([item], anchor_for=anchor_for)
+    assert corroboration_blocker(
+        item,
+        graph=graph,
+        anchor=anchor_for(item),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) == "no_peer_evidence"
+
+
+def test_blocker_explains_conflicting_clock_evidence() -> None:
+    rows = [
+        row(
+            "1",
+            "VRChat交流会 #VRC夜会 9/27 開催します。",
+            anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+        ),
+        row(
+            "2",
+            "VRChat交流会 #VRC夜会 21:00 Group +でJOIN。",
+            anchor=datetime(2026, 9, 24, 11, tzinfo=UTC),
+        ),
+        row(
+            "3",
+            "VRChat交流会 #VRC夜会 22:00 Group +でJOIN。",
+            anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+        ),
+    ]
+    graph = build_evidence_graph(rows, anchor_for=anchor_for)
+    assert corroboration_blocker(
+        rows[0],
+        graph=graph,
+        anchor=anchor_for(rows[0]),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) == "missing_or_conflicting_clock"
