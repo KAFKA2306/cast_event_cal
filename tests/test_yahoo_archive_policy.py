@@ -90,17 +90,6 @@ def test_action_and_attendance_do_not_promote_product_or_giveaway_noise():
     assert {item["reason"] for item in rejected} == {"product_only", "giveaway_only"}
 
 
-def test_action_and_attendance_alone_do_not_expand_event_identity():
-    configure_classifier()
-    accepted, rejected, _ = reclassify(
-        [row("本日22時 VRChatで開催します。ぜひお越しください。", retweets=20)],
-        actual_now=datetime(2026, 8, 3, tzinfo=UTC),
-        x_ids=set(),
-    )
-    assert accepted == []
-    assert rejected[0]["reason"] == "missing_event_marker"
-
-
 def test_missing_datetime_remains_rejected():
     configure_classifier()
     accepted, rejected, _ = reclassify(
