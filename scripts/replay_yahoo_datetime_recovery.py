@@ -76,6 +76,9 @@ def replay() -> dict[str, Any]:
         {
             "status_id": status_id,
             "previous_reason": before_by_id[status_id].get("last_reason"),
+            "starts_at": accepted_by_id[status_id].get("starts_at"),
+            "date_resolution_method": accepted_by_id[status_id].get("date_resolution_method"),
+            "date_resolution_evidence": accepted_by_id[status_id].get("date_resolution_evidence"),
             "text_excerpt": str(before_by_id[status_id].get("text") or "")[:240],
         }
         for status_id in promoted
