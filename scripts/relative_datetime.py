@@ -170,9 +170,11 @@ def _match_gap(left: re.Match[str], right: re.Match[str]) -> int:
 
 
 def _recovery_text_is_safe(text: str) -> bool:
-    if not RECOVERY_EVENT_RE.search(text) or not RECOVERY_ANNOUNCEMENT_RE.search(text):
-        return False
+    event = bool(RECOVERY_EVENT_RE.search(text))
+    announcement = bool(RECOVERY_ANNOUNCEMENT_RE.search(text))
     access = bool(RECOVERY_ACCESS_RE.search(text))
+    if not event or not (announcement or access):
+        return False
     if RECOVERY_PAST_RE.search(text) or RECOVERY_META_RE.search(text):
         return False
     if RECOVERY_WORLD_DESCRIPTION_RE.search(text) or RECOVERY_VISIT_RE.search(text):
