@@ -35,6 +35,7 @@ STATUS_ID_RE = re.compile(r"\d{10,25}")
 VRCHAT_RE = re.compile(r"(?i)(?:#?vrchat|#?vrc\b)")
 YAHOO_START_MARKER_RE = re.compile(r"^\s*START(?=\s)")
 YAHOO_END_MARKER_RE = re.compile(r"(?<=\s)END\s*$")
+FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
 TEXT_KEYS = ("displayText", "full_text", "fullText", "tweetText", "text")
 URL_KEYS = ("url", "tweetUrl", "statusUrl", "permalink")
 ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
@@ -209,7 +210,8 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
 
 def normalize_text(text: str) -> str:
     return (
-        text.replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
+        text.translate(FULLWIDTH_DIGIT_TRANSLATION)
+        .replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
         .replace("〜", "~").replace("～", "~")
     )
 

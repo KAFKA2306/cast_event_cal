@@ -38,6 +38,75 @@ jobs:
             tail -40 /tmp/pytest.log | tr '\n' '|' | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' | while IFS= read -r line; do echo "::error title=pytest failure::$line"; done
           fi
           exit "$status"
+      - name: Replay Yahoo archive policy against current ledger
+        run: |
+          python - <<'PY'
+          from datetime import UTC, datetime
+
+          from scripts import collect_yahoo_corpus as corpus
+          from scripts import fetch_yahoo_realtime as implementation
+          from scripts import reclassify_yahoo_archive as archive
+          from scripts import run_yahoo_realtime as ledger
+
+          history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
+          history = [
+              row for row in history_payload.get("candidates", [])
+              if isinstance(row, dict)
+          ]
+          health = ledger.read_object(implementation.HEALTH_PATH)
+          actual_now = (
+              implementation.parse_instant(str(health.get("generated_at") or ""))
+              or datetime.now(UTC)
+          )
+          before = implementation.read_array(implementation.OUTPUT_PATH)
+          x_ids = implementation.known_x_ids(
+              implementation.read_array(implementation.X_EVENTS_PATH)
+          )
+
+          archive.configure_archive_classifier()
+          accepted, _, evaluated = archive.reclassify(
+              history,
+              actual_now=actual_now,
+              x_ids=x_ids,
+          )
+
+          before_by_id = {
+              str(row.get("source_id")): row for row in before if row.get("source_id")
+          }
+          after_by_id = {
+              str(row.get("source_id")): row for row in accepted if row.get("source_id")
+          }
+          lost = sorted(before_by_id.keys() - after_by_id.keys())
+          promoted = sorted(after_by_id.keys() - before_by_id.keys())
+          changed_starts = sorted(
+              source_id
+              for source_id in before_by_id.keys() & after_by_id.keys()
+              if before_by_id[source_id].get("starts_at")
+              != after_by_id[source_id].get("starts_at")
+          )
+          original_by_status = {
+              str(row.get("status_id")): row for row in history
+              if row.get("status_id")
+          }
+          promoted_missing = [
+              source_id
+              for source_id in promoted
+              if original_by_status.get(source_id.rsplit(":", 1)[-1], {}).get("last_reason")
+              == "missing_datetime"
+          ]
+
+          print(
+              "Yahoo archive replay: "
+              f"history={len(history)} before_accepted={len(before_by_id)} "
+              f"after_accepted={len(after_by_id)} lost_existing={len(lost)} "
+              f"promoted={len(promoted)} promoted_missing_datetime={len(promoted_missing)} "
+              f"changed_existing_starts_at={len(changed_starts)}"
+          )
+          if lost:
+              raise SystemExit(f"archive replay lost existing accepted events: {lost[:10]}")
+          if len(evaluated) != len(history):
+              raise SystemExit("archive replay did not evaluate the full current ledger")
+          PY
       - run: cast-event-cal validate
       - name: Audit Yahoo datetime vocabulary
         run: |
