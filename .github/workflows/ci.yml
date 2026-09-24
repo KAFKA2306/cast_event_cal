@@ -113,7 +113,14 @@ jobs:
           python scripts/audit_yahoo_datetime_vocabulary.py --assert-complete
       - name: Replay Yahoo datetime recovery
         run: |
-          python scripts/replay_yahoo_datetime_recovery.py --assert-targets
+          python scripts/replay_yahoo_datetime_recovery.py --assert-targets --output yahoo-datetime-replay.json
+      - name: Upload Yahoo datetime replay
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: yahoo-datetime-replay-${{ matrix.python-version }}
+          path: yahoo-datetime-replay.json
+          if-no-files-found: error
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
