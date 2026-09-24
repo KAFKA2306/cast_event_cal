@@ -1,3 +1,4 @@
+import json
 from datetime import UTC, datetime
 
 from cast_event_cal.core import Event, build_event, deduplicate, parse_ics, render_ics, write_outputs, x_post_to_event
@@ -60,7 +61,7 @@ def test_datetime_provenance_survives_normalization_and_public_output(tmp_path):
         tmp_path,
         datetime(2026, 9, 25, 3, 1, tzinfo=UTC),
     )
-    payload = __import__("json").loads((tmp_path / "events.json").read_text(encoding="utf-8"))
+    payload = json.loads((tmp_path / "events.json").read_text(encoding="utf-8"))
     published = payload["events"][0]
     assert published["date_resolution_method"] == "relative_day_evidence_span"
     assert published["date_resolution_evidence"]["matched_text"] == "今夜 22:00"
