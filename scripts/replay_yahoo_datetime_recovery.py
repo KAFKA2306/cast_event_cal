@@ -126,6 +126,7 @@ def replay() -> dict[str, Any]:
         "lost_status_ids": lost,
         "newly_promoted": len(promoted),
         "promoted_previous_reason_counts": dict(sorted(promoted_previous_reason_counts.items())),
+        "promoted_from_other_reasons": len(promoted_other),
         "promoted_from_missing_datetime": len(promoted_missing),
         "promoted_without_resolution_evidence": len(promoted_without_evidence),
         "promoted_method_counts": dict(sorted(method_counts.items())),
@@ -148,6 +149,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.assert_targets:
         assert report["existing_accepted_lost"] == 0, report["lost_status_ids"]
         assert report["promoted_without_resolution_evidence"] == 0
+        assert report["promoted_from_other_reasons"] == 0, report["promoted_other"]
+        assert report["newly_promoted"] == report["promoted_from_missing_datetime"]
         assert report["promoted_from_missing_datetime"] >= args.min_promoted, (
             report["promoted_from_missing_datetime"],
             args.min_promoted,
