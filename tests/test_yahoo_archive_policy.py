@@ -95,3 +95,24 @@ def test_archive_relative_date_uses_source_timestamp_once():
     assert len(accepted) == 1
     assert accepted[0]["starts_at"] == "2026-08-10T13:00:00Z"
     assert accepted[0]["temporal_status"] == "past"
+
+
+def test_archive_fullwidth_clock_uses_source_day():
+    configure_archive_classifier()
+    accepted, rejected, _ = reclassify(
+        [
+            row(
+                "#VRC_Conductor VRC接客イベント『Conductor』 本日営業日です！！ "
+                "時間:２１時 参加方法：Discord事前抽選＋join "
+                "join先：杉崎リン ご来店希望の方は事前にフレンド申請をお願いします。",
+                retweets=7,
+                status_id="2101162106766987748",
+            )
+        ],
+        actual_now=datetime(2026, 9, 24, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 1
+    assert accepted[0]["starts_at"] == "2026-09-19T12:00:00Z"
+    assert accepted[0]["temporal_status"] == "past"
