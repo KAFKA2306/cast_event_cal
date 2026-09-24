@@ -156,3 +156,26 @@ def test_archive_fullwidth_clock_uses_source_day():
     assert len(accepted) == 1
     assert accepted[0]["starts_at"] == "2026-09-19T12:00:00Z"
     assert accepted[0]["temporal_status"] == "past"
+
+
+def test_archive_materializes_recurring_event_with_provenance():
+    configure_archive_classifier()
+    accepted, rejected, evaluated = reclassify(
+        [
+            row(
+                "毎週金曜日 22:00 VRChat交流イベント開催。参加方法はGroup +へJOIN",
+                retweets=1,
+                status_id="2080000000000000003",
+            )
+        ],
+        actual_now=datetime(2026, 8, 3, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 1
+    assert accepted[0]["starts_at"] == "2026-08-07T13:00:00Z"
+    assert accepted[0]["date_resolution_method"] == "recurrence_weekly_materialized"
+    assert accepted[0]["date_resolution_evidence"]["recurrence_rule"]["frequency"] == "weekly"
+    assert accepted[0]["recurrence_rule"]["weekday"] == 4
+    assert accepted[0]["temporal_status"] == "upcoming"
+    assert evaluated[0]["last_decision"] == "accepted"
