@@ -196,3 +196,36 @@ def test_access_clock_without_event_structure_remains_rejected():
     )
     assert accepted == []
     assert rejected[0]["reason"] == "missing_event_marker"
+
+
+def test_archive_corroborates_partial_datetime_across_same_event_fingerprint():
+    configure_archive_classifier()
+    candidates = [
+        row(
+            "VRChat交流会 #VRC夜会 8/10 開催します。Group +で参加できます。",
+            retweets=1,
+            status_id="2085561566622646272",
+        ),
+        row(
+            "VRChat交流会 #VRC夜会 22:00 Group +でJOINできます。",
+            retweets=1,
+            status_id="2085561566622647272",
+        ),
+    ]
+    accepted, rejected, evaluated = reclassify(
+        candidates,
+        actual_now=datetime(2026, 8, 8, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 2
+    assert {event["starts_at"] for event in accepted} == {"2026-08-10T13:00:00Z"}
+    assert {
+        event["date_resolution_method"] for event in accepted
+    } == {"corroborated_event_fingerprint_date_clock"}
+    assert all(
+        len(event["date_resolution_evidence"]["corroborating_source_ids"]) == 2
+        for event in accepted
+    )
+    assert all(event.get("event_fingerprint") for event in accepted)
+    assert all(row["last_decision"] == "accepted" for row in evaluated)
