@@ -15,6 +15,7 @@ from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
 from scripts.yahoo_evidence_graph import (
     build_evidence_graph,
+    event_fingerprints,
     resolve_corroborated_datetime,
 )
 from scripts.relative_datetime import (
@@ -179,14 +180,30 @@ def reclassify(
                 tags.append(f"リポスト{observed}件")
                 event["tags"] = tags
 
+        row["resolver_version"] = implementation.PARSER_VERSION
+        row["event_fingerprints"] = sorted(event_fingerprints(row))
         if event:
             row["last_decision"] = "accepted"
             row["last_reason"] = None
+            row["publishability_state"] = "publishable"
+            row["publishability_decision"] = "accepted_event"
+            row["date_resolution_method"] = event.get("date_resolution_method")
+            evidence = event.get("date_resolution_evidence")
+            if evidence:
+                row["date_resolution_evidence"] = evidence
             accepted.append(event)
         else:
             resolved = reason or "unknown"
             row["last_decision"] = "rejected"
             row["last_reason"] = resolved
+            if resolved == "missing_datetime":
+                text = str(row.get("text") or row.get("text_excerpt") or "")
+                occurrence = datetime_audit.occurrence_decision(text)
+                row["publishability_decision"] = occurrence
+                row["publishability_state"] = datetime_audit.publishability_state(occurrence)
+            else:
+                row["publishability_decision"] = resolved
+                row["publishability_state"] = "confirmed_non_event"
             rejected.append(refinement.rejection_row(row, resolved))
         evaluated.append(row)
 
@@ -228,7 +245,7 @@ def main() -> int:
 
     history_payload.update(
         {
-            "schema_version": "2.4",
+            "schema_version": "2.5",
             "generated_at": implementation.utc_text(now),
             "candidate_count": len(evaluated),
             "source_time_policy": "x_snowflake_created_at_then_first_seen_at",
