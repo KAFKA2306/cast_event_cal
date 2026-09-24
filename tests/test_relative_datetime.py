@@ -287,3 +287,22 @@ def test_recurrence_materializer_rejects_commerce_clock_without_access() -> None
         source_anchor,
         materialize_after=current,
     ) is None
+
+
+def test_access_evidence_can_anchor_relative_datetime_without_announcement_word() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "VRChat交流会 今夜22:00 Group +でJOINできます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 19, 22, 0, tzinfo=JST)
+
+
+def test_personal_join_without_event_structure_is_not_enough_for_archive_publication() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "今夜22:00にVRChatへJOINして遊びます。",
+        anchor,
+    )
+    assert result is not None
