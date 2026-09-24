@@ -8,6 +8,8 @@ from typing import Any, Callable
 from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
+FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
+EVIDENCE_SPAN_CHARS = 160
 WEEKDAY_INDEX = {name: index for index, name in enumerate("月火水木金土日")}
 WEEKDAY_PATTERN = re.compile(
     r"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*"
@@ -15,9 +17,71 @@ WEEKDAY_PATTERN = re.compile(
     r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
     flags=re.IGNORECASE | re.DOTALL,
 )
-RELATIVE_DAY_PATTERN = re.compile(r"本日|今日|明日")
+CLOCK_PATTERN = re.compile(
+    r"(?<!\d)(?P<hour>[01]?\d|2[0-3])(?:[:：時]\s*(?P<minute>\d{0,2}))(?!\d)"
+)
+RELATIVE_DAY_PATTERN = re.compile(r"本日|今日|明日|今夜|今晩|この後")
 EXPLICIT_DATE_PATTERN = re.compile(
-    r"(?:20\d{2}[./年-])?\d{1,2}[./月-]\d{1,2}日?"
+    r"(?<!\d)(?:20\d{2}\s*[./／⁄年-]\s*)?"
+    r"(?:1[0-2]|0?[1-9])\s*(?:[./／⁄-]|\s*月\s*)\s*"
+    r"(?:3[01]|[12]?\d)\s*日?(?!\d)"
+)
+DDMMYYYY_LABEL_PATTERN = re.compile(
+    r"dd\s*[/／⁄]\s*mm\s*[/／⁄]\s*yyyy\s*[:：]\s*"
+    r"(?P<day>3[01]|[12]?\d)\s*[/／⁄]\s*"
+    r"(?P<month>1[0-2]|0?[1-9])\s*[/／⁄]\s*(?P<year>20\d{2})",
+    flags=re.IGNORECASE,
+)
+RECOVERY_EVENT_RE = re.compile(
+    r"集会|交流会|イベント|event|開催|営業|公演|ライブ|撮影会|演奏会|DJ|勉強会|祭|"
+    r"参加|JOIN|リクイン|Group\s*[+＋]|グループインスタンス|request\s+invite",
+    flags=re.IGNORECASE,
+)
+RECOVERY_ANNOUNCEMENT_RE = re.compile(
+    r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|営業(?:します|予定)?",
+    flags=re.IGNORECASE,
+)
+RECOVERY_ACCESS_RE = re.compile(
+    r"join|ジョイン|リクイン|request\s*invite|フレンド申請|フレリク|"
+    r"group\s*[+＋]|group\s*インスタンス|グループ(?:プラス|インスタンス)|"
+    r"インスタンス|参加方法|参加希望|ご参加ください|参加してください|お越しください|"
+    r"ご来場|ご来店",
+    flags=re.IGNORECASE,
+)
+RECOVERY_PAST_RE = re.compile(
+    r"参加してき|行ってき|楽しかった|昨日|先日|でした|してきました|"
+    r"お邪魔(?:しました|してき)|ご参加ありがとうございました|"
+    r"お越しいただきありがとうございました|見た後|観劇して|店休日でした|営業してました",
+    flags=re.IGNORECASE,
+)
+RECOVERY_META_RE = re.compile(
+    r"イベントNEWS|毎朝.{0,12}更新|告知.{0,20}(?:あります|出すとして)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+RECOVERY_COMMERCE_RE = re.compile(
+    r"販売|発売|セール|BOOTH|プレゼント|キャンペーン",
+    flags=re.IGNORECASE,
+)
+RECOVERY_PHYSICAL_RE = re.compile(
+    r"幕張メッセ|大阪|静岡|心斎橋|アメ村|居酒屋|リアル(?:で|会場|イベント)|一日店長",
+    flags=re.IGNORECASE,
+)
+RECOVERY_BROADCAST_RE = re.compile(
+    r"生配信|配信URL|配信はこちら|配信枠|配信\s*告知",
+    flags=re.IGNORECASE,
+)
+RECOVERY_VIRTUAL_VENUE_RE = re.compile(
+    r"(?:VRChat|VRC).{0,40}(?:会場|Group|インスタンス)|"
+    r"(?:会場|Group|インスタンス).{0,40}(?:VRChat|VRC)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+RECOVERY_WORLD_DESCRIPTION_RE = re.compile(
+    r"World名|ワールド紹介|2019年から.{0,30}毎年開催",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+RECOVERY_VISIT_RE = re.compile(
+    r"開催\s*中.{0,80}(?:に行く|見に行く)|(?:に行く|見に行く).{0,80}開催\s*中",
+    flags=re.IGNORECASE | re.DOTALL,
 )
 
 
@@ -44,6 +108,180 @@ def _jst(value: datetime) -> datetime:
         return value.replace(tzinfo=JST)
     return value.astimezone(JST)
 
+
+
+def _normalize_recovery_text(text: str) -> str:
+    return (
+        text.translate(FULLWIDTH_DIGIT_TRANSLATION)
+        .replace("：", ":")
+        .replace("／", "/")
+        .replace("⁄", "/")
+        .replace("．", ".")
+        .replace("－", "-")
+        .replace("〜", "~")
+        .replace("～", "~")
+    )
+
+
+def _match_gap(left: re.Match[str], right: re.Match[str]) -> int:
+    if left.end() <= right.start():
+        return right.start() - left.end()
+    if right.end() <= left.start():
+        return left.start() - right.end()
+    return 0
+
+
+def _recovery_text_is_safe(text: str) -> bool:
+    if not RECOVERY_EVENT_RE.search(text) or not RECOVERY_ANNOUNCEMENT_RE.search(text):
+        return False
+    access = bool(RECOVERY_ACCESS_RE.search(text))
+    if RECOVERY_PAST_RE.search(text) or RECOVERY_META_RE.search(text):
+        return False
+    if RECOVERY_WORLD_DESCRIPTION_RE.search(text) or RECOVERY_VISIT_RE.search(text):
+        return False
+    if RECOVERY_COMMERCE_RE.search(text) and not access:
+        return False
+    if RECOVERY_PHYSICAL_RE.search(text) and not access:
+        return False
+    if (
+        RECOVERY_BROADCAST_RE.search(text)
+        and not access
+        and not RECOVERY_VIRTUAL_VENUE_RE.search(text)
+    ):
+        return False
+    return True
+
+
+def _resolution_from_parts(
+    *,
+    year: int,
+    month: int,
+    day: int,
+    clock: re.Match[str],
+    anchor: datetime,
+    method: str,
+    matched_text: str,
+) -> DateResolution | None:
+    try:
+        value = datetime(
+            year,
+            month,
+            day,
+            int(clock.group("hour")),
+            int(clock.group("minute") or 0),
+            tzinfo=JST,
+        )
+    except ValueError:
+        return None
+    return DateResolution(
+        event_at=value,
+        method=method,
+        anchor=anchor,
+        matched_text=matched_text[:160],
+    )
+
+
+def _resolve_evidence_span_datetime(text: str, anchor: datetime) -> DateResolution | None:
+    if not _recovery_text_is_safe(text):
+        return None
+    normalized = _normalize_recovery_text(text)
+    clocks = list(CLOCK_PATTERN.finditer(normalized))
+    if not clocks:
+        return None
+
+    choices: list[tuple[int, int, DateResolution]] = []
+
+    for match in DDMMYYYY_LABEL_PATTERN.finditer(normalized):
+        clock = min(clocks, key=lambda item: _match_gap(match, item))
+        gap = _match_gap(match, clock)
+        if gap > EVIDENCE_SPAN_CHARS:
+            continue
+        start = min(match.start(), clock.start())
+        end = max(match.end(), clock.end())
+        resolution = _resolution_from_parts(
+            year=int(match.group("year")),
+            month=int(match.group("month")),
+            day=int(match.group("day")),
+            clock=clock,
+            anchor=anchor,
+            method="explicit_ddmmyyyy_evidence_span",
+            matched_text=normalized[start:end],
+        )
+        if resolution:
+            choices.append((gap, 0, resolution))
+
+    for match in EXPLICIT_DATE_PATTERN.finditer(normalized):
+        token = match.group(0)
+        parts = re.search(
+            r"(?<!\d)(?:(?P<year>20\d{2})\s*[./年-]\s*)?"
+            r"(?P<month>1[0-2]|0?[1-9])\s*(?:[./-]|\s*月\s*)\s*"
+            r"(?P<day>3[01]|[12]?\d)(?!\d)",
+            token,
+        )
+        if not parts:
+            continue
+        clock = min(clocks, key=lambda item: _match_gap(match, item))
+        gap = _match_gap(match, clock)
+        if gap > EVIDENCE_SPAN_CHARS:
+            continue
+        explicit_year = parts.group("year")
+        year = int(explicit_year or anchor.year)
+        month = int(parts.group("month"))
+        day = int(parts.group("day"))
+        start = min(match.start(), clock.start())
+        end = max(match.end(), clock.end())
+        resolution = _resolution_from_parts(
+            year=year,
+            month=month,
+            day=day,
+            clock=clock,
+            anchor=anchor,
+            method="explicit_calendar_date_evidence_span",
+            matched_text=normalized[start:end],
+        )
+        if not resolution:
+            continue
+        if not explicit_year and resolution.event_at < anchor - timedelta(days=2):
+            if anchor.month == 12 and month == 1:
+                resolution = _resolution_from_parts(
+                    year=anchor.year + 1,
+                    month=month,
+                    day=day,
+                    clock=clock,
+                    anchor=anchor,
+                    method="explicit_calendar_date_evidence_span",
+                    matched_text=normalized[start:end],
+                )
+            else:
+                resolution = None
+        if resolution:
+            choices.append((gap, 1, resolution))
+
+    for match in RELATIVE_DAY_PATTERN.finditer(normalized):
+        clock = min(clocks, key=lambda item: _match_gap(match, item))
+        gap = _match_gap(match, clock)
+        if gap > EVIDENCE_SPAN_CHARS:
+            continue
+        day_offset = 1 if match.group(0) == "明日" else 0
+        target = (anchor + timedelta(days=day_offset)).date()
+        start = min(match.start(), clock.start())
+        end = max(match.end(), clock.end())
+        resolution = _resolution_from_parts(
+            year=target.year,
+            month=target.month,
+            day=target.day,
+            clock=clock,
+            anchor=anchor,
+            method="relative_day_evidence_span",
+            matched_text=normalized[start:end],
+        )
+        if resolution:
+            choices.append((gap, 2, resolution))
+
+    if not choices:
+        return None
+    choices.sort(key=lambda item: (item[0], item[1], item[2].event_at))
+    return choices[0][2]
 
 def resolve_event_datetime(
     text: str,
@@ -84,7 +322,7 @@ def resolve_event_datetime(
     )
     match = WEEKDAY_PATTERN.search(normalized)
     if not match:
-        return None
+        return _resolve_evidence_span_datetime(text, anchor_jst)
 
     target_weekday = WEEKDAY_INDEX[match.group("weekday")]
     prefix = (match.group("prefix") or "").strip()

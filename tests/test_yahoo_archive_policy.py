@@ -67,6 +67,29 @@ def test_giveaway_only_remains_rejected():
     assert rejected[0]["reason"] == "giveaway_only"
 
 
+def test_action_and_attendance_do_not_promote_product_or_giveaway_noise():
+    configure_classifier()
+    candidates = [
+        row(
+            "本日22時 VRChat向けアバター販売開始。ぜひお越しください。",
+            retweets=20,
+            status_id="2080000000000000001",
+        ),
+        row(
+            "本日22時 VRChatプレゼントキャンペーン開始。ぜひ来てね。フォロー＆RPで応募",
+            retweets=20,
+            status_id="2080000000000000002",
+        ),
+    ]
+    accepted, rejected, _ = reclassify(
+        candidates,
+        actual_now=datetime(2026, 8, 3, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert accepted == []
+    assert {item["reason"] for item in rejected} == {"product_only", "giveaway_only"}
+
+
 def test_missing_datetime_remains_rejected():
     configure_classifier()
     accepted, rejected, _ = reclassify(

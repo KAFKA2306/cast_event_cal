@@ -79,6 +79,116 @@ def test_same_day_unprefixed_future_stays_today_and_old_time_moves_next_week() -
     assert old is not None and old.event_at.date().isoformat() == "2026-08-10"
 
 
+def test_recovers_long_gap_relative_day_from_source_timestamp() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    text = (
+        "本日はVRChatイベントを開催します！ "
+        "Group + インスタンスで皆さまをお待ちしております。 "
+        "詳しい参加方法は案内をご確認ください。 開場は21:00です。"
+    )
+    result = resolve(text, anchor)
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 19, 21, 0, tzinfo=JST)
+    assert result.method == "relative_day_evidence_span"
+
+
+def test_recovers_konya_fullwidth_clock() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "VRChatの交流会を開催します。今夜 ２２時３０分からGroup +でOPENします。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 19, 22, 30, tzinfo=JST)
+
+
+def test_recovers_spaced_calendar_date() -> None:
+    anchor = datetime(2026, 8, 20, 12, 0, tzinfo=JST)
+    result = resolve(
+        "VRCイベント開催のお知らせ 日時: 8 / 30 (日) 0:00 Group +からjoinできます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 30, 0, 0, tzinfo=JST)
+    assert result.method == "explicit_calendar_date_evidence_span"
+
+
+def test_recovers_fraction_slash_calendar_date() -> None:
+    anchor = datetime(2026, 8, 19, 12, 0, tzinfo=JST)
+    result = resolve(
+        "VRC交流イベントを開催します。08⁄20（木）21時30分からGroup +で参加できます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 20, 21, 30, tzinfo=JST)
+
+
+def test_recovers_labeled_ddmmyyyy_date() -> None:
+    anchor = datetime(2026, 8, 10, 12, 0, tzinfo=JST)
+    result = resolve(
+        "VRCHAT GROUP＋ DJイベント dd/mm/yyyy:24/08/2026(mon.) START:22:00 開催",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 24, 22, 0, tzinfo=JST)
+    assert result.method == "explicit_ddmmyyyy_evidence_span"
+
+
+def test_recovers_konoato_as_same_day_evidence() -> None:
+    anchor = datetime(2026, 9, 10, 18, 0, tzinfo=JST)
+    result = resolve(
+        "この後21:45からVRCイベントを開催します。Group +でご参加ください。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 10, 21, 45, tzinfo=JST)
+
+
+def test_rejects_real_world_event_without_vr_access_evidence() -> None:
+    anchor = datetime(2026, 9, 10, 12, 0, tzinfo=JST)
+    assert resolve(
+        "今夜20:00から大阪でVRChatユーザー向けDJイベントを開催します。",
+        anchor,
+    ) is None
+
+
+def test_rejects_news_update_clock_as_event_clock() -> None:
+    anchor = datetime(2026, 9, 10, 7, 0, tzinfo=JST)
+    assert resolve(
+        "毎朝8時更新 今日のVRChatイベントNEWS。展示イベントが開催決定しました。",
+        anchor,
+    ) is None
+
+
+def test_rejects_visit_time_for_already_running_event() -> None:
+    anchor = datetime(2026, 9, 10, 18, 0, tzinfo=JST)
+    assert resolve(
+        "この後21時から、現在VRCで開催 中の展示会に行くよ！",
+        anchor,
+    ) is None
+
+
+def test_relative_tomorrow_is_not_double_applied_by_partial_date_match() -> None:
+    anchor = datetime(2026, 9, 20, 23, 54, tzinfo=JST)
+    result = resolve(
+        "明日からVRChat花火大会を開催します。21.22日の2日間、19時開始。Group +で参加できます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 21, 19, 0, tzinfo=JST)
+    assert result.method == "relative_day_evidence_span"
+
+
+def test_accepts_stream_when_vrchat_venue_is_explicit() -> None:
+    anchor = datetime(2026, 8, 20, 12, 0, tzinfo=JST)
+    result = resolve(
+        "今夜は特別ライブ。22:30 VRChatライブ会場 OPEN！23:20 配信枠はこちら。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 20, 22, 30, tzinfo=JST)
+
+
 def test_resolution_audit_records_changed_existing_events() -> None:
     previous = [
         {

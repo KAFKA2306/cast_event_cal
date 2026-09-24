@@ -111,6 +111,9 @@ jobs:
       - name: Audit Yahoo datetime vocabulary
         run: |
           python scripts/audit_yahoo_datetime_vocabulary.py --assert-complete
+      - name: Replay Yahoo datetime recovery
+        run: |
+          python scripts/replay_yahoo_datetime_recovery.py --assert-targets
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
