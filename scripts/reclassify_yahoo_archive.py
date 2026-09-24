@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from collections import Counter
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,7 @@ from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
 from scripts.yahoo_evidence_graph import (
     build_evidence_graph,
+    corroboration_blocker,
     event_fingerprints,
     resolve_corroborated_datetime,
 )
@@ -201,6 +203,19 @@ def reclassify(
                 occurrence = datetime_audit.occurrence_decision(text)
                 row["publishability_decision"] = occurrence
                 row["publishability_state"] = datetime_audit.publishability_state(occurrence)
+                if occurrence in {"partial_datetime", "ambiguous_datetime"}:
+                    row["resolution_blocker"] = corroboration_blocker(
+                        row,
+                        graph=evidence_graph,
+                        anchor=anchor,
+                        actual_now=actual_now,
+                    )
+                elif occurrence == "recurring_event":
+                    row["resolution_blocker"] = "recurrence_pattern_unsupported_or_unsafe"
+                elif occurrence == "resolvable_event_candidate":
+                    row["resolution_blocker"] = "datetime_parser_unsupported_or_unsafe"
+                else:
+                    row["resolution_blocker"] = occurrence
             else:
                 row["publishability_decision"] = resolved
                 if resolved in {
@@ -281,6 +296,11 @@ def main() -> int:
         if str(event.get("date_resolution_method") or "").startswith("recurrence_")
     ]
     resolution_method_counts: dict[str, int] = {}
+    blocker_counts = Counter(
+        str(row.get("resolution_blocker") or "none")
+        for row in evaluated
+        if row.get("last_reason") == "missing_datetime"
+    )
     for event in accepted:
         method = str(event.get("date_resolution_method") or "missing")
         resolution_method_counts[method] = resolution_method_counts.get(method, 0) + 1
@@ -307,6 +327,7 @@ def main() -> int:
             for event in accepted
         ),
         "resolution_method_counts": dict(sorted(resolution_method_counts.items())),
+        "resolution_blocker_counts": dict(sorted(blocker_counts.items())),
         "promotions_without_provenance": sum(
             not bool(accepted_by_status[status_id].get("date_resolution_evidence"))
             for status_id in promoted_from_missing
