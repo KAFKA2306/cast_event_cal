@@ -97,6 +97,21 @@ def occurrence_decision(text: str) -> str:
     return "partial_datetime"
 
 
+
+def publishability_state(decision: str) -> str:
+    if decision == "resolvable_event_candidate":
+        return "publishable_candidate"
+    if decision == "recurring_event":
+        return "recurring_series_candidate"
+    if decision in {"partial_datetime", "ambiguous_datetime"}:
+        return "unresolved_publishability"
+    if decision == "past_event_or_report":
+        return "past_only"
+    if decision in {"non_event", "non_event_commerce", "non_event_personal"}:
+        return "confirmed_non_event"
+    return "unresolved"
+
+
 def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
     decisions = Counter()
     reasons = Counter()
@@ -104,6 +119,7 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
     roles = Counter()
     bucket_roles: Counter[str] = Counter()
     occurrence_decisions = Counter()
+    publishability_states = Counter()
     examples: dict[str, list[dict[str, Any]]] = {}
 
     for row in rows:
@@ -120,7 +136,9 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
         roles[role] += 1
         bucket_roles[f"{bucket}:{role}"] += 1
         if bucket != "no_datetime_evidence":
-            occurrence_decisions[occurrence_decision(text)] += 1
+            occurrence = occurrence_decision(text)
+            occurrence_decisions[occurrence] += 1
+            publishability_states[publishability_state(occurrence)] += 1
         sample = examples.setdefault(bucket, [])
         if len(sample) < 5:
             sample.append({
@@ -135,7 +153,7 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
     temporal = missing - buckets["no_datetime_evidence"]
     return {
         "schema_version": "1.0",
-        "policy_version": "issue-196-read-only-audit.v1",
+        "policy_version": "issue-196-generic-publishability-audit.v2",
         "candidate_count": len(rows),
         "decision_counts": dict(sorted(decisions.items())),
         "rejection_reason_counts": dict(sorted(reasons.items())),
@@ -151,6 +169,15 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "bucket_role_counts": dict(sorted(bucket_roles.items())),
         "occurrence_decision_counts": dict(sorted(occurrence_decisions.items())),
         "occurrence_decision_total": sum(occurrence_decisions.values()),
+        "publishability_state_counts": dict(sorted(publishability_states.items())),
+        "publishability_backlog_count": sum(
+            occurrence_decisions[name]
+            for name in ("recurring_event", "partial_datetime", "ambiguous_datetime")
+        ),
+        "automatic_resolution_candidate_count": (
+            occurrence_decisions["resolvable_event_candidate"]
+            + occurrence_decisions["recurring_event"]
+        ),
         "temporal_unclassified_count": temporal - sum(occurrence_decisions.values()),
         "examples": {key: examples[key] for key in sorted(examples)},
     }
@@ -177,6 +204,8 @@ def main() -> int:
     print("bucket_counts=" + json.dumps(payload["bucket_counts"], ensure_ascii=False, sort_keys=True))
     print("occurrence_decision_counts=" + json.dumps(payload["occurrence_decision_counts"], ensure_ascii=False, sort_keys=True))
     print("evidence_role_counts=" + json.dumps(payload["evidence_role_counts"], ensure_ascii=False, sort_keys=True))
+    print("publishability_state_counts=" + json.dumps(payload["publishability_state_counts"], ensure_ascii=False, sort_keys=True))
+    print(f"publishability_backlog_count={payload['publishability_backlog_count']}")
     return 0
 
 
