@@ -154,6 +154,97 @@ def _clocks(text: str) -> set[tuple[int, int]]:
     return results
 
 
+def corroboration_blocker(
+    row: dict[str, Any],
+    *,
+    graph: dict[str, list[EvidenceNode]],
+    anchor: datetime,
+    actual_now: datetime,
+) -> str:
+    if resolve_corroborated_datetime(
+        row,
+        graph=graph,
+        anchor=anchor,
+        actual_now=actual_now,
+    ) is not None:
+        return "resolvable"
+
+    fingerprints = sorted(event_fingerprints(row))
+    if not fingerprints:
+        return "no_event_fingerprint"
+
+    peer_groups = [
+        [
+            node
+            for node in graph.get(fingerprint, [])
+            if abs(node.anchor - anchor) <= MAX_EVIDENCE_DISTANCE
+        ]
+        for fingerprint in fingerprints
+    ]
+    peer_groups = [
+        nodes for nodes in peer_groups
+        if len({node.status_id for node in nodes}) >= 2
+    ]
+    if not peer_groups:
+        return "no_peer_evidence"
+
+    signaled = [
+        nodes
+        for nodes in peer_groups
+        if any(STRONG_EVENT_SIGNAL_RE.search(node.text) for node in nodes)
+    ]
+    if not signaled:
+        return "no_strong_event_signal"
+
+    date_ready: list[tuple[list[EvidenceNode], set[date]]] = []
+    for nodes in signaled:
+        dates: set[date] = set()
+        for node in nodes:
+            dates.update(_explicit_dates(node.text, node.anchor))
+        if len(dates) == 1:
+            date_ready.append((nodes, dates))
+    if not date_ready:
+        return "missing_or_conflicting_date"
+
+    clock_ready: list[tuple[list[EvidenceNode], set[date], set[tuple[int, int]]]] = []
+    for nodes, dates in date_ready:
+        clocks: set[tuple[int, int]] = set()
+        for node in nodes:
+            clocks.update(_clocks(node.text))
+        if len(clocks) == 1:
+            clock_ready.append((nodes, dates, clocks))
+    if not clock_ready:
+        return "missing_or_conflicting_clock"
+
+    current_id = str(row.get("status_id") or "")
+    cross_source = False
+    within_window = False
+    now_jst = actual_now.astimezone(JST)
+    for nodes, dates, clocks in clock_ready:
+        evidence_ids = {node.status_id for node in nodes}
+        if current_id not in evidence_ids or len(evidence_ids) < 2:
+            continue
+        cross_source = True
+        event_date = next(iter(dates))
+        hour, minute = next(iter(clocks))
+        event_at = datetime(
+            event_date.year,
+            event_date.month,
+            event_date.day,
+            hour,
+            minute,
+            tzinfo=JST,
+        )
+        if now_jst - timedelta(hours=12) <= event_at <= now_jst + timedelta(days=180):
+            within_window = True
+            break
+    if not cross_source:
+        return "single_source_only"
+    if not within_window:
+        return "out_of_publication_window"
+    return "conflicting_fingerprint_resolution"
+
+
 def resolve_corroborated_datetime(
     row: dict[str, Any],
     *,
