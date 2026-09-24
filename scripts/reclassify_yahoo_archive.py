@@ -12,8 +12,15 @@ from scripts import collect_yahoo_corpus as corpus
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
+from scripts.relative_datetime import install_classifier_datetime
 
 ARCHIVE_RETENTION_DAYS = 365
+
+
+def configure_archive_classifier() -> None:
+    corpus.configure_classifier()
+    install_classifier_datetime(corpus, implementation)
+    implementation.PARSER_VERSION = "1.9"
 
 
 def temporal_status(start: datetime, now: datetime) -> str:
@@ -127,8 +134,7 @@ def reclassify(
 
 
 def main() -> int:
-    corpus.configure_classifier()
-    implementation.PARSER_VERSION = "1.9"
+    configure_archive_classifier()
     now = datetime.now(UTC).replace(microsecond=0)
     history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
     if not isinstance(history_payload, dict):
