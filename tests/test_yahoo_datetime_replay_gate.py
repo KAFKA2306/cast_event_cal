@@ -29,6 +29,10 @@ def test_replay_gate_accepts_steady_state_after_promotions_are_persisted() -> No
     assert_targets(report(promoted=0, durable=190), 50)
 
 
+def test_replay_gate_accepts_small_increment_after_durable_floor_is_met() -> None:
+    assert_targets(report(promoted=3, durable=185), 50)
+
+
 def test_replay_gate_rejects_steady_state_resolution_regression() -> None:
     with pytest.raises(AssertionError):
         assert_targets(report(promoted=0, durable=49), 50)
