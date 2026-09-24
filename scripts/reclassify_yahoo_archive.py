@@ -12,7 +12,7 @@ from scripts import collect_yahoo_corpus as corpus
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
-from scripts.relative_datetime import install_classifier_datetime
+from scripts.relative_datetime import EXPLICIT_DATE_PATTERN, install_classifier_datetime
 
 ARCHIVE_RETENTION_DAYS = 365
 
@@ -85,9 +85,14 @@ def reclassify(
                 elif parsed > actual_now + timedelta(days=180):
                     reason = "too_far_future_now"
                 else:
+                    classification_anchor = (
+                        parsed.astimezone(UTC)
+                        if EXPLICIT_DATE_PATTERN.search(text)
+                        else anchor
+                    )
                     event, reason = corpus.refined_candidate_to_event(
                         candidate,
-                        now=anchor,
+                        now=classification_anchor,
                         min_retweets=3,
                         x_ids=x_ids,
                     )
