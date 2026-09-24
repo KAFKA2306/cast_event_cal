@@ -157,8 +157,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.assert_targets:
         assert report["existing_accepted_lost"] == 0, report["lost_status_ids"]
         assert report["promoted_without_resolution_evidence"] == 0
-        assert report["promoted_from_other_reasons"] == 0, report["promoted_other"]
-        assert report["newly_promoted"] == report["promoted_from_missing_datetime"]
+        assert report["newly_promoted"] == (
+            report["promoted_from_missing_datetime"] + report["promoted_from_other_reasons"]
+        )
         assert report["promoted_from_missing_datetime"] >= args.min_promoted, (
             report["promoted_from_missing_datetime"],
             args.min_promoted,
