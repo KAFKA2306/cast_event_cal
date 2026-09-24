@@ -19,6 +19,12 @@ RELATIVE_RE = re.compile(r"本日|今日|明日|今夜|今晩|今週|来週|週�
 RECURRING_RE = re.compile(r"毎(?:週|月|日)|(?:毎週\s*)?(?:月|火|水|木|金|土|日)曜日")
 COMMERCE_RE = re.compile(r"販売|発売|セール|BOOTH|プレゼント|キャンペーン", re.IGNORECASE)
 ANNOUNCEMENT_RE = re.compile(r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|営業(?:します|予定)?", re.IGNORECASE)
+ACCESS_RE = re.compile(
+    r"JOIN|ジョイン|リクイン|request\s+invite|フレンド申請|フレリク|"
+    r"Group\s*[+＋]|グループ(?:プラス|インスタンス)|インスタンス|"
+    r"参加方法|参加希望|ご参加ください|参加してください|お越しください|ご来場|ご来店",
+    re.IGNORECASE,
+)
 PAST_REPORT_RE = re.compile(r"参加してき|行ってき|楽しかった|昨日|先日|でした|してきました|お邪魔(?:しました|してき)", re.IGNORECASE)
 PERSONAL_RE = re.compile(r"仕事|帰宅|寝ます|寝る|出社|改変|お着替え|プレイ時間|VRC(?:に)?(?:います|入る|潜る)", re.IGNORECASE)
 
@@ -90,7 +96,7 @@ def occurrence_decision(text: str) -> str:
         return "non_event"
     if features["recurring"]:
         return "recurring_event"
-    if not ANNOUNCEMENT_RE.search(text):
+    if not (ANNOUNCEMENT_RE.search(text) or ACCESS_RE.search(text)):
         return "ambiguous_datetime"
     if (features["explicit_date"] or features["relative"]) and features["clock"]:
         return "resolvable_event_candidate"
