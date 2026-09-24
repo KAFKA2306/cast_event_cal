@@ -97,6 +97,21 @@ def test_participation_and_classification_evidence_are_not_duplicated_in_details
     assert "対象" in details
 
 
+def test_home_card_preserves_datetime_provenance_after_reorder() -> None:
+    html = rendered_home()
+    details_start = html.index("function detailsHtml(event){")
+    classification_start = html.index("function classificationEvidenceHtml(event){")
+    details = html[details_start:classification_start]
+    event_start = html.index("function eventHtml(event){")
+    event_end = html.index("function renderAgenda(){", event_start)
+    card = html[event_start:event_end]
+
+    assert "resolutionText(event)" in details
+    assert "日時根拠" in details
+    assert "event.date_resolution_method" in card
+    assert "日時根拠あり" in card
+
+
 def test_evidence_disclosure_preserves_provenance_and_classification_audit() -> None:
     html = rendered_home()
     classification_start = html.index("function classificationEvidenceHtml(event){")
