@@ -157,6 +157,7 @@ def structured_classify(text: str) -> tuple[str | None, str | None]:
         or (has_generic_event and has_action)
         or (has_generic_event and has_attendance)
         or (has_action and has_access)
+        or (has_action and has_attendance and not has_product and not has_giveaway)
         or (has_access and has_attendance)
     )
     recruitment_structure = has_recruitment or (has_deadline and has_access)
