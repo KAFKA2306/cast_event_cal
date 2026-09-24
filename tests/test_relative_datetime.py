@@ -3,7 +3,11 @@ from __future__ import annotations
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from scripts.relative_datetime import build_resolution_audit, resolve_event_datetime
+from scripts.relative_datetime import (
+    build_resolution_audit,
+    resolve_event_datetime,
+    resolve_recurring_event,
+)
 
 JST = ZoneInfo("Asia/Tokyo")
 
@@ -238,3 +242,48 @@ def test_resolution_audit_records_changed_existing_events() -> None:
     assert audit["events_with_resolution_evidence"] == 1
     assert audit["changed_events"][0]["previous_starts_at"] == "2026-08-17T13:00:00Z"
     assert audit["changed_events"][0]["current_starts_at"] == "2026-08-10T13:00:00Z"
+
+
+def test_materializes_weekly_recurrence_after_current_time() -> None:
+    source_anchor = datetime(2026, 7, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 8, 3, 9, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週金曜日 22:00 VRChat交流イベント開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 7, 22, 0, tzinfo=JST)
+    assert result.method == "recurrence_weekly_materialized"
+    assert result.recurrence_rule == {
+        "frequency": "weekly",
+        "weekday": 4,
+        "hour": 22,
+        "minute": 0,
+        "timezone": "Asia/Tokyo",
+    }
+
+
+def test_materializes_ordinal_monthly_recurrence_without_guessing() -> None:
+    source_anchor = datetime(2026, 7, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎月第2、第4 日曜日 13:00開催。VRChat Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 27, 13, 0, tzinfo=JST)
+    assert result.method == "recurrence_ordinal_monthly_materialized"
+    assert result.recurrence_rule is not None
+    assert result.recurrence_rule["ordinals"] == [2, 4]
+
+
+def test_recurrence_materializer_rejects_commerce_clock_without_access() -> None:
+    source_anchor = datetime(2026, 7, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    assert resolve_recurring_event(
+        "毎週金曜日22:00 VRChat向け衣装セールを開催します。BOOTHで販売。",
+        source_anchor,
+        materialize_after=current,
+    ) is None
