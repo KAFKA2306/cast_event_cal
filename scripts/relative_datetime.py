@@ -515,7 +515,16 @@ def resolve_event_datetime(
         .replace("〜", "~")
         .replace("～", "~")
     )
-    if ORDINAL_RECURRING_WEEKDAY_PATTERN.search(normalized):
+    if any(
+        pattern.search(normalized)
+        for pattern in (
+            ORDINAL_RECURRING_WEEKDAY_PATTERN,
+            WEEKLY_RECURRENCE_PATTERN,
+            DAILY_RECURRENCE_PATTERN,
+            MONTHLY_DAY_RECURRENCE_PATTERN,
+            ORDINAL_MONTHLY_RECURRENCE_PATTERN,
+        )
+    ):
         return None
 
     match = WEEKDAY_PATTERN.search(normalized)
