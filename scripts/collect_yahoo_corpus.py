@@ -61,6 +61,7 @@ EVENT_ACTION_TERMS = {"開催", "open", "オープン", "開場", "開始", "営
 ATTENDANCE_TERMS = {
     "参加したい", "参加できます", "参加ください", "ご参加ください", "来場", "ご来場",
     "ご来店", "遊びに来て", "遊びにきて", "お越し", "見に来て", "聴きに来て",
+    "来てね", "聴きにきて", "待ってるね",
     "お待ちしております", "お待ちしてます", "入場",
 }
 SPECIFIC_RECRUITMENT_TERMS = {
@@ -73,6 +74,19 @@ WORLD_DESCRIPTION_TERMS = {"ワールド紹介", "ワールドを更新", "常�
 GENERIC_EVENT_TERMS = {"開催", "イベント", "キャンペーン", "募集", "応募"}
 AUDIT_GROUPS = {"commerce_noise", "temporal_audit"}
 QUERY_CONTEXT = "(開催 OR 告知 OR 日時 OR OPEN OR オープン OR 開場 OR 開始 OR 営業 OR 本日 OR 今日 OR 明日 OR 今夜 OR 参加 OR JOIN OR リクイン OR Group+)"
+STRONG_VR_CONTEXT_RE = re.compile(
+    r"VRChat|(?:^|\\s)VRC\\s*(?:で|にて|会場|キャバレー|クラブ|BAR|バー|カフェ|"
+    r"イベント|イベ|ライブ|DJ|営業)|メタバース.{0,80}VRC",
+    re.IGNORECASE | re.DOTALL,
+)
+PAST_TO_EXTERNAL_ACTIVITY_RE = re.compile(
+    r"(?:昨日|先日|でした|してきました|参加させて).{0,180}"
+    r"(?:配信|Fall\\s*Guys|Epic\\s*Games|タルコフ|#?EFT)",
+    re.IGNORECASE | re.DOTALL,
+)
+PHYSICAL_CONTEXT_RE = re.compile(r"大阪|心斎橋|アメ村|幕張メッセ|リアル会場", re.IGNORECASE)
+CLOCK_TOKEN_RE = re.compile(r"(?<!\\d)(?:[01]?\\d|2[0-3])(?::[0-5]\\d|時(?:半)?)")
+
 NEXT_MONTH_CONFLICT_RE = re.compile(
     r"次回.{0,50}?(?P<label_month>1[0-2]|0?[1-9])月.{0,80}?"
     r"(?:日時|日程)\s*[:：]?\s*(?:20\d{2}[./年-])?"
@@ -151,12 +165,23 @@ def structured_classify(text: str) -> tuple[str | None, str | None]:
     has_broadcast = has_any(text, BROADCAST_ONLY_TERMS)
     has_social_entry = has_any(text, SOCIAL_ENTRY_TERMS)
     looks_like_world_description = has_any(text, WORLD_DESCRIPTION_TERMS)
+    has_strong_vr_context = has_access or bool(STRONG_VR_CONTEXT_RE.search(text))
+    has_mixed_schedule = bool(PHYSICAL_CONTEXT_RE.search(text)) and len(CLOCK_TOKEN_RE.findall(text)) >= 3
+    broad_action_attendance = (
+        has_action
+        and has_attendance
+        and not has_product
+        and not has_giveaway
+        and has_strong_vr_context
+        and not PAST_TO_EXTERNAL_ACTIVITY_RE.search(text)
+        and not has_mixed_schedule
+    )
     event_structure = (
         has_specific_event
         or (has_generic_event and has_action)
         or (has_generic_event and has_attendance)
         or (has_action and has_access)
-        or (has_action and has_attendance and not has_product and not has_giveaway)
+        or broad_action_attendance
         or (has_access and has_attendance)
     )
     recruitment_structure = has_recruitment or (has_deadline and has_access)
