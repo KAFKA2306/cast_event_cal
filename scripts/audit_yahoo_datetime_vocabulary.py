@@ -165,6 +165,8 @@ def main() -> int:
     payload = build(read_candidates(args.input))
     if args.assert_complete and payload["missing_datetime_unclassified_count"] != 0:
         raise SystemExit("missing_datetime audit left unclassified rows")
+    if args.assert_complete and payload["temporal_unclassified_count"] != 0:
+        raise SystemExit("temporal-evidence audit left unclassified rows")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(
