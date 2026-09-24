@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 
 from scripts.collect_yahoo_corpus import configure_classifier
-from scripts.reclassify_yahoo_archive import reclassify
+from scripts.reclassify_yahoo_archive import configure_archive_classifier, reclassify
 
 
 def row(text: str, *, retweets: int = 0, status_id: str = "2080000000000000000"):
@@ -76,3 +76,22 @@ def test_missing_datetime_remains_rejected():
     )
     assert accepted == []
     assert rejected[0]["reason"] == "missing_datetime"
+
+
+def test_archive_relative_date_uses_source_timestamp_once():
+    configure_archive_classifier()
+    accepted, rejected, _ = reclassify(
+        [
+            row(
+                "来週月曜 22:00 VRC交流イベント開催。参加方法はJOIN",
+                retweets=1,
+                status_id="2085561566622646272",
+            )
+        ],
+        actual_now=datetime(2026, 8, 20, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 1
+    assert accepted[0]["starts_at"] == "2026-08-10T13:00:00Z"
+    assert accepted[0]["temporal_status"] == "past"
