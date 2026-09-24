@@ -174,6 +174,9 @@ def main() -> int:
         f"candidates={payload['candidate_count']} missing={payload['missing_datetime_count']} "
         f"temporal={payload['temporal_evidence_count']} unclassified={payload['missing_datetime_unclassified_count']}"
     )
+    print("bucket_counts=" + json.dumps(payload["bucket_counts"], ensure_ascii=False, sort_keys=True))
+    print("occurrence_decision_counts=" + json.dumps(payload["occurrence_decision_counts"], ensure_ascii=False, sort_keys=True))
+    print("evidence_role_counts=" + json.dumps(payload["evidence_role_counts"], ensure_ascii=False, sort_keys=True))
     return 0
 
 
