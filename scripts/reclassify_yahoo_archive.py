@@ -87,7 +87,7 @@ def reclassify(
                 else:
                     event, reason = corpus.refined_candidate_to_event(
                         candidate,
-                        now=parsed.astimezone(UTC),
+                        now=anchor,
                         min_retweets=3,
                         x_ids=x_ids,
                     )
