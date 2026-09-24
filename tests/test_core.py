@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from cast_event_cal.core import Event, deduplicate, parse_ics, render_ics, write_outputs, x_post_to_event
+from cast_event_cal.core import Event, build_event, deduplicate, parse_ics, render_ics, write_outputs, x_post_to_event
 
 
 def test_parse_ics_timezone_and_render_roundtrip():
@@ -31,6 +31,41 @@ def test_x_parser_rejects_ambiguous_post_and_accepts_explicit_datetime():
     assert event.starts_at == "2026-08-03T12:30:00Z"
     assert event.organizer == "@host"
 
+
+
+def test_datetime_provenance_survives_normalization_and_public_output(tmp_path):
+    raw = {
+        "source_id": "yahoo:x:1",
+        "title": "今夜のVRChatイベント",
+        "starts_at": "2026-09-25T13:00:00Z",
+        "category": "event",
+        "date_resolution_method": "relative_day_evidence_span",
+        "date_resolution_anchor": "2026-09-25T03:00:00Z",
+        "date_resolution_evidence": {
+            "method": "relative_day_evidence_span",
+            "matched_text": "今夜 22:00",
+            "timezone": "Asia/Tokyo",
+        },
+        "temporal_status": "upcoming",
+        "is_archived": False,
+    }
+    event = build_event(raw, "yahoo_realtime_events", "2026-09-25T03:01:00Z")
+    assert event.date_resolution_method == "relative_day_evidence_span"
+    assert event.date_resolution_evidence == raw["date_resolution_evidence"]
+    assert event.temporal_status == "upcoming"
+
+    write_outputs(
+        [event],
+        {"status": "ok", "generated_at": "2026-09-25T03:01:00Z"},
+        tmp_path,
+        datetime(2026, 9, 25, 3, 1, tzinfo=UTC),
+    )
+    payload = __import__("json").loads((tmp_path / "events.json").read_text(encoding="utf-8"))
+    published = payload["events"][0]
+    assert published["date_resolution_method"] == "relative_day_evidence_span"
+    assert published["date_resolution_evidence"]["matched_text"] == "今夜 22:00"
+    assert published["temporal_status"] == "upcoming"
+    assert published["is_archived"] is False
 
 def test_core_outputs_leave_html_to_canonical_frontend_renderer(tmp_path):
     generated_at = datetime(2026, 8, 16, tzinfo=UTC)
