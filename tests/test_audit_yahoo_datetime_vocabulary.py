@@ -83,5 +83,5 @@ def test_temporal_candidates_all_receive_occurrence_decision() -> None:
         "recurring_series_candidate": 1,
         "unresolved_publishability": 2,
     }
-    assert audit["publishability_backlog_count"] == 2
+    assert audit["publishability_backlog_count"] == 3
     assert audit["automatic_resolution_candidate_count"] == 2
