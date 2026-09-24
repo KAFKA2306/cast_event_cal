@@ -163,9 +163,20 @@ def test_rejects_news_update_clock_as_event_clock() -> None:
 def test_rejects_visit_time_for_already_running_event() -> None:
     anchor = datetime(2026, 9, 10, 18, 0, tzinfo=JST)
     assert resolve(
-        "この後21時から、現在VRCで開催中の展示会に行くよ！",
+        "この後21時から、現在VRCで開催 中の展示会に行くよ！",
         anchor,
     ) is None
+
+
+def test_relative_tomorrow_is_not_double_applied_by_partial_date_match() -> None:
+    anchor = datetime(2026, 9, 20, 23, 54, tzinfo=JST)
+    result = resolve(
+        "明日からVRChat花火大会を開催します。21.22日の2日間、19時開始。Group +で参加できます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 21, 19, 0, tzinfo=JST)
+    assert result.method == "relative_day_evidence_span"
 
 
 def test_accepts_stream_when_vrchat_venue_is_explicit() -> None:
