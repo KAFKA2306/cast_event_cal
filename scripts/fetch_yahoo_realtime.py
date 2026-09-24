@@ -209,7 +209,8 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
 
 def normalize_text(text: str) -> str:
     return (
-        text.replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
+        text.translate(FULLWIDTH_DIGIT_TRANSLATION)
+        .replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
         .replace("〜", "~").replace("～", "~")
     )
 
