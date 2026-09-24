@@ -116,6 +116,7 @@ def test_missing_datetime_remains_rejected():
     )
     assert accepted == []
     assert rejected[0]["reason"] == "missing_datetime"
+    assert _[0]["publishability_state"] == "unresolved"
 
 
 def test_archive_relative_date_uses_source_timestamp_once():
@@ -229,3 +230,5 @@ def test_archive_corroborates_partial_datetime_across_same_event_fingerprint():
     )
     assert all(event.get("event_fingerprint") for event in accepted)
     assert all(row["last_decision"] == "accepted" for row in evaluated)
+    assert all(row["publishability_state"] == "publishable" for row in evaluated)
+    assert all(row["event_fingerprints"] for row in evaluated)
