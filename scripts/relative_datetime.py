@@ -22,9 +22,9 @@ CLOCK_PATTERN = re.compile(
 )
 RELATIVE_DAY_PATTERN = re.compile(r"本日|今日|明日|今夜|今晩|この後")
 EXPLICIT_DATE_PATTERN = re.compile(
-    r"(?:20\d{2}\s*[./／⁄年-]\s*)?"
+    r"(?<!\d)(?:20\d{2}\s*[./／⁄年-]\s*)?"
     r"(?:1[0-2]|0?[1-9])\s*(?:[./／⁄-]|\s*月\s*)\s*"
-    r"(?:3[01]|[12]?\d)\s*日?"
+    r"(?:3[01]|[12]?\d)\s*日?(?!\d)"
 )
 DDMMYYYY_LABEL_PATTERN = re.compile(
     r"dd\s*[/／⁄]\s*mm\s*[/／⁄]\s*yyyy\s*[:：]\s*"
@@ -80,7 +80,7 @@ RECOVERY_WORLD_DESCRIPTION_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 RECOVERY_VISIT_RE = re.compile(
-    r"開催中.{0,80}(?:に行く|見に行く)|(?:に行く|見に行く).{0,80}開催中",
+    r"開催\s*中.{0,80}(?:に行く|見に行く)|(?:に行く|見に行く).{0,80}開催\s*中",
     flags=re.IGNORECASE | re.DOTALL,
 )
 
@@ -213,9 +213,9 @@ def _resolve_evidence_span_datetime(text: str, anchor: datetime) -> DateResoluti
     for match in EXPLICIT_DATE_PATTERN.finditer(normalized):
         token = match.group(0)
         parts = re.search(
-            r"(?:(?P<year>20\d{2})\s*[./年-]\s*)?"
+            r"(?<!\d)(?:(?P<year>20\d{2})\s*[./年-]\s*)?"
             r"(?P<month>1[0-2]|0?[1-9])\s*(?:[./-]|\s*月\s*)\s*"
-            r"(?P<day>3[01]|[12]?\d)",
+            r"(?P<day>3[01]|[12]?\d)(?!\d)",
             token,
         )
         if not parts:
