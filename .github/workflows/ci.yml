@@ -39,6 +39,9 @@ jobs:
           fi
           exit "$status"
       - run: cast-event-cal validate
+      - name: Audit Yahoo datetime vocabulary
+        run: |
+          python scripts/audit_yahoo_datetime_vocabulary.py --assert-complete
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
