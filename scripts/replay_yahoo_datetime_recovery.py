@@ -195,12 +195,8 @@ def assert_targets(report: dict[str, Any], min_promoted: int) -> None:
         report["promoted_from_missing_datetime"] + report["promoted_from_other_reasons"]
     )
 
-    promoted = int(report["promoted_from_missing_datetime"])
     durable = int(report["accepted_with_resolution_evidence"])
-    if promoted:
-        assert promoted >= min_promoted, (promoted, min_promoted)
-    else:
-        assert durable >= min_promoted, (durable, min_promoted)
+    assert durable >= min_promoted, (durable, min_promoted)
 
 
 def main(argv: list[str] | None = None) -> int:
