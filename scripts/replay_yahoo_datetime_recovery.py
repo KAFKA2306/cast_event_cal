@@ -72,6 +72,15 @@ def replay() -> dict[str, Any]:
         for status_id in promoted_missing
         if not accepted_by_id[status_id].get("date_resolution_evidence")
     )
+    promoted_other = [
+        {
+            "status_id": status_id,
+            "previous_reason": before_by_id[status_id].get("last_reason"),
+            "text_excerpt": str(before_by_id[status_id].get("text") or "")[:240],
+        }
+        for status_id in promoted
+        if status_id not in missing_before
+    ]
 
     method_counts: dict[str, int] = {}
     promoted_rows: list[dict[str, Any]] = []
@@ -120,6 +129,7 @@ def replay() -> dict[str, Any]:
         "promoted_from_missing_datetime": len(promoted_missing),
         "promoted_without_resolution_evidence": len(promoted_without_evidence),
         "promoted_method_counts": dict(sorted(method_counts.items())),
+        "promoted_other": promoted_other,
         "changed_existing_starts_at": len(changed_existing),
         "promoted": promoted_rows,
         "evaluated_count": len(evaluated),
