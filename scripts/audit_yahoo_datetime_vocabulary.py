@@ -18,6 +18,10 @@ DDMMYYYY_RE = re.compile(r"(?<!\d)\d{1,2}\s*/\s*\d{1,2}\s*/\s*20\d{2}(?!\d)")
 RELATIVE_RE = re.compile(r"本日|今日|明日|今夜|今晩|今週|来週|週末|(?:月|火|水|木|金|土|日)曜日")
 RECURRING_RE = re.compile(r"毎(?:週|月|日)|(?:毎週\s*)?(?:月|火|水|木|金|土|日)曜日")
 COMMERCE_RE = re.compile(r"販売|発売|セール|BOOTH|プレゼント|キャンペーン", re.IGNORECASE)
+ANNOUNCEMENT_RE = re.compile(r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|営業(?:します|予定)?", re.IGNORECASE)
+PAST_REPORT_RE = re.compile(r"参加してき|行ってき|楽しかった|昨日|先日|でした|してきました|お邪魔(?:しました|してき)", re.IGNORECASE)
+PERSONAL_RE = re.compile(r"仕事|帰宅|寝ます|寝る|出社|改変|お着替え|プレイ時間|VRC(?:に)?(?:います|入る|潜る)", re.IGNORECASE)
+
 EVENT_RE = re.compile(
     r"集会|交流会|イベント|開催|営業|公演|ライブ|撮影会|演奏会|DJ|勉強会|祭|参加|JOIN|"
     r"リクイン|Group\s*[+＋]|グループインスタンス|request\s+invite",
@@ -67,12 +71,39 @@ def evidence_role(text: str) -> str:
     return "neither"
 
 
+def occurrence_decision(text: str) -> str:
+    """Read-only semantic decision for temporal-evidence candidates.
+
+    This deliberately does not resolve a timestamp. It answers whether the
+    temporal evidence is eligible to be associated with an event occurrence.
+    """
+    features = temporal_features(text)
+    if not any(features.values()):
+        return "no_datetime_evidence"
+    if COMMERCE_RE.search(text) and not EVENT_RE.search(text):
+        return "non_event_commerce"
+    if PAST_REPORT_RE.search(text):
+        return "past_event_or_report"
+    if PERSONAL_RE.search(text) and not ANNOUNCEMENT_RE.search(text):
+        return "non_event_personal"
+    if not EVENT_RE.search(text):
+        return "non_event"
+    if features["recurring"]:
+        return "recurring_event"
+    if not ANNOUNCEMENT_RE.search(text):
+        return "ambiguous_datetime"
+    if (features["explicit_date"] or features["relative"]) and features["clock"]:
+        return "resolvable_event_candidate"
+    return "partial_datetime"
+
+
 def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
     decisions = Counter()
     reasons = Counter()
     buckets = Counter()
     roles = Counter()
     bucket_roles: Counter[str] = Counter()
+    occurrence_decisions = Counter()
     examples: dict[str, list[dict[str, Any]]] = {}
 
     for row in rows:
@@ -88,6 +119,8 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
         buckets[bucket] += 1
         roles[role] += 1
         bucket_roles[f"{bucket}:{role}"] += 1
+        if bucket != "no_datetime_evidence":
+            occurrence_decisions[occurrence_decision(text)] += 1
         sample = examples.setdefault(bucket, [])
         if len(sample) < 5:
             sample.append({
@@ -112,10 +145,13 @@ def build(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "temporal_evidence_count": temporal,
         "temporal_evidence_ratio": round(temporal / missing, 6) if missing else 0.0,
         "target_resolved_count": 2691,
-        "target_resolved_ratio": round(2200 / missing, 6) if missing else 0.0,
+        "target_resolved_ratio": round(2691 / missing, 6) if missing else 0.0,
         "bucket_counts": dict(sorted(buckets.items())),
         "evidence_role_counts": dict(sorted(roles.items())),
         "bucket_role_counts": dict(sorted(bucket_roles.items())),
+        "occurrence_decision_counts": dict(sorted(occurrence_decisions.items())),
+        "occurrence_decision_total": sum(occurrence_decisions.values()),
+        "temporal_unclassified_count": temporal - sum(occurrence_decisions.values()),
         "examples": {key: examples[key] for key in sorted(examples)},
     }
 
