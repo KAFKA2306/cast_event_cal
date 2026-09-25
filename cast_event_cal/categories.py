@@ -42,8 +42,31 @@ def organizer_key(event: dict[str, Any]) -> str | None:
     return value or None
 
 
-def event_fields(event: dict[str, Any]) -> list[tuple[str, str, int]]:
-    tags = " ".join(str(value) for value in event.get("tags", []) if str(value).strip())
+def keyword_text_contains(text: Any, term: Any) -> bool:
+    raw_text = unicodedata.normalize("NFKC", str(text or "")).casefold()
+    raw_term = unicodedata.normalize("NFKC", str(term or "")).casefold().strip()
+    needle = normalized(raw_term)
+    if not needle:
+        return False
+    if re.fullmatch(r"[a-z0-9]{1,3}", needle):
+        return bool(re.search(rf"(?<![a-z0-9]){re.escape(raw_term)}(?![a-z0-9])", raw_text))
+    return needle in normalized(raw_text)
+
+
+def event_fields(
+    event: dict[str, Any],
+    ontology: dict[str, Any] | None = None,
+) -> list[tuple[str, str, int]]:
+    ignored_tags = {
+        normalized(value)
+        for value in (ontology or {}).get("non_semantic_tags", [])
+        if normalized(value)
+    }
+    tags = " ".join(
+        str(value)
+        for value in event.get("tags", [])
+        if str(value).strip() and normalized(value) not in ignored_tags
+    )
     return [
         ("title", str(event.get("title") or ""), 4),
         ("canonical_name", str(event.get("canonical_name") or ""), 4),
@@ -65,7 +88,7 @@ def best_term_match(fields: list[tuple[str, str, int]], terms: list[Any], *, bas
         if not needle or needle in seen:
             continue
         seen.add(needle)
-        matches = [(field_name, field_weight) for field_name, text, field_weight in fields if needle in normalized(text)]
+        matches = [(field_name, field_weight) for field_name, text, field_weight in fields if keyword_text_contains(text, term)]
         if not matches:
             continue
         field_name, field_weight = max(matches, key=lambda item: item[1])
@@ -77,7 +100,7 @@ def best_term_match(fields: list[tuple[str, str, int]], terms: list[Any], *, bas
 def modality(event: dict[str, Any], ontology: dict[str, Any], category: str) -> str:
     if category == "recruitment_deadline":
         return "deadline"
-    text = " ".join(value for _, value, _ in event_fields(event))
+    text = " ".join(value for _, value, _ in event_fields(event, ontology))
     folded = normalized(text)
     rules = ontology.get("modalities", {})
 
@@ -105,7 +128,7 @@ def direct_decision(event: dict[str, Any], ontology: dict[str, Any]) -> Category
     by_id = {str(row.get("id")): row for row in categories if row.get("id")}
     default_id = str(ontology.get("default_category") or "other")
     minimum_score = int(ontology.get("minimum_keyword_score") or 3)
-    fields = event_fields(event)
+    fields = event_fields(event, ontology)
     scores: dict[str, int] = {}
     evidence_by_id: dict[str, list[str]] = defaultdict(list)
 

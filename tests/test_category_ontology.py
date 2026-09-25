@@ -106,3 +106,66 @@ def test_yahoo_rejection_sample_audit_covers_each_reason_and_prefers_high_retwee
     reasons = {row["reason"]: row for row in payload["reasons"]}
     assert reasons["missing_datetime"]["samples"][0]["status_id"] == "2"
     assert reasons["product_only"]["samples"][0]["status_id"] == "3"
+
+
+def test_source_provenance_tags_do_not_become_category_evidence():
+    ontology = load_category_ontology()
+    decision = direct_decision(
+        event(
+            "仮想学生集会",
+            "学生同士がお喋りしながら交流するイベントです",
+            tags=["外部カレンダー", "技術・学術"],
+        ),
+        ontology,
+    )
+    assert decision.category == "community"
+    assert all("技術・学術" not in evidence for evidence in decision.evidence)
+
+
+def test_observed_external_calendar_examples_follow_primary_intent():
+    ontology = load_category_ontology()
+    provenance_tags = ["外部カレンダー", "技術・学術"]
+    examples = [
+        (
+            event(
+                "株式投資座談会",
+                "株式投資について交流し、最後に写真撮影を行います",
+                tags=provenance_tags,
+            ),
+            "community",
+        ),
+        (
+            event(
+                "VRC MED J SALON",
+                "医学論文のAIまとめを医師が議論しながら修正します",
+                tags=provenance_tags,
+            ),
+            "technology",
+        ),
+        (
+            event(
+                "VRC微分音集会",
+                "微分音・Xenharmonicの音楽理論や調律理論について交流します",
+                tags=provenance_tags,
+            ),
+            "music",
+        ),
+        (
+            event(
+                "VR酔い訓練集会",
+                "VR酔いを軽減するための訓練集会です",
+                tags=provenance_tags,
+            ),
+            "wellness",
+        ),
+        (
+            event(
+                "Blender＆Unity技術交流会",
+                "BlenderとUnityを使う制作者同士で交流します",
+                tags=provenance_tags,
+            ),
+            "technology",
+        ),
+    ]
+    for row, expected in examples:
+        assert direct_decision(row, ontology).category == expected
