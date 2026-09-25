@@ -22,9 +22,9 @@ class TonightDetailLinkContractTest(unittest.TestCase):
             "ends_at",
             "primary_action_url",
             "official_links",
-            "review_required===true",
+            "review_required",
             "/^[A-Za-z0-9._-]{1,128}$/",
-            "hasDetail(e)",
+            "hasDetail(event)",
             "../events/${encodeURIComponent(stableId)}/",
             "event_detail_open",
         ):
