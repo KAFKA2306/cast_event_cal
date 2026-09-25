@@ -164,8 +164,8 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
                 continue
             fingerprints.add(f"{author}|name:{name}")
 
-        for linked_url in _linked_urls(row, text):
-            fingerprints.add(f"{author}|url:{linked_url}")
+    for linked_url in _linked_urls(row, text):
+        fingerprints.add(f"url:{linked_url}")
 
     return fingerprints
 
