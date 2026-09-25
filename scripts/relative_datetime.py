@@ -687,6 +687,7 @@ def materialize_recurring_events(
 
     return results
 
+
 def resolve_event_datetime(
     text: str,
     anchor: datetime,
