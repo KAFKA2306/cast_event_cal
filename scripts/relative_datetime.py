@@ -138,6 +138,36 @@ RECOVERY_WORLD_DESCRIPTION_RE = re.compile(
     r"World名|ワールド紹介|2019年から.{0,30}毎年開催",
     flags=re.IGNORECASE | re.DOTALL,
 )
+RECURRENCE_EVENT_IDENTITY_RE = re.compile(
+    r"集会|交流会|イベント|event|営業|公演|ライブ|撮影会|上映会|演奏会|"
+    r"DJ|勉強会|祭|酒場|バー|カフェ|喫茶|クラブ",
+    flags=re.IGNORECASE,
+)
+RECURRENCE_MARKER_RE = re.compile(
+    r"毎日|毎週|毎月|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
+    flags=re.IGNORECASE,
+)
+
+
+def _recurrence_clause_has_event_identity(text: str, match: re.Match[str]) -> bool:
+    """Bind a recurrence rule to its own event clause, not a later schedule.
+
+    Example rejected here:
+    "毎日21時から遊んでいます。それに毎週土曜は交流会の日"
+    The daily open-play schedule must not inherit 交流会 from the next rule.
+    """
+    next_marker = RECURRENCE_MARKER_RE.search(text, match.end())
+    right = next_marker.start() if next_marker else min(len(text), match.end() + 180)
+    left = max(0, match.start() - 100)
+    previous = None
+    for candidate in RECURRENCE_MARKER_RE.finditer(text, left, match.start()):
+        previous = candidate
+    if previous is not None:
+        left = previous.end()
+    clause = text[left:right]
+    return bool(RECURRENCE_EVENT_IDENTITY_RE.search(clause))
+
+
 RECOVERY_VISIT_RE = re.compile(
     r"開催\s*中.{0,80}(?:に行く|見に行く)|(?:に行く|見に行く).{0,80}開催\s*中",
     flags=re.IGNORECASE | re.DOTALL,
@@ -174,7 +204,7 @@ def _jst(value: datetime) -> datetime:
 
 
 def _normalize_recovery_text(text: str) -> str:
-    return (
+    normalized = (
         text.translate(FULLWIDTH_DIGIT_TRANSLATION)
         .replace("：", ":")
         .replace("／", "/")
@@ -183,6 +213,14 @@ def _normalize_recovery_text(text: str) -> str:
         .replace("－", "-")
         .replace("〜", "~")
         .replace("～", "~")
+    )
+    # Japanese schedules often omit 時 on the start side: "21~23時".
+    # Restore only that unambiguous clock-range marker so the first endpoint,
+    # not 23時, becomes the occurrence start.
+    return re.sub(
+        r"(?<!\d)([01]?\d|2[0-3])\s*~\s*(?=(?:[01]?\d|2[0-3])\s*時)",
+        r"\1時~",
+        normalized,
     )
 
 
@@ -450,7 +488,7 @@ def resolve_recurring_event(
     after = _jst(materialize_after)
 
     match = DAILY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -472,7 +510,7 @@ def resolve_recurring_event(
         )
 
     match = MULTI_WEEKLY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -503,7 +541,7 @@ def resolve_recurring_event(
         )
 
     match = WEEKLY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -529,7 +567,7 @@ def resolve_recurring_event(
         )
 
     match = MULTI_MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -556,7 +594,7 @@ def resolve_recurring_event(
             )
 
     match = MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -579,7 +617,7 @@ def resolve_recurring_event(
             )
 
     match = LAST_WEEKDAY_MONTHLY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -613,7 +651,7 @@ def resolve_recurring_event(
             )
 
     match = ORDINAL_MONTHLY_RECURRENCE_PATTERN.search(normalized)
-    if match:
+    if match and _recurrence_clause_has_event_identity(normalized, match):
         parts = _clock_parts(match)
         if parts is None:
             return None
