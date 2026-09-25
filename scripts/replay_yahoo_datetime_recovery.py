@@ -19,8 +19,16 @@ MIN_PROMOTED_MISSING_DATETIME = 50
 
 
 def source_status_id(event: dict[str, Any]) -> str:
-    source_id = str(event.get("source_id") or "")
-    return source_id.rsplit(":", 1)[-1] if source_id else ""
+    explicit = str(event.get("source_status_id") or "")
+    if implementation.STATUS_ID_RE.fullmatch(explicit):
+        return explicit
+    source_id = str(
+        event.get("recurrence_source_id")
+        or event.get("source_id")
+        or ""
+    )
+    match = implementation.STATUS_ID_RE.search(source_id)
+    return match.group(0) if match else ""
 
 
 def replay() -> dict[str, Any]:
@@ -52,11 +60,11 @@ def replay() -> dict[str, Any]:
         actual_now=replay_now,
         x_ids=x_ids,
     )
-    accepted_by_id = {
-        source_status_id(event): event
-        for event in accepted
-        if source_status_id(event)
-    }
+    accepted_by_id: dict[str, dict[str, Any]] = {}
+    for event in accepted:
+        status_id = source_status_id(event)
+        if status_id:
+            accepted_by_id.setdefault(status_id, event)
     accepted_after = set(accepted_by_id)
     accepted_with_resolution_evidence = sorted(
         status_id
@@ -163,6 +171,11 @@ def replay() -> dict[str, Any]:
         "replay_generated_at": implementation.utc_text(replay_now),
         "accepted_before": len(accepted_before),
         "accepted_after": len(accepted_after),
+        "accepted_occurrence_count": len(accepted),
+        "recurrence_occurrence_count": sum(
+            str(event.get("date_resolution_method") or "").startswith("recurrence_")
+            for event in accepted
+        ),
         "accepted_with_resolution_evidence": len(accepted_with_resolution_evidence),
         "existing_accepted_lost": len(lost),
         "lost_status_ids": lost,
