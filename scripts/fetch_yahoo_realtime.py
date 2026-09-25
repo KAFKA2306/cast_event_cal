@@ -28,7 +28,7 @@ DEFAULT_SEARCH_URL = "https://search.yahoo.co.jp/realtime/search?" + urlencode(
     {"ei": "UTF-8", "p": DEFAULT_QUERY, "md": "h"}
 )
 PARSER_VERSION = "1.2"
-FOREIGN_TIMEZONE_RE = re.compile(r"\\b(?:BST|UTC|GMT|PST|PDT|EST|EDT|CET|CEST)\\b", re.IGNORECASE)
+FOREIGN_TIMEZONE_RE = re.compile(r"\b(?:BST|UTC|GMT|PST|PDT|EST|EDT|CET|CEST)\b", re.IGNORECASE)
 STATUS_RE = re.compile(
     r"(?:https?://)?(?:www\.)?(?:x|twitter)\.com/[^\s\"'<>\\]+/status/(\d+)", re.IGNORECASE
 )
