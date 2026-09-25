@@ -65,13 +65,13 @@ jobs:
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/refine_yahoo_corpus.py
-      - name: Apply durable Yahoo archive policy
-        run: python scripts/reclassify_yahoo_archive.py
       - name: Collect external calendars and official event pages
         env:
           VRCEVE_DATA_USE_APPROVED: ${{ secrets.VRCEVE_DATA_USE_APPROVED }}
           VRCEVE_ICS_URL: ${{ secrets.VRCEVE_ICS_URL }}
         run: python scripts/fetch_external_calendars.py
+      - name: Apply durable Yahoo archive policy
+        run: python scripts/reclassify_yahoo_archive.py
       - name: Gate collection health before build
         run: |
           python - <<'PY'
