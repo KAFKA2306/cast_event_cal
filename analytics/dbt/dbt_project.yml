@@ -1,0 +1,16 @@
+name: cast_event_cal_read_model
+version: "1.0.0"
+config-version: 2
+
+profile: cast_event_cal_read_model
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  cast_event_cal_read_model:
+    +materialized: table

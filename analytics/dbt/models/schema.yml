@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: stg_source_records
+    description: Exact analytical projection of canonical source-record fields; no inferred defaults.
+    columns:
+      - name: source
+        data_tests: [not_null]
+      - name: source_id
+        data_tests: [not_null]
+      - name: decision
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["accepted", "rejected"]
+    data_tests:
+      - unique_pair:
+          arguments:
+            left_column: source
+            right_column: source_id
+
+  - name: stg_event_occurrences
+    description: Stable occurrence identities and times copied from the canonical-derived read model.
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: starts_at
+        data_tests: [not_null]
+    data_tests:
+      - valid_interval:
+          arguments:
+            start_column: starts_at
+            end_column: ends_at
+
+  - name: stg_event_sources
+    description: Canonical occurrence-to-source links.
+    columns:
+      - name: event_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_event_occurrences')
+                field: event_id
+      - name: source
+        data_tests: [not_null]
+      - name: source_id
+        data_tests: [not_null]
+
+  - name: stg_collection_runs
+    description: Collection-run evidence projected without changing collection semantics.
+    columns:
+      - name: run_id
+        data_tests: [not_null, unique]
+      - name: status
+        data_tests: [not_null]
+
+  - name: fct_collection_runs
+    description: Reusable analytical collection-run fact derived only from the staging projection.
+    columns:
+      - name: run_id
+        data_tests: [not_null, unique]
+
+  - name: fct_publication_quality
+    description: Counts canonical source decisions without changing or reclassifying them.
+    columns:
+      - name: decision
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["accepted", "rejected"]
+      - name: source_record_count
+        data_tests: [not_null]
