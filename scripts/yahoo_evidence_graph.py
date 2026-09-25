@@ -175,6 +175,10 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
         and name not in GENERIC_QUOTED_NAMES
     }
     series_tokens = {f"hashtag:{tag}" for tag in tags} | {f"name:{name}" for name in names}
+    for name in names:
+        fingerprints.add(f"eventtitle:{name}")
+    for tag in tags:
+        fingerprints.add(f"eventtitle:{tag}")
 
     links = _linked_urls(row, text)
     for linked_url in links:
@@ -213,7 +217,7 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
 
 
 def _evidence_window(fingerprint: str) -> timedelta:
-    if fingerprint.startswith("officialurl:"):
+    if fingerprint.startswith(("officialurl:", "eventtitle:")):
         return OFFICIAL_URL_DISTANCE
     if fingerprint.startswith(("status:", "thread:")):
         return MAX_EVIDENCE_DISTANCE
@@ -289,8 +293,11 @@ def add_external_event_evidence(
             anchor=event_at,
             text=f"{event_at:%Y/%m/%d %H:%M} 開催",
         )
-        for url in urls:
-            key = f"officialurl:{url}"
+        keys = {f"officialurl:{url}" for url in urls}
+        title = _normalize_identity(str(event.get("title") or ""))
+        if len(title) >= 4 and title not in GENERIC_QUOTED_NAMES:
+            keys.add(f"eventtitle:{title}")
+        for key in keys:
             nodes = graph.setdefault(key, [])
             if all(existing.status_id != node.status_id for existing in nodes):
                 nodes.append(node)
@@ -446,6 +453,79 @@ def corroboration_blocker(
     return "conflicting_fingerprint_resolution"
 
 
+def _resolve_fingerprint_datetime(
+    row: dict[str, Any],
+    nodes: list[EvidenceNode],
+    *,
+    anchor: datetime,
+) -> tuple[datetime, tuple[str, ...]] | None:
+    current_id = str(row.get("status_id") or "")
+    current_text = str(row.get("text") or row.get("text_excerpt") or "")
+    current_dates = _explicit_dates(current_text, anchor)
+    current_clocks = _clocks(current_text)
+
+    # A single known dimension is authoritative. Multiple dates or clocks in
+    # the candidate itself remain ambiguous and are never silently selected.
+    if len(current_dates) > 1 or len(current_clocks) > 1:
+        return None
+    fixed_date = next(iter(current_dates)) if current_dates else None
+    fixed_clock = next(iter(current_clocks)) if current_clocks else None
+
+    dates: set[date] = set()
+    clocks: set[tuple[int, int]] = set()
+    evidence_ids: set[str] = {current_id} if current_id else set()
+
+    for node in nodes:
+        node_dates = _explicit_dates(node.text, node.anchor)
+        node_clocks = _clocks(node.text)
+
+        if fixed_date is not None and node_dates and fixed_date not in node_dates:
+            continue
+        if fixed_clock is not None and node_clocks and fixed_clock not in node_clocks:
+            continue
+
+        if fixed_date is not None:
+            if fixed_date in node_dates:
+                dates.add(fixed_date)
+                evidence_ids.add(node.status_id)
+        else:
+            dates.update(node_dates)
+            if node_dates:
+                evidence_ids.add(node.status_id)
+
+        if fixed_clock is not None:
+            if fixed_clock in node_clocks:
+                clocks.add(fixed_clock)
+                evidence_ids.add(node.status_id)
+        else:
+            clocks.update(node_clocks)
+            if node_clocks:
+                evidence_ids.add(node.status_id)
+
+    if fixed_date is not None:
+        dates = {fixed_date}
+    if fixed_clock is not None:
+        clocks = {fixed_clock}
+    if len(dates) != 1 or len(clocks) != 1:
+        return None
+    if current_id not in evidence_ids or len(evidence_ids) < 2:
+        return None
+
+    event_date = next(iter(dates))
+    hour, minute = next(iter(clocks))
+    return (
+        datetime(
+            event_date.year,
+            event_date.month,
+            event_date.day,
+            hour,
+            minute,
+            tzinfo=JST,
+        ),
+        tuple(sorted(evidence_ids)),
+    )
+
+
 def resolve_corroborated_datetime(
     row: dict[str, Any],
     *,
@@ -454,7 +534,6 @@ def resolve_corroborated_datetime(
     actual_now: datetime,
 ) -> CorroboratedResolution | None:
     candidates: list[CorroboratedResolution] = []
-    status_id = str(row.get("status_id") or "")
 
     for fingerprint in sorted(event_fingerprints(row)):
         nearby = _nearby_nodes(graph, fingerprint, anchor)
@@ -463,36 +542,11 @@ def resolve_corroborated_datetime(
         if not any(STRONG_EVENT_SIGNAL_RE.search(node.text) for node in nearby):
             continue
 
-        dates: set[date] = set()
-        clocks: set[tuple[int, int]] = set()
-        date_sources: set[str] = set()
-        clock_sources: set[str] = set()
-        for node in nearby:
-            node_dates = _explicit_dates(node.text, node.anchor)
-            node_clocks = _clocks(node.text)
-            if node_dates:
-                dates.update(node_dates)
-                date_sources.add(node.status_id)
-            if node_clocks:
-                clocks.update(node_clocks)
-                clock_sources.add(node.status_id)
-
-        if len(dates) != 1 or len(clocks) != 1:
+        resolved = _resolve_fingerprint_datetime(row, nearby, anchor=anchor)
+        if resolved is None:
             continue
-        evidence_ids = tuple(sorted(date_sources | clock_sources))
-        if len(evidence_ids) < 2 or status_id not in evidence_ids:
-            continue
+        event_at, evidence_ids = resolved
 
-        event_date = next(iter(dates))
-        hour, minute = next(iter(clocks))
-        event_at = datetime(
-            event_date.year,
-            event_date.month,
-            event_date.day,
-            hour,
-            minute,
-            tzinfo=JST,
-        )
         now_jst = actual_now.astimezone(JST)
         if event_at < now_jst - timedelta(hours=12):
             continue
@@ -512,3 +566,4 @@ def resolve_corroborated_datetime(
     if len(unique_times) != 1:
         return None
     return sorted(candidates, key=lambda item: item.event_fingerprint)[0]
+
