@@ -2,38 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 781,
+  "event_count": 756,
   "matched_events": 295,
   "matched_series": {
-    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 36,
-    "vrc-petting-zoo": 19,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 35,
-    "vrc-fit-boxing": 34,
-    "personally-match": 17,
+    "vrc-fit-boxing": 35,
+    "personally-match": 18,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
-    "vrc-idle-gathering": 17
+    "vrc-idle-gathering": 17,
+    "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 486,
+  "unmatched_events": 461,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "39f7942ca36918ae60cf",
-      "title": "VRC初心者ワールドツアー",
-      "status": "matched",
-      "ontology_id": "vrc-beginner-world-tour",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "aac5df8586a3e44e3ee5",
       "title": "ASMR集会 初心者説明会",
@@ -66,17 +54,6 @@
       "evidence": [
         "alias",
         "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "8d01eed500eecc01230a",
-      "title": "【 VRC ふれあい動物園 9月25日】 本日 【22:00】より開園いたします！ 連休明けで体も心もなんだかおつかれモード…そんな時にはふれあい動物園で癒されに来ませんか？ 可愛いどうぶつさ…",
-      "status": "matched",
-      "ontology_id": "vrc-petting-zoo",
-      "evidence": [
-        "alias",
         "required_patterns"
       ],
       "profile_attached": true
@@ -3543,99 +3520,91 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "b3cfe349e5681170ebf1",
+      "title": "VRCフィットボクシング集会（土曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "e53b1e68595d30dd73de",
+      "title": "Personally match",
+      "status": "matched",
+      "ontology_id": "personally-match",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 781,
+    "event_count": 756,
     "category_breakdown": {
-      "art": 122,
-      "community": 186,
-      "game": 105,
+      "art": 121,
+      "community": 187,
+      "game": 102,
       "language_exchange": 35,
       "learning": 13,
-      "music": 17,
-      "other": 17,
-      "performance": 4,
-      "recruitment_deadline": 5,
-      "technology": 190,
-      "wellness": 68,
-      "world_tour": 19
+      "music": 8,
+      "other": 13,
+      "performance": 3,
+      "recruitment_deadline": 2,
+      "technology": 185,
+      "wellness": 69,
+      "world_tour": 18
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 2,
-      "bar": 2,
-      "cafe": 16,
-      "cast_recruitment": 1,
+      "application_deadline": 1,
+      "bar": 1,
+      "cafe": 19,
       "dance": 1,
-      "dj": 6,
-      "engineering": 107,
-      "fitness": 34,
-      "hangout": 28,
+      "dj": 1,
+      "engineering": 103,
+      "fitness": 35,
+      "hangout": 33,
       "language_exchange": 35,
       "lecture": 1,
       "live_music": 1,
-      "mystery": 36,
-      "photography": 122,
+      "mystery": 34,
+      "photography": 121,
       "research": 40,
-      "show": 2,
-      "social": 140,
+      "show": 1,
+      "social": 134,
       "tabletop": 34,
       "theater": 1,
       "workshop": 9,
-      "world_tour": 19
+      "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 4,
-      "in_world": 767,
+      "deadline": 2,
+      "hybrid": 2,
+      "in_world": 747,
       "stream": 4,
       "unknown": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 17,
-      "keyword_rules": 266,
-      "legacy_and_keywords": 99,
+      "curated_ontology": 278,
+      "fallback": 13,
+      "keyword_rules": 246,
+      "legacy_and_keywords": 97,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 38,
-    "audit_event_count": 38
+    "low_confidence_event_count": 31,
+    "audit_event_count": 31
   },
   "category_review_queue": [
-    {
-      "event_id": "9b20c622f7efd34d8f29",
-      "title": "今夜はこちら！ #VR演劇 をフィーチャーしているけど、 VRC 映画とかVRライブ、接客イベントにだってパンフがあったっていいじゃない！ 本日 20:45開場 #cluster ですが # …",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "performance",
-        "community"
-      ]
-    },
-    {
-      "event_id": "9072a697d499f4b85928",
-      "title": "本日 はVirtual Sky Serviceの定期イベント 開催 日です！ 21:00〜22:30(最終受付) Group ＋インスタンスで 開催 します VRChat Flight Wee…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "4a5130b55abcfe8f44d1",
       "title": "2026/9/25(金)19:50開店 居酒屋たま VRChat 店 オープン します！ 正式フライヤーは後日！ 居酒屋たま in a TRANCE Vol.4 DJ YSK DJ Yukii…",
@@ -3745,6 +3714,23 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "08272af4736c0933c818",
+      "title": "【 集会 閉場】 VR怪人組織 悪役結社ヴァリアールの本拠地を 舞台 とするメインRP 集会イベント 第49回 VRC 悪の組織 集会 が終了した。今回も実に盛況であった。 感想、写真等は #…",
+      "category": "performance",
+      "label": "公演・ショー",
+      "subcategory": "theater",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:舞台"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "40d05257e52fd7f68fd3",
       "title": "【Casa di luce】 VRC キャバレー 本日 22:00より 営業 スタートいたします！ 本日 は特別な夜「十五夜」🌙🐇 今夜 も華やかなキャスト陣がお待ちしております✨ 週末に向け…",
       "category": "other",
@@ -3758,47 +3744,21 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "c708b7fa551073ee4fea",
+      "title": "本日 は、アキュラデルフィニにて花火 大会 を 開催 いたします。 どなたでも 参加 可能な当日 リクイン 制となっております。 参加 をご希望の方は、22時25分から22時29分までの間に、…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "643b1605663061a2c8a3",
       "title": "【📣 VRCイベント告知 】 9/25(土)22:45より 笑点風大喜利 イベント 第174回 #にぎやか大喜利宴会 を _BarKansaiさんとのコラボで 開催 します。 観るだけ・聴くだ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d3b736c23409d3a61a6d",
-      "title": "🗓️9/26(土) 15:00〜21:00 ⛳️IV AKIHABARA 超ポニ フェス ！２ #超ポニ フェス 2 VRChat でお世話になっているぽにやまさんにお声がけいただきました…！…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "7b0e8aa7df819c92a12a",
-      "title": "🎆【新曲予告！】🏮 「もちもち音頭 ～もちもち村の夏祭り～」 2026.9.26 20:00～ 9/5に 開催 されました VRChatイベント #もち村祭 に提供したオリジナルソングです！ …",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d5a866e44b722f8ba51b",
-      "title": "9/26 土曜日 21:00〜より VRC サウナ愛好会今月2回目のTOTONOI イベント を 開催 致します。 涼しくなってきたようでなっていない今日この頃ですが、サウナトークで秋モードに…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3824,7 +3784,7 @@
     },
     {
       "event_id": "b78a97ec628b8f061a51",
-      "title": "VRCイベント 『Luminous Astrantia』 🍀第4回 オープン のお知らせ🍀 明日 9/26(土)22:55～ オープン です🫶 ■グループ 開催 になります ※てみさん回は今回…",
+      "title": "VRC イベント『Luminous Astrantia』 🍀第4回オープンのお知らせ🍀 明日 9/26(土)22:55～オープンです🫶 ■グループ開催になります ※てみさん回は今回がラストにな…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3849,54 +3809,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "7f8f18dbefdccb6eb878",
-      "title": "VRC 射撃部定例 イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日 は(JSC) 1位 Packy-193様 ぼうし様 2位 Sakusaku39398様 マス・…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "04886d0e755dd5cbcaa5",
-      "title": "【 集会 やります！】 なんと！ VRChat Japanチームの中の人、北庄司さん（@alfasud_ti）をお呼びし、 東京ゲームショウの話から日本チームの直近の施策までいろいろ伺っていく…",
-      "category": "performance",
-      "label": "公演・ショー",
-      "subcategory": "show",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ショー"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "game",
-        "community"
-      ]
-    },
-    {
-      "event_id": "2f4d58c5b443002d3a67",
-      "title": "第73回「アバター改変なんもわからん集会」 日時 ：9月30日(水) 22:00 開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加方法： VRC グループへ JOIN ※講師…",
-      "category": "technology",
-      "label": "技術・研究",
-      "subcategory": "engineering",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:技術"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "a34ae86c7abcf8ae1bc1",
       "title": "分解技術集会",
       "category": "technology",
@@ -3909,23 +3821,6 @@
         "keyword:title:技術"
       ],
       "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "fbd3393da7ad18baa841",
-      "title": "【 VRChat 内でVライフ！の 集会 を 開催 !】 久留米申込受付中&11月神戸 開催 の申込〆切1週前ということで、『Vライフ！』に関する VRChat集会 を来週の金曜･10月2日(…",
-      "category": "recruitment_deadline",
-      "label": "募集・締切",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:〆切"
-      ],
-      "event_mode": "deadline",
       "ambiguous_with": [
         "community"
       ]
