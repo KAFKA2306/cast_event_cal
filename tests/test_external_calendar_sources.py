@@ -173,3 +173,71 @@ def test_event_specific_url_only_deduplicates_same_occurrence_minute():
     selected, excluded = module.deduplicate_external(incoming, existing)
     assert excluded == 1
     assert [row["title"] for row in selected] == ["Next occurrence"]
+
+def test_parse_vrc_search_curated_events_uses_calendar_id_and_utc():
+    module = load_module()
+    html = """
+    <html><body>
+      <article class="list-group-item result-row result-row-event">
+        <a class="result-row-title">喫茶「はたご」通常営業日</a>
+        <div>開始 2026-09-25 10:00 終了 2026-09-25 12:00</div>
+        <p class="result-row-desc">19時から <b>Group+</b> でオープンします。</p>
+        <a href="/ja/groups/grp_12345678-abcd">喫茶「はたご」</a>
+        <a href="https://vrchat.com/home/group/grp_12345678-abcd/calendar/cal_abcdef12-3456-7890-abcd-ef1234567890">VRChatで見る</a>
+      </article>
+    </body></html>
+    """
+    events = module.parse_vrc_search_events(
+        html,
+        page_url="https://search.vrcwwt.com/ja/events/hangout/next-month/",
+        source_name="vrc_search_public_japanese",
+        fetched_at="2026-09-25T20:00:00Z",
+        tags=["日本語公開イベント"],
+        window_start=datetime(2026, 9, 25, tzinfo=UTC),
+        window_end=datetime(2026, 10, 25, tzinfo=UTC),
+    )
+    assert len(events) == 1
+    event = events[0]
+    assert event["source_id"] == "cal_abcdef12-3456-7890-abcd-ef1234567890"
+    assert event["starts_at"] == "2026-09-25T10:00:00Z"
+    assert event["ends_at"] == "2026-09-25T12:00:00Z"
+    assert event["organizer"] == "喫茶「はたご」"
+    assert event["location"] == "VRChat"
+    assert event["category"] == "hangout"
+    assert event["url"].startswith("https://vrchat.com/home/group/")
+    assert "Group+" in event["description"]
+    assert "VRC Search" in event["tags"]
+
+
+def test_vrc_search_parser_deduplicates_same_calendar_event_across_pages():
+    module = load_module()
+    card = """
+      <article class="list-group-item result-row result-row-event">
+        <a class="result-row-title">同じイベント</a>
+        <div>開始 2026-09-26 12:00 終了 2026-09-26 13:00</div>
+        <p class="result-row-desc">公開イベントです。</p>
+        <a href="/groups/grp_example">主催グループ</a>
+        <a href="https://vrchat.com/home/group/grp_example/calendar/cal_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee">VRChatで見る</a>
+      </article>
+    """
+    kwargs = {
+        "source_name": "vrc_search_public_japanese",
+        "fetched_at": "2026-09-25T20:00:00Z",
+        "tags": [],
+        "window_start": datetime(2026, 9, 25, tzinfo=UTC),
+        "window_end": datetime(2026, 10, 25, tzinfo=UTC),
+    }
+    music = module.parse_vrc_search_events(
+        card,
+        page_url="https://search.vrcwwt.com/ja/events/music/next-month/",
+        **kwargs,
+    )
+    dance = module.parse_vrc_search_events(
+        card,
+        page_url="https://search.vrcwwt.com/ja/events/dance/next-month/",
+        **kwargs,
+    )
+    selected, excluded = module.deduplicate_external([*music, *dance], [])
+    assert len(selected) == 1
+    assert excluded == 1
+
