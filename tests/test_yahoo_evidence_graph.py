@@ -375,3 +375,40 @@ def test_shared_official_page_with_conflicting_event_times_fails_closed() -> Non
         anchor=anchor_for(candidate),
         actual_now=datetime(2026, 9, 25, tzinfo=UTC),
     ) is None
+
+def test_candidate_date_selects_matching_occurrence_from_recurring_external_title() -> None:
+    candidate = row(
+        "1234567890123456789",
+        "【VRC Blender集会】10月3日に開催。詳細は公式案内へ。",
+        author="official",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    graph = build_evidence_graph([candidate], anchor_for=anchor_for)
+    add_external_event_evidence(
+        graph,
+        [
+            {
+                "source_id": "hub:oct03",
+                "title": "VRC Blender集会",
+                "starts_at": "2026-10-03T12:00:00Z",
+                "url": "https://vrc-ta-hub.com/event/list/",
+            },
+            {
+                "source_id": "hub:oct10",
+                "title": "VRC Blender集会",
+                "starts_at": "2026-10-10T12:00:00Z",
+                "url": "https://vrc-ta-hub.com/event/list/",
+            },
+        ],
+    )
+
+    result = resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    )
+
+    assert result is not None
+    assert result.event_at.isoformat() == "2026-10-03T21:00:00+09:00"
+    assert result.event_fingerprint == "eventtitle:vrcblender集会"
