@@ -211,3 +211,32 @@ def test_structured_parser_preserves_thread_quote_and_link_evidence():
     assert candidate["in_reply_to_status_id"] == "6234567890123456789"
     assert candidate["quoted_status_id"] == "5234567890123456789"
     assert candidate["linked_urls"] == ["https://example.com/events/vrc-night"]
+
+def test_structured_parser_prefers_richer_duplicate_candidate_object():
+    page = structured_page(
+        [
+            {
+                "id": "8234567890123456789",
+                "displayText": "9/27 22:00 VRChat交流会を開催",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/8234567890123456789",
+            },
+            {
+                "id": "8234567890123456789",
+                "displayText": "9/27 22:00 VRChat交流会を開催",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/8234567890123456789",
+                "conversation_id_str": "8234567890123456789",
+                "entities": {
+                    "urls": [{"expanded_url": "https://example.com/events/night"}]
+                },
+            },
+        ]
+    )
+
+    candidate = extract_candidates(page)[0]
+
+    assert candidate["conversation_id"] == "8234567890123456789"
+    assert candidate["linked_urls"] == ["https://example.com/events/night"]
