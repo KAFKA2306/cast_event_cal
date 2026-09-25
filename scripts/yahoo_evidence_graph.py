@@ -147,25 +147,39 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
     if quoted:
         fingerprints.add(f"status:{quoted}")
 
-    combined_group_text = " ".join([text, *sorted(_linked_urls(row, text))])
-    for group_id in GROUP_ID_RE.findall(combined_group_text):
-        fingerprints.add(f"group:{group_id.casefold()}")
+    tags = {
+        tag
+        for raw in HASHTAG_RE.findall(text)
+        if len(tag := _normalize_identity(raw)) >= 3 and tag not in GENERIC_HASHTAGS
+    }
+    names = {
+        name
+        for match in QUOTED_NAME_RE.finditer(text)
+        if len(name := _normalize_identity(match.group("name"))) >= 3
+        and name not in GENERIC_QUOTED_NAMES
+    }
+    series_tokens = {f"tag:{tag}" for tag in tags} | {f"name:{name}" for name in names}
+
+    links = _linked_urls(row, text)
+    combined_group_text = " ".join([text, *sorted(links)])
+    group_ids = {group_id.casefold() for group_id in GROUP_ID_RE.findall(combined_group_text)}
 
     if author:
-        for raw in HASHTAG_RE.findall(text):
-            tag = _normalize_identity(raw)
-            if len(tag) < 3 or tag in GENERIC_HASHTAGS:
-                continue
-            fingerprints.add(f"{author}|hashtag:{tag}")
+        for token in series_tokens:
+            fingerprints.add(f"{author}|{token}")
+        for group_id in group_ids:
+            fingerprints.add(f"{author}|group:{group_id}")
+        for linked_url in links:
+            fingerprints.add(f"{author}|url:{linked_url}")
 
-        for match in QUOTED_NAME_RE.finditer(text):
-            name = _normalize_identity(match.group("name"))
-            if len(name) < 3 or name in GENERIC_QUOTED_NAMES:
-                continue
-            fingerprints.add(f"{author}|name:{name}")
-
-    for linked_url in _linked_urls(row, text):
-        fingerprints.add(f"url:{linked_url}")
+    # Cross-author evidence requires both a shared platform/link identity and a
+    # shared event/series identity. A Group or community URL alone can host
+    # multiple events and is not sufficient to inherit a date or clock.
+    for token in series_tokens:
+        for group_id in group_ids:
+            fingerprints.add(f"group:{group_id}|{token}")
+        for linked_url in links:
+            fingerprints.add(f"url:{linked_url}|{token}")
 
     return fingerprints
 
@@ -173,7 +187,7 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
 def _evidence_window(fingerprint: str) -> timedelta:
     if fingerprint.startswith(("status:", "thread:")):
         return MAX_EVIDENCE_DISTANCE
-    if fingerprint.startswith(("group:", "url:")):
+    if "group:" in fingerprint or "url:" in fingerprint:
         return STRONG_CONTEXT_DISTANCE
     return MAX_EVIDENCE_DISTANCE
 
