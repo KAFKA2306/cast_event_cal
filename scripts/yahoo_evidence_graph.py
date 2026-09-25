@@ -539,6 +539,13 @@ def resolve_corroborated_datetime(
         nearby = _nearby_nodes(graph, fingerprint, anchor)
         if len({node.status_id for node in nearby}) < 2:
             continue
+        # Unscoped title identity is only safe as a bridge to structured external
+        # evidence. Candidate-to-candidate title matches can join unrelated hosts
+        # that happen to reuse the same event/series name.
+        if fingerprint.startswith("eventtitle:") and not any(
+            node.status_id.startswith("external:") for node in nearby
+        ):
+            continue
         if not any(STRONG_EVENT_SIGNAL_RE.search(node.text) for node in nearby):
             continue
 
