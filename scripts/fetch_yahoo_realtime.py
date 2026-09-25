@@ -36,6 +36,30 @@ VRCHAT_RE = re.compile(r"(?i)(?:#?vrchat|#?vrc\b)")
 YAHOO_START_MARKER_RE = re.compile(r"^\s*START(?=\s)")
 YAHOO_END_MARKER_RE = re.compile(r"(?<=\s)END\s*$")
 FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
+CLOCK_PUNCTUATION_TRANSLATION = str.maketrans({
+    "：": ":", "˸": ":", "꞉": ":", "∶": ":", "︓": ":", "﹕": ":",
+    "／": "/", "⁄": "/", "．": ".", "－": "-",
+})
+ENGLISH_MONTHS = {
+    "jan": 1, "january": 1,
+    "feb": 2, "february": 2,
+    "mar": 3, "march": 3,
+    "apr": 4, "april": 4,
+    "may": 5,
+    "jun": 6, "june": 6,
+    "jul": 7, "july": 7,
+    "aug": 8, "august": 8,
+    "sep": 9, "sept": 9, "september": 9,
+    "oct": 10, "october": 10,
+    "nov": 11, "november": 11,
+    "dec": 12, "december": 12,
+}
+ENGLISH_DATE_RE = re.compile(
+    r"(?i)\b(?P<day>3[01]|[12]?\d)(?:st|nd|rd|th)?\s+"
+    r"(?P<month>Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|"
+    r"Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|"
+    r"Nov(?:ember)?|Dec(?:ember)?)\.?[,]?\s+(?P<year>20\d{2})\b"
+)
 TEXT_KEYS = ("displayText", "full_text", "fullText", "tweetText", "text")
 URL_KEYS = ("url", "tweetUrl", "statusUrl", "permalink")
 ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
@@ -265,16 +289,26 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
 
 
 def normalize_text(text: str) -> str:
-    return (
+    normalized = (
         text.translate(FULLWIDTH_DIGIT_TRANSLATION)
-        .replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
+        .translate(CLOCK_PUNCTUATION_TRANSLATION)
         .replace("〜", "~").replace("～", "~")
     )
+
+    def english_date(match: re.Match[str]) -> str:
+        month = ENGLISH_MONTHS[match.group("month").casefold().rstrip(".")]
+        return f"{match.group('year')}/{month:02d}/{int(match.group('day')):02d}"
+
+    return ENGLISH_DATE_RE.sub(english_date, normalized)
 
 
 def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
     normalized = normalize_text(text)
-    clock = r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
+    clock = (
+        r"(?:(?P<period_before>AM|PM)\s*)?"
+        r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
+        r"(?:\s*(?P<period_after>AM|PM))?"
+    )
     patterns = [
         rf"(?P<year>20\d{{2}})[./年-](?P<month>\d{{1,2}})[./月-](?P<day>\d{{1,2}})日?"
         rf"(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
@@ -286,10 +320,17 @@ def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
         if not match:
             continue
         values = match.groupdict()
+        hour = int(values["hour"])
+        period = (values.get("period_before") or values.get("period_after") or "").casefold()
+        if period and hour <= 12:
+            if period == "am" and hour == 12:
+                hour = 0
+            elif period == "pm" and hour < 12:
+                hour += 12
         try:
             event_at = datetime(
                 int(values.get("year") or anchor.year), int(values["month"]), int(values["day"]),
-                int(values["hour"]), int(values.get("minute") or 0), tzinfo=JST,
+                hour, int(values.get("minute") or 0), tzinfo=JST,
             )
         except ValueError:
             return None
@@ -305,8 +346,15 @@ def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
     if not relative:
         return None
     day = (anchor + timedelta(days=1 if relative.group("day") == "明日" else 0)).date()
+    hour = int(relative.group("hour"))
+    period = (relative.group("period_before") or relative.group("period_after") or "").casefold()
+    if period and hour <= 12:
+        if period == "am" and hour == 12:
+            hour = 0
+        elif period == "pm" and hour < 12:
+            hour += 12
     return datetime(
-        day.year, day.month, day.day, int(relative.group("hour")),
+        day.year, day.month, day.day, hour,
         int(relative.group("minute") or 0), tzinfo=JST,
     )
 
