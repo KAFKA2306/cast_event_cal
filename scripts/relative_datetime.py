@@ -181,6 +181,37 @@ def _normalize_recovery_text(text: str) -> str:
     )
 
 
+def _clock_parts(match: re.Match[str]) -> tuple[int, int] | None:
+    hour = int(match.group("hour"))
+    period = match.groupdict().get("period")
+    if period == "午前":
+        if hour == 12:
+            hour = 0
+        elif hour > 11:
+            return None
+    elif period == "午後":
+        if hour < 12:
+            hour += 12
+        elif hour > 12:
+            return None
+    elif period == "夜":
+        if hour == 12:
+            return None
+        if 1 <= hour <= 11:
+            hour += 12
+        else:
+            return None
+
+    minute = 30 if match.groupdict().get("half") else int(
+        match.groupdict().get("minute")
+        or match.groupdict().get("minute_jp")
+        or 0
+    )
+    if minute > 59:
+        return None
+    return hour, minute
+
+
 def _match_gap(left: re.Match[str], right: re.Match[str]) -> int:
     if left.end() <= right.start():
         return right.start() - left.end()
@@ -222,13 +253,17 @@ def _resolution_from_parts(
     method: str,
     matched_text: str,
 ) -> DateResolution | None:
+    clock_parts = _clock_parts(clock)
+    if clock_parts is None:
+        return None
+    hour, minute = clock_parts
     try:
         value = datetime(
             year,
             month,
             day,
-            int(clock.group("hour")),
-            int(clock.group("minute") or 0),
+            hour,
+            minute,
             tzinfo=JST,
         )
     except ValueError:
