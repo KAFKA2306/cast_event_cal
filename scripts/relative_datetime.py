@@ -380,7 +380,7 @@ def _resolve_evidence_span_datetime(text: str, anchor: datetime) -> DateResoluti
             method="relative_day_evidence_span",
             matched_text=normalized[start:end],
         )
-        if resolution:
+        if resolution and resolution.event_at >= anchor - timedelta(hours=2):
             choices.append((gap, 2, resolution))
 
     if not choices:
