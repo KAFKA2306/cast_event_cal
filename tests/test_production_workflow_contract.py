@@ -28,3 +28,12 @@ def test_required_production_gates_run_before_commit() -> None:
     for command in required:
         assert command in text
         assert text.index(command) < commit_index
+
+
+def test_durable_status_job_runs_after_success_or_failure() -> None:
+    text = workflow_text()
+    assert "  status:\n" in text
+    assert "    needs: build\n" in text
+    assert "    if: ${{ always() }}\n" in text
+    assert 'python scripts/build_system_status.py --refresh-result "${{ needs.build.result }}" --max-age-minutes 180' in text
+    assert "git add public/status.json" in text
