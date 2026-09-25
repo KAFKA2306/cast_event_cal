@@ -270,3 +270,37 @@ def test_group_code_cross_author_join_still_requires_series_identity() -> None:
     assert result is not None
     assert result.event_at.isoformat() == "2026-09-27T22:00:00+09:00"
     assert result.event_fingerprint == "groupcode:yss.8431|hashtag:vrc夜会"
+
+def test_spaced_vrc_hashtag_recovers_series_identity() -> None:
+    item = row(
+        "1234567890123456789",
+        "# VRC 落語会 今夜21:00開催",
+        author="host",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    assert "host|hashtag:vrc落語会" in event_fingerprints(item)
+
+
+def test_same_author_repeated_tco_link_can_join_evidence() -> None:
+    first = row(
+        "1234567890123456789",
+        "VRChat交流会 9/27開催 https://t.co/AbCd1234",
+        author="host",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    second = row(
+        "2234567890123456789",
+        "VRChat交流会 22:00 Group +でJOIN https://t.co/AbCd1234",
+        author="host",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    graph = build_evidence_graph([first, second], anchor_for=anchor_for)
+    result = resolve_corroborated_datetime(
+        first,
+        graph=graph,
+        anchor=anchor_for(first),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    )
+    assert result is not None
+    assert result.event_at.isoformat() == "2026-09-27T22:00:00+09:00"
+    assert result.event_fingerprint == "host|shorturl:https://t.co/abcd1234"
