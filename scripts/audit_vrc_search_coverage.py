@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import asdict
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
 import httpx
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from cast_event_cal import core
 from scripts import fetch_external_calendars as external
