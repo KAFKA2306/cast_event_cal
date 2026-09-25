@@ -27,20 +27,25 @@ sources:
     type: vrc_search_pages
     enabled: true
     # VRC Search Terms allow read-only API/integration use but prohibit abusive
-    # scraping/bulk export. Keep this bounded to eight curated public pages and
+    # scraping/bulk export. Keep this bounded to ten curated public pages and
     # refresh no more than once per day; hourly production runs reuse cache.
+    # Global category pages reduce overlap with the existing Japan-heavy corpus,
+    # while three language overviews recover categories not exposed as curated
+    # category pages (for example wellness / film & media / other).
     urls:
+      - https://search.vrcwwt.com/events/music/next-month/
+      - https://search.vrcwwt.com/events/dance/next-month/
+      - https://search.vrcwwt.com/events/hangout/next-month/
+      - https://search.vrcwwt.com/events/gaming/next-month/
+      - https://search.vrcwwt.com/events/roleplaying/next-month/
+      - https://search.vrcwwt.com/events/performance/next-month/
+      - https://search.vrcwwt.com/events/education/next-month/
+      - https://search.vrcwwt.com/events/japanese/next-week/
       - https://search.vrcwwt.com/events/english/next-week/
-      - https://search.vrcwwt.com/ja/events/music/next-month/
-      - https://search.vrcwwt.com/ja/events/dance/next-month/
-      - https://search.vrcwwt.com/ja/events/hangout/next-month/
-      - https://search.vrcwwt.com/ja/events/gaming/next-month/
-      - https://search.vrcwwt.com/ja/events/roleplaying/next-month/
-      - https://search.vrcwwt.com/ja/events/performance/next-month/
-      - https://search.vrcwwt.com/ja/events/education/next-month/
-    source_page: https://search.vrcwwt.com/ja/events/
+      - https://search.vrcwwt.com/events/spanish/next-week/
+    source_page: https://search.vrcwwt.com/events/
     policy_url: https://search.vrcwwt.com/terms
-    max_pages: 8
+    max_pages: 10
     max_events: 400
     refresh_hours: 24
     request_interval_seconds: 0.75
