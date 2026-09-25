@@ -139,7 +139,7 @@ RECOVERY_WORLD_DESCRIPTION_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 RECURRENCE_EVENT_IDENTITY_RE = re.compile(
-    r"集会|交流会|イベント|event|営業|公演|ライブ|撮影会|上映会|演奏会|"
+    r"集会|交流会|イベント|event|開催|営業|公演|ライブ|撮影会|上映会|演奏会|"
     r"DJ|勉強会|祭|酒場|バー|カフェ|喫茶|クラブ",
     flags=re.IGNORECASE,
 )
