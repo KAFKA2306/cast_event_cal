@@ -53,7 +53,8 @@ def test_date_only_and_clock_only_same_event_fingerprint_resolve() -> None:
     assert result.event_at.isoformat() == "2026-09-27T22:00:00+09:00"
     assert result.method == "corroborated_event_fingerprint_date_clock"
     assert result.corroborating_source_ids == ("1", "2")
-    shared = event_fingerprints(first) & event_fingerprints(second)\n    assert result.event_fingerprint in shared
+    shared = event_fingerprints(first) & event_fingerprints(second)
+    assert result.event_fingerprint in shared
 
 
 def test_conflicting_clocks_fail_closed() -> None:
