@@ -5,26 +5,35 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Any, Callable
+from urllib.parse import urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
 MAX_EVIDENCE_DISTANCE = timedelta(days=7)
+STRONG_CONTEXT_DISTANCE = timedelta(days=3)
 
+STATUS_ID_RE = re.compile(r"\d{10,25}")
 GROUP_ID_RE = re.compile(r"\bgrp_[0-9a-f-]{8,}\b", re.IGNORECASE)
 HASHTAG_RE = re.compile(r"#([0-9A-Za-z_ぁ-んァ-ヶ一-龠]+)")
-QUOTED_NAME_RE = re.compile(r"[「『](?P<name>[^」』]{3,48})[」』]")
+QUOTED_NAME_RE = re.compile(r"[「『【《〈](?P<name>[^」』】》〉]{3,48})[」』】》〉]")
+TEXT_URL_RE = re.compile(r"https?://[^\s<>'\"）】]+", re.IGNORECASE)
 EXPLICIT_DATE_RE = re.compile(
     r"(?<!\d)(?:(?P<year>20\d{2})\s*[./／年-]\s*)?"
     r"(?P<month>1[0-2]|0?[1-9])\s*(?:[./／-]|\s*月\s*)\s*"
     r"(?P<day>3[01]|[12]?\d)\s*日?(?!\d)"
 )
-CLOCK_RE = re.compile(
-    r"(?<!\d)(?P<hour>[01]?\d|2[0-3])(?:[:：時]\s*(?P<minute>\d{0,2}))(?!\d)"
+COLON_CLOCK_RE = re.compile(
+    r"(?<!\d)(?P<hour>[01]?\d|2[0-3])[:：](?P<minute>[0-5]?\d)(?!\d)"
+)
+JAPANESE_CLOCK_RE = re.compile(
+    r"(?P<period>午前|午後|夜)?\s*(?P<hour>[01]?\d|2[0-3])\s*時"
+    r"\s*(?:(?P<minute>[0-5]?\d)\s*分?|(?P<half>半))?"
 )
 RELATIVE_DAY_RE = re.compile(r"本日|今日|明日|今夜|今晩|この後")
 STRONG_EVENT_SIGNAL_RE = re.compile(
     r"開催|OPEN|オープン|開場|開始|営業|JOIN|ジョイン|リクイン|request\s+invite|"
-    r"Group\s*[+＋]|グループインスタンス|参加方法|ご参加ください|参加してください",
+    r"Group\s*[+＋]|グループインスタンス|参加方法|ご参加ください|参加してください|"
+    r"集合|入場|会場|お越しください|ご来場|ご来店",
     re.IGNORECASE,
 )
 GENERIC_HASHTAGS = {
@@ -42,6 +51,18 @@ GENERIC_QUOTED_NAMES = {
     "営業",
     "vrchat",
     "vrc",
+}
+IGNORED_LINK_HOSTS = {
+    "x.com",
+    "www.x.com",
+    "twitter.com",
+    "www.twitter.com",
+    "t.co",
+    "booth.pm",
+    "www.booth.pm",
+    "youtube.com",
+    "www.youtube.com",
+    "youtu.be",
 }
 
 
@@ -76,29 +97,98 @@ def _normalize_identity(value: str) -> str:
     return re.sub(r"\s+", "", normalized).strip("_-・:：")
 
 
+def _status_value(row: dict[str, Any], key: str) -> str | None:
+    value = str(row.get(key) or "").strip()
+    return value if STATUS_ID_RE.fullmatch(value) else None
+
+
+def _canonical_link(value: str) -> str | None:
+    try:
+        parsed = urlsplit(value.strip())
+    except ValueError:
+        return None
+    host = (parsed.hostname or "").casefold()
+    if parsed.scheme not in {"http", "https"} or not host or host in IGNORED_LINK_HOSTS:
+        return None
+    path = re.sub(r"/+", "/", parsed.path or "/").rstrip("/")
+    if path in {"", "/"}:
+        return None
+    return urlunsplit(("https", host, path, "", ""))
+
+
+def _linked_urls(row: dict[str, Any], text: str) -> set[str]:
+    raw_values: set[str] = set(TEXT_URL_RE.findall(text))
+    supplied = row.get("linked_urls")
+    if isinstance(supplied, list):
+        raw_values.update(str(value) for value in supplied if isinstance(value, str))
+    return {
+        canonical
+        for raw in raw_values
+        if (canonical := _canonical_link(raw)) is not None
+    }
+
+
 def event_fingerprints(row: dict[str, Any]) -> set[str]:
-    author = _normalize_identity(str(row.get("author") or "").lstrip("@"))
-    if not author:
-        return set()
     text = str(row.get("text") or row.get("text_excerpt") or "")
+    author = _normalize_identity(str(row.get("author") or "").lstrip("@"))
     fingerprints: set[str] = set()
 
-    for group_id in GROUP_ID_RE.findall(text):
-        fingerprints.add(f"{author}|group:{group_id.casefold()}")
+    status_id = _status_value(row, "status_id")
+    conversation_id = _status_value(row, "conversation_id")
+    in_reply_to = _status_value(row, "in_reply_to_status_id")
+    quoted = _status_value(row, "quoted_status_id")
 
-    for raw in HASHTAG_RE.findall(text):
-        tag = _normalize_identity(raw)
-        if len(tag) < 3 or tag in GENERIC_HASHTAGS:
-            continue
-        fingerprints.add(f"{author}|hashtag:{tag}")
+    if status_id:
+        fingerprints.add(f"status:{status_id}")
+    if conversation_id:
+        fingerprints.add(f"thread:{conversation_id}")
+    if in_reply_to:
+        fingerprints.add(f"status:{in_reply_to}")
+    if quoted:
+        fingerprints.add(f"status:{quoted}")
 
-    for match in QUOTED_NAME_RE.finditer(text):
-        name = _normalize_identity(match.group("name"))
-        if len(name) < 3 or name in GENERIC_QUOTED_NAMES:
-            continue
-        fingerprints.add(f"{author}|name:{name}")
+    combined_group_text = " ".join([text, *sorted(_linked_urls(row, text))])
+    for group_id in GROUP_ID_RE.findall(combined_group_text):
+        fingerprints.add(f"group:{group_id.casefold()}")
+
+    if author:
+        for raw in HASHTAG_RE.findall(text):
+            tag = _normalize_identity(raw)
+            if len(tag) < 3 or tag in GENERIC_HASHTAGS:
+                continue
+            fingerprints.add(f"{author}|hashtag:{tag}")
+
+        for match in QUOTED_NAME_RE.finditer(text):
+            name = _normalize_identity(match.group("name"))
+            if len(name) < 3 or name in GENERIC_QUOTED_NAMES:
+                continue
+            fingerprints.add(f"{author}|name:{name}")
+
+        for linked_url in _linked_urls(row, text):
+            fingerprints.add(f"{author}|url:{linked_url}")
 
     return fingerprints
+
+
+def _evidence_window(fingerprint: str) -> timedelta:
+    if fingerprint.startswith(("status:", "thread:")):
+        return MAX_EVIDENCE_DISTANCE
+    if fingerprint.startswith("group:"):
+        return STRONG_CONTEXT_DISTANCE
+    return MAX_EVIDENCE_DISTANCE
+
+
+def _nearby_nodes(
+    graph: dict[str, list[EvidenceNode]],
+    fingerprint: str,
+    anchor: datetime,
+) -> list[EvidenceNode]:
+    limit = _evidence_window(fingerprint)
+    return [
+        node
+        for node in graph.get(fingerprint, [])
+        if abs(node.anchor - anchor) <= limit
+    ]
 
 
 def build_evidence_graph(
@@ -143,14 +233,39 @@ def _explicit_dates(text: str, anchor: datetime) -> set[date]:
     return results
 
 
+def _normalize_hour(period: str | None, hour: int) -> int | None:
+    if period == "午前":
+        if hour == 12:
+            return 0
+        return hour if 0 <= hour <= 11 else None
+    if period == "午後":
+        if hour == 12:
+            return 12
+        return hour + 12 if 0 <= hour <= 11 else None
+    if period == "夜":
+        if hour == 12:
+            return None
+        return hour + 12 if 1 <= hour <= 11 else None
+    return hour
+
+
 def _clocks(text: str) -> set[tuple[int, int]]:
     results: set[tuple[int, int]] = set()
     normalized = unicodedata.normalize("NFKC", text)
-    for match in CLOCK_RE.finditer(normalized):
-        minute_text = match.group("minute")
-        if minute_text and len(minute_text) not in {1, 2}:
+
+    occupied: list[tuple[int, int]] = []
+    for match in JAPANESE_CLOCK_RE.finditer(normalized):
+        hour = _normalize_hour(match.group("period"), int(match.group("hour")))
+        if hour is None:
             continue
-        results.add((int(match.group("hour")), int(minute_text or 0)))
+        minute = 30 if match.group("half") else int(match.group("minute") or 0)
+        results.add((hour, minute))
+        occupied.append((match.start(), match.end()))
+
+    for match in COLON_CLOCK_RE.finditer(normalized):
+        if any(start <= match.start() < end for start, end in occupied):
+            continue
+        results.add((int(match.group("hour")), int(match.group("minute"))))
     return results
 
 
@@ -174,15 +289,12 @@ def corroboration_blocker(
         return "no_event_fingerprint"
 
     peer_groups = [
-        [
-            node
-            for node in graph.get(fingerprint, [])
-            if abs(node.anchor - anchor) <= MAX_EVIDENCE_DISTANCE
-        ]
+        _nearby_nodes(graph, fingerprint, anchor)
         for fingerprint in fingerprints
     ]
     peer_groups = [
-        nodes for nodes in peer_groups
+        nodes
+        for nodes in peer_groups
         if len({node.status_id for node in nodes}) >= 2
     ]
     if not peer_groups:
@@ -256,11 +368,7 @@ def resolve_corroborated_datetime(
     status_id = str(row.get("status_id") or "")
 
     for fingerprint in sorted(event_fingerprints(row)):
-        nearby = [
-            node
-            for node in graph.get(fingerprint, [])
-            if abs(node.anchor - anchor) <= MAX_EVIDENCE_DISTANCE
-        ]
+        nearby = _nearby_nodes(graph, fingerprint, anchor)
         if len({node.status_id for node in nearby}) < 2:
             continue
         if not any(STRONG_EVENT_SIGNAL_RE.search(node.text) for node in nearby):
