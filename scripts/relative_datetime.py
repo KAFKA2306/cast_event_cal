@@ -17,7 +17,9 @@ CLOCK_CAPTURE_PATTERN = (
     r"(?P<hour>[01]?\d|2[0-3])"
     r"(?:[:：]\s*(?P<minute>[0-5]?\d)|時\s*(?:(?P<minute_jp>[0-5]?\d)\s*分?|(?P<half>半))?)"
 )
-PERIOD_CLOCK_RE = re.compile(r"(?:午前|午後|夜)\s*(?:[01]?\d|2[0-3])\s*時")
+NONTRIVIAL_CLOCK_RE = re.compile(
+    r"(?:(?:午前|午後|夜)\s*(?:[01]?\d|2[0-3])\s*時|(?:[01]?\d|2[0-3])\s*時\s*半)"
+)
 WEEKDAY_PATTERN = re.compile(
     r"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*"
     r"(?P<weekday>[月火水木金土日])曜日?.{0,100}?" + CLOCK_CAPTURE_PATTERN,
@@ -664,7 +666,8 @@ def resolve_event_datetime(
     if RELATIVE_DAY_PATTERN.search(text) and MULTI_EVENT_CLOCK_PATTERN.search(text):
         return None
 
-    explicit = explicit_parser(text, anchor_jst)
+    normalized = _normalize_recovery_text(text)
+    explicit = None if NONTRIVIAL_CLOCK_RE.search(normalized) else explicit_parser(text, anchor_jst)
     if explicit is not None:
         if RELATIVE_DAY_PATTERN.search(text):
             method = "relative_day_from_source_timestamp"
@@ -679,21 +682,16 @@ def resolve_event_datetime(
             matched_text="explicit",
         )
 
-    normalized = (
-        text.replace("：", ":")
-        .replace("／", "/")
-        .replace("．", ".")
-        .replace("－", "-")
-        .replace("〜", "~")
-        .replace("～", "~")
-    )
     if any(
         pattern.search(normalized)
         for pattern in (
             ORDINAL_RECURRING_WEEKDAY_PATTERN,
+            MULTI_WEEKLY_RECURRENCE_PATTERN,
             WEEKLY_RECURRENCE_PATTERN,
             DAILY_RECURRENCE_PATTERN,
+            MULTI_MONTHLY_DAY_RECURRENCE_PATTERN,
             MONTHLY_DAY_RECURRENCE_PATTERN,
+            LAST_WEEKDAY_MONTHLY_RECURRENCE_PATTERN,
             ORDINAL_MONTHLY_RECURRENCE_PATTERN,
         )
     ):
@@ -707,8 +705,10 @@ def resolve_event_datetime(
     prefix = (match.group("prefix") or "").strip()
     if not prefix and UNPREFIXED_WEEKDAY_PAST_CONTEXT_RE.search(text):
         return None
-    hour = int(match.group("hour"))
-    minute = int(match.group("minute") or 0)
+    parts = _clock_parts(match)
+    if parts is None:
+        return None
+    hour, minute = parts
     week_start = anchor_jst.date() - timedelta(days=anchor_jst.weekday())
 
     if prefix.startswith("来週"):
