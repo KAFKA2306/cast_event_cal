@@ -12,34 +12,56 @@ JST = ZoneInfo("Asia/Tokyo")
 FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
 EVIDENCE_SPAN_CHARS = 160
 WEEKDAY_INDEX = {name: index for index, name in enumerate("月火水木金土日")}
+CLOCK_CAPTURE_PATTERN = (
+    r"(?P<period>午前|午後|夜)?\s*"
+    r"(?P<hour>[01]?\d|2[0-3])"
+    r"(?:[:：]\s*(?P<minute>[0-5]?\d)|時\s*(?:(?P<minute_jp>[0-5]?\d)\s*分?|(?P<half>半))?)"
+)
+PERIOD_CLOCK_RE = re.compile(r"(?:午前|午後|夜)\s*(?:[01]?\d|2[0-3])\s*時")
 WEEKDAY_PATTERN = re.compile(
     r"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*"
-    r"(?P<weekday>[月火水木金土日])曜日?.{0,100}?"
-    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    r"(?P<weekday>[月火水木金土日])曜日?.{0,100}?" + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 ORDINAL_RECURRING_WEEKDAY_PATTERN = re.compile(
     r"(?:毎月\s*)?第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜(?:日)?",
     flags=re.IGNORECASE,
 )
+MULTI_WEEKLY_RECURRENCE_PATTERN = re.compile(
+    r"毎週\s*(?P<weekdays>[月火水木金土日](?:曜(?:日)?)?"
+    r"(?:\s*(?:[、,・/&]|と)\s*[月火水木金土日](?:曜(?:日)?)?)+)"
+    r".{0,100}?" + CLOCK_CAPTURE_PATTERN,
+    flags=re.IGNORECASE | re.DOTALL,
+)
 WEEKLY_RECURRENCE_PATTERN = re.compile(
     r"毎週\s*(?P<weekday>[月火水木金土日])(?:曜(?:日)?)?.{0,100}?"
-    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 DAILY_RECURRENCE_PATTERN = re.compile(
-    r"毎日.{0,100}?(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    r"毎日.{0,100}?" + CLOCK_CAPTURE_PATTERN,
+    flags=re.IGNORECASE | re.DOTALL,
+)
+MULTI_MONTHLY_DAY_RECURRENCE_PATTERN = re.compile(
+    r"毎月\s*(?P<days>(?:3[01]|[12]?\d)日"
+    r"(?:\s*(?:[、,・/&]|と)\s*(?:3[01]|[12]?\d)日)+)"
+    r".{0,100}?" + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 MONTHLY_DAY_RECURRENCE_PATTERN = re.compile(
     r"毎月\s*(?P<day>3[01]|[12]?\d)日.{0,100}?"
-    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    + CLOCK_CAPTURE_PATTERN,
+    flags=re.IGNORECASE | re.DOTALL,
+)
+LAST_WEEKDAY_MONTHLY_RECURRENCE_PATTERN = re.compile(
+    r"毎月\s*(?:最終|最後の)\s*(?P<weekday>[月火水木金土日])曜(?:日)?"
+    r".{0,100}?" + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 ORDINAL_MONTHLY_RECURRENCE_PATTERN = re.compile(
     r"(?:毎月\s*)?第\s*(?P<ordinals>\d+(?:\s*[、,・/]\s*第?\s*\d+)*)\s*"
     r"(?P<weekday>[月火水木金土日])曜(?:日)?.{0,100}?"
-    r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)",
+    + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 MULTI_EVENT_CLOCK_PATTERN = re.compile(
@@ -51,9 +73,7 @@ UNPREFIXED_WEEKDAY_PAST_CONTEXT_RE = re.compile(
     r"昨日|先日|参加してき|行ってき|営業してました",
     flags=re.IGNORECASE,
 )
-CLOCK_PATTERN = re.compile(
-    r"(?<!\d)(?P<hour>[01]?\d|2[0-3])(?:[:：時]\s*(?P<minute>\d{0,2}))(?!\d)"
-)
+CLOCK_PATTERN = re.compile(CLOCK_CAPTURE_PATTERN)
 RELATIVE_DAY_PATTERN = re.compile(r"本日|今日|明日|今夜|今晩|この後")
 EXPLICIT_DATE_PATTERN = re.compile(
     r"(?<!\d)(?:20\d{2}\s*[./／⁄年-]\s*)?"
