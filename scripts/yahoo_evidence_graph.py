@@ -23,6 +23,11 @@ GROUP_CODE_RE = re.compile(
 HASHTAG_RE = re.compile(r"#([0-9A-Za-z_ぁ-んァ-ヶ一-龠]+)")
 QUOTED_NAME_RE = re.compile(r"[「『【《〈](?P<name>[^」』】》〉]{3,48})[」』】》〉]")
 TEXT_URL_RE = re.compile(r"https?://[^\s<>'\"）】]+", re.IGNORECASE)
+TCO_URL_RE = re.compile(r"https?://t\.co/[0-9A-Za-z]+", re.IGNORECASE)
+SPACED_VRC_HASHTAG_RE = re.compile(
+    r"#\s*(?P<prefix>VRC|VRChat)\s+(?P<suffix>[0-9A-Za-z_ぁ-んァ-ヶ一-龠]{2,32})",
+    re.IGNORECASE,
+)
 EXPLICIT_DATE_RE = re.compile(
     r"(?<!\d)(?:(?P<year>20\d{2})\s*[./／年-]\s*)?"
     r"(?P<month>1[0-2]|0?[1-9])\s*(?:[./／-]|\s*月\s*)\s*"
@@ -158,6 +163,10 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
         for raw in HASHTAG_RE.findall(text)
         if len(tag := _normalize_identity(raw)) >= 3 and tag not in GENERIC_HASHTAGS
     }
+    for match in SPACED_VRC_HASHTAG_RE.finditer(text):
+        tag = _normalize_identity(match.group("prefix") + match.group("suffix"))
+        if len(tag) >= 3 and tag not in GENERIC_HASHTAGS:
+            tags.add(tag)
     names = {
         name
         for match in QUOTED_NAME_RE.finditer(text)
@@ -183,6 +192,8 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
             fingerprints.add(f"{author}|groupcode:{group_code}")
         for linked_url in links:
             fingerprints.add(f"{author}|url:{linked_url}")
+        for short_url in TCO_URL_RE.findall(text):
+            fingerprints.add(f"{author}|shorturl:{short_url.casefold()}")
 
     # Cross-author evidence requires both a shared platform/link identity and a
     # shared event/series identity. A Group or community URL alone can host
