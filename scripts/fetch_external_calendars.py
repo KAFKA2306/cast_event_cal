@@ -5,9 +5,11 @@ import hashlib
 import json
 import os
 import re
+import time
 import unicodedata
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime, timedelta
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
@@ -48,6 +50,7 @@ class SourceResult:
     stale_cache_count: int = 0
     source_page: str | None = None
     policy_url: str | None = None
+    cache_hit: bool | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return {key: value for key, value in asdict(self).items() if value is not None}
@@ -377,6 +380,183 @@ def extract_jsonld_events(
                 "review_required": False,
             }
             rows[source_id] = {key: value for key, value in event.items() if value is not None}
+    return sorted(rows.values(), key=lambda row: (row["starts_at"], row["title"]))
+
+
+
+VRC_SEARCH_CARD_SPLIT_RE = re.compile(
+    r'<article[^>]*class="[^"]*\bresult-row-event\b[^"]*"[^>]*>',
+    flags=re.IGNORECASE,
+)
+VRC_SEARCH_TITLE_RE = re.compile(
+    r'class="[^"]*\bresult-row-title\b[^"]*"[^>]*>(?P<value>.*?)</',
+    flags=re.IGNORECASE | re.DOTALL,
+)
+VRC_SEARCH_DESC_RE = re.compile(
+    r'class="[^"]*\bresult-row-desc\b[^"]*"[^>]*>(?P<value>.*?)</p>',
+    flags=re.IGNORECASE | re.DOTALL,
+)
+VRC_SEARCH_START_RE = re.compile(
+    r'(?:開始|Starts?)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
+    flags=re.IGNORECASE,
+)
+VRC_SEARCH_END_RE = re.compile(
+    r'(?:終了|Ends?)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
+    flags=re.IGNORECASE,
+)
+VRC_SEARCH_CALENDAR_RE = re.compile(r'\b(?P<id>cal_[0-9a-f-]{8,})\b', flags=re.IGNORECASE)
+VRC_SEARCH_GROUP_RE = re.compile(
+    r'href="/(?:[a-z]{2}/)?groups/(?P<id>grp_[^"/?]+)[^"]*"[^>]*>(?P<name>.*?)</a>',
+    flags=re.IGNORECASE | re.DOTALL,
+)
+VRC_SEARCH_VRCHAT_LINK_RE = re.compile(
+    r'href="(?P<url>https://vrchat\.com/[^"]*calendar/[^"]+)"',
+    flags=re.IGNORECASE,
+)
+
+
+def strip_html(value: str) -> str:
+    return clean_text(unescape(re.sub(r"<[^>]+>", " ", value)))
+
+
+def vrc_search_category(page_url: str) -> str | None:
+    match = re.search(
+        r"/events/(?P<category>music|dance|hangout|gaming|roleplaying|performance|education)/",
+        page_url,
+        flags=re.IGNORECASE,
+    )
+    return match.group("category").casefold() if match else None
+
+
+def parse_vrc_search_events(
+    html_text: str,
+    *,
+    page_url: str,
+    source_name: str,
+    fetched_at: str,
+    tags: Iterable[str],
+    window_start: datetime,
+    window_end: datetime,
+) -> list[dict[str, Any]]:
+    """Parse the small curated VRC Search SSR result pages.
+
+    VRC Search's localized curated pages currently expose timestamps in UTC,
+    despite surrounding localized copy. We keep UTC explicit here rather than
+    silently interpreting those values as JST.
+    """
+    rows: dict[str, dict[str, Any]] = {}
+    category = vrc_search_category(page_url)
+    event_tags = sorted(
+        {
+            clean_text(tag)
+            for tag in [*tags, "VRC Search", category or ""]
+            if clean_text(tag)
+        }
+    )
+    for card in VRC_SEARCH_CARD_SPLIT_RE.split(html_text)[1:]:
+        title_match = VRC_SEARCH_TITLE_RE.search(card)
+        start_match = VRC_SEARCH_START_RE.search(card)
+        if not title_match or not start_match:
+            continue
+        title = strip_html(title_match.group("value"))
+        if not title:
+            continue
+        try:
+            start = datetime.strptime(
+                start_match.group("value"), "%Y-%m-%d %H:%M"
+            ).replace(tzinfo=UTC)
+        except ValueError:
+            continue
+        if not window_start <= start <= window_end:
+            continue
+
+        end_match = VRC_SEARCH_END_RE.search(card)
+        end: datetime | None = None
+        if end_match:
+            try:
+                end = datetime.strptime(
+                    end_match.group("value"), "%Y-%m-%d %H:%M"
+                ).replace(tzinfo=UTC)
+            except ValueError:
+                end = None
+
+        calendar_match = VRC_SEARCH_CALENDAR_RE.search(card)
+        group_match = VRC_SEARCH_GROUP_RE.search(card)
+        vrchat_link_match = VRC_SEARCH_VRCHAT_LINK_RE.search(card)
+        desc_match = VRC_SEARCH_DESC_RE.search(card)
+        calendar_id = calendar_match.group("id") if calendar_match else None
+        organizer = strip_html(group_match.group("name")) if group_match else None
+        description = strip_html(desc_match.group("value")) if desc_match else None
+        event_url = (
+            unescape(vrchat_link_match.group("url"))
+            if vrchat_link_match
+            else page_url
+        )
+        starts_at = utc_text(start)
+        source_id = stable_source_id(
+            source_name,
+            calendar_id,
+            title,
+            starts_at,
+            event_url,
+        )
+        event = {
+            "source_id": source_id,
+            "title": title,
+            "starts_at": starts_at,
+            "ends_at": utc_text(end) if end else None,
+            "organizer": organizer,
+            "location": "VRChat",
+            "description": description,
+            "url": event_url,
+            "source_page": page_url,
+            "category": category,
+            "status": "scheduled",
+            "source": source_name,
+            "fetched_at": fetched_at,
+            "tags": event_tags,
+            "confidence": 0.9,
+            "review_required": False,
+        }
+        rows[source_id] = {
+            key: value for key, value in event.items() if value is not None
+        }
+    return sorted(rows.values(), key=lambda row: (row["starts_at"], row["title"]))
+
+
+def collect_vrc_search_pages(
+    client: httpx.Client,
+    source: dict[str, Any],
+    *,
+    config_path: Path,
+    fetched_at: str,
+    start: datetime,
+    end: datetime,
+) -> list[dict[str, Any]]:
+    urls = source_urls(source, config_path)
+    max_pages = max(1, min(int(source.get("max_pages", 8)), 20))
+    max_events = max(1, min(int(source.get("max_events", 400)), 1000))
+    interval = max(0.0, min(float(source.get("request_interval_seconds", 0.0)), 5.0))
+    rows: dict[str, dict[str, Any]] = {}
+    for index, url in enumerate(urls[:max_pages]):
+        response = client.get(url, headers=source.get("headers"))
+        response.raise_for_status()
+        for event in parse_vrc_search_events(
+            response.text,
+            page_url=url,
+            source_name=clean_text(source["name"]),
+            fetched_at=fetched_at,
+            tags=source.get("tags", []),
+            window_start=start,
+            window_end=end,
+        ):
+            rows[event["source_id"]] = event
+            if len(rows) >= max_events:
+                break
+        if len(rows) >= max_events:
+            break
+        if interval and index + 1 < min(len(urls), max_pages):
+            time.sleep(interval)
     return sorted(rows.values(), key=lambda row: (row["starts_at"], row["title"]))
 
 
