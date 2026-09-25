@@ -509,8 +509,7 @@ def write_report(report: dict[str, Any], output_path: Path) -> None:
             indent=2,
             sort_keys=True,
         )
-        + "
-",
+        + "\\n",
         encoding="utf-8",
     )
 
@@ -579,8 +578,7 @@ def append_history(
                 ensure_ascii=False,
                 sort_keys=True,
             )
-            + "
-"
+            + "\\n"
             for row in existing
         ),
         encoding="utf-8",
