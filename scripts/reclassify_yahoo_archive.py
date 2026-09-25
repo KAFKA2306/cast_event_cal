@@ -33,7 +33,7 @@ PUBLISHABILITY_AUDIT_PATH = Path("public/yahoo-publishability-audit.json")
 def configure_archive_classifier() -> None:
     corpus.configure_classifier()
     install_classifier_datetime(corpus, implementation)
-    implementation.PARSER_VERSION = "2.0"
+    implementation.PARSER_VERSION = "2.1"
 
 
 def temporal_status(start: datetime, now: datetime) -> str:
@@ -58,6 +58,10 @@ def adjusted_candidate(row: dict[str, Any]) -> tuple[dict[str, Any] | None, str 
         "text": row.get("text"),
         "author": row.get("author"),
         "retweet_count": row.get("retweet_count"),
+        "conversation_id": row.get("conversation_id"),
+        "in_reply_to_status_id": row.get("in_reply_to_status_id"),
+        "quoted_status_id": row.get("quoted_status_id"),
+        "linked_urls": row.get("linked_urls"),
     }
     value = candidate.get("retweet_count")
     if value is None:
