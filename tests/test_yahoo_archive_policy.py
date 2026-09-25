@@ -173,13 +173,27 @@ def test_archive_materializes_recurring_event_with_provenance():
         x_ids=set(),
     )
     assert rejected == []
-    assert len(accepted) == 1
-    assert accepted[0]["starts_at"] == "2026-08-07T13:00:00Z"
-    assert accepted[0]["date_resolution_method"] == "recurrence_weekly_materialized"
-    assert accepted[0]["date_resolution_evidence"]["recurrence_rule"]["frequency"] == "weekly"
-    assert accepted[0]["recurrence_rule"]["weekday"] == 4
-    assert accepted[0]["temporal_status"] == "upcoming"
+    assert len(accepted) == 4
+    assert [event["starts_at"] for event in accepted] == [
+        "2026-08-07T13:00:00Z",
+        "2026-08-14T13:00:00Z",
+        "2026-08-21T13:00:00Z",
+        "2026-08-28T13:00:00Z",
+    ]
+    assert all(
+        event["date_resolution_method"] == "recurrence_weekly_materialized"
+        for event in accepted
+    )
+    assert all(
+        event["date_resolution_evidence"]["recurrence_rule"]["frequency"] == "weekly"
+        for event in accepted
+    )
+    assert all(event["recurrence_rule"]["weekday"] == 4 for event in accepted)
+    assert all(event["temporal_status"] == "upcoming" for event in accepted)
+    assert len({event["source_id"] for event in accepted}) == 4
+    assert all(event["recurrence_source_id"] == "yahoo:x:2080000000000000003" for event in accepted)
     assert evaluated[0]["last_decision"] == "accepted"
+    assert evaluated[0]["materialized_occurrence_count"] == 4
 
 
 def test_access_clock_without_event_structure_remains_rejected():
