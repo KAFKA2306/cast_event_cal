@@ -433,3 +433,37 @@ def test_daily_open_play_does_not_inherit_later_weekly_event_identity() -> None:
         materialize_after=current,
     )
     assert result is None
+
+def test_every_night_schedule_materializes_safely() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 22, 30, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat酒場イベントを毎晩23時から開催。Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 23, 0, tzinfo=JST)
+
+
+def test_hyphen_clock_range_uses_start_endpoint() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat接客イベントを毎週金曜 21-23時に開催。Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 21, 0, tzinfo=JST)
+
+
+def test_relative_live_delivery_wording_is_an_announcement() -> None:
+    anchor = datetime(2026, 9, 25, 8, 0, tzinfo=JST)
+    result = resolve(
+        "今日は夜21時からオリジナル曲のみのライブをお届けする、"
+        "VRChat LIVE『#clubVERSE 60』です！",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 21, 0, tzinfo=JST)
