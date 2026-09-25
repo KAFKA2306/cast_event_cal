@@ -147,6 +147,23 @@ def replay() -> dict[str, Any]:
             }
         )
 
+    blocker_counts: dict[str, int] = {}
+    blocker_samples: dict[str, list[dict[str, str]]] = {}
+    for row in evaluated:
+        if row.get("last_reason") != "missing_datetime":
+            continue
+        blocker = str(row.get("resolution_blocker") or "none")
+        blocker_counts[blocker] = blocker_counts.get(blocker, 0) + 1
+        samples = blocker_samples.setdefault(blocker, [])
+        if len(samples) < 4:
+            samples.append(
+                {
+                    "status_id": str(row.get("status_id") or ""),
+                    "decision": str(row.get("publishability_decision") or ""),
+                    "text_excerpt": str(row.get("text") or row.get("text_excerpt") or "")[:220],
+                }
+            )
+
     changed_existing = []
     previous_events = {
         str(row.get("status_id") or ""): row
@@ -190,6 +207,10 @@ def replay() -> dict[str, Any]:
         "review_reason_mismatches": review_reason_mismatches,
         "reviewed_false_promoted": reviewed_false_promoted,
         "promoted_method_counts": dict(sorted(method_counts.items())),
+        "resolution_blocker_counts": dict(sorted(blocker_counts.items())),
+        "resolution_blocker_samples": {
+            key: blocker_samples[key] for key in sorted(blocker_samples)
+        },
         "promoted_other": promoted_other,
         "changed_existing_starts_at": len(changed_existing),
         "promoted": promoted_rows,
