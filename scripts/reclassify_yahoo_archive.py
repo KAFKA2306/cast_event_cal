@@ -15,6 +15,7 @@ from scripts import fetch_yahoo_realtime as implementation
 from scripts import refine_yahoo_corpus as refinement
 from scripts import run_yahoo_realtime as ledger
 from scripts.yahoo_evidence_graph import (
+    add_external_event_evidence,
     build_evidence_graph,
     corroboration_blocker,
     event_fingerprints,
@@ -28,6 +29,7 @@ from scripts.relative_datetime import (
 
 ARCHIVE_RETENTION_DAYS = 365
 PUBLISHABILITY_AUDIT_PATH = Path("public/yahoo-publishability-audit.json")
+EXTERNAL_EVENTS_PATH = Path("data/external_events.json")
 
 
 def configure_archive_classifier() -> None:
@@ -81,6 +83,7 @@ def reclassify(
     *,
     actual_now: datetime,
     x_ids: set[str],
+    external_events: list[dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     accepted: list[dict[str, Any]] = []
     rejected: list[dict[str, Any]] = []
@@ -89,6 +92,7 @@ def reclassify(
         history,
         anchor_for=lambda row: source_anchor(row, actual_now),
     )
+    add_external_event_evidence(evidence_graph, external_events or [])
 
     for original in history:
         row = dict(original)
@@ -298,6 +302,7 @@ def main() -> int:
         input_rows,
         actual_now=now,
         x_ids=x_ids,
+        external_events=implementation.read_array(EXTERNAL_EVENTS_PATH),
     )
 
     history_payload.update(
