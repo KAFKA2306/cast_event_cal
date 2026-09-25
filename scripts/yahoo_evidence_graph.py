@@ -158,7 +158,7 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
         if len(name := _normalize_identity(match.group("name"))) >= 3
         and name not in GENERIC_QUOTED_NAMES
     }
-    series_tokens = {f"tag:{tag}" for tag in tags} | {f"name:{name}" for name in names}
+    series_tokens = {f"hashtag:{tag}" for tag in tags} | {f"name:{name}" for name in names}
 
     links = _linked_urls(row, text)
     combined_group_text = " ".join([text, *sorted(links)])
