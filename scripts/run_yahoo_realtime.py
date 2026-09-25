@@ -111,6 +111,16 @@ def merge_history(
             new_retweets = normalized.get("retweet_count")
             if old_retweets is not None and (new_retweets is None or int(old_retweets) > int(new_retweets)):
                 normalized["retweet_count"] = int(old_retweets)
+            for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id"):
+                if not normalized.get(key) and current.get(key):
+                    normalized[key] = current[key]
+            combined_links = {
+                str(value).strip()
+                for value in [*(current.get("linked_urls") or []), *(normalized.get("linked_urls") or [])]
+                if isinstance(value, str) and value.startswith(("https://", "http://"))
+            }
+            if combined_links:
+                normalized["linked_urls"] = sorted(combined_links)[:20]
         normalized["last_seen_at"] = stamp
         selected[normalized["status_id"]] = normalized
     lower = observed_at - timedelta(days=HISTORY_RETENTION_DAYS)
