@@ -396,6 +396,29 @@ def _recurrence_resolution(
     )
 
 
+def _monthly_candidates(
+    *,
+    after: datetime,
+    days: list[int],
+    hour: int,
+    minute: int,
+) -> list[datetime]:
+    candidates: list[datetime] = []
+    for offset in range(14):
+        month_index = after.month - 1 + offset
+        year = after.year + month_index // 12
+        month = month_index % 12 + 1
+        for day in days:
+            if day > monthrange(year, month)[1]:
+                continue
+            event_at = datetime(year, month, day, hour, minute, tzinfo=JST)
+            if event_at >= after:
+                candidates.append(event_at)
+        if candidates:
+            break
+    return candidates
+
+
 def resolve_recurring_event(
     text: str,
     source_anchor: datetime,
@@ -417,8 +440,10 @@ def resolve_recurring_event(
 
     match = DAILY_RECURRENCE_PATTERN.search(normalized)
     if match:
-        hour = int(match.group("hour"))
-        minute = int(match.group("minute") or 0)
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
         event_at = datetime(after.year, after.month, after.day, hour, minute, tzinfo=JST)
         if event_at < after:
             event_at += timedelta(days=1)
@@ -435,11 +460,44 @@ def resolve_recurring_event(
             },
         )
 
+    match = MULTI_WEEKLY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
+        weekdays = sorted({WEEKDAY_INDEX[value] for value in re.findall(r"[月火水木金土日]", match.group("weekdays"))})
+        candidates: list[datetime] = []
+        for weekday in weekdays:
+            days_ahead = (weekday - after.weekday()) % 7
+            target = after.date() + timedelta(days=days_ahead)
+            event_at = datetime(target.year, target.month, target.day, hour, minute, tzinfo=JST)
+            if event_at < after:
+                event_at += timedelta(days=7)
+            candidates.append(event_at)
+        if not candidates:
+            return None
+        return _recurrence_resolution(
+            event_at=min(candidates),
+            source_anchor=anchor_jst,
+            method="recurrence_multi_weekly_materialized",
+            matched_text=match.group(0),
+            recurrence_rule={
+                "frequency": "weekly",
+                "weekdays": weekdays,
+                "hour": hour,
+                "minute": minute,
+                "timezone": "Asia/Tokyo",
+            },
+        )
+
     match = WEEKLY_RECURRENCE_PATTERN.search(normalized)
     if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
         weekday = WEEKDAY_INDEX[match.group("weekday")]
-        hour = int(match.group("hour"))
-        minute = int(match.group("minute") or 0)
         days_ahead = (weekday - after.weekday()) % 7
         target = after.date() + timedelta(days=days_ahead)
         event_at = datetime(target.year, target.month, target.day, hour, minute, tzinfo=JST)
@@ -459,22 +517,44 @@ def resolve_recurring_event(
             },
         )
 
+    match = MULTI_MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
+        days = sorted({
+            int(value)
+            for value in re.findall(r"\d{1,2}", match.group("days"))
+            if 1 <= int(value) <= 31
+        })
+        candidates = _monthly_candidates(after=after, days=days, hour=hour, minute=minute)
+        if candidates:
+            return _recurrence_resolution(
+                event_at=min(candidates),
+                source_anchor=anchor_jst,
+                method="recurrence_multi_monthly_day_materialized",
+                matched_text=match.group(0),
+                recurrence_rule={
+                    "frequency": "monthly",
+                    "days": days,
+                    "hour": hour,
+                    "minute": minute,
+                    "timezone": "Asia/Tokyo",
+                },
+            )
+
     match = MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
     if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
         day = int(match.group("day"))
-        hour = int(match.group("hour"))
-        minute = int(match.group("minute") or 0)
-        for offset in range(14):
-            month_index = after.month - 1 + offset
-            year = after.year + month_index // 12
-            month = month_index % 12 + 1
-            if day > monthrange(year, month)[1]:
-                continue
-            event_at = datetime(year, month, day, hour, minute, tzinfo=JST)
-            if event_at < after:
-                continue
+        candidates = _monthly_candidates(after=after, days=[day], hour=hour, minute=minute)
+        if candidates:
             return _recurrence_resolution(
-                event_at=event_at,
+                event_at=min(candidates),
                 source_anchor=anchor_jst,
                 method="recurrence_monthly_day_materialized",
                 matched_text=match.group(0),
@@ -487,16 +567,52 @@ def resolve_recurring_event(
                 },
             )
 
+    match = LAST_WEEKDAY_MONTHLY_RECURRENCE_PATTERN.search(normalized)
+    if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
+        weekday = WEEKDAY_INDEX[match.group("weekday")]
+        candidates: list[datetime] = []
+        for offset in range(14):
+            month_index = after.month - 1 + offset
+            year = after.year + month_index // 12
+            month = month_index % 12 + 1
+            last_day = monthrange(year, month)[1]
+            last_weekday = datetime(year, month, last_day, tzinfo=JST).weekday()
+            day = last_day - (last_weekday - weekday) % 7
+            event_at = datetime(year, month, day, hour, minute, tzinfo=JST)
+            if event_at >= after:
+                candidates.append(event_at)
+                break
+        if candidates:
+            return _recurrence_resolution(
+                event_at=min(candidates),
+                source_anchor=anchor_jst,
+                method="recurrence_last_weekday_monthly_materialized",
+                matched_text=match.group(0),
+                recurrence_rule={
+                    "frequency": "monthly_last_weekday",
+                    "weekday": weekday,
+                    "hour": hour,
+                    "minute": minute,
+                    "timezone": "Asia/Tokyo",
+                },
+            )
+
     match = ORDINAL_MONTHLY_RECURRENCE_PATTERN.search(normalized)
     if match:
+        parts = _clock_parts(match)
+        if parts is None:
+            return None
+        hour, minute = parts
         ordinals = sorted({
             int(value)
             for value in re.findall(r"\d+", match.group("ordinals"))
             if 1 <= int(value) <= 5
         })
         weekday = WEEKDAY_INDEX[match.group("weekday")]
-        hour = int(match.group("hour"))
-        minute = int(match.group("minute") or 0)
         candidates: list[datetime] = []
         for offset in range(14):
             month_index = after.month - 1 + offset
@@ -530,7 +646,6 @@ def resolve_recurring_event(
             )
 
     return None
-
 
 def resolve_event_datetime(
     text: str,
