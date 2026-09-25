@@ -467,3 +467,15 @@ def test_relative_live_delivery_wording_is_an_announcement() -> None:
     )
     assert result is not None
     assert result.event_at == datetime(2026, 9, 25, 21, 0, tzinfo=JST)
+
+def test_decorative_colon_in_recurring_schedule_is_normalized() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週金曜日 22˸30 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 22, 30, tzinfo=JST)
+
