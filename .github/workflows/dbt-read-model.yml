@@ -1,0 +1,47 @@
+name: dbt read-model contract
+
+on:
+  pull_request:
+    paths:
+      - "analytics/dbt/**"
+      - "scripts/build_dbt_read_model_fixture.py"
+      - "scripts/verify_dbt_read_model_contract.py"
+      - "tests/test_dbt_read_model_contract.py"
+      - ".github/workflows/dbt-read-model.yml"
+  push:
+    branches: [main]
+    paths:
+      - "analytics/dbt/**"
+      - "scripts/build_dbt_read_model_fixture.py"
+      - "scripts/verify_dbt_read_model_contract.py"
+      - "tests/test_dbt_read_model_contract.py"
+      - ".github/workflows/dbt-read-model.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dbt SQLite adapter
+        run: python -m pip install "dbt-sqlite==1.10.0"
+      - name: Verify fixture contract
+        run: python -m pytest tests/test_dbt_read_model_contract.py -q
+      - name: Run dbt contract verification
+        run: python scripts/verify_dbt_read_model_contract.py
+      - name: Upload dbt operator artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: dbt-read-model-${{ github.sha }}
+          path: |
+            analytics/dbt/target/manifest.json
+            analytics/dbt/target/run_results.json
+            analytics/dbt/target/contract-verification.json
+          if-no-files-found: error
+          retention-days: 14
