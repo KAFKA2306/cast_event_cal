@@ -23,7 +23,7 @@ from scripts.yahoo_evidence_graph import (
 from scripts.relative_datetime import (
     EXPLICIT_DATE_PATTERN,
     install_classifier_datetime,
-    resolve_recurring_event,
+    materialize_recurring_events,
 )
 
 ARCHIVE_RETENTION_DAYS = 365
@@ -100,6 +100,7 @@ def reclassify(
 
         candidate, reason = adjusted_candidate(row)
         event = None
+        resolved_events: list[dict[str, Any]] = []
         if candidate is not None:
             text = str(candidate.get("text") or "")
             if refinement.giveaway_without_event_access(text):
@@ -107,12 +108,12 @@ def reclassify(
             else:
                 parsed = implementation.parse_event_datetime(text, anchor)
                 if parsed is None:
-                    recurrence = resolve_recurring_event(
+                    recurrences = materialize_recurring_events(
                         text,
                         anchor,
                         materialize_after=actual_now,
                     )
-                    if recurrence is None:
+                    if not recurrences:
                         corroborated = resolve_corroborated_datetime(
                             row,
                             graph=evidence_graph,
@@ -139,19 +140,37 @@ def reclassify(
                                     corroborated.corroborating_source_ids
                                 )
                     else:
-                        event, reason = corpus.refined_candidate_to_event_at(
-                            candidate,
-                            event_at=recurrence.event_at,
-                            now=actual_now,
-                            min_retweets=3,
-                            x_ids=x_ids,
-                        )
-                        if event:
+                        occurrence_failure: str | None = None
+                        for recurrence in recurrences:
+                            occurrence_event, occurrence_reason = corpus.refined_candidate_to_event_at(
+                                candidate,
+                                event_at=recurrence.event_at,
+                                now=actual_now,
+                                min_retweets=3,
+                                x_ids=x_ids,
+                            )
+                            if occurrence_event is None:
+                                occurrence_failure = occurrence_reason or "recurrence_materialization_failed"
+                                resolved_events = []
+                                break
                             evidence = recurrence.evidence(implementation.utc_text)
-                            event["date_resolution_method"] = evidence["method"]
-                            event["date_resolution_anchor"] = evidence["anchor"]
-                            event["date_resolution_evidence"] = evidence
-                            event["recurrence_rule"] = recurrence.recurrence_rule
+                            occurrence_event["date_resolution_method"] = evidence["method"]
+                            occurrence_event["date_resolution_anchor"] = evidence["anchor"]
+                            occurrence_event["date_resolution_evidence"] = evidence
+                            occurrence_event["recurrence_rule"] = recurrence.recurrence_rule
+                            base_source_id = str(occurrence_event.get("source_id") or "")
+                            occurrence_key = recurrence.event_at.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
+                            occurrence_event["recurrence_source_id"] = base_source_id
+                            occurrence_event["source_id"] = (
+                                f"{base_source_id}:occurrence:{occurrence_key}"
+                            )
+                            occurrence_event["source_status_id"] = status_id
+                            resolved_events.append(occurrence_event)
+                        if resolved_events:
+                            event = resolved_events[0]
+                            reason = None
+                        elif occurrence_failure:
+                            reason = occurrence_failure
                 elif parsed > actual_now + timedelta(days=180):
                     reason = "too_far_future_now"
                 else:
@@ -167,24 +186,32 @@ def reclassify(
                         x_ids=x_ids,
                     )
 
-        if event:
-            start = implementation.parse_instant(str(event.get("starts_at") or ""))
-            if start is None:
-                event = None
-                reason = "missing_datetime"
-            else:
-                observed = int(row.get("retweet_count") or 0)
-                event["retweet_count"] = observed
-                event["temporal_status"] = temporal_status(start, actual_now)
-                event["is_archived"] = start < actual_now
+        if event and not resolved_events:
+            resolved_events = [event]
+
+        if resolved_events:
+            observed = int(row.get("retweet_count") or 0)
+            valid_events: list[dict[str, Any]] = []
+            for resolved_event in resolved_events:
+                start = implementation.parse_instant(str(resolved_event.get("starts_at") or ""))
+                if start is None:
+                    reason = "missing_datetime"
+                    valid_events = []
+                    break
+                resolved_event["retweet_count"] = observed
+                resolved_event["temporal_status"] = temporal_status(start, actual_now)
+                resolved_event["is_archived"] = start < actual_now
                 tags = [
                     tag
-                    for tag in event.get("tags", [])
+                    for tag in resolved_event.get("tags", [])
                     if tag != "リポスト3件以上"
                 ]
                 tags.append("終了済み" if start < actual_now else "開催予定")
                 tags.append(f"リポスト{observed}件")
-                event["tags"] = tags
+                resolved_event["tags"] = tags
+                valid_events.append(resolved_event)
+            resolved_events = valid_events
+            event = resolved_events[0] if resolved_events else None
 
         row["resolver_version"] = implementation.PARSER_VERSION
         row["event_fingerprints"] = sorted(event_fingerprints(row))
@@ -197,7 +224,8 @@ def reclassify(
             evidence = event.get("date_resolution_evidence")
             if evidence:
                 row["date_resolution_evidence"] = evidence
-            accepted.append(event)
+            row["materialized_occurrence_count"] = len(resolved_events)
+            accepted.extend(resolved_events)
         else:
             resolved = reason or "unknown"
             row["last_decision"] = "rejected"
@@ -288,11 +316,15 @@ def main() -> int:
     implementation.write_json(implementation.OUTPUT_PATH, accepted)
     implementation.write_json(implementation.REJECTED_PATH, rejected)
 
-    accepted_by_status = {
-        str(event.get("source_id") or "").rsplit(":", 1)[-1]: event
-        for event in accepted
-        if event.get("source_id")
-    }
+    accepted_by_status: dict[str, dict[str, Any]] = {}
+    for event in accepted:
+        status_id = str(event.get("source_status_id") or "")
+        if not status_id:
+            source_id = str(event.get("recurrence_source_id") or event.get("source_id") or "")
+            match = implementation.STATUS_ID_RE.search(source_id)
+            status_id = match.group(0) if match else ""
+        if status_id:
+            accepted_by_status.setdefault(status_id, event)
     promoted_from_missing = sorted(previous_missing_ids & set(accepted_by_status))
     recurrence_materialized = [
         event
@@ -374,7 +406,10 @@ def main() -> int:
             "generated_at": implementation.utc_text(now),
             "event_count": len(accepted),
             "history_candidate_count": len(evaluated),
-            "history_accepted_count": len(accepted),
+            "history_accepted_count": sum(
+                row.get("last_decision") == "accepted" for row in evaluated
+            ),
+            "materialized_event_count": len(accepted),
             "history_rejected_count": len(rejected),
             "source_timestamp_count": sum(bool(row.get("source_created_at")) for row in evaluated),
             "engagement_policy": history_payload["engagement_policy"],
