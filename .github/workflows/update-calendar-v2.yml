@@ -38,6 +38,10 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - name: Capture previous canonical snapshot
+        run: |
+          cp public/events.json /tmp/public-events-before.json
+          cp public/yahoo-candidate-history.json /tmp/yahoo-candidate-history-before.json
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -123,6 +127,25 @@ jobs:
         run: python scripts/audit_public_feed.py public/events.json --report /tmp/public-feed-audit.json
       - name: Validate generated data and collection health
         run: python scripts/validate_update_snapshot.py
+      - name: Explain canonical public snapshot delta
+        env:
+          BASE_SHA: ${{ github.sha }}
+        run: |
+          python scripts/build_public_snapshot_delta.py \
+            --before /tmp/public-events-before.json \
+            --after public/events.json \
+            --health public/health.json \
+            --recurring data/recurring_events.json \
+            --previous-yahoo-history /tmp/yahoo-candidate-history-before.json \
+            --base-sha "$BASE_SHA"
+      - name: Upload public snapshot delta audit
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: public-snapshot-delta-${{ github.run_id }}
+          path: audit/public-snapshot-delta.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Write canonical snapshot identity
         run: python scripts/write_snapshot_identity.py
       - name: Verify canonical snapshot identity
@@ -145,6 +168,8 @@ jobs:
             data/external_events.json
             data/external_discovery_health.json
             data/official_asset_cache.json
+            audit/public-snapshot-delta.json
+            audit/public-snapshot-delta-history.jsonl
             public
           )
           if [ -n "$(git status --porcelain -- "${paths[@]}")" ]; then
