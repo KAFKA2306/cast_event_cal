@@ -14,6 +14,12 @@ STRONG_CONTEXT_DISTANCE = timedelta(days=3)
 
 STATUS_ID_RE = re.compile(r"\d{10,25}")
 GROUP_ID_RE = re.compile(r"\bgrp_[0-9a-f-]{8,}\b", re.IGNORECASE)
+GROUP_CODE_RE = re.compile(
+    r"(?:VRChat|VRC)?\s*(?:Group|グループ)\s*"
+    r"(?:[+＋]\s*[/／]?\s*)?[「『【\"']?"
+    r"(?P<code>[A-Za-z][A-Za-z0-9_-]{1,31}\.\d{3,8})",
+    re.IGNORECASE,
+)
 HASHTAG_RE = re.compile(r"#([0-9A-Za-z_ぁ-んァ-ヶ一-龠]+)")
 QUOTED_NAME_RE = re.compile(r"[「『【《〈](?P<name>[^」』】》〉]{3,48})[」』】》〉]")
 TEXT_URL_RE = re.compile(r"https?://[^\s<>'\"）】]+", re.IGNORECASE)
@@ -163,12 +169,18 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
     links = _linked_urls(row, text)
     combined_group_text = " ".join([text, *sorted(links)])
     group_ids = {group_id.casefold() for group_id in GROUP_ID_RE.findall(combined_group_text)}
+    group_codes = {
+        match.group("code").casefold()
+        for match in GROUP_CODE_RE.finditer(combined_group_text)
+    }
 
     if author:
         for token in series_tokens:
             fingerprints.add(f"{author}|{token}")
         for group_id in group_ids:
             fingerprints.add(f"{author}|group:{group_id}")
+        for group_code in group_codes:
+            fingerprints.add(f"{author}|groupcode:{group_code}")
         for linked_url in links:
             fingerprints.add(f"{author}|url:{linked_url}")
 
@@ -178,6 +190,8 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
     for token in series_tokens:
         for group_id in group_ids:
             fingerprints.add(f"group:{group_id}|{token}")
+        for group_code in group_codes:
+            fingerprints.add(f"groupcode:{group_code}|{token}")
         for linked_url in links:
             fingerprints.add(f"url:{linked_url}|{token}")
 
@@ -187,7 +201,7 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
 def _evidence_window(fingerprint: str) -> timedelta:
     if fingerprint.startswith(("status:", "thread:")):
         return MAX_EVIDENCE_DISTANCE
-    if "group:" in fingerprint or "url:" in fingerprint:
+    if "group:" in fingerprint or "groupcode:" in fingerprint or "url:" in fingerprint:
         return STRONG_CONTEXT_DISTANCE
     return MAX_EVIDENCE_DISTANCE
 
