@@ -240,10 +240,24 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
                 continue
             post_id = str(candidate["status_id"])
             current = selected.get(post_id)
-            candidate_score = (candidate.get("retweet_count") is not None, len(str(candidate["text"])))
+            candidate_score = (
+                candidate.get("retweet_count") is not None,
+                len(str(candidate["text"])),
+                sum(
+                    bool(candidate.get(key))
+                    for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id")
+                ) + len(candidate.get("linked_urls") or []),
+            )
             current_score = (
-                (current.get("retweet_count") is not None, len(str(current.get("text", ""))))
-                if current else (False, -1)
+                (
+                    current.get("retweet_count") is not None,
+                    len(str(current.get("text", ""))),
+                    sum(
+                        bool(current.get(key))
+                        for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id")
+                    ) + len(current.get("linked_urls") or []),
+                )
+                if current else (False, -1, -1)
             )
             if current is None or candidate_score > current_score:
                 selected[post_id] = candidate
