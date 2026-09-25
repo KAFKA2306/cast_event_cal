@@ -389,3 +389,23 @@ def test_materializes_four_bounded_future_occurrences() -> None:
         datetime(2026, 8, 28, 22, 0, tzinfo=JST),
     ]
 
+def test_recovers_midnight_japanese_and_am_clock_without_shifting_to_afternoon() -> None:
+    anchor = datetime(2026, 6, 9, 0, 30, tzinfo=JST)
+    result = resolve(
+        "本日 深夜 #ガジェット愛好会 による WWDC応援上映会を開催。"
+        "深夜2時のVRChatでお待ちしています。6/9 (火) AM 2:00～ Group Public",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 6, 9, 2, 0, tzinfo=JST)
+
+
+def test_screening_notice_keeps_existing_explicit_broadcast_datetime() -> None:
+    anchor = datetime(2026, 9, 7, 12, 0, tzinfo=JST)
+    result = resolve(
+        "VRChat撮影作品。本編は9月13日（日）午前10時から配信開始！"
+        "9月8日（火）には先行上映会も開催します。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 13, 10, 0, tzinfo=JST)
