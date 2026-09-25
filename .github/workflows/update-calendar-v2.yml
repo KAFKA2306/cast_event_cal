@@ -155,3 +155,30 @@ jobs:
             git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
+
+
+  status:
+    name: Publish durable system status
+    needs: build
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Build status from the last-known-good public snapshot
+        run: python scripts/build_system_status.py --refresh-result "${{ needs.build.result }}" --max-age-minutes 180
+      - name: Commit status projection safely
+        run: |
+          set -euo pipefail
+          if [ -n "$(git status --porcelain -- public/status.json)" ]; then
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add public/status.json
+            git commit -m 'chore: update public system status'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
