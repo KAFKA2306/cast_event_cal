@@ -189,6 +189,18 @@ def test_datetime_parser_recovers_decorative_colon_and_english_date():
     assert decorative is not None
     assert decorative.isoformat() == "2026-09-27T04:00:00+09:00"
 
+    dual_timezone = parse_event_datetime(
+        "第6回は09/26のBST 20˸00~21˸00、09/27 JST 04˸00~05˸00に開催",
+        anchor,
+    )
+    assert dual_timezone is not None
+    assert dual_timezone.isoformat() == "2026-09-27T04:00:00+09:00"
+
+    assert parse_event_datetime(
+        "09/26 BST 20:00 VRChat event 開催",
+        anchor,
+    ) is None
+
     english = parse_event_datetime(
         "Saturday 26 Sept. 2026 21:00 PM (JST) VRChat Group+ event",
         anchor,
