@@ -23,6 +23,32 @@ sources:
       - 技術・学術
       - 外部カレンダー
 
+  - name: vrc_search_public_japanese
+    type: vrc_search_pages
+    enabled: true
+    # VRC Search Terms allow read-only API/integration use but prohibit abusive
+    # scraping/bulk export. Keep this bounded to eight curated public pages and
+    # refresh no more than once per day; hourly production runs reuse cache.
+    urls:
+      - https://search.vrcwwt.com/ja/events/japanese/next-week/
+      - https://search.vrcwwt.com/ja/events/music/next-month/
+      - https://search.vrcwwt.com/ja/events/dance/next-month/
+      - https://search.vrcwwt.com/ja/events/hangout/next-month/
+      - https://search.vrcwwt.com/ja/events/gaming/next-month/
+      - https://search.vrcwwt.com/ja/events/roleplaying/next-month/
+      - https://search.vrcwwt.com/ja/events/performance/next-month/
+      - https://search.vrcwwt.com/ja/events/education/next-month/
+    source_page: https://search.vrcwwt.com/ja/events/
+    policy_url: https://search.vrcwwt.com/terms
+    max_pages: 8
+    max_events: 400
+    refresh_hours: 24
+    request_interval_seconds: 0.75
+    tags:
+      - VRC Search
+      - 日本語公開イベント
+      - 外部ディスカバリー
+
   - name: official_event_websites
     type: ontology_jsonld
     enabled: true
