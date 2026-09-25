@@ -409,3 +409,27 @@ def test_screening_notice_keeps_existing_explicit_broadcast_datetime() -> None:
     )
     assert result is not None
     assert result.event_at == datetime(2026, 9, 13, 10, 0, tzinfo=JST)
+
+def test_multi_weekly_clock_range_uses_first_endpoint() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat接客イベントです。毎週月・水 21～23時 に営業中！"
+        "参加方法はグループから参加。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 28, 21, 0, tzinfo=JST)
+
+
+def test_daily_open_play_does_not_inherit_later_weekly_event_identity() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎日21時から23時頃までスポーツワールドでグループインスタンスを"
+        "ひらいて遊んでいます！それに毎週土曜は交流会の日です。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is None
