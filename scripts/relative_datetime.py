@@ -43,7 +43,7 @@ WEEKLY_RECURRENCE_PATTERN = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 DAILY_RECURRENCE_PATTERN = re.compile(
-    r"毎日.{0,100}?" + CLOCK_CAPTURE_PATTERN,
+    r"(?:毎日|毎晩).{0,100}?" + CLOCK_CAPTURE_PATTERN,
     flags=re.IGNORECASE | re.DOTALL,
 )
 MULTI_MONTHLY_DAY_RECURRENCE_PATTERN = re.compile(
@@ -97,7 +97,8 @@ RECOVERY_EVENT_RE = re.compile(
 )
 RECOVERY_ANNOUNCEMENT_RE = re.compile(
     r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|"
-    r"営業(?:します|予定)?|(?:上映会|集会|交流会|イベント).{0,16}(?:行います|行う|実施します|実施)",
+    r"営業(?:します|予定)?|(?:上映会|集会|交流会|イベント).{0,16}(?:行います|行う|実施します|実施)|"
+    r"(?:ライブ|公演).{0,20}(?:お届け|お送りします)",
     flags=re.IGNORECASE | re.DOTALL,
 )
 RECOVERY_ACCESS_RE = re.compile(
@@ -144,7 +145,7 @@ RECURRENCE_EVENT_IDENTITY_RE = re.compile(
     flags=re.IGNORECASE,
 )
 RECURRENCE_MARKER_RE = re.compile(
-    r"毎日|毎週|毎月|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
+    r"毎日|毎晩|毎週|毎月|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
     flags=re.IGNORECASE,
 )
 
@@ -218,7 +219,7 @@ def _normalize_recovery_text(text: str) -> str:
     # Restore only that unambiguous clock-range marker so the first endpoint,
     # not 23時, becomes the occurrence start.
     return re.sub(
-        r"(?<!\d)([01]?\d|2[0-3])\s*~\s*(?=(?:[01]?\d|2[0-3])\s*時)",
+        r"(?<!\d)([01]?\d|2[0-3])\s*[~-]\s*(?=(?:[01]?\d|2[0-3])\s*時)",
         r"\1時~",
         normalized,
     )
