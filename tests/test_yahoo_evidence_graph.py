@@ -190,7 +190,7 @@ def test_group_id_can_corroborate_across_different_authors() -> None:
     )
     assert result is not None
     assert result.event_at.isoformat() == "2026-09-27T22:30:00+09:00"
-    assert result.event_fingerprint == f"group:{group_id}|tag:vrc夜会"
+    assert result.event_fingerprint == f"group:{group_id}|hashtag:vrc夜会"
 
 
 def test_reply_context_can_corroborate_across_different_authors() -> None:
