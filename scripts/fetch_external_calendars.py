@@ -703,6 +703,33 @@ def run_collection(*, config_path: Path, output: Path, health_output: Path, time
             policy_url = clean_text(source.get("policy_url")) or None
             if not name:
                 raise ValueError("external source has no name")
+            cached = [
+                row for row in previous if clean_text(row.get("source")) == name
+            ]
+            refresh_hours = max(0.0, float(source.get("refresh_hours", 0) or 0))
+            if cached and refresh_hours:
+                cached_times = []
+                for row in cached:
+                    try:
+                        cached_times.append(parse_datetime(str(row.get("fetched_at") or "")))
+                    except (ValueError, TypeError, OverflowError):
+                        pass
+                newest_cache = max(cached_times, default=None)
+                if newest_cache and generated_at - newest_cache < timedelta(hours=refresh_hours):
+                    gathered.extend(cached)
+                    results.append(
+                        SourceResult(
+                            name,
+                            source_type,
+                            "ok",
+                            len(cached),
+                            source_page=source_page,
+                            policy_url=policy_url,
+                            cache_hit=True,
+                        )
+                    )
+                    continue
+
             effective_type = source_type
             if source_type == "permissioned_ics":
                 approval_env = clean_text(source.get("approval_env"))
@@ -718,6 +745,18 @@ def run_collection(*, config_path: Path, output: Path, health_output: Path, time
                         results.append(SourceResult(name, source_type, "skipped", 0, error="no official event pages configured", source_page=source_page, policy_url=policy_url))
                         continue
                     events = collect_jsonld(client, source, config_path=config_path, fetched_at=fetched_at, start=start, end=end)
+                elif effective_type == "vrc_search_pages":
+                    if not source_urls(source, config_path):
+                        results.append(SourceResult(name, source_type, "skipped", 0, error="no VRC Search pages configured", source_page=source_page, policy_url=policy_url))
+                        continue
+                    events = collect_vrc_search_pages(
+                        client,
+                        source,
+                        config_path=config_path,
+                        fetched_at=fetched_at,
+                        start=start,
+                        end=end,
+                    )
                 else:
                     raise ExternalSourceError(f"unsupported external source type: {source_type}")
                 gathered.extend(events)
