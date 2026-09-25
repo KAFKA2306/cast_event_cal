@@ -649,6 +649,44 @@ def resolve_recurring_event(
 
     return None
 
+
+def materialize_recurring_events(
+    text: str,
+    source_anchor: datetime,
+    *,
+    materialize_after: datetime,
+    max_occurrences: int = 4,
+    future_days: int = 120,
+) -> list[DateResolution]:
+    """Materialize a small rolling set of explicit future recurrence occurrences.
+
+    The recurring expression remains the authority. The bounded four-occurrence
+    projection avoids turning an old announcement into an indefinite schedule,
+    while giving the public calendar more than only the next occurrence.
+    """
+    if max_occurrences < 1 or future_days < 1:
+        return []
+
+    after = _jst(materialize_after)
+    limit = after + timedelta(days=future_days)
+    cursor = after
+    results: list[DateResolution] = []
+
+    for _ in range(max_occurrences):
+        resolution = resolve_recurring_event(
+            text,
+            source_anchor,
+            materialize_after=cursor,
+        )
+        if resolution is None or resolution.event_at > limit:
+            break
+        if results and resolution.event_at <= results[-1].event_at:
+            break
+        results.append(resolution)
+        cursor = resolution.event_at + timedelta(minutes=1)
+
+    return results
+
 def resolve_event_datetime(
     text: str,
     anchor: datetime,
