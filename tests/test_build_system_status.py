@@ -62,6 +62,8 @@ def test_fresh_healthy_refresh_is_ok() -> None:
     )
 
     assert status["overall_status"] == "ok"
+    assert status["snapshot_generated_at"] is None
+    assert status["last_successful_refresh_at"] == "2026-09-25T23:30:00Z"
     assert status["snapshot_age_minutes"] == 30.0
     assert status["canonical_event_count"] == 12
     assert status["slo"] == {
