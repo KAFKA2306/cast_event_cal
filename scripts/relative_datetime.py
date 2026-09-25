@@ -13,12 +13,12 @@ FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0
 EVIDENCE_SPAN_CHARS = 160
 WEEKDAY_INDEX = {name: index for index, name in enumerate("月火水木金土日")}
 CLOCK_CAPTURE_PATTERN = (
-    r"(?P<period>午前|午後|夜)?\s*"
+    r"(?P<period>午前|午後|(?<!今)夜)?\s*"
     r"(?P<hour>[01]?\d|2[0-3])"
     r"(?:[:：]\s*(?P<minute>[0-5]?\d)|時\s*(?:(?P<minute_jp>[0-5]?\d)\s*分?|(?P<half>半))?)"
 )
 NONTRIVIAL_CLOCK_RE = re.compile(
-    r"(?:(?:午前|午後|夜)\s*(?:[01]?\d|2[0-3])\s*時|(?:[01]?\d|2[0-3])\s*時\s*半)"
+    r"(?:(?:午前|午後|(?<!今)夜)\s*(?:[01]?\d|2[0-3])\s*時|(?:[01]?\d|2[0-3])\s*時\s*半)"
 )
 WEEKDAY_PATTERN = re.compile(
     r"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*"
