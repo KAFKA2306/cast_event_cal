@@ -41,6 +41,10 @@ URL_KEYS = ("url", "tweetUrl", "statusUrl", "permalink")
 ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
 AUTHOR_KEYS = ("screenName", "screen_name", "username", "userName", "handle")
 RETWEET_KEYS = ("rtCount", "retweet_count", "retweetCount", "repost_count", "repostCount")
+CONVERSATION_ID_KEYS = ("conversation_id_str", "conversation_id", "conversationId")
+IN_REPLY_TO_STATUS_ID_KEYS = ("in_reply_to_status_id_str", "in_reply_to_status_id", "inReplyToStatusId")
+QUOTED_STATUS_ID_KEYS = ("quoted_status_id_str", "quoted_status_id", "quotedStatusId")
+EXPANDED_URL_KEYS = ("expanded_url", "expandedUrl", "unwound_url", "unwoundUrl")
 EVENT_TERMS = {
     "イベント", "参加方法", "参加条件", "開催", "join", "ジョイン", "リクイン", "reqin",
     "リクエストインバイト", "request invite", "営業", "公演", "集会", "ライブ", "ツアー",
@@ -138,6 +142,34 @@ def direct_integer(mapping: dict[str, Any], keys: Iterable[str]) -> int | None:
     return None
 
 
+def direct_status_identifier(mapping: dict[str, Any], keys: Iterable[str]) -> str | None:
+    folded = {str(key).casefold(): value for key, value in mapping.items()}
+    for key in keys:
+        value = folded.get(key.casefold())
+        text = str(value).strip() if isinstance(value, (int, str)) else ""
+        if STATUS_ID_RE.fullmatch(text):
+            return text
+    return None
+
+
+def expanded_urls(mapping: dict[str, Any]) -> list[str]:
+    """Extract canonical link evidence attached to the same Yahoo/X post."""
+    results: set[str] = set()
+    for container_key in ("entities", "extended_entities"):
+        container = mapping.get(container_key)
+        if not isinstance(container, (dict, list)):
+            continue
+        for node in walk(container):
+            if not isinstance(node, dict):
+                continue
+            folded = {str(key).casefold(): value for key, value in node.items()}
+            for key in EXPANDED_URL_KEYS:
+                value = folded.get(key.casefold())
+                if isinstance(value, str) and value.startswith(("https://", "http://")):
+                    results.add(value.strip())
+    return sorted(results)[:20]
+
+
 def status_id(mapping: dict[str, Any]) -> str | None:
     for key in URL_KEYS:
         value = mapping.get(key)
@@ -175,13 +207,23 @@ def candidate_from_mapping(mapping: dict[str, Any]) -> dict[str, Any] | None:
     if not text or not post_id:
         return None
     text = clean_yahoo_text(text)
-    return {
+    candidate = {
         "status_id": post_id,
         "url": status_url(mapping, post_id),
         "text": text,
         "author": direct_string(mapping, AUTHOR_KEYS),
         "retweet_count": direct_integer(mapping, RETWEET_KEYS),
     }
+    optional_ids = {
+        "conversation_id": direct_status_identifier(mapping, CONVERSATION_ID_KEYS),
+        "in_reply_to_status_id": direct_status_identifier(mapping, IN_REPLY_TO_STATUS_ID_KEYS),
+        "quoted_status_id": direct_status_identifier(mapping, QUOTED_STATUS_ID_KEYS),
+    }
+    candidate.update({key: value for key, value in optional_ids.items() if value})
+    links = expanded_urls(mapping)
+    if links:
+        candidate["linked_urls"] = links
+    return candidate
 
 
 def extract_candidates(html_text: str) -> list[dict[str, Any]]:
