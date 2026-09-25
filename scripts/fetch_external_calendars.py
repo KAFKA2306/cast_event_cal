@@ -404,6 +404,16 @@ VRC_SEARCH_END_RE = re.compile(
     r'(?:終了|Ends?)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
     flags=re.IGNORECASE,
 )
+VRC_SEARCH_ENGLISH_START_RE = re.compile(
+    r'Starts?\s+(?P<value>[A-Za-z]{3},\s+[A-Za-z]{3}\s+\d{1,2},\s+'
+    r'\d{4}\s+\d{1,2}:\d{2}\s+(?:AM|PM))',
+    flags=re.IGNORECASE,
+)
+VRC_SEARCH_ENGLISH_END_RE = re.compile(
+    r'Ends?\s+(?P<value>[A-Za-z]{3},\s+[A-Za-z]{3}\s+\d{1,2},\s+'
+    r'\d{4}\s+\d{1,2}:\d{2}\s+(?:AM|PM))',
+    flags=re.IGNORECASE,
+)
 VRC_SEARCH_CALENDAR_RE = re.compile(r'\b(?P<id>cal_[0-9a-f-]{8,})\b', flags=re.IGNORECASE)
 VRC_SEARCH_GROUP_RE = re.compile(
     r'href="/(?:[a-z]{2}/)?groups/(?P<id>grp_[^"/?]+)[^"]*"[^>]*>(?P<name>.*?)</a>',
@@ -417,6 +427,27 @@ VRC_SEARCH_VRCHAT_LINK_RE = re.compile(
 
 def strip_html(value: str) -> str:
     return clean_text(unescape(re.sub(r"<[^>]+>", " ", value)))
+
+
+def parse_vrc_search_datetime(card: str, *, end: bool = False) -> datetime | None:
+    numeric_pattern = VRC_SEARCH_END_RE if end else VRC_SEARCH_START_RE
+    english_pattern = VRC_SEARCH_ENGLISH_END_RE if end else VRC_SEARCH_ENGLISH_START_RE
+    if match := numeric_pattern.search(card):
+        try:
+            return datetime.strptime(match.group("value"), "%Y-%m-%d %H:%M").replace(
+                tzinfo=UTC
+            )
+        except ValueError:
+            return None
+    if match := english_pattern.search(card):
+        try:
+            return datetime.strptime(
+                match.group("value"),
+                "%a, %b %d, %Y %I:%M %p",
+            ).replace(tzinfo=UTC)
+        except ValueError:
+            return None
+    return None
 
 
 def vrc_search_category(page_url: str) -> str | None:
@@ -455,30 +486,16 @@ def parse_vrc_search_events(
     )
     for card in VRC_SEARCH_CARD_SPLIT_RE.split(html_text)[1:]:
         title_match = VRC_SEARCH_TITLE_RE.search(card)
-        start_match = VRC_SEARCH_START_RE.search(card)
-        if not title_match or not start_match:
+        start = parse_vrc_search_datetime(card)
+        if not title_match or start is None:
             continue
         title = strip_html(title_match.group("value"))
         if not title:
             continue
-        try:
-            start = datetime.strptime(
-                start_match.group("value"), "%Y-%m-%d %H:%M"
-            ).replace(tzinfo=UTC)
-        except ValueError:
-            continue
         if not window_start <= start <= window_end:
             continue
 
-        end_match = VRC_SEARCH_END_RE.search(card)
-        end: datetime | None = None
-        if end_match:
-            try:
-                end = datetime.strptime(
-                    end_match.group("value"), "%Y-%m-%d %H:%M"
-                ).replace(tzinfo=UTC)
-            except ValueError:
-                end = None
+        end = parse_vrc_search_datetime(card, end=True)
 
         calendar_match = VRC_SEARCH_CALENDAR_RE.search(card)
         group_match = VRC_SEARCH_GROUP_RE.search(card)
