@@ -59,6 +59,7 @@ def replay() -> dict[str, Any]:
         history,
         actual_now=replay_now,
         x_ids=x_ids,
+        external_events=implementation.read_array(archive.EXTERNAL_EVENTS_PATH),
     )
     accepted_by_id: dict[str, dict[str, Any]] = {}
     for event in accepted:
