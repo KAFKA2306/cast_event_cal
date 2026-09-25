@@ -1,6 +1,7 @@
 from datetime import UTC, datetime
 
 from scripts.yahoo_evidence_graph import (
+    add_external_event_evidence,
     build_evidence_graph,
     corroboration_blocker,
     event_fingerprints,
@@ -304,3 +305,73 @@ def test_same_author_repeated_tco_link_can_join_evidence() -> None:
     assert result is not None
     assert result.event_at.isoformat() == "2026-09-27T22:00:00+09:00"
     assert result.event_fingerprint == "host|shorturl:https://t.co/abcd1234"
+
+def test_exact_official_url_can_supply_structured_clock_evidence() -> None:
+    candidate = {
+        **row(
+            "1234567890123456789",
+            "VRChat記念イベントを10月3日に開催。詳細は公式ページへ。",
+            author="official",
+            anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+        ),
+        "linked_urls": ["https://official.example/events/42"],
+    }
+    graph = build_evidence_graph([candidate], anchor_for=anchor_for)
+    add_external_event_evidence(
+        graph,
+        [
+            {
+                "source_id": "official:42",
+                "title": "VRChat記念イベント",
+                "starts_at": "2026-10-03T12:30:00Z",
+                "url": "https://official.example/events/42",
+            }
+        ],
+    )
+
+    result = resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    )
+
+    assert result is not None
+    assert result.event_at.isoformat() == "2026-10-03T21:30:00+09:00"
+    assert result.event_fingerprint == "officialurl:https://official.example/events/42"
+    assert "external:official:42" in result.corroborating_source_ids
+
+
+def test_shared_official_page_with_conflicting_event_times_fails_closed() -> None:
+    candidate = {
+        **row(
+            "1234567890123456789",
+            "VRChatイベントを10月3日に開催。詳細はイベント一覧へ。",
+            author="official",
+            anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+        ),
+        "linked_urls": ["https://official.example/events/list"],
+    }
+    graph = build_evidence_graph([candidate], anchor_for=anchor_for)
+    add_external_event_evidence(
+        graph,
+        [
+            {
+                "source_id": "official:a",
+                "starts_at": "2026-10-03T12:00:00Z",
+                "source_page": "https://official.example/events/list",
+            },
+            {
+                "source_id": "official:b",
+                "starts_at": "2026-10-03T13:00:00Z",
+                "source_page": "https://official.example/events/list",
+            },
+        ],
+    )
+
+    assert resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) is None
