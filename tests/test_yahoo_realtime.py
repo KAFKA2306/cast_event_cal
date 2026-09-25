@@ -179,6 +179,31 @@ def test_relative_datetime_and_cache_expiration_and_revalidation():
     }
 
 
+def test_datetime_parser_recovers_decorative_colon_and_english_date():
+    anchor = datetime(2026, 9, 25, tzinfo=UTC)
+
+    decorative = parse_event_datetime(
+        "VRChat交流会 第6回は09/27 JST 04˸00~05˸00に開催",
+        anchor,
+    )
+    assert decorative is not None
+    assert decorative.isoformat() == "2026-09-27T04:00:00+09:00"
+
+    english = parse_event_datetime(
+        "Saturday 26 Sept. 2026 21:00 PM (JST) VRChat Group+ event",
+        anchor,
+    )
+    assert english is not None
+    assert english.isoformat() == "2026-09-26T21:00:00+09:00"
+
+    twelve_hour = parse_event_datetime(
+        "26 September 2026 4:30 PM VRChat event 開催 Group+",
+        anchor,
+    )
+    assert twelve_hour is not None
+    assert twelve_hour.isoformat() == "2026-09-26T16:30:00+09:00"
+
+
 def test_search_url_is_pinned_to_yahoo_realtime():
     validate_search_url("https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=VRChat")
     with pytest.raises(ValueError):
