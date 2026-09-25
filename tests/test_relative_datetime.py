@@ -5,6 +5,7 @@ from zoneinfo import ZoneInfo
 
 from scripts.relative_datetime import (
     build_resolution_audit,
+    materialize_recurring_events,
     resolve_event_datetime,
     resolve_recurring_event,
 )
@@ -369,3 +370,22 @@ def test_period_clock_is_resolved_as_24_hour_time() -> None:
     )
     assert result is not None
     assert result.event_at == datetime(2026, 9, 19, 22, 30, tzinfo=JST)
+
+
+def test_materializes_four_bounded_future_occurrences() -> None:
+    source_anchor = datetime(2026, 8, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 8, 3, 12, 0, tzinfo=JST)
+
+    results = materialize_recurring_events(
+        "毎週金曜日 22:00 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+
+    assert [item.event_at for item in results] == [
+        datetime(2026, 8, 7, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 14, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 21, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 28, 22, 0, tzinfo=JST),
+    ]
+
