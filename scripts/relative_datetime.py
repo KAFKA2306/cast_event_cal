@@ -13,12 +13,14 @@ FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0
 EVIDENCE_SPAN_CHARS = 160
 WEEKDAY_INDEX = {name: index for index, name in enumerate("月火水木金土日")}
 CLOCK_CAPTURE_PATTERN = (
-    r"(?P<period>午前|午後|(?<!今)夜)?\s*"
+    r"(?P<period>午前|午後|深夜|(?<!今)(?<!深)夜|(?i:AM|PM))?\s*"
     r"(?P<hour>[01]?\d|2[0-3])"
     r"(?:[:：]\s*(?P<minute>[0-5]?\d)|時\s*(?:(?P<minute_jp>[0-5]?\d)\s*分?|(?P<half>半))?)"
 )
 NONTRIVIAL_CLOCK_RE = re.compile(
-    r"(?:(?:午前|午後|(?<!今)夜)\s*(?:[01]?\d|2[0-3])\s*時|(?:[01]?\d|2[0-3])\s*時\s*半)"
+    r"(?:(?:午前|午後|深夜|(?<!今)(?<!深)夜|(?i:AM|PM))\s*"
+    r"(?:[01]?\d|2[0-3])(?:\s*時|[:：]\s*[0-5]?\d)|"
+    r"(?:[01]?\d|2[0-3])\s*時\s*半)"
 )
 WEEKDAY_PATTERN = re.compile(
     r"(?P<prefix>次(?:の)?|来週(?:の)?|今週(?:の)?)?\s*"
@@ -89,7 +91,7 @@ DDMMYYYY_LABEL_PATTERN = re.compile(
     flags=re.IGNORECASE,
 )
 RECOVERY_EVENT_RE = re.compile(
-    r"集会|交流会|イベント|event|開催|営業|公演|ライブ|撮影会|演奏会|DJ|勉強会|祭|"
+    r"集会|交流会|イベント|event|開催|営業|公演|ライブ|撮影会|上映会|演奏会|DJ|勉強会|祭|"
     r"参加|JOIN|リクイン|Group\s*[+＋]|グループインスタンス|request\s+invite",
     flags=re.IGNORECASE,
 )
@@ -186,15 +188,21 @@ def _normalize_recovery_text(text: str) -> str:
 def _clock_parts(match: re.Match[str]) -> tuple[int, int] | None:
     hour = int(match.group("hour"))
     period = match.groupdict().get("period")
-    if period == "午前":
+    normalized_period = period.casefold() if period else None
+    if period == "午前" or normalized_period == "am":
         if hour == 12:
             hour = 0
         elif hour > 11:
             return None
-    elif period == "午後":
+    elif period == "午後" or normalized_period == "pm":
         if hour < 12:
             hour += 12
         elif hour > 12:
+            return None
+    elif period == "深夜":
+        if hour == 12:
+            hour = 0
+        elif hour > 5:
             return None
     elif period == "夜":
         if hour == 12:
