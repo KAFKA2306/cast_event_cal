@@ -25,6 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -38,7 +44,7 @@ jobs:
       - name: Upload dbt operator artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: dbt-read-model-${{ github.sha }}
+          name: dbt-read-model-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             analytics/dbt/target/manifest.json
             analytics/dbt/target/run_results.json
