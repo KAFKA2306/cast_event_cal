@@ -173,7 +173,7 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
 def _evidence_window(fingerprint: str) -> timedelta:
     if fingerprint.startswith(("status:", "thread:")):
         return MAX_EVIDENCE_DISTANCE
-    if fingerprint.startswith("group:"):
+    if fingerprint.startswith(("group:", "url:")):
         return STRONG_CONTEXT_DISTANCE
     return MAX_EVIDENCE_DISTANCE
 
