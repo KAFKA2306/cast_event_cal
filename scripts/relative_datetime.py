@@ -10,6 +10,10 @@ from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
 FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
+CLOCK_PUNCTUATION_TRANSLATION = str.maketrans({
+    "：": ":", "˸": ":", "꞉": ":", "∶": ":", "︓": ":", "﹕": ":",
+    "／": "/", "⁄": "/", "．": ".", "－": "-",
+})
 EVIDENCE_SPAN_CHARS = 160
 WEEKDAY_INDEX = {name: index for index, name in enumerate("月火水木金土日")}
 CLOCK_CAPTURE_PATTERN = (
@@ -207,11 +211,7 @@ def _jst(value: datetime) -> datetime:
 def _normalize_recovery_text(text: str) -> str:
     normalized = (
         text.translate(FULLWIDTH_DIGIT_TRANSLATION)
-        .replace("：", ":")
-        .replace("／", "/")
-        .replace("⁄", "/")
-        .replace("．", ".")
-        .replace("－", "-")
+        .translate(CLOCK_PUNCTUATION_TRANSLATION)
         .replace("〜", "~")
         .replace("～", "~")
     )
