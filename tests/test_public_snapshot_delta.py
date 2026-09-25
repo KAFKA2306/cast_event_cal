@@ -200,3 +200,31 @@ def test_degraded_source_without_disappearance_is_still_a_safe_delta(tmp_path: P
     assert report["status"] == "ok_with_degraded_sources"
     assert report["healthy"] is True
     assert append_history(report, history) is True
+
+
+def test_production_workflow_captures_and_persists_delta_contract() -> None:
+    root = Path(__file__).resolve().parents[1]
+    workflow = (root / ".github/workflows/update-calendar-v2.yml").read_text(
+        encoding="utf-8"
+    )
+
+    capture = workflow.index("Capture previous canonical snapshot")
+    materialize = workflow.index("Materialize curated recurring events")
+    validate = workflow.index("Validate generated data and collection health")
+    delta = workflow.index("Explain canonical public snapshot delta")
+    commit = workflow.index("Commit generated data safely")
+
+    assert capture < materialize < validate < delta < commit
+    assert "cp public/events.json /tmp/public-events-before.json" in workflow
+    assert (
+        "cp public/yahoo-candidate-history.json "
+        "/tmp/yahoo-candidate-history-before.json"
+    ) in workflow
+    assert "--before /tmp/public-events-before.json" in workflow
+    assert (
+        "--previous-yahoo-history "
+        "/tmp/yahoo-candidate-history-before.json"
+    ) in workflow
+    assert "uses: actions/upload-artifact@v7" in workflow
+    assert "path: audit/public-snapshot-delta.json" in workflow
+    assert "audit/public-snapshot-delta-history.jsonl" in workflow
