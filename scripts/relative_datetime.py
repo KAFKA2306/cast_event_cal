@@ -96,12 +96,13 @@ RECOVERY_EVENT_RE = re.compile(
     flags=re.IGNORECASE,
 )
 RECOVERY_ANNOUNCEMENT_RE = re.compile(
-    r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|営業(?:します|予定)?",
-    flags=re.IGNORECASE,
+    r"告知|開催(?:します|いたします|予定|決定)?|OPEN|オープン|開場|開始|"
+    r"営業(?:します|予定)?|(?:上映会|集会|交流会|イベント).{0,16}(?:行います|行う|実施します|実施)",
+    flags=re.IGNORECASE | re.DOTALL,
 )
 RECOVERY_ACCESS_RE = re.compile(
     r"join|ジョイン|リクイン|request\s*invite|フレンド申請|フレリク|"
-    r"group\s*[+＋]|group\s*インスタンス|グループ(?:プラス|インスタンス)|"
+    r"group\s*[+＋]|group\s*(?:public|インスタンス)|グループ(?:プラス|インスタンス)|"
     r"インスタンス|参加方法|参加希望|ご参加ください|参加してください|お越しください|"
     r"ご来場|ご来店",
     flags=re.IGNORECASE,
