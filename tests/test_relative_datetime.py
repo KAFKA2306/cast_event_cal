@@ -392,8 +392,8 @@ def test_materializes_four_bounded_future_occurrences() -> None:
 def test_recovers_midnight_japanese_and_am_clock_without_shifting_to_afternoon() -> None:
     anchor = datetime(2026, 6, 8, 7, 55, tzinfo=JST)
     result = resolve(
-        "本日 深夜 #ガジェット愛好会 による WWDC応援上映会を開催。"
-        "深夜2時のVRChatでお待ちしています。6/9 (火) AM 2:00～ Group Public",
+        "本日 深夜 #ガジェット愛好会 による WWDC 26 応援 上映会 を行います。"
+        "深夜2時の VRChat でお待ちしております。6/9 (火) AM 2:00～ Group Public",
         anchor,
     )
     assert result is not None
