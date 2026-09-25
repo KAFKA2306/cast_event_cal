@@ -155,7 +155,7 @@ def replay() -> dict[str, Any]:
         blocker = str(row.get("resolution_blocker") or "none")
         blocker_counts[blocker] = blocker_counts.get(blocker, 0) + 1
         samples = blocker_samples.setdefault(blocker, [])
-        if len(samples) < 4:
+        if len(samples) < 12:
             samples.append(
                 {
                     "status_id": str(row.get("status_id") or ""),
