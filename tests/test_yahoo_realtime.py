@@ -183,3 +183,31 @@ def test_search_url_is_pinned_to_yahoo_realtime():
     validate_search_url("https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=VRChat")
     with pytest.raises(ValueError):
         validate_search_url("https://example.com/realtime/search?p=VRChat")
+
+def test_structured_parser_preserves_thread_quote_and_link_evidence():
+    page = structured_page(
+        [
+            {
+                "id": "7234567890123456789",
+                "displayText": "9/27 VRChat交流会を開催。詳細はリンクへ",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/7234567890123456789",
+                "conversation_id_str": "7234567890123456789",
+                "in_reply_to_status_id_str": "6234567890123456789",
+                "quoted_status_id_str": "5234567890123456789",
+                "entities": {
+                    "urls": [
+                        {
+                            "expanded_url": "https://example.com/events/vrc-night",
+                        }
+                    ]
+                },
+            }
+        ]
+    )
+    candidate = extract_candidates(page)[0]
+    assert candidate["conversation_id"] == "7234567890123456789"
+    assert candidate["in_reply_to_status_id"] == "6234567890123456789"
+    assert candidate["quoted_status_id"] == "5234567890123456789"
+    assert candidate["linked_urls"] == ["https://example.com/events/vrc-night"]
