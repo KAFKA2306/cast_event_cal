@@ -164,7 +164,7 @@ def test_group_id_can_corroborate_across_different_authors() -> None:
         {
             **row(
                 "1234567890123456789",
-                f"VRChat交流会 9/27 開催します。Group {group_id}",
+                f"VRChat交流会 #VRC夜会 9/27 開催します。Group {group_id}",
                 author="host-a",
                 anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
             ),
@@ -173,7 +173,7 @@ def test_group_id_can_corroborate_across_different_authors() -> None:
         {
             **row(
                 "2234567890123456789",
-                f"VRChat交流会 22時半 JOIN案内 Group {group_id}",
+                f"VRChat交流会 #VRC夜会 22時半 JOIN案内 Group {group_id}",
                 author="host-b",
                 anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
             ),
@@ -190,7 +190,7 @@ def test_group_id_can_corroborate_across_different_authors() -> None:
     )
     assert result is not None
     assert result.event_at.isoformat() == "2026-09-27T22:30:00+09:00"
-    assert result.event_fingerprint == f"group:{group_id}"
+    assert result.event_fingerprint == f"group:{group_id}|tag:vrc夜会"
 
 
 def test_reply_context_can_corroborate_across_different_authors() -> None:
