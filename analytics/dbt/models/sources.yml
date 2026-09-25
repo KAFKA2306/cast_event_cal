@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: canonical_read_model
+    description: >
+      Canonical-derived SQLite read model input. dbt reads this boundary but does not
+      collect source data, assign canonical identity, or mutate source-of-truth state.
+    schema: canonical
+    tables:
+      - name: source_records
+        description: Canonical source records with preserved decision and provenance fields.
+      - name: event_occurrences
+        description: Stable canonical event occurrences supplied by the upstream read-model builder.
+      - name: event_sources
+        description: Links canonical occurrences to source records without re-inferring identity.
+      - name: collection_runs
+        description: Upstream collection-run evidence used only for analytical projection.
