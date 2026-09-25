@@ -66,7 +66,7 @@ def observed_candidate(row: dict[str, Any], observed_at: datetime) -> dict[str, 
     except (TypeError, ValueError):
         retweet_count = None
     stamp = implementation.utc_text(observed_at)
-    return {
+    normalized = {
         "status_id": status_id,
         "url": url,
         "text": text,
@@ -77,6 +77,18 @@ def observed_candidate(row: dict[str, Any], observed_at: datetime) -> dict[str, 
         "last_decision": str(row.get("last_decision") or "pending"),
         "last_reason": row.get("last_reason") or row.get("reason"),
     }
+    for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id"):
+        value = str(row.get(key) or "").strip()
+        if implementation.STATUS_ID_RE.fullmatch(value):
+            normalized[key] = value
+    links = row.get("linked_urls")
+    if isinstance(links, list):
+        normalized["linked_urls"] = sorted({
+            str(value).strip()
+            for value in links
+            if isinstance(value, str) and value.startswith(("https://", "http://"))
+        })[:20]
+    return normalized
 
 
 def merge_history(
