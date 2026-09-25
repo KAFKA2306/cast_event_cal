@@ -28,6 +28,7 @@ DEFAULT_SEARCH_URL = "https://search.yahoo.co.jp/realtime/search?" + urlencode(
     {"ei": "UTF-8", "p": DEFAULT_QUERY, "md": "h"}
 )
 PARSER_VERSION = "1.2"
+FOREIGN_TIMEZONE_RE = re.compile(r"\\b(?:BST|UTC|GMT|PST|PDT|EST|EDT|CET|CEST)\\b", re.IGNORECASE)
 STATUS_RE = re.compile(
     r"(?:https?://)?(?:www\.)?(?:x|twitter)\.com/[^\s\"'<>\\]+/status/(\d+)", re.IGNORECASE
 )
@@ -302,6 +303,34 @@ def normalize_text(text: str) -> str:
     return ENGLISH_DATE_RE.sub(english_date, normalized)
 
 
+def _datetime_from_match(match: re.Match[str], anchor: datetime) -> datetime | None:
+    values = match.groupdict()
+    hour = int(values["hour"])
+    period = (values.get("period_before") or values.get("period_after") or "").casefold()
+    if period and hour <= 12:
+        if period == "am" and hour == 12:
+            hour = 0
+        elif period == "pm" and hour < 12:
+            hour += 12
+    try:
+        event_at = datetime(
+            int(values.get("year") or anchor.year),
+            int(values["month"]),
+            int(values["day"]),
+            hour,
+            int(values.get("minute") or 0),
+            tzinfo=JST,
+        )
+    except ValueError:
+        return None
+    if not values.get("year") and event_at < anchor - timedelta(days=2):
+        try:
+            event_at = event_at.replace(year=event_at.year + 1)
+        except ValueError:
+            return None
+    return event_at
+
+
 def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
     normalized = normalize_text(text)
     clock = (
@@ -309,39 +338,41 @@ def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
         r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
         r"(?:\s*(?P<period_after>AM|PM))?"
     )
+    date_patterns = [
+        r"(?P<year>20\d{2})[./年-](?P<month>\d{1,2})[./月-](?P<day>\d{1,2})日?",
+        r"(?P<month>\d{1,2})[./月-](?P<day>\d{1,2})日?",
+    ]
+
+    # When a post presents multiple timezone renderings of the same event,
+    # prefer the explicitly labelled JST rendering instead of interpreting a
+    # preceding foreign clock as JST.
+    for date_pattern in date_patterns:
+        for pattern in (
+            rf"{date_pattern}\s*(?:[（(]?[月火水木金土日][）)]?)?\s*(?:\(?JST\)?)\s*{clock}",
+            rf"{date_pattern}\s*(?:[（(]?[月火水木金土日][）)]?)?.{{0,20}}?{clock}\s*(?:\(?JST\)?)",
+        ):
+            match = re.search(pattern, normalized, flags=re.IGNORECASE | re.DOTALL)
+            if match:
+                return _datetime_from_match(match, anchor)
+
+    # A foreign-zone clock without a nearby explicit JST representation is not
+    # safe to reinterpret. Fail closed rather than silently shifting the event.
+    if FOREIGN_TIMEZONE_RE.search(normalized):
+        return None
+
     patterns = [
-        rf"(?P<year>20\d{{2}})[./年-](?P<month>\d{{1,2}})[./月-](?P<day>\d{{1,2}})日?"
-        rf"(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
-        rf"(?P<month>\d{{1,2}})[./月-](?P<day>\d{{1,2}})日?"
-        rf"(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
+        rf"{date_patterns[0]}(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
+        rf"{date_patterns[1]}(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
     ]
     for pattern in patterns:
         match = re.search(pattern, normalized, flags=re.IGNORECASE | re.DOTALL)
-        if not match:
-            continue
-        values = match.groupdict()
-        hour = int(values["hour"])
-        period = (values.get("period_before") or values.get("period_after") or "").casefold()
-        if period and hour <= 12:
-            if period == "am" and hour == 12:
-                hour = 0
-            elif period == "pm" and hour < 12:
-                hour += 12
-        try:
-            event_at = datetime(
-                int(values.get("year") or anchor.year), int(values["month"]), int(values["day"]),
-                hour, int(values.get("minute") or 0), tzinfo=JST,
-            )
-        except ValueError:
-            return None
-        if not values.get("year") and event_at < anchor - timedelta(days=2):
-            try:
-                event_at = event_at.replace(year=event_at.year + 1)
-            except ValueError:
-                return None
-        return event_at
+        if match:
+            return _datetime_from_match(match, anchor)
+
     relative = re.search(
-        rf"(?P<day>本日|今日|明日).{{0,30}}?{clock}", normalized, flags=re.IGNORECASE | re.DOTALL
+        rf"(?P<day>本日|今日|明日).{{0,30}}?{clock}",
+        normalized,
+        flags=re.IGNORECASE | re.DOTALL,
     )
     if not relative:
         return None
@@ -354,8 +385,12 @@ def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
         elif period == "pm" and hour < 12:
             hour += 12
     return datetime(
-        day.year, day.month, day.day, hour,
-        int(relative.group("minute") or 0), tzinfo=JST,
+        day.year,
+        day.month,
+        day.day,
+        hour,
+        int(relative.group("minute") or 0),
+        tzinfo=JST,
     )
 
 
