@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 779,
+  "event_count": 783,
   "matched_events": 295,
   "matched_series": {
     "vrc-beginner-world-tour": 18,
@@ -19,7 +19,7 @@
     "ml-gathering": 34,
     "vrc-idle-gathering": 17
   },
-  "unmatched_events": 484,
+  "unmatched_events": 488,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3547,65 +3547,67 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 779,
+    "event_count": 783,
     "category_breakdown": {
-      "art": 123,
-      "community": 161,
+      "art": 122,
+      "community": 187,
       "game": 105,
       "language_exchange": 35,
-      "learning": 1,
-      "music": 16,
-      "other": 15,
+      "learning": 13,
+      "music": 17,
+      "other": 18,
       "performance": 4,
       "recruitment_deadline": 5,
-      "technology": 244,
-      "wellness": 51,
+      "technology": 190,
+      "wellness": 68,
       "world_tour": 19
     },
     "subcategory_breakdown": {
+      "ai": 34,
       "application_deadline": 2,
-      "bar": 18,
+      "bar": 2,
       "cafe": 16,
       "cast_recruitment": 1,
       "dance": 1,
-      "dj": 7,
-      "engineering": 73,
+      "dj": 6,
+      "engineering": 107,
       "fitness": 34,
-      "hangout": 5,
+      "hangout": 28,
       "language_exchange": 35,
       "lecture": 1,
       "live_music": 1,
       "mystery": 36,
       "photography": 122,
-      "research": 171,
+      "research": 40,
       "show": 2,
-      "social": 122,
+      "social": 141,
       "tabletop": 34,
       "theater": 1,
+      "workshop": 9,
       "world_tour": 19
     },
     "event_mode_breakdown": {
       "deadline": 5,
-      "hybrid": 5,
-      "in_world": 764,
+      "hybrid": 4,
+      "in_world": 769,
       "stream": 4,
       "unknown": 1
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
-      "fallback": 15,
-      "keyword_rules": 266,
-      "legacy_and_keywords": 220,
-      "legacy_category": 1
+      "fallback": 18,
+      "keyword_rules": 267,
+      "legacy_and_keywords": 99,
+      "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 22,
-    "audit_event_count": 22
+    "low_confidence_event_count": 39,
+    "audit_event_count": 39
   },
   "category_review_queue": [
     {
       "event_id": "9b20c622f7efd34d8f29",
-      "title": "今夜 はこちら！ #VR演劇 をフィーチャーしているけど、 VRC 映画とかVR ライブ 、接客 イベント にだってパンフがあったっていいじゃない！ 本日 20:45 開場 #cluster …",
+      "title": "今夜はこちら！ #VR演劇 をフィーチャーしているけど、 VRC 映画とかVRライブ、接客イベントにだってパンフがあったっていいじゃない！ 本日 20:45開場 #cluster ですが # …",
       "category": "music",
       "label": "音楽・ダンス",
       "subcategory": null,
@@ -3623,7 +3625,7 @@
     },
     {
       "event_id": "9072a697d499f4b85928",
-      "title": "本日 はVirtual Sky Serviceの定期 イベント開催 日です！ 21:00〜22:30(最終受付) Group ＋インスタンスで 開催 します VRChat Flight Wee…",
+      "title": "本日 はVirtual Sky Serviceの定期イベント 開催 日です！ 21:00〜22:30(最終受付) Group ＋インスタンスで 開催 します VRChat Flight Wee…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3635,17 +3637,21 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "73a1673103e767c63f5c",
-      "title": "明日開催 される VRChat の 居酒屋たま in a TRANCE Vol.4 2026/9/25(金)19:50開店です！ publicインスタンスで立てると 告知 してましたが、荒らし…",
-      "category": "other",
-      "label": "その他",
+      "event_id": "4a5130b55abcfe8f44d1",
+      "title": "2026/9/25(金)19:50開店 居酒屋たま VRChat 店 オープン します！ 正式フライヤーは後日！ 居酒屋たま in a TRANCE Vol.4 DJ YSK DJ Yukii…",
+      "category": "music",
+      "label": "音楽・ダンス",
       "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:dj"
+      ],
       "event_mode": "in_world",
-      "ambiguous_with": []
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "24e3d9fad13ac0ba5ea1",
@@ -3653,8 +3659,8 @@
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
@@ -3672,23 +3678,6 @@
       "evidence": [],
       "event_mode": "hybrid",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "905f91922eb9ac7f561c",
-      "title": "💕193 ライブ のお知らせ💕 Vtuber S Groove Kawaii!! Distortion 🗓️9/25(金) ⏰START 20:30 📍 VRChat & YouTube （ …",
-      "category": "art",
-      "label": "アート・展示・撮影",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:art"
-      ],
-      "event_mode": "hybrid",
-      "ambiguous_with": [
-        "music"
-      ]
     },
     {
       "event_id": "531cce649f435560089e",
@@ -3717,8 +3706,21 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "566f38a11b0a7a86f9ec",
-      "title": "【プレスリリース】 9/25(金) 21時 より、株式会社サイコム様主催の座談会「活動別に見る VRChat のPC事情」が開催されます！ ゲストにリーチャ隊長をお迎えし、プレイスタイルに合っ…",
+      "event_id": "ab7248b7860b7cd9ed5e",
+      "title": "「誰かと話したくなったら。」 VRChat で必ず誰かと話せるお店 Bar『Unveil』 告知 営業日！ 9/25（金）21:30 OPEN 一人でふらっとでも大歓迎。 キャスト達があなたを…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "28e9f4bea249a0d8ef03",
+      "title": "♦•♣•━━ VRChat キャバレー Casa Di Luce ━━•♠•❤️ 👠 本日 22:00 OPEN です✨ ➡️22:00にオーナー「Saru_猿頭トリートメント」へ Reque…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3732,6 +3734,45 @@
     {
       "event_id": "93ee8037ee999c04c8fd",
       "title": "【 VRChatイベント告知 】 耳を澄ませるとAkyoの鐘の音がする。 そうだ、季節はあきようになったんだ！ #Akyoのもみじがり 9/25(金) 22:00～23:00 https://…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "40d05257e52fd7f68fd3",
+      "title": "【Casa di luce】 VRC キャバレー 本日 22:00より 営業 スタートいたします！ 本日 は特別な夜「十五夜」🌙🐇 今夜 も華やかなキャスト陣がお待ちしております✨ 週末に向け…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "643b1605663061a2c8a3",
+      "title": "【📣 VRCイベント告知 】 9/25(土)22:45より 笑点風大喜利 イベント 第174回 #にぎやか大喜利宴会 を _BarKansaiさんとのコラボで 開催 します。 観るだけ・聴くだ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d3b736c23409d3a61a6d",
+      "title": "🗓️9/26(土) 15:00〜21:00 ⛳️IV AKIHABARA 超ポニ フェス ！２ #超ポニ フェス 2 VRChat でお世話になっているぽにやまさんにお声がけいただきました…！…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3795,23 +3836,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "47589b9a337a79093629",
-      "title": "🎀シスター・プリンセス ライブ ステージ ～Dream♡World～🎀 アーカイブ配信中です✨ さらに、 VRChat では【9/27(日) 12:00～】リバイバル上映も 開催 予定です！ …",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "hybrid",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "42b5081399150f313644",
       "title": "🌙【#ClubMorceau】#39🌙 ～ モルソ 第39回 通常営業 ～ ⏰9月27日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) 🎉Pe…",
       "category": "other",
@@ -3843,8 +3867,8 @@
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3869,6 +3893,40 @@
       ]
     },
     {
+      "event_id": "2f4d58c5b443002d3a67",
+      "title": "第73回「アバター改変なんもわからん集会」 日時 ：9月30日(水) 22:00 開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加方法： VRC グループへ JOIN ※講師…",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "a34ae86c7abcf8ae1bc1",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "fbd3393da7ad18baa841",
       "title": "【 VRChat 内でVライフ！の 集会 を 開催 !】 久留米申込受付中&11月神戸 開催 の申込〆切1週前ということで、『Vライフ！』に関する VRChat集会 を来週の金曜･10月2日(…",
       "category": "recruitment_deadline",
@@ -3886,33 +3944,259 @@
       ]
     },
     {
-      "event_id": "01071d3ff652a1c0cd2b",
-      "title": "20:30 開場 21:00 開始 VRChat & YouTube 出演者 藍葉じるあ Inferno Liberta Yasya & Mervy 頭ふりふりライブだ！激しいのやる豪華メンバ…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
+      "event_id": "occ_bcccb949b0ce5d71c0a7",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
       "confidence": 0.58,
       "source": "keyword_rules",
       "evidence": [
-        "keyword:title:ライブ"
+        "keyword:description:自然計算",
+        "keyword:description:研究"
       ],
-      "event_mode": "hybrid",
+      "event_mode": "in_world",
       "ambiguous_with": [
         "community"
       ]
     },
     {
-      "event_id": "b2ef69c2afd9bdbcd411",
-      "title": "💥ライブのお知らせ💥 10月10日(土) 「爆裂溌剌-楓 - #BAKURETSU-」 @ VRChat C3 Group + (Tamari Bar Cane) OPEN 18:45 / S…",
-      "category": "music",
-      "label": "音楽・ダンス",
+      "event_id": "49068467ba0325693240",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "9828e4ea4459ab978637",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "3ab081a165ca063f87b6",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
       "subcategory": null,
       "score": 5,
       "confidence": 0.58,
       "source": "keyword_rules",
       "evidence": [
-        "keyword:title:ライブ"
+        "keyword:title:歴史"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "b1738c448b1ae6d39526",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "ede144e9282460099b1f",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "1ca35dbc927b547740c5",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "fd5ddfa3e822cf34000a",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "9c9383ac2bec1643767a",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "occ_dafcd475c54aee19a754",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "occ_4c6dcbddc5036e035a4d",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "b8d31e57ac06bd089801",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "e5dfcf70479b507c1bc9",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "occ_68cddb4bf9624dd45016",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "26ab9a7d25fb170bf92d",
+      "title": "分解技術集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:技術"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
