@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 JST = ZoneInfo("Asia/Tokyo")
 MAX_EVIDENCE_DISTANCE = timedelta(days=7)
 STRONG_CONTEXT_DISTANCE = timedelta(days=3)
+OFFICIAL_URL_DISTANCE = timedelta(days=180)
 
 STATUS_ID_RE = re.compile(r"\d{10,25}")
 GROUP_ID_RE = re.compile(r"\bgrp_[0-9a-f-]{8,}\b", re.IGNORECASE)
@@ -176,6 +177,8 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
     series_tokens = {f"hashtag:{tag}" for tag in tags} | {f"name:{name}" for name in names}
 
     links = _linked_urls(row, text)
+    for linked_url in links:
+        fingerprints.add(f"officialurl:{linked_url}")
     combined_group_text = " ".join([text, *sorted(links)])
     group_ids = {group_id.casefold() for group_id in GROUP_ID_RE.findall(combined_group_text)}
     group_codes = {
@@ -210,6 +213,8 @@ def event_fingerprints(row: dict[str, Any]) -> set[str]:
 
 
 def _evidence_window(fingerprint: str) -> timedelta:
+    if fingerprint.startswith("officialurl:"):
+        return OFFICIAL_URL_DISTANCE
     if fingerprint.startswith(("status:", "thread:")):
         return MAX_EVIDENCE_DISTANCE
     if "group:" in fingerprint or "groupcode:" in fingerprint or "url:" in fingerprint:
@@ -247,6 +252,49 @@ def build_evidence_graph(
     for nodes in graph.values():
         nodes.sort(key=lambda item: (item.anchor, item.status_id))
     return graph
+
+
+def add_external_event_evidence(
+    graph: dict[str, list[EvidenceNode]],
+    events: list[dict[str, Any]],
+) -> None:
+    """Attach structured official-event datetime evidence by exact canonical URL.
+
+    The external collector already validates ICS/JSON-LD dates.  We only join
+    that evidence to Yahoo candidates sharing the exact non-root canonical URL.
+    General host or fuzzy-title joins are intentionally not allowed.
+    """
+    for event in events:
+        raw_start = str(event.get("starts_at") or "").strip()
+        if not raw_start:
+            continue
+        try:
+            event_at = datetime.fromisoformat(raw_start.replace("Z", "+00:00")).astimezone(JST)
+        except ValueError:
+            continue
+
+        urls = {
+            canonical
+            for value in (event.get("url"), event.get("source_page"))
+            if (canonical := _canonical_link(str(value or ""))) is not None
+        }
+        if not urls:
+            continue
+
+        source_id = str(event.get("source_id") or "").strip()
+        if not source_id:
+            continue
+        node = EvidenceNode(
+            status_id=f"external:{source_id}",
+            anchor=event_at,
+            text=f"{event_at:%Y/%m/%d %H:%M} 開催",
+        )
+        for url in urls:
+            key = f"officialurl:{url}"
+            nodes = graph.setdefault(key, [])
+            if all(existing.status_id != node.status_id for existing in nodes):
+                nodes.append(node)
+                nodes.sort(key=lambda item: (item.anchor, item.status_id))
 
 
 def _explicit_dates(text: str, anchor: datetime) -> set[date]:
