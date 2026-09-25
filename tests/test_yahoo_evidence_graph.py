@@ -236,3 +236,37 @@ def test_bracketed_event_name_is_available_as_author_scoped_fingerprint() -> Non
         anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
     )
     assert "host|name:vrc夜会" in event_fingerprints(item)
+
+def test_vrchat_group_code_is_a_stable_author_scoped_fingerprint() -> None:
+    item = row(
+        "1234567890123456789",
+        "VRChat接客イベント。VRC グループ「CLMGC.2277」から参加。",
+        author="host",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    assert "host|groupcode:clmgc.2277" in event_fingerprints(item)
+
+
+def test_group_code_cross_author_join_still_requires_series_identity() -> None:
+    first = row(
+        "1234567890123456789",
+        "VRChat交流会 #VRC夜会 9/27開催。Group + / YSS.8431",
+        author="host-a",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    second = row(
+        "2234567890123456789",
+        "VRChat交流会 #VRC夜会 22:00 JOIN。Group + / YSS.8431",
+        author="staff-b",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    graph = build_evidence_graph([first, second], anchor_for=anchor_for)
+    result = resolve_corroborated_datetime(
+        first,
+        graph=graph,
+        anchor=anchor_for(first),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    )
+    assert result is not None
+    assert result.event_at.isoformat() == "2026-09-27T22:00:00+09:00"
+    assert result.event_fingerprint == "groupcode:yss.8431|hashtag:vrc夜会"
