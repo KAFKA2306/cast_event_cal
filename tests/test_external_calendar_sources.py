@@ -241,3 +241,31 @@ def test_vrc_search_parser_deduplicates_same_calendar_event_across_pages():
     assert len(selected) == 1
     assert excluded == 1
 
+def test_parse_vrc_search_english_curated_time_format():
+    module = load_module()
+    html = """
+    <html><body>
+      <article class="list-group-item result-row result-row-event">
+        <a class="result-row-title">Mobility Monday</a>
+        <div>Starts Tue, Sep 29, 2026 12:00 AM Ends Tue, Sep 29, 2026 01:00 AM</div>
+        <p class="result-row-desc">Exercise session for all ability levels.</p>
+        <a href="/groups/grp_12345678-abcd">VR Wellness Center</a>
+        <a href="https://vrchat.com/home/group/grp_12345678-abcd/calendar/cal_12345678-aaaa-bbbb-cccc-dddddddddddd">View on VRChat</a>
+      </article>
+    </body></html>
+    """
+    events = module.parse_vrc_search_events(
+        html,
+        page_url="https://search.vrcwwt.com/events/english/next-week/",
+        source_name="vrc_search_public_events",
+        fetched_at="2026-09-26T00:00:00Z",
+        tags=["公開VRChatイベント"],
+        window_start=datetime(2026, 9, 26, tzinfo=UTC),
+        window_end=datetime(2026, 10, 26, tzinfo=UTC),
+    )
+    assert len(events) == 1
+    assert events[0]["starts_at"] == "2026-09-29T00:00:00Z"
+    assert events[0]["ends_at"] == "2026-09-29T01:00:00Z"
+    assert events[0]["source_id"] == "cal_12345678-aaaa-bbbb-cccc-dddddddddddd"
+    assert events[0]["organizer"] == "VR Wellness Center"
+
