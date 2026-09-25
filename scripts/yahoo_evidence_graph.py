@@ -332,7 +332,9 @@ def _normalize_hour(period: str | None, hour: int) -> int | None:
     if period == "夜":
         if hour == 12:
             return None
-        return hour + 12 if 1 <= hour <= 11 else None
+        if 1 <= hour <= 11:
+            return hour + 12
+        return hour if 18 <= hour <= 23 else None
     return hour
 
 
