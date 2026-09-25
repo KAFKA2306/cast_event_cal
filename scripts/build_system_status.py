@@ -6,8 +6,12 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from scripts.audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, parse_instant, read_object
-from scripts.validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, SOURCE_HEALTH_PATHS
+if __package__:
+    from scripts.audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, parse_instant, read_object
+    from scripts.validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, SOURCE_HEALTH_PATHS
+else:
+    from audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, parse_instant, read_object
+    from validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, SOURCE_HEALTH_PATHS
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_HEALTH = ROOT / "public" / "health.json"
@@ -97,7 +101,8 @@ def build_status(
     return {
         "schema_version": "1.0",
         "generated_at": isoformat_utc(now),
-        "snapshot_generated_at": freshness["published_at"],
+        "snapshot_generated_at": snapshot.get("generated_at") if parse_instant(snapshot.get("generated_at")) else None,
+        "last_successful_refresh_at": freshness["published_at"],
         "snapshot_age_minutes": freshness["snapshot_age_minutes"],
         "overall_status": overall_status,
         "refresh_result": normalized_refresh_result,
