@@ -118,6 +118,7 @@ Public artifact:
 - `public/calendar.ics`
 - `public/health.json`
 - `public/snapshot.json` — `events.json` のSHA-256・件数・latest event identity
+- `public/status.json` — 最終正常snapshotの鮮度、collection health、直近refresh結果から生成する公開SLO status
 - `public/yahoo-candidate-history.json`
 - `public/yahoo-classifier-audit.json`
 - `public/event-ontology.json`
@@ -202,6 +203,7 @@ matchは単なるfuzzy searchでは成立しません。alias exact match、ま�
 13. `events.json` のdeterministic snapshot identity生成
 14. GitHub Pages配信
 15. production snapshot / HTML / JSON / ICS / tonightをread-backし、repository snapshotと一致確認
+16. build成功・失敗のどちらでも、最終正常snapshotから `public/status.json` を更新して `ok / degraded / stale` を公開
 
 日常分類ではLLM判定を使用しません。
 
