@@ -249,6 +249,8 @@ def _clock_parts(match: re.Match[str]) -> tuple[int, int] | None:
             return None
         if 1 <= hour <= 11:
             hour += 12
+        elif 18 <= hour <= 23:
+            hour = hour
         else:
             return None
 
