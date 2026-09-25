@@ -122,3 +122,35 @@ def test_ontology_rejects_pattern_only_and_tied_matches():
         {"canonical_id": "two", "aliases": ["一般オークション"], "organizers": [], "required_patterns": []},
     ]
     assert select_entry(event, tied)[1] == "ambiguous"
+
+def test_history_retains_corroboration_metadata_when_later_observation_is_sparse():
+    later = datetime(2026, 8, 3, 1, 0, tzinfo=UTC)
+    existing = [
+        {
+            "status_id": "1234567890123456789",
+            "url": "https://x.com/host/status/1234567890123456789",
+            "text": "8/10 VRCイベント開催",
+            "author": "host",
+            "retweet_count": 8,
+            "first_seen_at": "2026-08-02T01:00:00Z",
+            "last_seen_at": "2026-08-02T01:00:00Z",
+            "conversation_id": "1234567890123456789",
+            "quoted_status_id": "2234567890123456789",
+            "linked_urls": ["https://example.com/events/night"],
+        }
+    ]
+    observed = [
+        {
+            "status_id": "1234567890123456789",
+            "url": "https://x.com/host/status/1234567890123456789",
+            "text": "8/10 VRCイベント開催",
+            "author": "host",
+            "retweet_count": 8,
+        }
+    ]
+
+    merged = merge_history(existing, observed, later)
+
+    assert merged[0]["conversation_id"] == "1234567890123456789"
+    assert merged[0]["quoted_status_id"] == "2234567890123456789"
+    assert merged[0]["linked_urls"] == ["https://example.com/events/night"]
