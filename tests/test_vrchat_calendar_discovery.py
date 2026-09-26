@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from scripts import fetch_vrchat_calendar as calendar
 from scripts.fetch_vrchat_calendar import normalize_event, run_discovery
 
 
@@ -41,13 +42,88 @@ def test_normalize_event_rejects_non_public_or_deleted_event():
     assert normalize_event(sample_event(isDraft=True)) is None
 
 
-def test_missing_cookie_preserves_existing_cache(tmp_path: Path):
+class FakeResponse:
+    def __init__(self, payload):
+        self.payload = payload
+
+    def raise_for_status(self):
+        return None
+
+    def json(self):
+        return self.payload
+
+
+class FakeClient:
+    def __init__(self, payloads, **kwargs):
+        self.payloads = list(payloads)
+        self.headers = kwargs.get("headers", {})
+        self.calls = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def get(self, url, *, params):
+        self.calls.append((url, params))
+        return FakeResponse(self.payloads.pop(0))
+
+
+def test_missing_cookie_uses_anonymous_public_discover(tmp_path: Path, monkeypatch):
+    output = tmp_path / "discovered.json"
+    health = tmp_path / "health.json"
+    exclude = tmp_path / "manual.json"
+    output.write_text("[]", encoding="utf-8")
+    exclude.write_text("[]", encoding="utf-8")
+
+    client = FakeClient([{"results": [sample_event()], "nextCursor": ""}])
+    monkeypatch.setattr(calendar.httpx, "Client", lambda **kwargs: (
+        setattr(client, "headers", kwargs.get("headers", {})) or client
+    ))
+
+    result = run_discovery(
+        cookie=None,
+        output=output,
+        health_output=health,
+        exclude=exclude,
+        terms=["日本語"],
+        page_size=100,
+        max_pages=1,
+        timeout=1.0,
+    )
+
+    assert result == 0
+    events = json.loads(output.read_text(encoding="utf-8"))
+    assert [event["source_id"] for event in events] == [
+        "cal_6b182f0c-61ef-4bdf-97fe-94f63bcba27b"
+    ]
+    assert "Cookie" not in client.headers
+    assert client.calls[0][0] == calendar.DISCOVER_API_URL
+    assert client.calls[0][1]["personalizedResults"] == "exclude"
+
+    health_data = json.loads(health.read_text(encoding="utf-8"))
+    assert health_data["status"] == "degraded"
+    assert health_data["event_count"] == 1
+    assert health_data["query_count"] == 0
+    assert health_data["routes"] == {"discover": 1, "search": 0}
+    assert "anonymous public discover" in health_data["reason"]
+
+
+def test_anonymous_discover_failure_preserves_existing_cache(tmp_path: Path, monkeypatch):
     output = tmp_path / "discovered.json"
     health = tmp_path / "health.json"
     exclude = tmp_path / "manual.json"
     cached = [{"source_id": "cal_cached", "title": "cached", "starts_at": "2026-08-10T12:00:00Z"}]
     output.write_text(json.dumps(cached), encoding="utf-8")
     exclude.write_text("[]", encoding="utf-8")
+
+    class FailingClient(FakeClient):
+        def get(self, url, *, params):
+            raise RuntimeError("temporary outage")
+
+    client = FailingClient([])
+    monkeypatch.setattr(calendar.httpx, "Client", lambda **kwargs: client)
 
     result = run_discovery(
         cookie=None,
@@ -63,5 +139,6 @@ def test_missing_cookie_preserves_existing_cache(tmp_path: Path):
     assert result == 0
     assert json.loads(output.read_text(encoding="utf-8")) == cached
     health_data = json.loads(health.read_text(encoding="utf-8"))
-    assert health_data["status"] == "skipped"
+    assert health_data["status"] == "degraded"
     assert health_data["event_count"] == 1
+    assert "preserved previous discovery cache" in health_data["reason"]
