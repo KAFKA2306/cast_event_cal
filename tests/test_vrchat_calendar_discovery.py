@@ -108,8 +108,8 @@ def test_missing_cookie_uses_anonymous_public_discover(tmp_path: Path, monkeypat
     assert client.calls[0][0] == calendar.DISCOVER_API_URL
     assert client.calls[0][1]["personalizedResults"] == "exclude"
     assert len(client.calls) == len(calendar.ANONYMOUS_DISCOVER_CATEGORY_GROUPS)
-    assert client.calls[0][1].get("categories") is None
-    assert client.calls[1][1]["categories"] == "music,performance"
+    assert client.calls[0][1]["categories"] == "arts"
+    assert client.calls[1][1]["categories"] == "avatars"
 
     health_data = json.loads(health.read_text(encoding="utf-8"))
     assert health_data["status"] == "degraded"
