@@ -44,10 +44,16 @@ def test_discover_route_uses_next_cursor():
             {"results": [{"id": "cal_2"}], "nextCursor": ""},
         ]
     )
-    rows = module.fetch_discover(client, page_size=80, max_pages=3)
+    rows = module.fetch_discover(
+        client,
+        page_size=80,
+        max_pages=3,
+        personalized_results="exclude",
+    )
     assert [row["id"] for row in rows] == ["cal_1", "cal_2"]
     assert client.calls[0][0] == module.DISCOVER_API_URL
     assert client.calls[0][1]["scope"] == "upcoming"
+    assert client.calls[0][1]["personalizedResults"] == "exclude"
     assert client.calls[1][1] == {"n": 80, "nextCursor": "cursor-2"}
 
 
