@@ -277,6 +277,7 @@ def test_parse_vrc_search_localized_numeric_datetime_labels():
         ("Empieza 2026-09-26 01:00 Termina 2026-09-26 02:00", "2026-09-26T01:00:00Z", "2026-09-26T02:00:00Z"),
         ("Beginnt 2026-09-27 03:00 Endet 2026-09-27 04:00", "2026-09-27T03:00:00Z", "2026-09-27T04:00:00Z"),
         ("Начало 2026-09-28 05:00 Окончание 2026-09-28 06:00", "2026-09-28T05:00:00Z", "2026-09-28T06:00:00Z"),
+        ("Commence 2026-09-29 07:00 Se termine 2026-09-29 08:00", "2026-09-29T07:00:00Z", "2026-09-29T08:00:00Z"),
     ]
     for text, expected_start, expected_end in cases:
         start = module.parse_vrc_search_datetime(text)
