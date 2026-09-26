@@ -4,7 +4,6 @@ name: Update calendar data
 on:
   workflow_dispatch:
   schedule:
-    # Hourly refresh keeps the public calendar bounded in age even without code changes.
     - cron: '17 * * * *'
   push:
     branches: [main]
@@ -13,7 +12,6 @@ on:
       - config/**
       - data/recurring_events.json
       - data/one_off_events.json
-      # Generated discovery outputs are intentionally excluded to avoid self-trigger loops.
       - scripts/**
       - tests/**
       - web/**
@@ -75,28 +73,12 @@ jobs:
       - name: Gate collection health before build
         run: |
           python - <<'PY'
-          from scripts.validate_update_snapshot import (
-              OPTIONAL_COLLECTION_SOURCES,
-              ROOT,
-              require,
-              sync_collection_health,
-          )
-
+          from scripts.validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, ROOT, require, sync_collection_health
           health = sync_collection_health(ROOT)
-          statuses = {
-              str(row.get('name')): str(row.get('status'))
-              for row in health.get('sources', [])
-              if isinstance(row, dict)
-          }
-          require(
-              statuses.get('yahoo_realtime_events') == 'ok',
-              f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}",
-          )
+          statuses = {str(row.get('name')): str(row.get('status')) for row in health.get('sources', []) if isinstance(row, dict)}
+          require(statuses.get('yahoo_realtime_events') == 'ok', f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}")
           for name in OPTIONAL_COLLECTION_SOURCES:
-              require(
-                  statuses.get(name) in {'ok', 'degraded', 'skipped'},
-                  f"optional collection source has invalid status: {name}={statuses.get(name)}",
-              )
+              require(statuses.get(name) in {'ok', 'degraded', 'skipped'}, f"optional collection source has invalid status: {name}={statuses.get(name)}")
           print(f"collection health gate passed: {health.get('status')}")
           PY
       - name: Build normalized calendar
@@ -129,6 +111,8 @@ jobs:
         run: python scripts/write_snapshot_identity.py --check public/snapshot.json
       - name: Gate generated snapshot freshness
         run: python scripts/audit_freshness.py --max-age-minutes 180
+      - name: Build durable system status
+        run: python scripts/build_system_status.py --max-age-minutes 180
       - name: Commit generated data safely
         run: |
           set -euo pipefail
