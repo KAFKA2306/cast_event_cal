@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "event_types": {
+    "surface_opened": {"required": ["surface"]},
+    "event_detail_opened": {"required": ["surface", "event_id"]},
+    "official_source_opened": {"required": ["surface", "event_id", "destination_type"]},
+    "calendar_subscription_started": {"required": ["surface", "destination_type"]}
+  },
+  "common_required": ["schema_version", "event_type", "surface", "observed_at", "observation_kind"],
+  "observation_kinds": ["actual", "synthetic"],
+  "referrer_states": ["observed", "unverified"],
+  "forbidden_fields": ["event_title", "event_description", "full_url", "email", "user_id", "client_id"]
+}
