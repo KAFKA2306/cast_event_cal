@@ -32,20 +32,76 @@ def _events(payload: Any) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     return payload, rows
 
 
+def _type_names(spec: dict[str, Any]) -> set[str]:
+    value = spec.get("type")
+    if isinstance(value, str):
+        return {value}
+    if isinstance(value, list) and all(isinstance(item, str) for item in value):
+        return set(value)
+    return set()
+
+
+def _matches_type(value: Any, allowed: set[str]) -> bool:
+    if value is None:
+        return "null" in allowed
+    if isinstance(value, bool):
+        return "boolean" in allowed
+    if isinstance(value, str):
+        return "string" in allowed
+    if isinstance(value, int):
+        return "integer" in allowed or "number" in allowed
+    if isinstance(value, float):
+        return "number" in allowed
+    if isinstance(value, list):
+        return "array" in allowed
+    if isinstance(value, dict):
+        return "object" in allowed
+    return False
+
+
+def _validate_object(value: dict[str, Any], spec: dict[str, Any], label: str) -> None:
+    required = set(spec.get("required", []))
+    missing = required.difference(value)
+    if missing:
+        raise ValueError(f"{label} missing required fields: {sorted(missing)}")
+    for name, field_spec in spec.get("properties", {}).items():
+        if name not in value:
+            continue
+        allowed = _type_names(field_spec)
+        if allowed and not _matches_type(value[name], allowed):
+            raise ValueError(f"{label}.{name} must match schema types {sorted(allowed)}")
+
+
 def _validate_public_contract(payload: dict[str, Any], rows: list[dict[str, Any]]) -> None:
     schema = json.loads(PUBLIC_SCHEMA_PATH.read_text(encoding="utf-8"))
-    required_top = set(schema["required"])
-    missing_top = required_top.difference(payload)
-    if missing_top:
-        raise ValueError(f"public feed missing required fields: {sorted(missing_top)}")
-    required_event = set(schema["properties"]["events"]["items"]["required"])
+    _validate_object(payload, schema, "public feed")
+    event_spec = schema["properties"]["events"]["items"]
     for index, row in enumerate(rows):
-        missing = required_event.difference(row)
-        if missing:
-            raise ValueError(f"event {index} missing required fields: {sorted(missing)}")
+        _validate_object(row, event_spec, f"event {index}")
         event_id = row["id"]
-        if not isinstance(event_id, str) or not event_id.strip():
+        if not event_id.strip():
             raise ValueError(f"event {index} id must be a non-empty string")
+
+
+def public_schema_breakages(previous: dict[str, Any], candidate: dict[str, Any]) -> list[str]:
+    """Return v1-incompatible changes. Additive optional fields remain compatible."""
+    problems: list[str] = []
+    previous_events = previous["properties"]["events"]["items"]
+    candidate_events = candidate["properties"]["events"]["items"]
+    previous_props = previous_events.get("properties", {})
+    candidate_props = candidate_events.get("properties", {})
+    for name, old_spec in previous_props.items():
+        if name not in candidate_props:
+            problems.append(f"stable field removed: {name}")
+            continue
+        old_types = _type_names(old_spec)
+        new_types = _type_names(candidate_props[name])
+        if old_types and not old_types.issubset(new_types):
+            problems.append(f"stable field type narrowed: {name}: {sorted(old_types)} -> {sorted(new_types)}")
+    newly_required = set(candidate_events.get("required", [])) - set(previous_events.get("required", []))
+    for name in sorted(newly_required):
+        problems.append(f"optional field became required: {name}")
+    return problems
 
 
 def build(source: Path, output_dir: Path) -> dict[str, Any]:
