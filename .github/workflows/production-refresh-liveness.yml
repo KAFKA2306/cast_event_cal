@@ -1,0 +1,43 @@
+name: Production refresh liveness
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Independent watchdog: it must still run when the production workflow YAML is broken.
+    - cron: '47 * * * *'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require a recent successful production refresh
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const workflow_id = 'update-calendar-v2.yml';
+            const maxAgeMs = 3 * 60 * 60 * 1000;
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id,
+              branch: 'main',
+              status: 'success',
+              per_page: 1,
+            });
+            const run = data.workflow_runs[0];
+            if (!run) {
+              core.setFailed('No successful production refresh run exists.');
+              return;
+            }
+            const completed = Date.parse(run.updated_at || run.created_at);
+            const ageMs = Date.now() - completed;
+            core.info(`last successful refresh: #${run.run_number} ${run.html_url}`);
+            core.info(`age_minutes=${Math.floor(ageMs / 60000)} max_age_minutes=${maxAgeMs / 60000}`);
+            if (!Number.isFinite(completed) || ageMs < 0 || ageMs > maxAgeMs) {
+              core.setFailed(`Production refresh SLA breached: last success is ${Math.floor(ageMs / 60000)} minutes old.`);
+            }
