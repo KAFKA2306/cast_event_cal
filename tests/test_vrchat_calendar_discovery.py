@@ -77,7 +77,13 @@ def test_missing_cookie_uses_anonymous_public_discover(tmp_path: Path, monkeypat
     output.write_text("[]", encoding="utf-8")
     exclude.write_text("[]", encoding="utf-8")
 
-    client = FakeClient([{"results": [sample_event()], "nextCursor": ""}])
+    client = FakeClient(
+        [{"results": [sample_event()], "nextCursor": ""}]
+        + [
+            {"results": [], "nextCursor": ""}
+            for _ in range(len(calendar.ANONYMOUS_DISCOVER_CATEGORY_GROUPS) - 1)
+        ]
+    )
     monkeypatch.setattr(calendar.httpx, "Client", lambda **kwargs: (
         setattr(client, "headers", kwargs.get("headers", {})) or client
     ))
@@ -101,12 +107,18 @@ def test_missing_cookie_uses_anonymous_public_discover(tmp_path: Path, monkeypat
     assert "Cookie" not in client.headers
     assert client.calls[0][0] == calendar.DISCOVER_API_URL
     assert client.calls[0][1]["personalizedResults"] == "exclude"
+    assert len(client.calls) == len(calendar.ANONYMOUS_DISCOVER_CATEGORY_GROUPS)
+    assert client.calls[0][1].get("categories") is None
+    assert client.calls[1][1]["categories"] == "music,performance"
 
     health_data = json.loads(health.read_text(encoding="utf-8"))
     assert health_data["status"] == "degraded"
     assert health_data["event_count"] == 1
     assert health_data["query_count"] == 0
     assert health_data["routes"] == {"discover": 1, "search": 0}
+    assert health_data["discover_request_count"] == len(
+        calendar.ANONYMOUS_DISCOVER_CATEGORY_GROUPS
+    )
     assert "anonymous public discover" in health_data["reason"]
 
 
