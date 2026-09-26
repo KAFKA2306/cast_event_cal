@@ -14,6 +14,15 @@ SEARCH_API_URL = "https://api.vrchat.cloud/api/1/calendar/search"
 DISCOVER_API_URL = "https://api.vrchat.cloud/api/1/calendar/discover"
 USER_AGENT = "cast-event-cal/2.2 (+https://github.com/KAFKA2306/cast_event_cal)"
 DEFAULT_TERMS = ["日本語", "初心者", "交流", "音楽", "ゲーム", "Quest"]
+ANONYMOUS_DISCOVER_CATEGORY_GROUPS: tuple[str | None, ...] = (
+    None,
+    "music,performance",
+    "gaming,roleplaying",
+    "avatars,exploration",
+    "dance,hangout",
+    "education,wellness",
+    "arts,film_media,other",
+)
 
 
 def utc_text(value: datetime | None = None) -> str:
@@ -112,6 +121,7 @@ def fetch_discover(
     page_size: int,
     max_pages: int,
     personalized_results: str = "include",
+    categories: str | None = None,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     cursor: str | None = None
@@ -127,6 +137,8 @@ def fetch_discover(
                 "minimumRemainingMinutes": 0,
                 "n": page_size,
             }
+            if categories:
+                params["categories"] = categories
         response = client.get(DISCOVER_API_URL, params=params)
         response.raise_for_status()
         page, payload = checked_results(response.json(), route="discovery")
@@ -135,6 +147,26 @@ def fetch_discover(
         if not page or not isinstance(next_cursor, str) or not next_cursor.strip():
             break
         cursor = next_cursor
+    return rows
+
+
+def fetch_anonymous_discover(
+    client: httpx.Client,
+    *,
+    page_size: int,
+    max_pages: int,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for categories in ANONYMOUS_DISCOVER_CATEGORY_GROUPS:
+        rows.extend(
+            fetch_discover(
+                client,
+                page_size=page_size,
+                max_pages=max_pages,
+                personalized_results="exclude",
+                categories=categories,
+            )
+        )
     return rows
 
 
@@ -225,12 +257,19 @@ def run_discovery(
         headers=headers,
     ) as client:
         try:
-            discovered = fetch_discover(
-                client,
-                page_size=page_size,
-                max_pages=max_pages,
-                personalized_results="include" if token else "exclude",
-            )
+            if token:
+                discovered = fetch_discover(
+                    client,
+                    page_size=page_size,
+                    max_pages=max_pages,
+                    personalized_results="include",
+                )
+            else:
+                discovered = fetch_anonymous_discover(
+                    client,
+                    page_size=page_size,
+                    max_pages=max_pages,
+                )
             raw_rows.extend(discovered)
             route_counts["discover"] = len(discovered)
         except Exception as exc:
@@ -281,6 +320,9 @@ def run_discovery(
             "query_count": len(terms) if token else 0,
             "raw_result_count": len(raw_rows),
             "routes": route_counts,
+            "discover_request_count": (
+                1 if token else len(ANONYMOUS_DISCOVER_CATEGORY_GROUPS)
+            ),
             "errors": errors,
         },
     )
