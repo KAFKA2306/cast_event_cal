@@ -14,6 +14,16 @@ SEARCH_API_URL = "https://api.vrchat.cloud/api/1/calendar/search"
 DISCOVER_API_URL = "https://api.vrchat.cloud/api/1/calendar/discover"
 USER_AGENT = "cast-event-cal/2.2 (+https://github.com/KAFKA2306/cast_event_cal)"
 DEFAULT_TERMS = ["日本語", "初心者", "交流", "音楽", "ゲーム", "Quest"]
+ANONYMOUS_DISCOVER_CATEGORY_GROUPS: tuple[str | None, ...] = (
+    None,
+    "music,performance",
+    "gaming,roleplaying",
+    "avatars,exploration",
+    "dance,hangout",
+    "education,wellness",
+    "arts,film_media,other",
+)
+ANONYMOUS_UPCOMING_OFFSET_MINUTES = 120 * 24 * 60
 
 
 def utc_text(value: datetime | None = None) -> str:
@@ -106,7 +116,15 @@ def checked_results(payload: Any, *, route: str) -> tuple[list[dict[str, Any]], 
     return [item for item in page if isinstance(item, dict)], payload
 
 
-def fetch_discover(client: httpx.Client, *, page_size: int, max_pages: int) -> list[dict[str, Any]]:
+def fetch_discover(
+    client: httpx.Client,
+    *,
+    page_size: int,
+    max_pages: int,
+    personalized_results: str = "include",
+    categories: str | None = None,
+    upcoming_offset_minutes: int | None = None,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     cursor: str | None = None
     for _ in range(max_pages):
@@ -117,10 +135,14 @@ def fetch_discover(client: httpx.Client, *, page_size: int, max_pages: int) -> l
                 "scope": "upcoming",
                 "featuredResults": "include",
                 "nonFeaturedResults": "include",
-                "personalizedResults": "include",
+                "personalizedResults": personalized_results,
                 "minimumRemainingMinutes": 0,
                 "n": page_size,
             }
+            if categories:
+                params["categories"] = categories
+            if upcoming_offset_minutes is not None:
+                params["upcomingOffsetMinutes"] = upcoming_offset_minutes
         response = client.get(DISCOVER_API_URL, params=params)
         response.raise_for_status()
         page, payload = checked_results(response.json(), route="discovery")
@@ -129,6 +151,27 @@ def fetch_discover(client: httpx.Client, *, page_size: int, max_pages: int) -> l
         if not page or not isinstance(next_cursor, str) or not next_cursor.strip():
             break
         cursor = next_cursor
+    return rows
+
+
+def fetch_anonymous_discover(
+    client: httpx.Client,
+    *,
+    page_size: int,
+    max_pages: int,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for categories in ANONYMOUS_DISCOVER_CATEGORY_GROUPS:
+        rows.extend(
+            fetch_discover(
+                client,
+                page_size=page_size,
+                max_pages=max_pages,
+                personalized_results="exclude",
+                categories=categories,
+                upcoming_offset_minutes=ANONYMOUS_UPCOMING_OFFSET_MINUTES,
+            )
+        )
     return rows
 
 
@@ -196,57 +239,54 @@ def run_discovery(
     existing = read_array(output)
     excluded_keys = {semantic_key(item) for item in read_array(exclude)}
 
-    if not cookie:
-        if not output.exists():
-            write_json(output, [])
-        write_preserved_health(
-            health_output=health_output,
-            generated_at=generated_at,
-            existing_count=len(existing),
-            status="skipped",
-            reason="VRCHAT_AUTH_COOKIE is not configured",
-            query_count=0,
-            errors=[],
-        )
-        print("VRChat calendar discovery skipped: VRCHAT_AUTH_COOKIE is not configured")
-        return 0
-
-    try:
-        token = normalize_cookie(cookie)
-    except ValueError as exc:
-        write_preserved_health(
-            health_output=health_output,
-            generated_at=generated_at,
-            existing_count=len(existing),
-            status="degraded",
-            reason="invalid credential; preserved previous discovery cache",
-            query_count=0,
-            errors=[str(exc)],
-        )
-        print(f"VRChat calendar discovery preserved {len(existing)} cached events")
-        return 0
+    token: str | None = None
+    credential_error: str | None = None
+    if cookie:
+        try:
+            token = normalize_cookie(cookie)
+        except ValueError as exc:
+            credential_error = str(exc)
 
     errors: list[str] = []
+    if credential_error:
+        errors.append(credential_error)
     raw_rows: list[dict[str, Any]] = []
     route_counts = {"discover": 0, "search": 0}
+    headers = {"User-Agent": USER_AGENT}
+    if token:
+        headers["Cookie"] = f"auth={token}"
+
     with httpx.Client(
         timeout=timeout,
         follow_redirects=True,
-        headers={"User-Agent": USER_AGENT, "Cookie": f"auth={token}"},
+        headers=headers,
     ) as client:
         try:
-            discovered = fetch_discover(client, page_size=page_size, max_pages=max_pages)
+            if token:
+                discovered = fetch_discover(
+                    client,
+                    page_size=page_size,
+                    max_pages=max_pages,
+                    personalized_results="include",
+                )
+            else:
+                discovered = fetch_anonymous_discover(
+                    client,
+                    page_size=page_size,
+                    max_pages=max_pages,
+                )
             raw_rows.extend(discovered)
             route_counts["discover"] = len(discovered)
         except Exception as exc:
             errors.append(f"discover: {type(exc).__name__}: {exc}")
-        for term in terms:
-            try:
-                searched = fetch_term(client, term=term, page_size=page_size, max_pages=max_pages)
-                raw_rows.extend(searched)
-                route_counts["search"] += len(searched)
-            except Exception as exc:
-                errors.append(f"search:{term}: {type(exc).__name__}: {exc}")
+        if token:
+            for term in terms:
+                try:
+                    searched = fetch_term(client, term=term, page_size=page_size, max_pages=max_pages)
+                    raw_rows.extend(searched)
+                    route_counts["search"] += len(searched)
+                except Exception as exc:
+                    errors.append(f"search:{term}: {type(exc).__name__}: {exc}")
 
     events_by_id: dict[str, dict[str, Any]] = {}
     for item in raw_rows:
@@ -256,14 +296,14 @@ def run_discovery(
         events_by_id[str(event["source_id"])] = event
     events = sorted(events_by_id.values(), key=lambda item: (str(item["starts_at"]), str(item["title"])))
 
-    if errors and not events:
+    if not events:
         write_preserved_health(
             health_output=health_output,
             generated_at=generated_at,
             existing_count=len(existing),
             status="degraded",
-            reason="all live routes failed; preserved previous discovery cache",
-            query_count=len(terms),
+            reason="no usable public discover events; preserved previous discovery cache",
+            query_count=len(terms) if token else 0,
             errors=errors,
         )
         print(f"VRChat calendar discovery preserved {len(existing)} cached events")
@@ -275,11 +315,19 @@ def run_discovery(
         {
             "schema_version": "1.1",
             "generated_at": generated_at,
-            "status": "ok" if not errors else "degraded",
+            "status": "ok" if token and not errors else "degraded",
+            "reason": (
+                None
+                if token and not errors
+                else "anonymous public discover used; authenticated search unavailable"
+            ),
             "event_count": len(events),
-            "query_count": len(terms),
+            "query_count": len(terms) if token else 0,
             "raw_result_count": len(raw_rows),
             "routes": route_counts,
+            "discover_request_count": (
+                1 if token else len(ANONYMOUS_DISCOVER_CATEGORY_GROUPS)
+            ),
             "errors": errors,
         },
     )

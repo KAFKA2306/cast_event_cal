@@ -122,7 +122,7 @@ jobs:
           path: yahoo-datetime-replay.json
           if-no-files-found: error
       - run: python scripts/materialize_events.py
-      - name: Exercise credential-free discovery fallback
+      - name: Exercise credential-free public discovery
         run: |
           unset VRCHAT_AUTH_COOKIE
           python scripts/fetch_vrchat_calendar.py
@@ -131,8 +131,12 @@ jobs:
           from pathlib import Path
 
           health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
-          assert health['status'] == 'skipped'
-          assert health['event_count'] == len(json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8')))
+          events = json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8'))
+          assert health['status'] in {'ok', 'degraded'}
+          assert health['status'] != 'skipped'
+          assert health['query_count'] == 0
+          assert health['routes']['search'] == 0
+          assert health['event_count'] == len(events)
           PY
       - name: Enforce useful event coverage
         run: |

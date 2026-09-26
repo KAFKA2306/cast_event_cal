@@ -23,6 +23,47 @@ sources:
       - 技術・学術
       - 外部カレンダー
 
+  - name: vrc_search_public_events
+    type: vrc_search_pages
+    enabled: true
+    # VRC Search Terms allow read-only API/integration use but prohibit abusive
+    # scraping/bulk export. Keep this bounded to curated public pages and
+    # refresh no more than once per day; hourly production runs reuse cache.
+    # Global category pages maximize breadth. Japanese category pages deepen
+    # coverage past the broad Japanese page's first 20 results without adding
+    # a second authority or bypassing the site's documented public surfaces.
+    urls:
+      - https://search.vrcwwt.com/events/music/next-month/
+      - https://search.vrcwwt.com/events/dance/next-month/
+      - https://search.vrcwwt.com/events/hangout/next-month/
+      - https://search.vrcwwt.com/events/gaming/next-month/
+      - https://search.vrcwwt.com/events/roleplaying/next-month/
+      - https://search.vrcwwt.com/events/performance/next-month/
+      - https://search.vrcwwt.com/events/education/next-month/
+      - https://search.vrcwwt.com/events/japanese/next-week/
+      - https://search.vrcwwt.com/ko/events/music/next-month/
+      - https://search.vrcwwt.com/events/spanish/next-week/
+      - https://search.vrcwwt.com/ja/events/music/next-month/
+      - https://search.vrcwwt.com/ja/events/dance/next-month/
+      - https://search.vrcwwt.com/ja/events/hangout/next-month/
+      - https://search.vrcwwt.com/ja/events/gaming/next-month/
+      - https://search.vrcwwt.com/ja/events/roleplaying/next-month/
+      - https://search.vrcwwt.com/fr/events/roleplaying/next-month/
+      - https://search.vrcwwt.com/ja/events/education/next-month/
+      - https://search.vrcwwt.com/es/events/music/next-month/
+      - https://search.vrcwwt.com/de/events/music/next-month/
+      - https://search.vrcwwt.com/ru/events/dance/next-month/
+    source_page: https://search.vrcwwt.com/events/
+    policy_url: https://search.vrcwwt.com/terms
+    max_pages: 20
+    max_events: 800
+    refresh_hours: 24
+    request_interval_seconds: 0.75
+    tags:
+      - VRC Search
+      - 公開VRChatイベント
+      - 外部ディスカバリー
+
   - name: official_event_websites
     type: ontology_jsonld
     enabled: true
