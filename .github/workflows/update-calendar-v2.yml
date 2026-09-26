@@ -59,6 +59,8 @@ jobs:
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/collect_yahoo_corpus.py --mode daily --target 1000
+      - name: Audit Yahoo query yield
+        run: python scripts/audit_yahoo_query_yield.py
       - name: Replay retained Yahoo corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
