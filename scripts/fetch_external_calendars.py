@@ -397,11 +397,11 @@ VRC_SEARCH_DESC_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 VRC_SEARCH_START_RE = re.compile(
-    r'(?:開始|Starts?)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
+    r'(?:開始|Starts?|Empieza|Beginnt|Начало)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
     flags=re.IGNORECASE,
 )
 VRC_SEARCH_END_RE = re.compile(
-    r'(?:終了|Ends?)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
+    r'(?:終了|Ends?|Termina|Endet|Окончание)\s*(?P<value>\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})',
     flags=re.IGNORECASE,
 )
 VRC_SEARCH_ENGLISH_START_RE = re.compile(
