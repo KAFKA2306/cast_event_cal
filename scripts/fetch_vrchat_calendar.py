@@ -15,13 +15,19 @@ DISCOVER_API_URL = "https://api.vrchat.cloud/api/1/calendar/discover"
 USER_AGENT = "cast-event-cal/2.2 (+https://github.com/KAFKA2306/cast_event_cal)"
 DEFAULT_TERMS = ["日本語", "初心者", "交流", "音楽", "ゲーム", "Quest"]
 ANONYMOUS_DISCOVER_CATEGORY_GROUPS: tuple[str | None, ...] = (
-    None,
-    "music,performance",
-    "gaming,roleplaying",
-    "avatars,exploration",
-    "dance,hangout",
-    "education,wellness",
-    "arts,film_media,other",
+    "arts",
+    "avatars",
+    "dance",
+    "education",
+    "exploration",
+    "film_media",
+    "gaming",
+    "hangout",
+    "music",
+    "other",
+    "performance",
+    "roleplaying",
+    "wellness",
 )
 
 
