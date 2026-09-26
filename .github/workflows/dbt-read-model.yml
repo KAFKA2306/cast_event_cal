@@ -23,6 +23,8 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      CAST_EVENT_CAL_PUBLIC_ORIGIN: https://vrc-cast-event-calender.pages.dev
     steps:
       - uses: actions/checkout@v6
         with:
