@@ -145,11 +145,10 @@ def audit(
         follow_redirects=True,
         headers={"User-Agent": vrchat.USER_AGENT},
     ) as client:
-        raw_public_discover = vrchat.fetch_discover(
+        raw_public_discover = vrchat.fetch_anonymous_discover(
             client,
             page_size=100,
             max_pages=2,
-            personalized_results="exclude",
         )
 
     manual_events = external.read_json_array(Path("data/manual_events.json"))
@@ -214,6 +213,9 @@ def audit(
         "vrc_search_discovered": len(discovered),
         "vrchat_public_discover_raw": len(raw_public_discover),
         "vrchat_public_discover_normalized": len(official_discovered),
+        "vrchat_public_discover_request_count": len(
+            vrchat.ANONYMOUS_DISCOVER_CATEGORY_GROUPS
+        ),
         "external_events_before": len(previous_external),
         "external_events_after": len(expanded_external),
         "external_events_delta": len(expanded_external) - len(previous_external),
