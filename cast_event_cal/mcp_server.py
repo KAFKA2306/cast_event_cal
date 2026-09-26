@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from mcp.server import MCPServer
@@ -7,6 +8,10 @@ from mcp.server import MCPServer
 from . import mcp_read_model as read_model
 
 MCP_SCHEMA_VERSION = "cast-event.mcp.v1"
+MCP_DEFAULT_HOST = "127.0.0.1"
+MCP_DEFAULT_PORT = 8011
+MCP_DEFAULT_TRANSPORT = "streamable-http"
+MCP_SUPPORTED_TRANSPORTS = frozenset({"streamable-http", "sse", "stdio"})
 
 mcp = MCPServer(
     "cast_event_cal",
@@ -103,9 +108,33 @@ def get_methodology() -> dict[str, Any]:
     return read_model.methodology()
 
 
+def _runtime_config() -> tuple[str, int, str]:
+    host = os.environ.get("CAST_EVENT_MCP_HOST", MCP_DEFAULT_HOST).strip()
+    if not host:
+        raise ValueError("CAST_EVENT_MCP_HOST must not be empty")
+
+    port_raw = os.environ.get("CAST_EVENT_MCP_PORT", str(MCP_DEFAULT_PORT)).strip()
+    try:
+        port = int(port_raw)
+    except ValueError as exc:
+        raise ValueError("CAST_EVENT_MCP_PORT must be an integer") from exc
+    if not 1 <= port <= 65535:
+        raise ValueError("CAST_EVENT_MCP_PORT must be between 1 and 65535")
+
+    transport = os.environ.get("CAST_EVENT_MCP_TRANSPORT", MCP_DEFAULT_TRANSPORT).strip().lower()
+    if transport not in MCP_SUPPORTED_TRANSPORTS:
+        supported = ", ".join(sorted(MCP_SUPPORTED_TRANSPORTS))
+        raise ValueError(f"CAST_EVENT_MCP_TRANSPORT must be one of: {supported}")
+    return host, port, transport
+
+
 def main() -> None:
-    """Run the canonical Event MCP server on localhost."""
-    mcp.run("streamable-http", host="127.0.0.1", port=8011)
+    """Run the canonical Event MCP server with environment-configurable binding."""
+    host, port, transport = _runtime_config()
+    if transport == "stdio":
+        mcp.run(transport)
+    else:
+        mcp.run(transport, host=host, port=port)
 
 
 if __name__ == "__main__":
