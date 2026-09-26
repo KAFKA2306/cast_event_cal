@@ -19,8 +19,16 @@ MIN_PROMOTED_MISSING_DATETIME = 50
 
 
 def source_status_id(event: dict[str, Any]) -> str:
-    source_id = str(event.get("source_id") or "")
-    return source_id.rsplit(":", 1)[-1] if source_id else ""
+    explicit = str(event.get("source_status_id") or "")
+    if implementation.STATUS_ID_RE.fullmatch(explicit):
+        return explicit
+    source_id = str(
+        event.get("recurrence_source_id")
+        or event.get("source_id")
+        or ""
+    )
+    match = implementation.STATUS_ID_RE.search(source_id)
+    return match.group(0) if match else ""
 
 
 def replay() -> dict[str, Any]:
@@ -51,12 +59,13 @@ def replay() -> dict[str, Any]:
         history,
         actual_now=replay_now,
         x_ids=x_ids,
+        external_events=implementation.read_array(archive.EXTERNAL_EVENTS_PATH),
     )
-    accepted_by_id = {
-        source_status_id(event): event
-        for event in accepted
-        if source_status_id(event)
-    }
+    accepted_by_id: dict[str, dict[str, Any]] = {}
+    for event in accepted:
+        status_id = source_status_id(event)
+        if status_id:
+            accepted_by_id.setdefault(status_id, event)
     accepted_after = set(accepted_by_id)
     accepted_with_resolution_evidence = sorted(
         status_id
@@ -139,6 +148,23 @@ def replay() -> dict[str, Any]:
             }
         )
 
+    blocker_counts: dict[str, int] = {}
+    blocker_samples: dict[str, list[dict[str, str]]] = {}
+    for row in evaluated:
+        if row.get("last_reason") != "missing_datetime":
+            continue
+        blocker = str(row.get("resolution_blocker") or "none")
+        blocker_counts[blocker] = blocker_counts.get(blocker, 0) + 1
+        samples = blocker_samples.setdefault(blocker, [])
+        if len(samples) < 12:
+            samples.append(
+                {
+                    "status_id": str(row.get("status_id") or ""),
+                    "decision": str(row.get("publishability_decision") or ""),
+                    "text_excerpt": str(row.get("text") or row.get("text_excerpt") or "")[:220],
+                }
+            )
+
     changed_existing = []
     previous_events = {
         str(row.get("status_id") or ""): row
@@ -163,6 +189,11 @@ def replay() -> dict[str, Any]:
         "replay_generated_at": implementation.utc_text(replay_now),
         "accepted_before": len(accepted_before),
         "accepted_after": len(accepted_after),
+        "accepted_occurrence_count": len(accepted),
+        "recurrence_occurrence_count": sum(
+            str(event.get("date_resolution_method") or "").startswith("recurrence_")
+            for event in accepted
+        ),
         "accepted_with_resolution_evidence": len(accepted_with_resolution_evidence),
         "existing_accepted_lost": len(lost),
         "lost_status_ids": lost,
@@ -177,6 +208,10 @@ def replay() -> dict[str, Any]:
         "review_reason_mismatches": review_reason_mismatches,
         "reviewed_false_promoted": reviewed_false_promoted,
         "promoted_method_counts": dict(sorted(method_counts.items())),
+        "resolution_blocker_counts": dict(sorted(blocker_counts.items())),
+        "resolution_blocker_samples": {
+            key: blocker_samples[key] for key in sorted(blocker_samples)
+        },
         "promoted_other": promoted_other,
         "changed_existing_starts_at": len(changed_existing),
         "promoted": promoted_rows,
@@ -195,12 +230,8 @@ def assert_targets(report: dict[str, Any], min_promoted: int) -> None:
         report["promoted_from_missing_datetime"] + report["promoted_from_other_reasons"]
     )
 
-    promoted = int(report["promoted_from_missing_datetime"])
     durable = int(report["accepted_with_resolution_evidence"])
-    if promoted:
-        assert promoted >= min_promoted, (promoted, min_promoted)
-    else:
-        assert durable >= min_promoted, (durable, min_promoted)
+    assert durable >= min_promoted, (durable, min_promoted)
 
 
 def main(argv: list[str] | None = None) -> int:

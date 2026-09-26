@@ -76,3 +76,12 @@ def test_temporal_candidates_all_receive_occurrence_decision() -> None:
     assert audit["occurrence_decision_total"] == 7
     assert audit["temporal_unclassified_count"] == 0
     assert sum(audit["occurrence_decision_counts"].values()) == 7
+    assert audit["publishability_state_counts"] == {
+        "confirmed_non_event": 2,
+        "past_only": 1,
+        "publishable_candidate": 1,
+        "recurring_series_candidate": 1,
+        "unresolved_publishability": 2,
+    }
+    assert audit["publishability_backlog_count"] == 3
+    assert audit["automatic_resolution_candidate_count"] == 2

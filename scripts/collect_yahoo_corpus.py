@@ -224,6 +224,45 @@ def refined_candidate_to_event(
     return event, reason
 
 
+
+def refined_candidate_to_event_at(
+    candidate: dict[str, Any],
+    *,
+    event_at: datetime,
+    now: datetime,
+    min_retweets: int,
+    x_ids: set[str],
+) -> tuple[dict[str, Any] | None, str | None]:
+    """Apply the same semantic policy with a resolver-supplied timestamp."""
+    text = str(candidate.get("text") or "").strip()
+    conflict = NEXT_MONTH_CONFLICT_RE.search(text)
+    if conflict and int(conflict.group("label_month")) != int(conflict.group("date_month")):
+        return None, "conflicting_date_context"
+
+    has_participation = has_any(text, PARTICIPATION_TERMS)
+    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
+    has_product = has_any(text, implementation.PRODUCT_TERMS)
+    has_giveaway = has_any(text, implementation.GIVEAWAY_TERMS)
+    has_only_generic_event = has_any(text, GENERIC_EVENT_TERMS) and not has_specific_event
+
+    if has_giveaway and not has_participation and not has_specific_event:
+        return None, "giveaway_only"
+    if has_product and has_only_generic_event and not has_participation:
+        return None, "product_only"
+    if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+        return None, "missing_participation_method"
+
+    event, reason = implementation.candidate_to_event_at(
+        candidate,
+        event_at=event_at,
+        now=now,
+        min_retweets=min_retweets,
+        x_ids=x_ids,
+    )
+    if event and has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+        return None, "missing_participation_method"
+    return event, reason
+
 def configure_classifier() -> None:
     ledger.configure()
     implementation.PARSER_VERSION = "1.8"

@@ -116,6 +116,7 @@ def test_missing_datetime_remains_rejected():
     )
     assert accepted == []
     assert rejected[0]["reason"] == "missing_datetime"
+    assert _[0]["publishability_state"] == "unresolved"
 
 
 def test_archive_relative_date_uses_source_timestamp_once():
@@ -156,3 +157,92 @@ def test_archive_fullwidth_clock_uses_source_day():
     assert len(accepted) == 1
     assert accepted[0]["starts_at"] == "2026-09-19T12:00:00Z"
     assert accepted[0]["temporal_status"] == "past"
+
+
+def test_archive_materializes_recurring_event_with_provenance():
+    configure_archive_classifier()
+    accepted, rejected, evaluated = reclassify(
+        [
+            row(
+                "毎週金曜日 22:00 VRChat交流イベント開催。参加方法はGroup +へJOIN",
+                retweets=1,
+                status_id="2080000000000000003",
+            )
+        ],
+        actual_now=datetime(2026, 8, 3, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 4
+    assert [event["starts_at"] for event in accepted] == [
+        "2026-08-07T13:00:00Z",
+        "2026-08-14T13:00:00Z",
+        "2026-08-21T13:00:00Z",
+        "2026-08-28T13:00:00Z",
+    ]
+    assert all(
+        event["date_resolution_method"] == "recurrence_weekly_materialized"
+        for event in accepted
+    )
+    assert all(
+        event["date_resolution_evidence"]["recurrence_rule"]["frequency"] == "weekly"
+        for event in accepted
+    )
+    assert all(event["recurrence_rule"]["weekday"] == 4 for event in accepted)
+    assert all(event["temporal_status"] == "upcoming" for event in accepted)
+    assert len({event["source_id"] for event in accepted}) == 4
+    assert all(event["recurrence_source_id"] == "yahoo:x:2080000000000000003" for event in accepted)
+    assert evaluated[0]["last_decision"] == "accepted"
+    assert evaluated[0]["materialized_occurrence_count"] == 4
+
+
+def test_access_clock_without_event_structure_remains_rejected():
+    configure_archive_classifier()
+    accepted, rejected, _ = reclassify(
+        [
+            row(
+                "今夜22:00にVRChatへJOINして遊びます。",
+                retweets=5,
+                status_id="2080000000000000004",
+            )
+        ],
+        actual_now=datetime(2026, 9, 19, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert accepted == []
+    assert rejected[0]["reason"] == "missing_event_marker"
+
+
+def test_archive_corroborates_partial_datetime_across_same_event_fingerprint():
+    configure_archive_classifier()
+    candidates = [
+        row(
+            "VRChat交流会 #VRC夜会 8/10 開催します。Group +で参加できます。",
+            retweets=1,
+            status_id="2085561566622646272",
+        ),
+        row(
+            "VRChat交流会 #VRC夜会 22:00 Group +でJOINできます。",
+            retweets=1,
+            status_id="2085561566622647272",
+        ),
+    ]
+    accepted, rejected, evaluated = reclassify(
+        candidates,
+        actual_now=datetime(2026, 8, 8, tzinfo=UTC),
+        x_ids=set(),
+    )
+    assert rejected == []
+    assert len(accepted) == 2
+    assert {event["starts_at"] for event in accepted} == {"2026-08-10T13:00:00Z"}
+    assert {
+        event["date_resolution_method"] for event in accepted
+    } == {"corroborated_event_fingerprint_date_clock"}
+    assert all(
+        len(event["date_resolution_evidence"]["corroborating_source_ids"]) == 2
+        for event in accepted
+    )
+    assert all(event.get("event_fingerprint") for event in accepted)
+    assert all(row["last_decision"] == "accepted" for row in evaluated)
+    assert all(row["publishability_state"] == "publishable" for row in evaluated)
+    assert all(row["event_fingerprints"] for row in evaluated)

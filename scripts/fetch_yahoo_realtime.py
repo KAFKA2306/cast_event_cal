@@ -28,6 +28,7 @@ DEFAULT_SEARCH_URL = "https://search.yahoo.co.jp/realtime/search?" + urlencode(
     {"ei": "UTF-8", "p": DEFAULT_QUERY, "md": "h"}
 )
 PARSER_VERSION = "1.2"
+FOREIGN_TIMEZONE_RE = re.compile(r"\b(?:BST|UTC|GMT|PST|PDT|EST|EDT|CET|CEST)\b", re.IGNORECASE)
 STATUS_RE = re.compile(
     r"(?:https?://)?(?:www\.)?(?:x|twitter)\.com/[^\s\"'<>\\]+/status/(\d+)", re.IGNORECASE
 )
@@ -36,11 +37,39 @@ VRCHAT_RE = re.compile(r"(?i)(?:#?vrchat|#?vrc\b)")
 YAHOO_START_MARKER_RE = re.compile(r"^\s*START(?=\s)")
 YAHOO_END_MARKER_RE = re.compile(r"(?<=\s)END\s*$")
 FULLWIDTH_DIGIT_TRANSLATION = str.maketrans("０１２３４５６７８９", "0123456789")
+CLOCK_PUNCTUATION_TRANSLATION = str.maketrans({
+    "：": ":", "˸": ":", "꞉": ":", "∶": ":", "︓": ":", "﹕": ":",
+    "／": "/", "⁄": "/", "．": ".", "－": "-",
+})
+ENGLISH_MONTHS = {
+    "jan": 1, "january": 1,
+    "feb": 2, "february": 2,
+    "mar": 3, "march": 3,
+    "apr": 4, "april": 4,
+    "may": 5,
+    "jun": 6, "june": 6,
+    "jul": 7, "july": 7,
+    "aug": 8, "august": 8,
+    "sep": 9, "sept": 9, "september": 9,
+    "oct": 10, "october": 10,
+    "nov": 11, "november": 11,
+    "dec": 12, "december": 12,
+}
+ENGLISH_DATE_RE = re.compile(
+    r"(?i)\b(?P<day>3[01]|[12]?\d)(?:st|nd|rd|th)?\s+"
+    r"(?P<month>Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|"
+    r"Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|"
+    r"Nov(?:ember)?|Dec(?:ember)?)\.?[,]?\s+(?P<year>20\d{2})\b"
+)
 TEXT_KEYS = ("displayText", "full_text", "fullText", "tweetText", "text")
 URL_KEYS = ("url", "tweetUrl", "statusUrl", "permalink")
 ID_KEYS = ("id", "tweetId", "statusId", "id_str", "rest_id")
 AUTHOR_KEYS = ("screenName", "screen_name", "username", "userName", "handle")
 RETWEET_KEYS = ("rtCount", "retweet_count", "retweetCount", "repost_count", "repostCount")
+CONVERSATION_ID_KEYS = ("conversation_id_str", "conversation_id", "conversationId")
+IN_REPLY_TO_STATUS_ID_KEYS = ("in_reply_to_status_id_str", "in_reply_to_status_id", "inReplyToStatusId")
+QUOTED_STATUS_ID_KEYS = ("quoted_status_id_str", "quoted_status_id", "quotedStatusId")
+EXPANDED_URL_KEYS = ("expanded_url", "expandedUrl", "unwound_url", "unwoundUrl")
 EVENT_TERMS = {
     "イベント", "参加方法", "参加条件", "開催", "join", "ジョイン", "リクイン", "reqin",
     "リクエストインバイト", "request invite", "営業", "公演", "集会", "ライブ", "ツアー",
@@ -138,6 +167,34 @@ def direct_integer(mapping: dict[str, Any], keys: Iterable[str]) -> int | None:
     return None
 
 
+def direct_status_identifier(mapping: dict[str, Any], keys: Iterable[str]) -> str | None:
+    folded = {str(key).casefold(): value for key, value in mapping.items()}
+    for key in keys:
+        value = folded.get(key.casefold())
+        text = str(value).strip() if isinstance(value, (int, str)) else ""
+        if STATUS_ID_RE.fullmatch(text):
+            return text
+    return None
+
+
+def expanded_urls(mapping: dict[str, Any]) -> list[str]:
+    """Extract canonical link evidence attached to the same Yahoo/X post."""
+    results: set[str] = set()
+    for container_key in ("entities", "extended_entities"):
+        container = mapping.get(container_key)
+        if not isinstance(container, (dict, list)):
+            continue
+        for node in walk(container):
+            if not isinstance(node, dict):
+                continue
+            folded = {str(key).casefold(): value for key, value in node.items()}
+            for key in EXPANDED_URL_KEYS:
+                value = folded.get(key.casefold())
+                if isinstance(value, str) and value.startswith(("https://", "http://")):
+                    results.add(value.strip())
+    return sorted(results)[:20]
+
+
 def status_id(mapping: dict[str, Any]) -> str | None:
     for key in URL_KEYS:
         value = mapping.get(key)
@@ -175,13 +232,23 @@ def candidate_from_mapping(mapping: dict[str, Any]) -> dict[str, Any] | None:
     if not text or not post_id:
         return None
     text = clean_yahoo_text(text)
-    return {
+    candidate = {
         "status_id": post_id,
         "url": status_url(mapping, post_id),
         "text": text,
         "author": direct_string(mapping, AUTHOR_KEYS),
         "retweet_count": direct_integer(mapping, RETWEET_KEYS),
     }
+    optional_ids = {
+        "conversation_id": direct_status_identifier(mapping, CONVERSATION_ID_KEYS),
+        "in_reply_to_status_id": direct_status_identifier(mapping, IN_REPLY_TO_STATUS_ID_KEYS),
+        "quoted_status_id": direct_status_identifier(mapping, QUOTED_STATUS_ID_KEYS),
+    }
+    candidate.update({key: value for key, value in optional_ids.items() if value})
+    links = expanded_urls(mapping)
+    if links:
+        candidate["linked_urls"] = links
+    return candidate
 
 
 def extract_candidates(html_text: str) -> list[dict[str, Any]]:
@@ -198,10 +265,24 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
                 continue
             post_id = str(candidate["status_id"])
             current = selected.get(post_id)
-            candidate_score = (candidate.get("retweet_count") is not None, len(str(candidate["text"])))
+            candidate_score = (
+                candidate.get("retweet_count") is not None,
+                len(str(candidate["text"])),
+                sum(
+                    bool(candidate.get(key))
+                    for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id")
+                ) + len(candidate.get("linked_urls") or []),
+            )
             current_score = (
-                (current.get("retweet_count") is not None, len(str(current.get("text", ""))))
-                if current else (False, -1)
+                (
+                    current.get("retweet_count") is not None,
+                    len(str(current.get("text", ""))),
+                    sum(
+                        bool(current.get(key))
+                        for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id")
+                    ) + len(current.get("linked_urls") or []),
+                )
+                if current else (False, -1, -1)
             )
             if current is None or candidate_score > current_score:
                 selected[post_id] = candidate
@@ -209,49 +290,107 @@ def extract_candidates(html_text: str) -> list[dict[str, Any]]:
 
 
 def normalize_text(text: str) -> str:
-    return (
+    normalized = (
         text.translate(FULLWIDTH_DIGIT_TRANSLATION)
-        .replace("：", ":").replace("／", "/").replace("．", ".").replace("－", "-")
+        .translate(CLOCK_PUNCTUATION_TRANSLATION)
         .replace("〜", "~").replace("～", "~")
     )
+
+    def english_date(match: re.Match[str]) -> str:
+        month = ENGLISH_MONTHS[match.group("month").casefold().rstrip(".")]
+        return f"{match.group('year')}/{month:02d}/{int(match.group('day')):02d}"
+
+    return ENGLISH_DATE_RE.sub(english_date, normalized)
+
+
+def _datetime_from_match(match: re.Match[str], anchor: datetime) -> datetime | None:
+    values = match.groupdict()
+    hour = int(values["hour"])
+    period = (values.get("period_before") or values.get("period_after") or "").casefold()
+    if period and hour <= 12:
+        if period == "am" and hour == 12:
+            hour = 0
+        elif period == "pm" and hour < 12:
+            hour += 12
+    try:
+        event_at = datetime(
+            int(values.get("year") or anchor.year),
+            int(values["month"]),
+            int(values["day"]),
+            hour,
+            int(values.get("minute") or 0),
+            tzinfo=JST,
+        )
+    except ValueError:
+        return None
+    if not values.get("year") and event_at < anchor - timedelta(days=2):
+        try:
+            event_at = event_at.replace(year=event_at.year + 1)
+        except ValueError:
+            return None
+    return event_at
 
 
 def parse_event_datetime(text: str, anchor: datetime) -> datetime | None:
     normalized = normalize_text(text)
-    clock = r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
+    clock = (
+        r"(?:(?P<period_before>AM|PM)\s*)?"
+        r"(?P<hour>[01]?\d|2[0-3])(?:[:時](?P<minute>\d{2})?)"
+        r"(?:\s*(?P<period_after>AM|PM))?"
+    )
+    date_patterns = [
+        r"(?P<year>20\d{2})[./年-](?P<month>\d{1,2})[./月-](?P<day>\d{1,2})日?",
+        r"(?P<month>\d{1,2})[./月-](?P<day>\d{1,2})日?",
+    ]
+
+    # When a post presents multiple timezone renderings of the same event,
+    # prefer the explicitly labelled JST rendering instead of interpreting a
+    # preceding foreign clock as JST.
+    for date_pattern in date_patterns:
+        for pattern in (
+            rf"{date_pattern}\s*(?:[（(]?[月火水木金土日][）)]?)?\s*(?:\(?JST\)?)\s*{clock}",
+            rf"{date_pattern}\s*(?:[（(]?[月火水木金土日][）)]?)?.{{0,20}}?{clock}\s*(?:\(?JST\)?)",
+        ):
+            match = re.search(pattern, normalized, flags=re.IGNORECASE | re.DOTALL)
+            if match:
+                return _datetime_from_match(match, anchor)
+
+    # A foreign-zone clock without a nearby explicit JST representation is not
+    # safe to reinterpret. Fail closed rather than silently shifting the event.
+    if FOREIGN_TIMEZONE_RE.search(normalized):
+        return None
+
     patterns = [
-        rf"(?P<year>20\d{{2}})[./年-](?P<month>\d{{1,2}})[./月-](?P<day>\d{{1,2}})日?"
-        rf"(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
-        rf"(?P<month>\d{{1,2}})[./月-](?P<day>\d{{1,2}})日?"
-        rf"(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
+        rf"{date_patterns[0]}(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
+        rf"{date_patterns[1]}(?:\s*[（(]?[月火水木金土日][）)]?)?.{{0,40}}?{clock}",
     ]
     for pattern in patterns:
         match = re.search(pattern, normalized, flags=re.IGNORECASE | re.DOTALL)
-        if not match:
-            continue
-        values = match.groupdict()
-        try:
-            event_at = datetime(
-                int(values.get("year") or anchor.year), int(values["month"]), int(values["day"]),
-                int(values["hour"]), int(values.get("minute") or 0), tzinfo=JST,
-            )
-        except ValueError:
-            return None
-        if not values.get("year") and event_at < anchor - timedelta(days=2):
-            try:
-                event_at = event_at.replace(year=event_at.year + 1)
-            except ValueError:
-                return None
-        return event_at
+        if match:
+            return _datetime_from_match(match, anchor)
+
     relative = re.search(
-        rf"(?P<day>本日|今日|明日).{{0,30}}?{clock}", normalized, flags=re.IGNORECASE | re.DOTALL
+        rf"(?P<day>本日|今日|明日).{{0,30}}?{clock}",
+        normalized,
+        flags=re.IGNORECASE | re.DOTALL,
     )
     if not relative:
         return None
     day = (anchor + timedelta(days=1 if relative.group("day") == "明日" else 0)).date()
+    hour = int(relative.group("hour"))
+    period = (relative.group("period_before") or relative.group("period_after") or "").casefold()
+    if period and hour <= 12:
+        if period == "am" and hour == 12:
+            hour = 0
+        elif period == "pm" and hour < 12:
+            hour += 12
     return datetime(
-        day.year, day.month, day.day, int(relative.group("hour")),
-        int(relative.group("minute") or 0), tzinfo=JST,
+        day.year,
+        day.month,
+        day.day,
+        hour,
+        int(relative.group("minute") or 0),
+        tzinfo=JST,
     )
 
 
@@ -297,9 +436,15 @@ def known_x_ids(events: Iterable[dict[str, Any]]) -> set[str]:
     return result
 
 
-def candidate_to_event(
-    candidate: dict[str, Any], *, now: datetime, min_retweets: int, x_ids: set[str]
+def candidate_to_event_at(
+    candidate: dict[str, Any],
+    *,
+    event_at: datetime | None,
+    now: datetime,
+    min_retweets: int,
+    x_ids: set[str],
 ) -> tuple[dict[str, Any] | None, str | None]:
+    """Build an event from a resolver-supplied timestamp after normal policy checks."""
     post_id = str(candidate.get("status_id") or "")
     text = clean_yahoo_text(str(candidate.get("text") or ""))
     if not STATUS_ID_RE.fullmatch(post_id):
@@ -322,9 +467,9 @@ def candidate_to_event(
         return None, "retweet_count_invalid"
     if retweets < min_retweets:
         return None, "retweet_below_threshold"
-    event_at = parse_event_datetime(text, now.astimezone(JST))
     if event_at is None:
         return None, "missing_datetime"
+    event_at = event_at.astimezone(JST)
     if event_at < now.astimezone(JST) - timedelta(hours=12):
         return None, "past_event"
     if event_at > now.astimezone(JST) + timedelta(days=180):
@@ -345,6 +490,19 @@ def candidate_to_event(
     }
     return {key: value for key, value in event.items() if value is not None}, None
 
+
+def candidate_to_event(
+    candidate: dict[str, Any], *, now: datetime, min_retweets: int, x_ids: set[str]
+) -> tuple[dict[str, Any] | None, str | None]:
+    text = clean_yahoo_text(str(candidate.get("text") or ""))
+    event_at = parse_event_datetime(text, now.astimezone(JST))
+    return candidate_to_event_at(
+        candidate,
+        event_at=event_at,
+        now=now,
+        min_retweets=min_retweets,
+        x_ids=x_ids,
+    )
 
 def parse_instant(value: str) -> datetime | None:
     try:

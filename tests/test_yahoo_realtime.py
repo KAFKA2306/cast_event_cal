@@ -179,7 +179,101 @@ def test_relative_datetime_and_cache_expiration_and_revalidation():
     }
 
 
+def test_datetime_parser_recovers_decorative_colon_and_english_date():
+    anchor = datetime(2026, 9, 25, tzinfo=UTC)
+
+    decorative = parse_event_datetime(
+        "VRChat交流会 第6回は09/27 JST 04˸00~05˸00に開催",
+        anchor,
+    )
+    assert decorative is not None
+    assert decorative.isoformat() == "2026-09-27T04:00:00+09:00"
+
+    dual_timezone = parse_event_datetime(
+        "第6回は09/26のBST 20˸00~21˸00、09/27 JST 04˸00~05˸00に開催",
+        anchor,
+    )
+    assert dual_timezone is not None
+    assert dual_timezone.isoformat() == "2026-09-27T04:00:00+09:00"
+
+    assert parse_event_datetime(
+        "09/26 BST 20:00 VRChat event 開催",
+        anchor,
+    ) is None
+
+    english = parse_event_datetime(
+        "Saturday 26 Sept. 2026 21:00 PM (JST) VRChat Group+ event",
+        anchor,
+    )
+    assert english is not None
+    assert english.isoformat() == "2026-09-26T21:00:00+09:00"
+
+    twelve_hour = parse_event_datetime(
+        "26 September 2026 4:30 PM VRChat event 開催 Group+",
+        anchor,
+    )
+    assert twelve_hour is not None
+    assert twelve_hour.isoformat() == "2026-09-26T16:30:00+09:00"
+
+
 def test_search_url_is_pinned_to_yahoo_realtime():
     validate_search_url("https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=VRChat")
     with pytest.raises(ValueError):
         validate_search_url("https://example.com/realtime/search?p=VRChat")
+
+def test_structured_parser_preserves_thread_quote_and_link_evidence():
+    page = structured_page(
+        [
+            {
+                "id": "7234567890123456789",
+                "displayText": "9/27 VRChat交流会を開催。詳細はリンクへ",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/7234567890123456789",
+                "conversation_id_str": "7234567890123456789",
+                "in_reply_to_status_id_str": "6234567890123456789",
+                "quoted_status_id_str": "5234567890123456789",
+                "entities": {
+                    "urls": [
+                        {
+                            "expanded_url": "https://example.com/events/vrc-night",
+                        }
+                    ]
+                },
+            }
+        ]
+    )
+    candidate = extract_candidates(page)[0]
+    assert candidate["conversation_id"] == "7234567890123456789"
+    assert candidate["in_reply_to_status_id"] == "6234567890123456789"
+    assert candidate["quoted_status_id"] == "5234567890123456789"
+    assert candidate["linked_urls"] == ["https://example.com/events/vrc-night"]
+
+def test_structured_parser_prefers_richer_duplicate_candidate_object():
+    page = structured_page(
+        [
+            {
+                "id": "8234567890123456789",
+                "displayText": "9/27 22:00 VRChat交流会を開催",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/8234567890123456789",
+            },
+            {
+                "id": "8234567890123456789",
+                "displayText": "9/27 22:00 VRChat交流会を開催",
+                "screenName": "host",
+                "rtCount": 5,
+                "url": "https://x.com/host/status/8234567890123456789",
+                "conversation_id_str": "8234567890123456789",
+                "entities": {
+                    "urls": [{"expanded_url": "https://example.com/events/night"}]
+                },
+            },
+        ]
+    )
+
+    candidate = extract_candidates(page)[0]
+
+    assert candidate["conversation_id"] == "8234567890123456789"
+    assert candidate["linked_urls"] == ["https://example.com/events/night"]
