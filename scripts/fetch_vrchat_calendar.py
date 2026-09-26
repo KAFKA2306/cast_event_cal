@@ -15,20 +15,15 @@ DISCOVER_API_URL = "https://api.vrchat.cloud/api/1/calendar/discover"
 USER_AGENT = "cast-event-cal/2.2 (+https://github.com/KAFKA2306/cast_event_cal)"
 DEFAULT_TERMS = ["日本語", "初心者", "交流", "音楽", "ゲーム", "Quest"]
 ANONYMOUS_DISCOVER_CATEGORY_GROUPS: tuple[str | None, ...] = (
-    "arts",
-    "avatars",
-    "dance",
-    "education",
-    "exploration",
-    "film_media",
-    "gaming",
-    "hangout",
-    "music",
-    "other",
-    "performance",
-    "roleplaying",
-    "wellness",
+    None,
+    "music,performance",
+    "gaming,roleplaying",
+    "avatars,exploration",
+    "dance,hangout",
+    "education,wellness",
+    "arts,film_media,other",
 )
+ANONYMOUS_UPCOMING_OFFSET_MINUTES = 120 * 24 * 60
 
 
 def utc_text(value: datetime | None = None) -> str:
@@ -128,6 +123,7 @@ def fetch_discover(
     max_pages: int,
     personalized_results: str = "include",
     categories: str | None = None,
+    upcoming_offset_minutes: int | None = None,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     cursor: str | None = None
@@ -145,6 +141,8 @@ def fetch_discover(
             }
             if categories:
                 params["categories"] = categories
+            if upcoming_offset_minutes is not None:
+                params["upcomingOffsetMinutes"] = upcoming_offset_minutes
         response = client.get(DISCOVER_API_URL, params=params)
         response.raise_for_status()
         page, payload = checked_results(response.json(), route="discovery")
@@ -171,6 +169,7 @@ def fetch_anonymous_discover(
                 max_pages=max_pages,
                 personalized_results="exclude",
                 categories=categories,
+                upcoming_offset_minutes=ANONYMOUS_UPCOMING_OFFSET_MINUTES,
             )
         )
     return rows
