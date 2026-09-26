@@ -15,6 +15,7 @@ if __package__ in {None, ""}:
 
 from cast_event_cal import core
 from scripts import fetch_external_calendars as external
+from scripts import fetch_vrchat_calendar as vrchat
 from scripts.deduplicate_occurrences import deduplicate_events
 
 DEFAULT_EXTERNAL_CONFIG = Path("config/external_calendars.yaml")
@@ -39,6 +40,7 @@ def _source_rows(
     sources_config_path: Path,
     *,
     external_rows: list[dict[str, Any]] | None = None,
+    discovered_rows: list[dict[str, Any]] | None = None,
 ) -> list[tuple[str, dict[str, Any]]]:
     config = core.load_config(sources_config_path)
     selected: list[tuple[str, dict[str, Any]]] = []
@@ -52,6 +54,8 @@ def _source_rows(
         name = core.clean_text(source.get("name"))
         if name == "external_calendar_events" and external_rows is not None:
             rows = external_rows
+        elif name == "vrchat_calendar_discovery" and discovered_rows is not None:
+            rows = discovered_rows
         else:
             path = _source_path(sources_config_path, str(source["path"]))
             rows = external.read_json_array(path)
@@ -63,6 +67,7 @@ def _public_count(
     sources_config_path: Path,
     *,
     external_rows: list[dict[str, Any]] | None,
+    discovered_rows: list[dict[str, Any]] | None = None,
     now: datetime,
 ) -> tuple[int, int]:
     config = core.load_config(sources_config_path)
@@ -71,6 +76,7 @@ def _public_count(
     for source_name, row in _source_rows(
         sources_config_path,
         external_rows=external_rows,
+        discovered_rows=discovered_rows,
     ):
         try:
             events.append(core.build_event(row, source_name, fetched_at))
@@ -134,6 +140,31 @@ def audit(
             end=end,
         )
 
+    with httpx.Client(
+        timeout=timeout,
+        follow_redirects=True,
+        headers={"User-Agent": vrchat.USER_AGENT},
+    ) as client:
+        raw_public_discover = vrchat.fetch_discover(
+            client,
+            page_size=100,
+            max_pages=2,
+            personalized_results="exclude",
+        )
+
+    manual_events = external.read_json_array(Path("data/manual_events.json"))
+    manual_keys = {vrchat.semantic_key(row) for row in manual_events}
+    official_by_id: dict[str, dict[str, Any]] = {}
+    for item in raw_public_discover:
+        event = vrchat.normalize_event(item)
+        if event is None or vrchat.semantic_key(event) in manual_keys:
+            continue
+        official_by_id[str(event["source_id"])] = event
+    official_discovered = sorted(
+        official_by_id.values(),
+        key=lambda row: (str(row["starts_at"]), str(row["title"])),
+    )
+
     previous_external = external.read_json_array(external_events_path)
     source_name = external.clean_text(source["name"])
     retained_external = [
@@ -163,6 +194,12 @@ def audit(
         external_rows=expanded_external,
         now=generated_at,
     )
+    normalized_combined, public_combined = _public_count(
+        sources_config_path,
+        external_rows=expanded_external,
+        discovered_rows=official_discovered,
+        now=generated_at,
+    )
     health = _read_public_health(health_path)
     published_baseline = health.get("event_count")
 
@@ -175,6 +212,8 @@ def audit(
             int(source.get("max_pages", 8)),
         ),
         "vrc_search_discovered": len(discovered),
+        "vrchat_public_discover_raw": len(raw_public_discover),
+        "vrchat_public_discover_normalized": len(official_discovered),
         "external_events_before": len(previous_external),
         "external_events_after": len(expanded_external),
         "external_events_delta": len(expanded_external) - len(previous_external),
@@ -185,6 +224,10 @@ def audit(
         "public_before_simulated": public_before,
         "public_after_simulated": public_after,
         "public_net_delta": public_after - public_before,
+        "normalized_combined": normalized_combined,
+        "public_after_combined": public_combined,
+        "vrchat_public_discover_incremental_delta": public_combined - public_after,
+        "public_combined_net_delta": public_combined - public_before,
         "production_health_event_count": published_baseline,
         "baseline_matches_production_health": (
             isinstance(published_baseline, int) and published_baseline == public_before
