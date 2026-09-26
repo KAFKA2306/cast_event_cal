@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 API_SCHEMA = "cast-event-cal.api.v1"
+PUBLIC_SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schemas" / "public-events-v1.schema.json"
 
 
 def _sha256(path: Path) -> str:
@@ -31,11 +32,28 @@ def _events(payload: Any) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     return payload, rows
 
 
+def _validate_public_contract(payload: dict[str, Any], rows: list[dict[str, Any]]) -> None:
+    schema = json.loads(PUBLIC_SCHEMA_PATH.read_text(encoding="utf-8"))
+    required_top = set(schema["required"])
+    missing_top = required_top.difference(payload)
+    if missing_top:
+        raise ValueError(f"public feed missing required fields: {sorted(missing_top)}")
+    required_event = set(schema["properties"]["events"]["items"]["required"])
+    for index, row in enumerate(rows):
+        missing = required_event.difference(row)
+        if missing:
+            raise ValueError(f"event {index} missing required fields: {sorted(missing)}")
+        event_id = row["id"]
+        if not isinstance(event_id, str) or not event_id.strip():
+            raise ValueError(f"event {index} id must be a non-empty string")
+
+
 def build(source: Path, output_dir: Path) -> dict[str, Any]:
     payload, rows = _events(json.loads(source.read_text(encoding="utf-8")))
-    ids = [str(row.get("id", "")).strip() for row in rows]
-    if any(not value for value in ids) or len(ids) != len(set(ids)):
-        raise ValueError("event ids must be non-empty and unique")
+    _validate_public_contract(payload, rows)
+    ids = [row["id"].strip() for row in rows]
+    if len(ids) != len(set(ids)):
+        raise ValueError("event ids must be unique")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     api_events = output_dir / "events.json"
@@ -70,6 +88,7 @@ def build(source: Path, output_dir: Path) -> dict[str, Any]:
         "timezone": payload.get("timezone"),
         "event_count": len(rows),
         "source_sha256": _sha256(source),
+        "public_schema": {"name": PUBLIC_SCHEMA_PATH.name, "sha256": _sha256(PUBLIC_SCHEMA_PATH)},
         "cache": {"max_age_seconds": 900, "validation": "sha256"},
         "files": files,
     }
