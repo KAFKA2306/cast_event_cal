@@ -1,8 +1,12 @@
 from datetime import UTC, datetime
+from pathlib import Path
+import subprocess
+import sys
 
 from scripts.build_system_status import build_status
 
 NOW = datetime(2026, 9, 26, 2, 0, tzinfo=UTC)
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _snapshot():
@@ -36,3 +40,15 @@ def test_stale_snapshot_overrides_healthy_collection():
     )
     assert result["overall_status"] == "stale"
     assert result["snapshot_age_minutes"] == 360.0
+
+
+def test_script_entrypoint_runs_from_repository_root(tmp_path):
+    output = tmp_path / "status.json"
+    result = subprocess.run(
+        [sys.executable, "scripts/build_system_status.py", "--now", "2026-09-26T02:00:00Z", "--output", str(output)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert output.exists()
