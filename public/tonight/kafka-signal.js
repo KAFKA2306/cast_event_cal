@@ -20,9 +20,7 @@
   function installInfiniteScroll() {
     const more = document.querySelector('#more');
     if (!more || !('IntersectionObserver' in window)) return;
-
     let loading = false;
-
     const loadNext = () => {
       if (loading || more.hidden || more.disabled) return;
       loading = true;
@@ -30,34 +28,39 @@
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       more.click();
-      if (activeElement && activeElement !== document.body && typeof activeElement.focus === 'function') {
-        activeElement.focus({ preventScroll: true });
-      } else {
-        more.blur();
-      }
+      if (activeElement && activeElement !== document.body && typeof activeElement.focus === 'function') activeElement.focus({ preventScroll: true });
+      else more.blur();
       window.scrollTo(scrollX, scrollY);
       requestAnimationFrame(() => {
         loading = false;
-        if (!more.hidden && more.getBoundingClientRect().top < window.innerHeight + preloadMargin) {
-          loadNext();
-        }
+        if (!more.hidden && more.getBoundingClientRect().top < window.innerHeight + preloadMargin) loadNext();
       });
     };
-
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) loadNext();
-    }, {
-      root: null,
-      rootMargin: `${preloadMargin}px 0px`,
-      threshold: 0,
-    });
+    }, { root: null, rootMargin: `${preloadMargin}px 0px`, threshold: 0 });
     observer.observe(more);
-
     new MutationObserver(() => {
-      if (!more.hidden && more.getBoundingClientRect().top < window.innerHeight + preloadMargin) {
-        loadNext();
-      }
+      if (!more.hidden && more.getBoundingClientRect().top < window.innerHeight + preloadMargin) loadNext();
     }).observe(more, { attributes: true, attributeFilter: ['hidden'] });
+  }
+
+  async function installProvenance(footer) {
+    const paragraph = document.createElement('p');
+    paragraph.className = 'ks-version';
+    paragraph.textContent = `KAFKA SIGNAL ${release} · provenance loading`;
+    footer.append(paragraph);
+    try {
+      const response = await fetch('./provenance.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const provenance = await response.json();
+      const revision = provenance.verified ? provenance.commit.slice(0, 8) : 'LOCAL/UNVERIFIED';
+      paragraph.textContent = `KAFKA SIGNAL ${provenance.release || release} · ${revision}`;
+      document.documentElement.dataset.publicationCommit = provenance.commit || 'UNVERIFIED';
+    } catch (_error) {
+      paragraph.textContent = `KAFKA SIGNAL ${release} · LOCAL/UNVERIFIED`;
+      document.documentElement.dataset.publicationCommit = 'UNVERIFIED';
+    }
   }
 
   function install() {
@@ -76,16 +79,9 @@
       list.querySelectorAll('.event-card').forEach(explain);
     }
     const footer = document.querySelector('footer');
-    if (footer && !footer.querySelector('.ks-version')) {
-      const paragraph = document.createElement('p');
-      paragraph.className = 'ks-version';
-      paragraph.textContent = `KAFKA SIGNAL ${release} · 6cceef70`;
-      footer.append(paragraph);
-    }
+    if (footer && !footer.querySelector('.ks-version')) installProvenance(footer);
     const off = document.querySelector('#history-off');
-    if (off) {
-      off.addEventListener('click', () => localStorage.setItem('vrc-tonight-history-off', off.getAttribute('aria-pressed') === 'true' ? '1' : '0'));
-    }
+    if (off) off.addEventListener('click', () => localStorage.setItem('vrc-tonight-history-off', off.getAttribute('aria-pressed') === 'true' ? '1' : '0'));
     installInfiniteScroll();
   }
 
