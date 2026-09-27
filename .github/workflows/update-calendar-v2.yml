@@ -36,6 +36,8 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - name: Record validated source base
+        run: python scripts/publication_guard.py record
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -106,13 +108,19 @@ jobs:
       - name: Validate generated data and collection health
         run: python scripts/validate_update_snapshot.py
       - name: Write canonical snapshot identity
-        run: python scripts/write_snapshot_identity.py
+        run: |
+          SOURCE_REVISION="$(python -c 'import json; print(json.load(open("/tmp/validated-base.json"))["validated_base_sha"])')"
+          python scripts/write_snapshot_identity.py --source-revision "$SOURCE_REVISION"
       - name: Verify canonical snapshot identity
-        run: python scripts/write_snapshot_identity.py --check public/snapshot.json
+        run: |
+          SOURCE_REVISION="$(python -c 'import json; print(json.load(open("/tmp/validated-base.json"))["validated_base_sha"])')"
+          python scripts/write_snapshot_identity.py --check public/snapshot.json --source-revision "$SOURCE_REVISION"
       - name: Gate generated snapshot freshness
         run: python scripts/audit_freshness.py --max-age-minutes 180
       - name: Build durable system status
         run: python scripts/build_system_status.py --max-age-minutes 180
+      - name: Guard exact validated base before publication
+        run: python scripts/publication_guard.py check
       - name: Commit generated data safely
         run: |
           set -euo pipefail
@@ -136,6 +144,5 @@ jobs:
             git config user.email 41898282+github-actions[bot]@users.noreply.github.com
             git add "${paths[@]}"
             git commit -m 'chore: refresh calendar links images and ontology'
-            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
