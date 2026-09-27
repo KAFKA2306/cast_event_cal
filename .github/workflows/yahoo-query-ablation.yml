@@ -1,26 +1,12 @@
 name: Yahoo query ablation
 
+# Expensive evidence benchmark. Production publication is owned by the
+# canonical update/render workflows; this workflow is intentionally manual.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 21 * * *'
-  pull_request:
-    paths:
-      - config/yahoo_query_ablation.json
-      - scripts/run_yahoo_query_ablation.py
-      - tests/test_yahoo_query_ablation.py
-      - .github/workflows/yahoo-query-ablation.yml
-  push:
-    branches: [main]
-    paths:
-      - config/yahoo_query_ablation.json
-      - scripts/run_yahoo_query_ablation.py
-      - tests/test_yahoo_query_ablation.py
-      - .github/workflows/yahoo-query-ablation.yml
 
 permissions:
-  contents: write
-  actions: write
+  contents: read
 
 concurrency:
   group: yahoo-query-ablation-${{ github.ref }}
@@ -82,23 +68,4 @@ jobs:
           path: |
             public/yahoo-query-ablation.json
             data/yahoo-query-ablation-raw.json
-          retention-days: 30
-      - name: Commit empirical result
-        if: github.event_name != 'pull_request'
-        run: |
-          set -euo pipefail
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add public/yahoo-query-ablation.json data/yahoo-query-ablation-raw.json
-          if git diff --cached --quiet; then
-            echo 'No ablation result changes'
-          else
-            git commit -m 'chore: refresh Yahoo query ablation [skip ci]'
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
-      - name: Redeploy production Pages with evidence
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run render-search-pages.yml --ref main
+          retention-days: 7
