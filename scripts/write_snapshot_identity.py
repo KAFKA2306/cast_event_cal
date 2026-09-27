@@ -7,7 +7,9 @@ from pathlib import Path
 from typing import Any
 
 
-def build_snapshot_identity(events_path: Path) -> dict[str, Any]:
+def build_snapshot_identity(
+    events_path: Path, source_revision: str | None = None
+) -> dict[str, Any]:
     raw = events_path.read_bytes()
     payload = json.loads(raw.decode("utf-8"))
     events = payload.get("events")
@@ -29,17 +31,25 @@ def build_snapshot_identity(events_path: Path) -> dict[str, Any]:
     latest_event_id = str(latest.get("id") or latest.get("source_id") or "")
     latest_starts_at = str(latest.get("starts_at") or "")
 
-    return {
+    identity: dict[str, Any] = {
         "schema_version": 1,
         "events_sha256": hashlib.sha256(raw).hexdigest(),
         "event_count": len(events),
         "latest_event_id": latest_event_id,
         "latest_starts_at": latest_starts_at,
     }
+    if source_revision is not None:
+        source_revision = source_revision.strip()
+        if not source_revision:
+            raise ValueError("source_revision must not be empty")
+        identity["source_revision"] = source_revision
+    return identity
 
 
-def write_snapshot_identity(events_path: Path, output_path: Path) -> dict[str, Any]:
-    snapshot = build_snapshot_identity(events_path)
+def write_snapshot_identity(
+    events_path: Path, output_path: Path, source_revision: str | None = None
+) -> dict[str, Any]:
+    snapshot = build_snapshot_identity(events_path, source_revision)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(snapshot, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -48,9 +58,11 @@ def write_snapshot_identity(events_path: Path, output_path: Path) -> dict[str, A
     return snapshot
 
 
-def verify_snapshot_identity(events_path: Path, snapshot_path: Path) -> dict[str, Any]:
+def verify_snapshot_identity(
+    events_path: Path, snapshot_path: Path, source_revision: str | None = None
+) -> dict[str, Any]:
     expected = json.loads(snapshot_path.read_text(encoding="utf-8"))
-    actual = build_snapshot_identity(events_path)
+    actual = build_snapshot_identity(events_path, source_revision)
     if expected != actual:
         raise ValueError(
             "snapshot identity mismatch:\n"
@@ -67,17 +79,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--events", type=Path, default=Path("public/events.json"))
     parser.add_argument("--output", type=Path, default=Path("public/snapshot.json"))
     parser.add_argument("--check", type=Path)
+    parser.add_argument(
+        "--source-revision",
+        help="Validated source/base revision to bind to this generated snapshot.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     if args.check:
-        snapshot = verify_snapshot_identity(args.events, args.check)
+        snapshot = verify_snapshot_identity(
+            args.events, args.check, args.source_revision
+        )
         print(json.dumps(snapshot, ensure_ascii=False, sort_keys=True))
         return 0
 
-    snapshot = write_snapshot_identity(args.events, args.output)
+    snapshot = write_snapshot_identity(
+        args.events, args.output, args.source_revision
+    )
     print(json.dumps(snapshot, ensure_ascii=False, sort_keys=True))
     return 0
 
