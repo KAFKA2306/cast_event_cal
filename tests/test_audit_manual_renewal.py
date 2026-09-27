@@ -2,7 +2,7 @@ from datetime import UTC, datetime
 
 import pytest
 
-from scripts.audit_manual_renewal import audit, classify
+from scripts.audit_manual_renewal import DEFAULT_INPUTS, audit, classify, load
 
 NOW = datetime(2026, 9, 27, 14, 0, tzinfo=UTC)
 
@@ -16,10 +16,17 @@ def test_audit_is_deterministic_and_limits_human_queue_to_due_states() -> None:
     ]
     first = audit(records, now=NOW, due_days=90)
     second = audit(list(reversed(records)), now=NOW, due_days=90)
-
     assert first == second
     assert first["state_counts"] == {"verified": 1, "due": 1, "overdue": 1, "unknown": 1}
     assert first["human_queue"] == ["due", "old", "unknown"]
+
+
+def test_current_manual_corpus_is_fully_auditable() -> None:
+    records = load(list(DEFAULT_INPUTS))
+    result = audit(records, now=NOW, due_days=90)
+    assert result["record_count"] == len(records)
+    assert sum(result["state_counts"].values()) == len(records)
+    assert len(result["records"]) == len(records)
 
 
 def test_missing_evidence_is_never_promoted_to_fresh() -> None:
