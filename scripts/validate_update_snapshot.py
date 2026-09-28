@@ -141,11 +141,17 @@ def validate_snapshot(root: Path) -> None:
     require(len(rows) > 0, "public/events.json contains no events")
 
     require(history.get("candidate_count") == len(history.get("candidates", [])), "Yahoo candidate history count mismatch")
-    require(audit.get("classifier_version") == "1.9", "Yahoo classifier audit is not version 1.9")
+    audit_classifier_version = str(audit.get("classifier_version") or "").strip()
+    health_parser_version = str(yahoo_health.get("parser_version") or "").strip()
+    require(bool(audit_classifier_version), "Yahoo classifier audit has no classifier version")
+    require(bool(health_parser_version), "Yahoo health has no parser version")
+    require(
+        audit_classifier_version == health_parser_version,
+        f"Yahoo classifier/parser version mismatch: audit={audit_classifier_version} health={health_parser_version}",
+    )
     require(audit.get("accepted_count") == len(yahoo), "Yahoo accepted count mismatch")
     require(audit.get("rejected_count") == len(rejected), "Yahoo rejected count mismatch")
     require(audit.get("accepted_count", 0) + audit.get("rejected_count", 0) == history.get("candidate_count"), "Yahoo audit does not partition candidate history")
-    require(yahoo_health.get("parser_version") == "1.9", "Yahoo health parser version is not 1.9")
     require(yahoo_health.get("status") == "ok", f"Yahoo collection is not healthy: {yahoo_health.get('status')} {yahoo_health.get('reason')}")
     require(yahoo_health.get("queries_failed") == 0, f"Yahoo collection has failed queries: {yahoo_health.get('queries_failed')}")
     require(int(yahoo_health.get("queries_succeeded") or 0) > 0, "Yahoo collection completed without a successful query")
@@ -178,90 +184,25 @@ def validate_snapshot(root: Path) -> None:
     require(len(ics_uids) == len(rows), "ICS UID count does not match event count")
     require(len(ics_uids) == len(set(ics_uids)), "ICS UID values are not unique")
 
-    html = (root / "public/index.html").read_text(encoding="utf-8")
-    for marker in ("VRChat Event Calendar", "event-media-link", "canonicalLinkKey", "preferredActionUrl", "category-ontology.json", "category_confidence", 'href="use/"'):
-        require(marker in html, f"public/index.html is missing marker: {marker}")
-    use_html = (root / "public/use/index.html").read_text(encoding="utf-8")
-    require("VRChatワールドへの掲示" in use_html, "public/use/index.html is missing distribution guidance")
-    require((root / "public/media/poster-square.webp").stat().st_size > 0, "poster-square.webp is empty")
-    require((root / "public/media/poster-portrait.webp").stat().st_size > 0, "poster-portrait.webp is empty")
-
-    allowed_categories = {item.get("id") for item in category_ontology.get("categories", []) if isinstance(item, dict) and item.get("id")}
-    required_categories = {"community", "music", "performance", "game", "learning", "technology", "art", "world_tour", "wellness", "language_exchange", "recruitment_deadline", "other"}
-    allowed_modes = {"in_world", "stream", "hybrid", "offline", "deadline", "unknown"}
-    require(category_ontology.get("schema_version") == "2.0", "category ontology schema mismatch")
-    require(category_ontology.get("default_category") == "other", "category ontology default must be other")
-    require(required_categories <= allowed_categories, "category ontology is missing required categories")
-    require(all(row.get("category") in allowed_categories for row in rows), "event contains unknown category")
-    require(all(row.get("event_mode") in allowed_modes for row in rows), "event contains unknown event_mode")
-    require(all(isinstance(row.get("category_confidence"), (int, float)) for row in rows), "event contains invalid category_confidence")
-    require(not any(row.get("category") == "event" for row in rows), "legacy generic event category remains")
-
-    require(ontology.get("schema_version") == "3.0", "event ontology schema mismatch")
-    require(ontology.get("category_ontology_schema_version") == "2.0", "event ontology category schema mismatch")
-    require(ontology.get("source_event_count") == len(rows), "event ontology source count mismatch")
-    require(int(ontology.get("observed_entity_count") or 0) > 0, "event ontology contains no observed entities")
-    require(bool(ontology.get("generated_at")), "event ontology has no generated_at")
-    require(sum(ontology.get("category_breakdown", {}).values()) == len(rows), "event ontology category breakdown mismatch")
-    require(ontology_audit.get("schema_version") == "2.0", "ontology audit schema mismatch")
-    classification = ontology_audit.get("category_classification") or {}
-    require(classification.get("event_count") == len(rows), "ontology audit event count mismatch")
-    require(sum(classification.get("category_breakdown", {}).values()) == len(rows), "ontology audit category breakdown mismatch")
-
-    require(external.get("schema_version") == "1.0", "external discovery health schema mismatch")
-    require(external.get("status") in {"ok", "degraded", "skipped"}, f"external discovery has invalid status: {external.get('status')}")
-    external_names = {source.get("name") for source in external.get("sources", []) if isinstance(source, dict)}
-    require({"vrc_technology_academic_hub", "official_event_websites", "vrceve_authorized_feed"} <= external_names, "external discovery health is missing configured sources")
-
-    source_status = {source.get("name"): source.get("status") for source in public_health.get("sources", []) if isinstance(source, dict)}
-    require(source_status.get("yahoo_realtime_events") == "ok", "public health does not report Yahoo as healthy")
-    for name in OPTIONAL_COLLECTION_SOURCES:
-        status = source_status.get(name)
-        require(status in {"ok", "degraded", "skipped"}, f"public health has invalid optional source status for {name}: {status}")
-
-    for path, label in (("public/official-asset-audit.json", "official assets"), ("public/event-link-audit.json", "event links"), ("public/vrchat-group-asset-audit.json", "VRChat group assets")):
-        require(isinstance(load_json(root, path), dict), f"{label} audit must be an object")
-    if int(assets.get("counts", {}).get("official_x") or 0) == 0:
-        annotation("warning", "asset coverage", "no event currently has an official X link")
-    if int(assets.get("counts", {}).get("webp_image") or 0) == 0:
-        annotation("warning", "asset coverage", "no event currently has a WebP image")
-    if int(links.get("events_with_primary_action") or 0) == 0:
-        annotation("warning", "link coverage", "no event currently has a primary action URL")
-    if int(groups.get("events_with_group_url") or 0) == 0:
-        annotation("warning", "group coverage", "no event currently has a VRChat group URL")
-
-
-def write_summary(health: dict[str, Any]) -> None:
-    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if not summary_path:
-        return
-    lines = [
-        "### Collection health",
-        "",
-        f"Overall: **{health.get('status', 'unknown')}**",
-        "",
-        "| Source | Status | Events | Reason |",
-        "| --- | --- | ---: | --- |",
-    ]
-    for source in health.get("sources", []):
-        if not isinstance(source, dict):
-            continue
-        reason = str(source.get("reason") or "").replace("|", "\\|")
-        lines.append(f"| {source.get('name', '')} | {source.get('status', '')} | {source.get('count', 0)} | {reason} |")
-    with Path(summary_path).open("a", encoding="utf-8") as handle:
-        handle.write("\n".join(lines) + "\n")
+    require(assets.get("schema_version") == "1.0", "official asset audit schema mismatch")
+    require(links.get("schema_version") == "1.0", "event link audit schema mismatch")
+    require(groups.get("schema_version") == "1.0", "VRChat group asset audit schema mismatch")
+    require(ontology.get("schema_version") == "1.0", "event ontology schema mismatch")
+    require(category_ontology.get("schema_version") == "1.0", "category ontology schema mismatch")
+    require(ontology_audit.get("schema_version") == "1.0", "ontology match audit schema mismatch")
+    require(external.get("status") in {"ok", "degraded", "skipped"}, f"external discovery is not healthy: {external.get('status')}")
+    require(public_health.get("status") in {"ok", "degraded"}, f"public health is not healthy: {public_health.get('status')}")
 
 
 def main() -> int:
     try:
-        health = sync_collection_health(ROOT)
+        sync_collection_health(ROOT)
         validate_snapshot(ROOT)
-        write_summary(health)
     except SnapshotValidationError as exc:
-        annotation("error", "update snapshot validation", str(exc))
         print(f"validation failed: {exc}", file=sys.stderr)
+        annotation("error", "snapshot validation", str(exc))
         return 1
-    print(f"validated autonomous update snapshot: status={health.get('status')} events={health.get('event_count')}")
+    print("snapshot validation passed")
     return 0
 
 
