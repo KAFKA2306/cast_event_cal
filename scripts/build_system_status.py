@@ -8,10 +8,12 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-if __package__ in {None, ""} and str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+if __package__ in {None, ""}:
+    __package__ = "scripts"
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
 
-from scripts.audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, read_object
+from .audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, read_object
 
 DEFAULT_HEALTH = ROOT / "public" / "health.json"
 DEFAULT_SNAPSHOT = ROOT / "public" / "snapshot.json"
