@@ -193,7 +193,7 @@ def test_peer_evidence_plan_prefers_group_code_over_series_hashtag():
 
     assert len(plan) == 1
     assert "yss.8431" in plan[0]["query"].casefold()
-    assert plan[0]["term"].startswith("host|groupcode:")
+    assert "groupcode:yss.8431" in plan[0]["term"]
 
 
 def test_peer_evidence_plan_skips_rows_that_already_have_joinable_peer():
