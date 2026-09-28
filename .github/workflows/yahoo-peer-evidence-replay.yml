@@ -1,0 +1,49 @@
+name: Yahoo peer evidence replay
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+    inputs:
+      max_queries:
+        description: Maximum targeted peer-evidence queries
+        required: false
+        default: '12'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yahoo-peer-evidence-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install project
+        run: pip install -e .
+      - name: Replay targeted peer evidence
+        env:
+          MAX_QUERIES: ${{ github.event.inputs.max_queries || '12' }}
+        run: |
+          python scripts/replay_yahoo_peer_evidence.py \
+            --max-queries "$MAX_QUERIES" \
+            --output peer-evidence-replay.json
+      - name: Show report
+        if: always()
+        run: cat peer-evidence-replay.json || true
+      - name: Upload replay report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-peer-evidence-replay-${{ github.run_id }}
+          path: peer-evidence-replay.json
+          if-no-files-found: error
+          retention-days: 30
