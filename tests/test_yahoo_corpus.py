@@ -230,3 +230,49 @@ def test_peer_evidence_plan_honors_zero_budget():
     ]
 
     assert build_peer_evidence_query_plan(history, limit=0) == []
+
+
+
+def test_peer_evidence_plan_uses_author_fallback_instead_of_tco_search():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "VRChatイベント 9/27開催 https://t.co/AbCd1234",
+            "author": "host",
+            "last_seen_at": "2026-09-27T10:00:00Z",
+            "last_reason": "missing_datetime",
+            "resolution_blocker": "no_peer_evidence",
+        }
+    ]
+
+    plan = build_peer_evidence_query_plan(history, limit=1)
+
+    assert len(plan) == 1
+    assert "@host" in plan[0]["query"]
+    assert "t.co" not in plan[0]["query"]
+
+
+def test_peer_evidence_plan_prioritizes_recent_unresolved_rows():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "VRChat交流会 #VRC古い会 9/20開催",
+            "author": "oldhost",
+            "last_seen_at": "2026-09-20T10:00:00Z",
+            "last_reason": "missing_datetime",
+            "resolution_blocker": "no_peer_evidence",
+        },
+        {
+            "status_id": "2234567890123456789",
+            "text": "VRChat交流会 #VRC新しい会 9/28開催",
+            "author": "newhost",
+            "last_seen_at": "2026-09-28T01:00:00Z",
+            "last_reason": "missing_datetime",
+            "resolution_blocker": "no_peer_evidence",
+        },
+    ]
+
+    plan = build_peer_evidence_query_plan(history, limit=1)
+
+    assert len(plan) == 1
+    assert "#vrc新しい会" in plan[0]["query"].casefold()
