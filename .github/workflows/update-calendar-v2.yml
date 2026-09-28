@@ -59,18 +59,6 @@ jobs:
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/collect_yahoo_corpus.py --mode daily --target 1000
-      - name: Align retained Yahoo classifier contract
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          path = Path('scripts/refine_yahoo_corpus.py')
-          text = path.read_text(encoding='utf-8')
-          old = 'implementation.PARSER_VERSION = "1.8"'
-          new = 'implementation.PARSER_VERSION = "1.9"'
-          if old not in text:
-              raise SystemExit('expected Yahoo classifier version assignment not found')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
-          PY
       - name: Replay retained Yahoo corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
