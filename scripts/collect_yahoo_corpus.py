@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -18,6 +19,7 @@ if __package__ in {None, ""}:
 
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import run_yahoo_realtime as ledger
+from scripts.yahoo_evidence_graph import event_fingerprints
 
 JST = ZoneInfo("Asia/Tokyo")
 CONFIG_PATH = Path("config/yahoo_query_terms.json")
@@ -224,6 +226,45 @@ def refined_candidate_to_event(
     return event, reason
 
 
+
+def refined_candidate_to_event_at(
+    candidate: dict[str, Any],
+    *,
+    event_at: datetime,
+    now: datetime,
+    min_retweets: int,
+    x_ids: set[str],
+) -> tuple[dict[str, Any] | None, str | None]:
+    """Apply the same semantic policy with a resolver-supplied timestamp."""
+    text = str(candidate.get("text") or "").strip()
+    conflict = NEXT_MONTH_CONFLICT_RE.search(text)
+    if conflict and int(conflict.group("label_month")) != int(conflict.group("date_month")):
+        return None, "conflicting_date_context"
+
+    has_participation = has_any(text, PARTICIPATION_TERMS)
+    has_specific_event = has_any(text, SPECIFIC_EVENT_TERMS)
+    has_product = has_any(text, implementation.PRODUCT_TERMS)
+    has_giveaway = has_any(text, implementation.GIVEAWAY_TERMS)
+    has_only_generic_event = has_any(text, GENERIC_EVENT_TERMS) and not has_specific_event
+
+    if has_giveaway and not has_participation and not has_specific_event:
+        return None, "giveaway_only"
+    if has_product and has_only_generic_event and not has_participation:
+        return None, "product_only"
+    if has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+        return None, "missing_participation_method"
+
+    event, reason = implementation.candidate_to_event_at(
+        candidate,
+        event_at=event_at,
+        now=now,
+        min_retweets=min_retweets,
+        x_ids=x_ids,
+    )
+    if event and has_any(text, PRIVATE_INSTANCE_TERMS) and not has_participation:
+        return None, "missing_participation_method"
+    return event, reason
+
 def configure_classifier() -> None:
     ledger.configure()
     implementation.PARSER_VERSION = "1.8"
@@ -282,6 +323,169 @@ def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> 
         audit_offset = (ordinal * audit_count) % len(audit)
         selected += (audit[audit_offset:] + audit[:audit_offset])[:audit_count]
     return selected
+
+
+
+PEER_EVIDENCE_PLATFORM = "(VRChat OR VRC)"
+
+
+def _peer_query_for_fingerprint(fingerprint: str) -> tuple[int, str] | None:
+    """Return a bounded Yahoo query for a machine-safe event identity.
+
+    Search is only evidence acquisition. Publication still requires the
+    evidence-graph resolver and safety gate, so a broad search hit never
+    becomes publication authority by itself.
+    """
+    parts = fingerprint.split("|")
+    tokens: list[str] = []
+    priority = 9
+
+    def add_token(prefix: str, *, hashtag: bool = False) -> None:
+        nonlocal priority
+        for part in parts:
+            if not part.startswith(prefix):
+                continue
+            value = part.split(":", 1)[1].strip()
+            if not value:
+                continue
+            token = f"#{value}" if hashtag else value
+            if token not in tokens:
+                tokens.append(token)
+
+    # Prefer identities Yahoo can actually search. t.co tokens are stable
+    # graph edges but poor search keys, so they are never queried directly.
+    if any(part.startswith("groupcode:") for part in parts):
+        priority = 0
+        add_token("groupcode:")
+    if any(part.startswith("group:") for part in parts):
+        priority = min(priority, 1)
+        add_token("group:")
+    if any(part.startswith("hashtag:") for part in parts):
+        priority = min(priority, 2)
+        add_token("hashtag:", hashtag=True)
+    if any(part.startswith("name:") for part in parts):
+        priority = min(priority, 3)
+        add_token("name:")
+    if fingerprint.startswith("officialurl:"):
+        priority = min(priority, 4)
+        add_token("officialurl:")
+    if any(part.startswith("url:") for part in parts):
+        priority = min(priority, 5)
+        add_token("url:")
+
+    # Same-author lookup is a bounded fallback for rows whose only stable edge
+    # is a short URL. Retrieved posts still cannot resolve unless they share a
+    # graph identity, so this broadens acquisition without broadening authority.
+    author = parts[0] if parts and ":" not in parts[0] else ""
+    if not tokens and author and any(part.startswith("shorturl:") for part in parts):
+        priority = 6
+        tokens.append(f"@{author}")
+
+    # Unscoped eventtitle is deliberately not searched on its own. The
+    # resolver only permits it as a bridge to structured external evidence.
+    if not tokens:
+        return None
+
+    identity = " ".join(f"({token})" for token in tokens[:2])
+    return priority, f"{identity} {PEER_EVIDENCE_PLATFORM}"
+
+
+def build_peer_evidence_query_plan(
+    history: list[dict[str, Any]],
+    *,
+    limit: int,
+) -> list[dict[str, str]]:
+    """Plan targeted searches for unresolved rows that currently lack peers."""
+    if limit <= 0:
+        return []
+
+    sources_by_fingerprint: dict[str, set[str]] = {}
+    fingerprints_by_status: dict[str, set[str]] = {}
+    for row in history:
+        status_id = str(row.get("status_id") or "")
+        if not status_id:
+            continue
+        fingerprints = event_fingerprints(row)
+        fingerprints_by_status[status_id] = fingerprints
+        for fingerprint in fingerprints:
+            if fingerprint.startswith("eventtitle:"):
+                continue
+            sources_by_fingerprint.setdefault(fingerprint, set()).add(status_id)
+
+    candidates: dict[str, dict[str, Any]] = {}
+    for row in history:
+        if row.get("last_reason") != "missing_datetime":
+            continue
+        status_id = str(row.get("status_id") or "")
+        fingerprints = fingerprints_by_status.get(status_id, set())
+        joinable = [
+            fingerprint
+            for fingerprint in fingerprints
+            if not fingerprint.startswith("eventtitle:")
+        ]
+        blocker = str(row.get("resolution_blocker") or "")
+        inferred_no_peer = bool(joinable) and not any(
+            len(sources_by_fingerprint.get(fingerprint, set())) >= 2
+            for fingerprint in joinable
+        )
+        if blocker != "no_peer_evidence" and not (not blocker and inferred_no_peer):
+            continue
+
+        choices: list[tuple[int, str, str]] = []
+        for fingerprint in joinable:
+            planned = _peer_query_for_fingerprint(fingerprint)
+            if planned is None:
+                continue
+            priority, query = planned
+            choices.append((priority, fingerprint, query))
+        if not choices:
+            continue
+
+        priority, fingerprint, query = min(choices)
+        seen = (
+            implementation.parse_instant(str(row.get("last_seen_at") or ""))
+            or implementation.parse_instant(str(row.get("first_seen_at") or ""))
+        )
+        seen_timestamp = seen.timestamp() if seen is not None else 0.0
+        item = candidates.setdefault(
+            fingerprint,
+            {
+                "priority": priority,
+                "query": query,
+                "source_ids": set(),
+                "latest_seen_timestamp": seen_timestamp,
+            },
+        )
+        item["source_ids"].add(status_id)
+        item["latest_seen_timestamp"] = max(
+            float(item["latest_seen_timestamp"]),
+            seen_timestamp,
+        )
+
+    ranked = sorted(
+        candidates.items(),
+        key=lambda pair: (
+            -float(pair[1]["latest_seen_timestamp"]),
+            -len(pair[1]["source_ids"]),
+            int(pair[1]["priority"]),
+            pair[0],
+        ),
+    )
+    plan: list[dict[str, str]] = []
+    for fingerprint, item in ranked[:limit]:
+        digest = hashlib.sha256(fingerprint.encode("utf-8")).hexdigest()[:12]
+        query = str(item["query"])
+        plan.append(
+            {
+                "key": f"peer-{digest}",
+                "group": "peer_evidence",
+                "term": fingerprint,
+                "query": query,
+                "url": "https://search.yahoo.co.jp/realtime/search?"
+                + urlencode({"ei": "UTF-8", "p": query, "md": "h"}),
+            }
+        )
+    return plan
 
 
 def candidate_score(row: dict[str, Any]) -> tuple[bool, int, int]:
@@ -488,6 +692,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--target", type=int)
     parser.add_argument("--max-queries", type=int)
     parser.add_argument("--delay-seconds", type=float)
+    parser.add_argument("--peer-evidence-queries", type=int)
     parser.add_argument("--require-target", action="store_true")
     args = parser.parse_args(argv)
 
@@ -505,9 +710,22 @@ def main(argv: list[str] | None = None) -> int:
     plan = build_query_plan(config)
     if args.mode == "bootstrap":
         selected_plan = plan[: int(args.max_queries or config.get("bootstrap_query_count", 140))]
+        peer_plan: list[dict[str, str]] = []
     else:
         daily_count = int(config.get("daily_query_count", 16)) * (2 if len(before) < target else 1)
         selected_plan = select_daily_plan(plan, now, int(args.max_queries or daily_count))
+        peer_limit = int(
+            args.peer_evidence_queries
+            if args.peer_evidence_queries is not None
+            else config.get("peer_evidence_query_count", 12)
+        )
+        peer_plan = build_peer_evidence_query_plan(before, limit=max(0, peer_limit))
+        seen_queries = {str(row["query"]).casefold() for row in selected_plan}
+        selected_plan.extend(
+            row
+            for row in peer_plan
+            if str(row["query"]).casefold() not in seen_queries
+        )
 
     observed, query_results, raw_total = fetch_candidates(
         selected_plan,
@@ -535,6 +753,7 @@ def main(argv: list[str] | None = None) -> int:
         "candidate_count": len(observed), "raw_candidate_count": raw_total,
         "duplicate_observations_removed": max(0, raw_total - len(observed)),
         "query_results": query_results, "candidates": observed,
+        "peer_evidence_queries_planned": len(peer_plan),
     })
 
     ledger.HISTORY_RETENTION_DAYS = int(config.get("retention_days", HISTORY_RETENTION_DAYS))
@@ -582,6 +801,11 @@ def main(argv: list[str] | None = None) -> int:
         "corpus_target_reached": len(evaluated) >= target,
         "queries_attempted": len(query_results), "queries_succeeded": successful,
         "queries_failed": len(query_results) - successful,
+        "peer_evidence_queries_planned": len(peer_plan),
+        "peer_evidence_queries_succeeded": sum(
+            row.get("group") == "peer_evidence" and row.get("status") == "ok"
+            for row in query_results
+        ),
         "raw_candidate_count": raw_total, "unique_candidates_this_run": len(observed),
         "duplicate_observations_removed": max(0, raw_total - len(observed)),
         "rejection_counts": audit["rejection_reason_counts"], "query_results": query_results,
@@ -590,7 +814,7 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"Yahoo corpus: mode={args.mode} queries={len(query_results)} successful={successful} "
         f"observed={len(observed)} history={len(evaluated)} accepted={len(accepted)} "
-        f"rejected={len(rejected)} target={target}"
+        f"rejected={len(rejected)} target={target} peer_queries={len(peer_plan)}"
     )
     return 2 if args.require_target and len(evaluated) < target else 0
 

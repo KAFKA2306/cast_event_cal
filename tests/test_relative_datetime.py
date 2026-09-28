@@ -3,7 +3,12 @@ from __future__ import annotations
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from scripts.relative_datetime import build_resolution_audit, resolve_event_datetime
+from scripts.relative_datetime import (
+    build_resolution_audit,
+    materialize_recurring_events,
+    resolve_event_datetime,
+    resolve_recurring_event,
+)
 
 JST = ZoneInfo("Asia/Tokyo")
 
@@ -238,3 +243,239 @@ def test_resolution_audit_records_changed_existing_events() -> None:
     assert audit["events_with_resolution_evidence"] == 1
     assert audit["changed_events"][0]["previous_starts_at"] == "2026-08-17T13:00:00Z"
     assert audit["changed_events"][0]["current_starts_at"] == "2026-08-10T13:00:00Z"
+
+
+def test_materializes_weekly_recurrence_after_current_time() -> None:
+    source_anchor = datetime(2026, 7, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 8, 3, 9, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週金曜日 22:00 VRChat交流イベント開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 7, 22, 0, tzinfo=JST)
+    assert result.method == "recurrence_weekly_materialized"
+    assert result.recurrence_rule == {
+        "frequency": "weekly",
+        "weekday": 4,
+        "hour": 22,
+        "minute": 0,
+        "timezone": "Asia/Tokyo",
+    }
+
+
+def test_materializes_ordinal_monthly_recurrence_without_guessing() -> None:
+    source_anchor = datetime(2026, 7, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎月第2、第4 日曜日 13:00開催。VRChat Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 27, 13, 0, tzinfo=JST)
+    assert result.method == "recurrence_ordinal_monthly_materialized"
+    assert result.recurrence_rule is not None
+    assert result.recurrence_rule["ordinals"] == [2, 4]
+
+
+def test_recurrence_materializer_rejects_commerce_clock_without_access() -> None:
+    source_anchor = datetime(2026, 7, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    assert resolve_recurring_event(
+        "毎週金曜日22:00 VRChat向け衣装セールを開催します。BOOTHで販売。",
+        source_anchor,
+        materialize_after=current,
+    ) is None
+
+
+def test_access_evidence_can_anchor_relative_datetime_without_announcement_word() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "VRChat交流会 今夜22:00 Group +でJOINできます。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 19, 22, 0, tzinfo=JST)
+
+
+def test_parser_can_resolve_access_clock_before_semantic_classifier_gate() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "今夜22:00にVRChatへJOINして遊びます。",
+        anchor,
+    )
+    assert result is not None
+
+def test_materializes_multiple_weekdays_and_selects_next_occurrence() -> None:
+    source_anchor = datetime(2026, 8, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 8, 3, 23, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週 月曜・水曜 22:00 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 8, 5, 22, 0, tzinfo=JST)
+    assert result.recurrence_rule is not None
+    assert result.recurrence_rule["weekdays"] == [0, 2]
+
+
+def test_materializes_multiple_month_days() -> None:
+    source_anchor = datetime(2026, 9, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎月 1日・15日 21:30 VRChat集会を開催。Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 15, 21, 30, tzinfo=JST)
+    assert result.recurrence_rule is not None
+    assert result.recurrence_rule["days"] == [1, 15]
+
+
+def test_materializes_last_weekday_of_month() -> None:
+    source_anchor = datetime(2026, 9, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎月最終金曜日 22:00 VRChatイベント開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 22, 0, tzinfo=JST)
+    assert result.recurrence_rule is not None
+    assert result.recurrence_rule["frequency"] == "monthly_last_weekday"
+
+
+def test_recurrence_half_hour_is_not_truncated_to_top_of_hour() -> None:
+    source_anchor = datetime(2026, 9, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 14, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週金曜日 22時半 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 18, 22, 30, tzinfo=JST)
+
+
+def test_period_clock_is_resolved_as_24_hour_time() -> None:
+    anchor = datetime(2026, 9, 19, 10, 0, tzinfo=JST)
+    result = resolve(
+        "本日 VRChat交流会を開催します。Group +でJOIN、開始は午後10時半です。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 19, 22, 30, tzinfo=JST)
+
+
+def test_materializes_four_bounded_future_occurrences() -> None:
+    source_anchor = datetime(2026, 8, 1, 12, 0, tzinfo=JST)
+    current = datetime(2026, 8, 3, 12, 0, tzinfo=JST)
+
+    results = materialize_recurring_events(
+        "毎週金曜日 22:00 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+
+    assert [item.event_at for item in results] == [
+        datetime(2026, 8, 7, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 14, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 21, 22, 0, tzinfo=JST),
+        datetime(2026, 8, 28, 22, 0, tzinfo=JST),
+    ]
+
+def test_recovers_midnight_japanese_and_am_clock_without_shifting_to_afternoon() -> None:
+    anchor = datetime(2026, 6, 8, 7, 55, tzinfo=JST)
+    result = resolve(
+        "本日 深夜 #ガジェット愛好会 による WWDC 26 応援 上映会 を行います。"
+        "深夜2時の VRChat でお待ちしております。6/9 (火) AM 2:00～ Group Public",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 6, 9, 2, 0, tzinfo=JST)
+
+
+def test_screening_notice_keeps_existing_explicit_broadcast_datetime() -> None:
+    anchor = datetime(2026, 9, 7, 12, 0, tzinfo=JST)
+    result = resolve(
+        "VRChat撮影作品。本編は9月13日（日）午前10時から配信開始！"
+        "9月8日（火）には先行上映会も開催します。",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 13, 10, 0, tzinfo=JST)
+
+def test_multi_weekly_clock_range_uses_first_endpoint() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat接客イベントです。毎週月・水 21～23時 に営業中！"
+        "参加方法はグループから参加。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 28, 21, 0, tzinfo=JST)
+
+
+def test_daily_open_play_does_not_inherit_later_weekly_event_identity() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎日21時から23時頃までスポーツワールドでグループインスタンスを"
+        "ひらいて遊んでいます！それに毎週土曜は交流会の日です。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is None
+
+def test_every_night_schedule_materializes_safely() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 22, 30, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat酒場イベントを毎晩23時から開催。Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 23, 0, tzinfo=JST)
+
+
+def test_hyphen_clock_range_uses_start_endpoint() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "VRChat接客イベントを毎週金曜 21-23時に開催。Group +で参加できます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 21, 0, tzinfo=JST)
+
+
+def test_relative_live_delivery_wording_is_an_announcement() -> None:
+    anchor = datetime(2026, 9, 25, 8, 0, tzinfo=JST)
+    result = resolve(
+        "今日は夜21時からオリジナル曲のみのライブをお届けする、"
+        "VRChat LIVE『#clubVERSE 60』です！",
+        anchor,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 21, 0, tzinfo=JST)
+
+def test_decorative_colon_in_recurring_schedule_is_normalized() -> None:
+    source_anchor = datetime(2026, 9, 20, 12, 0, tzinfo=JST)
+    current = datetime(2026, 9, 25, 12, 0, tzinfo=JST)
+    result = resolve_recurring_event(
+        "毎週金曜日 22˸30 VRChat交流会を開催。Group +でJOINできます。",
+        source_anchor,
+        materialize_after=current,
+    )
+    assert result is not None
+    assert result.event_at == datetime(2026, 9, 25, 22, 30, tzinfo=JST)
+
