@@ -1,0 +1,46 @@
+name: Updater liveness
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 * * * *'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Read canonical updater control plane
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-calendar-v2.yml/runs?per_page=20" > /tmp/runs.json
+          python - <<'PY'
+          import json, os, subprocess
+          runs = json.load(open('/tmp/runs.json', encoding='utf-8')).get('workflow_runs', [])
+          jobs = {}
+          if runs:
+              rid = str(runs[0]['id'])
+              raw = subprocess.check_output(['gh', 'api', f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{rid}/jobs?per_page=100"], text=True)
+              jobs[rid] = json.loads(raw).get('jobs', [])
+          json.dump({'runs': runs, 'jobs_by_run': jobs}, open('/tmp/liveness-input.json', 'w', encoding='utf-8'))
+          PY
+      - name: Audit updater liveness
+        if: always()
+        run: python scripts/audit_updater_liveness.py --input /tmp/liveness-input.json --output updater-liveness.json
+      - name: Upload machine-readable audit
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: updater-liveness
+          path: updater-liveness.json
+          if-no-files-found: error
