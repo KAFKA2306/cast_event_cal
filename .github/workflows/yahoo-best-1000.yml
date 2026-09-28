@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - scripts/run_yahoo_best_1000.py
+      - scripts/replay_yahoo_peer_evidence.py
       - scripts/collect_yahoo_corpus.py
       - scripts/refine_yahoo_corpus.py
       - scripts/fetch_yahoo_realtime.py
@@ -17,6 +18,7 @@ on:
     branches: [main]
     paths:
       - scripts/run_yahoo_best_1000.py
+      - scripts/replay_yahoo_peer_evidence.py
       - scripts/collect_yahoo_corpus.py
       - scripts/refine_yahoo_corpus.py
       - scripts/fetch_yahoo_realtime.py
@@ -52,6 +54,22 @@ jobs:
         run: |
           ruff check scripts/run_yahoo_best_1000.py tests/test_yahoo_best_1000.py
           pytest tests/test_yahoo_best_1000.py
+      - name: Replay targeted peer evidence without publishing
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: >-
+          python scripts/replay_yahoo_peer_evidence.py
+          --max-queries 12
+          --delay-seconds 0.25
+          --output peer-evidence-replay.json
+      - name: Upload peer evidence replay
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yahoo-peer-evidence-${{ github.sha }}
+          path: peer-evidence-replay.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Collect and classify exactly 1000 candidates
         env:
           YAHOO_MIN_RETWEETS: '3'
