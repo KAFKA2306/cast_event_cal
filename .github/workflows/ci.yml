@@ -68,42 +68,67 @@ jobs:
               history,
               actual_now=actual_now,
               x_ids=x_ids,
+              external_events=implementation.read_array(archive.EXTERNAL_EVENTS_PATH),
           )
 
-          before_by_id = {
-              str(row.get("source_id")): row for row in before if row.get("source_id")
-          }
-          after_by_id = {
-              str(row.get("source_id")): row for row in accepted if row.get("source_id")
-          }
-          lost = sorted(before_by_id.keys() - after_by_id.keys())
-          promoted = sorted(after_by_id.keys() - before_by_id.keys())
+          def origin_status_id(row):
+              explicit = str(row.get("source_status_id") or "")
+              if implementation.STATUS_ID_RE.fullmatch(explicit):
+                  return explicit
+              source_id = str(
+                  row.get("recurrence_source_id")
+                  or row.get("source_id")
+                  or ""
+              )
+              match = implementation.STATUS_ID_RE.search(source_id)
+              return match.group(0) if match else ""
+
+          def by_origin(rows):
+              grouped = {}
+              for row in rows:
+                  status_id = origin_status_id(row)
+                  if not status_id:
+                      continue
+                  grouped.setdefault(status_id, []).append(row)
+              for values in grouped.values():
+                  values.sort(key=lambda item: str(item.get("starts_at") or ""))
+              return grouped
+
+          before_by_origin = by_origin(before)
+          after_by_origin = by_origin(accepted)
+          lost = sorted(before_by_origin.keys() - after_by_origin.keys())
+          promoted = sorted(after_by_origin.keys() - before_by_origin.keys())
           changed_starts = sorted(
-              source_id
-              for source_id in before_by_id.keys() & after_by_id.keys()
-              if before_by_id[source_id].get("starts_at")
-              != after_by_id[source_id].get("starts_at")
+              status_id
+              for status_id in before_by_origin.keys() & after_by_origin.keys()
+              if before_by_origin[status_id][0].get("starts_at")
+              != after_by_origin[status_id][0].get("starts_at")
           )
           original_by_status = {
               str(row.get("status_id")): row for row in history
               if row.get("status_id")
           }
           promoted_missing = [
-              source_id
-              for source_id in promoted
-              if original_by_status.get(source_id.rsplit(":", 1)[-1], {}).get("last_reason")
+              status_id
+              for status_id in promoted
+              if original_by_status.get(status_id, {}).get("last_reason")
               == "missing_datetime"
           ]
+          additional_occurrences = max(0, len(accepted) - len(before))
 
           print(
               "Yahoo archive replay: "
-              f"history={len(history)} before_accepted={len(before_by_id)} "
-              f"after_accepted={len(after_by_id)} lost_existing={len(lost)} "
-              f"promoted={len(promoted)} promoted_missing_datetime={len(promoted_missing)} "
+              f"history={len(history)} before_accepted_sources={len(before_by_origin)} "
+              f"after_accepted_sources={len(after_by_origin)} lost_existing={len(lost)} "
+              f"promoted_sources={len(promoted)} "
+              f"promoted_missing_datetime={len(promoted_missing)} "
+              f"materialized_event_delta={additional_occurrences} "
               f"changed_existing_starts_at={len(changed_starts)}"
           )
           if lost:
-              raise SystemExit(f"archive replay lost existing accepted events: {lost[:10]}")
+              raise SystemExit(
+                  f"archive replay lost existing accepted source events: {lost[:10]}"
+              )
           if len(evaluated) != len(history):
               raise SystemExit("archive replay did not evaluate the full current ledger")
           PY
