@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 
 from scripts.collect_yahoo_corpus import (
     NEXT_MONTH_CONFLICT_RE,
+    build_peer_evidence_query_plan,
     build_query_plan,
     configure_classifier,
     merge_provenance,
@@ -152,3 +153,80 @@ def test_host_event_abbreviation_with_explicit_schedule_is_accepted():
     assert reason is None
     assert event is not None
     assert event["starts_at"] == "2026-08-15T13:00:00Z"
+
+
+
+def test_peer_evidence_plan_targets_singleton_event_fingerprint():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "VRChat交流会 #VRC夜会 9/27 開催します。Group+で参加",
+            "author": "host",
+            "retweet_count": 4,
+            "first_seen_at": "2026-09-24T10:00:00Z",
+            "last_reason": "missing_datetime",
+        }
+    ]
+
+    plan = build_peer_evidence_query_plan(history, limit=8)
+
+    assert len(plan) == 1
+    assert plan[0]["group"] == "peer_evidence"
+    assert "#vrc夜会" in plan[0]["query"].casefold()
+    assert "vrchat or vrc" in plan[0]["query"].casefold()
+
+
+def test_peer_evidence_plan_prefers_group_code_over_series_hashtag():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "VRChat交流会 #VRC夜会 9/27開催。Group + / YSS.8431",
+            "author": "host",
+            "retweet_count": 4,
+            "first_seen_at": "2026-09-24T10:00:00Z",
+            "last_reason": "missing_datetime",
+            "resolution_blocker": "no_peer_evidence",
+        }
+    ]
+
+    plan = build_peer_evidence_query_plan(history, limit=8)
+
+    assert len(plan) == 1
+    assert "yss.8431" in plan[0]["query"].casefold()
+    assert plan[0]["term"].startswith("host|groupcode:")
+
+
+def test_peer_evidence_plan_skips_rows_that_already_have_joinable_peer():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "VRChat交流会 #VRC夜会 9/27 開催します。",
+            "author": "host",
+            "retweet_count": 4,
+            "first_seen_at": "2026-09-24T10:00:00Z",
+            "last_reason": "missing_datetime",
+        },
+        {
+            "status_id": "2234567890123456789",
+            "text": "VRChat交流会 #VRC夜会 22:00 Group+でJOIN",
+            "author": "host",
+            "retweet_count": 5,
+            "first_seen_at": "2026-09-24T12:00:00Z",
+            "last_reason": "missing_datetime",
+        },
+    ]
+
+    assert build_peer_evidence_query_plan(history, limit=8) == []
+
+
+def test_peer_evidence_plan_honors_zero_budget():
+    history = [
+        {
+            "status_id": "1234567890123456789",
+            "text": "【VRC夜会】9/27 VRChatで開催",
+            "author": "host",
+            "last_reason": "missing_datetime",
+        }
+    ]
+
+    assert build_peer_evidence_query_plan(history, limit=0) == []
