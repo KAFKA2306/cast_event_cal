@@ -143,7 +143,8 @@ def validate_snapshot(root: Path) -> None:
 
     require(history.get("candidate_count") == len(history.get("candidates", [])), "Yahoo candidate history count mismatch")
     require(audit.get("classifier_version") == YAHOO_RESOLVER_VERSION, f"Yahoo classifier audit is not resolver version {YAHOO_RESOLVER_VERSION}")
-    require(audit.get("accepted_count") == len(yahoo), "Yahoo accepted count mismatch")
+    require(audit.get("accepted_count") == yahoo_health.get("history_accepted_count"), "Yahoo accepted candidate count mismatch")
+    require(yahoo_health.get("materialized_event_count") == len(yahoo), "Yahoo materialized occurrence count mismatch")
     require(audit.get("rejected_count") == len(rejected), "Yahoo rejected count mismatch")
     require(audit.get("accepted_count", 0) + audit.get("rejected_count", 0) == history.get("candidate_count"), "Yahoo audit does not partition candidate history")
     require(yahoo_health.get("parser_version") == YAHOO_RESOLVER_VERSION, f"Yahoo health parser version is not resolver version {YAHOO_RESOLVER_VERSION}")
@@ -157,7 +158,7 @@ def validate_snapshot(root: Path) -> None:
     latest = registration.get("latest") or {}
     require(latest.get("calendar_event_count") == events.get("count"), "registration calendar event count mismatch")
     require(latest.get("yahoo_candidate_count") == history.get("candidate_count"), "registration Yahoo candidate count mismatch")
-    require(latest.get("yahoo_accepted_count") == len(yahoo), "registration Yahoo accepted count mismatch")
+    require(latest.get("yahoo_accepted_count") == yahoo_health.get("history_accepted_count"), "registration Yahoo accepted candidate count mismatch")
     require(latest.get("yahoo_rejected_count") == len(rejected), "registration Yahoo rejected count mismatch")
     require(latest.get("yahoo_queries_failed") == 0, "registration reports failed Yahoo queries")
 
