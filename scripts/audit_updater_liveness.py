@@ -39,7 +39,9 @@ def evaluate(payload: dict[str, Any], *, checked_at: datetime, late_after_minute
 
 
 def _result(checked_at: datetime, latest_at: datetime | None, success_at: datetime | None, age: float | None, state: str) -> dict[str, Any]:
-    fmt = lambda value: value.isoformat().replace("+00:00", "Z") if value else None
+    def fmt(value: datetime | None) -> str | None:
+        return value.isoformat().replace("+00:00", "Z") if value else None
+
     return {"checked_at": fmt(checked_at), "latest_run_at": fmt(latest_at), "latest_success_at": fmt(success_at), "age_minutes": age, "state": state}
 
 
