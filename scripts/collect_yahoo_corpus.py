@@ -352,27 +352,34 @@ def _peer_query_for_fingerprint(fingerprint: str) -> tuple[int, str] | None:
             if token not in tokens:
                 tokens.append(token)
 
+    # Prefer identities Yahoo can actually search. t.co tokens are stable
+    # graph edges but poor search keys, so they are never queried directly.
     if any(part.startswith("groupcode:") for part in parts):
         priority = 0
         add_token("groupcode:")
     if any(part.startswith("group:") for part in parts):
         priority = min(priority, 1)
         add_token("group:")
-    if fingerprint.startswith("officialurl:"):
-        priority = min(priority, 1)
-        add_token("officialurl:")
-    if any(part.startswith("url:") for part in parts):
-        priority = min(priority, 2)
-        add_token("url:")
-    if any(part.startswith("shorturl:") for part in parts):
-        priority = min(priority, 3)
-        add_token("shorturl:")
     if any(part.startswith("hashtag:") for part in parts):
-        priority = min(priority, 4)
+        priority = min(priority, 2)
         add_token("hashtag:", hashtag=True)
     if any(part.startswith("name:") for part in parts):
-        priority = min(priority, 5)
+        priority = min(priority, 3)
         add_token("name:")
+    if fingerprint.startswith("officialurl:"):
+        priority = min(priority, 4)
+        add_token("officialurl:")
+    if any(part.startswith("url:") for part in parts):
+        priority = min(priority, 5)
+        add_token("url:")
+
+    # Same-author lookup is a bounded fallback for rows whose only stable edge
+    # is a short URL. Retrieved posts still cannot resolve unless they share a
+    # graph identity, so this broadens acquisition without broadening authority.
+    author = parts[0] if parts and ":" not in parts[0] else ""
+    if not tokens and author and any(part.startswith("shorturl:") for part in parts):
+        priority = 6
+        tokens.append(f"@{author}")
 
     # Unscoped eventtitle is deliberately not searched on its own. The
     # resolver only permits it as a bridge to structured external evidence.
@@ -435,19 +442,30 @@ def build_peer_evidence_query_plan(
             continue
 
         priority, fingerprint, query = min(choices)
+        seen = (
+            implementation.parse_instant(str(row.get("last_seen_at") or ""))
+            or implementation.parse_instant(str(row.get("first_seen_at") or ""))
+        )
+        seen_timestamp = seen.timestamp() if seen is not None else 0.0
         item = candidates.setdefault(
             fingerprint,
             {
                 "priority": priority,
                 "query": query,
                 "source_ids": set(),
+                "latest_seen_timestamp": seen_timestamp,
             },
         )
         item["source_ids"].add(status_id)
+        item["latest_seen_timestamp"] = max(
+            float(item["latest_seen_timestamp"]),
+            seen_timestamp,
+        )
 
     ranked = sorted(
         candidates.items(),
         key=lambda pair: (
+            -float(pair[1]["latest_seen_timestamp"]),
             -len(pair[1]["source_ids"]),
             int(pair[1]["priority"]),
             pair[0],
