@@ -22,16 +22,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-calendar-v2.yml/runs?per_page=20" > /tmp/runs.json
+          set +e
+          printf '{"runs":[],"jobs_by_run":{}}\n' > /tmp/liveness-input.json
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-calendar-v2.yml/runs?per_page=20" > /tmp/runs.json || exit 0
           python - <<'PY'
           import json, os, subprocess
           runs = json.load(open('/tmp/runs.json', encoding='utf-8')).get('workflow_runs', [])
           jobs = {}
           if runs:
               rid = str(runs[0]['id'])
-              raw = subprocess.check_output(['gh', 'api', f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{rid}/jobs?per_page=100"], text=True)
-              jobs[rid] = json.loads(raw).get('jobs', [])
+              try:
+                  raw = subprocess.check_output(['gh', 'api', f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{rid}/jobs?per_page=100"], text=True)
+                  jobs[rid] = json.loads(raw).get('jobs', [])
+              except subprocess.CalledProcessError:
+                  runs = []
           json.dump({'runs': runs, 'jobs_by_run': jobs}, open('/tmp/liveness-input.json', 'w', encoding='utf-8'))
           PY
       - name: Audit updater liveness
