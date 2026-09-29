@@ -1,0 +1,40 @@
+name: Robots crawl policy contract
+
+on:
+  pull_request:
+    paths:
+      - scripts/generate_robots.py
+      - tests/test_robots.py
+      - public/robots.txt
+      - .github/workflows/robots-contract.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e '.[dev]'
+      - run: pytest tests/test_robots.py -q
+      - name: Verify generated robots against canonical sitemap authority
+        run: |
+          tmp="$(mktemp -d)"
+          cat > "$tmp/sitemap.xml" <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://vrc-cast-event-calender.pages.dev/</loc></url></urlset>
+          EOF
+          python scripts/generate_robots.py --public-root "$tmp"
+          cmp "$tmp/robots.txt" public/robots.txt
+          test "$(grep -c '^Sitemap:' public/robots.txt)" -eq 1
+          grep -Fxq 'Sitemap: https://vrc-cast-event-calender.pages.dev/sitemap.xml' public/robots.txt
+          ! grep -Fq 'github.io' public/robots.txt
+          ! grep -Fxq 'Disallow: /' public/robots.txt
