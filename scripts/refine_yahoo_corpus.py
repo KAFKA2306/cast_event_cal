@@ -110,15 +110,23 @@ def reevaluate_with_source_time(
         if event:
             start = implementation.parse_instant(str(event.get("starts_at") or ""))
             if start is None:
-                reason = "missing_datetime"; event = None
+                reason = "missing_datetime"
+                event = None
             elif start < actual_now - timedelta(hours=12):
-                reason = "past_event_now"; event = None
+                reason = "past_event_now"
+                event = None
             elif start > actual_now + timedelta(days=180):
-                reason = "too_far_future_now"; event = None
+                reason = "too_far_future_now"
+                event = None
         if event:
-            row["last_decision"] = "accepted"; row["last_reason"] = None; accepted.append(event)
+            row["last_decision"] = "accepted"
+            row["last_reason"] = None
+            accepted.append(event)
         else:
-            resolved_reason = reason or "unknown"; row["last_decision"] = "rejected"; row["last_reason"] = resolved_reason; rejected.append(rejection_row(row, resolved_reason))
+            resolved_reason = reason or "unknown"
+            row["last_decision"] = "rejected"
+            row["last_reason"] = resolved_reason
+            rejected.append(rejection_row(row, resolved_reason))
         evaluated.append(row)
     accepted.sort(key=lambda item: (str(item.get("starts_at")), str(item.get("source_id"))))
     rejected.sort(key=lambda item: (-int(item.get("retweet_count") or 0), str(item.get("reason")), str(item.get("status_id"))))
@@ -137,7 +145,8 @@ def build_audit(evaluated: list[dict[str, Any]], query_results: list[dict[str, A
         if row.get("last_decision") == "accepted" and (corpus.has_any(str(row.get("text") or ""), implementation.PRODUCT_TERMS) or corpus.has_any(str(row.get("text") or ""), implementation.GIVEAWAY_TERMS)):
             suspicious.append({"status_id": row.get("status_id"), "url": row.get("url"), "source_created_at": row.get("source_created_at"), "text_excerpt": str(row.get("text") or "")[:360]})
     high_retweet.sort(key=lambda item: int(item["retweet_count"]), reverse=True)
-    total = len(evaluated); accepted_count = decisions.get("accepted", 0)
+    total = len(evaluated)
+    accepted_count = decisions.get("accepted", 0)
     return {"schema_version": "1.3", "classifier_version": implementation.PARSER_VERSION, "date_resolution_policy": "calendar-week-relative-date.v1", "generated_at": implementation.utc_text(now), "target_count": target, "candidate_count": total, "target_reached": total >= target, "accepted_count": accepted_count, "rejected_count": decisions.get("rejected", 0), "acceptance_rate": round(accepted_count / total, 6) if total else 0.0, "rejection_reason_counts": {key: value for key, value in sorted(reasons.items()) if key != "accepted"}, "query_results": query_results, "high_retweet_rejections": high_retweet[:200], "suspicious_accepted_commerce": suspicious[:100], "quality": {"duplicate_status_ids": total - len({str(row.get("status_id")) for row in evaluated}), "missing_first_seen_at": sum(not row.get("first_seen_at") for row in evaluated), "missing_last_seen_at": sum(not row.get("last_seen_at") for row in evaluated), "missing_source_created_at": sum(not row.get("source_created_at") for row in evaluated), "ambiguous_decisions": sum(row.get("last_decision") not in {"accepted", "rejected"} for row in evaluated)}}
 
 
@@ -145,12 +154,15 @@ def build_positive_vocabulary(events: list[dict[str, Any]], now: datetime) -> di
     config = corpus.read_json(corpus.CONFIG_PATH, {})
     feedback = config.get("positive_feedback", {}) if isinstance(config, dict) else {}
     terms = feedback.get("terms", []) if isinstance(feedback, dict) else []
-    counts: dict[str, int] = {}; examples: dict[str, list[str]] = {}
+    counts: dict[str, int] = {}
+    examples: dict[str, list[str]] = {}
     for raw_term in terms:
         term = str(raw_term).strip()
-        if not term: continue
+        if not term:
+            continue
         matching = [str(event.get("source_id")) for event in events if term.casefold() in str(event.get("description") or "").casefold()]
-        counts[term] = len(matching); examples[term] = matching[:5]
+        counts[term] = len(matching)
+        examples[term] = matching[:5]
     adopted = [term for term, count in counts.items() if count > 0]
     return {"schema_version": "1.0", "generated_at": implementation.utc_text(now), "source": "accepted_yahoo_events", "positive_event_count": len(events), "minimum_retweets": 3, "adoption_policy": "reusable_structural_terms_only", "adopted_terms": adopted, "term_counts": counts, "example_event_ids": examples, "excluded_as_too_generic": feedback.get("excluded_as_too_generic", [])}
 
@@ -162,9 +174,11 @@ def main() -> int:
     implementation.PARSER_VERSION = "1.9"
     now = datetime.now(UTC).replace(microsecond=0)
     history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
-    if not isinstance(history_payload, dict): raise ValueError("Yahoo candidate history must be an object")
+    if not isinstance(history_payload, dict):
+        raise ValueError("Yahoo candidate history must be an object")
     history = history_payload.get("candidates", [])
-    if not isinstance(history, list): raise ValueError("Yahoo candidate history candidates must be an array")
+    if not isinstance(history, list):
+        raise ValueError("Yahoo candidate history candidates must be an array")
     min_retweets = int(os.environ.get("YAHOO_MIN_RETWEETS", "3"))
     x_ids = implementation.known_x_ids(implementation.read_array(implementation.X_EVENTS_PATH))
     accepted, rejected, evaluated = reevaluate_with_source_time([row for row in history if isinstance(row, dict)], actual_now=now, min_retweets=min_retweets, x_ids=x_ids)
