@@ -17,7 +17,7 @@ def sitemap(urls: list[str]) -> str:
 def test_robots_is_byte_stable_and_has_one_canonical_sitemap(tmp_path: Path) -> None:
     base = "https://vrc-cast-event-calender.pages.dev"
     (tmp_path / "sitemap.xml").write_text(
-        sitemap([base + "/", base + "/events/a/"]), encoding="utf-8"
+        sitemap([f"{base}/", f"{base}/events/a/"]), encoding="utf-8"
     )
     first = write_robots(tmp_path, base).read_bytes()
     second = write_robots(tmp_path, base).read_bytes()
