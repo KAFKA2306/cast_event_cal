@@ -33,10 +33,12 @@ def verify_sitemap(sitemap: Path, base_url: str) -> None:
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     urls = [node.text or "" for node in root.findall("s:url/s:loc", ns)]
     if not urls:
-        raise ValueError("sitemap contains no URLs")
+        msg = "sitemap contains no URLs"
+        raise ValueError(msg)
     prefix = base + "/"
     if any(not url.startswith(prefix) for url in urls):
-        raise ValueError("sitemap contains a URL outside the canonical base URL")
+        msg = "sitemap contains a URL outside the canonical base URL"
+        raise ValueError(msg)
 
 
 def write_robots(public_root: Path, base_url: str) -> Path:
