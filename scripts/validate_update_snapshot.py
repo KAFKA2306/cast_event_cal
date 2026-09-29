@@ -221,7 +221,7 @@ def validate_snapshot(root: Path) -> None:
         status = source_status.get(name)
         require(status in {"ok", "degraded", "skipped"}, f"public health has invalid optional source status for {name}: {status}")
 
-    require(assets.get("schema_version") == "1.0", "official asset audit schema mismatch")
+    require(assets.get("schema_version") == "1.1", "official asset audit schema mismatch")
     require(links.get("schema_version") == "1.0", "event link audit schema mismatch")
     require(groups.get("schema_version") == "1.0", "VRChat group asset audit schema mismatch")
 
