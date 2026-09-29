@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-09-29T01:08:19Z",
+  "snapshot_generated_at": "2026-09-29T01:06:26Z",
+  "snapshot_age_minutes": 1.89,
+  "overall_status": "degraded",
+  "canonical_event_count": 1121,
+  "sources": [
+    {
+      "name": "repository_manual_events",
+      "status": "ok",
+      "last_observed_at": null,
+      "event_count": 498
+    },
+    {
+      "name": "vrchat_calendar_discovery",
+      "status": "skipped",
+      "last_observed_at": "2026-09-29T01:04:57Z",
+      "event_count": 0
+    },
+    {
+      "name": "x_curated_events",
+      "status": "skipped",
+      "last_observed_at": "2026-09-29T01:04:57Z",
+      "event_count": 2
+    },
+    {
+      "name": "yahoo_realtime_events",
+      "status": "ok",
+      "last_observed_at": "2026-09-29T01:06:22Z",
+      "event_count": 171
+    },
+    {
+      "name": "external_calendar_events",
+      "status": "ok",
+      "last_observed_at": "2026-09-29T01:05:59Z",
+      "event_count": 699
+    }
+  ],
+  "slo": {
+    "max_snapshot_age_minutes": 180,
+    "version": "1.0"
+  }
+}

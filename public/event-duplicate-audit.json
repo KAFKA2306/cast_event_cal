@@ -1,16 +1,82 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 861,
-  "event_count_after": 754,
-  "candidate_cluster_count": 85,
-  "duplicate_cluster_count": 85,
-  "duplicate_occurrence_count": 107,
-  "duplicate_post_count": 107,
-  "duplicate_rate": 0.124274,
+  "event_count_before": 1246,
+  "event_count_after": 1121,
+  "candidate_cluster_count": 101,
+  "duplicate_cluster_count": 101,
+  "duplicate_occurrence_count": 125,
+  "duplicate_post_count": 125,
+  "duplicate_rate": 0.100321,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
+    {
+      "cluster_id": "occ_02f0adde585a83d85b99",
+      "starts_at": "2026-09-30T21:00:00Z",
+      "title": "EPIC Fellowship Men's Bible Study",
+      "member_count": 2,
+      "member_ids": [
+        "021cc8bda7e08b01b476",
+        "7c0028df360f9444bcc4"
+      ],
+      "source_record_ids": [
+        "src_6651fe00fe823f5bbbfc",
+        "src_bcca8fcf84a7e1dec761"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_bcca8fcf84a7e1dec761"
+    },
+    {
+      "cluster_id": "occ_05d2126b49cc9ea0171b",
+      "starts_at": "2027-01-23T12:00:00Z",
+      "title": "セキュリティ集会",
+      "member_count": 2,
+      "member_ids": [
+        "c0a55680c3882f65edf1",
+        "fefc747dcf2fc6280272"
+      ],
+      "source_record_ids": [
+        "src_d807fe8c6dbaec9bf471",
+        "src_f36e01e5d2f87346199e"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_d807fe8c6dbaec9bf471"
+    },
+    {
+      "cluster_id": "occ_0cbb32332c1bc856f5cb",
+      "starts_at": "2026-11-28T13:00:00Z",
+      "title": "VRChat物理学集会",
+      "member_count": 2,
+      "member_ids": [
+        "13d5082d6b7eb379db10",
+        "b34c7567ba8396facf6a"
+      ],
+      "source_record_ids": [
+        "src_587206c00f3463e20570",
+        "src_b783780febec063f3e1d"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_b783780febec063f3e1d"
+    },
     {
       "cluster_id": "occ_0ee28ad8ef100bfe3f0e",
       "starts_at": "2026-10-30T12:00:00Z",
@@ -32,30 +98,6 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_f1e6d9cc0cfa085c0da3"
-    },
-    {
-      "cluster_id": "occ_10fb48bcc17dd85b707d",
-      "starts_at": "2026-09-26T12:00:00Z",
-      "title": "VRC海洋学研究会",
-      "member_count": 3,
-      "member_ids": [
-        "48fae18aec9440d6c52f",
-        "d1f58eb9eec37d7b334c",
-        "d41cc73e3577fdbc3ffa"
-      ],
-      "source_record_ids": [
-        "src_0c3152d42ff4f0c94ea5",
-        "src_b3ec91e0ec6d83f681bd",
-        "src_d8c13eedf0c547243909"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_d8c13eedf0c547243909"
     },
     {
       "cluster_id": "occ_12ca6712420762b7db66",
@@ -304,37 +346,17 @@
       "representative_source_record_id": "src_eb9f51fc467d9f37b6f3"
     },
     {
-      "cluster_id": "occ_2865ca4a6e531c88466b",
-      "starts_at": "2026-09-25T13:00:00Z",
-      "title": "Blender＆Unity技術交流会",
-      "member_count": 2,
-      "member_ids": [
-        "a890a8fd3aa82a41df4f",
-        "c3350ee5724b8f9eeca1"
-      ],
-      "source_record_ids": [
-        "src_17e9b8022bbfb0da7849",
-        "src_508a8a08968372c571f1"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_508a8a08968372c571f1"
-    },
-    {
       "cluster_id": "occ_28efbe3843b88b4caba7",
       "starts_at": "2026-10-10T12:00:00Z",
       "title": "VR研究Cafe",
-      "member_count": 2,
+      "member_count": 3,
       "member_ids": [
         "0cb78032f9be148ed6cd",
-        "c85580275fdcad2cd15e"
+        "c85580275fdcad2cd15e",
+        "d0a737d67d08aecf7e46"
       ],
       "source_record_ids": [
+        "src_0120d0b7c6f3ea0196a3",
         "src_1947b7babf319caadc48",
         "src_bdc1cef3dc2c5b04a51b"
       ],
@@ -458,6 +480,28 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_bc5709c8337fc88e7f52"
+    },
+    {
+      "cluster_id": "occ_38ab13b7e3af34f04d37",
+      "starts_at": "2027-01-11T13:00:00Z",
+      "title": "VRChat.ts",
+      "member_count": 2,
+      "member_ids": [
+        "05f9d8fc5be2212900a8",
+        "3783e83a1dadaa2ed8f2"
+      ],
+      "source_record_ids": [
+        "src_7e361e196942e7690e5f",
+        "src_89ffbd912980b7714d11"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_89ffbd912980b7714d11"
     },
     {
       "cluster_id": "occ_3a02c270f1cb7dc895a0",
@@ -688,6 +732,28 @@
       "representative_source_record_id": "src_acbaa5623147e4d1166a"
     },
     {
+      "cluster_id": "occ_5aa3abbe4eb627785596",
+      "starts_at": "2026-11-22T04:00:00Z",
+      "title": "✨Champion League📷毎月第2、第4 日曜日 13:00~22:00開催📷# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.2277」 …",
+      "member_count": 2,
+      "member_ids": [
+        "ac8adc4c5d8244c5dc0f",
+        "ca2b08b7935997161f6b"
+      ],
+      "source_record_ids": [
+        "src_5708ea149f3138ec509a",
+        "src_def6d327489e33fd0a1c"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_def6d327489e33fd0a1c"
+    },
+    {
       "cluster_id": "occ_5afdacde7c3f3009f95b",
       "starts_at": "2026-12-10T12:00:00Z",
       "title": "データサイエンティスト集会",
@@ -780,6 +846,28 @@
       "representative_source_record_id": "src_422db055d112e99ef158"
     },
     {
+      "cluster_id": "occ_5d0bf3c2f26324c1dd02",
+      "starts_at": "2026-10-24T12:00:00Z",
+      "title": "VRC通信工学集会",
+      "member_count": 2,
+      "member_ids": [
+        "2ed878c7253860ff2f82",
+        "b1e3f12fe5b480b036b8"
+      ],
+      "source_record_ids": [
+        "src_cd1da26fc445cb5c7b65",
+        "src_f6f74a136961d4c2cdad"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_f6f74a136961d4c2cdad"
+    },
+    {
       "cluster_id": "occ_5ea7d9b37b8761db20eb",
       "starts_at": "2026-12-05T13:00:00Z",
       "title": "ITインフラ集会",
@@ -800,6 +888,28 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_f55be82bd5f802bde5b4"
+    },
+    {
+      "cluster_id": "occ_60c5850fdf15d736e875",
+      "starts_at": "2026-10-31T13:00:00Z",
+      "title": "プログラミング集会",
+      "member_count": 2,
+      "member_ids": [
+        "afaedc0f1ecfeb7072a6",
+        "cc0199763649560e2016"
+      ],
+      "source_record_ids": [
+        "src_2af1a4a9dc0e13b77ca0",
+        "src_3b740351e9676c892d48"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_3b740351e9676c892d48"
     },
     {
       "cluster_id": "occ_676f6387f8a9355fb7e0",
@@ -844,6 +954,50 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_e4fa110a4c1ba6344053"
+    },
+    {
+      "cluster_id": "occ_6cb6133d1a4a5b9bcc8b",
+      "starts_at": "2026-10-01T02:00:00Z",
+      "title": "Club Immortal",
+      "member_count": 2,
+      "member_ids": [
+        "0f485bba091b671f8cef",
+        "8eef42ddbbecb4c10b89"
+      ],
+      "source_record_ids": [
+        "src_42b231ef0b435310e26a",
+        "src_5a7dd9be87851b09c307"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_5a7dd9be87851b09c307"
+    },
+    {
+      "cluster_id": "occ_6dd11d47deaa4536419a",
+      "starts_at": "2027-01-18T13:00:00Z",
+      "title": "VRC Bio Journal RTA",
+      "member_count": 2,
+      "member_ids": [
+        "980fdb9897474f16bbcf",
+        "fd95bb6b405d64c72e56"
+      ],
+      "source_record_ids": [
+        "src_aa86659b9b7877409845",
+        "src_ae4b6a3319878c32d601"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_ae4b6a3319878c32d601"
     },
     {
       "cluster_id": "occ_6e046692ef0f3940cf18",
@@ -960,6 +1114,72 @@
       "representative_source_record_id": "src_77f5c1c691635fb50c0a"
     },
     {
+      "cluster_id": "occ_811f14391e687628a333",
+      "starts_at": "2026-12-28T13:00:00Z",
+      "title": "VRC Bio Journal RTA",
+      "member_count": 2,
+      "member_ids": [
+        "544e9ffeef11bbdcf652",
+        "9380a5dc40ae5ef41292"
+      ],
+      "source_record_ids": [
+        "src_3ce763ba3ab67cf1995a",
+        "src_9a4b2c022017a8b6c7f6"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_9a4b2c022017a8b6c7f6"
+    },
+    {
+      "cluster_id": "occ_820d5f61c439572722e8",
+      "starts_at": "2026-10-25T04:00:00Z",
+      "title": "✨Champion League📷毎月第2、第4 日曜日 13:00~22:00開催📷# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.2277」 …",
+      "member_count": 2,
+      "member_ids": [
+        "04bbfb9fe0adca3348f4",
+        "fd44994d77441ee00da9"
+      ],
+      "source_record_ids": [
+        "src_5af5aea9fa6aecb8abd8",
+        "src_b7c2c9fa0cc7cf9a4393"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_b7c2c9fa0cc7cf9a4393"
+    },
+    {
+      "cluster_id": "occ_82461f7de176361e35d2",
+      "starts_at": "2026-11-02T13:00:00Z",
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "member_count": 2,
+      "member_ids": [
+        "3ab081a165ca063f87b6",
+        "64d40cd650bee48ab722"
+      ],
+      "source_record_ids": [
+        "src_b5fe0ace3452658602f0",
+        "src_b613cf18af27bfea1942"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_b613cf18af27bfea1942"
+    },
+    {
       "cluster_id": "occ_82c8fef43644d2acc938",
       "starts_at": "2026-11-08T12:00:00Z",
       "title": "ゲーム開発集会Ⅳ",
@@ -1028,6 +1248,28 @@
       "representative_source_record_id": "src_6e20f5272aa3973a0ca1"
     },
     {
+      "cluster_id": "occ_8dad49ae4c1ba2d7a11f",
+      "starts_at": "2027-01-04T13:00:00Z",
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "member_count": 2,
+      "member_ids": [
+        "9380e02f31423c086382",
+        "b8d31e57ac06bd089801"
+      ],
+      "source_record_ids": [
+        "src_d1b948ff5f0e5b5dd398",
+        "src_e04113cb4cd043a60f9a"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_e04113cb4cd043a60f9a"
+    },
+    {
       "cluster_id": "occ_9488f39aae50589f80e9",
       "starts_at": "2026-09-30T13:00:00Z",
       "title": "Web技術集会",
@@ -1048,6 +1290,28 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_823e3cf2f044808d07c4"
+    },
+    {
+      "cluster_id": "occ_94890309582e1519b936",
+      "starts_at": "2026-11-08T04:00:00Z",
+      "title": "✨Champion League📷毎月第2、第4 日曜日 13:00~22:00開催📷# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.2277」 …",
+      "member_count": 2,
+      "member_ids": [
+        "54d44cafea8cba9e45b0",
+        "d402ba12366cc8e1bf35"
+      ],
+      "source_record_ids": [
+        "src_4f73681620213b00f47b",
+        "src_9473fbe4a5ee474ce4c8"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_9473fbe4a5ee474ce4c8"
     },
     {
       "cluster_id": "occ_981007fb1a6e333fc517",
@@ -1118,6 +1382,28 @@
       "representative_source_record_id": "src_bd342c0188f6c6591231"
     },
     {
+      "cluster_id": "occ_99f357d3c8e26a670e82",
+      "starts_at": "2027-01-09T12:00:00Z",
+      "title": "セキュリティ集会",
+      "member_count": 2,
+      "member_ids": [
+        "48096281a1d653ea3213",
+        "c7acabdad9cf9ae6beb8"
+      ],
+      "source_record_ids": [
+        "src_8ee67eb7e92b31f55821",
+        "src_bee29257270b4041f17b"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_8ee67eb7e92b31f55821"
+    },
+    {
       "cluster_id": "occ_9a46df61578a14e10082",
       "starts_at": "2027-01-01T13:00:00Z",
       "title": "エンジニア作業飲み集会",
@@ -1162,6 +1448,28 @@
       "representative_source_record_id": "src_bb518038a35e001cadd9"
     },
     {
+      "cluster_id": "occ_9b93d24e91d6596f7184",
+      "starts_at": "2026-12-07T13:00:00Z",
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "member_count": 2,
+      "member_ids": [
+        "f7b26ddef23f14972ea3",
+        "fd5ddfa3e822cf34000a"
+      ],
+      "source_record_ids": [
+        "src_2368d30e4e190797b148",
+        "src_b2019e55cc14c2717814"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_2368d30e4e190797b148"
+    },
+    {
       "cluster_id": "occ_a249c778348bb12d41e7",
       "starts_at": "2026-10-18T12:00:00Z",
       "title": "ITエンジニア キャリア相談・雑談集会",
@@ -1186,14 +1494,16 @@
     {
       "cluster_id": "occ_a8564bfcbe484fdf0ff7",
       "starts_at": "2026-10-17T12:00:00Z",
-      "title": "セキュリティ集会",
-      "member_count": 2,
+      "title": "学生学際集会",
+      "member_count": 3,
       "member_ids": [
+        "1d31bfedbcf18ff43c02",
         "226f87d43ab8e3dee561",
         "8483b7037fe1ab5aee73"
       ],
       "source_record_ids": [
         "src_2ea4daa75c34a7d7d44d",
+        "src_3ea453afbc77238d67a1",
         "src_8c03d52c66f2608855f5"
       ],
       "sources": [
@@ -1203,7 +1513,7 @@
         "same_canonical_url"
       ],
       "confidence": 1.0,
-      "representative_source_record_id": "src_2ea4daa75c34a7d7d44d"
+      "representative_source_record_id": "src_3ea453afbc77238d67a1"
     },
     {
       "cluster_id": "occ_ae4e54538147447f5efc",
@@ -1348,10 +1658,10 @@
       "member_count": 2,
       "member_ids": [
         "0d2912c640b082a100bc",
-        "6e3068c41ea2b5bdf6c5"
+        "5418ab0f399b36824392"
       ],
       "source_record_ids": [
-        "src_3700c4e5e0f2db269889",
+        "src_14fbdc52acc880d67e54",
         "src_3ed3bd0f34e69e9ef6d9"
       ],
       "sources": [
@@ -1388,6 +1698,50 @@
       "representative_source_record_id": "src_6e134769bdf87e73b4e9"
     },
     {
+      "cluster_id": "occ_c1c8175810d3ef2df913",
+      "starts_at": "2026-09-28T13:00:00Z",
+      "title": "VRC Bio Journal RTA",
+      "member_count": 2,
+      "member_ids": [
+        "5915c594b06d6feb0c24",
+        "65d1cd2c5762837d4050"
+      ],
+      "source_record_ids": [
+        "src_532c6b387512d6a90bfa",
+        "src_68f02a4c3a987f7f2e6c"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_68f02a4c3a987f7f2e6c"
+    },
+    {
+      "cluster_id": "occ_c22d01b19ffb2718bac5",
+      "starts_at": "2026-10-11T04:00:00Z",
+      "title": "✨Champion League📷毎月第2、第4 日曜日 13:00~22:00開催📷# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.2277」 …",
+      "member_count": 2,
+      "member_ids": [
+        "0427cb31687588a58e73",
+        "a4d184ae3b080a7a1f65"
+      ],
+      "source_record_ids": [
+        "src_a2d0af996dc1960e9790",
+        "src_ca5f0ca508cc702a5775"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_ca5f0ca508cc702a5775"
+    },
+    {
       "cluster_id": "occ_c2ef885009aff3f20c34",
       "starts_at": "2026-11-18T13:00:00Z",
       "title": "VRC Bio Journal RTA",
@@ -1414,13 +1768,15 @@
     {
       "cluster_id": "occ_c35b4675d6a793c27f17",
       "starts_at": "2026-10-05T13:00:00Z",
-      "title": "化学のおはなし会",
-      "member_count": 2,
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "member_count": 3,
       "member_ids": [
+        "312e58988c993264199a",
         "6683ab0d5883f57912a8",
         "6b34ba04a805a8d544dc"
       ],
       "source_record_ids": [
+        "src_02f3c4bc76466e77c5df",
         "src_3215c5ff2354eb35a810",
         "src_df645785c9f0d0511d69"
       ],
@@ -1431,7 +1787,7 @@
         "same_canonical_url"
       ],
       "confidence": 1.0,
-      "representative_source_record_id": "src_df645785c9f0d0511d69"
+      "representative_source_record_id": "src_02f3c4bc76466e77c5df"
     },
     {
       "cluster_id": "occ_c627af50cbbf16924f05",
@@ -1658,6 +2014,28 @@
       "representative_source_record_id": "src_fcb81675fcdcf5217700"
     },
     {
+      "cluster_id": "occ_e4a4393fe2cb8624cc32",
+      "starts_at": "2026-10-17T13:00:00Z",
+      "title": "VRChat物理学集会",
+      "member_count": 2,
+      "member_ids": [
+        "4c06a6f40f4b7f0ca382",
+        "9828e4ea4459ab978637"
+      ],
+      "source_record_ids": [
+        "src_901a2da59bf35b17888f",
+        "src_de3b658ce871a67b04fd"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_de3b658ce871a67b04fd"
+    },
+    {
       "cluster_id": "occ_e9b94ff8d402b9e8f3c6",
       "starts_at": "2027-01-22T13:00:00Z",
       "title": "Blender＆Unity技術交流会",
@@ -1768,28 +2146,6 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_b9118a435959e1871ba8"
-    },
-    {
-      "cluster_id": "occ_f08cfebc54774b685055",
-      "starts_at": "2026-09-26T12:30:00Z",
-      "title": "マネジメント集会",
-      "member_count": 2,
-      "member_ids": [
-        "3e3146d2157500b8337f",
-        "f5dd7abc742e8b2f7a6c"
-      ],
-      "source_record_ids": [
-        "src_1a45bad370b6b7a12a34",
-        "src_35a5c39245b147914afb"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_35a5c39245b147914afb"
     },
     {
       "cluster_id": "occ_f10bc9631ce0c84e0106",
@@ -1926,108 +2282,127 @@
       "representative_source_record_id": "src_853615c1617fb4556397"
     }
   ],
-  "ambiguous_candidates": [],
-  "negative_samples": [
+  "ambiguous_candidates": [
     {
-      "left_id": "4a5130b55abcfe8f44d1",
-      "right_id": "73a1673103e767c63f5c",
-      "starts_at": "2026-09-25T10:50:00Z",
-      "left_organizer": "@kazuaki_ndk",
-      "right_organizer": "@kazuaki_ndk",
-      "similarity": 0.3093,
-      "left_title": "2026/9/25(金)19:50開店 居酒屋たま VRChat 店 オープン します！ 正式フライヤーは後日！ 居酒屋たま in a TRANCE Vol.4 DJ YSK DJ Yukii…",
-      "right_title": "明日開催 される VRChat の 居酒屋たま in a TRANCE Vol.4 2026/9/25(金)19:50開店です！ publicインスタンスで立てると 告知 してましたが、荒らし…"
+      "left_id": "2b4589562666617e36f2",
+      "right_id": "67281b527f29be0b43c1",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@takamaruvr",
+      "similarity": 0.5323,
+      "left_title": "VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催 決定✨ 📅 2026.10.03（土） 🕘 21:00 START 当日はリクエストTime有り！ ダンサー…",
+      "right_title": "✨新規 イベント ✨ VRC A-POP DANCE NIGHT # VRC えーだん 🎧プレ オープン （ver.0） 開催 決定🎧 📅 2026.10.03（土） 🕘 21:00 STAR…"
     },
     {
-      "left_id": "aac5df8586a3e44e3ee5",
-      "right_id": "2c734fb635299da06f01",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
-    },
-    {
-      "left_id": "aac5df8586a3e44e3ee5",
-      "right_id": "531cce649f435560089e",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@Prisma_jp",
-      "similarity": 0.1667,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "◢◤ Prisma VRC EVENT #01 ◢◤ ついに...⁉️ ＿人人人人人人人人＿ ＞ イベント 当日 ＜ ￣Y^Y^Y^Y^Y^Y^Y￣ 本日 21時から VRChat のグループ…"
-    },
-    {
-      "left_id": "aac5df8586a3e44e3ee5",
-      "right_id": "8e7c2f8555e1150e1a7a",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@vr_avatar_3d",
-      "similarity": 0.1829,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【 告知 試着会】 09/25 (金) 21:00 ‑ 22:00、「低身長貧乳軍人 白龍子」の試着会を 開催 します！ スタッフ: @ suma_ VRC Boo Boo Bougainvi…"
-    },
-    {
-      "left_id": "aac5df8586a3e44e3ee5",
-      "right_id": "1253b53efca978df44eb",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@trinitytails_vr",
-      "similarity": 0.1053,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【 明日開催 】 VRChat 音楽FES. 🗓️2026.9.25(金) 21:00 OPEN ！ 🌕超かぐや姫セトリライブ ⛩️#TrinityTails Group + お願い、きて🐰 …"
-    },
-    {
-      "left_id": "2c734fb635299da06f01",
-      "right_id": "531cce649f435560089e",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@Prisma_jp",
-      "similarity": 0.1163,
-      "left_title": "VRC Blender集会",
-      "right_title": "◢◤ Prisma VRC EVENT #01 ◢◤ ついに...⁉️ ＿人人人人人人人人＿ ＞ イベント 当日 ＜ ￣Y^Y^Y^Y^Y^Y^Y￣ 本日 21時から VRChat のグループ…"
-    },
-    {
-      "left_id": "2c734fb635299da06f01",
-      "right_id": "8e7c2f8555e1150e1a7a",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@vr_avatar_3d",
-      "similarity": 0.1051,
-      "left_title": "VRC Blender集会",
-      "right_title": "【 告知 試着会】 09/25 (金) 21:00 ‑ 22:00、「低身長貧乳軍人 白龍子」の試着会を 開催 します！ スタッフ: @ suma_ VRC Boo Boo Bougainvi…"
-    },
-    {
-      "left_id": "2c734fb635299da06f01",
-      "right_id": "1253b53efca978df44eb",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@trinitytails_vr",
-      "similarity": 0.0756,
-      "left_title": "VRC Blender集会",
-      "right_title": "【 明日開催 】 VRChat 音楽FES. 🗓️2026.9.25(金) 21:00 OPEN ！ 🌕超かぐや姫セトリライブ ⛩️#TrinityTails Group + お願い、きて🐰 …"
-    },
-    {
-      "left_id": "531cce649f435560089e",
-      "right_id": "8e7c2f8555e1150e1a7a",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "@Prisma_jp",
-      "right_organizer": "@vr_avatar_3d",
-      "similarity": 0.1345,
-      "left_title": "◢◤ Prisma VRC EVENT #01 ◢◤ ついに...⁉️ ＿人人人人人人人人＿ ＞ イベント 当日 ＜ ￣Y^Y^Y^Y^Y^Y^Y￣ 本日 21時から VRChat のグループ…",
-      "right_title": "【 告知 試着会】 09/25 (金) 21:00 ‑ 22:00、「低身長貧乳軍人 白龍子」の試着会を 開催 します！ スタッフ: @ suma_ VRC Boo Boo Bougainvi…"
-    },
-    {
-      "left_id": "531cce649f435560089e",
-      "right_id": "1253b53efca978df44eb",
-      "starts_at": "2026-09-25T12:00:00Z",
-      "left_organizer": "@Prisma_jp",
-      "right_organizer": "@trinitytails_vr",
-      "similarity": 0.13,
-      "left_title": "◢◤ Prisma VRC EVENT #01 ◢◤ ついに...⁉️ ＿人人人人人人人人＿ ＞ イベント 当日 ＜ ￣Y^Y^Y^Y^Y^Y^Y￣ 本日 21時から VRChat のグループ…",
-      "right_title": "【 明日開催 】 VRChat 音楽FES. 🗓️2026.9.25(金) 21:00 OPEN ！ 🌕超かぐや姫セトリライブ ⛩️#TrinityTails Group + お願い、きて🐰 …"
+      "left_id": "6eb8b3cfe483b3c5f95c",
+      "right_id": "3d171d7f0ccecbbe8413",
+      "starts_at": "2026-10-10T09:45:00Z",
+      "organizer": "@shiizalemon_vrc",
+      "similarity": 0.5729,
+      "left_title": "【おはようございます】 「爆裂溌剌」 at VRChat group + 2026年10月10日 OPEN 18:45〜 #BAKURETSU 最終回にお呼ばれしまして、ライブさせていただきま…",
+      "right_title": "【おはようございます】 「爆裂溌剌」 at VRChat group + 2026年10月10日 OPEN 18:45〜 22:20より出演させていただきます！ そんな檸檬ちゃんのスプリンター…"
     }
   ],
-  "generated_at": "2026-09-26T01:31:49Z"
+  "negative_samples": [
+    {
+      "left_id": "2a1e72bdea3f526ad327",
+      "right_id": "3f49e384deff54993893",
+      "starts_at": "2026-09-28T12:00:00Z",
+      "left_organizer": "VRCごいた会",
+      "right_organizer": "VRCゲームワールド部",
+      "similarity": 0.4828,
+      "left_title": "VRCごいた会",
+      "right_title": "VRCゲームワールド部 月曜イベント"
+    },
+    {
+      "left_id": "2a1e72bdea3f526ad327",
+      "right_id": "b78e9269710fc46fed38",
+      "starts_at": "2026-09-28T12:00:00Z",
+      "left_organizer": "VRCごいた会",
+      "right_organizer": "@VRC_BLONDE",
+      "similarity": 0.0899,
+      "left_title": "VRCごいた会",
+      "right_title": "【新規 VRC イベント 開催 のお知らせ】 スナックBLONDEです。9月28日月曜日の21時よりプレ オープン 致します。21時から23時の2時間の 営業 です。皆さんのご来店心よりお待ち…"
+    },
+    {
+      "left_id": "3f49e384deff54993893",
+      "right_id": "b78e9269710fc46fed38",
+      "starts_at": "2026-09-28T12:00:00Z",
+      "left_organizer": "VRCゲームワールド部",
+      "right_organizer": "@VRC_BLONDE",
+      "similarity": 0.0757,
+      "left_title": "VRCゲームワールド部 月曜イベント",
+      "right_title": "【新規 VRC イベント 開催 のお知らせ】 スナックBLONDEです。9月28日月曜日の21時よりプレ オープン 致します。21時から23時の2時間の 営業 です。皆さんのご来店心よりお待ち…"
+    },
+    {
+      "left_id": "65d1cd2c5762837d4050",
+      "right_id": "d2cb4b2ae629f855ea75",
+      "starts_at": "2026-09-28T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@akaiheya_vrc",
+      "similarity": 0.1481,
+      "left_title": "VRC Bio Journal RTA",
+      "right_title": "VRC 怪談集会 赤い部屋 第149回 ◎ 開催日時 ：9/28(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bEm…"
+    },
+    {
+      "left_id": "d2cb4b2ae629f855ea75",
+      "right_id": "5915c594b06d6feb0c24",
+      "starts_at": "2026-09-28T13:00:00Z",
+      "left_organizer": "@akaiheya_vrc",
+      "right_organizer": null,
+      "similarity": 0.2809,
+      "left_title": "VRC 怪談集会 赤い部屋 第149回 ◎ 開催日時 ：9/28(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bEm…",
+      "right_title": "VRChat.ts"
+    },
+    {
+      "left_id": "4a5e71305dc39ab8aa03",
+      "right_id": "590e3250684006e5e30c",
+      "starts_at": "2026-09-29T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Phoenix Haven",
+      "similarity": 0.1426,
+      "left_title": "Chill Monda",
+      "right_title": "Game Night"
+    },
+    {
+      "left_id": "4a5e71305dc39ab8aa03",
+      "right_id": "6ba6ffeaaab2d9cfaf26",
+      "starts_at": "2026-09-29T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Kirby Korner",
+      "similarity": 0.0881,
+      "left_title": "Chill Monda",
+      "right_title": "Magical Movement Mondayǃ"
+    },
+    {
+      "left_id": "4a5e71305dc39ab8aa03",
+      "right_id": "36a3313f22403cd323bc",
+      "starts_at": "2026-09-29T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "PrideVR",
+      "similarity": 0.1598,
+      "left_title": "Chill Monda",
+      "right_title": "Queer Pug"
+    },
+    {
+      "left_id": "4a5e71305dc39ab8aa03",
+      "right_id": "2baffa604e668c571a8b",
+      "starts_at": "2026-09-29T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "The Dragon of the North",
+      "similarity": 0.1341,
+      "left_title": "Chill Monda",
+      "right_title": "TDOTN˸ Karaoke Nightǃ"
+    },
+    {
+      "left_id": "4a5e71305dc39ab8aa03",
+      "right_id": "f6caf715141ef04ab748",
+      "starts_at": "2026-09-29T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "No Friends Friends Club",
+      "similarity": 0.1934,
+      "left_title": "Chill Monda",
+      "right_title": "US Hangout"
+    }
+  ],
+  "generated_at": "2026-09-29T01:06:26Z"
 }

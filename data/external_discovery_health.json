@@ -1,17 +1,26 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-26T01:31:46Z",
+  "generated_at": "2026-09-29T01:05:59Z",
   "status": "ok",
-  "event_count": 329,
-  "deduplicated_against_existing": 0,
+  "event_count": 699,
+  "deduplicated_against_existing": 6,
   "sources": [
     {
       "name": "vrc_technology_academic_hub",
       "source_type": "ics",
       "status": "ok",
-      "count": 329,
+      "count": 353,
       "stale_cache_count": 0,
       "source_page": "https://vrc-ta-hub.com/event/list/"
+    },
+    {
+      "name": "vrc_search_public_events",
+      "source_type": "vrc_search_pages",
+      "status": "ok",
+      "count": 352,
+      "stale_cache_count": 0,
+      "source_page": "https://search.vrcwwt.com/events/",
+      "policy_url": "https://search.vrcwwt.com/terms"
     },
     {
       "name": "official_event_websites",
