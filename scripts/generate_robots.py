@@ -35,7 +35,7 @@ def verify_sitemap(sitemap: Path, base_url: str) -> None:
     if not urls:
         msg = "sitemap contains no URLs"
         raise ValueError(msg)
-    prefix = base + "/"
+    prefix = f"{base}/"
     if any(not url.startswith(prefix) for url in urls):
         msg = "sitemap contains a URL outside the canonical base URL"
         raise ValueError(msg)
