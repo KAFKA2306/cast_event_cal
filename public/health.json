@@ -1,24 +1,24 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-09-29T10:06:32Z",
+  "generated_at": "2026-09-29T11:13:01Z",
   "status": "degraded",
   "enabled_sources": 5,
   "successful_sources": 3,
   "failed_sources": 0,
-  "event_count": 1123,
+  "event_count": 1124,
   "sources": [
     {
       "name": "repository_manual_events",
       "status": "ok",
       "count": 498,
-      "duration_ms": 1000
+      "duration_ms": 0
     },
     {
       "name": "vrchat_calendar_discovery",
       "status": "skipped",
       "count": 0,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-29T10:05:27Z",
+      "collection_generated_at": "2026-09-29T11:11:54Z",
       "reason": "VRCHAT_AUTH_COOKIE is not configured",
       "collection_event_count": 0
     },
@@ -27,24 +27,24 @@
       "status": "skipped",
       "count": 2,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-29T10:05:27Z",
+      "collection_generated_at": "2026-09-29T11:11:54Z",
       "reason": "X_BEARER_TOKEN is not configured; retained existing cache",
       "collection_event_count": 2
     },
     {
       "name": "yahoo_realtime_events",
       "status": "ok",
-      "count": 157,
+      "count": 158,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-29T10:06:28Z",
-      "collection_event_count": 157
+      "collection_generated_at": "2026-09-29T11:12:59Z",
+      "collection_event_count": 158
     },
     {
       "name": "external_calendar_events",
       "status": "ok",
       "count": 698,
       "duration_ms": 0,
-      "collection_generated_at": "2026-09-29T10:06:26Z",
+      "collection_generated_at": "2026-09-29T11:12:55Z",
       "collection_event_count": 698
     }
   ],
@@ -54,13 +54,13 @@
     "entries": 15,
     "matched_events": 293,
     "matched_series": 13,
-    "unmatched_events": 830,
+    "unmatched_events": 831,
     "ambiguous_events": 0,
     "status": "ok"
   },
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1123,
+    "event_count": 1124,
     "category_breakdown": {
       "art": 121,
       "community": 260,
@@ -70,7 +70,7 @@
       "music": 151,
       "other": 106,
       "performance": 27,
-      "recruitment_deadline": 2,
+      "recruitment_deadline": 3,
       "technology": 195,
       "wellness": 70,
       "world_tour": 21
@@ -103,7 +103,7 @@
       "world_tour": 21
     },
     "event_mode_breakdown": {
-      "deadline": 2,
+      "deadline": 3,
       "hybrid": 11,
       "in_world": 1106,
       "stream": 4
@@ -113,13 +113,13 @@
       "fallback": 106,
       "keyword_rules": 466,
       "legacy_and_keywords": 134,
-      "legacy_category": 141
+      "legacy_category": 142
     },
     "organizer_profile_count": 25,
     "low_confidence_event_count": 135,
     "audit_event_count": 135
   },
-  "normalized_event_count": 1244,
+  "normalized_event_count": 1245,
   "occurrence_dedup_policy": "canonical-occurrence.v1",
   "skipped_sources": 2,
   "degraded_sources": 0
