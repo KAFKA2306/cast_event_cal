@@ -39,12 +39,7 @@ jobs:
           s = s.replace(old, new)
           p.write_text(s)
           PY
-      - name: Run focused regression and lint
-        run: |
-          python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_recurrence_clause_boundary.py
-          python -m ruff check scripts/relative_datetime.py tests/test_recurrence_clause_boundary.py
-      - name: Commit fix and remove one-shot workflow
+      - name: Persist fix and remove one-shot workflow
         run: |
           rm .github/workflows/fix-301-apply.yml
           git config user.name github-actions[bot]
@@ -52,3 +47,8 @@ jobs:
           git add scripts/relative_datetime.py .github/workflows/fix-301-apply.yml
           git commit -m 'fix: keep recurrence clock inside its clause'
           git push
+      - name: Run focused regression and lint
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_recurrence_clause_boundary.py
+          python -m ruff check scripts/relative_datetime.py tests/test_recurrence_clause_boundary.py
