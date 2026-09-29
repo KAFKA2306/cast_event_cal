@@ -2,13 +2,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from scripts.audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, read_object
-
 ROOT = Path(__file__).resolve().parents[1]
+if __package__ in {None, ""}:
+    __package__ = "scripts"
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+
+from .audit_freshness import DEFAULT_MAX_SNAPSHOT_AGE_MINUTES, audit, read_object
+
 DEFAULT_HEALTH = ROOT / "public" / "health.json"
 DEFAULT_SNAPSHOT = ROOT / "public" / "snapshot.json"
 DEFAULT_OUTPUT = ROOT / "public" / "status.json"
