@@ -3,49 +3,25 @@
   "ontology_entries": 15,
   "curation_mode": "human_only",
   "event_count": 1124,
-  "matched_events": 293,
+  "matched_events": 296,
   "matched_series": {
-    "vrc-goita": 18,
-    "vrc-game-world-club": 18,
     "vrc-fit-boxing": 35,
     "exploit-club": 18,
-    "yuruge-meet": 17,
-    "wednesday-quest-beginners": 17,
-    "ml-gathering": 34,
-    "vrc-idle-gathering": 17,
+    "yuruge-meet": 18,
+    "wednesday-quest-beginners": 18,
+    "ml-gathering": 36,
+    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
-    "personally-match": 17
+    "personally-match": 17,
+    "vrc-goita": 17,
+    "vrc-game-world-club": 17
   },
-  "unmatched_events": 831,
+  "unmatched_events": 828,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "2a1e72bdea3f526ad327",
-      "title": "VRCごいた会",
-      "status": "matched",
-      "ontology_id": "vrc-goita",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "3f49e384deff54993893",
-      "title": "VRCゲームワールド部 月曜イベント",
-      "status": "matched",
-      "ontology_id": "vrc-game-world-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "9b652dcb969075170f4f",
       "title": "VRCフィットボクシング集会",
@@ -3520,6 +3496,65 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "86df769b961c5f23cb25",
+      "title": "ゆるゲMEET定期開催日",
+      "status": "matched",
+      "ontology_id": "yuruge-meet",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "215cc43b0373aac83890",
+      "title": "水曜Quest初心者の集い",
+      "status": "matched",
+      "ontology_id": "wednesday-quest-beginners",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "4186889114b0b2ffaeec",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "88f255b2616bce67f4ae",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "81d514b3e3f98d526013",
+      "title": "VRCでボーっとする会",
+      "status": "matched",
+      "ontology_id": "vrc-idle-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
@@ -3527,61 +3562,62 @@
     "event_count": 1124,
     "category_breakdown": {
       "art": 121,
-      "community": 260,
+      "community": 262,
       "game": 115,
       "language_exchange": 34,
-      "learning": 21,
-      "music": 151,
-      "other": 106,
+      "learning": 20,
+      "music": 149,
+      "other": 104,
       "performance": 27,
-      "recruitment_deadline": 3,
-      "technology": 195,
+      "recruitment_deadline": 8,
+      "technology": 193,
       "wellness": 70,
       "world_tour": 21
     },
     "subcategory_breakdown": {
-      "ai": 34,
+      "ai": 36,
       "bar": 1,
       "cafe": 34,
-      "cast_recruitment": 1,
+      "cast_recruitment": 4,
       "cast_service": 9,
       "class": 4,
       "competition": 1,
-      "dance": 73,
-      "dj": 6,
-      "engineering": 108,
+      "dance": 70,
+      "dj": 7,
+      "engineering": 104,
       "fitness": 35,
-      "hangout": 59,
+      "hangout": 54,
       "language_exchange": 34,
-      "lecture": 8,
+      "lecture": 7,
       "live_music": 1,
-      "mystery": 34,
+      "mystery": 35,
       "orientation": 1,
+      "participant_recruitment": 1,
       "photography": 121,
       "research": 44,
       "show": 23,
-      "social": 136,
-      "tabletop": 38,
-      "theater": 3,
+      "social": 143,
+      "tabletop": 37,
+      "theater": 2,
       "workshop": 8,
       "world_tour": 21
     },
     "event_mode_breakdown": {
-      "deadline": 3,
+      "deadline": 8,
       "hybrid": 11,
-      "in_world": 1106,
-      "stream": 4
+      "in_world": 1104,
+      "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 276,
-      "fallback": 106,
-      "keyword_rules": 466,
-      "legacy_and_keywords": 134,
-      "legacy_category": 142
+      "curated_ontology": 279,
+      "fallback": 104,
+      "keyword_rules": 459,
+      "legacy_and_keywords": 139,
+      "legacy_category": 143
     },
-    "organizer_profile_count": 25,
-    "low_confidence_event_count": 135,
-    "audit_event_count": 135
+    "organizer_profile_count": 26,
+    "low_confidence_event_count": 132,
+    "audit_event_count": 132
   },
   "category_review_queue": [
     {
@@ -4419,23 +4455,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "2f4d58c5b443002d3a67",
-      "title": "第73回「アバター改変なんもわからん集会」 日時 ：9月30日(水) 22:00 開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加 方法： VRC グループへ JOIN ※講…",
-      "category": "technology",
-      "label": "技術・研究",
-      "subcategory": "engineering",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:技術"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "6bf7d172236d57099cb0",
       "title": "イベント開催【osakana3にリクイン】",
       "category": "other",
@@ -4579,21 +4598,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "f44a271c08bdf6009012",
-      "title": "VRC 内で弾き語りするときはこちらのグループで通知を出してます！ 木曜日 22:00の定期開催以外にも不定期でやってるのでぜひ覗きに来てね💪https://t.co/yP2q7gbqaL",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "55a74421163932cb48e6",
-      "title": "【💜RPキャンペーン💜】 VRCイベント でびきゅーぶ！の本 営業開始 を記念して共鳴者様2名を イベント にご招待✨️ ▼ 開催日時 10月1日(木)22時〜 ( リクイン 21時55分 開…",
+      "title": "【💜RPキャンペーン💜】 VRC イベントでびきゅーぶ！の本 営業開始 を記念して共鳴者様2名をイベントにご招待✨️ ▼ 開催日時 10月1日(木)22時〜 ( リクイン 21時55分 開始 …",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4791,19 +4797,6 @@
       "evidence": [
         "keyword:organizer:unity"
       ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ee7bd550861e9d5cf2d0",
-      "title": "再 告知 ！ 今週末10月3日（土）20時より、 VRChat にてはこだまボドゲの第8回 大会 を行います！ 今回は久しぶりの個人戦！ 新キャラたちも活躍する 大会 はお気軽にご参加いただけ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
     },
@@ -5057,19 +5050,6 @@
       ]
     },
     {
-      "event_id": "4543361515b8189302cf",
-      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 10月5日（月曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください！…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "d21c38b82b6f7fb76d96",
       "title": "Join for Some Funǃ",
       "category": "other",
@@ -5210,6 +5190,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "0c6d328b7c99fcbce1cb",
+      "title": "【 VRC 心中RP イベント 、またねの約束。第4回 営業 のお知らせ】 ◆ 開催 日◆ 10月20日、27日（火曜日） 各日21時45分 リクイン ◆ 参加 方法◆ 事前抽選 https:…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "occ_82461f7de176361e35d2",
