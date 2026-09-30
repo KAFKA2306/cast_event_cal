@@ -34,3 +34,15 @@ def test_same_clause_daily_recurrence_keeps_its_clock():
     assert resolution.recurrence_rule is not None
     assert resolution.recurrence_rule["frequency"] == "daily"
     assert (resolution.event_at.hour, resolution.event_at.minute) == (22, 0)
+
+
+def test_compound_monthly_ordinal_recurrence_is_one_clause():
+    text = "毎月第2、第4日曜13時にカフェ営業します。"
+
+    resolution = resolve_recurring_event(text, ANCHOR, materialize_after=AFTER)
+
+    assert resolution is not None
+    assert resolution.method == "recurrence_ordinal_monthly_materialized"
+    assert resolution.recurrence_rule is not None
+    assert resolution.recurrence_rule["frequency"] == "monthly_ordinal_weekday"
+    assert (resolution.event_at.hour, resolution.event_at.minute) == (13, 0)

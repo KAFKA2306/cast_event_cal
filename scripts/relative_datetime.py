@@ -149,7 +149,7 @@ RECURRENCE_EVENT_IDENTITY_RE = re.compile(
     flags=re.IGNORECASE,
 )
 RECURRENCE_MARKER_RE = re.compile(
-    r"毎日|毎晩|毎週|毎月|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
+    r"毎日|毎晩|毎週|毎月(?!\s*第)|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
     flags=re.IGNORECASE,
 )
 
