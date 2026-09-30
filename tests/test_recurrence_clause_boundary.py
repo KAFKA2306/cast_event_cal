@@ -1,3 +1,5 @@
+"""Regression contract for keeping recurrence clocks inside their own clause."""
+
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
