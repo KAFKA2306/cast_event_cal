@@ -1,0 +1,49 @@
+name: Patch #301 compound monthly recurrence
+on:
+  push:
+    branches: [fix/301-recurrence-clause-boundary]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/301-recurrence-clause-boundary
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch recurrence marker and regression
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/relative_datetime.py')
+          s = p.read_text()
+          old = 'r"毎日|毎晩|毎週|毎月|第\\s*\\d+(?:\\s*[、,・/]\\s*第?\\s*\\d+)*\\s*[月火水木金土日]曜",'
+          new = 'r"毎日|毎晩|毎週|毎月(?!\\s*第)|第\\s*\\d+(?:\\s*[、,・/]\\s*第?\\s*\\d+)*\\s*[月火水木金土日]曜",'
+          if old not in s:
+              raise SystemExit('expected recurrence marker pattern not found')
+          p.write_text(s.replace(old, new, 1))
+
+          t = Path('tests/test_recurrence_clause_boundary.py')
+          tests = t.read_text()
+          case = '''\n\ndef test_compound_monthly_ordinal_recurrence_is_one_clause():\n    text = "毎月第2、第4日曜13時にカフェ営業します。"\n\n    resolution = resolve_recurring_event(text, ANCHOR, materialize_after=AFTER)\n\n    assert resolution is not None\n    assert resolution.method == "recurrence_ordinal_monthly_materialized"\n    assert resolution.recurrence_rule is not None\n    assert resolution.recurrence_rule["frequency"] == "monthly"\n    assert (resolution.event_at.hour, resolution.event_at.minute) == (13, 0)\n'''
+          if 'test_compound_monthly_ordinal_recurrence_is_one_clause' not in tests:
+              t.write_text(tests + case)
+          PY
+      - name: Focused regression
+        run: python -m pytest -q tests/test_recurrence_clause_boundary.py
+      - name: Full tests
+        run: python -m pytest -q
+      - name: Ruff
+        run: python -m ruff check .
+      - name: Commit fix and remove one-shot workflow
+        run: |
+          rm .github/workflows/patch-301-compound-monthly.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add scripts/relative_datetime.py tests/test_recurrence_clause_boundary.py .github/workflows/patch-301-compound-monthly.yml
+          git commit -m 'fix: preserve compound monthly recurrence clauses'
+          git push
