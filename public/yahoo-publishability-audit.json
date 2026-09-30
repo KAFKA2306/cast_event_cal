@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "policy_version": "issue-196-generic-publishability.v1",
-  "generated_at": "2026-09-30T05:10:10Z",
+  "generated_at": "2026-09-30T06:41:30Z",
   "candidate_count": 5000,
-  "missing_datetime_before": 497,
+  "missing_datetime_before": 496,
   "publishability_backlog_before": 225,
   "occurrence_decision_counts_before": {
     "ambiguous_datetime": 38,
@@ -15,31 +15,28 @@
     "recurring_event": 21,
     "resolvable_event_candidate": 5
   },
-  "accepted_event_count": 126,
-  "promoted_from_missing_datetime": 1,
-  "promoted_status_ids": [
-    "2088873706991018088"
-  ],
+  "accepted_event_count": 125,
+  "promoted_from_missing_datetime": 0,
+  "promoted_status_ids": [],
   "recurrence_materialized_count": 4,
-  "corroborated_materialized_count": 1,
+  "corroborated_materialized_count": 0,
   "resolution_method_counts": {
-    "corroborated_event_fingerprint_date_clock": 1,
-    "explicit_calendar_date": 58,
+    "explicit_calendar_date": 59,
     "explicit_calendar_date_evidence_span": 7,
     "explicit_datetime": 3,
     "next_occurrence_unprefixed": 4,
     "recurrence_weekly_materialized": 4,
-    "relative_day_evidence_span": 12,
+    "relative_day_evidence_span": 11,
     "relative_day_from_source_timestamp": 37
   },
   "resolution_blocker_counts": {
     "datetime_parser_unsupported_or_unsafe": 23,
-    "missing_or_conflicting_clock": 87,
+    "missing_or_conflicting_clock": 88,
     "missing_or_conflicting_date": 190,
-    "no_datetime_evidence": 1786,
-    "no_peer_evidence": 372,
+    "no_datetime_evidence": 1785,
+    "no_peer_evidence": 371,
     "no_strong_event_signal": 33,
-    "non_event": 893,
+    "non_event": 895,
     "non_event_commerce": 182,
     "non_event_personal": 153,
     "out_of_publication_window": 17,
