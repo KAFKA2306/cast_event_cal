@@ -149,9 +149,14 @@ RECURRENCE_EVENT_IDENTITY_RE = re.compile(
     flags=re.IGNORECASE,
 )
 RECURRENCE_MARKER_RE = re.compile(
-    r"毎日|毎晩|毎週|毎月|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
+    r"毎日|毎晩|毎週|毎月(?!\s*第)|第\s*\d+(?:\s*[、,・/]\s*第?\s*\d+)*\s*[月火水木金土日]曜",
     flags=re.IGNORECASE,
 )
+
+
+def _recurrence_match_stays_in_clause(match: re.Match[str]) -> bool:
+    """Reject a recurrence regex match that consumed a later recurrence clause."""
+    return sum(1 for _ in RECURRENCE_MARKER_RE.finditer(match.group(0))) <= 1
 
 
 def _recurrence_clause_has_event_identity(text: str, match: re.Match[str]) -> bool:
@@ -491,7 +496,11 @@ def resolve_recurring_event(
     after = _jst(materialize_after)
 
     match = DAILY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -513,7 +522,11 @@ def resolve_recurring_event(
         )
 
     match = MULTI_WEEKLY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -544,7 +557,11 @@ def resolve_recurring_event(
         )
 
     match = WEEKLY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -570,7 +587,11 @@ def resolve_recurring_event(
         )
 
     match = MULTI_MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -597,7 +618,11 @@ def resolve_recurring_event(
             )
 
     match = MONTHLY_DAY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -620,7 +645,11 @@ def resolve_recurring_event(
             )
 
     match = LAST_WEEKDAY_MONTHLY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
@@ -654,7 +683,11 @@ def resolve_recurring_event(
             )
 
     match = ORDINAL_MONTHLY_RECURRENCE_PATTERN.search(normalized)
-    if match and _recurrence_clause_has_event_identity(normalized, match):
+    if (
+        match
+        and _recurrence_match_stays_in_clause(match)
+        and _recurrence_clause_has_event_identity(normalized, match)
+    ):
         parts = _clock_parts(match)
         if parts is None:
             return None
