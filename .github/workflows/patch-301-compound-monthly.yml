@@ -29,7 +29,7 @@ jobs:
 
           t = Path('tests/test_recurrence_clause_boundary.py')
           tests = t.read_text()
-          case = '''\n\ndef test_compound_monthly_ordinal_recurrence_is_one_clause():\n    text = "毎月第2、第4日曜13時にカフェ営業します。"\n\n    resolution = resolve_recurring_event(text, ANCHOR, materialize_after=AFTER)\n\n    assert resolution is not None\n    assert resolution.method == "recurrence_ordinal_monthly_materialized"\n    assert resolution.recurrence_rule is not None\n    assert resolution.recurrence_rule["frequency"] == "monthly"\n    assert (resolution.event_at.hour, resolution.event_at.minute) == (13, 0)\n'''
+          case = '''\n\ndef test_compound_monthly_ordinal_recurrence_is_one_clause():\n    text = "毎月第2、第4日曜13時にカフェ営業します。"\n\n    resolution = resolve_recurring_event(text, ANCHOR, materialize_after=AFTER)\n\n    assert resolution is not None\n    assert resolution.method == "recurrence_ordinal_monthly_materialized"\n    assert resolution.recurrence_rule is not None\n    assert resolution.recurrence_rule["frequency"] == "monthly_ordinal_weekday"\n    assert (resolution.event_at.hour, resolution.event_at.minute) == (13, 0)\n'''
           if 'test_compound_monthly_ordinal_recurrence_is_one_clause' not in tests:
               t.write_text(tests + case)
           PY
