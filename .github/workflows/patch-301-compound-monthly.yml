@@ -4,6 +4,7 @@ on:
     branches: [fix/301-recurrence-clause-boundary]
 permissions:
   contents: write
+  issues: write
 jobs:
   patch:
     if: github.actor != 'github-actions[bot]'
@@ -26,7 +27,6 @@ jobs:
           if old not in s:
               raise SystemExit('expected recurrence marker pattern not found')
           p.write_text(s.replace(old, new, 1))
-
           t = Path('tests/test_recurrence_clause_boundary.py')
           tests = t.read_text()
           case = '''\n\ndef test_compound_monthly_ordinal_recurrence_is_one_clause():\n    text = "毎月第2、第4日曜13時にカフェ営業します。"\n\n    resolution = resolve_recurring_event(text, ANCHOR, materialize_after=AFTER)\n\n    assert resolution is not None\n    assert resolution.method == "recurrence_ordinal_monthly_materialized"\n    assert resolution.recurrence_rule is not None\n    assert resolution.recurrence_rule["frequency"] == "monthly_ordinal_weekday"\n    assert (resolution.event_at.hour, resolution.event_at.minute) == (13, 0)\n'''
@@ -34,7 +34,18 @@ jobs:
               t.write_text(tests + case)
           PY
       - name: Focused regression
-        run: python -m pytest -q tests/test_recurrence_clause_boundary.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python -m pytest -q tests/test_recurrence_clause_boundary.py > /tmp/pytest301.log 2>&1
+          status=$?
+          cat /tmp/pytest301.log
+          if [ "$status" -ne 0 ]; then
+            { echo 'Focused regression output:'; echo '```'; cat /tmp/pytest301.log; echo '```'; } > /tmp/comment.md
+            gh issue comment 301 --body-file /tmp/comment.md
+            exit "$status"
+          fi
       - name: Full tests
         run: python -m pytest -q
       - name: Ruff
