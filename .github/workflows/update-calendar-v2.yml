@@ -20,8 +20,9 @@ on:
       - .github/workflows/update-calendar-v2.yml
       - .github/workflows/render-search-pages.yml
 
+# Default to read-only. Only the publish job below can write repository contents.
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: cast-event-calendar-production
@@ -115,6 +116,43 @@ jobs:
         run: python scripts/audit_freshness.py --max-age-minutes 180
       - name: Build durable system status
         run: python scripts/build_system_status.py --max-age-minutes 180
+      - name: Stage validated snapshot for publisher
+        uses: actions/upload-artifact@v4
+        with:
+          name: calendar-publish-snapshot-${{ github.run_id }}
+          path: |
+            data/manual_events.json
+            data/discovered_events.json
+            data/discovery_health.json
+            data/x_events.json
+            data/x_discovery_health.json
+            data/yahoo_realtime_candidates.json
+            data/yahoo_realtime_events.json
+            data/yahoo_realtime_rejected.json
+            data/yahoo_realtime_health.json
+            data/external_events.json
+            data/external_discovery_health.json
+            data/official_asset_cache.json
+            public/
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Download validated snapshot
+        uses: actions/download-artifact@v5
+        with:
+          name: calendar-publish-snapshot-${{ github.run_id }}
+          path: .
       - name: Commit generated data safely
         run: |
           set -euo pipefail
