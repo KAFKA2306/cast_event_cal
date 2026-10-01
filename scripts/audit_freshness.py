@@ -49,8 +49,11 @@ def audit(
     now: datetime,
     max_snapshot_age_minutes: int,
 ) -> dict[str, Any]:
-    timestamps = [stamp for stamp in (generated_at(health), generated_at(snapshot)) if stamp]
-    published_at = max(timestamps) if timestamps else None
+    # The canonical snapshot is the freshness authority. Health is deliberately
+    # not allowed to make an old snapshot look fresh merely by receiving a new
+    # generated_at timestamp. This also lets a valid current-run snapshot recover
+    # from a stale previous health projection without a circular dependency.
+    published_at = generated_at(snapshot)
     age_minutes = (
         max(0.0, (now - published_at).total_seconds() / 60.0)
         if published_at
