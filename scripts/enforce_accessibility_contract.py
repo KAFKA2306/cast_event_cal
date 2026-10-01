@@ -1,16 +1,36 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 SKIP_LINK = '<a class="skip-link" href="#main-content">本文へスキップ</a>'
-MAIN_TARGET = '<main id="main-content" class="shell" tabindex="-1">'
 ACCESSIBILITY_CSS = """
 .skip-link{position:fixed;left:12px;top:12px;z-index:1000;transform:translateY(-160%);padding:10px 14px;border-radius:10px;background:var(--ink);color:#fff;font-weight:800;text-decoration:none}
 .skip-link:focus{transform:translateY(0)}
 :where(a,button,input,select,summary):focus-visible{outline:3px solid #1f6feb;outline-offset:3px}
 #main-content:focus{outline:none}
 """.strip()
+MAIN_RE = re.compile(r"<main\b(?P<attrs>[^>]*)>", re.IGNORECASE)
+
+
+def _set_attribute(attrs: str, name: str, value: str) -> str:
+    pattern = re.compile(rf"(?P<prefix>\s){re.escape(name)}\s*=\s*(?P<quote>['\"])(?P<value>.*?)(?P=quote)", re.IGNORECASE)
+    match = pattern.search(attrs)
+    if match:
+        return attrs[: match.start("value")] + value + attrs[match.end("value") :]
+    return attrs + f' {name}="{value}"'
+
+
+def _enforce_main_landmark(text: str) -> str:
+    matches = list(MAIN_RE.finditer(text))
+    if len(matches) != 1:
+        raise ValueError(f"expected exactly one main landmark, found {len(matches)}")
+    match = matches[0]
+    attrs = _set_attribute(match.group("attrs"), "id", "main-content")
+    attrs = _set_attribute(attrs, "tabindex", "-1")
+    replacement = f"<main{attrs}>"
+    return text[: match.start()] + replacement + text[match.end() :]
 
 
 def enforce(text: str) -> str:
@@ -18,11 +38,7 @@ def enforce(text: str) -> str:
         if "<body>" not in text:
             raise ValueError("body marker missing")
         text = text.replace("<body>", f"<body>\n{SKIP_LINK}", 1)
-    if MAIN_TARGET not in text:
-        marker = '<main class="shell">'
-        if marker not in text:
-            raise ValueError("main shell marker missing")
-        text = text.replace(marker, MAIN_TARGET, 1)
+    text = _enforce_main_landmark(text)
     if ACCESSIBILITY_CSS not in text:
         if "</style>" not in text:
             raise ValueError("style marker missing")
@@ -31,9 +47,19 @@ def enforce(text: str) -> str:
 
 
 def verify(text: str) -> None:
+    main_matches = list(MAIN_RE.finditer(text))
+    valid_main = 0
+    for match in main_matches:
+        attrs = match.group("attrs")
+        has_id = re.search(r"\sid\s*=\s*(['\"])main-content\1", attrs, re.IGNORECASE)
+        has_tabindex = re.search(r"\stabindex\s*=\s*(['\"])-1\1", attrs, re.IGNORECASE)
+        if has_id and has_tabindex:
+            valid_main += 1
+    if len(main_matches) != 1 or valid_main != 1:
+        raise ValueError("accessibility contract requires exactly one main#main-content[tabindex=-1]")
+    if text.count(SKIP_LINK) != 1:
+        raise ValueError("accessibility contract requires exactly one skip link")
     required = (
-        SKIP_LINK,
-        MAIN_TARGET,
         ":where(a,button,input,select,summary):focus-visible",
         ".skip-link:focus",
     )
