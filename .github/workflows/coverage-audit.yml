@@ -1,0 +1,26 @@
+name: Coverage audit contract
+on:
+  pull_request:
+    paths:
+      - 'config/coverage_gold.json'
+      - 'scripts/audit_coverage.py'
+      - 'tests/test_audit_coverage.py'
+      - '.github/workflows/coverage-audit.yml'
+  workflow_dispatch:
+jobs:
+  coverage-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test runner
+        run: python -m pip install pytest
+      - name: Run coverage contract tests
+        run: python -m pytest -q tests/test_audit_coverage.py
+      - name: Exercise one-command audit
+        run: |
+          printf '%s\n' '{"events":[],"supported_sources":["yahoo_realtime"],"source_unavailable":["yahoo_realtime"]}' > /tmp/coverage-run.json
+          python scripts/audit_coverage.py --run /tmp/coverage-run.json --output /tmp/coverage-report.json
+          python -m json.tool /tmp/coverage-report.json >/dev/null
