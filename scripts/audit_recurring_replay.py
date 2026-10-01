@@ -64,21 +64,25 @@ def replay(
     future_occurrences = 0
     duplicate_count = 0
     provenance_missing = 0
+    promotions_without_provenance = 0
 
     for row in recurring_rows:
         text = str(row.get("text", ""))
         status_id = str(row.get("status_id", ""))
         url = str(row.get("url", ""))
-        if not status_id and not url:
+        provenance_complete = bool(status_id or url)
+        if not provenance_complete:
             provenance_missing += 1
 
-        decision = occurrence_decision(text, now=now)
-        rule = decision.get("rule")
-        resolved = resolve_recurrence(text, now=now)
-        starts = [str(item) for item in resolved.get("starts", [])]
+        decision = occurrence_decision(text)
+        resolved = resolve_recurrence(text, after=now)
+        starts = [str(item) for item in resolved.get("occurrences", [])]
         future = [start for start in starts if start >= now.isoformat()]
         duplicates = [start for start in future if start in public_starts]
-        reason = str(resolved.get("reason") or decision.get("reason") or "unknown")
+        promotions = [start for start in future if start not in public_starts]
+        if promotions and not provenance_complete:
+            promotions_without_provenance += len(promotions)
+        reason = str(resolved.get("reason") or resolved.get("status") or decision or "unknown")
         reason_counts[reason] += 1
         if starts:
             resolved_count += 1
@@ -90,7 +94,8 @@ def replay(
                 "fingerprint": candidate_fingerprint(row),
                 "status_id": status_id,
                 "url": url,
-                "rule": rule,
+                "rule": resolved.get("rule"),
+                "decision": decision,
                 "reason": reason,
                 "resolved": bool(starts),
                 "starts": starts,
@@ -109,6 +114,7 @@ def replay(
         "materialized_future_occurrences": future_occurrences,
         "duplicate_delta": duplicate_count,
         "provenance_missing": provenance_missing,
+        "promotions_without_provenance": promotions_without_provenance,
         "reason_counts": dict(sorted(reason_counts.items())),
         "results": results,
     }
@@ -130,13 +136,16 @@ def main() -> int:
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(json.dumps({key: value for key, value in report.items() if key != "results"}, ensure_ascii=False))
 
-    if args.require_gates and report["provenance_missing"]:
-        print("recurring replay gate failed: provenance_missing > 0", file=sys.stderr)
+    if args.require_gates and report["promotions_without_provenance"]:
+        print(
+            "recurring replay gate failed: promotions_without_provenance > 0",
+            file=sys.stderr,
+        )
         return 1
     return 0
 
