@@ -12,9 +12,9 @@ RESOLVER_VERSION = "recurrence-v1"
 
 _WEEKDAY = {"月": 0, "火": 1, "水": 2, "木": 3, "金": 4, "土": 5, "日": 6}
 _CLOCK_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])\s*(?::|：|時)\s*([0-5]?\d)?\s*分?")
-_ORDINAL_RE = re.compile(r"第\s*([1-5](?:\s*[・,、]\s*[1-5])*)\s*(月|火|水|木|金|土|日)曜(?:日)?")
+_ORDINAL_RE = re.compile(r"第\s*([1-5](?:\s*[・,、]\s*第?\s*[1-5])*)\s*(月|火|水|木|金|土|日)曜(?:日)?")
 _WEEKLY_RE = re.compile(r"毎週\s*(月|火|水|木|金|土|日)曜(?:日)?")
-_MONTHLY_RE = re.compile(r"毎月[^\n]{0,24}?第\s*([1-5](?:\s*[・,、]\s*[1-5])*)\s*(月|火|水|木|金|土|日)曜(?:日)?")
+_MONTHLY_RE = re.compile(r"毎月[^\n]{0,24}?第\s*([1-5](?:\s*[・,、]\s*第?\s*[1-5])*)\s*(月|火|水|木|金|土|日)曜(?:日)?")
 
 
 @dataclass(frozen=True)
@@ -44,7 +44,7 @@ def parse_recurrence(text: str) -> RecurrenceRule | None:
 
     monthly = _MONTHLY_RE.search(text)
     if monthly:
-        ordinals = tuple(int(v) for v in re.split(r"\s*[・,、]\s*", monthly.group(1)))
+        ordinals = tuple(int(v) for v in re.findall(r"[1-5]", monthly.group(1)))
         return RecurrenceRule("monthly_ordinal", (_WEEKDAY[monthly.group(2)],), ordinals, local_time)
 
     weekly = _WEEKLY_RE.search(text)
@@ -53,7 +53,7 @@ def parse_recurrence(text: str) -> RecurrenceRule | None:
 
     ordinal = _ORDINAL_RE.search(text)
     if ordinal:
-        ordinals = tuple(int(v) for v in re.split(r"\s*[・,、]\s*", ordinal.group(1)))
+        ordinals = tuple(int(v) for v in re.findall(r"[1-5]", ordinal.group(1)))
         return RecurrenceRule("monthly_ordinal", (_WEEKDAY[ordinal.group(2)],), ordinals, local_time)
     return None
 
