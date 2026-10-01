@@ -69,10 +69,6 @@ jobs:
         run: python scripts/refine_yahoo_corpus.py
       - name: Measure recurring corpus before materialization
         run: python scripts/audit_recurring_replay.py --require-gates
-      - name: Materialize replay-proven recurring occurrences
-        env:
-          YAHOO_MIN_RETWEETS: '3'
-        run: python scripts/materialize_recurring_replay.py
       - name: Collect external calendars and official event pages
         env:
           VRCEVE_DATA_USE_APPROVED: ${{ secrets.VRCEVE_DATA_USE_APPROVED }}
@@ -80,6 +76,10 @@ jobs:
         run: python scripts/fetch_external_calendars.py
       - name: Apply durable Yahoo archive policy
         run: python scripts/reclassify_yahoo_archive.py
+      - name: Materialize replay-proven recurring occurrences
+        env:
+          YAHOO_MIN_RETWEETS: '3'
+        run: python scripts/materialize_recurring_replay.py
       - name: Gate collection health before build
         run: |
           python - <<'PY'
