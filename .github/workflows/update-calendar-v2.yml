@@ -128,7 +128,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: public-snapshot-delta-${{ github.run_id }}
-          path: audit/public-snapshot-delta.json
+          path: |
+            audit/public-snapshot-delta.json
+            audit/public-snapshot-delta-history.jsonl
           if-no-files-found: error
           retention-days: 30
       - name: Write canonical snapshot identity
