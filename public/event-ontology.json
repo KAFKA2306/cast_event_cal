@@ -1,8 +1,8 @@
 {
   "schema_version": "3.0",
-  "generated_at": "2026-10-01T19:13:41Z",
-  "source_event_generated_at": "2026-10-01T19:12:35Z",
-  "source_event_count": 1121,
+  "generated_at": "2026-10-01T21:52:19Z",
+  "source_event_generated_at": "2026-10-01T21:50:52Z",
+  "source_event_count": 1122,
   "curated_schema_version": "2.0",
   "governance": {
     "curation_mode": "human_only",
@@ -23,7 +23,7 @@
     "required_identity": "alias or exact organizer plus all required patterns"
   },
   "curated_entry_count": 15,
-  "observed_entity_count": 269,
+  "observed_entity_count": 270,
   "category_ontology_schema_version": "2.0",
   "category_labels": {
     "recruitment_deadline": "募集・締切",
@@ -40,7 +40,7 @@
     "other": "その他"
   },
   "category_breakdown": {
-    "community": 270,
+    "community": 271,
     "technology": 192,
     "music": 145,
     "art": 122,
@@ -70,7 +70,7 @@
     "show": 18,
     "workshop": 9,
     "lecture": 8,
-    "cast_service": 5,
+    "cast_service": 6,
     "class": 4,
     "dj": 3,
     "bar": 1,
@@ -81,14 +81,14 @@
     "theater": 1
   },
   "event_mode_breakdown": {
-    "in_world": 1104,
+    "in_world": 1105,
     "hybrid": 13,
     "deadline": 3,
     "stream": 1
   },
   "classification_source_breakdown": {
     "keyword_rules": 468,
-    "curated_ontology": 276,
+    "curated_ontology": 277,
     "legacy_category": 140,
     "legacy_and_keywords": 132,
     "fallback": 105
@@ -8823,6 +8823,56 @@
         {
           "url": "https://x.com/VRC_Owarai_dojo",
           "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/vrc_petting_zoo",
+      "organizer": "@VRC_Petting_zoo",
+      "official_x_url": "https://x.com/VRC_Petting_zoo",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HTk3-4SbQAADT-l.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-10-02T13:00:00Z",
+      "sample_event_ids": [
+        "e1a8f0c64c5ca68485d8"
+      ],
+      "sample_titles": [
+        "VRCふれあい動物園"
+      ],
+      "category_distribution": {
+        "community": 1
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "cast_service": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {
+        "vrc-petting-zoo": 1
+      },
+      "official_links": [
+        {
+          "url": "https://x.com/VRC_Petting_zoo/status/2105776307170873525?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知・参加方法",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://vrchat.com/home/launch?worldId=wrld_9a1eedbb-34ee-49cd-87da-41e321258fb6",
+          "label": "公式イベントワールド",
+          "kind": "official_website"
+        },
+        {
+          "url": "https://x.com/VRC_Petting_zoo",
+          "label": "イベント公式X",
           "kind": "official_x"
         }
       ]
