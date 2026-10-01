@@ -192,8 +192,6 @@ jobs:
             data/external_events.json
             data/external_discovery_health.json
             data/official_asset_cache.json
-            audit/public-snapshot-delta.json
-            audit/public-snapshot-delta-history.jsonl
             public
           )
           if [ -n "$(git status --porcelain -- "${paths[@]}")" ]; then
