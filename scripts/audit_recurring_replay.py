@@ -3,10 +3,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from cast_event_cal.recurrence import resolve_recurrence
 from scripts.audit_yahoo_datetime_vocabulary import occurrence_decision
