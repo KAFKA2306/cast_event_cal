@@ -9,6 +9,24 @@ def candidate(text: str, **extra: str) -> dict[str, str]:
     return {"datetime_reason": "recurring_event", "text": text, **extra}
 
 
+def test_production_last_reason_selects_recurring_candidate():
+    report = replay(
+        [
+            {
+                "last_decision": "rejected",
+                "last_reason": "recurring_event",
+                "text": "毎週金曜日 22:00から集会を開催します",
+                "status_id": "123",
+            }
+        ],
+        set(),
+        now=ANCHOR,
+    )
+
+    assert report["input_recurring_rows"] == 1
+    assert report["resolved_rows"] == 1
+
+
 def test_unresolved_missing_provenance_does_not_create_unsafe_promotion():
     report = replay(
         [candidate("毎週土曜日に集会を開催します")],
