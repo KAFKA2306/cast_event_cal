@@ -74,8 +74,7 @@ def replay(
         if not provenance_complete:
             provenance_missing += 1
 
-        decision = occurrence_decision(text, now=now)
-        rule = decision.get("rule")
+        decision = occurrence_decision(text)
         resolved = resolve_recurrence(text, now=now)
         starts = [str(item) for item in resolved.get("starts", [])]
         future = [start for start in starts if start >= now.isoformat()]
@@ -83,7 +82,7 @@ def replay(
         promotions = [start for start in future if start not in public_starts]
         if promotions and not provenance_complete:
             promotions_without_provenance += len(promotions)
-        reason = str(resolved.get("reason") or decision.get("reason") or "unknown")
+        reason = str(resolved.get("reason") or decision or "unknown")
         reason_counts[reason] += 1
         if starts:
             resolved_count += 1
@@ -95,7 +94,7 @@ def replay(
                 "fingerprint": candidate_fingerprint(row),
                 "status_id": status_id,
                 "url": url,
-                "rule": rule,
+                "rule": decision,
                 "reason": reason,
                 "resolved": bool(starts),
                 "starts": starts,
