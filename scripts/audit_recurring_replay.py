@@ -75,14 +75,14 @@ def replay(
             provenance_missing += 1
 
         decision = occurrence_decision(text)
-        resolved = resolve_recurrence(text, now=now)
-        starts = [str(item) for item in resolved.get("starts", [])]
+        resolved = resolve_recurrence(text, after=now)
+        starts = [str(item) for item in resolved.get("occurrences", [])]
         future = [start for start in starts if start >= now.isoformat()]
         duplicates = [start for start in future if start in public_starts]
         promotions = [start for start in future if start not in public_starts]
         if promotions and not provenance_complete:
             promotions_without_provenance += len(promotions)
-        reason = str(resolved.get("reason") or decision or "unknown")
+        reason = str(resolved.get("reason") or resolved.get("status") or decision or "unknown")
         reason_counts[reason] += 1
         if starts:
             resolved_count += 1
@@ -94,7 +94,8 @@ def replay(
                 "fingerprint": candidate_fingerprint(row),
                 "status_id": status_id,
                 "url": url,
-                "rule": decision,
+                "rule": resolved.get("rule"),
+                "decision": decision,
                 "reason": reason,
                 "resolved": bool(starts),
                 "starts": starts,
@@ -135,7 +136,7 @@ def main() -> int:
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(json.dumps({key: value for key, value in report.items() if key != "results"}, ensure_ascii=False))
