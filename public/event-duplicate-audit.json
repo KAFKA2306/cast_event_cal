@@ -1,38 +1,16 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1249,
-  "event_count_after": 1118,
+  "event_count_before": 1261,
+  "event_count_after": 1131,
   "candidate_cluster_count": 101,
   "duplicate_cluster_count": 101,
-  "duplicate_occurrence_count": 131,
-  "duplicate_post_count": 131,
-  "duplicate_rate": 0.104884,
+  "duplicate_occurrence_count": 130,
+  "duplicate_post_count": 130,
+  "duplicate_rate": 0.103093,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
-    {
-      "cluster_id": "occ_02f0adde585a83d85b99",
-      "starts_at": "2026-09-30T21:00:00Z",
-      "title": "EPIC Fellowship Men's Bible Study",
-      "member_count": 2,
-      "member_ids": [
-        "021cc8bda7e08b01b476",
-        "7c0028df360f9444bcc4"
-      ],
-      "source_record_ids": [
-        "src_6651fe00fe823f5bbbfc",
-        "src_bcca8fcf84a7e1dec761"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_bcca8fcf84a7e1dec761"
-    },
     {
       "cluster_id": "occ_05d2126b49cc9ea0171b",
       "starts_at": "2027-01-23T12:00:00Z",
@@ -1382,6 +1360,28 @@
       "representative_source_record_id": "src_c12154f5b7f174492d61"
     },
     {
+      "cluster_id": "occ_9860f336ddbe334de2a9",
+      "starts_at": "2027-01-28T13:00:00Z",
+      "title": "VRC Bio Journal RTA",
+      "member_count": 2,
+      "member_ids": [
+        "2f4780b6b824416ca136",
+        "9fc6dd67c51db783cc46"
+      ],
+      "source_record_ids": [
+        "src_799933f769ccceca50c9",
+        "src_a9b2069d8487b7ccf5d0"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_a9b2069d8487b7ccf5d0"
+    },
+    {
       "cluster_id": "occ_990cb1b0b587ebf3a91e",
       "starts_at": "2027-01-20T13:00:00Z",
       "title": "Web技術集会",
@@ -1541,14 +1541,12 @@
       "cluster_id": "occ_a8564bfcbe484fdf0ff7",
       "starts_at": "2026-10-17T12:00:00Z",
       "title": "学生学際集会",
-      "member_count": 3,
+      "member_count": 2,
       "member_ids": [
         "1d31bfedbcf18ff43c02",
-        "226f87d43ab8e3dee561",
         "8483b7037fe1ab5aee73"
       ],
       "source_record_ids": [
-        "src_2ea4daa75c34a7d7d44d",
         "src_3ea453afbc77238d67a1",
         "src_8c03d52c66f2608855f5"
       ],
@@ -2296,6 +2294,15 @@
   ],
   "ambiguous_candidates": [
     {
+      "left_id": "ec3493dc52343d959706",
+      "right_id": "d5cee7e0cbd97549d531",
+      "starts_at": "2026-10-09T13:55:00Z",
+      "organizer": "@VRC_lumitia",
+      "similarity": 0.5382,
+      "left_title": "VRCイベント 『Luminous Astrantia』 🍀10月・11月 イベント開催 予定日のお知らせ🍀 10月 ☑️9(金)22:55～24:15 ☑️23(金)22:55～24:15 …",
+      "right_title": "VRCイベント 『Luminous Astrantia』 🍀第5回 オープン のお知らせ🍀 10/9(金)22:55~24:15 🌟リポストキャンペーン🌟 ゲストさんの歌×particleli…"
+    },
+    {
       "left_id": "6eb8b3cfe483b3c5f95c",
       "right_id": "3d171d7f0ccecbbe8413",
       "starts_at": "2026-10-10T09:45:00Z",
@@ -2307,105 +2314,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "8a4aa6159da6ef2ed562",
-      "right_id": "882be70a9946c51f125b",
-      "starts_at": "2026-09-29T12:00:00Z",
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "b75cadaf0e079f59177d",
+      "starts_at": "2026-09-30T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@clove2122",
-      "similarity": 0.2058,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "VRC イベントを 開催 します！ 「 VRC 北海道集会」 VRC 北海道集会は北海道に住んでいる(住んでいた)人や、北海道に興味がある人が集まってゆるく雑談を楽しむイベントです！ ※And…"
+      "right_organizer": null,
+      "similarity": 0.1412,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "VRC数学談話会"
     },
     {
-      "left_id": "8a4aa6159da6ef2ed562",
-      "right_id": "1a6a8fd236560ce3e311",
-      "starts_at": "2026-09-29T12:00:00Z",
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "8091f6c94ab577f9ee1e",
+      "starts_at": "2026-09-30T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1586,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "⭐【 本日 21時 開催 】⭐ VRChat 静岡ケンミン 集会 静岡県民あつまれ！ 他県民の 参加 も大歓迎 ゆる雑談・初参加・聞き専OK！ 開始 ：21:00〜 ▼ 参加 方法 ① 主催「…"
+      "right_organizer": null,
+      "similarity": 0.134,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "VR研究Cafe"
     },
     {
-      "left_id": "8a4aa6159da6ef2ed562",
-      "right_id": "656d6c82f1a3b033f230",
-      "starts_at": "2026-09-29T12:00:00Z",
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "7a2cf457b4480ea230db",
+      "starts_at": "2026-09-30T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.1029,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 htt…"
+      "right_organizer": "VR研究カフェ",
+      "similarity": 0.0375,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "VR研究カフェ（毎月30日）"
     },
     {
-      "left_id": "8a4aa6159da6ef2ed562",
-      "right_id": "833f7a1e5ea3344fd6bd",
-      "starts_at": "2026-09-29T12:00:00Z",
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "2162fe188022cbfbbb29",
+      "starts_at": "2026-09-30T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.2407,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "本日 ！月釜（茶道の茶会）！！ 9月29日㈫ 21時～22時 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る）、または jenara/ジェナーラ または yokof…"
+      "right_organizer": "@VRC_nayameeting",
+      "similarity": 0.141,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第82回は9月30日(水) 『21:00〜22:30』 ※当イベントは…"
     },
     {
-      "left_id": "882be70a9946c51f125b",
-      "right_id": "1a6a8fd236560ce3e311",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@clove2122",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.2619,
-      "left_title": "VRC イベントを 開催 します！ 「 VRC 北海道集会」 VRC 北海道集会は北海道に住んでいる(住んでいた)人や、北海道に興味がある人が集まってゆるく雑談を楽しむイベントです！ ※And…",
-      "right_title": "⭐【 本日 21時 開催 】⭐ VRChat 静岡ケンミン 集会 静岡県民あつまれ！ 他県民の 参加 も大歓迎 ゆる雑談・初参加・聞き専OK！ 開始 ：21:00〜 ▼ 参加 方法 ① 主催「…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "f82b7f03f41670ebf132",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "ゆるゲMEET",
+      "similarity": 0.0889,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "ゆるゲMEET定期開催日"
     },
     {
-      "left_id": "882be70a9946c51f125b",
-      "right_id": "656d6c82f1a3b033f230",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@clove2122",
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.13,
-      "left_title": "VRC イベントを 開催 します！ 「 VRC 北海道集会」 VRC 北海道集会は北海道に住んでいる(住んでいた)人や、北海道に興味がある人が集まってゆるく雑談を楽しむイベントです！ ※And…",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 htt…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "e5ebc4a881c3e1528a8e",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": null,
+      "similarity": 0.0731,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     },
     {
-      "left_id": "882be70a9946c51f125b",
-      "right_id": "833f7a1e5ea3344fd6bd",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@clove2122",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.1245,
-      "left_title": "VRC イベントを 開催 します！ 「 VRC 北海道集会」 VRC 北海道集会は北海道に住んでいる(住んでいた)人や、北海道に興味がある人が集まってゆるく雑談を楽しむイベントです！ ※And…",
-      "right_title": "本日 ！月釜（茶道の茶会）！！ 9月29日㈫ 21時～22時 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る）、または jenara/ジェナーラ または yokof…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "02bc48b57a58fc0932d9",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "水曜Quest初心者の集い",
+      "similarity": 0.1071,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "水曜Quest初心者の集い"
     },
     {
-      "left_id": "1a6a8fd236560ce3e311",
-      "right_id": "656d6c82f1a3b033f230",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@ShizuokaSyuukai",
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.163,
-      "left_title": "⭐【 本日 21時 開催 】⭐ VRChat 静岡ケンミン 集会 静岡県民あつまれ！ 他県民の 参加 も大歓迎 ゆる雑談・初参加・聞き専OK！ 開始 ：21:00〜 ▼ 参加 方法 ① 主催「…",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 htt…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "869e4b5e2ff72b9c6ce1",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "謎めぐり",
+      "similarity": 0.0774,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "謎めぐり"
     },
     {
-      "left_id": "1a6a8fd236560ce3e311",
-      "right_id": "833f7a1e5ea3344fd6bd",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@ShizuokaSyuukai",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.2133,
-      "left_title": "⭐【 本日 21時 開催 】⭐ VRChat 静岡ケンミン 集会 静岡県民あつまれ！ 他県民の 参加 も大歓迎 ゆる雑談・初参加・聞き専OK！ 開始 ：21:00〜 ▼ 参加 方法 ① 主催「…",
-      "right_title": "本日 ！月釜（茶道の茶会）！！ 9月29日㈫ 21時～22時 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る）、または jenara/ジェナーラ または yokof…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "3ed9833b4f5d048e24a2",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": null,
+      "similarity": 0.0849,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "電子工作の興味人と趣味人『EDIY HOBBYIST GATHERING PLACE』に集まろう"
     },
     {
-      "left_id": "656d6c82f1a3b033f230",
-      "right_id": "833f7a1e5ea3344fd6bd",
-      "starts_at": "2026-09-29T12:00:00Z",
-      "left_organizer": "@KMID_Numanidive",
-      "right_organizer": "@VRC_Chado",
-      "similarity": 0.2543,
-      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 htt…",
-      "right_title": "本日 ！月釜（茶道の茶会）！！ 9月29日㈫ 21時～22時 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る）、または jenara/ジェナーラ または yokof…"
+      "left_id": "a5f095dbfac5c61a29b7",
+      "right_id": "092377de32b176dcfc2f",
+      "starts_at": "2026-09-30T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@dm_avatar",
+      "similarity": 0.1034,
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
+      "right_title": "📢新作衣装 Lady Soirée Style 試着交流会のお知らせ💎 📆9/30 (水) 21:00-22:00 グループ ＋ インスタンス VRChat 向け新作バルーンパーティードレス「…"
     }
   ],
-  "generated_at": "2026-09-30T06:41:33Z"
+  "generated_at": "2026-10-01T10:16:40Z"
 }
