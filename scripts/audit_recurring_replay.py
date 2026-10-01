@@ -75,7 +75,8 @@ def replay(
         text = str(row.get("text") or row.get("text_excerpt") or "")
         status_id = str(row.get("status_id", ""))
         url = str(row.get("url", ""))
-        provenance_complete = bool(status_id or url)
+        author = str(row.get("author") or row.get("author_id") or "")
+        provenance_complete = bool(text and (status_id or url))
         if not provenance_complete:
             provenance_missing += 1
 
@@ -99,6 +100,12 @@ def replay(
                 "fingerprint": candidate_fingerprint(row),
                 "status_id": status_id,
                 "url": url,
+                "author": author,
+                "evidence_text": text,
+                "source_created_at": row.get("source_created_at"),
+                "observation_count": row.get("observation_count"),
+                "event_fingerprints": list(row.get("event_fingerprints") or []),
+                "provenance_complete": provenance_complete,
                 "rule": resolved.get("rule"),
                 "decision": decision,
                 "reason": reason,
