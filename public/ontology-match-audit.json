@@ -2,85 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1131,
-  "matched_events": 296,
+  "event_count": 1125,
+  "matched_events": 294,
   "matched_series": {
-    "yuruge-meet": 18,
-    "wednesday-quest-beginners": 18,
-    "ml-gathering": 36,
-    "vrc-idle-gathering": 18,
     "vrc-fit-boxing": 35,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 34,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
-    "exploit-club": 17
+    "exploit-club": 17,
+    "yuruge-meet": 17,
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 34,
+    "vrc-idle-gathering": 17
   },
-  "unmatched_events": 835,
+  "unmatched_events": 831,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "f82b7f03f41670ebf132",
-      "title": "ゆるゲMEET定期開催日",
-      "status": "matched",
-      "ontology_id": "yuruge-meet",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "02bc48b57a58fc0932d9",
-      "title": "水曜Quest初心者の集い",
-      "status": "matched",
-      "ontology_id": "wednesday-quest-beginners",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "19c2613dce10deb50e3f",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "962d513e0debae419b63",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "c4657f46747bbc224fd8",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "53b7c6457e374a5afae0",
       "title": "VRCフィットボクシング集会",
@@ -3555,62 +3496,99 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "513e7798adb3be538313",
+      "title": "ASMR集会 初心者説明会",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "8bcebbafedcf8351f9ff",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "e6691d40f6b8a15144ad",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1131,
+    "event_count": 1125,
     "category_breakdown": {
       "art": 121,
       "community": 268,
-      "game": 118,
+      "game": 116,
       "language_exchange": 34,
       "learning": 25,
-      "music": 146,
+      "music": 148,
       "other": 109,
       "performance": 21,
       "recruitment_deadline": 2,
-      "technology": 195,
-      "wellness": 70,
-      "world_tour": 22
+      "technology": 191,
+      "wellness": 69,
+      "world_tour": 21
     },
     "subcategory_breakdown": {
-      "ai": 36,
+      "ai": 34,
       "bar": 1,
-      "cafe": 39,
-      "cast_service": 7,
+      "cafe": 40,
+      "cast_service": 5,
       "class": 4,
       "competition": 1,
       "dance": 63,
       "dj": 5,
-      "engineering": 104,
+      "engineering": 105,
       "fitness": 35,
       "hangout": 59,
       "language_exchange": 34,
       "lecture": 12,
-      "mystery": 36,
+      "live_music": 1,
+      "mystery": 35,
       "orientation": 1,
       "participant_recruitment": 1,
       "photography": 121,
-      "research": 46,
+      "research": 43,
       "show": 18,
-      "social": 143,
+      "social": 144,
       "tabletop": 35,
       "theater": 1,
       "workshop": 8,
-      "world_tour": 22
+      "world_tour": 21
     },
     "event_mode_breakdown": {
       "deadline": 2,
-      "hybrid": 13,
-      "in_world": 1115,
+      "hybrid": 14,
+      "in_world": 1108,
       "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 278,
+      "curated_ontology": 276,
       "fallback": 109,
-      "keyword_rules": 470,
-      "legacy_and_keywords": 134,
+      "keyword_rules": 468,
+      "legacy_and_keywords": 132,
       "legacy_category": 140
     },
     "organizer_profile_count": 26,
@@ -3618,32 +3596,6 @@
     "audit_event_count": 139
   },
   "category_review_queue": [
-    {
-      "event_id": "2162fe188022cbfbbb29",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第82回は9月30日(水) 『21:00〜22:30』 ※当イベントは…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "51a0e27e5db1442e8b88",
-      "title": "朝 告知 ！ VRC 弓道部は今晩22時からです！ Group インスタンスで 開催 するので事前に Group への参加をお忘れなく！ https://t.co/M5RegW08EF",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "f8f2d4a2349609d0bcad",
       "title": "Educational Expedition",
@@ -3961,6 +3913,19 @@
     {
       "event_id": "5ee7797ea4853c330bff",
       "title": "cop",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "f06b85873e8d5f3ec120",
+      "title": "VRChatイベント 「休憩処 キツネコタン」 10/1(木) 22:00～23:00 開店します 🦊 今日 は面白い小物追加予定✨️ ご来店お待ちしております 🦊🦊🦊 # VRChat #K…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4653,6 +4618,19 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "84ac10ee4a48d3ed7d07",
+      "title": "ジオゲッサー日本マップコミュニティのGeoJapanさん（@GeoJapanGuessr）に許可をいただき、 「GeoJapan杯 2026秋 本戦」の配信のパブリックビューイングを、 VRC…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
       "ambiguous_with": []
     },
     {
