@@ -112,6 +112,16 @@ jobs:
         run: python scripts/audit_public_feed.py public/events.json --report /tmp/public-feed-audit.json
       - name: Validate generated data and collection health
         run: python scripts/validate_update_snapshot.py
+      - name: Replay recurring corpus and enforce publication safety gates
+        run: python scripts/audit_recurring_replay.py --require-gates
+      - name: Upload recurring replay audit
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: recurring-replay-${{ github.run_id }}
+          path: audit/recurring-replay.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Explain canonical public snapshot delta
         env:
           BASE_SHA: ${{ github.sha }}
