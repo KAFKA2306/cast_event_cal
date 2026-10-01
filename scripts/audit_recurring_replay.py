@@ -3,13 +3,18 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from cast_event_cal.recurrence import resolve_recurrence
-from scripts.audit_yahoo_datetime_vocabulary import occurrence_decision
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from cast_event_cal.recurrence import resolve_recurrence  # noqa: E402
+from scripts.audit_yahoo_datetime_vocabulary import occurrence_decision  # noqa: E402
 
 DEFAULT_INPUT = Path("public/yahoo-candidate-history.json")
 DEFAULT_PUBLIC = Path("public/events.json")
@@ -28,116 +33,111 @@ def read_public_starts(path: Path) -> set[str]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload.get("events", []) if isinstance(payload, dict) else []
     return {
-        str(row.get("starts_at"))
+        str(row.get("start", ""))
         for row in rows
-        if isinstance(row, dict) and row.get("starts_at")
+        if isinstance(row, dict) and row.get("start")
     }
 
 
-def fingerprint(row: dict[str, Any]) -> str:
-    payload = "|".join(
-        [
-            str(row.get("status_id") or ""),
-            str(row.get("url") or ""),
-            str(row.get("text") or row.get("text_excerpt") or ""),
-        ]
+def candidate_fingerprint(row: dict[str, Any]) -> str:
+    material = "\n".join(
+        str(row.get(key, ""))
+        for key in ("status_id", "url", "text", "author_id")
     )
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
+    return hashlib.sha256(material.encode("utf-8")).hexdigest()[:20]
 
 
-def build(
-    rows: list[dict[str, Any]],
-    *,
+def replay(
+    candidates: list[dict[str, Any]],
     public_starts: set[str],
-    after: datetime,
-    count: int,
+    *,
+    now: datetime,
 ) -> dict[str, Any]:
-    replay_rows: list[dict[str, Any]] = []
-    reasons: Counter[str] = Counter()
-    proposed: set[str] = set()
+    recurring_rows = [
+        row
+        for row in candidates
+        if str(row.get("datetime_reason", "")) == "recurring_event"
+    ]
+    results: list[dict[str, Any]] = []
+    reason_counts: Counter[str] = Counter()
+    resolved_count = 0
+    future_occurrences = 0
     duplicate_count = 0
-    missing_provenance = 0
+    provenance_missing = 0
 
-    for row in rows:
-        text = str(row.get("text") or row.get("text_excerpt") or "")
-        if occurrence_decision(text) != "recurring_event":
-            continue
-        evidence = {
-            "status_id": str(row.get("status_id") or ""),
-            "url": str(row.get("url") or ""),
-            "text_excerpt": " ".join(text.split())[:500],
-        }
-        provenance_complete = bool(evidence["status_id"] and evidence["url"] and evidence["text_excerpt"])
-        if not provenance_complete:
-            missing_provenance += 1
-        resolution = resolve_recurrence(text, after=after, count=count)
-        decision = str(resolution["status"])
-        reason = str(resolution.get("reason") or "resolved")
-        reasons[reason] += 1
-        occurrences = list(resolution.get("occurrences") or []) if decision == "resolved" else []
-        duplicates: list[str] = []
-        new_occurrences: list[str] = []
-        for occurrence in occurrences:
-            normalized = str(occurrence).replace("+09:00", "Z")
-            if normalized in public_starts or normalized in proposed:
-                duplicates.append(str(occurrence))
-                duplicate_count += 1
-            else:
-                proposed.add(normalized)
-                new_occurrences.append(str(occurrence))
-        replay_rows.append(
+    for row in recurring_rows:
+        text = str(row.get("text", ""))
+        status_id = str(row.get("status_id", ""))
+        url = str(row.get("url", ""))
+        if not status_id and not url:
+            provenance_missing += 1
+
+        decision = occurrence_decision(text, now=now)
+        rule = decision.get("rule")
+        resolved = resolve_recurrence(text, now=now)
+        starts = [str(item) for item in resolved.get("starts", [])]
+        future = [start for start in starts if start >= now.isoformat()]
+        duplicates = [start for start in future if start in public_starts]
+        reason = str(resolved.get("reason") or decision.get("reason") or "unknown")
+        reason_counts[reason] += 1
+        if starts:
+            resolved_count += 1
+        future_occurrences += len(future)
+        duplicate_count += len(duplicates)
+
+        results.append(
             {
-                "candidate_fingerprint": fingerprint(row),
-                "provenance": evidence,
-                "provenance_complete": provenance_complete,
-                "decision": decision,
-                "unresolved_reason": None if decision == "resolved" else reason,
-                "rule": resolution.get("rule"),
-                "resolver_version": resolution.get("resolver_version"),
-                "proposed_occurrences": occurrences,
-                "new_occurrences": new_occurrences,
-                "duplicate_occurrences": duplicates,
+                "fingerprint": candidate_fingerprint(row),
+                "status_id": status_id,
+                "url": url,
+                "rule": rule,
+                "reason": reason,
+                "resolved": bool(starts),
+                "starts": starts,
+                "future_starts": future,
+                "duplicate_starts": duplicates,
             }
         )
 
-    resolved = sum(row["decision"] == "resolved" for row in replay_rows)
+    total = len(recurring_rows)
     return {
-        "schema_version": "1.0",
-        "policy_version": "issue-313-recurring-replay.v1",
-        "anchor": after.astimezone(UTC).isoformat(),
-        "input_recurring_rows": len(replay_rows),
-        "safely_resolved_rules": resolved,
-        "resolution_rate": round(resolved / len(replay_rows), 6) if replay_rows else 0.0,
-        "materialized_future_occurrences": sum(len(row["new_occurrences"]) for row in replay_rows),
+        "generated_at": now.isoformat(),
+        "resolver_version": "recurrence-v1",
+        "input_recurring_rows": total,
+        "resolved_rows": resolved_count,
+        "resolution_rate": (resolved_count / total) if total else 0.0,
+        "materialized_future_occurrences": future_occurrences,
         "duplicate_delta": duplicate_count,
-        "provenance_missing": missing_provenance,
-        "existing_accepted_loss": 0,
-        "unresolved_by_reason": dict(sorted((key, value) for key, value in reasons.items() if key != "resolved")),
-        "publication_gate_passed": missing_provenance == 0,
-        "rows": sorted(replay_rows, key=lambda row: row["candidate_fingerprint"]),
+        "provenance_missing": provenance_missing,
+        "reason_counts": dict(sorted(reason_counts.items())),
+        "results": results,
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Read-only replay of recurring Yahoo candidates")
+    parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--public", type=Path, default=DEFAULT_PUBLIC)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--after", help="ISO 8601 replay anchor; defaults to current UTC time")
-    parser.add_argument("--count", type=int, default=1)
     parser.add_argument("--require-gates", action="store_true")
     args = parser.parse_args()
-    if args.count < 1:
-        raise SystemExit("--count must be >= 1")
-    after = datetime.fromisoformat(args.after.replace("Z", "+00:00")) if args.after else datetime.now(UTC).replace(microsecond=0)
-    if after.tzinfo is None:
-        after = after.replace(tzinfo=UTC)
-    payload = build(read_candidates(args.input), public_starts=read_public_starts(args.public), after=after, count=args.count)
+
+    now = datetime.now(UTC)
+    report = replay(
+        read_candidates(args.input),
+        read_public_starts(args.public),
+        now=now,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({key: payload[key] for key in ("input_recurring_rows", "safely_resolved_rules", "resolution_rate", "materialized_future_occurrences", "duplicate_delta", "provenance_missing", "existing_accepted_loss", "publication_gate_passed")}, ensure_ascii=False, sort_keys=True))
-    if args.require_gates and not payload["publication_gate_passed"]:
-        return 2
+    args.output.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps({key: value for key, value in report.items() if key != "results"}, ensure_ascii=False))
+
+    if args.require_gates and report["provenance_missing"]:
+        print("recurring replay gate failed: provenance_missing > 0", file=sys.stderr)
+        return 1
     return 0
 
 
