@@ -131,6 +131,14 @@ jobs:
           path: audit/public-snapshot-delta.json
           if-no-files-found: error
           retention-days: 30
+      - name: Upload public snapshot delta history
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: public-snapshot-delta-history-${{ github.run_id }}
+          path: audit/public-snapshot-delta-history.jsonl
+          if-no-files-found: warn
+          retention-days: 30
       - name: Write canonical snapshot identity
         run: python scripts/write_snapshot_identity.py
       - name: Verify canonical snapshot identity
@@ -192,8 +200,6 @@ jobs:
             data/external_events.json
             data/external_discovery_health.json
             data/official_asset_cache.json
-            audit/public-snapshot-delta.json
-            audit/public-snapshot-delta-history.jsonl
             public
           )
           if [ -n "$(git status --porcelain -- "${paths[@]}")" ]; then
