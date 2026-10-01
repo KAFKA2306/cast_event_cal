@@ -7,13 +7,20 @@ def test_enforce_adds_keyboard_navigation_contract() -> None:
 
     assert rendered.index('class="skip-link"') < rendered.index('id="main-content"')
     assert 'href="#main-content"' in rendered
-    assert '<main id="main-content" class="shell" tabindex="-1">' in rendered
+    assert '<main class="shell" id="main-content" tabindex="-1">' in rendered
     assert ':where(a,button,input,select,summary):focus-visible' in rendered
     assert '.skip-link:focus' in rendered
     verify(rendered)
 
 
-def test_enforce_is_idempotent() -> None:
-    source = '<html><head><style></style></head><body><main class="shell"></main></body></html>'
+def test_enforce_preserves_enriched_main_attributes_and_is_idempotent() -> None:
+    source = '<html><head><style></style></head><body><main data-view="home" tabindex="0" class="shell enriched" aria-label="Events" id="old-main"></main></body></html>'
     once = enforce(source)
+
+    assert 'data-view="home"' in once
+    assert 'class="shell enriched"' in once
+    assert 'aria-label="Events"' in once
+    assert 'id="main-content"' in once
+    assert 'tabindex="-1"' in once
     assert enforce(once) == once
+    verify(once)
