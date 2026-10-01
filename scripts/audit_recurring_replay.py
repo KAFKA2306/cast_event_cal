@@ -47,17 +47,17 @@ def candidate_fingerprint(row: dict[str, Any]) -> str:
     return hashlib.sha256(material.encode("utf-8")).hexdigest()[:20]
 
 
+def is_recurring_candidate(row: dict[str, Any]) -> bool:
+    return str(row.get("last_reason") or row.get("datetime_reason") or "") == "recurring_event"
+
+
 def replay(
     candidates: list[dict[str, Any]],
     public_starts: set[str],
     *,
     now: datetime,
 ) -> dict[str, Any]:
-    recurring_rows = [
-        row
-        for row in candidates
-        if str(row.get("datetime_reason", "")) == "recurring_event"
-    ]
+    recurring_rows = [row for row in candidates if is_recurring_candidate(row)]
     results: list[dict[str, Any]] = []
     reason_counts: Counter[str] = Counter()
     resolved_count = 0
