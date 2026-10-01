@@ -51,9 +51,6 @@ def parse_recurrence(text: str) -> RecurrenceRule | None:
     if weekly:
         return RecurrenceRule("weekly", (_WEEKDAY[weekly.group(1)],), (), local_time)
 
-    # Bare ordinal weekday is conventionally monthly, but only when the text
-    # explicitly carries the ordinal and weekday. We never infer a cadence
-    # from a weekday alone.
     ordinal = _ORDINAL_RE.search(text)
     if ordinal:
         ordinals = tuple(int(v) for v in re.split(r"\s*[・,、]\s*", ordinal.group(1)))
@@ -87,20 +84,23 @@ def materialize_next(rule: RecurrenceRule, *, after: datetime, count: int = 1) -
 
     year, month = local_after.year, local_after.month
     while len(out) < count:
+        month_candidates: list[datetime] = []
         for ordinal in rule.ordinals:
             candidate_date = _nth_weekday(year, month, rule.weekdays[0], ordinal)
             if candidate_date is None:
                 continue
             candidate = datetime.combine(candidate_date, rule.local_time, JST)
             if candidate > local_after:
-                out.append(candidate)
-                if len(out) == count:
-                    return sorted(out)
+                month_candidates.append(candidate)
+        for candidate in sorted(month_candidates):
+            out.append(candidate)
+            if len(out) == count:
+                return out
         month += 1
         if month == 13:
             year += 1
             month = 1
-    return sorted(out)[:count]
+    return out
 
 
 def resolve_recurrence(text: str, *, after: datetime, count: int = 1) -> dict[str, Any]:
