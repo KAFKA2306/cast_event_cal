@@ -1,28 +1,37 @@
 name: CI
 
 on:
-  push:
   pull_request:
+  push:
+    branches: [main]
+    paths-ignore:
+      - public/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
       - run: ruff check cast_event_cal scripts tests
       - name: Run pytest
-        shell: bash
         run: |
-          set -o pipefail
+          set +e
           pytest -x -vv 2>&1 | tee /tmp/pytest.log
           status=${PIPESTATUS[0]}
           if [ "$status" -ne 0 ]; then
@@ -168,21 +177,37 @@ jobs:
           python scripts/audit_yahoo_datetime_vocabulary.py --assert-complete
       - name: Replay Yahoo datetime recovery
         run: |
-          python scripts/audit_yahoo_datetime_recovery.py --assert-safety
+          python scripts/replay_yahoo_datetime_recovery.py --assert-targets --output yahoo-datetime-replay.json
       - name: Upload Yahoo datetime replay
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: yahoo-datetime-replay-${{ matrix.python-version }}
-          path: data/yahoo_datetime_replay.json
+          path: yahoo-datetime-replay.json
           if-no-files-found: error
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
-          python scripts/run_discovery_fallback.py --assert-safety
+          unset VRCHAT_AUTH_COOKIE
+          python scripts/fetch_vrchat_calendar.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
+          assert health['status'] == 'skipped'
+          assert health['event_count'] == len(json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8')))
+          PY
       - name: Enforce useful event coverage
         run: |
-          python scripts/audit_event_coverage.py --assert-safety
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          events = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
+          assert len(events) >= 60, f'event coverage too small: {len(events)}'
+          assert len({item['source_id'] for item in events}) == len(events)
+          PY
       - run: cast-event-cal run --strict
       - name: Verify clean checkout
         if: always()
