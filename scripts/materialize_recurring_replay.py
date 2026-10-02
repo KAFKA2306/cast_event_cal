@@ -3,9 +3,15 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Callable
+
+# Production invokes this file directly (`python scripts/...`). Ensure the
+# repository root is importable just as it is for the other script entrypoints.
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import collect_yahoo_corpus as corpus
 from scripts import fetch_yahoo_realtime as implementation
