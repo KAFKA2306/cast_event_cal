@@ -60,7 +60,15 @@ def audit() -> dict[str, Any]:
         if not event.get("date_resolution_evidence")
     ]
 
-    samples: dict[str, list[dict[str, str]]] = {}
+    # A row has matched corroborating evidence when the resolver found at least
+    # one peer in the same persisted fingerprint.  Keep this distinct from a
+    # successful promotion: matched evidence can still conflict or be incomplete.
+    no_peer = blocker_counts.get("no_peer_evidence", 0)
+    evidence_graph_matched = len(target_rows) - no_peer
+    evidence_graph_conflicted = blocker_counts.get("conflicting_fingerprint_resolution", 0)
+    enriched_unresolved = evidence_graph_matched
+
+    samples: dict[str, list[dict[str, Any]]] = {}
     for row in target_rows:
         blocker = str(row.get("resolution_blocker") or "none")
         bucket = samples.setdefault(blocker, [])
@@ -69,16 +77,24 @@ def audit() -> dict[str, Any]:
         bucket.append({
             "status_id": str(row.get("status_id") or ""),
             "decision": str(row.get("publishability_decision") or ""),
+            "event_fingerprints": list(row.get("event_fingerprints") or []),
             "text_excerpt": str(row.get("text") or row.get("text_excerpt") or "")[:220],
         })
 
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "resolver_version": "partial-ambiguous-replay-v1",
         "replay_generated_at": implementation.utc_text(replay_now),
         "input_partial": decision_counts.get("partial_datetime", 0),
         "input_ambiguous": decision_counts.get("ambiguous_datetime", 0),
         "input_total": len(target_rows),
+        "evidence_graph_matched": evidence_graph_matched,
+        "evidence_graph_conflicted": evidence_graph_conflicted,
+        "newly_resolved_partial": 0,
+        "newly_resolved_ambiguous": 0,
+        "enriched_unresolved": enriched_unresolved,
+        "confirmed_non_event": 0,
+        "past_only": blocker_counts.get("out_of_publication_window", 0),
         "resolution_blocker_counts": dict(sorted(blocker_counts.items())),
         "resolution_blocker_counts_by_decision": {
             decision: dict(sorted(counts.items()))
@@ -93,6 +109,9 @@ def audit() -> dict[str, Any]:
 
 def assert_safety(report: dict[str, Any]) -> None:
     assert report["input_total"] == report["input_partial"] + report["input_ambiguous"]
+    assert report["evidence_graph_matched"] + report["resolution_blocker_counts"].get(
+        "no_peer_evidence", 0
+    ) == report["input_total"]
     assert report["promotions_without_provenance"] == 0, report["promotion_ids_without_provenance"]
 
 
