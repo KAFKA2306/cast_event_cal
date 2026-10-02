@@ -96,7 +96,15 @@ jobs:
 
           before_by_origin = by_origin(before)
           after_by_origin = by_origin(accepted)
+          original_by_status = {
+              str(row.get("status_id")): row for row in history
+              if row.get("status_id")
+          }
           lost = sorted(before_by_origin.keys() - after_by_origin.keys())
+          lost_without_current_ledger = [
+              status_id for status_id in lost if status_id in original_by_status
+          ]
+          retained_outside_current_ledger = sorted(set(lost) - set(lost_without_current_ledger))
           promoted = sorted(after_by_origin.keys() - before_by_origin.keys())
           changed_starts = sorted(
               status_id
@@ -104,10 +112,6 @@ jobs:
               if before_by_origin[status_id][0].get("starts_at")
               != after_by_origin[status_id][0].get("starts_at")
           )
-          original_by_status = {
-              str(row.get("status_id")): row for row in history
-              if row.get("status_id")
-          }
           promoted_missing = [
               status_id
               for status_id in promoted
@@ -120,14 +124,16 @@ jobs:
               "Yahoo archive replay: "
               f"history={len(history)} before_accepted_sources={len(before_by_origin)} "
               f"after_accepted_sources={len(after_by_origin)} lost_existing={len(lost)} "
+              f"retained_outside_current_ledger={len(retained_outside_current_ledger)} "
               f"promoted_sources={len(promoted)} "
               f"promoted_missing_datetime={len(promoted_missing)} "
               f"materialized_event_delta={additional_occurrences} "
               f"changed_existing_starts_at={len(changed_starts)}"
           )
-          if lost:
+          if lost_without_current_ledger:
               raise SystemExit(
-                  f"archive replay lost existing accepted source events: {lost[:10]}"
+                  "archive replay lost existing accepted source events still present in current ledger: "
+                  f"{lost_without_current_ledger[:10]}"
               )
           if len(evaluated) != len(history):
               raise SystemExit("archive replay did not evaluate the full current ledger")
