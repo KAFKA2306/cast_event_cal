@@ -1,8 +1,9 @@
+import json
 from datetime import UTC, datetime
 
 import pytest
 
-from scripts.materialize_recurring_replay import materialize
+from scripts.materialize_recurring_replay import materialize, sync_health
 
 NOW = datetime(2026, 10, 2, tzinfo=UTC)
 
@@ -50,6 +51,18 @@ def test_materializes_only_replay_proven_occurrence() -> None:
     assert events[0]["recurrence_resolver_version"] == "recurrence-v1"
     assert events[0]["recurrence_provenance_url"].startswith("https://x.com/")
     assert "定期開催" in events[0]["tags"]
+
+
+def test_sync_health_tracks_materialized_output_count(tmp_path) -> None:
+    path = tmp_path / "health.json"
+    path.write_text(json.dumps({"status": "ok", "materialized_event_count": 1}), encoding="utf-8")
+
+    sync_health([{"source_id": "one"}, {"source_id": "two"}], path=path)
+
+    health = json.loads(path.read_text(encoding="utf-8"))
+    assert health["status"] == "ok"
+    assert health["event_count"] == 2
+    assert health["materialized_event_count"] == 2
 
 
 def test_fails_closed_when_replay_gate_failed() -> None:
