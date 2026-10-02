@@ -12,6 +12,7 @@ if __package__ in {None, ""}:
 
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import reclassify_yahoo_archive as archive
+from scripts import yahoo_evidence_graph as evidence_graph
 
 HISTORY_PATH = Path("public/yahoo-candidate-history.json")
 TARGET_DECISIONS = {"partial_datetime", "ambiguous_datetime"}
@@ -23,6 +24,38 @@ def fingerprint_kind(value: str) -> str:
     return value.split(":", 1)[0] if ":" in value else "other"
 
 
+def date_blocker_detail(
+    row: dict[str, Any],
+    *,
+    graph: dict[str, list[evidence_graph.EvidenceNode]],
+    anchor: Any,
+) -> str:
+    """Distinguish absent date evidence from genuinely conflicting dates."""
+    peer_groups = [
+        evidence_graph._nearby_nodes(graph, fingerprint, anchor)
+        for fingerprint in sorted(evidence_graph.event_fingerprints(row))
+    ]
+    peer_groups = [
+        nodes for nodes in peer_groups if len({node.status_id for node in nodes}) >= 2
+    ]
+    signaled = [
+        nodes
+        for nodes in peer_groups
+        if any(evidence_graph.STRONG_EVENT_SIGNAL_RE.search(node.text) for node in nodes)
+    ]
+    date_sets = []
+    for nodes in signaled:
+        dates = set()
+        for node in nodes:
+            dates.update(evidence_graph._explicit_dates(node.text, node.anchor))
+        date_sets.append(dates)
+    if not any(date_sets):
+        return "missing_date"
+    if any(len(dates) > 1 for dates in date_sets):
+        return "conflicting_date"
+    return "missing_date"
+
+
 def audit() -> dict[str, Any]:
     payload = json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
     history = [row for row in payload.get("candidates", []) if isinstance(row, dict)]
@@ -31,6 +64,13 @@ def audit() -> dict[str, Any]:
         raise AssertionError("history generated_at is required for deterministic replay")
 
     archive.configure_archive_classifier()
+    graph = evidence_graph.build_evidence_graph(
+        history,
+        anchor_for=lambda row: archive.source_anchor(row, replay_now),
+    )
+    evidence_graph.add_external_event_evidence(
+        graph, implementation.read_array(archive.EXTERNAL_EVENTS_PATH)
+    )
     x_ids = implementation.known_x_ids(implementation.read_array(implementation.X_EVENTS_PATH))
     accepted, _rejected, evaluated = archive.reclassify(
         history,
@@ -47,6 +87,7 @@ def audit() -> dict[str, Any]:
     blocker_counts = Counter(str(row.get("resolution_blocker") or "none") for row in target_rows)
     blocker_by_decision: dict[str, Counter[str]] = {decision: Counter() for decision in sorted(TARGET_DECISIONS)}
     identity_by_blocker: dict[str, Counter[str]] = {}
+    date_blocker_counts: Counter[str] = Counter()
     for row in target_rows:
         decision = str(row.get("publishability_decision") or "")
         blocker = str(row.get("resolution_blocker") or "none")
@@ -57,6 +98,14 @@ def audit() -> dict[str, Any]:
             bucket["none"] += 1
         for kind in kinds:
             bucket[kind] += 1
+        if blocker == "missing_or_conflicting_date":
+            date_blocker_counts[
+                date_blocker_detail(
+                    row,
+                    graph=graph,
+                    anchor=archive.source_anchor(row, replay_now),
+                )
+            ] += 1
 
     promoted = [event for event in accepted if str(event.get("date_resolution_method") or "").startswith("corroborated_")]
     promotions_without_provenance = [
@@ -104,6 +153,7 @@ def audit() -> dict[str, Any]:
         "fingerprint_kind_counts_by_blocker": {
             blocker: dict(sorted(counts.items())) for blocker, counts in sorted(identity_by_blocker.items())
         },
+        "date_blocker_detail_counts": dict(sorted(date_blocker_counts.items())),
         "corroborated_promotions": len(promoted),
         "promotions_without_provenance": len(promotions_without_provenance),
         "promotion_ids_without_provenance": promotions_without_provenance,
@@ -114,6 +164,9 @@ def audit() -> dict[str, Any]:
 def assert_safety(report: dict[str, Any]) -> None:
     assert report["input_total"] == report["input_partial"] + report["input_ambiguous"]
     assert report["evidence_graph_matched"] + report["resolution_blocker_counts"].get("no_peer_evidence", 0) == report["input_total"]
+    assert sum(report["date_blocker_detail_counts"].values()) == report[
+        "resolution_blocker_counts"
+    ].get("missing_or_conflicting_date", 0)
     assert report["promotions_without_provenance"] == 0, report["promotion_ids_without_provenance"]
 
 
