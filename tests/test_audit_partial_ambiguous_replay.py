@@ -11,6 +11,9 @@ def test_partial_ambiguous_replay_reports_evidence_coverage() -> None:
     assert report["evidence_graph_matched"] + report["resolution_blocker_counts"].get(
         "no_peer_evidence", 0
     ) == report["input_total"]
+    assert sum(report["date_blocker_detail_counts"].values()) == report[
+        "resolution_blocker_counts"
+    ].get("missing_or_conflicting_date", 0)
     assert all(
         "event_fingerprints" in sample
         for samples in report["blocker_samples"].values()
