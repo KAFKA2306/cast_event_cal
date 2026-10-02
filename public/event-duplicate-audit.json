@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1249,
-  "event_count_after": 1122,
-  "candidate_cluster_count": 100,
-  "duplicate_cluster_count": 100,
-  "duplicate_occurrence_count": 127,
-  "duplicate_post_count": 127,
-  "duplicate_rate": 0.101681,
+  "event_count_before": 1200,
+  "event_count_after": 1074,
+  "candidate_cluster_count": 99,
+  "duplicate_cluster_count": 99,
+  "duplicate_occurrence_count": 126,
+  "duplicate_post_count": 126,
+  "duplicate_rate": 0.105,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 2,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_05d2126b49cc9ea0171b",
@@ -1000,28 +1000,6 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_e4fa110a4c1ba6344053"
-    },
-    {
-      "cluster_id": "occ_6cb6133d1a4a5b9bcc8b",
-      "starts_at": "2026-10-01T02:00:00Z",
-      "title": "Club Immortal",
-      "member_count": 2,
-      "member_ids": [
-        "0f485bba091b671f8cef",
-        "8eef42ddbbecb4c10b89"
-      ],
-      "source_record_ids": [
-        "src_42b231ef0b435310e26a",
-        "src_5a7dd9be87851b09c307"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_5a7dd9be87851b09c307"
     },
     {
       "cluster_id": "occ_6dd11d47deaa4536419a",
@@ -2268,15 +2246,6 @@
   ],
   "ambiguous_candidates": [
     {
-      "left_id": "ec3493dc52343d959706",
-      "right_id": "d5cee7e0cbd97549d531",
-      "starts_at": "2026-10-09T13:55:00Z",
-      "organizer": "@VRC_lumitia",
-      "similarity": 0.5382,
-      "left_title": "VRCイベント 『Luminous Astrantia』 🍀10月・11月 イベント開催 予定日のお知らせ🍀 10月 ☑️9(金)22:55～24:15 ☑️23(金)22:55～24:15 …",
-      "right_title": "VRCイベント 『Luminous Astrantia』 🍀第5回 オープン のお知らせ🍀 10/9(金)22:55~24:15 🌟リポストキャンペーン🌟 ゲストさんの歌×particleli…"
-    },
-    {
       "left_id": "6eb8b3cfe483b3c5f95c",
       "right_id": "3d171d7f0ccecbbe8413",
       "starts_at": "2026-10-10T09:45:00Z",
@@ -2288,105 +2257,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "803a4d0e88ae564a44b8",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "El Alba",
-      "similarity": 0.117,
-      "left_title": "Educational Expedition",
-      "right_title": "El Alba Wednesday Activities"
+      "left_id": "08fdebe9b0a3d6e7e43f",
+      "right_id": "55621a3abd0e53591380",
+      "starts_at": "2026-10-01T03:00:00Z",
+      "left_organizer": "Hypnotic Theatre",
+      "right_organizer": "SCP Die in the Dark",
+      "similarity": 0.0532,
+      "left_title": "Open Mic Night",
+      "right_title": "Wednesday Roleplay"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "031d1abb5f1e7acde3ce",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "CnA The Encore",
-      "similarity": 0.0749,
-      "left_title": "Educational Expedition",
-      "right_title": "Group Instanceǃǃǃ"
+      "left_id": "e3a59fc46809c6331e2b",
+      "right_id": "ea57aea6cd90c0e64654",
+      "starts_at": "2026-10-01T04:00:00Z",
+      "left_organizer": "LGBTQ",
+      "right_organizer": "Avatar Search World Balancer",
+      "similarity": 0.0997,
+      "left_title": "Age Verified World Roulette˸ You Choose the Destination",
+      "right_title": "Come join us for a game․"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "9f3f00caba0e89cbff72",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "Unknown Theater",
-      "similarity": 0.0444,
-      "left_title": "Educational Expedition",
-      "right_title": "Live Loops （Music Performance）"
+      "left_id": "e3a59fc46809c6331e2b",
+      "right_id": "c45d7154e41bdb7b482f",
+      "starts_at": "2026-10-01T04:00:00Z",
+      "left_organizer": "LGBTQ",
+      "right_organizer": "La maid de barrio",
+      "similarity": 0.0942,
+      "left_title": "Age Verified World Roulette˸ You Choose the Destination",
+      "right_title": "Evento ǃ En servicio"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "b412f467f72b6259d40e",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "VRDancing",
-      "similarity": 0.1897,
-      "left_title": "Educational Expedition",
-      "right_title": "NA Open Session"
+      "left_id": "ea57aea6cd90c0e64654",
+      "right_id": "c45d7154e41bdb7b482f",
+      "starts_at": "2026-10-01T04:00:00Z",
+      "left_organizer": "Avatar Search World Balancer",
+      "right_organizer": "La maid de barrio",
+      "similarity": 0.1905,
+      "left_title": "Come join us for a game․",
+      "right_title": "Evento ǃ En servicio"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "10612adce63fd0897bc3",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "Sol's Eclipse",
-      "similarity": 0.1786,
-      "left_title": "Educational Expedition",
-      "right_title": "Sol's Eclipse˸ Bar or Game Nightǃ"
+      "left_id": "d92512c88f22ddd658b6",
+      "right_id": "d85c5cd6939dc65c0811",
+      "starts_at": "2026-10-01T07:00:00Z",
+      "left_organizer": "BYOB Events",
+      "right_organizer": "Icehouse Casino",
+      "similarity": 0.0968,
+      "left_title": "LEVEL UP GAMING LOFT",
+      "right_title": "OPEN MIC"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "6cb208fc0d58ebfd798b",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "The TECKFADER Community",
-      "similarity": 0.1979,
-      "left_title": "Educational Expedition",
-      "right_title": "TECKFADER's Studio Vibe Night"
+      "left_id": "d92512c88f22ddd658b6",
+      "right_id": "6d86c9e8b225e286df1c",
+      "starts_at": "2026-10-01T07:00:00Z",
+      "left_organizer": "BYOB Events",
+      "right_organizer": "BYOB Events",
+      "similarity": 0.1106,
+      "left_title": "LEVEL UP GAMING LOFT",
+      "right_title": "SKYY MUSIC STUDIO"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "c07892be294999c3fa74",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "The Wandering Disco",
-      "similarity": 0.1143,
-      "left_title": "Educational Expedition",
-      "right_title": "Tipsy Wednesdayǃ"
+      "left_id": "d85c5cd6939dc65c0811",
+      "right_id": "6d86c9e8b225e286df1c",
+      "starts_at": "2026-10-01T07:00:00Z",
+      "left_organizer": "Icehouse Casino",
+      "right_organizer": "BYOB Events",
+      "similarity": 0.3359,
+      "left_title": "OPEN MIC",
+      "right_title": "SKYY MUSIC STUDIO"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "63468c58e74409d909f5",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "VR LGBTQ Community",
-      "similarity": 0.2183,
-      "left_title": "Educational Expedition",
-      "right_title": "VR LGBTQ＋ and Friends Meetup"
+      "left_id": "fc53112db14e51895eaf",
+      "right_id": "b6facdc12be843841b08",
+      "starts_at": "2026-10-01T09:39:00Z",
+      "left_organizer": "JAMONES",
+      "right_organizer": "JAMONES",
+      "similarity": 0.351,
+      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
+      "right_title": "LA JUNTA DE LOS CEBADOS"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "044506ef529e6a57bed3",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "Spin The Wheel Lovers",
-      "similarity": 0.2607,
-      "left_title": "Educational Expedition",
-      "right_title": "Wild Card Wednesdayǃ"
+      "left_id": "0e77b92f77cc05a37082",
+      "right_id": "3a5ace7e8a57802d86f1",
+      "starts_at": "2026-10-01T10:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "Precious Stone Garnet",
+      "similarity": 0.0804,
+      "left_title": "AP Open Session",
+      "right_title": "Cafe＆BAR Precious Stone Garnet"
     },
     {
-      "left_id": "f8f2d4a2349609d0bcad",
-      "right_id": "ec8fb1822d44406eed85",
-      "starts_at": "2026-10-01T00:00:00Z",
-      "left_organizer": "The Eye Of Veritas",
-      "right_organizer": "WLW",
-      "similarity": 0.1379,
-      "left_title": "Educational Expedition",
-      "right_title": "WLW hangout"
+      "left_id": "0e77b92f77cc05a37082",
+      "right_id": "5039caed6d036def4735",
+      "starts_at": "2026-10-01T10:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "喫茶「はたご」",
+      "similarity": 0.0328,
+      "left_title": "AP Open Session",
+      "right_title": "喫茶『はたご』通常営業日"
     }
   ],
-  "generated_at": "2026-10-01T22:10:37Z"
+  "generated_at": "2026-10-02T02:08:27Z"
 }
