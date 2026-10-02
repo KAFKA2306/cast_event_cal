@@ -46,6 +46,7 @@ jobs:
           from scripts import collect_yahoo_corpus as corpus
           from scripts import fetch_yahoo_realtime as implementation
           from scripts import reclassify_yahoo_archive as archive
+          from scripts import relative_datetime
           from scripts import run_yahoo_realtime as ledger
 
           history_payload = corpus.read_json(ledger.HISTORY_PATH, {})
@@ -94,6 +95,19 @@ jobs:
                   values.sort(key=lambda item: str(item.get("starts_at") or ""))
               return grouped
 
+          def is_recurrence_relevance_correction(events):
+              if not events:
+                  return False
+              for event in events:
+                  method = str(event.get("date_resolution_method") or "")
+                  evidence = event.get("date_resolution_evidence") or {}
+                  matched_text = str(evidence.get("matched_text") or "")
+                  if not method.startswith("recurrence_"):
+                      return False
+                  if relative_datetime.RECURRENCE_EVENT_IDENTITY_RE.search(matched_text):
+                      return False
+              return True
+
           before_by_origin = by_origin(before)
           after_by_origin = by_origin(accepted)
           original_by_status = {
@@ -101,10 +115,19 @@ jobs:
               if row.get("status_id")
           }
           lost = sorted(before_by_origin.keys() - after_by_origin.keys())
-          lost_without_current_ledger = [
-              status_id for status_id in lost if status_id in original_by_status
+          safe_recurrence_corrections = [
+              status_id for status_id in lost
+              if status_id in original_by_status
+              and is_recurrence_relevance_correction(before_by_origin[status_id])
           ]
-          retained_outside_current_ledger = sorted(set(lost) - set(lost_without_current_ledger))
+          lost_without_current_ledger = [
+              status_id for status_id in lost
+              if status_id in original_by_status
+              and status_id not in safe_recurrence_corrections
+          ]
+          retained_outside_current_ledger = sorted(
+              set(lost) - set(lost_without_current_ledger) - set(safe_recurrence_corrections)
+          )
           promoted = sorted(after_by_origin.keys() - before_by_origin.keys())
           changed_starts = sorted(
               status_id
@@ -124,6 +147,7 @@ jobs:
               "Yahoo archive replay: "
               f"history={len(history)} before_accepted_sources={len(before_by_origin)} "
               f"after_accepted_sources={len(after_by_origin)} lost_existing={len(lost)} "
+              f"safe_recurrence_corrections={len(safe_recurrence_corrections)} "
               f"retained_outside_current_ledger={len(retained_outside_current_ledger)} "
               f"promoted_sources={len(promoted)} "
               f"promoted_missing_datetime={len(promoted_missing)} "
