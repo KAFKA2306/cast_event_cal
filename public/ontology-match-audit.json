@@ -2,14 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1074,
-  "matched_events": 295,
+  "event_count": 1058,
+  "matched_events": 296,
   "matched_series": {
     "vrc-fit-boxing": 35,
     "vrc-beginner-world-tour": 18,
     "asmr-gathering": 36,
     "vrc-petting-zoo": 19,
-    "en-jp-language-exchange": 34,
+    "en-jp-language-exchange": 35,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
@@ -19,7 +19,7 @@
     "ml-gathering": 34,
     "vrc-idle-gathering": 17
   },
-  "unmatched_events": 779,
+  "unmatched_events": 762,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3543,22 +3543,34 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "4a65595542ad2f63d548",
+      "title": "EN-JP Language Exchange（土曜）",
+      "status": "matched",
+      "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1074,
+    "event_count": 1058,
     "category_breakdown": {
       "art": 122,
       "community": 250,
-      "game": 113,
-      "language_exchange": 34,
-      "learning": 21,
-      "music": 133,
-      "other": 99,
-      "performance": 16,
+      "game": 110,
+      "language_exchange": 35,
+      "learning": 20,
+      "music": 128,
+      "other": 91,
+      "performance": 14,
       "recruitment_deadline": 5,
-      "technology": 191,
+      "technology": 193,
       "wellness": 69,
       "world_tour": 21
     },
@@ -3569,135 +3581,44 @@
       "cast_service": 6,
       "class": 3,
       "competition": 1,
-      "dance": 59,
-      "dj": 3,
-      "engineering": 104,
+      "dance": 58,
+      "dj": 2,
+      "engineering": 105,
       "fitness": 35,
-      "hangout": 62,
-      "language_exchange": 34,
+      "hangout": 61,
+      "language_exchange": 35,
       "lecture": 8,
       "live_music": 1,
       "mystery": 35,
       "orientation": 1,
       "participant_recruitment": 1,
       "photography": 122,
-      "research": 44,
-      "show": 13,
-      "social": 144,
+      "research": 45,
+      "show": 11,
+      "social": 145,
       "tabletop": 35,
       "theater": 1,
-      "workshop": 9,
+      "workshop": 8,
       "world_tour": 21
     },
     "event_mode_breakdown": {
       "deadline": 5,
-      "hybrid": 9,
-      "in_world": 1059,
+      "hybrid": 7,
+      "in_world": 1045,
       "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 99,
-      "keyword_rules": 449,
-      "legacy_and_keywords": 127,
+      "curated_ontology": 278,
+      "fallback": 91,
+      "keyword_rules": 442,
+      "legacy_and_keywords": 125,
       "legacy_category": 122
     },
     "organizer_profile_count": 23,
-    "low_confidence_event_count": 130,
-    "audit_event_count": 130
+    "low_confidence_event_count": 123,
+    "audit_event_count": 123
   },
   "category_review_queue": [
-    {
-      "event_id": "81fb907a2bd51d0d8a8d",
-      "title": "Murder drone role play ǃǃ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e4dbb3910752cb140426",
-      "title": "Death on a Dime （Mid-Week Edition）",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "55621a3abd0e53591380",
-      "title": "Wednesday Roleplay",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e3a59fc46809c6331e2b",
-      "title": "Age Verified World Roulette˸ You Choose the Destination",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c45d7154e41bdb7b482f",
-      "title": "Evento ǃ En servicio",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "279a1c45bee1d38a6ca0",
-      "title": "Server Start up",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d92512c88f22ddd658b6",
-      "title": "LEVEL UP GAMING LOFT",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
     {
       "event_id": "fc53112db14e51895eaf",
       "title": "BORRACHERA TERAPÉUTICA S․A․C․",
@@ -4368,19 +4289,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "bbc7367da42a21592e82",
-      "title": "VRCイベント 〜Gothic＆LolitaBar Amethyst〜 10/2（金）22:00から 開催 致します 皆様のご来店をお待ちしております",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "e17a6be2ee144692619d",
       "title": "【今晩22時から! VRChat 内でVライフ！の 集会 を 開催 !】 久留米申込受付中&11月神戸 開催 の申込〆切1週前ということで、『Vライフ！』に関する VRChat集会 を今晩･1…",
       "category": "recruitment_deadline",
@@ -4543,19 +4451,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "c0c602ef0e77bdfea79f",
-      "title": "🌻かしこまりまとめ🌻 🌻10/3かしこまり＆せんのいのり主催 #ご当地V旅歌リレー 15:30開会式！ 再生リスト https://t.co/hmwUx4iEKP 🌻10/10エンタス８周年記…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "84ac10ee4a48d3ed7d07",
       "title": "ジオゲッサー日本マップコミュニティのGeoJapanさん（@GeoJapanGuessr）に許可をいただき、 「GeoJapan杯 2026秋 本戦」の配信のパブリックビューイングを、 VRC…",
       "category": "other",
@@ -4580,6 +4475,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "fb450a11946e0f6076cf",
+      "title": "明日 は学生学際 集会 ！ 【タイムスケジュール】 10月3日(土) 21:00～ 開場 21:15～ fairyichikaさん 『#4 20分でふわっと見る温泉科学』 ぜひお越しください！…",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:科学"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "6f3e6298d6c13e5c9c7f",
@@ -4671,6 +4583,19 @@
     {
       "event_id": "de3150f952d2d25c1381",
       "title": "rp fantaisie",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "dbb17ae9ecf2bdda2e47",
+      "title": "【 VRC 内イベント】星降る茶会 ～Eternal Stella～ -第1回- 突然ですが！ 2026/10/04（日）24時より グループインスタンス でイベントを 開催 いたします✨ ご…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
