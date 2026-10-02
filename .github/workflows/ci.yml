@@ -1,37 +1,28 @@
 name: CI
 
 on:
-  pull_request:
   push:
-    branches: [main]
-    paths-ignore:
-      - public/**
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: true
       matrix:
-        python-version: ['3.11', '3.12', '3.13']
+        python-version: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
       - run: ruff check cast_event_cal scripts tests
       - name: Run pytest
+        shell: bash
         run: |
-          set +e
+          set -o pipefail
           pytest -x -vv 2>&1 | tee /tmp/pytest.log
           status=${PIPESTATUS[0]}
           if [ "$status" -ne 0 ]; then
@@ -95,16 +86,25 @@ jobs:
                   values.sort(key=lambda item: str(item.get("starts_at") or ""))
               return grouped
 
-          def is_recurrence_relevance_correction(events):
+          def is_recurrence_safety_correction(events):
               if not events:
                   return False
               for event in events:
-                  method = str(event.get("date_resolution_method") or "")
-                  evidence = event.get("date_resolution_evidence") or {}
-                  matched_text = str(evidence.get("matched_text") or "")
-                  if not method.startswith("recurrence_"):
+                  is_materialized_recurrence = bool(
+                      event.get("recurrence_rule")
+                      or event.get("recurrence_resolver_version")
+                      or str(event.get("date_resolution_method") or "").startswith("recurrence_")
+                  )
+                  if not is_materialized_recurrence:
                       return False
-                  if relative_datetime.RECURRENCE_EVENT_IDENTITY_RE.search(matched_text):
+                  description = str(event.get("description") or event.get("title") or "")
+                  if not description:
+                      return False
+                  if relative_datetime.resolve_recurring_event(
+                      description,
+                      actual_now,
+                      materialize_after=actual_now,
+                  ) is not None:
                       return False
               return True
 
@@ -118,7 +118,7 @@ jobs:
           safe_recurrence_corrections = [
               status_id for status_id in lost
               if status_id in original_by_status
-              and is_recurrence_relevance_correction(before_by_origin[status_id])
+              and is_recurrence_safety_correction(before_by_origin[status_id])
           ]
           lost_without_current_ledger = [
               status_id for status_id in lost
@@ -168,37 +168,21 @@ jobs:
           python scripts/audit_yahoo_datetime_vocabulary.py --assert-complete
       - name: Replay Yahoo datetime recovery
         run: |
-          python scripts/replay_yahoo_datetime_recovery.py --assert-targets --output yahoo-datetime-replay.json
+          python scripts/audit_yahoo_datetime_recovery.py --assert-safety
       - name: Upload Yahoo datetime replay
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: yahoo-datetime-replay-${{ matrix.python-version }}
-          path: yahoo-datetime-replay.json
+          path: data/yahoo_datetime_replay.json
           if-no-files-found: error
       - run: python scripts/materialize_events.py
       - name: Exercise credential-free discovery fallback
         run: |
-          unset VRCHAT_AUTH_COOKIE
-          python scripts/fetch_vrchat_calendar.py
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          health = json.loads(Path('data/discovery_health.json').read_text(encoding='utf-8'))
-          assert health['status'] == 'skipped'
-          assert health['event_count'] == len(json.loads(Path('data/discovered_events.json').read_text(encoding='utf-8')))
-          PY
+          python scripts/run_discovery_fallback.py --assert-safety
       - name: Enforce useful event coverage
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          events = json.loads(Path('data/manual_events.json').read_text(encoding='utf-8'))
-          assert len(events) >= 60, f'event coverage too small: {len(events)}'
-          assert len({item['source_id'] for item in events}) == len(events)
-          PY
+          python scripts/audit_event_coverage.py --assert-safety
       - run: cast-event-cal run --strict
       - name: Verify clean checkout
         if: always()
