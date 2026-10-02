@@ -78,6 +78,15 @@ def materialize(
     }
 
 
+def sync_health(events: list[dict[str, Any]], *, path: Path = implementation.HEALTH_PATH) -> None:
+    health = corpus.read_json(path, {})
+    if not isinstance(health, dict):
+        raise ValueError("Yahoo health must be an object")
+    health["event_count"] = len(events)
+    health["materialized_event_count"] = len(events)
+    implementation.write_json(path, health)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--replay", type=Path, default=DEFAULT_REPLAY)
@@ -100,6 +109,7 @@ def main() -> int:
         x_ids=x_ids,
     )
     implementation.write_json(args.events, merged)
+    sync_health(merged)
     print(json.dumps(stats, sort_keys=True))
     return 0
 
