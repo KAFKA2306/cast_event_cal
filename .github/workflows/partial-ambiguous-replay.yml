@@ -1,0 +1,43 @@
+name: Partial ambiguous replay audit
+
+on:
+  pull_request:
+    paths:
+      - scripts/audit_partial_ambiguous_replay.py
+      - scripts/fetch_yahoo_realtime.py
+      - scripts/reclassify_yahoo_archive.py
+      - public/yahoo-candidate-history.json
+      - .github/workflows/partial-ambiguous-replay.yml
+  push:
+    branches: [main]
+    paths:
+      - scripts/audit_partial_ambiguous_replay.py
+      - scripts/fetch_yahoo_realtime.py
+      - scripts/reclassify_yahoo_archive.py
+      - public/yahoo-candidate-history.json
+      - .github/workflows/partial-ambiguous-replay.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e '.[dev]'
+      - name: Replay partial and ambiguous datetime corpus
+        run: python scripts/audit_partial_ambiguous_replay.py --assert-safety --output partial-ambiguous-replay.json
+      - name: Upload replay artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: partial-ambiguous-replay
+          path: partial-ambiguous-replay.json
+          if-no-files-found: error
