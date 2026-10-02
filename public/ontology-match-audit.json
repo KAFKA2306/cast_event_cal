@@ -2,8 +2,8 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1058,
-  "matched_events": 296,
+  "event_count": 1063,
+  "matched_events": 297,
   "matched_series": {
     "vrc-fit-boxing": 35,
     "vrc-beginner-world-tour": 18,
@@ -13,13 +13,14 @@
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
+    "zerozoku-auction": 1,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
     "vrc-idle-gathering": 17
   },
-  "unmatched_events": 762,
+  "unmatched_events": 766,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -170,6 +171,18 @@
       "title": "VRCゲームワールド部 月曜イベント",
       "status": "matched",
       "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "bc9ac997380019d91f92",
+      "title": "VRCイベント 〜０属オークション〜 ✨10月 開催告知 ✨ 『第7回』 10/5 (月) 22:00～ 『第8回』10/14(土)22:00〜 コラボ 開催 ‼️ 『第9回』10/17(土)…",
+      "status": "matched",
+      "ontology_id": "zerozoku-auction",
       "evidence": [
         "alias",
         "organizer",
@@ -3559,33 +3572,34 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1058,
+    "event_count": 1063,
     "category_breakdown": {
       "art": 122,
-      "community": 250,
-      "game": 110,
+      "community": 249,
+      "game": 111,
       "language_exchange": 35,
-      "learning": 20,
+      "learning": 24,
       "music": 128,
       "other": 91,
       "performance": 14,
-      "recruitment_deadline": 5,
+      "recruitment_deadline": 6,
       "technology": 193,
       "wellness": 69,
       "world_tour": 21
     },
     "subcategory_breakdown": {
       "ai": 34,
+      "auction": 1,
       "cafe": 36,
       "cast_recruitment": 1,
       "cast_service": 6,
-      "class": 3,
+      "class": 7,
       "competition": 1,
       "dance": 58,
       "dj": 2,
       "engineering": 105,
       "fitness": 35,
-      "hangout": 61,
+      "hangout": 60,
       "language_exchange": 35,
       "lecture": 8,
       "live_music": 1,
@@ -3602,21 +3616,21 @@
       "world_tour": 21
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 7,
-      "in_world": 1045,
+      "deadline": 6,
+      "hybrid": 8,
+      "in_world": 1048,
       "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 278,
+      "curated_ontology": 279,
       "fallback": 91,
-      "keyword_rules": 442,
+      "keyword_rules": 446,
       "legacy_and_keywords": 125,
       "legacy_category": 122
     },
     "organizer_profile_count": 23,
-    "low_confidence_event_count": 123,
-    "audit_event_count": 123
+    "low_confidence_event_count": 124,
+    "audit_event_count": 124
   },
   "category_review_queue": [
     {
@@ -4235,6 +4249,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "c1a715c2195df0409a0d",
+      "title": "今日の予定 20時20分からお誕生日配信‼️ https://t.co/SpCmy9FmHW そして 23時 から VRC でアイちゃんが所属するイベント【Palena Leo】に出るよ〜‼️…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "88ffe290ac0bf780482f",
       "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
       "category": "other",
@@ -4821,19 +4848,6 @@
       ]
     },
     {
-      "event_id": "4543361515b8189302cf",
-      "title": "【# VRC 餌場 開催告知！】 VRC の雑魚のイベント 餌場《Kamonegi》 10月5日（月曜日） 22時 ～開催！！ 事前申し込み制になりますので下記のフォームにご記入ください！ 締…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "0f2a46a399c61251bd31",
       "title": "今日 も一日おつかれさまでした🌙 9月もいよいよ 明日 で終わりですね。 火曜日を乗り切った方も、まだお仕事中の方も、夜は少しゆっくりと☕ 自分はこのあと VRChat へ🌐 そして 今夜 2…",
       "category": "recruitment_deadline",
@@ -5168,6 +5182,23 @@
         "keyword:title:技術"
       ],
       "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "6391fb1cb40d7718da22",
+      "title": "【異世界酒場番外編 VRC 収穫祭🍻】 今年もやります！エールで乾杯！異世界酒場！ ツリーにてstaff募集中‼ 11/22（日）22時から23時予定 開催 場所：YOEOの Group +イ…",
+      "category": "recruitment_deadline",
+      "label": "募集・締切",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:募集"
+      ],
+      "event_mode": "deadline",
       "ambiguous_with": [
         "community"
       ]
