@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1145,
-  "event_count_after": 1014,
-  "candidate_cluster_count": 103,
-  "duplicate_cluster_count": 103,
-  "duplicate_occurrence_count": 131,
-  "duplicate_post_count": 131,
-  "duplicate_rate": 0.11441,
+  "event_count_before": 1260,
+  "event_count_after": 1128,
+  "candidate_cluster_count": 104,
+  "duplicate_cluster_count": 104,
+  "duplicate_occurrence_count": 132,
+  "duplicate_post_count": 132,
+  "duplicate_rate": 0.104762,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 6,
   "clusters": [
     {
       "cluster_id": "occ_05d2126b49cc9ea0171b",
@@ -298,30 +298,6 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_9f1661d893189d298c9d"
-    },
-    {
-      "cluster_id": "occ_1b387112aaf9aa4fc09d",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "title": "Blender＆Unity技術交流会",
-      "member_count": 3,
-      "member_ids": [
-        "882b5bbfe8406fda050c",
-        "b64d409afeedbca9d368",
-        "ff82c86db8b925264970"
-      ],
-      "source_record_ids": [
-        "src_183d0149977b432800dc",
-        "src_9e1db1cbd872d65095e7",
-        "src_b29b7af9826daa7478cf"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_b29b7af9826daa7478cf"
     },
     {
       "cluster_id": "occ_1ebfc1c4d73d9d929011",
@@ -1068,6 +1044,28 @@
       "representative_source_record_id": "src_e4fa110a4c1ba6344053"
     },
     {
+      "cluster_id": "occ_6cdedfd300e263b23d62",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "title": "🚨✨重大 告知 ！！！ 🚨 VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START ついに来週‼…",
+      "member_count": 2,
+      "member_ids": [
+        "c9f6230d12dade35c16c",
+        "f71a919a67790c38ac48"
+      ],
+      "source_record_ids": [
+        "src_582d9062adb02aebd1b3",
+        "src_604bb7be8ce48aebd556"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_604bb7be8ce48aebd556"
+    },
+    {
       "cluster_id": "occ_6dd11d47deaa4536419a",
       "starts_at": "2027-01-18T13:00:00Z",
       "title": "VRC Bio Journal RTA",
@@ -1585,12 +1583,14 @@
       "cluster_id": "occ_a8564bfcbe484fdf0ff7",
       "starts_at": "2026-10-17T12:00:00Z",
       "title": "学生学際集会",
-      "member_count": 2,
+      "member_count": 3,
       "member_ids": [
         "1d31bfedbcf18ff43c02",
-        "8483b7037fe1ab5aee73"
+        "8483b7037fe1ab5aee73",
+        "d58219c3c5a2429cca25"
       ],
       "source_record_ids": [
+        "src_2a23ed13488bad743a00",
         "src_3ea453afbc77238d67a1",
         "src_8c03d52c66f2608855f5"
       ],
@@ -2290,6 +2290,28 @@
       "representative_source_record_id": "src_54ff5cf58196ab8f1751"
     },
     {
+      "cluster_id": "occ_f8e1ef50e9253a226f26",
+      "starts_at": "2026-10-07T12:00:00Z",
+      "title": "【10名様ご招待】 🎨HIRAVAクリエイターの商品が当たる！第一回HIRAVA集会 開催決定 🎨 10/7(水) 21:00より、 VRChat 内TAG公式ワールドにて第一回HIRAVA集…",
+      "member_count": 2,
+      "member_ids": [
+        "54ab5e8f6275a22fdca6",
+        "ab1629933eae34f66a4a"
+      ],
+      "source_record_ids": [
+        "src_1ccc78a0d7b1583d1883",
+        "src_bd02cb57abac6004966c"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_bd02cb57abac6004966c"
+    },
+    {
       "cluster_id": "occ_fb73a9021eba358c8222",
       "starts_at": "2026-12-24T12:00:00Z",
       "title": "仮想学生集会",
@@ -2336,6 +2358,51 @@
   ],
   "ambiguous_candidates": [
     {
+      "left_id": "2b4589562666617e36f2",
+      "right_id": "67281b527f29be0b43c1",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@takamaruvr",
+      "similarity": 0.5323,
+      "left_title": "VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 当日はリクエストTime有り！ ダンサー…",
+      "right_title": "✨新規イベント✨ VRC A-POP DANCE NIGHT # VRC えーだん 🎧プレ オープン （ver.0） 開催決定 🎧 📅 2026.10.03（土） 🕘 21:00 START …"
+    },
+    {
+      "left_id": "2b4589562666617e36f2",
+      "right_id": "f08b15368871e25bc32d",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@takamaruvr",
+      "similarity": 0.5244,
+      "left_title": "VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 当日はリクエストTime有り！ ダンサー…",
+      "right_title": "新イベント‼️ VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 色々ご予定あると思います…"
+    },
+    {
+      "left_id": "67281b527f29be0b43c1",
+      "right_id": "f08b15368871e25bc32d",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@takamaruvr",
+      "similarity": 0.5088,
+      "left_title": "✨新規イベント✨ VRC A-POP DANCE NIGHT # VRC えーだん 🎧プレ オープン （ver.0） 開催決定 🎧 📅 2026.10.03（土） 🕘 21:00 START …",
+      "right_title": "新イベント‼️ VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 色々ご予定あると思います…"
+    },
+    {
+      "left_id": "ed5fb07e7ad31f1a8680",
+      "right_id": "c9f6230d12dade35c16c",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@vrca_dan",
+      "similarity": 0.5578,
+      "left_title": "🚨✨ついに 明日 ✨🚨 VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 本 開催 に向け…",
+      "right_title": "🚨✨重大 告知 ！！！ 🚨 VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START ついに来週‼…"
+    },
+    {
+      "left_id": "ed5fb07e7ad31f1a8680",
+      "right_id": "f71a919a67790c38ac48",
+      "starts_at": "2026-10-03T12:00:00Z",
+      "organizer": "@vrca_dan",
+      "similarity": 0.5657,
+      "left_title": "🚨✨ついに 明日 ✨🚨 VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START 本 開催 に向け…",
+      "right_title": "🚨✨重大 告知 ！！！ 🚨 VRC A-POP DANCE NIGHT ✨プレ オープン （ver.0） 開催決定 ✨ 📅 2026.10.03（土） 🕘 21:00 START ぜひ予定を空…"
+    },
+    {
       "left_id": "6eb8b3cfe483b3c5f95c",
       "right_id": "3d171d7f0ccecbbe8413",
       "starts_at": "2026-10-10T09:45:00Z",
@@ -2347,105 +2414,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "5c99e775d74bf6d2637b",
-      "right_id": "4fa54bb198c810442ab4",
-      "starts_at": "2026-10-02T12:50:00Z",
-      "left_organizer": "Bar Veil",
-      "right_organizer": "S P E A K U P",
-      "similarity": 0.0442,
-      "left_title": "Bar Veil",
-      "right_title": "잠시후 10시ǃǃ 제13회 펭귄바 X 스피크업 콜라보 9월 음악 콘서트"
+      "left_id": "15fdbde279c4f137fd8b",
+      "right_id": "4e588372d85299335fb6",
+      "starts_at": "2026-10-02T19:00:00Z",
+      "left_organizer": "@yukikano1192",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.1192,
+      "left_title": "VRChatイベント告知 本日 10/3 24:00～25:00 【ツアー イベント 】愛すべきクセすごワールドツアー クセ強めなワールドをメインに、色々な世界を巡るツアー イベント だよ〜♪…",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "91ad82a16a15b1a83af4",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "425thVTFTWイベント用Gr",
-      "similarity": 0.0634,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "425th VTFTW定期イベント日"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "53da5d468e186cbf918e",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Bass Station",
+      "similarity": 0.0843,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Bass Station FRIDAYǃ"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "07c3fe71db0e7d8a56cb",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "ASMR集会",
-      "similarity": 0.0185,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "ASMR集会 本営業"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "90b79304dc6ea2d32c86",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "The Night Shift",
+      "similarity": 0.2529,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Bostin's Community Nightǃ"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "2b6a1d0681daafc2f36e",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "Projekto Babel",
-      "similarity": 0.0631,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "Azulja mana＝ban⁄アズーリャ教室⁄Azulja classroom"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "e4de0e73776dfbac34fd",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Dibz Adventures",
+      "similarity": 0.2044,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Community Night Stream"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "59e852fb715769abb7b0",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "BAR CarToOn",
-      "similarity": 0.0755,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "BAR 「CarToOn」"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "dc48af2f0fc57f96c139",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Red Fox Tails",
+      "similarity": 0.2405,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Dance Event ＃6"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "dfdd85f06820878c77c9",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "BarSTAYTUNE",
-      "similarity": 0.0988,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "BarSTAYTUNE EventDay"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "75897a867dcfccfbf061",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Teevz Rainworld Slugcat Meetups",
+      "similarity": 0.1768,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Final Friday Meetup"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "882b5bbfe8406fda050c",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": null,
-      "similarity": 0.0664,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "Blender＆Unity技術交流会"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "3646d5cff081b12ef97b",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "The Madhouse Carnival",
+      "similarity": 0.2526,
+      "left_title": "Activity Nightǃ",
+      "right_title": "FREAKSHOW FESTIVAL"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "2c0f3badcbd8a3dcc945",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "․P․U․L․S․E",
-      "similarity": 0.0965,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "P․U․L․S․E 2nd Treatment ｜ Liquid Funk Session"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "3853b9de7e592c5a5f0d",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Mellish's Penthouse 18 Plus",
+      "similarity": 0.1222,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Friday Night VRChat Meetups - 18＋ Friendly"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "4d01fd5c4fbb673bced2",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.0645,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "395e2297197be42cf230",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Project Eden",
+      "similarity": 0.323,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Fucked Up Friday"
     },
     {
-      "left_id": "a7e7b8a1d7c8d7b17e98",
-      "right_id": "3f167267cc539d7d15c8",
-      "starts_at": "2026-10-02T13:00:00Z",
-      "left_organizer": "カジュアルビリヤード部",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.068,
-      "left_title": "10月カジュビリスポーツワールド巡り",
-      "right_title": "VRCふれあい動物園"
+      "left_id": "755fb1931653e17f06c9",
+      "right_id": "cc4ee64694dc9f5d6055",
+      "starts_at": "2026-10-03T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "FurHub",
+      "similarity": 0.3053,
+      "left_title": "Activity Nightǃ",
+      "right_title": "FurHub Game Night"
     }
   ],
-  "generated_at": "2026-10-03T12:31:17Z"
+  "generated_at": "2026-10-03T17:16:02Z"
 }
