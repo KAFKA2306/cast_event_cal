@@ -2,17 +2,16 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1032,
-  "matched_events": 297,
+  "event_count": 1014,
+  "matched_events": 296,
   "matched_series": {
-    "asmr-gathering": 36,
-    "vrc-fit-boxing": 36,
+    "asmr-gathering": 35,
     "vrc-petting-zoo": 18,
-    "en-jp-language-exchange": 35,
+    "en-jp-language-exchange": 36,
+    "vrc-fit-boxing": 36,
     "personally-match": 18,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
-    "zerozoku-auction": 1,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
@@ -20,33 +19,9 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 735,
+  "unmatched_events": 718,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "d78138f3d49b4ae266c4",
-      "title": "ASMR集会 初心者説明会",
-      "status": "matched",
-      "ontology_id": "asmr-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "bc6e7526dbcda5002651",
-      "title": "VRCフィットボクシング集会",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "07c3fe71db0e7d8a56cb",
       "title": "ASMR集会 本営業",
@@ -148,18 +123,6 @@
       "title": "VRCゲームワールド部 月曜イベント",
       "status": "matched",
       "ontology_id": "vrc-game-world-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "c56c8e6fe00f424d2b74",
-      "title": "VRCイベント 〜０属オークション〜 ✨10月 開催告知 ✨ 『第7回』 10/5 (月) 22:00～ 『第8回』10/14(水)22:00〜 コラボ 開催 ‼️ 『第9回』10/17(土)…",
-      "status": "matched",
-      "ontology_id": "zerozoku-auction",
       "evidence": [
         "alias",
         "organizer",
@@ -3569,39 +3532,62 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "13abb6f558c2ee86e2e3",
+      "title": "EN-JP Language Exchange（日曜）",
+      "status": "matched",
+      "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "7aa1b62390f96b2655f4",
+      "title": "VRCフィットボクシング集会（日曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1032,
+    "event_count": 1014,
     "category_breakdown": {
       "art": 122,
-      "community": 245,
-      "game": 109,
-      "language_exchange": 35,
-      "learning": 22,
-      "music": 132,
-      "other": 64,
+      "community": 241,
+      "game": 106,
+      "language_exchange": 36,
+      "learning": 23,
+      "music": 125,
+      "other": 59,
       "performance": 16,
-      "recruitment_deadline": 5,
+      "recruitment_deadline": 4,
       "technology": 193,
       "wellness": 70,
       "world_tour": 19
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "auction": 1,
-      "bar": 2,
-      "cafe": 34,
+      "bar": 3,
+      "cafe": 33,
       "cast_service": 6,
       "class": 6,
       "competition": 1,
-      "dance": 60,
-      "dj": 3,
+      "dance": 57,
+      "dj": 2,
       "engineering": 103,
       "fitness": 36,
-      "hangout": 57,
-      "language_exchange": 35,
+      "hangout": 56,
+      "language_exchange": 36,
       "lecture": 7,
       "live_music": 3,
       "mystery": 34,
@@ -3610,148 +3596,29 @@
       "photography": 121,
       "research": 47,
       "show": 15,
-      "social": 144,
-      "tabletop": 35,
-      "workshop": 8,
+      "social": 141,
+      "tabletop": 34,
+      "workshop": 9,
       "world_tour": 19
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 6,
-      "in_world": 1020,
+      "deadline": 4,
+      "hybrid": 5,
+      "in_world": 1004,
       "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 280,
-      "fallback": 64,
-      "keyword_rules": 437,
-      "legacy_and_keywords": 129,
+      "curated_ontology": 279,
+      "fallback": 59,
+      "keyword_rules": 429,
+      "legacy_and_keywords": 125,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 94,
-    "audit_event_count": 94
+    "low_confidence_event_count": 89,
+    "audit_event_count": 89
   },
   "category_review_queue": [
-    {
-      "event_id": "adc256e1427833cab3c3",
-      "title": "LEVEL UP GAMING LOFT",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "6c3ec4a6d9536f5d3cd6",
-      "title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ae8a7ffdb7ffd6b29249",
-      "title": "LA JUNTA DE LOS CEBADOS",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "203b4847874bf48e6894",
-      "title": "ALCOLICOS ANONIMOS - CAPITULO FIN DE SEMANA",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c55237aed0bfbe767b0a",
-      "title": "ちょいトレ・がちトレ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e0316795f890595ce323",
-      "title": "City rp",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "88ffe290ac0bf780482f",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "30adf5235aef63627d4d",
-      "title": "MLGround ＃74",
-      "category": "game",
-      "label": "ゲーム・参加型",
-      "subcategory": "tabletop",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:麻雀"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "020fc1e06a0cbc1fa046",
-      "title": "わさきよのワールドめぐり2nd Anniversary Event",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "5c99e775d74bf6d2637b",
       "title": "Bar Veil",
@@ -4080,7 +3947,7 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "fb450a11946e0f6076cf",
+      "event_id": "occ_4a73645395178eeedaf6",
       "title": "明日 は学生学際集会！ 【タイムスケジュール】 10月3日(土) 21:00～ 開場 21:15～ fairyichikaさん 『#4 20分でふわっと見る温泉科学』 ぜひお越しください！！ …",
       "category": "technology",
       "label": "技術・研究",
@@ -4095,6 +3962,32 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "54f86fc782ceaf2113c2",
+      "title": "本日 21:00から、第1回 VRC バドミントン部団体戦を 開催 します！ 出場者じゃない方も、ぜひ観戦しに来てください〜 熱い試合を一緒に楽しみましょう！ ワールドはQuest対応です！ …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d2fdbc632435febb5266",
+      "title": "踏みたい人と踏まれたい人が集まる イベント 足蹴屋です。 本日 21時より第248回目を 開催 します。 参加 したい方は VRC アカウントにTwitterアカウント紐付けの上、グループ申請…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "6f3e6298d6c13e5c9c7f",
@@ -4158,6 +4051,21 @@
       ]
     },
     {
+      "event_id": "828ee137e039746bd939",
+      "title": "イベント 開催告知 です。 今週の VRC イベント『Fighting Burst』は予約等なしの、フリー参加形式で 本日 10/3(土)22時より 開催 します！ JOIN 先はリプに続ける…",
+      "category": "community",
+      "label": "交流・カフェ",
+      "subcategory": "cafe",
+      "score": 3,
+      "confidence": 0.585,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:organizer:cafe"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "32dc695d31f512faf777",
       "title": "TCG「Battle Xceed」体験会",
       "category": "other",
@@ -4172,7 +4080,7 @@
     },
     {
       "event_id": "00451d82c02c26ccaa65",
-      "title": "#VRCPPP VRC イベント「Pretty Private Pleasure」 10月3日(土)23時 リクイン 受付 開始 😈 【タイムテーブル】 23:00~23:02 Req-In（…",
+      "title": "#VRCPPP VRCイベント 「Pretty Private Pleasure」 10月3日(土)23時 リクイン 受付 開始 😈 【タイムテーブル】 23:00~23:02 Req-In（…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4282,6 +4190,19 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ad941f993344f0f7b2b6",
+      "title": "🔥🔥🔥 明日 は柚華はこちら🔥🔥🔥 めっちゃ頭振れる イベント 確定です！ 全 VRChat のパンク・ハードコアキッズとメタルヘッズのみんな 遊びに来い！ 10/04（日）20:30 開場 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4576,7 +4497,7 @@
     },
     {
       "event_id": "2dbc83effe738227e71b",
-      "title": "🐙 VRCイベント 『Mouth of Madness』 第2木曜・第4日曜の22:00より 開催 。 10月は【10/8(木)】と【10/25(日)】に 開催 予定です。 21:50~22:…",
+      "title": "🐙 VRC イベント『Mouth of Madness』 第2木曜・第4日曜の22:00より 開催 。 10月は【10/8(木)】と【10/25(日)】に 開催 予定です。 21:50~22:…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
