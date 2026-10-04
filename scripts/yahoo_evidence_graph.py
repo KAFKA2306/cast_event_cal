@@ -464,12 +464,12 @@ def _resolve_fingerprint_datetime(
     current_dates = _explicit_dates(current_text, anchor)
     current_clocks = _clocks(current_text)
 
-    # A single known dimension is authoritative. Multiple dates or clocks in
-    # the candidate itself remain ambiguous and are never silently selected.
-    if len(current_dates) > 1 or len(current_clocks) > 1:
-        return None
-    fixed_date = next(iter(current_dates)) if current_dates else None
-    fixed_clock = next(iter(current_clocks)) if current_clocks else None
+    # A single known dimension is authoritative. Multiple occurrences may be
+    # narrowed only by independent peer evidence.
+    fixed_date = next(iter(current_dates)) if len(current_dates) == 1 else None
+    fixed_clock = next(iter(current_clocks)) if len(current_clocks) == 1 else None
+    ambiguous_dates = current_dates if len(current_dates) > 1 else set()
+    ambiguous_clocks = current_clocks if len(current_clocks) > 1 else set()
 
     dates: set[date] = set()
     clocks: set[tuple[int, int]] = set()
@@ -488,6 +488,12 @@ def _resolve_fingerprint_datetime(
             if fixed_date in node_dates:
                 dates.add(fixed_date)
                 evidence_ids.add(node.status_id)
+        elif ambiguous_dates:
+            if node.status_id != current_id:
+                matching_dates = node_dates & ambiguous_dates
+                dates.update(matching_dates)
+                if matching_dates:
+                    evidence_ids.add(node.status_id)
         else:
             dates.update(node_dates)
             if node_dates:
@@ -497,6 +503,12 @@ def _resolve_fingerprint_datetime(
             if fixed_clock in node_clocks:
                 clocks.add(fixed_clock)
                 evidence_ids.add(node.status_id)
+        elif ambiguous_clocks:
+            if node.status_id != current_id:
+                matching_clocks = node_clocks & ambiguous_clocks
+                clocks.update(matching_clocks)
+                if matching_clocks:
+                    evidence_ids.add(node.status_id)
         else:
             clocks.update(node_clocks)
             if node_clocks:
