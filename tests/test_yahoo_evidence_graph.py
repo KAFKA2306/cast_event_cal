@@ -470,3 +470,32 @@ def test_multi_date_candidate_stays_unresolved_when_peers_support_two_occurrence
         anchor=anchor_for(candidate),
         actual_now=datetime(2026, 9, 25, tzinfo=UTC),
     ) is None
+
+
+def test_multi_date_candidate_does_not_synthesize_occurrence_from_separate_peers() -> None:
+    candidate = row(
+        "1234567890123456789",
+        "【VRC夜会】10/3・10/10開催。Group +で参加できます。",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    date_peer = row(
+        "2234567890123456789",
+        "【VRC夜会】10/3開催。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    clock_peer = row(
+        "3234567890123456789",
+        "【VRC夜会】21:00開始。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 13, tzinfo=UTC),
+    )
+    graph = build_evidence_graph(
+        [candidate, date_peer, clock_peer],
+        anchor_for=anchor_for,
+    )
+
+    assert resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) is None
