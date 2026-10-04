@@ -2,8 +2,8 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1032,
-  "matched_events": 294,
+  "event_count": 1029,
+  "matched_events": 295,
   "matched_series": {
     "vrc-fit-boxing": 36,
     "personally-match": 18,
@@ -11,6 +11,7 @@
     "cafe-bar-for-light": 1,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
+    "zerozoku-auction": 1,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
@@ -20,7 +21,7 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 738,
+  "unmatched_events": 734,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -100,6 +101,18 @@
       "title": "VRCゲームワールド部 月曜イベント",
       "status": "matched",
       "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "e6ac28d8644acbf0a7d7",
+      "title": "VRCイベント 〜０属オークション〜 ✨第7回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 10/5(月) 22:00～ ✅ リクイン 抽選式 ✅ 参加 条件は5万UC以上の所持条…",
+      "status": "matched",
+      "ontology_id": "zerozoku-auction",
       "evidence": [
         "alias",
         "organizer",
@@ -3537,24 +3550,24 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1032,
+    "event_count": 1029,
     "category_breakdown": {
       "art": 121,
       "community": 253,
-      "game": 106,
+      "game": 107,
       "language_exchange": 35,
       "learning": 22,
-      "music": 135,
-      "other": 61,
+      "music": 133,
+      "other": 60,
       "performance": 10,
-      "recruitment_deadline": 10,
+      "recruitment_deadline": 9,
       "technology": 192,
       "wellness": 70,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 1,
+      "auction": 1,
       "bar": 1,
       "cafe": 36,
       "cast_recruitment": 4,
@@ -3565,65 +3578,39 @@
       "dj": 5,
       "engineering": 102,
       "fitness": 36,
-      "hangout": 59,
+      "hangout": 60,
       "language_exchange": 35,
       "lecture": 3,
-      "live_music": 4,
+      "live_music": 3,
       "mystery": 34,
       "orientation": 1,
       "participant_recruitment": 3,
       "photography": 121,
       "research": 47,
       "show": 9,
-      "social": 146,
+      "social": 145,
       "tabletop": 34,
       "workshop": 9,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 10,
+      "deadline": 9,
       "hybrid": 6,
-      "in_world": 1015,
+      "in_world": 1013,
       "stream": 1
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 61,
-      "keyword_rules": 448,
-      "legacy_and_keywords": 123,
+      "curated_ontology": 278,
+      "fallback": 60,
+      "keyword_rules": 446,
+      "legacy_and_keywords": 122,
       "legacy_category": 123
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 85,
-    "audit_event_count": 85
+    "low_confidence_event_count": 84,
+    "audit_event_count": 84
   },
   "category_review_queue": [
-    {
-      "event_id": "fa80c19a3ab5346ba0c7",
-      "title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c8dd604a5ba343647470",
-      "title": "LA JUNTA DE LOS CEBADOS",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "4d9e11aba9275d82be3a",
       "title": "ALCOLICOS ANONIMOS - CAPITULO FIN DE SEMANA",
@@ -3970,6 +3957,19 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c2f26445599473075e8c",
+      "title": "本日 の20:15~しりとり系ワールドを楽しもう！というイベントを 開催 致します！ 無言勢も､観戦だけという方も､実力問わず誰でも参加大歓迎です！ 参加方法 グループ: VRC しりとり協会…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
