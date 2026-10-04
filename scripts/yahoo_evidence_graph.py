@@ -464,12 +464,70 @@ def _resolve_fingerprint_datetime(
     current_dates = _explicit_dates(current_text, anchor)
     current_clocks = _clocks(current_text)
 
-    # A single known dimension is authoritative. Multiple dates or clocks in
-    # the candidate itself remain ambiguous and are never silently selected.
-    if len(current_dates) > 1 or len(current_clocks) > 1:
-        return None
-    fixed_date = next(iter(current_dates)) if current_dates else None
-    fixed_clock = next(iter(current_clocks)) if current_clocks else None
+    # A single known dimension is authoritative. Multiple occurrences may be
+    # narrowed only by independent peer evidence.
+    fixed_date = next(iter(current_dates)) if len(current_dates) == 1 else None
+    fixed_clock = next(iter(current_clocks)) if len(current_clocks) == 1 else None
+    ambiguous_dates = current_dates if len(current_dates) > 1 else set()
+    ambiguous_clocks = current_clocks if len(current_clocks) > 1 else set()
+
+    # When the candidate itself contains multiple dates or clocks, narrow an
+    # occurrence only from a single peer node that can support the remaining
+    # dimensions together. This prevents synthesizing a date from one peer and
+    # an unrelated clock from another peer.
+    if ambiguous_dates or ambiguous_clocks:
+        occurrences: dict[tuple[date, tuple[int, int]], set[str]] = {}
+        for node in nodes:
+            if node.status_id == current_id:
+                continue
+            node_dates = _explicit_dates(node.text, node.anchor)
+            node_clocks = _clocks(node.text)
+
+            if fixed_date is not None and node_dates and fixed_date not in node_dates:
+                continue
+            if fixed_clock is not None and node_clocks and fixed_clock not in node_clocks:
+                continue
+
+            if ambiguous_dates:
+                candidate_dates = node_dates & ambiguous_dates
+                if not candidate_dates:
+                    continue
+            elif fixed_date is not None:
+                candidate_dates = {fixed_date}
+            else:
+                candidate_dates = node_dates
+
+            if ambiguous_clocks:
+                candidate_clocks = node_clocks & ambiguous_clocks
+                if not candidate_clocks:
+                    continue
+            elif fixed_clock is not None:
+                candidate_clocks = {fixed_clock}
+            else:
+                candidate_clocks = node_clocks
+
+            if not candidate_dates or not candidate_clocks:
+                continue
+            for event_date in candidate_dates:
+                for event_clock in candidate_clocks:
+                    occurrences.setdefault((event_date, event_clock), set()).add(
+                        node.status_id
+                    )
+
+        if len(occurrences) != 1 or not current_id:
+            return None
+        (event_date, (hour, minute)), peer_ids = next(iter(occurrences.items()))
+        return (
+            datetime(
+                event_date.year,
+                event_date.month,
+                event_date.day,
+                hour,
+                minute,
+                tzinfo=JST,
+            ),
+            tuple(sorted({current_id, *peer_ids})),
+        )
 
     dates: set[date] = set()
     clocks: set[tuple[int, int]] = set()

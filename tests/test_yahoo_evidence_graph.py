@@ -413,3 +413,89 @@ def test_candidate_date_selects_matching_occurrence_from_recurring_external_titl
     assert result is not None
     assert result.event_at.isoformat() == "2026-10-03T21:00:00+09:00"
     assert result.event_fingerprint == "eventtitle:vrcblender集会"
+
+
+def test_multi_date_candidate_is_narrowed_by_single_peer_occurrence() -> None:
+    candidate = row(
+        "1234567890123456789",
+        "【VRC夜会】10/3・10/10 21:00開催。Group +で参加できます。",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    peer = row(
+        "2234567890123456789",
+        "【VRC夜会】10/3 21:00開催。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    graph = build_evidence_graph([candidate, peer], anchor_for=anchor_for)
+
+    result = resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    )
+
+    assert result is not None
+    assert result.event_at.isoformat() == "2026-10-03T21:00:00+09:00"
+    assert result.corroborating_source_ids == (
+        "1234567890123456789",
+        "2234567890123456789",
+    )
+
+
+def test_multi_date_candidate_stays_unresolved_when_peers_support_two_occurrences() -> None:
+    candidate = row(
+        "1234567890123456789",
+        "【VRC夜会】10/3・10/10 21:00開催。Group +で参加できます。",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    first_peer = row(
+        "2234567890123456789",
+        "【VRC夜会】10/3 21:00開催。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    second_peer = row(
+        "3234567890123456789",
+        "【VRC夜会】10/10 21:00開催。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 13, tzinfo=UTC),
+    )
+    graph = build_evidence_graph(
+        [candidate, first_peer, second_peer],
+        anchor_for=anchor_for,
+    )
+
+    assert resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) is None
+
+
+def test_multi_date_candidate_does_not_synthesize_occurrence_from_separate_peers() -> None:
+    candidate = row(
+        "1234567890123456789",
+        "【VRC夜会】10/3・10/10開催。Group +で参加できます。",
+        anchor=datetime(2026, 9, 24, 10, tzinfo=UTC),
+    )
+    date_peer = row(
+        "2234567890123456789",
+        "【VRC夜会】10/3開催。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 12, tzinfo=UTC),
+    )
+    clock_peer = row(
+        "3234567890123456789",
+        "【VRC夜会】21:00開始。Group +でJOINできます。",
+        anchor=datetime(2026, 9, 24, 13, tzinfo=UTC),
+    )
+    graph = build_evidence_graph(
+        [candidate, date_peer, clock_peer],
+        anchor_for=anchor_for,
+    )
+
+    assert resolve_corroborated_datetime(
+        candidate,
+        graph=graph,
+        anchor=anchor_for(candidate),
+        actual_now=datetime(2026, 9, 25, tzinfo=UTC),
+    ) is None
