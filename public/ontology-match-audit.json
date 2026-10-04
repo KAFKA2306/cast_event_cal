@@ -2,15 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1028,
+  "event_count": 975,
   "matched_events": 295,
   "matched_series": {
-    "vrc-fit-boxing": 36,
-    "personally-match": 18,
     "en-jp-language-exchange": 35,
+    "vrc-fit-boxing": 35,
     "cafe-bar-for-light": 1,
-    "vrc-goita": 17,
-    "vrc-game-world-club": 17,
+    "vrc-goita": 18,
+    "vrc-game-world-club": 18,
     "zerozoku-auction": 1,
     "exploit-club": 17,
     "yuruge-meet": 17,
@@ -19,35 +18,12 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
-    "vrc-petting-zoo": 17
+    "vrc-petting-zoo": 17,
+    "personally-match": 17
   },
-  "unmatched_events": 733,
+  "unmatched_events": 680,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "db45cb82ced9ea7824d6",
-      "title": "VRCフィットボクシング集会（土曜）",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "80dfdb07298a86ecd2e1",
-      "title": "Personally match",
-      "status": "matched",
-      "ontology_id": "personally-match",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "02ef3a5e60331103d649",
       "title": "EN-JP Language Exchange（日曜）",
@@ -3546,22 +3522,46 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "6959eb8be607007807c4",
+      "title": "VRCごいた会",
+      "status": "matched",
+      "ontology_id": "vrc-goita",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "a9a63611112bbd7d7a69",
+      "title": "VRCゲームワールド部 月曜イベント",
+      "status": "matched",
+      "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1028,
+    "event_count": 975,
     "category_breakdown": {
       "art": 121,
-      "community": 253,
-      "game": 107,
+      "community": 231,
+      "game": 109,
       "language_exchange": 35,
-      "learning": 22,
-      "music": 133,
-      "other": 59,
-      "performance": 10,
-      "recruitment_deadline": 9,
-      "technology": 192,
+      "learning": 20,
+      "music": 124,
+      "other": 47,
+      "performance": 8,
+      "recruitment_deadline": 2,
+      "technology": 191,
       "wellness": 70,
       "world_tour": 17
     },
@@ -3569,308 +3569,45 @@
       "ai": 34,
       "auction": 1,
       "bar": 1,
-      "cafe": 35,
-      "cast_recruitment": 4,
-      "cast_service": 6,
+      "cafe": 28,
+      "cast_service": 5,
       "class": 9,
-      "competition": 1,
-      "dance": 64,
+      "dance": 59,
       "dj": 5,
-      "engineering": 102,
-      "fitness": 36,
-      "hangout": 61,
+      "engineering": 104,
+      "fitness": 35,
+      "hangout": 53,
       "language_exchange": 35,
-      "lecture": 3,
-      "live_music": 3,
+      "lecture": 1,
       "mystery": 34,
       "orientation": 1,
-      "participant_recruitment": 3,
+      "participant_recruitment": 1,
       "photography": 121,
-      "research": 47,
-      "show": 9,
-      "social": 145,
-      "tabletop": 34,
+      "research": 44,
+      "show": 7,
+      "social": 140,
+      "tabletop": 35,
       "workshop": 9,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 9,
-      "hybrid": 6,
-      "in_world": 1012,
+      "deadline": 2,
+      "hybrid": 4,
+      "in_world": 968,
       "stream": 1
     },
     "classification_source_breakdown": {
       "curated_ontology": 278,
-      "fallback": 59,
-      "keyword_rules": 447,
-      "legacy_and_keywords": 121,
-      "legacy_category": 123
+      "fallback": 47,
+      "keyword_rules": 425,
+      "legacy_and_keywords": 103,
+      "legacy_category": 122
     },
-    "organizer_profile_count": 22,
-    "low_confidence_event_count": 83,
-    "audit_event_count": 83
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 68,
+    "audit_event_count": 68
   },
   "category_review_queue": [
-    {
-      "event_id": "a136a433c9024967434e",
-      "title": "3日開店",
-      "category": "community",
-      "label": "交流・カフェ",
-      "subcategory": "cafe",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:カフェ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "84ac10ee4a48d3ed7d07",
-      "title": "ジオゲッサー日本マップコミュニティのGeoJapanさん（@GeoJapanGuessr）に許可をいただき、 「GeoJapan杯 2026秋 本戦」の配信のパブリックビューイングを、 VRC…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d97d28965be42c740329",
-      "title": "ー夜の部ー",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e06c080d601a684ba493",
-      "title": "初心者案内＆ジェイプラツアー",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "617fdc860dfa5392f8bd",
-      "title": "디멘션 허브 ［Dimension Hub］",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "7e5b64df81feffc57e12",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "occ_4a73645395178eeedaf6",
-      "title": "明日 は学生学際集会！ 【タイムスケジュール】 10月3日(土) 21:00～ 開場 21:15～ fairyichikaさん 『#4 20分でふわっと見る温泉科学』 ぜひお越しください！！ …",
-      "category": "technology",
-      "label": "技術・研究",
-      "subcategory": "research",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:科学"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "54f86fc782ceaf2113c2",
-      "title": "本日 21:00から、第1回 VRC バドミントン部団体戦を 開催 します！ 出場者じゃない方も、ぜひ観戦しに来てください〜 熱い試合を一緒に楽しみましょう！ ワールドはQuest対応です！ …",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "6f3e6298d6c13e5c9c7f",
-      "title": "club Focus",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "036450465032af63bb56",
-      "title": "cop",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e36f0fb275ca16bb654e",
-      "title": "Progrès fulgurant",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "occ_bcccb949b0ce5d71c0a7",
-      "title": "「計算と自然」集会",
-      "category": "technology",
-      "label": "技術・研究",
-      "subcategory": "research",
-      "score": 7,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:自然計算",
-        "keyword:description:研究"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "828ee137e039746bd939",
-      "title": "イベント 開催告知 です。 今週の VRC イベント『Fighting Burst』は予約等なしの、フリー参加形式で 本日 10/3(土)22時より 開催 します！ JOIN 先はリプに続ける…",
-      "category": "community",
-      "label": "交流・カフェ",
-      "subcategory": "cafe",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:cafe"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "32dc695d31f512faf777",
-      "title": "TCG「Battle Xceed」体験会",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "9d28e2aa9229a4fadc6f",
-      "title": "Bar Lupinus",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "00451d82c02c26ccaa65",
-      "title": "#VRCPPP VRC イベント「Pretty Private Pleasure」 10月3日(土)23時 リクイン 受付 開始 😈 【タイムテーブル】 23:00~23:02 Req-In（…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d0a154cca2d7a10b7635",
-      "title": "VRC イベント「ふぇむふぇむもくもく」 #fem_moku 10/3（土）23:00に リクイン 受付 開始 です 今夜 は個室コンテナ１回ラウンジ２回での 開催 です 可愛いふぇむぼーい達…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "5a996fd0fb3c9ea6eb45",
-      "title": "Jujutsu Reborn Episode ｜ RP Session",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "de3150f952d2d25c1381",
-      "title": "rp fantaisie",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "9215f77a50ff28a7f014",
       "title": "Bar Event 16＋",
@@ -3950,8 +3687,34 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "25ce4043f34770c0dfb4",
+      "title": "【お知らせ】 相当なわがままは承知なのですが、 この後18時より VRC にてゲリラで少し歌わせていただきます。 良かったら聞きに来てね。（ Group + インスタンス です） https:…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "c2f26445599473075e8c",
       "title": "本日 の20:15~しりとり系ワールドを楽しもう！というイベントを 開催 致します！ 無言勢も､観戦だけという方も､実力問わず誰でも参加大歓迎です！ 参加方法 グループ: VRC しりとり協会…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ad941f993344f0f7b2b6",
+      "title": "🔥🔥🔥 明日 は柚華はこちら🔥🔥🔥 めっちゃ頭振れるイベント確定です！ 全 VRChat のパンク・ハードコアキッズとメタルヘッズのみんな 遊びに来い！ 10/04（日）20:30 開場 21…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3983,6 +3746,19 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fe8f0da7e00e92bd740e",
+      "title": "🌙【#ClubMorceau】#39 🌙 ～ モルソ 第39回 House回 ～ ⏰10月4日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4377,8 +4153,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "0ebb67aea499a6751dde",
-      "title": "【🪞 VRCイベント告知 🍎】 10月9日〜11日まで 開催 される ポピー横丁7周年祭に出演いたします🙌✨ 私の出演日は10月9日(金)22:10〜です！ イベントの詳細につきましては引用元…",
+      "event_id": "d5cee7e0cbd97549d531",
+      "title": "VRC イベント 『Luminous Astrantia』 🍀第5回 オープン のお知らせ🍀 10/9(金)22:55~24:15 🌟リポストキャンペーン🌟 ゲストさんの歌×particlel…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4597,7 +4373,7 @@
     },
     {
       "event_id": "6391fb1cb40d7718da22",
-      "title": "【異世界酒場番外編 VRC 収穫祭🍻】 今年もやります！エールで乾杯！異世界酒場！ ツリーにてstaff募集中‼ 11/22（日）22時から23時予定 開催 場所：YOEOの Group +イ…",
+      "title": "【異世界酒場番外編 VRC 収穫祭🍻】 今年もやります！エールで乾杯！異世界酒場！ ツリーにてstaff募集中‼ 11/22（日）22時から23時予定 開催 場所：YOEOの Group + …",
       "category": "recruitment_deadline",
       "label": "募集・締切",
       "subcategory": null,
@@ -4779,6 +4555,23 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "occ_900df5ea9af6658d2a06",
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ソフトウェア"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
