@@ -4,6 +4,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -19,7 +20,9 @@ HISTORY_PATH = Path("public/yahoo-candidate-history.json")
 TARGET_DECISIONS = {"partial_datetime", "ambiguous_datetime"}
 
 DEADLINE_RE = re.compile(
-    r"応募|募集|申込|申し込み|エントリー|予約|受付|締切|〆切|期限|(?:までに|までの)"
+    r"締切|〆切|"
+    r"(?:応募|募集|申込|申し込み|エントリー|受付).{0,20}"
+    r"(?:期限|締切|終了|まで)"
 )
 PERIOD_RE = re.compile(
     r"開催期間|展示期間|公開期間|営業期間|"
@@ -33,9 +36,10 @@ MULTI_OCCURRENCE_RE = re.compile(
     r"\d{1,2}\s*[./／月-]\s*\d{1,2}\s*日?"
 )
 PAST_REPORT_RE = re.compile(
-    r"開催しました|開催いたしました|終了しました|終了いたしました|"
+    r"開催しました|開催いたしました|開催した|開催されました|"
+    r"参加しました|参加した|終了しました|終了いたしました|"
     r"ご参加ありがとうございました|ご来場ありがとうございました|"
-    r"活動報告|開催報告|イベントレポート|先日|昨日"
+    r"活動報告|開催報告|イベントレポート|振り返り|集合写真|備忘録|アフター"
 )
 
 
@@ -123,6 +127,46 @@ def conflicting_date_context(
     )
 
 
+def _date_context_windows(text: str, radius: int = 48) -> list[str]:
+    """Return bounded context around date mentions in the current candidate only."""
+    normalized = unicodedata.normalize("NFKC", text)
+    matches = [
+        *evidence_graph.EXPLICIT_DATE_RE.finditer(normalized),
+        *evidence_graph.RELATIVE_DAY_RE.finditer(normalized),
+    ]
+    return [
+        normalized[max(0, match.start() - radius): min(len(normalized), match.end() + radius)]
+        for match in matches
+    ]
+
+
+def classify_row_date_semantics(
+    row: dict[str, Any],
+    *,
+    anchor: Any,
+) -> str:
+    """Classify the current row's own date role; peer text cannot leak roles into it."""
+    text = str(row.get("text") or row.get("text_excerpt") or "")
+    windows = _date_context_windows(text)
+    dates = evidence_graph._explicit_dates(text, anchor)
+
+    if any(DEADLINE_RE.search(window) for window in windows):
+        return "application_or_recruitment_deadline"
+    if PERIOD_RE.search(unicodedata.normalize("NFKC", text)):
+        return "event_period"
+    if MULTI_OCCURRENCE_RE.search(text) or len(dates) > 1:
+        return "multiple_occurrences"
+    if any(PAST_REPORT_RE.search(window) for window in windows) or (
+        not windows and PAST_REPORT_RE.search(text)
+    ):
+        return "past_event_or_activity_report"
+    if any(evidence_graph.STRONG_EVENT_SIGNAL_RE.search(window) for window in windows):
+        return "event_occurrence"
+    if not windows and evidence_graph.STRONG_EVENT_SIGNAL_RE.search(text):
+        return "event_occurrence"
+    return "other_or_undetermined"
+
+
 def classify_conflicting_date_semantics(
     row: dict[str, Any],
     *,
@@ -130,38 +174,8 @@ def classify_conflicting_date_semantics(
     anchor: Any,
 ) -> tuple[str, list[str], list[str]]:
     """Classify conflicting-date evidence without changing publication decisions."""
-    nodes, fingerprints = conflicting_date_context(row, graph=graph, anchor=anchor)
-    texts = [node.text for node in nodes]
-    if not texts:
-        texts = [str(row.get("text") or row.get("text_excerpt") or "")]
-    combined = "\n".join(texts)
-
-    if DEADLINE_RE.search(combined):
-        semantic = "application_or_recruitment_deadline"
-    elif PERIOD_RE.search(combined):
-        semantic = "event_period"
-    elif PAST_REPORT_RE.search(combined):
-        semantic = "past_event_or_activity_report"
-    else:
-        unique_dates = {
-            event_date
-            for node in nodes
-            for event_date in evidence_graph._explicit_dates(node.text, node.anchor)
-        }
-        dated_occurrence_nodes = sum(
-            bool(evidence_graph._explicit_dates(node.text, node.anchor))
-            and bool(evidence_graph.STRONG_EVENT_SIGNAL_RE.search(node.text))
-            for node in nodes
-        )
-        if MULTI_OCCURRENCE_RE.search(combined) or (
-            len(unique_dates) > 1 and dated_occurrence_nodes >= 2
-        ):
-            semantic = "multiple_occurrences"
-        elif evidence_graph.STRONG_EVENT_SIGNAL_RE.search(combined):
-            semantic = "event_occurrence"
-        else:
-            semantic = "other_or_undetermined"
-
+    _nodes, fingerprints = conflicting_date_context(row, graph=graph, anchor=anchor)
+    semantic = classify_row_date_semantics(row, anchor=anchor)
     families = sorted({fingerprint_family(value) for value in fingerprints})
     return semantic, families, fingerprints
 
