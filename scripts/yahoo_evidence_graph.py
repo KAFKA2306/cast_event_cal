@@ -471,6 +471,64 @@ def _resolve_fingerprint_datetime(
     ambiguous_dates = current_dates if len(current_dates) > 1 else set()
     ambiguous_clocks = current_clocks if len(current_clocks) > 1 else set()
 
+    # When the candidate itself contains multiple dates or clocks, narrow an
+    # occurrence only from a single peer node that can support the remaining
+    # dimensions together. This prevents synthesizing a date from one peer and
+    # an unrelated clock from another peer.
+    if ambiguous_dates or ambiguous_clocks:
+        occurrences: dict[tuple[date, tuple[int, int]], set[str]] = {}
+        for node in nodes:
+            if node.status_id == current_id:
+                continue
+            node_dates = _explicit_dates(node.text, node.anchor)
+            node_clocks = _clocks(node.text)
+
+            if fixed_date is not None and node_dates and fixed_date not in node_dates:
+                continue
+            if fixed_clock is not None and node_clocks and fixed_clock not in node_clocks:
+                continue
+
+            if ambiguous_dates:
+                candidate_dates = node_dates & ambiguous_dates
+                if not candidate_dates:
+                    continue
+            elif fixed_date is not None:
+                candidate_dates = {fixed_date}
+            else:
+                candidate_dates = node_dates
+
+            if ambiguous_clocks:
+                candidate_clocks = node_clocks & ambiguous_clocks
+                if not candidate_clocks:
+                    continue
+            elif fixed_clock is not None:
+                candidate_clocks = {fixed_clock}
+            else:
+                candidate_clocks = node_clocks
+
+            if not candidate_dates or not candidate_clocks:
+                continue
+            for event_date in candidate_dates:
+                for event_clock in candidate_clocks:
+                    occurrences.setdefault((event_date, event_clock), set()).add(
+                        node.status_id
+                    )
+
+        if len(occurrences) != 1 or not current_id:
+            return None
+        (event_date, (hour, minute)), peer_ids = next(iter(occurrences.items()))
+        return (
+            datetime(
+                event_date.year,
+                event_date.month,
+                event_date.day,
+                hour,
+                minute,
+                tzinfo=JST,
+            ),
+            tuple(sorted({current_id, *peer_ids})),
+        )
+
     dates: set[date] = set()
     clocks: set[tuple[int, int]] = set()
     evidence_ids: set[str] = {current_id} if current_id else set()
@@ -488,12 +546,6 @@ def _resolve_fingerprint_datetime(
             if fixed_date in node_dates:
                 dates.add(fixed_date)
                 evidence_ids.add(node.status_id)
-        elif ambiguous_dates:
-            if node.status_id != current_id:
-                matching_dates = node_dates & ambiguous_dates
-                dates.update(matching_dates)
-                if matching_dates:
-                    evidence_ids.add(node.status_id)
         else:
             dates.update(node_dates)
             if node_dates:
@@ -503,12 +555,6 @@ def _resolve_fingerprint_datetime(
             if fixed_clock in node_clocks:
                 clocks.add(fixed_clock)
                 evidence_ids.add(node.status_id)
-        elif ambiguous_clocks:
-            if node.status_id != current_id:
-                matching_clocks = node_clocks & ambiguous_clocks
-                clocks.update(matching_clocks)
-                if matching_clocks:
-                    evidence_ids.add(node.status_id)
         else:
             clocks.update(node_clocks)
             if node_clocks:
