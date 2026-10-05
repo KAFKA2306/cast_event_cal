@@ -43,3 +43,38 @@ community_name, score, rank, fit_reason, contact_url, participation_url, corpora
 - category欠損を文字列部分一致だけで自動分類しない。
 - 公開窓口があっても、営業・協賛受付を意味するとは断定しない。
 - 個人情報や非公開連絡先は収集しない。
+
+## PoC納品テンプレート
+
+### 商品入力
+
+- client_name: 対象企業名
+- target_theme: 製品 / 採用職種 / IP / 教育テーマなど1つ
+- desired_action: 技術広報 / 採用 / 体験会 / コラボ / 市場調査のいずれか
+
+### 納品物
+
+1. Executive summary: 対象テーマに対する結論を3行以内で示す。
+2. Shortlist: A/Bランクを優先して10〜20コミュニティを提示する。
+3. Evidence: 各候補に公開窓口、参加導線、企業・団体実績、継続性、外部展開の根拠を付ける。
+4. Recommended action: 各候補について企業側が次に検討できる施策を1つだけ示す。
+5. Exclusions: 根拠不足で除外した候補と理由を残す。
+
+### Shortlist列
+
+client_name, target_theme, community_name, score, rank, fit_reason, recommended_action, contact_url, participation_url, corporate_evidence_url, recurrence_evidence, external_evidence_url, next_event, observed_occurrences, checked_at
+
+### 納品品質ルール
+
+- 10〜20件を埋めるために低品質候補を水増ししない。A/Bが10件未満なら件数不足を明記する。
+- recommended_action は公開情報から合理的に検討できる施策に限定し、「営業可能」「協賛可能」など未確認の受入可否を断定しない。
+- URLは納品生成時に再確認し、リンク切れ・非公開化した根拠は採点から外す。
+- next_event と observed_occurrences は観測データから生成し、外部サイトの累計値と混同しない。
+- checked_at を必須にし、時間経過で古くなる調査結果だと分かるようにする。
+
+## 販売単位
+
+初回PoCは「1社 × 1テーマ × 10〜20候補」の固定スコープとする。価格仮説は9,800円。追加テーマ、継続監視、定期更新は初回PoCと分離し、初回購入の判断を単純にする。
+
+顧客に売るのはイベント一覧ではなく、公開根拠付きのコミュニティ候補と次の施策候補である。内部の711件規模の観測データは探索母集団として使い、その件数自体を商品価値の中心にしない。
+
