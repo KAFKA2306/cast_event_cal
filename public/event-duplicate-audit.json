@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1181,
-  "event_count_after": 1050,
+  "event_count_before": 1119,
+  "event_count_after": 988,
   "candidate_cluster_count": 103,
   "duplicate_cluster_count": 103,
   "duplicate_occurrence_count": 131,
   "duplicate_post_count": 131,
-  "duplicate_rate": 0.110923,
+  "duplicate_rate": 0.117069,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
     {
       "cluster_id": "occ_05d2126b49cc9ea0171b",
@@ -1626,6 +1626,28 @@
       "representative_source_record_id": "src_afc9fae54fe776abb47e"
     },
     {
+      "cluster_id": "occ_af3c9d694878a9ec28af",
+      "starts_at": "2026-10-06T11:00:00Z",
+      "title": "『Eclipse Resonance -蝕の共鳴-』 2026/10/6 20:00、発売します。 でも―― 商品写真だけでは、このギターの半分も伝わらないと思っています。 なので 今夜 22…",
+      "member_count": 2,
+      "member_ids": [
+        "135b4056cdb0e16dd094",
+        "6f856cd7c03f45764130"
+      ],
+      "source_record_ids": [
+        "src_3f2dc5a5ef25f122c7a3",
+        "src_734417932cb11109c3d6"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_734417932cb11109c3d6"
+    },
+    {
       "cluster_id": "occ_b0fc665aac5da9145113",
       "starts_at": "2026-11-25T12:00:00Z",
       "title": "VRC数学談話会",
@@ -2178,28 +2200,6 @@
       "representative_source_record_id": "src_b9118a435959e1871ba8"
     },
     {
-      "cluster_id": "occ_efd3178fdba37071ccf0",
-      "starts_at": "2026-10-05T13:00:00Z",
-      "title": "VRC イベント「JPTOWN夏祭り2026本 祭り 」 開場 しました！ HK2（KUSAASOBI）に JOIN https://t.co/C1UAvM0Bw3 もしくは、Publicイン…",
-      "member_count": 2,
-      "member_ids": [
-        "2f4c4b83c22df04b468a",
-        "af00fd0a35eecdb1da36"
-      ],
-      "source_record_ids": [
-        "src_4970e4bae2c4045537e3",
-        "src_c180426a8412e124e850"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_c180426a8412e124e850"
-    },
-    {
       "cluster_id": "occ_f10bc9631ce0c84e0106",
       "starts_at": "2026-11-25T13:00:00Z",
       "title": "Web技術集会",
@@ -2336,6 +2336,15 @@
   ],
   "ambiguous_candidates": [
     {
+      "left_id": "4c28162ff4679f127370",
+      "right_id": "b186dc775b4f53076913",
+      "starts_at": "2026-10-05T13:00:00Z",
+      "organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.626,
+      "left_title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/mA0G5pCNpe",
+      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
+    },
+    {
       "left_id": "6eb8b3cfe483b3c5f95c",
       "right_id": "3d171d7f0ccecbbe8413",
       "starts_at": "2026-10-10T09:45:00Z",
@@ -2347,105 +2356,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "b9cffee1463e23525c97",
-      "right_id": "60c11bcadc022684f385",
-      "starts_at": "2026-10-04T09:39:00Z",
-      "left_organizer": "JAMONES",
-      "right_organizer": "JAMONES",
-      "similarity": 0.351,
-      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "right_title": "LA JUNTA DE LOS CEBADOS"
+      "left_id": "671e30dee54a19d361b9",
+      "right_id": "7be418024cae5c597123",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Dancers LFG",
+      "right_organizer": "LinuxVRC",
+      "similarity": 0.0961,
+      "left_title": "Dancers LFG Open Mat",
+      "right_title": "Sunday LinuxVRC Meetupǃ"
     },
     {
-      "left_id": "44a08073fb7f2736f848",
-      "right_id": "6391782f280dafd5ac9f",
-      "starts_at": "2026-10-04T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "ガンナガン同好会",
-      "similarity": 0.1038,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "VRChatでカードゲーム！ ガンナガン初心者体験会"
+      "left_id": "671e30dee54a19d361b9",
+      "right_id": "692185bc686073e6d31d",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Dancers LFG",
+      "right_organizer": "Meta Church",
+      "similarity": 0.1034,
+      "left_title": "Dancers LFG Open Mat",
+      "right_title": "Sunday Service"
     },
     {
-      "left_id": "41cfaa8f3733eddf391f",
-      "right_id": "7fb07c4d62350c11ae97",
-      "starts_at": "2026-10-04T11:00:00Z",
-      "left_organizer": "oobatenのかくれんぼ",
-      "right_organizer": "超ねこ速度",
-      "similarity": 0.1517,
-      "left_title": "_NaZ3_さんのかくれんぼ",
-      "right_title": "NewB - 初心者交流イベント"
+      "left_id": "671e30dee54a19d361b9",
+      "right_id": "273ddf4b263804662372",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Dancers LFG",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.2375,
+      "left_title": "Dancers LFG Open Mat",
+      "right_title": "The Autistic Circus"
     },
     {
-      "left_id": "acc33cbd6171d6b372f0",
-      "right_id": "cd9ad7886db00147d34d",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "@193IQ3_kashikoi",
-      "right_organizer": "-メタバースソーラン- Metaverse Soran",
-      "similarity": 0.0824,
-      "left_title": "VRChat 音楽イベント 告知 ！！ 193企画！",
-      "right_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】"
+      "left_id": "671e30dee54a19d361b9",
+      "right_id": "8050f4d9bf7679f15731",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Dancers LFG",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0044,
+      "left_title": "Dancers LFG Open Mat",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "acc33cbd6171d6b372f0",
-      "right_id": "ea255d11c51bc641cc9a",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "@193IQ3_kashikoi",
-      "right_organizer": "@miruny1665",
-      "similarity": 0.3077,
-      "left_title": "VRChat 音楽イベント 告知 ！！ 193企画！",
-      "right_title": "今日 ！21時から、193主催の激しいライブがあるよ🧈 頭ふりふりバターをつくろう！ 豪華メンバーと共に盛りあがろう！！✨ 10/4 （日） 開場 20:30 スタート21:00 VRChat…"
+      "left_id": "7be418024cae5c597123",
+      "right_id": "692185bc686073e6d31d",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "LinuxVRC",
+      "right_organizer": "Meta Church",
+      "similarity": 0.0444,
+      "left_title": "Sunday LinuxVRC Meetupǃ",
+      "right_title": "Sunday Service"
     },
     {
-      "left_id": "acc33cbd6171d6b372f0",
-      "right_id": "ad941f993344f0f7b2b6",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "@193IQ3_kashikoi",
-      "right_organizer": "@fukuiyuzuha__V",
-      "similarity": 0.2294,
-      "left_title": "VRChat 音楽イベント 告知 ！！ 193企画！",
-      "right_title": "🔥🔥🔥 明日 は柚華はこちら🔥🔥🔥 めっちゃ頭振れるイベント確定です！ 全 VRChat のパンク・ハードコアキッズとメタルヘッズのみんな 遊びに来い！ 10/04（日）20:30 開場 21…"
+      "left_id": "7be418024cae5c597123",
+      "right_id": "273ddf4b263804662372",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "LinuxVRC",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.1753,
+      "left_title": "Sunday LinuxVRC Meetupǃ",
+      "right_title": "The Autistic Circus"
     },
     {
-      "left_id": "cd9ad7886db00147d34d",
-      "right_id": "ea255d11c51bc641cc9a",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "-メタバースソーラン- Metaverse Soran",
-      "right_organizer": "@miruny1665",
-      "similarity": 0.0629,
-      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
-      "right_title": "今日 ！21時から、193主催の激しいライブがあるよ🧈 頭ふりふりバターをつくろう！ 豪華メンバーと共に盛りあがろう！！✨ 10/4 （日） 開場 20:30 スタート21:00 VRChat…"
+      "left_id": "7be418024cae5c597123",
+      "right_id": "8050f4d9bf7679f15731",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "LinuxVRC",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0528,
+      "left_title": "Sunday LinuxVRC Meetupǃ",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "cd9ad7886db00147d34d",
-      "right_id": "ad941f993344f0f7b2b6",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "-メタバースソーラン- Metaverse Soran",
-      "right_organizer": "@fukuiyuzuha__V",
-      "similarity": 0.1538,
-      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
-      "right_title": "🔥🔥🔥 明日 は柚華はこちら🔥🔥🔥 めっちゃ頭振れるイベント確定です！ 全 VRChat のパンク・ハードコアキッズとメタルヘッズのみんな 遊びに来い！ 10/04（日）20:30 開場 21…"
+      "left_id": "692185bc686073e6d31d",
+      "right_id": "273ddf4b263804662372",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Meta Church",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.1015,
+      "left_title": "Sunday Service",
+      "right_title": "The Autistic Circus"
     },
     {
-      "left_id": "ea255d11c51bc641cc9a",
-      "right_id": "ad941f993344f0f7b2b6",
-      "starts_at": "2026-10-04T11:30:00Z",
-      "left_organizer": "@miruny1665",
-      "right_organizer": "@fukuiyuzuha__V",
-      "similarity": 0.1353,
-      "left_title": "今日 ！21時から、193主催の激しいライブがあるよ🧈 頭ふりふりバターをつくろう！ 豪華メンバーと共に盛りあがろう！！✨ 10/4 （日） 開場 20:30 スタート21:00 VRChat…",
-      "right_title": "🔥🔥🔥 明日 は柚華はこちら🔥🔥🔥 めっちゃ頭振れるイベント確定です！ 全 VRChat のパンク・ハードコアキッズとメタルヘッズのみんな 遊びに来い！ 10/04（日）20:30 開場 21…"
+      "left_id": "692185bc686073e6d31d",
+      "right_id": "8050f4d9bf7679f15731",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "Meta Church",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0444,
+      "left_title": "Sunday Service",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "9aa06a9eaac29bc5d53f",
-      "right_id": "dd115a2ce4c9f4002817",
-      "starts_at": "2026-10-04T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "2026年9月VRC同期会",
-      "similarity": 0.024,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：杉崎リン ご来店希…",
-      "right_title": "10⁄4（日） 21時～ VRC同期会を作ろう！ ＃2026年9月VRC同期会"
+      "left_id": "273ddf4b263804662372",
+      "right_id": "8050f4d9bf7679f15731",
+      "starts_at": "2026-10-04T19:00:00Z",
+      "left_organizer": "The Autistic Circus",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0123,
+      "left_title": "The Autistic Circus",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     }
   ],
-  "generated_at": "2026-10-05T08:59:46Z"
+  "generated_at": "2026-10-05T18:24:51Z"
 }
