@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-10-08T08:59:09Z",
+  "generated_at": "2026-10-08T13:24:20Z",
   "status": "degraded",
   "enabled_sources": 5,
   "successful_sources": 3,
   "failed_sources": 0,
-  "event_count": 1133,
+  "event_count": 1119,
   "sources": [
     {
       "name": "repository_manual_events",
@@ -18,7 +18,7 @@
       "status": "skipped",
       "count": 0,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-08T08:57:55Z",
+      "collection_generated_at": "2026-10-08T13:23:08Z",
       "reason": "VRCHAT_AUTH_COOKIE is not configured",
       "collection_event_count": 0
     },
@@ -27,96 +27,96 @@
       "status": "skipped",
       "count": 2,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-08T08:57:55Z",
+      "collection_generated_at": "2026-10-08T13:23:08Z",
       "reason": "X_BEARER_TOKEN is not configured; retained existing cache",
       "collection_event_count": 2
     },
     {
       "name": "yahoo_realtime_events",
       "status": "ok",
-      "count": 64,
+      "count": 48,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-08T08:59:04Z",
-      "collection_event_count": 64
+      "collection_generated_at": "2026-10-08T13:24:17Z",
+      "collection_event_count": 48
     },
     {
       "name": "external_calendar_events",
       "status": "ok",
-      "count": 709,
+      "count": 707,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-08T08:59:02Z",
-      "collection_event_count": 709
+      "collection_generated_at": "2026-10-08T13:24:14Z",
+      "collection_event_count": 707
     }
   ],
   "ontology": {
     "schema_version": "2.0",
     "curation_mode": "human_only",
     "entries": 15,
-    "matched_events": 296,
+    "matched_events": 295,
     "matched_series": 13,
-    "unmatched_events": 837,
+    "unmatched_events": 824,
     "ambiguous_events": 0,
     "status": "ok"
   },
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1133,
+    "event_count": 1119,
     "category_breakdown": {
       "art": 122,
-      "community": 275,
-      "game": 115,
+      "community": 269,
+      "game": 112,
       "language_exchange": 34,
       "learning": 17,
-      "music": 151,
-      "other": 100,
-      "performance": 24,
+      "music": 149,
+      "other": 101,
+      "performance": 23,
       "recruitment_deadline": 3,
-      "technology": 202,
+      "technology": 200,
       "wellness": 70,
-      "world_tour": 20
+      "world_tour": 19
     },
     "subcategory_breakdown": {
-      "ai": 36,
+      "ai": 34,
       "bar": 1,
-      "cafe": 41,
-      "cast_service": 4,
+      "cafe": 36,
+      "cast_service": 3,
       "class": 6,
-      "dance": 66,
+      "dance": 62,
       "dj": 2,
-      "engineering": 112,
+      "engineering": 113,
       "fitness": 35,
-      "hangout": 65,
+      "hangout": 67,
       "language_exchange": 34,
       "lecture": 2,
       "live_music": 2,
-      "mystery": 37,
+      "mystery": 35,
       "participant_recruitment": 2,
       "photography": 121,
-      "research": 45,
-      "show": 23,
-      "social": 143,
+      "research": 44,
+      "show": 22,
+      "social": 141,
       "tabletop": 37,
       "workshop": 9,
-      "world_tour": 20
+      "world_tour": 19
     },
     "event_mode_breakdown": {
       "deadline": 3,
       "hybrid": 14,
-      "in_world": 1113,
+      "in_world": 1099,
       "stream": 3
     },
     "classification_source_breakdown": {
-      "curated_ontology": 278,
-      "fallback": 100,
-      "keyword_rules": 477,
-      "legacy_and_keywords": 137,
+      "curated_ontology": 277,
+      "fallback": 101,
+      "keyword_rules": 464,
+      "legacy_and_keywords": 136,
       "legacy_category": 141
     },
     "organizer_profile_count": 28,
-    "low_confidence_event_count": 128,
-    "audit_event_count": 128
+    "low_confidence_event_count": 126,
+    "audit_event_count": 126
   },
-  "normalized_event_count": 1269,
+  "normalized_event_count": 1251,
   "occurrence_dedup_policy": "canonical-occurrence.v1",
   "skipped_sources": 2,
   "degraded_sources": 0
