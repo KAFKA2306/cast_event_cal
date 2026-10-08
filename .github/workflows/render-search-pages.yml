@@ -39,6 +39,7 @@ permissions:
 
 jobs:
   verify:
+    timeout-minutes: 60
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -51,6 +52,7 @@ jobs:
           cache: pip
       - run: pip install -e '.[dev]'
       - name: Install Japanese font for deterministic OG rendering
+        timeout-minutes: 10
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
@@ -65,6 +67,7 @@ jobs:
       - run: python scripts/verify_crawl_graph.py
 
   publish:
+    timeout-minutes: 90
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     needs: verify
     runs-on: ubuntu-latest
@@ -83,6 +86,7 @@ jobs:
           cache: pip
       - run: pip install -e .
       - name: Install Japanese font for deterministic OG rendering
+        timeout-minutes: 10
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
