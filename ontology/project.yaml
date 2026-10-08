@@ -76,3 +76,19 @@ validation:
   semantic: Preserve event identity, cancellation, rescheduling, recurrence, and timezone meaning across outputs.
   evidence: Verify source snapshots, merge reasons, conversion rules, and freshness timestamps.
   publication: JSON, iCalendar, and web outputs must agree on event identity, status, and schedule.
+
+operational_model:
+  implementation_status: "Existing deterministic source acquisition, accept/reject and canonical publication pipeline."
+  canonical_sources: ["config/event_ontology.json","data/yahoo_realtime_candidates.json","data/yahoo_realtime_rejected.json","public/events.json","public/calendar.ics","public/snapshot.json"]
+  objects: ["SourcePost","Organizer","Event","Series","Occurrence","Classification","CalendarSnapshot","Evidence"]
+  links:
+    - ["SourcePost","DESCRIBES","Event"]
+    - ["Organizer","HOSTS","Event"]
+    - ["Series","HAS_OCCURRENCE","Occurrence"]
+    - ["Classification","EVALUATES","SourcePost"]
+  actions:
+    - id: "publish_verified_event"
+      preconditions: "Source identity, event time with timezone, source-post-relative date, organizer evidence and duplicate/status checks pass."
+      recorded_effect: "Publish accepted events to canonical JSON, iCalendar and Web with matching identity and snapshot hashes; rejected candidates keep reason codes."
+      rollback_or_recovery: "Missing or contradictory organizer/time evidence remains rejected or ambiguous; do not change canonical publication to fit target coverage."
+  outcome_metrics: ["accepted_with_source_ratio","rejection_reason_coverage","calendar_snapshot_integrity","time_conflict_count"]
