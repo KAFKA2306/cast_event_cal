@@ -1,0 +1,33 @@
+name: Tonight publication provenance
+
+on:
+  pull_request:
+    paths:
+      - 'public/tonight/**'
+      - 'scripts/build_tonight_provenance.py'
+      - 'scripts/verify_tonight_provenance.py'
+      - 'tests/test_tonight_provenance.py'
+      - '.github/workflows/tonight-provenance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build production-candidate provenance from exact head
+        run: |
+          cp -R public/tonight "$RUNNER_TEMP/tonight"
+          python scripts/build_tonight_provenance.py --commit "$GITHUB_SHA" --production --output "$RUNNER_TEMP/tonight/provenance.json"
+      - name: Verify all Tonight provenance surfaces agree
+        run: python scripts/verify_tonight_provenance.py --root "$RUNNER_TEMP/tonight" --production
+      - name: Regression tests
+        run: |
+          python -m pip install pytest
+          pytest -q tests/test_tonight_provenance.py
