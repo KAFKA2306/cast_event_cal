@@ -2,14 +2,24 @@
   const current = document.currentScript;
   const configUrl = current?.dataset.config || 'analytics-config.json';
   const safe = (value, limit = 80) => String(value || '').slice(0, limit);
-  const send = (name, params = {}) => { if (typeof window.gtag === 'function') window.gtag('event', name, params); };
+  const privacyOptOut = () => navigator.globalPrivacyControl === true || navigator.doNotTrack === '1';
+  const send = (name, params = {}) => {
+    if (privacyOptOut()) return;
+    if (typeof window.gtag === 'function') window.gtag('event', name, params);
+  };
+  if (privacyOptOut()) return;
   fetch(configUrl, { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(config => {
     const id = safe(config.ga4_measurement_id);
     if (!/^G-[A-Z0-9]+$/.test(id)) return;
     window.dataLayer = window.dataLayer || [];
     window.gtag = function(){ dataLayer.push(arguments); };
     gtag('js', new Date());
-    gtag('config', id, { allow_google_signals: false });
+    gtag('config', id, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+      ads_data_redaction: true,
+      send_page_view: false,
+    });
     const tag = document.createElement('script');
     tag.async = true;
     tag.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
