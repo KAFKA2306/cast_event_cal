@@ -1,20 +1,42 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1272,
-  "event_count_after": 1271,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.000786,
+  "event_count_before": 1298,
+  "event_count_after": 1296,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.001541,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
+      "cluster_id": "occ_1145f8b8329107f013c0",
+      "starts_at": "2026-10-13T12:40:00Z",
+      "title": "毎週火曜日21:40～ VRC イベント 「 VRC お絵かき集会inペンの多い集会所」 本日 も 開催 です！ お絵かき集会は、第3回 SpiceOfVRinks に 参加 します！よろしく…",
+      "member_count": 2,
+      "member_ids": [
+        "7e8abce87497abb38b8c",
+        "d17d024b31297205a419"
+      ],
+      "source_record_ids": [
+        "src_0a067b74ac99f3053459",
+        "src_43e8ce4a3226a967d8b4"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_43e8ce4a3226a967d8b4"
+    },
+    {
       "cluster_id": "occ_cd1a935813870f152548",
       "starts_at": "2026-10-10T12:00:00Z",
-      "title": "明日 は VRC 通信工学集会！ 【タイムスケジュール】 10月10日(土) 21:00～ 開場 21:30～ Yudofu_185さん #10 そのコンタクトレンズ、通信どうしてんの？〜「超…",
+      "title": "明日 は VRC 通信工学 集会 ！ 【タイムスケジュール】 10月10日(土) 21:00～ 開場 21:30～ Yudofu_185さん #10 そのコンタクトレンズ、通信どうしてんの？〜…",
       "member_count": 2,
       "member_ids": [
         "378ff957bf370896f49c",
@@ -47,105 +69,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "4ce9de62fabaa7e83073",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.1074,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "Blender＆Unity技術交流会"
+      "left_id": "1467e6b8c951851f843c",
+      "right_id": "24fd81a365c5834fa8e4",
+      "starts_at": "2026-10-09T19:00:00Z",
+      "left_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "right_organizer": "@Very_Chevy",
+      "similarity": 0.08,
+      "left_title": "おはよう！朝4時に何してるんだぃ？",
+      "right_title": "🀄【 明日開催 ！雀KEMO!! 麻雀 集会 】🐾 📅 10/10(土) 22:00〜24:00 JST 📍 VRChat 「麻雀 集会 所 β」 🌐 グループパブリック 初心者歓迎！アバター…"
     },
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "e297ef690aab97e0076a",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.4,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "16a80a940337f5c98a05",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Dibz Adventures",
+      "similarity": 0.2332,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Community Night Stream"
     },
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "c9f65e4511edd38a5b30",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.3333,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRCふれあい動物園"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "e800b0f72af40ae8894b",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Anime Ships United",
+      "similarity": 0.1699,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Fleet Fridayǃ RP Eventǃ"
     },
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "419ce817abcdc12dd85b",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.0549,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "エンジニア作業飲み集会"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "13142ed90aaab839ffba",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Mellish's Penthouse 18 Plus",
+      "similarity": 0.1604,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Friday Night VRChat Meetups - 18＋ Friendly"
     },
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "078b570389accd0f6887",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRC_WorldTour",
-      "similarity": 0.1019,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "🛖【 VRC世界旅行EX 】🛖 明日22:00〜23:00 「世界の土着建築」 開催 です! 石を積み、岩を削り、土を固める。 有名な建築家ではなく、その土地の人々が、その土地の材料でつくって…"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "c487c058d6521b1b7bbd",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Project Eden",
+      "similarity": 0.2433,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Fucked Up Friday"
     },
     {
-      "left_id": "50fc9975dd112764ae84",
-      "right_id": "24ef459db2cdcdd24d89",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@MilfyDance",
-      "similarity": 0.1618,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "🧸毎週金曜日はミルフィちゃんダンス部🧸 第13回 #ミルフィちゃんダンス部 本日 22:00〜23:30で 開催 ✨ ミルフィちゃんで楽しくわちゃわちゃ踊ろう！🐾 参加はプロフィールの VRC…"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "73503c4f6718999c1dd9",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "FurHub",
+      "similarity": 0.1639,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "FurHub Game Night"
     },
     {
-      "left_id": "4ce9de62fabaa7e83073",
-      "right_id": "e297ef690aab97e0076a",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.0933,
-      "left_title": "Blender＆Unity技術交流会",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "95e95f5e62480898a792",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "CnA The Encore",
+      "similarity": 0.14,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Group Instanceǃǃǃ"
     },
     {
-      "left_id": "4ce9de62fabaa7e83073",
-      "right_id": "c9f65e4511edd38a5b30",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.0719,
-      "left_title": "Blender＆Unity技術交流会",
-      "right_title": "VRCふれあい動物園"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "cd91fd68929d83f2372b",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Wildclaw101",
+      "similarity": 0.1598,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Innkeeping at The Wanderer"
     },
     {
-      "left_id": "4ce9de62fabaa7e83073",
-      "right_id": "419ce817abcdc12dd85b",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": null,
-      "similarity": 0.193,
-      "left_title": "Blender＆Unity技術交流会",
-      "right_title": "エンジニア作業飲み集会"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "5a1a2dba12199058f669",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "Game Show Mafia",
+      "similarity": 0.2382,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "Lost in Movies"
     },
     {
-      "left_id": "4ce9de62fabaa7e83073",
-      "right_id": "078b570389accd0f6887",
-      "starts_at": "2026-10-09T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@VRC_WorldTour",
-      "similarity": 0.1226,
-      "left_title": "Blender＆Unity技術交流会",
-      "right_title": "🛖【 VRC世界旅行EX 】🛖 明日22:00〜23:00 「世界の土着建築」 開催 です! 石を積み、岩を削り、土を固める。 有名な建築家ではなく、その土地の人々が、その土地の材料でつくって…"
+      "left_id": "b6c97e3503f32698a903",
+      "right_id": "10816fc296d74b07926b",
+      "starts_at": "2026-10-10T00:00:00Z",
+      "left_organizer": "The Night Shift",
+      "right_organizer": "No Friends Friends Club",
+      "similarity": 0.2335,
+      "left_title": "Bostin's Community Nightǃ",
+      "right_title": "NFFC Friday Meeting"
     }
   ],
-  "generated_at": "2026-10-10T12:27:42Z"
+  "generated_at": "2026-10-10T17:52:02Z"
 }
