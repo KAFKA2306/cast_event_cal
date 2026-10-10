@@ -276,3 +276,28 @@ def test_peer_evidence_plan_prioritizes_recent_unresolved_rows():
 
     assert len(plan) == 1
     assert "#vrc新しい会" in plan[0]["query"].casefold()
+
+def test_vrc_world_tour_ex_announcement_is_recognized_without_generic_event_noun():
+    configure_classifier()
+    announcement = (
+        "【VRC世界旅行EX】2026/10/21 22:00〜23:00 "
+        "「物語の舞台を旅する」開催です！クエスト対応。#VRChat"
+    )
+    accepted, reason = refined_candidate_to_event(
+        candidate(announcement),
+        now=datetime(2026, 10, 20, tzinfo=UTC),
+        min_retweets=3,
+        x_ids=set(),
+    )
+    assert reason is None
+    assert accepted is not None
+    assert accepted["starts_at"] == "2026-10-21T13:00:00Z"
+
+    unknown_date, reason = refined_candidate_to_event(
+        candidate("【VRC世界旅行EX】開催予定！#VRChat"),
+        now=datetime(2026, 10, 20, tzinfo=UTC),
+        min_retweets=3,
+        x_ids=set(),
+    )
+    assert unknown_date is None
+    assert reason == "missing_datetime"
