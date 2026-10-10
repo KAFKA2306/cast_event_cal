@@ -58,6 +58,9 @@ SPECIFIC_EVENT_TERMS = {
     "朗読ミュージカル", "舞台公演", "演奏会", "音楽会", "撮影会", "展示会", "展覧会",
     "フェス", "festival", "祭り", "オフ会", "説明会", "体験会", "試写会", "フォトコン",
     "vrchatライブ", "performance live", "講習会", "dj営業",
+    # Official VRChat event-series names are event markers even when announcements
+    # omit generic terms like 集会 or イベント. Time validation remains mandatory.
+    "世界旅行ex", "vrc世界旅行", "vrc 世界旅行", "vrc旅ハブ",
 }
 EVENT_ACTION_TERMS = {"開催", "open", "オープン", "開場", "開始", "営業", "公演", "実施", "開演"}
 ATTENDANCE_TERMS = {
