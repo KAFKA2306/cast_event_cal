@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1101,
+  "event_count": 1230,
   "matched_events": 297,
   "matched_series": {
     "asmr-gathering": 36,
@@ -19,7 +19,7 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 804,
+  "unmatched_events": 933,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3571,18 +3571,18 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1101,
+    "event_count": 1230,
     "category_breakdown": {
       "art": 122,
-      "community": 260,
+      "community": 294,
       "game": 115,
       "language_exchange": 35,
-      "learning": 15,
+      "learning": 23,
       "music": 151,
       "other": 94,
       "performance": 17,
       "recruitment_deadline": 9,
-      "technology": 196,
+      "technology": 283,
       "wellness": 70,
       "world_tour": 17
     },
@@ -3595,18 +3595,18 @@
       "class": 5,
       "dance": 61,
       "dj": 4,
-      "engineering": 109,
+      "engineering": 174,
       "fitness": 36,
-      "hangout": 62,
+      "hangout": 71,
       "language_exchange": 35,
       "lecture": 1,
       "live_music": 2,
       "mystery": 34,
       "participant_recruitment": 2,
       "photography": 121,
-      "research": 44,
+      "research": 66,
       "show": 16,
-      "social": 147,
+      "social": 172,
       "tabletop": 36,
       "workshop": 9,
       "world_tour": 17
@@ -3614,19 +3614,20 @@
     "event_mode_breakdown": {
       "deadline": 9,
       "hybrid": 7,
-      "in_world": 1082,
-      "stream": 3
+      "in_world": 1189,
+      "stream": 17,
+      "unknown": 8
     },
     "classification_source_breakdown": {
       "curated_ontology": 280,
       "fallback": 94,
-      "keyword_rules": 461,
+      "keyword_rules": 590,
       "legacy_and_keywords": 135,
       "legacy_category": 131
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 119,
-    "audit_event_count": 119
+    "low_confidence_event_count": 133,
+    "audit_event_count": 133
   },
   "category_review_queue": [
     {
@@ -4935,6 +4936,24 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "9828e4ea4459ab978637",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "d382be791db7bfe88476",
       "title": "Dancing in VR with Asogautǃ",
       "category": "music",
@@ -4970,6 +4989,23 @@
       ]
     },
     {
+      "event_id": "028cfee32dec982a428b",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "c7cd98dcf348ff77aedb",
       "title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 ひときわ怪しく光る一冊の本。 いつもとは違う力を…",
       "category": "other",
@@ -4996,7 +5032,7 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "occ_82461f7de176361e35d2",
+      "event_id": "64d40cd650bee48ab722",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5006,6 +5042,23 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "3ab081a165ca063f87b6",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5030,6 +5083,24 @@
       ]
     },
     {
+      "event_id": "213a1288a9220dfb3ed6",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "54409b37830be4a1d404",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
@@ -5040,6 +5111,23 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "658bbf811a819a97fb4a",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5064,6 +5152,24 @@
       ]
     },
     {
+      "event_id": "f0a7b4e468661d0f6e78",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "1ca35dbc927b547740c5",
       "title": "分解技術集会",
       "category": "technology",
@@ -5081,7 +5187,25 @@
       ]
     },
     {
-      "event_id": "occ_9b93d24e91d6596f7184",
+      "event_id": "0b2f14574eed0ee9f095",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "f7b26ddef23f14972ea3",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5091,6 +5215,40 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "fd5ddfa3e822cf34000a",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "757ad6929e4f65524629",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5115,7 +5273,7 @@
       ]
     },
     {
-      "event_id": "occ_dafcd475c54aee19a754",
+      "event_id": "b028535937209dfaff69",
       "title": "「計算と自然」集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5150,7 +5308,7 @@
       ]
     },
     {
-      "event_id": "occ_4c6dcbddc5036e035a4d",
+      "event_id": "f6b4fcf90dc5c57c3291",
       "title": "「計算と自然」集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5168,7 +5326,7 @@
       ]
     },
     {
-      "event_id": "occ_8dad49ae4c1ba2d7a11f",
+      "event_id": "9380e02f31423c086382",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5178,6 +5336,23 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "b8d31e57ac06bd089801",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5202,7 +5377,7 @@
       ]
     },
     {
-      "event_id": "occ_68cddb4bf9624dd45016",
+      "event_id": "a92d7384884e11c40bbb",
       "title": "「計算と自然」集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5213,6 +5388,40 @@
       "evidence": [
         "keyword:description:自然計算",
         "keyword:description:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "fd95bb6b405d64c72e56",
+      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "5f7a2683e2e99f476711",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5237,7 +5446,7 @@
       ]
     },
     {
-      "event_id": "occ_900df5ea9af6658d2a06",
+      "event_id": "d83177aeecad1cc4ca0b",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
       "label": "技術・研究",
@@ -5247,6 +5456,23 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:ソフトウェア"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "a579dcea7ef1ceac4be5",
+      "title": "VRC歴史集会",
+      "category": "learning",
+      "label": "学習・講義",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:歴史"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -5264,6 +5490,24 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "ac879a779717a26eaf43",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
