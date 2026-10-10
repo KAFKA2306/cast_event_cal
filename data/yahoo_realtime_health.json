@@ -1,7 +1,7 @@
 {
   "schema_version": "2.3",
   "parser_version": "2.1",
-  "generated_at": "2026-10-10T00:12:13Z",
+  "generated_at": "2026-10-10T00:16:59Z",
   "status": "ok",
   "reason": null,
   "search_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88+OR+%E5%8F%82%E5%8A%A0%E6%96%B9%E6%B3%95+OR+%E5%8F%82%E5%8A%A0%E6%9D%A1%E4%BB%B6+OR+%E9%96%8B%E5%82%AC+OR+%E4%B8%BB%E5%82%AC+OR+join+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%A4%E3%83%B3%E3%83%90%E3%82%A4%E3%83%88+OR+%22request+invite%22+OR+%E6%9C%AC%E6%97%A5+OR+%E5%96%B6%E6%A5%AD+OR+%E5%BF%9C%E5%8B%9F%29+%28VRChat+OR+VRC%29&md=h",
@@ -12,30 +12,31 @@
   "accepted_candidates": 0,
   "rejected_candidates": 40,
   "retained_events": 0,
-  "event_count": 56,
+  "event_count": 61,
   "rejection_counts": {
-    "giveaway_only": 230,
-    "missing_datetime": 4227,
-    "missing_event_marker": 379,
+    "giveaway_only": 228,
+    "missing_datetime": 4202,
+    "missing_event_marker": 372,
     "missing_participation_method": 7,
+    "not_vrchat": 1,
     "past_event": 1,
-    "product_only": 61,
+    "product_only": 60,
     "too_far_future_now": 15
   },
   "history_replay_mode": "sharded_corpus",
   "history_retention_days": 365,
   "history_candidate_count": 5000,
-  "history_accepted_count": 80,
-  "history_rejected_count": 4920,
+  "history_accepted_count": 114,
+  "history_rejected_count": 4886,
   "automatically_promoted_count": 3,
   "corpus_target_count": 1000,
   "corpus_target_reached": true,
-  "queries_attempted": 34,
-  "queries_succeeded": 34,
+  "queries_attempted": 35,
+  "queries_succeeded": 35,
   "queries_failed": 0,
-  "raw_candidate_count": 353,
-  "unique_candidates_this_run": 311,
-  "duplicate_observations_removed": 42,
+  "raw_candidate_count": 442,
+  "unique_candidates_this_run": 381,
+  "duplicate_observations_removed": 61,
   "query_results": [
     {
       "key": "base-000",
@@ -44,10 +45,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88+OR+%E9%9B%86%E4%BC%9A+OR+%E4%BA%A4%E6%B5%81%E4%BC%9A+OR+%E5%96%B6%E6%A5%AD+OR+%E5%85%AC%E6%BC%94+OR+%E3%83%A9%E3%82%A4%E3%83%96+OR+DJ+OR+%E5%A4%A7%E4%BC%9A+OR+%E6%9C%97%E8%AA%AD%E4%BC%9A+OR+%E6%9C%97%E8%AA%AD%E5%8A%87+OR+%E6%9C%97%E8%AA%AD%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%B8%E3%82%AB%E3%83%AB+OR+%E8%88%9E%E5%8F%B0+OR+%E4%B8%8A%E6%98%A0%E4%BC%9A+OR+%E6%98%A0%E7%94%BB%E7%A5%AD+OR+%E5%B1%95%E7%A4%BA%E4%BC%9A+OR+%E6%92%AE%E5%BD%B1%E4%BC%9A+OR+%E3%83%95%E3%82%A7%E3%82%B9+OR+%E7%A5%AD%E3%82%8A+OR+%E3%82%AA%E3%83%95%E4%BC%9A+OR+%E8%AA%AC%E6%98%8E%E4%BC%9A+OR+%E4%BD%93%E9%A8%93%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 754202,
+      "html_bytes": 752981,
       "raw_candidates": 40,
       "unique_candidates_after_query": 40,
-      "duration_ms": 1785
+      "duration_ms": 1659
     },
     {
       "key": "base-001",
@@ -56,10 +57,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%91%8A%E7%9F%A5+OR+%E5%96%B6%E6%A5%AD%E5%91%8A%E7%9F%A5+OR+%E9%80%9A%E5%B8%B8%E5%96%B6%E6%A5%AD+OR+%E9%96%8B%E5%82%AC%E6%B1%BA%E5%AE%9A+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%29+%28JOIN+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+Group%2B+OR+%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E5%8F%82%E5%8A%A0%E6%96%B9%E6%B3%95%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 715137,
+      "html_bytes": 713916,
       "raw_candidates": 40,
       "unique_candidates_after_query": 77,
-      "duration_ms": 1755
+      "duration_ms": 1143
     },
     {
       "key": "base-002",
@@ -68,10 +69,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28JOIN+OR+%E3%82%B8%E3%83%A7%E3%82%A4%E3%83%B3+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+reqin+OR+%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%A4%E3%83%B3%E3%83%90%E3%82%A4%E3%83%88+OR+%22request+invite%22+OR+Group%2B+OR+%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9+OR+%E3%83%95%E3%83%AC%E3%83%B3%E3%83%89%E7%94%B3%E8%AB%8B%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 695473,
+      "html_bytes": 694252,
       "raw_candidates": 40,
       "unique_candidates_after_query": 103,
-      "duration_ms": 1295
+      "duration_ms": 1089
     },
     {
       "key": "base-003",
@@ -80,70 +81,22 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E5%8B%9F%E9%9B%86+OR+%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95%E5%8B%9F%E9%9B%86+OR+%E5%BA%97%E5%93%A1%E5%8B%9F%E9%9B%86+OR+%E6%BC%94%E8%80%85%E5%8B%9F%E9%9B%86+OR+%E3%83%86%E3%82%B9%E3%82%BF%E3%83%BC%E5%8B%9F%E9%9B%86+OR+%E5%8F%82%E5%8A%A0%E8%80%85%E5%8B%9F%E9%9B%86+OR+%E5%87%BA%E5%B1%95%E5%8B%9F%E9%9B%86+OR+%E5%85%AC%E5%8B%9F%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 248232,
+      "html_bytes": 247011,
       "raw_candidates": 9,
       "unique_candidates_after_query": 112,
-      "duration_ms": 1291
+      "duration_ms": 955
     },
     {
-      "key": "communities-012-地域交流会",
-      "group": "communities",
-      "term": "地域交流会",
+      "key": "base-004",
+      "group": "base",
+      "term": "(\"株式投資座談会\" OR \"化学のおはなし会\" OR \"個人開発集会\" OR \"VRC旅ハブ\" OR \"VRC世界旅行\" OR \"VRC世界旅行EX\") (開催 OR 告知 OR 日時 OR 参加 OR 集会 OR ツアー)",
       "status": "ok",
       "http_status": 200,
-      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%9C%B0%E5%9F%9F%E4%BA%A4%E6%B5%81%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 154105,
-      "raw_candidates": 0,
-      "unique_candidates_after_query": 112,
-      "duration_ms": 963
-    },
-    {
-      "key": "communities-013-改変交流会",
-      "group": "communities",
-      "term": "改変交流会",
-      "status": "ok",
-      "http_status": 200,
-      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E6%94%B9%E5%A4%89%E4%BA%A4%E6%B5%81%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 154105,
-      "raw_candidates": 0,
-      "unique_candidates_after_query": 112,
-      "duration_ms": 1081
-    },
-    {
-      "key": "communities-014-アバタ-交流会",
-      "group": "communities",
-      "term": "アバター交流会",
-      "status": "ok",
-      "http_status": 200,
-      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A2%E3%83%90%E3%82%BF%E3%83%BC%E4%BA%A4%E6%B5%81%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 141236,
-      "raw_candidates": 1,
-      "unique_candidates_after_query": 113,
-      "duration_ms": 1619
-    },
-    {
-      "key": "communities-015-クリエイタ-交流会",
-      "group": "communities",
-      "term": "クリエイター交流会",
-      "status": "ok",
-      "http_status": 200,
-      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AF%E3%83%AA%E3%82%A8%E3%82%A4%E3%82%BF%E3%83%BC%E4%BA%A4%E6%B5%81%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 155377,
-      "raw_candidates": 0,
-      "unique_candidates_after_query": 113,
-      "duration_ms": 1095
-    },
-    {
-      "key": "communities-016-開発者交流会",
-      "group": "communities",
-      "term": "開発者交流会",
-      "status": "ok",
-      "http_status": 200,
-      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E9%96%8B%E7%99%BA%E8%80%85%E4%BA%A4%E6%B5%81%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 154423,
-      "raw_candidates": 0,
-      "unique_candidates_after_query": 113,
-      "duration_ms": 1317
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%22%E6%A0%AA%E5%BC%8F%E6%8A%95%E8%B3%87%E5%BA%A7%E8%AB%87%E4%BC%9A%22+OR+%22%E5%8C%96%E5%AD%A6%E3%81%AE%E3%81%8A%E3%81%AF%E3%81%AA%E3%81%97%E4%BC%9A%22+OR+%22%E5%80%8B%E4%BA%BA%E9%96%8B%E7%99%BA%E9%9B%86%E4%BC%9A%22+OR+%22VRC%E6%97%85%E3%83%8F%E3%83%96%22+OR+%22VRC%E4%B8%96%E7%95%8C%E6%97%85%E8%A1%8C%22+OR+%22VRC%E4%B8%96%E7%95%8C%E6%97%85%E8%A1%8CEX%22%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+%E5%8F%82%E5%8A%A0+OR+%E9%9B%86%E4%BC%9A+OR+%E3%83%84%E3%82%A2%E3%83%BC%29&md=h",
+      "html_bytes": 698435,
+      "raw_candidates": 39,
+      "unique_candidates_after_query": 151,
+      "duration_ms": 1127
     },
     {
       "key": "communities-017-vrc初心者案内",
@@ -152,10 +105,46 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28VRC%E5%88%9D%E5%BF%83%E8%80%85%E6%A1%88%E5%86%85%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 139791,
+      "html_bytes": 138570,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 114,
-      "duration_ms": 999
+      "unique_candidates_after_query": 152,
+      "duration_ms": 1000
+    },
+    {
+      "key": "communities-018-株式投資座談会",
+      "group": "communities",
+      "term": "株式投資座談会",
+      "status": "ok",
+      "http_status": 200,
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E6%A0%AA%E5%BC%8F%E6%8A%95%E8%B3%87%E5%BA%A7%E8%AB%87%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
+      "html_bytes": 152820,
+      "raw_candidates": 2,
+      "unique_candidates_after_query": 152,
+      "duration_ms": 817
+    },
+    {
+      "key": "communities-019-化学のおはなし会",
+      "group": "communities",
+      "term": "化学のおはなし会",
+      "status": "ok",
+      "http_status": 200,
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%8C%96%E5%AD%A6%E3%81%AE%E3%81%8A%E3%81%AF%E3%81%AA%E3%81%97%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
+      "html_bytes": 153807,
+      "raw_candidates": 0,
+      "unique_candidates_after_query": 152,
+      "duration_ms": 788
+    },
+    {
+      "key": "communities-020-個人開発集会",
+      "group": "communities",
+      "term": "個人開発集会",
+      "status": "ok",
+      "http_status": 200,
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%80%8B%E4%BA%BA%E9%96%8B%E7%99%BA%E9%9B%86%E4%BC%9A%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
+      "html_bytes": 174034,
+      "raw_candidates": 3,
+      "unique_candidates_after_query": 152,
+      "duration_ms": 896
     },
     {
       "key": "recruitment-000-キャスト募集",
@@ -164,10 +153,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 621438,
+      "html_bytes": 620217,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 151,
-      "duration_ms": 1158
+      "unique_candidates_after_query": 189,
+      "duration_ms": 957
     },
     {
       "key": "recruitment-001-スタッフ募集",
@@ -176,10 +165,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 358618,
+      "html_bytes": 357397,
       "raw_candidates": 18,
-      "unique_candidates_after_query": 166,
-      "duration_ms": 1095
+      "unique_candidates_after_query": 204,
+      "duration_ms": 970
     },
     {
       "key": "recruitment-002-店員募集",
@@ -188,10 +177,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%BA%97%E5%93%A1%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 144283,
+      "html_bytes": 143031,
       "raw_candidates": 0,
-      "unique_candidates_after_query": 166,
-      "duration_ms": 1136
+      "unique_candidates_after_query": 204,
+      "duration_ms": 794
     },
     {
       "key": "recruitment-003-演者募集",
@@ -200,10 +189,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E6%BC%94%E8%80%85%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 140408,
+      "html_bytes": 139187,
       "raw_candidates": 2,
-      "unique_candidates_after_query": 167,
-      "duration_ms": 928
+      "unique_candidates_after_query": 205,
+      "duration_ms": 813
     },
     {
       "key": "recruitment-004-テスタ-募集",
@@ -212,10 +201,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%86%E3%82%B9%E3%82%BF%E3%83%BC%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 353655,
+      "html_bytes": 352434,
       "raw_candidates": 19,
-      "unique_candidates_after_query": 184,
-      "duration_ms": 1385
+      "unique_candidates_after_query": 222,
+      "duration_ms": 970
     },
     {
       "key": "recruitment-005-参加者募集",
@@ -224,10 +213,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%8F%82%E5%8A%A0%E8%80%85%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 282567,
+      "html_bytes": 281346,
       "raw_candidates": 13,
-      "unique_candidates_after_query": 196,
-      "duration_ms": 1232
+      "unique_candidates_after_query": 234,
+      "duration_ms": 1073
     },
     {
       "key": "recruitment-006-出展募集",
@@ -236,10 +225,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%87%BA%E5%B1%95%E5%8B%9F%E9%9B%86%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 132192,
+      "html_bytes": 130971,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 197,
-      "duration_ms": 1097
+      "unique_candidates_after_query": 235,
+      "duration_ms": 889
     },
     {
       "key": "recruitment-007-公募",
@@ -248,10 +237,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%85%AC%E5%8B%9F%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 176021,
+      "html_bytes": 174800,
       "raw_candidates": 4,
-      "unique_candidates_after_query": 200,
-      "duration_ms": 1062
+      "unique_candidates_after_query": 238,
+      "duration_ms": 1058
     },
     {
       "key": "recruitment-008-応募期限",
@@ -260,10 +249,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 239630,
+      "html_bytes": 238680,
       "raw_candidates": 9,
-      "unique_candidates_after_query": 209,
-      "duration_ms": 1576
+      "unique_candidates_after_query": 247,
+      "duration_ms": 1030
     },
     {
       "key": "recruitment-009-面接",
@@ -272,10 +261,34 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E9%9D%A2%E6%8E%A5%29+%28%E7%B7%A0%E5%88%87+OR+%E3%80%86%E5%88%87+OR+%E5%BF%9C%E5%8B%9F%E6%9C%9F%E9%99%90+OR+%E9%9D%A2%E6%8E%A5+OR+%E5%8B%9F%E9%9B%86%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 496076,
+      "html_bytes": 494855,
       "raw_candidates": 33,
-      "unique_candidates_after_query": 240,
-      "duration_ms": 1295
+      "unique_candidates_after_query": 278,
+      "duration_ms": 956
+    },
+    {
+      "key": "core-000-イベント告知",
+      "group": "core",
+      "term": "イベント告知",
+      "status": "ok",
+      "http_status": 200,
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%91%8A%E7%9F%A5%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
+      "html_bytes": 668530,
+      "raw_candidates": 40,
+      "unique_candidates_after_query": 308,
+      "duration_ms": 1103
+    },
+    {
+      "key": "core-001-営業告知",
+      "group": "core",
+      "term": "営業告知",
+      "status": "ok",
+      "http_status": 200,
+      "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E5%96%B6%E6%A5%AD%E5%91%8A%E7%9F%A5%29+%28%E9%96%8B%E5%82%AC+OR+%E5%91%8A%E7%9F%A5+OR+%E6%97%A5%E6%99%82+OR+OPEN+OR+%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3+OR+%E9%96%8B%E5%A0%B4+OR+%E9%96%8B%E5%A7%8B+OR+%E5%96%B6%E6%A5%AD+OR+%E6%9C%AC%E6%97%A5+OR+%E4%BB%8A%E6%97%A5+OR+%E6%98%8E%E6%97%A5+OR+%E4%BB%8A%E5%A4%9C+OR+%E5%8F%82%E5%8A%A0+OR+JOIN+OR+%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%B3+OR+Group%2B%29+%28VRChat+OR+VRC%29&md=h",
+      "html_bytes": 206869,
+      "raw_candidates": 6,
+      "unique_candidates_after_query": 311,
+      "duration_ms": 896
     },
     {
       "key": "commerce_noise-013-フォロ-rp",
@@ -284,10 +297,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E3%83%95%E3%82%A9%E3%83%AD%E3%83%BC%EF%BC%86RP%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 563436,
+      "html_bytes": 562215,
       "raw_candidates": 32,
-      "unique_candidates_after_query": 272,
-      "duration_ms": 1103
+      "unique_candidates_after_query": 343,
+      "duration_ms": 987
     },
     {
       "key": "temporal_audit-000-本日",
@@ -296,10 +309,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%E6%9C%AC%E6%97%A5%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 659690,
+      "html_bytes": 658654,
       "raw_candidates": 40,
-      "unique_candidates_after_query": 301,
-      "duration_ms": 1254
+      "unique_candidates_after_query": 371,
+      "duration_ms": 1091
     },
     {
       "key": "peer-e5779d535671",
@@ -308,10 +321,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23%E8%B6%85%E6%9C%88%E8%A6%8B%E7%A5%AD%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 130874,
+      "html_bytes": 129555,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 302,
-      "duration_ms": 942
+      "unique_candidates_after_query": 372,
+      "duration_ms": 823
     },
     {
       "key": "peer-5b9a2b31726d",
@@ -320,10 +333,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23bar_artemis%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 125856,
+      "html_bytes": 124598,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 303,
-      "duration_ms": 871
+      "unique_candidates_after_query": 373,
+      "duration_ms": 1081
     },
     {
       "key": "peer-de51bf7c82f9",
@@ -332,10 +345,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23bort_vr%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 132940,
+      "html_bytes": 131719,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 304,
-      "duration_ms": 928
+      "unique_candidates_after_query": 374,
+      "duration_ms": 747
     },
     {
       "key": "peer-ed067c9fe950",
@@ -344,10 +357,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23vrc%E3%81%A1%E3%81%B3%E3%81%B5%E3%82%8F%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 124195,
+      "html_bytes": 122974,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 305,
-      "duration_ms": 1890
+      "unique_candidates_after_query": 375,
+      "duration_ms": 775
     },
     {
       "key": "peer-a8da6d2f85fa",
@@ -356,10 +369,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23%E9%9B%BB%E5%99%A8%E5%B1%8Bwalker%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 123421,
+      "html_bytes": 122200,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 306,
-      "duration_ms": 898
+      "unique_candidates_after_query": 376,
+      "duration_ms": 788
     },
     {
       "key": "peer-bba9250092fd",
@@ -368,10 +381,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23fumifumi_v%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 129753,
+      "html_bytes": 128705,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 307,
-      "duration_ms": 1247
+      "unique_candidates_after_query": 377,
+      "duration_ms": 788
     },
     {
       "key": "peer-53c99432a64d",
@@ -380,10 +393,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23fnbiq6qcigrv7cc%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 130094,
+      "html_bytes": 128775,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 308,
-      "duration_ms": 936
+      "unique_candidates_after_query": 378,
+      "duration_ms": 826
     },
     {
       "key": "peer-d37cd69a4037",
@@ -392,10 +405,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23furriverse%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 138136,
+      "html_bytes": 137088,
       "raw_candidates": 0,
-      "unique_candidates_after_query": 308,
-      "duration_ms": 916
+      "unique_candidates_after_query": 378,
+      "duration_ms": 816
     },
     {
       "key": "peer-d684da576f9c",
@@ -404,10 +417,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23lovace_3d%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 125594,
+      "html_bytes": 124546,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 309,
-      "duration_ms": 857
+      "unique_candidates_after_query": 379,
+      "duration_ms": 738
     },
     {
       "key": "peer-fd19398c51ef",
@@ -416,10 +429,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23vrc_aurora%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 126175,
+      "html_bytes": 125225,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 310,
-      "duration_ms": 1934
+      "unique_candidates_after_query": 380,
+      "duration_ms": 850
     },
     {
       "key": "peer-958a48b8d99b",
@@ -428,10 +441,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23%E3%81%BF%E3%81%95%E3%81%B4%E3%82%87%E3%82%93%E6%84%9B%E8%AD%B7%E5%9B%A3%E4%BD%93%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 129077,
+      "html_bytes": 127992,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 311,
-      "duration_ms": 955
+      "unique_candidates_after_query": 381,
+      "duration_ms": 809
     },
     {
       "key": "peer-e042607d47ed",
@@ -440,10 +453,10 @@
       "status": "ok",
       "http_status": 200,
       "final_url": "https://search.yahoo.co.jp/realtime/search?ei=UTF-8&p=%28%23%E9%A3%B2%E3%81%BF%E4%BC%9Aasap%29+%28VRChat+OR+VRC%29&md=h",
-      "html_bytes": 126242,
+      "html_bytes": 125194,
       "raw_candidates": 1,
-      "unique_candidates_after_query": 311,
-      "duration_ms": 1084
+      "unique_candidates_after_query": 381,
+      "duration_ms": 800
     }
   ],
   "source_timestamp_count": 5000,
@@ -452,12 +465,12 @@
   "engagement_policy": "retweet_count_required_but_no_minimum",
   "temporal_policy": "retain_past_events_for_365_day_candidate_history",
   "date_resolution_policy": "calendar-week-relative-date.v1",
-  "date_resolution_evidence_count": 30,
-  "date_resolution_changed_event_count": 1,
+  "date_resolution_evidence_count": 35,
+  "date_resolution_changed_event_count": 2,
   "peer_evidence_queries_planned": 12,
   "peer_evidence_queries_succeeded": 12,
-  "materialized_event_count": 56,
-  "publishability_backlog_before": 218,
+  "materialized_event_count": 61,
+  "publishability_backlog_before": 214,
   "promoted_from_missing_datetime": 0,
   "recurrence_materialized_count": 4,
   "corroborated_materialized_count": 0,
