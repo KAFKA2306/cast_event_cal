@@ -1,8 +1,9 @@
 (()=>{'use strict';
 function safeOutboundUrl(value){
   if(typeof value!=='string')return null;
+  if(/[\u0000-\u001f\u007f]/.test(value))return null;
   const raw=value.trim();
-  if(!raw||raw.startsWith('//')||/[\u0000-\u001f\u007f]/.test(raw))return null;
+  if(!raw||raw.startsWith('//')||/^[\\/]{2}/.test(raw))return null;
   try{
     const url=new URL(raw);
     if(url.protocol!=='https:'||!url.hostname)return null;
@@ -12,9 +13,14 @@ function safeOutboundUrl(value){
 function sanitizeAnchor(anchor){
   if(!(anchor instanceof HTMLAnchorElement))return;
   const raw=anchor.getAttribute('href');
-  if(!raw)return;
+  if(raw===null)return;
+  // A browser may interpret leading whitespace, controls, or backslashes as a scheme/host.
+  // Never allow those values to escape the outbound policy's scheme detection.
+  if(!raw||raw!==raw.trim()||/[\u0000-\u001f\u007f]/.test(raw)||raw.startsWith('\\')||/^[\\/]{2}/.test(raw)){
+    anchor.remove();return;
+  }
   // Relative first-party navigation is intentionally outside the outbound policy.
-  if(!/^[A-Za-z][A-Za-z0-9+.-]*:/.test(raw)&&!raw.startsWith('//'))return;
+  if(!/^[A-Za-z][A-Za-z0-9+.-]*:/.test(raw))return;
   const safe=safeOutboundUrl(raw);
   if(!safe){anchor.remove();return;}
   anchor.href=safe;
