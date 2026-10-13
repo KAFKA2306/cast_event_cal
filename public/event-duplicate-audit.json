@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1151,
-  "event_count_after": 1148,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 3,
-  "duplicate_post_count": 3,
-  "duplicate_rate": 0.002606,
+  "event_count_before": 1260,
+  "event_count_after": 1255,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.003968,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
@@ -56,6 +56,50 @@
       "representative_source_record_id": "src_bd6dbb71665592144b06"
     },
     {
+      "cluster_id": "occ_9e1807dbc43ebf0e6802",
+      "starts_at": "2026-10-14T21:00:00Z",
+      "title": "EPIC Fellowship Men's Bible Study",
+      "member_count": 2,
+      "member_ids": [
+        "2a13ece3fd27c44b02d1",
+        "747ffc5314237189cb6f"
+      ],
+      "source_record_ids": [
+        "src_64d3c6b415d07c597853",
+        "src_a5a96e041801cbc49cc0"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_a5a96e041801cbc49cc0"
+    },
+    {
+      "cluster_id": "occ_b7ab097053126f9b0e7a",
+      "starts_at": "2026-10-15T02:00:00Z",
+      "title": "Gotholica",
+      "member_count": 2,
+      "member_ids": [
+        "09bbb804706d0db372ba",
+        "355728b38f4e5ee84bdf"
+      ],
+      "source_record_ids": [
+        "src_1935f1ee3e6c7f74ca89",
+        "src_c736c2bbb0af740897ef"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_c736c2bbb0af740897ef"
+    },
+    {
       "cluster_id": "occ_ba0e227bc5c9acb51974",
       "starts_at": "2026-10-20T13:00:00Z",
       "title": "🐾キャストオフショット🐾 VRC ユーザ名：「Yukime8」 @YukimeYukinko #ルーアファミー は毎月第1,第3火曜日、22:00-23:00で開店しております。 次回 営業 …",
@@ -81,105 +125,105 @@
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "3e519371e60aeb79c919",
-      "right_id": "d2b8d91019e187584798",
-      "starts_at": "2026-10-12T19:00:00Z",
-      "left_organizer": "El Alba",
-      "right_organizer": "Murderdrones",
-      "similarity": 0.0482,
-      "left_title": "Cozy Evening ｜ Tarde acojedora",
-      "right_title": "Murder drone rp"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "a088d72339b65b48f181",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "Phoenix Haven",
+      "similarity": 0.1558,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "Phoenix Haven 13＋ Game Night"
     },
     {
-      "left_id": "3e519371e60aeb79c919",
-      "right_id": "331571264752d9913551",
-      "starts_at": "2026-10-12T19:00:00Z",
-      "left_organizer": "El Alba",
-      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
-      "similarity": 0.0191,
-      "left_title": "Cozy Evening ｜ Tarde acojedora",
-      "right_title": "おはよう！朝4時に何してるんだぃ？"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "31ab5412b1c448ecda8f",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "PrideVR",
+      "similarity": 0.1556,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "Queer Pug"
     },
     {
-      "left_id": "d2b8d91019e187584798",
-      "right_id": "331571264752d9913551",
-      "starts_at": "2026-10-12T19:00:00Z",
-      "left_organizer": "Murderdrones",
-      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
-      "similarity": 0.0328,
-      "left_title": "Murder drone rp",
-      "right_title": "おはよう！朝4時に何してるんだぃ？"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "9717c1d489d828bbffbd",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "No Friends Friends Club",
+      "similarity": 0.2778,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "US Hangout"
     },
     {
-      "left_id": "e82fc51e2cbd7bff1048",
-      "right_id": "c61b03cb047637f3f4b2",
-      "starts_at": "2026-10-12T23:30:00Z",
-      "left_organizer": "Unknown Theater",
-      "right_organizer": "The Comfy Critters",
-      "similarity": 0.1867,
-      "left_title": "'Joke Club' Comedy Class",
-      "right_title": "chill hangout"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "e9f6dba3dab7f9c06c73",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "Comedy Open Mic",
+      "similarity": 0.1087,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "VR On The Spotǃ"
     },
     {
-      "left_id": "e82fc51e2cbd7bff1048",
-      "right_id": "c31a00d2fb676eb765aa",
-      "starts_at": "2026-10-12T23:30:00Z",
-      "left_organizer": "Unknown Theater",
-      "right_organizer": "Tsukimichi",
-      "similarity": 0.0631,
-      "left_title": "'Joke Club' Comedy Class",
-      "right_title": "Scary Movie Nightǃ"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "425d2829903c489f97d7",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "Astro Bot",
+      "similarity": 0.2581,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "VR Playground's Anniversary ǃ"
     },
     {
-      "left_id": "c61b03cb047637f3f4b2",
-      "right_id": "c31a00d2fb676eb765aa",
-      "starts_at": "2026-10-12T23:30:00Z",
-      "left_organizer": "The Comfy Critters",
-      "right_organizer": "Tsukimichi",
-      "similarity": 0.1017,
-      "left_title": "chill hangout",
-      "right_title": "Scary Movie Nightǃ"
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "a619e48d026bf05eae89",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "Black Hole Poker",
+      "similarity": 0.1805,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "Wednesday game night"
     },
     {
-      "left_id": "b08a0866b83a1a53adfc",
+      "left_id": "cf275ed2efa4fa3af23c",
+      "right_id": "00bd7b4da5bd7b0def9d",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "_newUser's Macro Micro Community",
+      "right_organizer": "WLW",
+      "similarity": 0.2778,
+      "left_title": "Monthly Group＋ Meetup",
+      "right_title": "WLW hangout"
+    },
+    {
+      "left_id": "cf275ed2efa4fa3af23c",
       "right_id": "ba42f80a9421019c3991",
       "starts_at": "2026-10-13T00:00:00Z",
-      "left_organizer": "Comedy Open Mic",
+      "left_organizer": "_newUser's Macro Micro Community",
       "right_organizer": "ʏᴏsʜɪᴋᴀɢᴇ's ᴄᴀғᴇ",
-      "similarity": 0.1053,
-      "left_title": "VR On The Spotǃ",
+      "similarity": 0.0769,
+      "left_title": "Monthly Group＋ Meetup",
       "right_title": "ᴇᴠᴇɴᴛᴏ ᴍᴀɪᴅ ᴄᴀғᴇ́ ʜᴏʏ ᴀ ʟᴀs 7 ᴘᴍ"
     },
     {
-      "left_id": "63233e0f5886c89db1ef",
-      "right_id": "2086d965e07b92b0889e",
-      "starts_at": "2026-10-13T01:00:00Z",
-      "left_organizer": "Unknown Theater",
-      "right_organizer": "CLUB SIREN",
-      "similarity": 0.2017,
-      "left_title": "'The Beta Show' Comedy Open Mic",
-      "right_title": "DESIRE AFTER DARK"
+      "left_id": "a088d72339b65b48f181",
+      "right_id": "31ab5412b1c448ecda8f",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "Phoenix Haven",
+      "right_organizer": "PrideVR",
+      "similarity": 0.2334,
+      "left_title": "Phoenix Haven 13＋ Game Night",
+      "right_title": "Queer Pug"
     },
     {
-      "left_id": "63233e0f5886c89db1ef",
-      "right_id": "65fab6ef764bb7692eae",
-      "starts_at": "2026-10-13T01:00:00Z",
-      "left_organizer": "Unknown Theater",
-      "right_organizer": "El Alba",
-      "similarity": 0.2374,
-      "left_title": "'The Beta Show' Comedy Open Mic",
-      "right_title": "（NA） Soft Night ｜ Noche de Relajo"
-    },
-    {
-      "left_id": "2086d965e07b92b0889e",
-      "right_id": "65fab6ef764bb7692eae",
-      "starts_at": "2026-10-13T01:00:00Z",
-      "left_organizer": "CLUB SIREN",
-      "right_organizer": "El Alba",
-      "similarity": 0.1718,
-      "left_title": "DESIRE AFTER DARK",
-      "right_title": "（NA） Soft Night ｜ Noche de Relajo"
+      "left_id": "a088d72339b65b48f181",
+      "right_id": "9717c1d489d828bbffbd",
+      "starts_at": "2026-10-13T00:00:00Z",
+      "left_organizer": "Phoenix Haven",
+      "right_organizer": "No Friends Friends Club",
+      "similarity": 0.1617,
+      "left_title": "Phoenix Haven 13＋ Game Night",
+      "right_title": "US Hangout"
     }
   ],
-  "generated_at": "2026-10-13T17:36:05Z"
+  "generated_at": "2026-10-13T22:43:09Z"
 }
