@@ -2,38 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1193,
+  "event_count": 1163,
   "matched_events": 296,
   "matched_series": {
-    "vrc-fit-boxing": 35,
     "exploit-club": 18,
     "yuruge-meet": 18,
     "wednesday-quest-beginners": 18,
     "ml-gathering": 36,
     "vrc-idle-gathering": 18,
-    "vrc-beginner-world-tour": 17,
+    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
+    "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17
   },
-  "unmatched_events": 897,
+  "unmatched_events": 867,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "76e74f5d41fe4954d406",
-      "title": "VRCフィットボクシング集会",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "fabfd4f5387de018e5d3",
       "title": "EXPLOIT部 定期対戦会",
@@ -3555,226 +3543,80 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "173686627807978ab9e2",
+      "title": "VRC初心者ワールドツアー",
+      "status": "matched",
+      "ontology_id": "vrc-beginner-world-tour",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1193,
+    "event_count": 1163,
     "category_breakdown": {
-      "art": 123,
-      "community": 277,
+      "art": 124,
+      "community": 265,
       "game": 112,
       "language_exchange": 34,
       "learning": 28,
-      "music": 144,
-      "other": 86,
-      "performance": 22,
+      "music": 135,
+      "other": 75,
+      "performance": 21,
       "recruitment_deadline": 3,
-      "technology": 274,
-      "wellness": 70,
-      "world_tour": 20
+      "technology": 276,
+      "wellness": 69,
+      "world_tour": 21
     },
     "subcategory_breakdown": {
       "ai": 36,
       "application_deadline": 1,
       "bar": 2,
-      "cafe": 30,
-      "cast_service": 6,
+      "cafe": 27,
+      "cast_service": 5,
       "class": 3,
-      "dance": 65,
-      "dj": 8,
-      "engineering": 161,
-      "fitness": 35,
-      "hangout": 81,
+      "dance": 62,
+      "dj": 5,
+      "engineering": 162,
+      "fitness": 34,
+      "hangout": 75,
       "language_exchange": 34,
       "lecture": 8,
       "live_music": 1,
-      "mystery": 35,
+      "mystery": 36,
       "participant_recruitment": 1,
       "photography": 122,
-      "research": 68,
-      "show": 20,
+      "research": 69,
+      "show": 19,
       "social": 155,
       "tabletop": 38,
       "workshop": 9,
-      "world_tour": 20
+      "world_tour": 21
     },
     "event_mode_breakdown": {
       "deadline": 3,
-      "hybrid": 7,
-      "in_world": 1179,
+      "hybrid": 5,
+      "in_world": 1151,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 279,
-      "fallback": 86,
-      "keyword_rules": 578,
-      "legacy_and_keywords": 127,
-      "legacy_category": 123
+      "curated_ontology": 278,
+      "fallback": 75,
+      "keyword_rules": 570,
+      "legacy_and_keywords": 118,
+      "legacy_category": 122
     },
-    "organizer_profile_count": 23,
-    "low_confidence_event_count": 130,
-    "audit_event_count": 130
+    "organizer_profile_count": 22,
+    "low_confidence_event_count": 119,
+    "audit_event_count": 119
   },
   "category_review_queue": [
-    {
-      "event_id": "ceaac0f59a5e9ab274e2",
-      "title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "eaaa247a759cc526602e",
-      "title": "LA JUNTA DE LOS CEBADOS",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "5fd1842491fa485c3ac8",
-      "title": "ALCOLICOS ANONIMOS - CAPITULO FIN DE SEMANA",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "1db71313ffe1509c2e23",
-      "title": "LapinEnsoleillé 営業日",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "2fb737e35806d3bfd6b4",
-      "title": "City rp",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "19f91bbbe7185b1155e2",
-      "title": "ゼロから始めるスワヒリ語",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "064e0126030ded521a22",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c16a072eeb4b6458133c",
-      "title": "C# Tokyo VRもくもく会",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "8431fe9a254c062ab893",
-      "title": "どろーん部",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "726122453ac06f57a03e",
-      "title": "ケモセーフ界隈",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ed9d852ed348cf42135f",
-      "title": "Cocktail Lounge Murasaki",
-      "category": "community",
-      "label": "交流・カフェ",
-      "subcategory": "cast_service",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:接客"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ad8eb1f5667cb2f91c8c",
-      "title": "cop",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "c3e52b731f8115bf1775",
       "title": "Jujutsu Reborn Episode ｜ RP Session",
@@ -4367,6 +4209,23 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "80970be73a8a8a121cd6",
+      "title": "# VRChat # VRChatイベント 会員の 開催イベント について 告知 します。 【 VRC 芸術 集会 （仮）】木曜２２時～ 美術や建築、考古、陶磁器といった芸術に関するプレゼンを…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:美術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "49068467ba0325693240",
       "title": "分解技術集会",
       "category": "technology",
@@ -4886,6 +4745,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "0c08a8f042bc6a89853a",
+      "title": "·.⟡┈┈┈┈┈︎ ✧┈┈┈┈┈⟡.· 公式x フォロワー 300人突破記念🎉 10月29日のハロウィン🎃営業日への にゃんぱすぽーとを手に入れようっ.ᐟ *⋆⸜ 参加 条件⸝⋆* 1.フォロ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "028cfee32dec982a428b",
       "title": "VRC歴史集会",
       "category": "learning",
@@ -4921,7 +4793,7 @@
     },
     {
       "event_id": "89b9f6c89180278b0b4a",
-      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 10月21日（水曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください…",
+      "title": "【# VRC 餌場 開催告知！】 VRC の雑魚のイベント 餌場《Kamonegi》 10月21日（ 水曜日 ）22時～開催！！ 事前申し込み制になりますので下記のフォームにご記入ください！ …",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4935,19 +4807,6 @@
     {
       "event_id": "70cfb09c9d53e7cddf1d",
       "title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 ------ 未完成でありながら、他の本に比べ読…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "9e3f556c77faeff88b5f",
-      "title": "姫様へ 今宵も狂月踊る時 着飾る星は誰ぞやと VRC で1番ド派手なホスイベ 悪い男達が彩る祭典 『Attrazione』 今、扉が開く 10月度 通常 営業 は10月24日 22時始動 At…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
