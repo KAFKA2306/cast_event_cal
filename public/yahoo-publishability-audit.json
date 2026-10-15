@@ -1,30 +1,28 @@
 {
   "schema_version": "1.0",
   "policy_version": "issue-196-generic-publishability.v1",
-  "generated_at": "2026-10-15T05:54:04Z",
+  "generated_at": "2026-10-15T11:23:35Z",
   "candidate_count": 5000,
-  "missing_datetime_before": 465,
-  "publishability_backlog_before": 207,
+  "missing_datetime_before": 468,
+  "publishability_backlog_before": 209,
   "occurrence_decision_counts_before": {
-    "ambiguous_datetime": 28,
+    "ambiguous_datetime": 29,
     "non_event": 23,
     "non_event_commerce": 1,
-    "non_event_personal": 1,
+    "non_event_personal": 2,
     "partial_datetime": 158,
     "past_event_or_report": 21,
-    "recurring_event": 21,
+    "recurring_event": 22,
     "resolvable_event_candidate": 6
   },
   "accepted_event_count": 87,
-  "promoted_from_missing_datetime": 2,
+  "promoted_from_missing_datetime": 1,
   "promoted_status_ids": [
-    "2107788029133787443",
-    "2109938176089534705"
+    "2107788029133787443"
   ],
   "recurrence_materialized_count": 8,
-  "corroborated_materialized_count": 1,
+  "corroborated_materialized_count": 0,
   "resolution_method_counts": {
-    "corroborated_event_fingerprint_date_clock": 1,
     "explicit_calendar_date": 43,
     "explicit_calendar_date_evidence_span": 2,
     "explicit_datetime": 2,
@@ -32,22 +30,22 @@
     "recurrence_ordinal_monthly_materialized": 4,
     "recurrence_weekly_materialized": 4,
     "relative_day_evidence_span": 1,
-    "relative_day_from_source_timestamp": 27
+    "relative_day_from_source_timestamp": 28
   },
   "resolution_blocker_counts": {
     "conflicting_fingerprint_resolution": 2,
     "datetime_parser_unsupported_or_unsafe": 18,
-    "missing_or_conflicting_clock": 84,
+    "missing_or_conflicting_clock": 86,
     "missing_or_conflicting_date": 203,
     "no_datetime_evidence": 1773,
-    "no_peer_evidence": 347,
+    "no_peer_evidence": 349,
     "no_strong_event_signal": 31,
-    "non_event": 982,
+    "non_event": 980,
     "non_event_commerce": 149,
     "non_event_personal": 165,
     "out_of_publication_window": 7,
-    "past_event_or_report": 398,
-    "recurrence_pattern_unsupported_or_unsafe": 113
+    "past_event_or_report": 395,
+    "recurrence_pattern_unsupported_or_unsafe": 114
   },
   "promotions_without_provenance": 0,
   "resolver_version": "2.1",
