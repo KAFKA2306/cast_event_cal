@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
   "policy_version": "issue-196-generic-publishability.v1",
-  "generated_at": "2026-10-15T20:21:41Z",
+  "generated_at": "2026-10-15T23:41:50Z",
   "candidate_count": 5000,
-  "missing_datetime_before": 465,
-  "publishability_backlog_before": 207,
+  "missing_datetime_before": 466,
+  "publishability_backlog_before": 208,
   "occurrence_decision_counts_before": {
     "ambiguous_datetime": 30,
     "non_event": 23,
@@ -12,7 +12,7 @@
     "non_event_personal": 2,
     "partial_datetime": 157,
     "past_event_or_report": 21,
-    "recurring_event": 20,
+    "recurring_event": 21,
     "resolvable_event_candidate": 5
   },
   "accepted_event_count": 103,
@@ -22,29 +22,29 @@
   "corroborated_materialized_count": 1,
   "resolution_method_counts": {
     "corroborated_event_fingerprint_date_clock": 1,
-    "explicit_calendar_date": 53,
+    "explicit_calendar_date": 52,
     "explicit_calendar_date_evidence_span": 1,
     "explicit_datetime": 3,
     "next_occurrence_unprefixed": 3,
     "recurrence_ordinal_monthly_materialized": 4,
     "recurrence_weekly_materialized": 8,
     "relative_day_evidence_span": 1,
-    "relative_day_from_source_timestamp": 29
+    "relative_day_from_source_timestamp": 30
   },
   "resolution_blocker_counts": {
-    "conflicting_fingerprint_resolution": 2,
+    "conflicting_fingerprint_resolution": 4,
     "datetime_parser_unsupported_or_unsafe": 17,
     "missing_or_conflicting_clock": 84,
     "missing_or_conflicting_date": 201,
-    "no_datetime_evidence": 1765,
+    "no_datetime_evidence": 1767,
     "no_peer_evidence": 344,
     "no_strong_event_signal": 35,
-    "non_event": 971,
+    "non_event": 966,
     "non_event_commerce": 147,
-    "non_event_personal": 165,
+    "non_event_personal": 166,
     "out_of_publication_window": 8,
-    "past_event_or_report": 400,
-    "recurrence_pattern_unsupported_or_unsafe": 123
+    "past_event_or_report": 398,
+    "recurrence_pattern_unsupported_or_unsafe": 124
   },
   "promotions_without_provenance": 0,
   "resolver_version": "2.1",
