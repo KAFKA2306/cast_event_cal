@@ -1,28 +1,41 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1253,
-  "event_count_after": 1253,
-  "candidate_cluster_count": 0,
-  "duplicate_cluster_count": 0,
-  "duplicate_occurrence_count": 0,
-  "duplicate_post_count": 0,
-  "duplicate_rate": 0.0,
+  "event_count_before": 1259,
+  "event_count_after": 1258,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.000794,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
-  "clusters": [],
+  "clusters": [
+    {
+      "cluster_id": "occ_e152407efd405c7b217d",
+      "starts_at": "2026-10-16T13:00:00Z",
+      "title": "今日 は10月第3金曜日 初心者講習会の日です！ ふるよにを始めてみたいけどルールがわからない！という方におすすめの イベント となっております！ 22時から VRC ふるよに部の Group…",
+      "member_count": 2,
+      "member_ids": [
+        "3ad5b1043934a4e5f721",
+        "eb6cd107d7e3684149c1"
+      ],
+      "source_record_ids": [
+        "src_72671afcdbb55c5dd4e8",
+        "src_aefba1d7e76db18f7e17"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_aefba1d7e76db18f7e17"
+    }
+  ],
   "ambiguous_candidates": [],
   "negative_samples": [
-    {
-      "left_id": "541c8815f30dfb603955",
-      "right_id": "e8970ea7e322c2b1e470",
-      "starts_at": "2026-10-15T12:00:00Z",
-      "left_organizer": "VRC初心者ワールドツアー",
-      "right_organizer": "@VRC_AvaColle",
-      "similarity": 0.0494,
-      "left_title": "VRC初心者ワールドツアー",
-      "right_title": "【 本日 #こなぷら 定期 開催 日🫰】 🧥アバター改変の話ができる場所✨ VRC Avatar Collection #あばこれ の定期 集会イベント 「こなれ＋（こなれぷらす）」#こなぷら…"
-    },
     {
       "left_id": "541c8815f30dfb603955",
       "right_id": "796a7d8f508013c7fc60",
@@ -41,26 +54,6 @@
       "right_organizer": null,
       "similarity": 0.0656,
       "left_title": "VRC初心者ワールドツアー",
-      "right_title": "データサイエンティスト集会"
-    },
-    {
-      "left_id": "e8970ea7e322c2b1e470",
-      "right_id": "796a7d8f508013c7fc60",
-      "starts_at": "2026-10-15T12:00:00Z",
-      "left_organizer": "@VRC_AvaColle",
-      "right_organizer": "@VRC_kiokubu",
-      "similarity": 0.1473,
-      "left_title": "【 本日 #こなぷら 定期 開催 日🫰】 🧥アバター改変の話ができる場所✨ VRC Avatar Collection #あばこれ の定期 集会イベント 「こなれ＋（こなれぷらす）」#こなぷら…",
-      "right_title": "【次回 定期会のお知らせ】 開催日時 :2026年10月15日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…"
-    },
-    {
-      "left_id": "e8970ea7e322c2b1e470",
-      "right_id": "ff0f31b9b6027d95c8e2",
-      "starts_at": "2026-10-15T12:00:00Z",
-      "left_organizer": "@VRC_AvaColle",
-      "right_organizer": null,
-      "similarity": 0.0702,
-      "left_title": "【 本日 #こなぷら 定期 開催 日🫰】 🧥アバター改変の話ができる場所✨ VRC Avatar Collection #あばこれ の定期 集会イベント 「こなれ＋（こなれぷらす）」#こなぷら…",
       "right_title": "データサイエンティスト集会"
     },
     {
@@ -112,7 +105,37 @@
       "similarity": 0.2889,
       "left_title": "Flirtual Bar Night",
       "right_title": "GAME NIGHT"
+    },
+    {
+      "left_id": "44ff0517f2a20fd119d9",
+      "right_id": "8cd7e04d1a23ff23ca97",
+      "starts_at": "2026-10-16T00:00:00Z",
+      "left_organizer": "Flirtual",
+      "right_organizer": "Kitkat's Cafe",
+      "similarity": 0.3816,
+      "left_title": "Flirtual Bar Night",
+      "right_title": "Kitkat Weekly Singing Stream ˸3"
+    },
+    {
+      "left_id": "44ff0517f2a20fd119d9",
+      "right_id": "db6f170d9d90515a78e7",
+      "starts_at": "2026-10-16T00:00:00Z",
+      "left_organizer": "Flirtual",
+      "right_organizer": "Phoenix Haven",
+      "similarity": 0.1513,
+      "left_title": "Flirtual Bar Night",
+      "right_title": "Phoenix Haven 18＋ Game Night"
+    },
+    {
+      "left_id": "44ff0517f2a20fd119d9",
+      "right_id": "c22e4880cae31da0dc54",
+      "starts_at": "2026-10-16T00:00:00Z",
+      "left_organizer": "Flirtual",
+      "right_organizer": "PrideVR",
+      "similarity": 0.3065,
+      "left_title": "Flirtual Bar Night",
+      "right_title": "Queer Bar（18＋）"
     }
   ],
-  "generated_at": "2026-10-16T04:28:02Z"
+  "generated_at": "2026-10-16T09:46:55Z"
 }
