@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-10-18T09:34:22Z",
+  "generated_at": "2026-10-18T14:00:53Z",
   "status": "degraded",
   "enabled_sources": 5,
   "successful_sources": 3,
   "failed_sources": 0,
-  "event_count": 1265,
+  "event_count": 1250,
   "sources": [
     {
       "name": "repository_manual_events",
@@ -18,7 +18,7 @@
       "status": "skipped",
       "count": 0,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-18T09:32:51Z",
+      "collection_generated_at": "2026-10-18T13:59:35Z",
       "reason": "VRCHAT_AUTH_COOKIE is not configured",
       "collection_event_count": 0
     },
@@ -27,25 +27,25 @@
       "status": "skipped",
       "count": 2,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-18T09:32:51Z",
+      "collection_generated_at": "2026-10-18T13:59:35Z",
       "reason": "X_BEARER_TOKEN is not configured; retained existing cache",
       "collection_event_count": 2
     },
     {
       "name": "yahoo_realtime_events",
       "status": "ok",
-      "count": 70,
+      "count": 56,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-18T09:34:19Z",
-      "collection_event_count": 70
+      "collection_generated_at": "2026-10-18T14:00:49Z",
+      "collection_event_count": 56
     },
     {
       "name": "external_calendar_events",
       "status": "ok",
-      "count": 707,
+      "count": 704,
       "duration_ms": 0,
-      "collection_generated_at": "2026-10-18T09:33:55Z",
-      "collection_event_count": 707
+      "collection_generated_at": "2026-10-18T14:00:46Z",
+      "collection_event_count": 704
     }
   ],
   "ontology": {
@@ -54,69 +54,70 @@
     "entries": 15,
     "matched_events": 294,
     "matched_series": 13,
-    "unmatched_events": 971,
+    "unmatched_events": 956,
     "ambiguous_events": 0,
     "status": "ok"
   },
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1265,
+    "event_count": 1250,
     "category_breakdown": {
-      "art": 125,
-      "community": 305,
-      "game": 113,
+      "art": 124,
+      "community": 297,
+      "game": 115,
       "language_exchange": 35,
       "learning": 29,
-      "music": 157,
-      "other": 107,
+      "music": 154,
+      "other": 104,
       "performance": 23,
-      "recruitment_deadline": 8,
+      "recruitment_deadline": 6,
       "technology": 275,
       "wellness": 71,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 2,
-      "cafe": 39,
-      "cast_service": 6,
+      "application_deadline": 1,
+      "bar": 1,
+      "cafe": 37,
+      "cast_service": 5,
       "class": 8,
       "dance": 65,
       "dj": 5,
-      "engineering": 164,
-      "fitness": 37,
-      "hangout": 82,
+      "engineering": 166,
+      "fitness": 36,
+      "hangout": 75,
       "language_exchange": 35,
       "lecture": 3,
-      "live_music": 4,
+      "live_music": 3,
       "mystery": 34,
       "participant_recruitment": 1,
-      "photography": 125,
-      "research": 68,
+      "photography": 124,
+      "research": 66,
       "show": 22,
-      "social": 158,
-      "tabletop": 34,
+      "social": 159,
+      "tabletop": 35,
       "workshop": 10,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 8,
+      "deadline": 6,
       "hybrid": 6,
-      "in_world": 1247,
+      "in_world": 1234,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
-      "fallback": 107,
-      "keyword_rules": 607,
-      "legacy_and_keywords": 135,
+      "fallback": 104,
+      "keyword_rules": 594,
+      "legacy_and_keywords": 136,
       "legacy_category": 139
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 146,
-    "audit_event_count": 146
+    "low_confidence_event_count": 141,
+    "audit_event_count": 141
   },
-  "normalized_event_count": 1269,
+  "normalized_event_count": 1253,
   "occurrence_dedup_policy": "canonical-occurrence.v1",
   "skipped_sources": 2,
   "degraded_sources": 0
