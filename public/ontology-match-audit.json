@@ -2,10 +2,10 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1156,
-  "matched_events": 293,
+  "event_count": 1265,
+  "matched_events": 294,
   "matched_series": {
-    "vrc-fit-boxing": 36,
+    "vrc-fit-boxing": 37,
     "personally-match": 18,
     "en-jp-language-exchange": 35,
     "vrc-goita": 17,
@@ -19,7 +19,7 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 863,
+  "unmatched_events": 971,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -51,6 +51,18 @@
       "title": "EN-JP Language Exchange（日曜）",
       "status": "matched",
       "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "1d743103e15187fd1dda",
+      "title": "VRCフィットボクシング集会",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
       "evidence": [
         "alias",
         "organizer",
@@ -3524,156 +3536,63 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1156,
+    "event_count": 1265,
     "category_breakdown": {
-      "art": 124,
-      "community": 284,
-      "game": 107,
+      "art": 125,
+      "community": 305,
+      "game": 113,
       "language_exchange": 35,
-      "learning": 33,
-      "music": 139,
-      "other": 59,
-      "performance": 8,
-      "recruitment_deadline": 7,
-      "technology": 273,
-      "wellness": 70,
+      "learning": 29,
+      "music": 157,
+      "other": 107,
+      "performance": 23,
+      "recruitment_deadline": 8,
+      "technology": 275,
+      "wellness": 71,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 2,
-      "bar": 1,
-      "cafe": 34,
-      "cast_service": 7,
-      "class": 6,
-      "dance": 58,
+      "cafe": 39,
+      "cast_service": 6,
+      "class": 8,
+      "dance": 65,
       "dj": 5,
-      "engineering": 161,
-      "fitness": 36,
-      "hangout": 78,
+      "engineering": 164,
+      "fitness": 37,
+      "hangout": 82,
       "language_exchange": 35,
-      "lecture": 9,
-      "live_music": 5,
+      "lecture": 3,
+      "live_music": 4,
       "mystery": 34,
       "participant_recruitment": 1,
-      "photography": 124,
-      "research": 69,
-      "show": 6,
+      "photography": 125,
+      "research": 68,
+      "show": 22,
       "social": 158,
-      "tabletop": 35,
-      "theater": 1,
+      "tabletop": 34,
       "workshop": 10,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 7,
-      "hybrid": 5,
-      "in_world": 1140,
+      "deadline": 8,
+      "hybrid": 6,
+      "in_world": 1247,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 276,
-      "fallback": 59,
-      "keyword_rules": 581,
-      "legacy_and_keywords": 116,
-      "legacy_category": 124
+      "curated_ontology": 277,
+      "fallback": 107,
+      "keyword_rules": 607,
+      "legacy_and_keywords": 135,
+      "legacy_category": 139
     },
-    "organizer_profile_count": 20,
-    "low_confidence_event_count": 103,
-    "audit_event_count": 103
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 146,
+    "audit_event_count": 146
   },
   "category_review_queue": [
-    {
-      "event_id": "4049c466da3da608042f",
-      "title": "Server Start up",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "4646f165414495f829e5",
-      "title": "Join up",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ad955eb5d7774369f1ef",
-      "title": "Roleplays",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "bd3b7cedd7f0f8f6a186",
-      "title": "Join the rp",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c077631e3d187a7d1e22",
-      "title": "初心者案内＆ジェイプラツアー",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "35a9e307983a28f19e5c",
-      "title": "디멘션 허브 ［Dimension Hub］",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e759552beb55038ec327",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "751208a0ed638fa9d546",
       "title": "━━━ JAM ━━━ 10/17(SAT) OPEN 21:25 21:30-21:55 VRChat ( Group +:JAM.2553) 煮ル果実オンリーで制作したMix動画を上映しま…",
@@ -3686,62 +3605,6 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "509684f21807572cc932",
-      "title": "club Focus",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "71737500337d921fd2fa",
-      "title": "cop",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "caddfbc6a12cce7d2849",
-      "title": "Progrès fulgurant",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "dcaea4bbddf1e86e79e4",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
     },
     {
       "event_id": "9828e4ea4459ab978637",
@@ -3792,19 +3655,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "4c863a4ffa13d8159f6a",
-      "title": "副本-夜眠花",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "ea49f3a5b73c4d46f67f",
       "title": "#VRCPPP VRC イベント「Pretty Private Pleasure」 10月17日(土)23時 リクイン 受付 開始 😈 【タイムテーブル】 23:00~23:02 Req-In…",
       "category": "other",
@@ -3831,25 +3681,90 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "fa09237f4bfe75421361",
-      "title": "学術サロン Forum des étoiles",
+      "event_id": "dee51b39d0d48adf1eed",
+      "title": "Arc Day˸ 7 Back to the pastǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1fa6e71c3340de333d44",
+      "title": "Cat Club eventǃǃǃǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "8f4159fea27084ff6958",
+      "title": "Drinking Night Shenanigansǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0374810e79d024ea6e8c",
+      "title": "LATIN VIBES",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "a6f95aacbd642dd9ac28",
+      "title": "ROLEPLAY NIGHT",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "62a92812025203d52c3a",
+      "title": "VRC Community Night Game Stream",
       "category": "technology",
       "label": "技術・研究",
-      "subcategory": "research",
+      "subcategory": "engineering",
       "score": 5,
       "confidence": 0.58,
       "source": "keyword_rules",
       "evidence": [
-        "keyword:title:学術"
+        "keyword:title:unity"
       ],
-      "event_mode": "in_world",
+      "event_mode": "hybrid",
       "ambiguous_with": [
-        "learning"
+        "game"
       ]
     },
     {
-      "event_id": "20067027d0e4ed770ee9",
-      "title": "rp fantaisie",
+      "event_id": "f122bc1b58ee97a15615",
+      "title": "We ain't dead",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3861,8 +3776,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "460c0b99f8e0db33c57e",
-      "title": "Study Russian meet up",
+      "event_id": "8524b34e3ddaabfe321b",
+      "title": "ᴇᴠᴇɴᴛᴏ ᴍᴀɪᴅ ᴄᴀғᴇ́ ʜᴏʏ ᴀ ʟᴀs 7 ᴘᴍ",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3874,8 +3789,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "b83092559c6db094cc2f",
-      "title": "Join for Some Funǃ",
+      "event_id": "f9bb6da36bb43658761e",
+      "title": "GOOFY COURT",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3887,8 +3802,21 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "f4745d59d99185d05b07",
-      "title": "Join to have late-night funǃ",
+      "event_id": "c9ff56168e3a6fc24595",
+      "title": "Court Weekendǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "260e40fa5bbed531a25c",
+      "title": "Weekly Lasertag Event ǃ ｛TTO｝",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3900,13 +3828,403 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "5eef5eeda064d6f3bc05",
-      "title": "SIREN ＆ CHILL",
+      "event_id": "024ccd40f5033f274726",
+      "title": "Escape marathon",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "7774d149574de547a9dd",
+      "title": "Adult Hunt",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1d995f75a02b95246e1d",
+      "title": "Midnight Groove collabǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "24fbbd87b57c36e5bcda",
+      "title": "Saturday Rock Night",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2c9e7480aab3e98c3aab",
+      "title": "Weekend Event",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "afa70e7aa3f48837ba8e",
+      "title": "TONIGHTS THE NIGHT",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "333e70ee94a50e11eda4",
+      "title": "JROTC Training",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "a6991f888bace7cb463f",
+      "title": "Recruitment instance",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0f2646506a01f27f4d5f",
+      "title": "BFM Breakdown",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c85208e96a88ea8fb09d",
+      "title": "Dia De Los Muertos Casino",
       "category": "other",
       "label": "その他",
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ec23962ab9f5b969dfb3",
+      "title": "El Reggaeton Room Hours",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "aa79dee5cb07d0ac4490",
+      "title": "El Reggaeton Room every Saturday 10˸00pm EST",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1ae6d4d41c30f58a6624",
+      "title": "SLASHER SMACKDOWN",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0cb34043d2b1360c740b",
+      "title": "Murder drone role play ǃǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "5a952ad31ec33a345291",
+      "title": "for rp",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d9bfe2ff25e9419bd489",
+      "title": "tournaments",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "f6480150c76940a4dceb",
+      "title": "Final Selection",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "adf1b0174790d94a78fa",
+      "title": "HOUSE POP UP",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "645971e54680d45e28e8",
+      "title": "El bar vuelve a abrir sus puertasǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d397666b9491398bdf08",
+      "title": "Frights ＆ Lights",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fb5ec4ba6cdd8a925200",
+      "title": "Age Verified World Roulette˸ You Choose the Destination",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "dd87ca2838d1090db063",
+      "title": "Haus ov Cards Bar ｜ Saturday Night",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "915dec007ebfc056ba83",
+      "title": "This is a new group for Wanted sabrean",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "e227b81a665ba42bb519",
+      "title": "Server Start up",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "e196a7f1ac2a72d22028",
+      "title": "Join up",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "97bd3edf93d7d03aebf8",
+      "title": "Roleplays",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "721d42cccec609ebd435",
+      "title": "Join the rp",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "961f9313228c0d456559",
+      "title": "BORRACHERA TERAPÉUTICA S․A․C․",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "e0f55d7964e134b9991c",
+      "title": "LA JUNTA DE LOS CEBADOS",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "5d47d73ac55ed3b4d971",
+      "title": "ALCOLICOS ANONIMOS - CAPITULO FIN DE SEMANA",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "4013e56e0c8908c94eb9",
+      "title": "પય 교단 પય 클럽 후 8 픈",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3952,8 +4270,47 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "3ac4c653e838399c174b",
+      "title": "【2日目】BANGER ROOM × CLUBSERA",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "6ba2f83d07ed2cc0543a",
+      "title": "遠夏の鑑賞会【第７１回上映会】",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "3cbe3fc6ad1d7437460d",
       "title": "🌙【#ClubMorceau】#41 🌙 ～ モルソ 第41回 通常 営業 ～ ⏰10月18日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "3c6ac9e5593c4a57ac42",
+      "title": "cop",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3976,23 +4333,6 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "ea4b5f07986124933cea",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
     },
     {
       "event_id": "5c33b1fbeaf308d161d9",
@@ -4026,6 +4366,19 @@
       ]
     },
     {
+      "event_id": "d6363cdfa97a0dde4158",
+      "title": "Spooky Month Cinema˸ An American Werewolf in London",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "0d7dea2aff837948e3ae",
       "title": "ʚ 堕天Bar～テンテンテンゴクジゴク ɞ",
       "category": "other",
@@ -4052,8 +4405,34 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "80e852908b31f2e1cce4",
+      "title": "Back To The Future Movie Marathon",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "6ddb8744601da420a617",
       "title": "Helping Hands Festival 2026 - The Mighty Gym presentation ＆ tour",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "5e12fed605d9ffef284c",
+      "title": "Sunday Service",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4096,6 +4475,58 @@
       ]
     },
     {
+      "event_id": "87b99ff3e6eed97a7c5d",
+      "title": "EPIC Fellowship Sunday Service",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "dd38439befe5e2cd371d",
+      "title": "Esoterics w⁄ FoxyFoo",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "748fa3ac307cafbf67ad",
+      "title": "SFW⁄Open Amanugai's Hypnosis Workshop",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "1274ecaf992e351f6cf5",
+      "title": "Helping Hands Festival 2026 - Trans Academy presentation ＆ tour",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "0b2156e05cffd8380f37",
       "title": "Join to have late-night funǃ",
       "category": "other",
@@ -4111,6 +4542,45 @@
     {
       "event_id": "8f83f349bdd82f784853",
       "title": "SIREN ＆ CHILL",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ef90605ba52fc47e95b7",
+      "title": "Torah Study",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "9302c577d2a8f0f31bb0",
+      "title": "Orrum middle school",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "02d7769822a163eeafda",
+      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4152,23 +4622,6 @@
       ]
     },
     {
-      "event_id": "1db2f097e5ae83ee2cb0",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "d19db0239f3fa5c4427c",
       "title": "夜ボド－VazaR倶楽部 VRボドゲを遊ぼう！ 第121回",
       "category": "other",
@@ -4184,6 +4637,19 @@
     {
       "event_id": "c985a65f68b3e58636e9",
       "title": "Join for Some Funǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2125f87b7d9811480aca",
+      "title": "Peachs Munch Evening",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4221,23 +4687,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "42f0861dc5253241090e",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "a10ea2dcff105da72709",
       "title": "Join for Some Funǃ",
       "category": "other",
@@ -4253,6 +4702,32 @@
     {
       "event_id": "15f23dc0c9eb5d6b05b8",
       "title": "Join to have late-night funǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0fdbd37765985126f530",
+      "title": "SIREN ＆ CHILL",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "e36627d87381a412c73a",
+      "title": "定期部活動（水）",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4300,23 +4775,6 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:歴史"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "78814f30ac78644c727c",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -4402,23 +4860,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "f3ab7ccbb4d70370f4dc",
-      "title": "Vspeed 定期集会",
-      "category": "learning",
-      "label": "学習・講義",
-      "subcategory": "lecture",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:description:講座"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "ae986fb6f0c6790d3218",
       "title": "～ VRC 華道部の 体験会 お知らせ～ いけばな体験がメイン！ 初めての方でも先生が教えてくれるので安心！ ※体験できる人数には限りがあります。予めご了承ください！ 日時 ：※10/22(木…",
       "category": "other",
@@ -4471,6 +4912,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "b967415cc80afd975d49",
+      "title": "Suki猫娘咖啡厅营业中~期待有缘的你",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "4e88f60b98a187590926",
       "title": "Join for Some Funǃ",
       "category": "other",
@@ -4491,6 +4945,34 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "30189df77c6586ef94b7",
+      "title": "Let's study Japanese with JapaNichijou ジャパ日常ǃ",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "engineering",
+      "score": 3,
+      "confidence": 0.585,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:organizer:unity"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "b444e0f719e8dd62df89",
+      "title": "club Focus",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4523,6 +5005,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "60c8e4be54b7787d8c8f",
+      "title": "VRChatイベント『ブイシロ』",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "0d6db7aba5d7505c6160",
       "title": "rp fantaisie",
       "category": "other",
@@ -4549,6 +5044,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "6f7e3db2b2e0e3c4a2d1",
+      "title": "Join to have late-night funǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "b5446fdc03eacb56c1ad",
       "title": "VRC アカウント【Lustroir】アカウントにフレンド申請。 ▪️10月25日21時55分に リクエストインバイト （1度のみ） お連れ様がいる場合当日会場のスタッフにお伝え下さい。 一組…",
       "category": "other",
@@ -4556,6 +5064,45 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ad04cb53cfe6c22720c8",
+      "title": "Progrès fulgurant",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "6e333636beffc67ec0dd",
+      "title": "Join for Some Funǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ac3fb589eb0d60099aca",
+      "title": "Join to have late-night funǃ",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",

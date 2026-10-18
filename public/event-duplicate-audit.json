@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1159,
-  "event_count_after": 1156,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 3,
-  "duplicate_post_count": 3,
-  "duplicate_rate": 0.002588,
+  "event_count_before": 1269,
+  "event_count_after": 1265,
+  "candidate_cluster_count": 4,
+  "duplicate_cluster_count": 4,
+  "duplicate_occurrence_count": 4,
+  "duplicate_post_count": 4,
+  "duplicate_rate": 0.003152,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
+    {
+      "cluster_id": "occ_6ca264cd5f41a8b665da",
+      "starts_at": "2026-10-19T19:41:00Z",
+      "title": "< 告知 > ロケット打ち上げを観る集会 - 生中継の部 みなさん、フォボスのサンプル回収を目指す打ち上げを見届けよう！ 🚀 H3-24 | Martian Moons eXploration…",
+      "member_count": 2,
+      "member_ids": [
+        "7cbb42b2101213580b07",
+        "ae720b9fe1590c55aee0"
+      ],
+      "source_record_ids": [
+        "src_445bb9738e7cf700ef81",
+        "src_92261588916c24e2b9ee"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_92261588916c24e2b9ee"
+    },
     {
       "cluster_id": "occ_907cfd2c23bc7a01e67f",
       "starts_at": "2026-10-17T12:00:00Z",
@@ -78,108 +100,118 @@
       "representative_source_record_id": "src_d5d1e891c9a1d9d89c4d"
     }
   ],
-  "ambiguous_candidates": [],
-  "negative_samples": [
+  "ambiguous_candidates": [
     {
-      "left_id": "855c5713603e3de42312",
-      "right_id": "8e8746664c615d65bd7b",
-      "starts_at": "2026-10-17T04:30:00Z",
-      "left_organizer": "Kraken Shipwatch",
-      "right_organizer": "~ VR Wellness Center ~",
-      "similarity": 0.1008,
-      "left_title": "Bar⁄Casino Shipwatch",
-      "right_title": "VRWC Spooky Game Hop"
-    },
-    {
-      "left_id": "e3a4e864671aad259809",
-      "right_id": "e38f9295781397680914",
-      "starts_at": "2026-10-17T05:00:00Z",
-      "left_organizer": "TheHazbinHotel666",
-      "right_organizer": "にらかふぇ",
-      "similarity": 0.0,
-      "left_title": "The radio broadcast 616 event",
-      "right_title": "【にらかふぇ】雑談カフェイベント"
-    },
-    {
-      "left_id": "dedc11e6883c4bb54377",
-      "right_id": "094470f1ffd3bb23e39c",
-      "starts_at": "2026-10-17T08:00:00Z",
-      "left_organizer": "@Miraikirari0305",
-      "right_organizer": "@Bambi84_VT",
-      "similarity": 0.3482,
-      "left_title": "お知らせ📣 明日 （10/9）、私たちBloom Gemの初配信があります！ 配信では、私たちの初ライブになる 1st HalloweenLIVE（ Group インスタンスにて10/17 1…",
-      "right_title": "改めて 本日 BloomGemの初ライブです。 VRC にて グループインスタンス から会場に入れます。17時会場、17時半開演です。 またyoutubeでもライブ配信行います。 アーカイブも…"
-    },
-    {
-      "left_id": "dedc11e6883c4bb54377",
-      "right_id": "e412c8efd4edd82a984a",
-      "starts_at": "2026-10-17T08:00:00Z",
-      "left_organizer": "@Miraikirari0305",
-      "right_organizer": "メガネアバターを広める会",
-      "similarity": 0.0628,
-      "left_title": "お知らせ📣 明日 （10/9）、私たちBloom Gemの初配信があります！ 配信では、私たちの初ライブになる 1st HalloweenLIVE（ Group インスタンスにて10/17 1…",
-      "right_title": "眼鏡喫茶墨染"
-    },
-    {
-      "left_id": "094470f1ffd3bb23e39c",
-      "right_id": "e412c8efd4edd82a984a",
-      "starts_at": "2026-10-17T08:00:00Z",
-      "left_organizer": "@Bambi84_VT",
-      "right_organizer": "メガネアバターを広める会",
-      "similarity": 0.0886,
-      "left_title": "改めて 本日 BloomGemの初ライブです。 VRC にて グループインスタンス から会場に入れます。17時会場、17時半開演です。 またyoutubeでもライブ配信行います。 アーカイブも…",
-      "right_title": "眼鏡喫茶墨染"
-    },
-    {
-      "left_id": "4cc9831a2dc05b8a7539",
-      "right_id": "2a0dc3b2dd319b6069a0",
-      "starts_at": "2026-10-17T09:39:00Z",
-      "left_organizer": "JAMONES",
-      "right_organizer": "JAMONES",
-      "similarity": 0.351,
-      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "right_title": "LA JUNTA DE LOS CEBADOS"
-    },
-    {
-      "left_id": "1fd5cfc71daba5d5f695",
-      "right_id": "30d42b36ce3a3deb4beb",
-      "starts_at": "2026-10-17T11:00:00Z",
-      "left_organizer": "夜カフェ「パルラーレ」",
-      "right_organizer": "Leaf's Library",
-      "similarity": 0.0678,
-      "left_title": "cafe：17日開店",
-      "right_title": "Leaf's Library"
-    },
-    {
-      "left_id": "1fd5cfc71daba5d5f695",
-      "right_id": "c077631e3d187a7d1e22",
-      "starts_at": "2026-10-17T11:00:00Z",
-      "left_organizer": "夜カフェ「パルラーレ」",
-      "right_organizer": "ジェイプラ - JP PLAZA - 公式",
-      "similarity": 0.0828,
-      "left_title": "cafe：17日開店",
-      "right_title": "初心者案内＆ジェイプラツアー"
-    },
-    {
-      "left_id": "1fd5cfc71daba5d5f695",
-      "right_id": "8347705e66837a33e747",
-      "starts_at": "2026-10-17T11:00:00Z",
-      "left_organizer": "夜カフェ「パルラーレ」",
-      "right_organizer": "観測者",
-      "similarity": 0.0952,
-      "left_title": "cafe：17日開店",
-      "right_title": "暇人の集い"
-    },
-    {
-      "left_id": "1fd5cfc71daba5d5f695",
-      "right_id": "fed25f8cf121cff65f6b",
-      "starts_at": "2026-10-17T11:00:00Z",
-      "left_organizer": "夜カフェ「パルラーレ」",
-      "right_organizer": "VRCボウリング部",
-      "similarity": 0.2406,
-      "left_title": "cafe：17日開店",
-      "right_title": "第14回 VRCボウリング部交流会"
+      "left_id": "f5e85a84cec5175c9378",
+      "right_id": "e7c7ddaf3bb2cb76b9b4",
+      "starts_at": "2026-10-18T13:00:00Z",
+      "organizer": "@VRC_Chado",
+      "similarity": 0.4532,
+      "left_title": "『和服で巡ろう！和風×季節ワールドめぐり＆写真撮影会 by VRC 茶道部』 日時 ：10月18日㈰ 22時～23時 参加方法： VRC 茶道部のグループ＋、または yokof にフレリク＆ …",
+      "right_title": "本日 ！ 10月18日㈰ 22時～23時 『和装で巡ろう！和風×季節ワールドめぐり＆写真 撮影会 』 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る） 素敵な秋のひ…"
     }
   ],
-  "generated_at": "2026-10-18T04:27:33Z"
+  "negative_samples": [
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "92d333f2cc9665696481",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@sansuke05_vr",
+      "similarity": 0.1065,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【 VRChatイベント告知 】第11回 九尾の傍観者集会 を開催します！ 日時：2026年10月17日 (土) 21:00 ~ 22:00 参加方法 ：「九尾の傍観者の集い」のグループに参加…"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "395545b6fd0c06d4c341",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@trinitytails_vr",
+      "similarity": 0.1039,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【 明日開催 】 VRChat 音楽ライブ 🗓️2026.10.17(土) 21:00 OPEN ！ 🎸ロックバンドLIVE 🌐 #TrinityTails Group + 重なり合う音と熱狂…"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "d58219c3c5a2429cca25",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0851,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "セキュリティ集会"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "f6147c359e500c96b3a0",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1538,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "今夜 は学生学際集会！ 【タイムスケジュール】 10月17日(土) 21:00～ 開場 21:15～ もこmoko059さん 『#5 大学の数学科が気にすること』 ぜひお越しください！！ Jo…"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "1d31bfedbcf18ff43c02",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0621,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "学生学際集会"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "e6858a44811d4bb3836b",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1538,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "明日 は学生学際集会！ 【タイムスケジュール】 10月17日(土) 21:00～ 開場 21:15～ もこmoko059さん 『#5 大学の数学科が気にすること』 ぜひお越しください！！ Jo…"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "8483b7037fe1ab5aee73",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0334,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "株式投資座談会"
+    },
+    {
+      "left_id": "5426731cf71940057a96",
+      "right_id": "8d2558470212d10e1564",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@Cacophony_Box",
+      "similarity": 0.0789,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "📢 告知 ！ VRC 両声類歌練習イベント 「Cacophony Box」 本日 10月17日21:00〜23:00、第33回 開催 ！！ セミエントリー式の オープン マイクイベントとなりま…"
+    },
+    {
+      "left_id": "92d333f2cc9665696481",
+      "right_id": "395545b6fd0c06d4c341",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "@sansuke05_vr",
+      "right_organizer": "@trinitytails_vr",
+      "similarity": 0.2403,
+      "left_title": "【 VRChatイベント告知 】第11回 九尾の傍観者集会 を開催します！ 日時：2026年10月17日 (土) 21:00 ~ 22:00 参加方法 ：「九尾の傍観者の集い」のグループに参加…",
+      "right_title": "【 明日開催 】 VRChat 音楽ライブ 🗓️2026.10.17(土) 21:00 OPEN ！ 🎸ロックバンドLIVE 🌐 #TrinityTails Group + 重なり合う音と熱狂…"
+    },
+    {
+      "left_id": "92d333f2cc9665696481",
+      "right_id": "d58219c3c5a2429cca25",
+      "starts_at": "2026-10-17T12:00:00Z",
+      "left_organizer": "@sansuke05_vr",
+      "right_organizer": null,
+      "similarity": 0.2545,
+      "left_title": "【 VRChatイベント告知 】第11回 九尾の傍観者集会 を開催します！ 日時：2026年10月17日 (土) 21:00 ~ 22:00 参加方法 ：「九尾の傍観者の集い」のグループに参加…",
+      "right_title": "セキュリティ集会"
+    }
+  ],
+  "generated_at": "2026-10-18T09:34:22Z"
 }
