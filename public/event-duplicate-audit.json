@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1157,
-  "event_count_after": 1155,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.001729,
+  "event_count_before": 1245,
+  "event_count_after": 1242,
+  "candidate_cluster_count": 3,
+  "duplicate_cluster_count": 3,
+  "duplicate_occurrence_count": 3,
+  "duplicate_post_count": 3,
+  "duplicate_rate": 0.00241,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 4,
+  "unresolved_ambiguous_cluster_count": 3,
   "clusters": [
     {
       "cluster_id": "occ_6ca264cd5f41a8b665da",
@@ -54,18 +54,31 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_aefba1d7e76db18f7e17"
+    },
+    {
+      "cluster_id": "occ_f1eca1d22b64b4f62e84",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "title": "💫「YSS HomeLive」 開催 のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ …",
+      "member_count": 2,
+      "member_ids": [
+        "2da6008a78e56bb667f0",
+        "b38905db5094d6653297"
+      ],
+      "source_record_ids": [
+        "src_ecbb24eb7eafd691695f",
+        "src_f18a8bdcba723e01b584"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_ecbb24eb7eafd691695f"
     }
   ],
   "ambiguous_candidates": [
-    {
-      "left_id": "f5e85a84cec5175c9378",
-      "right_id": "e7c7ddaf3bb2cb76b9b4",
-      "starts_at": "2026-10-18T13:00:00Z",
-      "organizer": "@VRC_Chado",
-      "similarity": 0.4532,
-      "left_title": "『和服で巡ろう！和風×季節ワールドめぐり＆写真撮影会 by VRC 茶道部』 日時 ：10月18日㈰ 22時～23時 参加 方法： VRC 茶道部のグループ＋、または yokof に フレリク…",
-      "right_title": "本日 ！ 10月18日㈰ 22時～23時 『和装で巡ろう！和風×季節ワールドめぐり＆写真 撮影会 』 【 参加 方法】 VRC 茶道部の VRC グループ＋に Join （入る） 素敵な秋のひ…"
-    },
     {
       "left_id": "70cfb09c9d53e7cddf1d",
       "right_id": "a49d6765476139ee0d06",
@@ -96,105 +109,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "961f9313228c0d456559",
-      "right_id": "e0f55d7964e134b9991c",
-      "starts_at": "2026-10-18T09:39:00Z",
-      "left_organizer": "JAMONES",
-      "right_organizer": "JAMONES",
-      "similarity": 0.351,
-      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "right_title": "LA JUNTA DE LOS CEBADOS"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "4b2993e915c7244d7121",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "PLUR FAM",
+      "similarity": 0.1242,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "BASS FACE 16"
     },
     {
-      "left_id": "fe235d3beae2bb20adb7",
-      "right_id": "7047553589c18e7042c5",
-      "starts_at": "2026-10-18T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "ガンナガン同好会",
-      "similarity": 0.1038,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "VRChatでカードゲーム！ ガンナガン初心者体験会"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "253dad662ad4967a04b3",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "Respiteful Friends",
+      "similarity": 0.122,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Cafe Fishingǃ"
     },
     {
-      "left_id": "04632c3476b433b116bc",
-      "right_id": "399ca33e0f6c464d096c",
-      "starts_at": "2026-10-18T11:30:00Z",
-      "left_organizer": null,
-      "right_organizer": "-メタバースソーラン- Metaverse Soran",
-      "similarity": 0.1075,
-      "left_title": "VR核融合コミュニティ Virtual Fusion Nexus",
-      "right_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "633b2fadb398ba536629",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "CnA The Encore",
+      "similarity": 0.2989,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Group Instanceǃǃǃ"
     },
     {
-      "left_id": "04632c3476b433b116bc",
-      "right_id": "c51862e9570fe875885e",
-      "starts_at": "2026-10-18T11:30:00Z",
-      "left_organizer": null,
-      "right_organizer": "VR核融合コミュニティ Virtual Fusion Nexus",
-      "similarity": 0.1924,
-      "left_title": "VR核融合コミュニティ Virtual Fusion Nexus",
-      "right_title": "【Android対応】VRで知る核融合の今ǃ 第6回Fusion News Cafe【初心者さん歓迎ǃ】"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "c4298f48c906e7784b39",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "The Madhouse Carnival",
+      "similarity": 0.1501,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "KARAOKE SUNDAYS"
     },
     {
-      "left_id": "399ca33e0f6c464d096c",
-      "right_id": "c51862e9570fe875885e",
-      "starts_at": "2026-10-18T11:30:00Z",
-      "left_organizer": "-メタバースソーラン- Metaverse Soran",
-      "right_organizer": "VR核融合コミュニティ Virtual Fusion Nexus",
-      "similarity": 0.0575,
-      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
-      "right_title": "【Android対応】VRで知る核融合の今ǃ 第6回Fusion News Cafe【初心者さん歓迎ǃ】"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "e12e8a66f2384c58eff8",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "Oasis Church VR",
+      "similarity": 0.1333,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Never Been to Church? Youre Welcome Here․"
     },
     {
-      "left_id": "0435dc96266d2f3044ed",
-      "right_id": "bf408f42bb320c87a315",
-      "starts_at": "2026-10-18T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "吃书兽读书会",
-      "similarity": 0.0275,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "c6266d73dc62ffef8800",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "Dumpsterfire",
+      "similarity": 0.2571,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Pool Hangout"
     },
     {
-      "left_id": "0435dc96266d2f3044ed",
-      "right_id": "fad54bd66ec92bc384a0",
-      "starts_at": "2026-10-18T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "ASMRCafe～あすもあ～",
-      "similarity": 0.1422,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "ASMRCafe〜あすもあ〜"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "0e4185df6ebb246e6a5a",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "Forjadores Hispanos",
+      "similarity": 0.1273,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Reunion Dominical de forjadores"
     },
     {
-      "left_id": "0435dc96266d2f3044ed",
-      "right_id": "d57d913393b6895b9d7a",
-      "starts_at": "2026-10-18T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "BORT",
-      "similarity": 0.104,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "BORT 44 - TECHNO"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "080d77895ca459a85de3",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "UNSC Embers Of Hope",
+      "similarity": 0.32,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Server Meeting"
     },
     {
-      "left_id": "0435dc96266d2f3044ed",
-      "right_id": "349f89ae3484aea2162c",
-      "starts_at": "2026-10-18T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "Club Morceau",
-      "similarity": 0.1143,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "ClubMorceau ＃41"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "7a6a9881a5f8214038b0",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "SYN",
+      "similarity": 0.2772,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "SINFUL SUNDAY"
     },
     {
-      "left_id": "0435dc96266d2f3044ed",
-      "right_id": "f4b2d7fbb81f77e59be4",
-      "starts_at": "2026-10-18T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "EN-JP Language Exchange",
-      "similarity": 0.0741,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join join 先：杉崎リン ご来店…",
-      "right_title": "EN-JP Language Exchange（日曜）"
+      "left_id": "3a116d07cac1980c0d5e",
+      "right_id": "4007ee7967d8704bef84",
+      "starts_at": "2026-10-19T00:00:00Z",
+      "left_organizer": "The Faceless",
+      "right_organizer": "The howl pack",
+      "similarity": 0.2938,
+      "left_title": "18＋verified SFW - Community Night",
+      "right_title": "Sunday movie nights"
     }
   ],
-  "generated_at": "2026-10-19T06:12:03Z"
+  "generated_at": "2026-10-19T13:06:21Z"
 }
