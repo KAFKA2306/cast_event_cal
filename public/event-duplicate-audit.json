@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1158,
-  "event_count_after": 1157,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.000864,
+  "event_count_before": 1228,
+  "event_count_after": 1226,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.001629,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
+    {
+      "cluster_id": "occ_a18fea9306e60c058485",
+      "starts_at": "2026-10-21T21:00:00Z",
+      "title": "Epic Fellowship Women's Bible Study",
+      "member_count": 2,
+      "member_ids": [
+        "d21745061e44b056cd39",
+        "e9f0cdb73871841b26d2"
+      ],
+      "source_record_ids": [
+        "src_15f0eb5da9e6663f19c9",
+        "src_436869bb7cb8f82c8af7"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_436869bb7cb8f82c8af7"
+    },
     {
       "cluster_id": "occ_f1eca1d22b64b4f62e84",
       "starts_at": "2026-10-30T12:50:00Z",
@@ -34,118 +56,108 @@
       "representative_source_record_id": "src_ecbb24eb7eafd691695f"
     }
   ],
-  "ambiguous_candidates": [
-    {
-      "left_id": "304efafc2e8cafe5f8e4",
-      "right_id": "a9a55194f3a79d64e5c7",
-      "starts_at": "2026-10-23T12:00:00Z",
-      "organizer": "@imasDJ_yanagi",
-      "similarity": 0.58,
-      "left_title": "【 告知 解禁】 スタジオヤナギ次回のイベントは… ＼アイマスオンリー DJイベント ぶいM@S！／ 日時 ：2026/10/23（金）21時～ DJ：ヤナギ・takuro3・加持さん VJ：…",
-      "right_title": "【# VRChat イベント 告知 】 アイドルマスターオンリー DJイベント ぶいM@S!まで後一週間!! プロデューサーの皆さん、 VRChat でもアイマスですよ、アイマス!! 日時 ：…"
-    }
-  ],
+  "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "e9c684dc7cc317bcfbbf",
-      "right_id": "8b3792805d8c84bd0b6f",
-      "starts_at": "2026-10-19T11:30:00Z",
-      "left_organizer": "-メタバースソーラン- Metaverse Soran",
-      "right_organizer": "ぶいトレ",
-      "similarity": 0.1519,
-      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
-      "right_title": "ちょいトレ・がちトレ"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "c5e40e1073eaf7160e43",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Kirby Korner",
+      "similarity": 0.0406,
+      "left_title": "Chill Monday open mic",
+      "right_title": "Magical Movement Mondayǃ"
     },
     {
-      "left_id": "e9c684dc7cc317bcfbbf",
-      "right_id": "263a6973eb94debb0005",
-      "starts_at": "2026-10-19T11:30:00Z",
-      "left_organizer": "-メタバースソーラン- Metaverse Soran",
-      "right_organizer": "Dimension Hub",
-      "similarity": 0.0,
-      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
-      "right_title": "디멘션 허브 ［Dimension Hub］"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "91932734310bdc8c2445",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "PrideVR",
+      "similarity": 0.1298,
+      "left_title": "Chill Monday open mic",
+      "right_title": "Queer Pug"
     },
     {
-      "left_id": "8b3792805d8c84bd0b6f",
-      "right_id": "263a6973eb94debb0005",
-      "starts_at": "2026-10-19T11:30:00Z",
-      "left_organizer": "ぶいトレ",
-      "right_organizer": "Dimension Hub",
-      "similarity": 0.0,
-      "left_title": "ちょいトレ・がちトレ",
-      "right_title": "디멘션 허브 ［Dimension Hub］"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "9595b896a3a791d33fd3",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Seasonal slayers",
+      "similarity": 0.0792,
+      "left_title": "Chill Monday open mic",
+      "right_title": "Training"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "3aa6af6ab77b7e361af6",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "C9ue - Billiards and Bar",
-      "similarity": 0.0474,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "BilliardsBAR『C9ue』"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "56ff256db0f2e3386d01",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "No Friends Friends Club",
+      "similarity": 0.1073,
+      "left_title": "Chill Monday open mic",
+      "right_title": "US Hangout"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "c5bea7b8a54b7e262346",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "Gemeinschaft of Hardcore",
-      "similarity": 0.0,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "Club_GoH Vol․16"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "d9476098ea94750615d7",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "SYN",
+      "similarity": 0.0557,
+      "left_title": "Chill Monday open mic",
+      "right_title": "VENOM MONDAYS"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "977ff31eaadd907009be",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "VRCごいた会",
-      "similarity": 0.0,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "VRCごいた会"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "5f43871ff39ceda43233",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Comedy Open Mic",
+      "similarity": 0.0301,
+      "left_title": "Chill Monday open mic",
+      "right_title": "VR On The Spot Comedy Show"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "999f35ac2831cae2ab54",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "VRCゲームワールド部",
-      "similarity": 0.0128,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "VRCゲームワールド部 月曜イベント"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "69f33526b7f88e49838b",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "Black Hole Poker",
+      "similarity": 0.0699,
+      "left_title": "Chill Monday open mic",
+      "right_title": "Wednesday game night"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "91dc1fb8b4e7686a6edf",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "VRCフィットボクシング集会",
-      "similarity": 0.0,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "VRCフィットボクシング集会"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "cd86c8c7d2f2cae6f8ef",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "WLW",
+      "similarity": 0.0868,
+      "left_title": "Chill Monday open mic",
+      "right_title": "WLW hangout"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "515fdd13f003692bc467",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "Stella Talk Cafe",
-      "similarity": 0.0081,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "【占い】Stella Talk Cafe"
+      "left_id": "f4507bc8937139994e91",
+      "right_id": "4c8da1268594fdffd1bd",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Thickaz24 Luxury Events",
+      "right_organizer": "ʏᴏsʜɪᴋᴀɢᴇ's ᴄᴀғᴇ",
+      "similarity": 0.0485,
+      "left_title": "Chill Monday open mic",
+      "right_title": "ᴇᴠᴇɴᴛᴏ ᴍᴀɪᴅ ᴄᴀғᴇ́ ʜᴏʏ ᴀ ʟᴀs 7 ᴘᴍ"
     },
     {
-      "left_id": "02d7769822a163eeafda",
-      "right_id": "bb5db1448971dcead246",
-      "starts_at": "2026-10-19T12:00:00Z",
-      "left_organizer": "吃书兽读书会",
-      "right_organizer": "BLOOD RECALL同好会",
-      "similarity": 0.0296,
-      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "right_title": "ブラッドリコール交流会"
+      "left_id": "c5e40e1073eaf7160e43",
+      "right_id": "91932734310bdc8c2445",
+      "starts_at": "2026-10-20T00:00:00Z",
+      "left_organizer": "Kirby Korner",
+      "right_organizer": "PrideVR",
+      "similarity": 0.1415,
+      "left_title": "Magical Movement Mondayǃ",
+      "right_title": "Queer Pug"
     }
   ],
-  "generated_at": "2026-10-20T10:01:41Z"
+  "generated_at": "2026-10-20T15:03:52Z"
 }
