@@ -1,38 +1,16 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1234,
-  "event_count_after": 1232,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.001621,
+  "event_count_before": 1172,
+  "event_count_after": 1171,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.000853,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
-    {
-      "cluster_id": "occ_6ca264cd5f41a8b665da",
-      "starts_at": "2026-10-19T19:41:00Z",
-      "title": "< 告知 > ロケット打ち上げを観る集会 - 生中継の部 みなさん、フォボスのサンプル回収を目指す打ち上げを見届けよう！ 🚀 H3-24 | Martian Moons eXploration…",
-      "member_count": 2,
-      "member_ids": [
-        "7cbb42b2101213580b07",
-        "ae720b9fe1590c55aee0"
-      ],
-      "source_record_ids": [
-        "src_445bb9738e7cf700ef81",
-        "src_92261588916c24e2b9ee"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_92261588916c24e2b9ee"
-    },
     {
       "cluster_id": "occ_f1eca1d22b64b4f62e84",
       "starts_at": "2026-10-30T12:50:00Z",
@@ -58,6 +36,15 @@
   ],
   "ambiguous_candidates": [
     {
+      "left_id": "4298e3d280177ef23dfd",
+      "right_id": "24ff8b1d2ed2c71052e0",
+      "starts_at": "2026-10-20T13:00:00Z",
+      "organizer": "@CinemaBookevent",
+      "similarity": 0.5263,
+      "left_title": "VRC CINEMA BOOK CAFEの初 営業 は 本日 22時からスタート！ 事前にプロフィールのリンクからグループ加入して頂き、22時から開く グループインスタンス にて JOIN し…",
+      "right_title": "VRC CINEMA BOOK CAFEの初 営業 まであと1日...!!! #ぶいCBCafe # VRChatイベント"
+    },
+    {
       "left_id": "304efafc2e8cafe5f8e4",
       "right_id": "a9a55194f3a79d64e5c7",
       "starts_at": "2026-10-23T12:00:00Z",
@@ -69,105 +56,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "4b2993e915c7244d7121",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "PLUR FAM",
-      "similarity": 0.1242,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "BASS FACE 16"
+      "left_id": "2e715c1cd513bcb95544",
+      "right_id": "9ff8bd97dce33f32f314",
+      "starts_at": "2026-10-19T07:00:00Z",
+      "left_organizer": "BYOB Events",
+      "right_organizer": "IndieLovers",
+      "similarity": 0.1006,
+      "left_title": "LEVEL UP GAMING LOFT",
+      "right_title": "Roleplays"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "253dad662ad4967a04b3",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "Respiteful Friends",
-      "similarity": 0.122,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Cafe Fishingǃ"
+      "left_id": "e18200ddf52270b967c0",
+      "right_id": "584024fa6c3f9c41b355",
+      "starts_at": "2026-10-19T09:39:00Z",
+      "left_organizer": "JAMONES",
+      "right_organizer": "JAMONES",
+      "similarity": 0.351,
+      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
+      "right_title": "LA JUNTA DE LOS CEBADOS"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "633b2fadb398ba536629",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "CnA The Encore",
-      "similarity": 0.2989,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Group Instanceǃǃǃ"
+      "left_id": "068ae633575afe482915",
+      "right_id": "ece72f452eee638312b1",
+      "starts_at": "2026-10-19T10:00:00Z",
+      "left_organizer": "@yagami_mac",
+      "right_organizer": "Precious Stone Garnet",
+      "similarity": 0.1255,
+      "left_title": "...ネオミル×スタコレ... 明日 (10/19)19:00から VRC で 開催 。 ネオミルとスタコレの特別コラボ イベント です。 https://t.co/Wum0SVjwOS",
+      "right_title": "Cafe＆BAR Precious Stone Garnet"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "c4298f48c906e7784b39",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "The Madhouse Carnival",
-      "similarity": 0.1501,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "KARAOKE SUNDAYS"
+      "left_id": "068ae633575afe482915",
+      "right_id": "c285a379aafd92c7ac55",
+      "starts_at": "2026-10-19T10:00:00Z",
+      "left_organizer": "@yagami_mac",
+      "right_organizer": "喫茶「はたご」",
+      "similarity": 0.1111,
+      "left_title": "...ネオミル×スタコレ... 明日 (10/19)19:00から VRC で 開催 。 ネオミルとスタコレの特別コラボ イベント です。 https://t.co/Wum0SVjwOS",
+      "right_title": "喫茶『はたご』通常営業日"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "e12e8a66f2384c58eff8",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "Oasis Church VR",
-      "similarity": 0.1333,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Never Been to Church? Youre Welcome Here․"
+      "left_id": "ece72f452eee638312b1",
+      "right_id": "c285a379aafd92c7ac55",
+      "starts_at": "2026-10-19T10:00:00Z",
+      "left_organizer": "Precious Stone Garnet",
+      "right_organizer": "喫茶「はたご」",
+      "similarity": 0.1324,
+      "left_title": "Cafe＆BAR Precious Stone Garnet",
+      "right_title": "喫茶『はたご』通常営業日"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "c6266d73dc62ffef8800",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "Dumpsterfire",
-      "similarity": 0.2571,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Pool Hangout"
+      "left_id": "e9c684dc7cc317bcfbbf",
+      "right_id": "8b3792805d8c84bd0b6f",
+      "starts_at": "2026-10-19T11:30:00Z",
+      "left_organizer": "-メタバースソーラン- Metaverse Soran",
+      "right_organizer": "ぶいトレ",
+      "similarity": 0.1519,
+      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
+      "right_title": "ちょいトレ・がちトレ"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "0e4185df6ebb246e6a5a",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "Forjadores Hispanos",
-      "similarity": 0.1273,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Reunion Dominical de forjadores"
+      "left_id": "e9c684dc7cc317bcfbbf",
+      "right_id": "263a6973eb94debb0005",
+      "starts_at": "2026-10-19T11:30:00Z",
+      "left_organizer": "-メタバースソーラン- Metaverse Soran",
+      "right_organizer": "Dimension Hub",
+      "similarity": 0.0,
+      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
+      "right_title": "디멘션 허브 ［Dimension Hub］"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "080d77895ca459a85de3",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "UNSC Embers Of Hope",
-      "similarity": 0.32,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Server Meeting"
+      "left_id": "8b3792805d8c84bd0b6f",
+      "right_id": "263a6973eb94debb0005",
+      "starts_at": "2026-10-19T11:30:00Z",
+      "left_organizer": "ぶいトレ",
+      "right_organizer": "Dimension Hub",
+      "similarity": 0.0,
+      "left_title": "ちょいトレ・がちトレ",
+      "right_title": "디멘션 허브 ［Dimension Hub］"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "7a6a9881a5f8214038b0",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "SYN",
-      "similarity": 0.2772,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "SINFUL SUNDAY"
+      "left_id": "02d7769822a163eeafda",
+      "right_id": "3aa6af6ab77b7e361af6",
+      "starts_at": "2026-10-19T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "C9ue - Billiards and Bar",
+      "similarity": 0.0474,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "BilliardsBAR『C9ue』"
     },
     {
-      "left_id": "3a116d07cac1980c0d5e",
-      "right_id": "4007ee7967d8704bef84",
-      "starts_at": "2026-10-19T00:00:00Z",
-      "left_organizer": "The Faceless",
-      "right_organizer": "The howl pack",
-      "similarity": 0.2938,
-      "left_title": "18＋verified SFW - Community Night",
-      "right_title": "Sunday movie nights"
+      "left_id": "02d7769822a163eeafda",
+      "right_id": "c5bea7b8a54b7e262346",
+      "starts_at": "2026-10-19T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "Gemeinschaft of Hardcore",
+      "similarity": 0.0,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "Club_GoH Vol․16"
     }
   ],
-  "generated_at": "2026-10-19T23:37:46Z"
+  "generated_at": "2026-10-20T04:45:07Z"
 }
