@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "policy_version": "issue-196-generic-publishability.v1",
-  "generated_at": "2026-10-21T00:39:42Z",
+  "generated_at": "2026-10-21T06:01:26Z",
   "candidate_count": 5000,
-  "missing_datetime_before": 426,
+  "missing_datetime_before": 425,
   "publishability_backlog_before": 187,
   "occurrence_decision_counts_before": {
     "ambiguous_datetime": 29,
@@ -14,35 +14,32 @@
     "recurring_event": 15,
     "resolvable_event_candidate": 5
   },
-  "accepted_event_count": 103,
-  "promoted_from_missing_datetime": 1,
-  "promoted_status_ids": [
-    "2112378270452953503"
-  ],
+  "accepted_event_count": 102,
+  "promoted_from_missing_datetime": 0,
+  "promoted_status_ids": [],
   "recurrence_materialized_count": 0,
-  "corroborated_materialized_count": 1,
+  "corroborated_materialized_count": 0,
   "resolution_method_counts": {
-    "corroborated_event_fingerprint_date_clock": 1,
-    "explicit_calendar_date": 52,
+    "explicit_calendar_date": 54,
     "explicit_calendar_date_evidence_span": 2,
     "explicit_datetime": 1,
     "relative_day_evidence_span": 3,
-    "relative_day_from_source_timestamp": 44
+    "relative_day_from_source_timestamp": 42
   },
   "resolution_blocker_counts": {
-    "conflicting_fingerprint_resolution": 3,
+    "conflicting_fingerprint_resolution": 2,
     "datetime_parser_unsupported_or_unsafe": 18,
     "missing_or_conflicting_clock": 77,
-    "missing_or_conflicting_date": 216,
-    "no_datetime_evidence": 1947,
-    "no_peer_evidence": 332,
-    "no_strong_event_signal": 30,
-    "non_event": 843,
-    "non_event_commerce": 174,
-    "non_event_personal": 149,
-    "out_of_publication_window": 8,
+    "missing_or_conflicting_date": 218,
+    "no_datetime_evidence": 1953,
+    "no_peer_evidence": 331,
+    "no_strong_event_signal": 31,
+    "non_event": 841,
+    "non_event_commerce": 176,
+    "non_event_personal": 147,
+    "out_of_publication_window": 9,
     "past_event_or_report": 347,
-    "recurrence_pattern_unsupported_or_unsafe": 94
+    "recurrence_pattern_unsupported_or_unsafe": 92
   },
   "promotions_without_provenance": 0,
   "resolver_version": "2.1",
