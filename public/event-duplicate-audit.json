@@ -1,16 +1,40 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1174,
-  "event_count_after": 1171,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 3,
-  "duplicate_post_count": 3,
-  "duplicate_rate": 0.002555,
+  "event_count_before": 1161,
+  "event_count_after": 1156,
+  "candidate_cluster_count": 4,
+  "duplicate_cluster_count": 4,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.004307,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
+    {
+      "cluster_id": "occ_3c7844772990e5af0f37",
+      "starts_at": "2026-10-22T13:00:00Z",
+      "title": "今週の 個人開発集会 は おぷんさんの発表があります！ 10月22日(木) 22:00〜 開場 おぷんさん 『AstraとFable5.1とOpus5.5で放置ゲムワを2日で作った話』 お楽し…",
+      "member_count": 3,
+      "member_ids": [
+        "0091b1d6141b23a1e0d8",
+        "4a211db9b7ab4ef20ea0",
+        "5c5329e9f35a3c143213"
+      ],
+      "source_record_ids": [
+        "src_20bf75a32cbc2b87eb47",
+        "src_717a310d819a30eb7db8",
+        "src_84a2758e7932985ee6bc"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.939,
+      "representative_source_record_id": "src_717a310d819a30eb7db8"
+    },
     {
       "cluster_id": "occ_88629f45d6c1cb3fbefb",
       "starts_at": "2026-10-22T02:00:00Z",
@@ -81,105 +105,105 @@
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "1ab39a7c84eecbe919f7",
-      "right_id": "5967f0e857b6fc879f18",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "BYOB Events",
-      "right_organizer": "Icehouse Casino",
-      "similarity": 0.0968,
-      "left_title": "LEVEL UP GAMING LOFT",
-      "right_title": "OPEN MIC"
+      "left_id": "914ef8486b8eacc21043",
+      "right_id": "57f3d444a5b372f0c9a0",
+      "starts_at": "2026-10-21T11:00:00Z",
+      "left_organizer": "夜カフェ「パルラーレ」",
+      "right_organizer": "minferia",
+      "similarity": 0.0561,
+      "left_title": "cafe：21日開店",
+      "right_title": "ワンマンライブやるぞ！！！"
     },
     {
-      "left_id": "1ab39a7c84eecbe919f7",
-      "right_id": "2c8dc9b37db902663e14",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "BYOB Events",
-      "right_organizer": "IndieLovers",
-      "similarity": 0.1006,
-      "left_title": "LEVEL UP GAMING LOFT",
-      "right_title": "Roleplays"
+      "left_id": "eccdb054dd8af5314782",
+      "right_id": "1dd86c8673afc840eeb0",
+      "starts_at": "2026-10-21T11:30:00Z",
+      "left_organizer": "-メタバースソーラン- Metaverse Soran",
+      "right_organizer": "ぶいトレ",
+      "similarity": 0.1519,
+      "left_title": "【20˸30 or 20˸45~】ソーラン節、踊ろうǃ【15分エクササイズ】",
+      "right_title": "ちょいトレ・がちトレ"
     },
     {
-      "left_id": "1ab39a7c84eecbe919f7",
-      "right_id": "702f0c408310ebb41715",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "BYOB Events",
-      "right_organizer": "BYOB Events",
-      "similarity": 0.1106,
-      "left_title": "LEVEL UP GAMING LOFT",
-      "right_title": "SKYY MUSIC STUDIO"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "4e49476fda5b1c911db3",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "吃书兽读书会",
+      "similarity": 0.0307,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】"
     },
     {
-      "left_id": "1ab39a7c84eecbe919f7",
-      "right_id": "7dbd46eed1d9dd55cae2",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "BYOB Events",
-      "right_organizer": "Furry Social",
-      "similarity": 0.2692,
-      "left_title": "LEVEL UP GAMING LOFT",
-      "right_title": "Tag Meǃ"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "6d79c147ca2090d53a69",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "C9ue - Billiards and Bar",
+      "similarity": 0.063,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "BilliardsBAR『C9ue』"
     },
     {
-      "left_id": "5967f0e857b6fc879f18",
-      "right_id": "2c8dc9b37db902663e14",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "Icehouse Casino",
-      "right_organizer": "IndieLovers",
-      "similarity": 0.0629,
-      "left_title": "OPEN MIC",
-      "right_title": "Roleplays"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "5006c7582007ca0f344b",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "EXTREME",
+      "similarity": 0.1364,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "EXTREME Weekly Partyǃǃ"
     },
     {
-      "left_id": "5967f0e857b6fc879f18",
-      "right_id": "702f0c408310ebb41715",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "Icehouse Casino",
-      "right_organizer": "BYOB Events",
-      "similarity": 0.3359,
-      "left_title": "OPEN MIC",
-      "right_title": "SKYY MUSIC STUDIO"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "7a67c5a2d3d9475f9936",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "Rod of Asclepius",
+      "similarity": 0.0783,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "RBT交流会"
     },
     {
-      "left_id": "5967f0e857b6fc879f18",
-      "right_id": "7dbd46eed1d9dd55cae2",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "Icehouse Casino",
-      "right_organizer": "Furry Social",
-      "similarity": 0.167,
-      "left_title": "OPEN MIC",
-      "right_title": "Tag Meǃ"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "daa8d7526de11f8814b0",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0128,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "VRCフィットボクシング集会"
     },
     {
-      "left_id": "2c8dc9b37db902663e14",
-      "right_id": "702f0c408310ebb41715",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "IndieLovers",
-      "right_organizer": "BYOB Events",
-      "similarity": 0.0856,
-      "left_title": "Roleplays",
-      "right_title": "SKYY MUSIC STUDIO"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "bde04457d2dfca5e4100",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": null,
+      "similarity": 0.1003,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "VRC数学談話会"
     },
     {
-      "left_id": "2c8dc9b37db902663e14",
-      "right_id": "7dbd46eed1d9dd55cae2",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "IndieLovers",
-      "right_organizer": "Furry Social",
-      "similarity": 0.0856,
-      "left_title": "Roleplays",
-      "right_title": "Tag Meǃ"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "4b26d3a8127ff0147547",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "@VRC_nayameeting",
+      "similarity": 0.0812,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第85回は10月21日(水) 『21:00〜22:30』 ※当イベント…"
     },
     {
-      "left_id": "702f0c408310ebb41715",
-      "right_id": "7dbd46eed1d9dd55cae2",
-      "starts_at": "2026-10-21T07:00:00Z",
-      "left_organizer": "BYOB Events",
-      "right_organizer": "Furry Social",
-      "similarity": 0.1375,
-      "left_title": "SKYY MUSIC STUDIO",
-      "right_title": "Tag Meǃ"
+      "left_id": "48ebde47c430e13370b6",
+      "right_id": "ca245500204b32bc5570",
+      "starts_at": "2026-10-21T12:00:00Z",
+      "left_organizer": "遊び場",
+      "right_organizer": "VRC手話ポータル こねくと",
+      "similarity": 0.118,
+      "left_title": "1周年記念！10月21日はGIGASで遊びます！",
+      "right_title": "ねぎ手話教室（JSL）"
     }
   ],
-  "generated_at": "2026-10-22T04:39:07Z"
+  "generated_at": "2026-10-22T10:09:36Z"
 }
