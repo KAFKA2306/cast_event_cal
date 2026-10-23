@@ -53,10 +53,14 @@ def test_render_search_pages_is_truthful_bounded_and_idempotent(tmp_path: Path) 
     events = root / "events.json"
     events.write_text(json.dumps(payload), encoding="utf-8")
 
+    privacy_script = "/* privacy-reviewed analytics asset */\n"
+    (root / "analytics.js").write_text(privacy_script, encoding="utf-8")
+
     first = render(events, root, "https://example.test/project")
     first_index = (root / "index.html").read_text(encoding="utf-8")
     second = render(events, root, "https://example.test/project")
     second_index = (root / "index.html").read_text(encoding="utf-8")
+    assert (root / "analytics.js").read_text(encoding="utf-8") == privacy_script
 
     assert first == second == {"event_count": 3, "indexable_count": 1, "sitemap_url_count": 2}
     assert first_index == second_index
