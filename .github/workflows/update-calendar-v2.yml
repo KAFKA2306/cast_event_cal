@@ -36,6 +36,8 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - name: Record validated source base
+        run: python scripts/publication_guard.py record
       - name: Capture previous canonical snapshot
         run: |
           cp public/events.json /tmp/public-events-before.json
@@ -155,9 +157,13 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
       - name: Write canonical snapshot identity
-        run: python scripts/write_snapshot_identity.py
+        run: |
+          SOURCE_REVISION="$(python -c 'import json; print(json.load(open("audit/validated-source.json"))["validated_base_sha"])')"
+          python scripts/write_snapshot_identity.py --source-revision "$SOURCE_REVISION"
       - name: Verify canonical snapshot identity
-        run: python scripts/write_snapshot_identity.py --check public/snapshot.json
+        run: |
+          SOURCE_REVISION="$(python -c 'import json; print(json.load(open("audit/validated-source.json"))["validated_base_sha"])')"
+          python scripts/write_snapshot_identity.py --check public/snapshot.json --source-revision "$SOURCE_REVISION"
       - name: Gate generated snapshot freshness
         run: python scripts/audit_freshness.py --max-age-minutes 180
       - name: Build durable system status
@@ -179,6 +185,7 @@ jobs:
             data/external_events.json
             data/external_discovery_health.json
             data/official_asset_cache.json
+            audit/validated-source.json
             public/
           if-no-files-found: error
           retention-days: 1
@@ -199,6 +206,8 @@ jobs:
         with:
           name: calendar-publish-snapshot-${{ github.run_id }}
           path: .
+      - name: Reject publication when main changed after validation
+        run: python scripts/publication_guard.py check
       - name: Commit generated data safely
         run: |
           set -euo pipefail
@@ -222,6 +231,5 @@ jobs:
             git config user.email 41898282+github-actions[bot]@users.noreply.github.com
             git add "${paths[@]}"
             git commit -m 'chore: refresh calendar links images and ontology'
-            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
