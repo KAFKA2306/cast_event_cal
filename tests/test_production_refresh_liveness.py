@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from unittest import TestCase
 
 from scripts.check_production_refresh_liveness import evaluate
 
 
-NOW = datetime(2026, 10, 24, 0, 0, tzinfo=timezone.utc)
+NOW = datetime(2026, 10, 24, 0, 0, tzinfo=UTC)
 
 
 def run(minutes_ago, *, conclusion="success", branch="main", url="https://github.com/test/runs/1"):
