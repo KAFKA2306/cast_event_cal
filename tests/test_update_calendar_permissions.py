@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -20,7 +21,7 @@ def test_calendar_build_is_read_only_and_publish_is_the_only_writer() -> None:
     assert "contents: write" not in build
     assert "needs: build" in publish
     assert "permissions:\n      contents: write" in publish
-    assert "actions/download-artifact@v5" in publish
+    assert re.search(r"actions/download-artifact@[0-9a-f]{40}\b", publish)
     assert "git push origin HEAD:main" in publish
 
 
@@ -28,7 +29,7 @@ def test_validated_snapshot_crosses_jobs_as_an_explicit_artifact() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
     build = _section(text, "  build:\n", "  publish:\n")
 
-    assert "actions/upload-artifact@v4" in build
+    assert re.search(r"actions/upload-artifact@[0-9a-f]{40}\b", build)
     assert "if-no-files-found: error" in build
     for required in (
         "data/discovered_events.json",
