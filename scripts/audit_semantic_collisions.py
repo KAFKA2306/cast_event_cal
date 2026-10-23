@@ -5,6 +5,7 @@ import json
 import re
 import unicodedata
 from collections import defaultdict
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -23,11 +24,15 @@ def _norm(value: Any) -> str | None:
 
 def _start(event: dict[str, Any]) -> str | None:
     value = event.get("start") or event.get("start_at") or event.get("start_datetime")
-    return (
-        value.strip().replace("Z", "+00:00")
-        if isinstance(value, str) and value.strip()
-        else None
-    )
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.isoformat()
+    return parsed.astimezone(UTC).isoformat()
 
 
 def _url_key(event: dict[str, Any]) -> str | None:
