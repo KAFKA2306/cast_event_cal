@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,16 @@ def build_snapshot_identity(events_path: Path) -> dict[str, Any]:
     events = payload.get("events")
     if not isinstance(events, list):
         raise ValueError("events.json must contain an events list")
+
+    timestamp = payload.get("generated_at")
+    if not isinstance(timestamp, str) or not timestamp.strip():
+        raise ValueError("events.json must contain a generated_at timestamp")
+    try:
+        parsed_timestamp = datetime.fromisoformat(timestamp.strip().replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError("events.json generated_at must be ISO-8601") from exc
+    if parsed_timestamp.tzinfo is None:
+        raise ValueError("events.json generated_at must include a timezone")
 
     count = payload.get("count")
     if count != len(events):
@@ -31,6 +42,7 @@ def build_snapshot_identity(events_path: Path) -> dict[str, Any]:
 
     return {
         "schema_version": 1,
+        "generated_at": timestamp,
         "events_sha256": hashlib.sha256(raw).hexdigest(),
         "event_count": len(events),
         "latest_event_id": latest_event_id,
