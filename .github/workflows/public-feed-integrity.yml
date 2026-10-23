@@ -5,8 +5,10 @@ on:
     paths:
       - "public/events.json"
       - "scripts/audit_public_feed.py"
+      - "scripts/audit_semantic_collisions.py"
       - "scripts/check_upstream_conclusion.py"
       - "tests/test_audit_public_feed.py"
+      - "tests/test_semantic_collision_audit.py"
       - "tests/test_check_upstream_conclusion.py"
       - ".github/workflows/public-feed-integrity.yml"
   push:
@@ -70,13 +72,22 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: python -m pip install -e ".[dev]"
-      - run: ruff check scripts/audit_public_feed.py scripts/check_upstream_conclusion.py tests/test_audit_public_feed.py tests/test_check_upstream_conclusion.py
-      - run: pytest tests/test_audit_public_feed.py tests/test_check_upstream_conclusion.py
+      - run: ruff check scripts/audit_public_feed.py scripts/audit_semantic_collisions.py scripts/check_upstream_conclusion.py tests/test_audit_public_feed.py tests/test_semantic_collision_audit.py tests/test_check_upstream_conclusion.py
+      - run: pytest tests/test_audit_public_feed.py tests/test_semantic_collision_audit.py tests/test_check_upstream_conclusion.py
       - run: python scripts/audit_public_feed.py public/events.json --report build/public-feed-audit.json
+      - run: python scripts/audit_semantic_collisions.py public/events.json --report build/semantic-collision-audit.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: public-feed-audit
           path: build/public-feed-audit.json
+          retention-days: 14
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: semantic-collision-audit
+          path: build/semantic-collision-audit.json
           retention-days: 14
           if-no-files-found: error
