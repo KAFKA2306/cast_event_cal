@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
@@ -18,7 +18,7 @@ def parse_utc(value: str) -> datetime:
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
         raise ValueError("timestamp is missing timezone")
-    return parsed.astimezone(timezone.utc)
+    return parsed.astimezone(UTC)
 
 
 def evaluate(runs: list[dict], now: datetime, max_age: timedelta = MAX_AGE) -> tuple[bool, str]:
@@ -39,7 +39,7 @@ def evaluate(runs: list[dict], now: datetime, max_age: timedelta = MAX_AGE) -> t
     if not completed:
         return False, "no successful main-branch production refresh run found"
     when, url = max(completed)
-    age = now.astimezone(timezone.utc) - when
+    age = now.astimezone(UTC) - when
     if age < timedelta(0):
         return False, f"latest successful refresh timestamp is in the future: {when.isoformat()}"
     if age > max_age:
@@ -63,7 +63,7 @@ def main() -> int:
     runs = payload.get("workflow_runs")
     if not isinstance(runs, list):
         raise ValueError("GitHub Actions API response lacks workflow_runs")
-    healthy, message = evaluate(runs, datetime.now(timezone.utc))
+    healthy, message = evaluate(runs, datetime.now(UTC))
     print(message, file=sys.stdout if healthy else sys.stderr)
     return 0 if healthy else 1
 
