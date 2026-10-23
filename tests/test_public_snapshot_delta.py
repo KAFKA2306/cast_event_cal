@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 from scripts.build_public_snapshot_delta import append_history, build_delta
@@ -225,6 +226,6 @@ def test_production_workflow_captures_and_persists_delta_contract() -> None:
         "--previous-yahoo-history "
         "/tmp/yahoo-candidate-history-before.json"
     ) in workflow
-    assert "uses: actions/upload-artifact@v7" in workflow
+    assert re.search(r"uses: actions/upload-artifact@[0-9a-f]{40}\b", workflow)
     assert "path: audit/public-snapshot-delta.json" in workflow
     assert "audit/public-snapshot-delta-history.jsonl" in workflow
