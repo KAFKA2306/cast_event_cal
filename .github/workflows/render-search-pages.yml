@@ -55,8 +55,8 @@ jobs:
         timeout-minutes: 10
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
-          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+          sudo apt-get install -y --no-install-recommends fonts-ipafont-gothic
+          test -f /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
       - run: pytest tests/test_promotions.py tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
@@ -89,8 +89,8 @@ jobs:
         timeout-minutes: 10
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
-          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+          sudo apt-get install -y --no-install-recommends fonts-ipafont-gothic
+          test -f /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
       - name: Render current/future crawlable event pages
         run: python scripts/render_search_pages.py
       - name: Render category landing pages
