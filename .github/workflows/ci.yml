@@ -26,9 +26,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
       - run: ruff check cast_event_cal scripts tests
+      - name: Verify analytics privacy boundary
+        run: node tests/browser_analytics_privacy.cjs
       - name: Run pytest
         run: |
           set +e
