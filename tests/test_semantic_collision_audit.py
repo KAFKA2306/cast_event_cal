@@ -52,3 +52,16 @@ def test_title_only_match_is_review_candidate(tmp_path):
     ])
     assert report["collisions"][0]["classification"] == "review_candidate"
     assert report["collisions"][0]["evidence_fields"] == ["title"]
+
+
+def test_published_starts_at_field(tmp_path):
+    # public/events.json uses starts_at, not the source-only start aliases.
+    report = _run(tmp_path, [
+        {"id": "feed-a", "title": "Dance Night", "starts_at": "2026-10-01T21:00:00+09:00", "url": "https://example.com/dance?src=x"},
+        {"id": "feed-b", "title": "Dance Night", "starts_at": "2026-10-01T12:00:00Z", "url": "https://example.com/dance?src=calendar"},
+    ])
+    assert report["event_count"] == 2
+    assert report["events_with_start"] == 2
+    assert report["events_without_start"] == 0
+    assert report["collision_count"] == 1
+    assert report["collisions"][0]["classification"] == "high_confidence"
