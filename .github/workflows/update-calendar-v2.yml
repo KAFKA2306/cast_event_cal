@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           ref: main
           fetch-depth: 0
@@ -40,7 +40,7 @@ jobs:
         run: |
           cp public/events.json /tmp/public-events-before.json
           cp public/yahoo-candidate-history.json /tmp/yahoo-candidate-history-before.json
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
           cache: pip
@@ -121,7 +121,7 @@ jobs:
         run: python scripts/audit_recurring_replay.py --require-gates
       - name: Upload recurring replay audit
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: recurring-replay-${{ github.run_id }}
           path: audit/recurring-replay.json
@@ -140,7 +140,7 @@ jobs:
             --base-sha "$BASE_SHA"
       - name: Upload public snapshot delta audit
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: public-snapshot-delta-${{ github.run_id }}
           path: audit/public-snapshot-delta.json
@@ -148,7 +148,7 @@ jobs:
           retention-days: 30
       - name: Upload public snapshot delta history
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: public-snapshot-delta-history-${{ github.run_id }}
           path: audit/public-snapshot-delta-history.jsonl
@@ -163,7 +163,7 @@ jobs:
       - name: Build durable system status
         run: python scripts/build_system_status.py --max-age-minutes 180
       - name: Stage validated snapshot for publisher
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: calendar-publish-snapshot-${{ github.run_id }}
           path: |
@@ -190,12 +190,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           ref: main
           fetch-depth: 0
       - name: Download validated snapshot
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           name: calendar-publish-snapshot-${{ github.run_id }}
           path: .
