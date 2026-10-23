@@ -29,6 +29,10 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -e '.[dev]'
       - run: ruff check cast_event_cal scripts tests
+      - name: Verify dbt exposure origin authority
+        env:
+          CAST_EVENT_CAL_PUBLIC_ORIGIN: https://vrc-cast-event-calender.pages.dev
+        run: python scripts/verify_dbt_exposure_origin.py
       - name: Run pytest
         run: |
           set +e

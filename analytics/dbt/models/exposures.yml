@@ -5,7 +5,7 @@ exposures:
     label: public/events.json analytical quality lineage
     type: application
     maturity: low
-    url: https://kafka2306.github.io/cast_event_cal/events.json
+    url: "{{ env_var('CAST_EVENT_CAL_PUBLIC_ORIGIN') }}/events.json"
     description: >
       Analytical lineage marker only. The production events.json generator does not read dbt
       output in this slice; canonical publication authority remains upstream.
@@ -21,7 +21,7 @@ exposures:
     label: calendar.ics analytical quality lineage
     type: application
     maturity: low
-    url: https://kafka2306.github.io/cast_event_cal/calendar.ics
+    url: "{{ env_var('CAST_EVENT_CAL_PUBLIC_ORIGIN') }}/calendar.ics"
     description: >
       Documents downstream quality lineage without making dbt the runtime ICS authority.
     depends_on:
@@ -35,7 +35,7 @@ exposures:
     label: Tonight analytical quality lineage
     type: application
     maturity: low
-    url: https://kafka2306.github.io/cast_event_cal/tonight/
+    url: "{{ env_var('CAST_EVENT_CAL_PUBLIC_ORIGIN') }}/tonight/"
     description: >
       Documents the analytical dependency surface only; Tonight still consumes canonical
       publication artifacts rather than dbt-generated tables.
