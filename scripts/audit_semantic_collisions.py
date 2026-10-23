@@ -23,7 +23,7 @@ def _norm(value: Any) -> str | None:
 
 
 def _start(event: dict[str, Any]) -> str | None:
-    value = event.get("start") or event.get("start_at") or event.get("start_datetime")
+    value = event.get("starts_at") or event.get("start") or event.get("start_at") or event.get("start_datetime")
     if not isinstance(value, str) or not value.strip():
         return None
     try:
@@ -128,9 +128,12 @@ def audit(path: Path) -> dict[str, Any]:
         key=lambda x: (x["member_ids"], x["classification"], x["evidence_fields"])
     )
     insufficient.sort(key=lambda x: x["member_ids"])
+    events_with_start = sum("start" in facts for _, facts in rows)
     return {
         "schema_version": SCHEMA_VERSION,
         "event_count": len(events),
+        "events_with_start": events_with_start,
+        "events_without_start": len(events) - events_with_start,
         "collision_count": len(collisions),
         "collisions": collisions,
         "insufficient_evidence": insufficient,
