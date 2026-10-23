@@ -2,14 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1122,
-  "matched_events": 294,
+  "event_count": 1105,
+  "matched_events": 295,
   "matched_series": {
     "asmr-gathering": 36,
     "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 35,
     "vrc-fit-boxing": 35,
-    "personally-match": 17,
+    "personally-match": 18,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
@@ -19,7 +19,7 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 828,
+  "unmatched_events": 810,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3532,21 +3532,33 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "0b46c6ee6a4b82b790dc",
+      "title": "Personally match",
+      "status": "matched",
+      "ontology_id": "personally-match",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1122,
+    "event_count": 1105,
     "category_breakdown": {
       "art": 121,
-      "community": 253,
+      "community": 246,
       "game": 108,
       "language_exchange": 35,
-      "learning": 28,
-      "music": 120,
-      "other": 70,
+      "learning": 27,
+      "music": 114,
+      "other": 68,
       "performance": 16,
-      "recruitment_deadline": 7,
+      "recruitment_deadline": 6,
       "technology": 278,
       "wellness": 69,
       "world_tour": 17
@@ -3554,23 +3566,23 @@
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 1,
-      "cafe": 26,
+      "cafe": 25,
       "cast_recruitment": 2,
       "cast_service": 3,
       "class": 3,
-      "dance": 55,
-      "dj": 2,
-      "engineering": 169,
+      "dance": 53,
+      "dj": 1,
+      "engineering": 168,
       "fitness": 35,
-      "hangout": 62,
+      "hangout": 57,
       "language_exchange": 35,
-      "lecture": 7,
+      "lecture": 6,
       "mystery": 35,
       "participant_recruitment": 1,
       "photography": 121,
-      "reading": 1,
-      "research": 66,
-      "show": 13,
+      "reading": 2,
+      "research": 67,
+      "show": 12,
       "social": 159,
       "tabletop": 37,
       "theater": 1,
@@ -3578,66 +3590,23 @@
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 7,
+      "deadline": 6,
       "hybrid": 4,
-      "in_world": 1107,
+      "in_world": 1091,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 70,
-      "keyword_rules": 529,
-      "legacy_and_keywords": 121,
-      "legacy_category": 125
+      "curated_ontology": 278,
+      "fallback": 68,
+      "keyword_rules": 521,
+      "legacy_and_keywords": 114,
+      "legacy_category": 124
     },
-    "organizer_profile_count": 22,
-    "low_confidence_event_count": 109,
-    "audit_event_count": 109
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 107,
+    "audit_event_count": 107
   },
   "category_review_queue": [
-    {
-      "event_id": "a9d02fd940f0a28ed3e2",
-      "title": "cop",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d6cb7d963a95c82b4969",
-      "title": "【clubSTRAY通常営業日】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e91e0f01755af9e62f0e",
-      "title": "【第24期講師募集】 #私立 VRC 学園 〇説明会日程のお知らせ 講師希望者向けの説明会を下記日程で 開催 します。 【日程】10/22（木）、10/23（金） 【時間】22:00～23:0…",
-      "category": "recruitment_deadline",
-      "label": "募集・締切",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:募集"
-      ],
-      "event_mode": "deadline",
-      "ambiguous_with": [
-        "learning"
-      ]
-    },
     {
       "event_id": "739cc75363a2389d051c",
       "title": "Jujutsu Reborn Episode ｜ RP Session",
@@ -3945,7 +3914,7 @@
     },
     {
       "event_id": "a785478d39edefad9d8e",
-      "title": "VRC 1:1型RP イベント 『モーモー牧場』事前抽選の当選者様へDM送信完了しました！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちして…",
+      "title": "VRC 1:1型RPイベント 『モーモー牧場』事前抽選の当選者様へDM送信完了しました！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてま…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -5164,6 +5133,24 @@
       "source": "keyword_rules",
       "evidence": [
         "keyword:title:技術"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "4aa6b53ae50343e38250",
+      "title": "「計算と自然」集会",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 7,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:description:自然計算",
+        "keyword:description:研究"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
