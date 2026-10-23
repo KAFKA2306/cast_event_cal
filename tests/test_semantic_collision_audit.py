@@ -26,6 +26,16 @@ def test_cross_source_collision_and_order_independence(tmp_path):
     assert forward["collisions"][0]["evidence_fields"] == ["title", "url"]
 
 
+def test_equivalent_offsets_share_one_start_instant(tmp_path):
+    report = _run(tmp_path, [
+        {"id": "a", "title": "VRC Night", "start": "2026-10-01T21:00:00+09:00", "official_url": "https://example.com/event?utm_source=x"},
+        {"id": "b", "title": "VRC Night", "start": "2026-10-01T12:00:00Z", "official_url": "https://example.com/event?ref=y"},
+    ])
+    assert report["collision_count"] == 1
+    assert report["collisions"][0]["classification"] == "high_confidence"
+    assert report["collisions"][0]["start"] == "2026-10-01T12:00:00+00:00"
+
+
 def test_same_time_different_event_is_insufficient(tmp_path):
     report = _run(tmp_path, [
         {"id": "a", "title": "Study Group", "start": "2026-10-01T21:00:00+09:00"},
