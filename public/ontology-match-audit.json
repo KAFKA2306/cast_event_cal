@@ -2,14 +2,13 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1140,
-  "matched_events": 295,
+  "event_count": 1122,
+  "matched_events": 294,
   "matched_series": {
-    "vrc-fit-boxing": 35,
-    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 36,
     "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 35,
+    "vrc-fit-boxing": 35,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
@@ -17,35 +16,12 @@
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
-    "vrc-idle-gathering": 17
+    "vrc-idle-gathering": 17,
+    "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 845,
+  "unmatched_events": 828,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "a17b459f2550728e5fb5",
-      "title": "VRCフィットボクシング集会",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "de9bc7b398a928296656",
-      "title": "VRC初心者ワールドツアー",
-      "status": "matched",
-      "ontology_id": "vrc-beginner-world-tour",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "a4b7d64e7f767f4a4b2f",
       "title": "ASMR集会 初心者説明会",
@@ -3544,160 +3520,81 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "05871acf5e5f74144a4c",
+      "title": "VRCフィットボクシング集会（土曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1140,
+    "event_count": 1122,
     "category_breakdown": {
       "art": 121,
-      "community": 259,
+      "community": 253,
       "game": 108,
       "language_exchange": 35,
       "learning": 28,
-      "music": 125,
-      "other": 77,
+      "music": 120,
+      "other": 70,
       "performance": 16,
       "recruitment_deadline": 7,
-      "technology": 277,
+      "technology": 278,
       "wellness": 69,
-      "world_tour": 18
+      "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 1,
-      "cafe": 27,
+      "cafe": 26,
       "cast_recruitment": 2,
       "cast_service": 3,
       "class": 3,
-      "dance": 56,
-      "dj": 4,
-      "engineering": 170,
+      "dance": 55,
+      "dj": 2,
+      "engineering": 169,
       "fitness": 35,
-      "hangout": 65,
+      "hangout": 62,
       "language_exchange": 35,
       "lecture": 7,
       "mystery": 35,
       "participant_recruitment": 1,
       "photography": 121,
       "reading": 1,
-      "research": 64,
+      "research": 66,
       "show": 13,
-      "social": 161,
+      "social": 159,
       "tabletop": 37,
       "theater": 1,
       "workshop": 10,
-      "world_tour": 18
+      "world_tour": 17
     },
     "event_mode_breakdown": {
       "deadline": 7,
       "hybrid": 4,
-      "in_world": 1125,
+      "in_world": 1107,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
-      "fallback": 77,
-      "keyword_rules": 535,
-      "legacy_and_keywords": 126,
+      "fallback": 70,
+      "keyword_rules": 529,
+      "legacy_and_keywords": 121,
       "legacy_category": 125
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 116,
-    "audit_event_count": 116
+    "low_confidence_event_count": 109,
+    "audit_event_count": 109
   },
   "category_review_queue": [
-    {
-      "event_id": "dad64156110c56bd82d4",
-      "title": "vrchat Home",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "a53ae6106df1c3568135",
-      "title": "毎週木曜イベント開催！",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "5be4b829c45c0be54636",
-      "title": "TRPG体験会「カツドンの日」",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "447238a4702980edd534",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "dbd788c80d7085aad251",
-      "title": "【次回 定期会のお知らせ】 開催日時 :2026年10月22日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c2a9281d272b6d2a05b1",
-      "title": "営業",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c2fd5e24fde1e12289ab",
-      "title": "自由登校日",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "a9d02fd940f0a28ed3e2",
       "title": "cop",
@@ -4048,7 +3945,7 @@
     },
     {
       "event_id": "a785478d39edefad9d8e",
-      "title": "VRC 1:1型RPイベント 『モーモー牧場』事前抽選の当選者様へDM送信完了しました！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてま…",
+      "title": "VRC 1:1型RP イベント 『モーモー牧場』事前抽選の当選者様へDM送信完了しました！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちして…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
