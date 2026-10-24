@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVENTS = ROOT / "public" / "events.json"
@@ -12,8 +13,25 @@ ACTIONABLE_LINK_KINDS = frozenset({"application", "participation", "vrchat_group
 
 
 def _https(value: Any) -> str | None:
-    value = str(value or "").strip()
-    return value if value.startswith("https://") else None
+    if not isinstance(value, str) or not value.strip():
+        return None
+    raw = value.strip()
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        return None
+    if "\\" in raw or raw.startswith("//"):
+        return None
+    try:
+        parsed = urlparse(raw)
+        if parsed.scheme != "https" or not parsed.hostname:
+            return None
+        if parsed.username or parsed.password or "@" in parsed.netloc:
+            return None
+        if any(char.isspace() for char in parsed.netloc):
+            return None
+        _ = parsed.port
+    except ValueError:
+        return None
+    return raw
 
 
 def actionable_official_links(event: dict[str, Any]) -> list[dict[str, str]]:

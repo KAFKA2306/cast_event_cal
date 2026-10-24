@@ -54,8 +54,23 @@ def _parse_datetime(value: str) -> bool:
 def _is_safe_public_url(value: Any) -> bool:
     if not isinstance(value, str) or not value.strip():
         return False
-    parsed = urlparse(value.strip())
-    return parsed.scheme == "https" and bool(parsed.netloc)
+    raw = value.strip()
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        return False
+    if "\\" in raw or raw.startswith("//"):
+        return False
+    try:
+        parsed = urlparse(raw)
+        if parsed.scheme != "https" or not parsed.hostname:
+            return False
+        if parsed.username or parsed.password or "@" in parsed.netloc:
+            return False
+        if any(char.isspace() for char in parsed.netloc):
+            return False
+        _ = parsed.port
+    except ValueError:
+        return False
+    return True
 
 
 def _public_links(event: dict[str, Any]) -> list[tuple[str, Any]]:

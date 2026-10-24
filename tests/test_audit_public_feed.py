@@ -78,3 +78,16 @@ def test_all_public_navigation_links_fail_closed_on_unsafe_schemes(tmp_path: Pat
         "proof_links[0]",
         "evidence_links[0]",
     }
+
+def test_public_feed_rejects_credentials_and_malformed_https(tmp_path: Path) -> None:
+    for value in (
+        "https://user:pass@example.com/join",
+        "https://user@example.com/join",
+        "https://example.com:bad/join",
+        "https://exa mple.com/join",
+        "https:\\example.com/join",
+        "https://example.com/evil\npath",
+    ):
+        path = _write(tmp_path, [{"id": "unsafe", "title": "Unsafe", "url": value}])
+        errors = audit(path)["errors"]
+        assert any(row["code"] == "invalid_url" and row["field"] == "url" for row in errors), value
