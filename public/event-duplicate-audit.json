@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1120,
-  "event_count_after": 1119,
+  "event_count_before": 1096,
+  "event_count_after": 1095,
   "candidate_cluster_count": 1,
   "duplicate_cluster_count": 1,
   "duplicate_occurrence_count": 1,
   "duplicate_post_count": 1,
-  "duplicate_rate": 0.000893,
+  "duplicate_rate": 0.000912,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_ce6f53c54d9793ddd20c",
       "starts_at": "2026-10-24T12:00:00Z",
-      "title": "明日 は VRC 通信工学 集会 ！ 【タイムスケジュール】 10月24日(土) 21:00～ 開場 21:30～ Yudofu_185さん 『#11 電波って狙って飛ばせるの？～ビームフォー…",
+      "title": "明日 は VRC 通信工学集会！ 【タイムスケジュール】 10月24日(土) 21:00～ 開場 21:30～ Yudofu_185さん 『#11 電波って狙って飛ばせるの？～ビームフォーミン…",
       "member_count": 2,
       "member_ids": [
         "88ae37079bba0e8b7fdd",
@@ -34,68 +34,18 @@
       "representative_source_record_id": "src_b699150f1789bb857f4c"
     }
   ],
-  "ambiguous_candidates": [],
+  "ambiguous_candidates": [
+    {
+      "left_id": "70cfb09c9d53e7cddf1d",
+      "right_id": "a49d6765476139ee0d06",
+      "starts_at": "2026-10-24T13:00:00Z",
+      "organizer": "@BOUKYAKUKOSYO",
+      "similarity": 0.5224,
+      "left_title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 ------ 未完成でありながら、他の本に比べ読…",
+      "right_title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 何処かから楽しそうな声が聞こえる…… こっち？ …"
+    }
+  ],
   "negative_samples": [
-    {
-      "left_id": "2241c9e70f00cc48baeb",
-      "right_id": "eab958b81b2e74a8f6d7",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "Nerds who acc shower",
-      "right_organizer": "カルーアミルクでいいですか？",
-      "similarity": 0.0,
-      "left_title": "Jujutsu Reborn Episode ｜ RP Session",
-      "right_title": "カルーアミルクでいいですか？"
-    },
-    {
-      "left_id": "2241c9e70f00cc48baeb",
-      "right_id": "749eb55a54d2bd339fda",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "Nerds who acc shower",
-      "right_organizer": "ケモノ居酒屋「狐狗狸屋」",
-      "similarity": 0.0,
-      "left_title": "Jujutsu Reborn Episode ｜ RP Session",
-      "right_title": "ケモノ居酒屋 狐狗狸屋 営業日"
-    },
-    {
-      "left_id": "2241c9e70f00cc48baeb",
-      "right_id": "b702ce0d3e5caaca9228",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "Nerds who acc shower",
-      "right_organizer": "夜音（ヨルネ）",
-      "similarity": 0.0152,
-      "left_title": "Jujutsu Reborn Episode ｜ RP Session",
-      "right_title": "喫茶夜音（ヨルネ）"
-    },
-    {
-      "left_id": "eab958b81b2e74a8f6d7",
-      "right_id": "749eb55a54d2bd339fda",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "カルーアミルクでいいですか？",
-      "right_organizer": "ケモノ居酒屋「狐狗狸屋」",
-      "similarity": 0.098,
-      "left_title": "カルーアミルクでいいですか？",
-      "right_title": "ケモノ居酒屋 狐狗狸屋 営業日"
-    },
-    {
-      "left_id": "eab958b81b2e74a8f6d7",
-      "right_id": "b702ce0d3e5caaca9228",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "カルーアミルクでいいですか？",
-      "right_organizer": "夜音（ヨルネ）",
-      "similarity": 0.1274,
-      "left_title": "カルーアミルクでいいですか？",
-      "right_title": "喫茶夜音（ヨルネ）"
-    },
-    {
-      "left_id": "749eb55a54d2bd339fda",
-      "right_id": "b702ce0d3e5caaca9228",
-      "starts_at": "2026-10-23T15:00:00Z",
-      "left_organizer": "ケモノ居酒屋「狐狗狸屋」",
-      "right_organizer": "夜音（ヨルネ）",
-      "similarity": 0.065,
-      "left_title": "ケモノ居酒屋 狐狗狸屋 営業日",
-      "right_title": "喫茶夜音（ヨルネ）"
-    },
     {
       "left_id": "1d757ea4598ab2eeb7cc",
       "right_id": "4216be586a1603db3c30",
@@ -135,7 +85,67 @@
       "similarity": 0.0169,
       "left_title": "2 Day B-Day Collab mit HotGaming",
       "right_title": "Voice Training with Prof․ Aurelia Vox"
+    },
+    {
+      "left_id": "b5f14e2c91d958188dee",
+      "right_id": "0116db1fe115be48c4e6",
+      "starts_at": "2026-10-23T18:00:00Z",
+      "left_organizer": "CHAOTIX ARMY",
+      "right_organizer": "Omniversal Paradise RERUN",
+      "similarity": 0.0851,
+      "left_title": "EXO RADIUS",
+      "right_title": "MEET THE CAST ＋ Q⁄A"
+    },
+    {
+      "left_id": "b5f14e2c91d958188dee",
+      "right_id": "b870ec7a9cbd692a7915",
+      "starts_at": "2026-10-23T18:00:00Z",
+      "left_organizer": "CHAOTIX ARMY",
+      "right_organizer": "Rainbow Library",
+      "similarity": 0.0995,
+      "left_title": "EXO RADIUS",
+      "right_title": "Voice Training with Prof․ Aurelia Vox"
+    },
+    {
+      "left_id": "0116db1fe115be48c4e6",
+      "right_id": "b870ec7a9cbd692a7915",
+      "starts_at": "2026-10-23T18:00:00Z",
+      "left_organizer": "Omniversal Paradise RERUN",
+      "right_organizer": "Rainbow Library",
+      "similarity": 0.0563,
+      "left_title": "MEET THE CAST ＋ Q⁄A",
+      "right_title": "Voice Training with Prof․ Aurelia Vox"
+    },
+    {
+      "left_id": "1c95f810d94b8c87dc9e",
+      "right_id": "0861acfc5fa7eeeb4f49",
+      "starts_at": "2026-10-23T19:00:00Z",
+      "left_organizer": "BELKA",
+      "right_organizer": "We are Family",
+      "similarity": 0.2697,
+      "left_title": "BELKA",
+      "right_title": "Karaoke"
+    },
+    {
+      "left_id": "1c95f810d94b8c87dc9e",
+      "right_id": "9b48e6c5b6fbfaf577a5",
+      "starts_at": "2026-10-23T19:00:00Z",
+      "left_organizer": "BELKA",
+      "right_organizer": "Mint Cat Club",
+      "similarity": 0.3043,
+      "left_title": "BELKA",
+      "right_title": "PARADISE Пятница в Mint Cat Club"
+    },
+    {
+      "left_id": "1c95f810d94b8c87dc9e",
+      "right_id": "6026ff5c6747e75e46ce",
+      "starts_at": "2026-10-23T19:00:00Z",
+      "left_organizer": "BELKA",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.06,
+      "left_title": "BELKA",
+      "right_title": "The Autistic Circus"
     }
   ],
-  "generated_at": "2026-10-24T14:30:52Z"
+  "generated_at": "2026-10-24T15:11:40Z"
 }
