@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import copy
 import csv
 import hashlib
 import json
 from pathlib import Path
 
-from scripts.build_public_api import build
+from scripts.build_public_api import PUBLIC_SCHEMA_PATH, build, public_schema_breakages
 
 
 def test_build_public_api_outputs_consistent_files(tmp_path: Path) -> None:
@@ -30,6 +31,8 @@ def test_build_public_api_outputs_consistent_files(tmp_path: Path) -> None:
     manifest = build(source, output)
     assert manifest["event_count"] == 2
     assert manifest["source_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+    assert manifest["public_schema"]["name"] == "public-events-v1.schema.json"
+    assert manifest["public_schema"]["sha256"] == hashlib.sha256(PUBLIC_SCHEMA_PATH.read_bytes()).hexdigest()
     events = json.loads((output / "events.json").read_text(encoding="utf-8"))
     assert events["count"] == 2
     facets = json.loads((output / "facets.json").read_text(encoding="utf-8"))
@@ -52,3 +55,52 @@ def test_duplicate_ids_fail_closed(tmp_path: Path) -> None:
         assert "unique" in str(exc)
     else:
         raise AssertionError("duplicate ids must be rejected")
+
+
+def test_non_string_event_id_fails_public_contract(tmp_path: Path) -> None:
+    source = tmp_path / "events.json"
+    source.write_text(json.dumps({"count": 1, "events": [{"id": 123}]}), encoding="utf-8")
+    try:
+        build(source, tmp_path / "out")
+    except ValueError as exc:
+        assert "schema types" in str(exc)
+    else:
+        raise AssertionError("non-string ids must be rejected by the public contract")
+
+
+def test_wrong_stable_field_type_fails_public_contract(tmp_path: Path) -> None:
+    source = tmp_path / "events.json"
+    source.write_text(json.dumps({"count": 1, "events": [{"id": "x", "title": ["not", "a", "title"]}]}), encoding="utf-8")
+    try:
+        build(source, tmp_path / "out")
+    except ValueError as exc:
+        assert "event 0.title" in str(exc)
+    else:
+        raise AssertionError("stable public fields must be validated against declared types")
+
+
+def test_public_schema_is_versioned_machine_readable_contract() -> None:
+    schema = json.loads(PUBLIC_SCHEMA_PATH.read_text(encoding="utf-8"))
+    assert schema["$schema"] == "https://json-schema.org/draft/2020-12/schema"
+    assert schema["properties"]["events"]["items"]["required"] == ["id"]
+
+
+def test_public_schema_compatibility_classifies_additive_and_breaking_changes() -> None:
+    baseline = json.loads(PUBLIC_SCHEMA_PATH.read_text(encoding="utf-8"))
+    event_spec = baseline["properties"]["events"]["items"]
+
+    additive = copy.deepcopy(baseline)
+    additive["properties"]["events"]["items"]["properties"]["ticket_url"] = {"type": ["string", "null"]}
+    assert public_schema_breakages(baseline, additive) == []
+
+    removed = copy.deepcopy(baseline)
+    del removed["properties"]["events"]["items"]["properties"]["title"]
+    assert public_schema_breakages(baseline, removed) == ["stable field removed: title"]
+
+    narrowed = copy.deepcopy(baseline)
+    narrowed["properties"]["events"]["items"]["properties"]["title"] = {"type": "string"}
+    assert any("type narrowed: title" in item for item in public_schema_breakages(baseline, narrowed))
+
+    required = copy.deepcopy(baseline)
+    required["properties"]["events"]["items"]["required"] = [*event_spec["required"], "title"]
+    assert "optional field became required: title" in public_schema_breakages(baseline, required)

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cast-event-cal.example/schemas/public-events-v1.schema.json",
+  "title": "Cast Event Calendar public events feed v1",
+  "type": "object",
+  "required": ["count", "events"],
+  "properties": {
+    "schema_version": {"type": ["string", "null"]},
+    "generated_at": {"type": ["string", "null"]},
+    "timezone": {"type": ["string", "null"]},
+    "count": {"type": "integer", "minimum": 0},
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": ["string", "null"]},
+          "starts_at": {"type": ["string", "null"]},
+          "ends_at": {"type": ["string", "null"]},
+          "organizer": {"type": ["string", "null"]},
+          "location": {"type": ["string", "null"]},
+          "category": {"type": ["string", "null"]},
+          "status": {"type": ["string", "null"]},
+          "source": {"type": ["string", "null"]},
+          "url": {"type": ["string", "null"]},
+          "fetched_at": {"type": ["string", "null"]},
+          "event_mode": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
