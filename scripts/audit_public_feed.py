@@ -97,7 +97,33 @@ def _public_links(event: dict[str, Any]) -> list[tuple[str, Any]]:
             value = item.get("url") if isinstance(item, dict) else item
             if value is not None:
                 links.append((f"{key}[{offset}]", value))
+    # Tonight's proof renderer can also turn assets/sources into anchors.
+    # Audit their URL-bearing entries, but allow safe relative first-party paths.
+    for key in ("assets", "sources"):
+        values = event.get(key)
+        if not isinstance(values, list):
+            continue
+        for offset, item in enumerate(values):
+            value = (item.get("url") or item.get("href")) if isinstance(item, dict) else item
+            if not isinstance(value, str) or not value.strip():
+                continue
+            if _is_safe_internal_href(value):
+                continue
+            links.append((f"{key}[{offset}]", value))
     return links
+
+
+def _is_safe_internal_href(value: str) -> bool:
+    raw = value.strip()
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        return False
+    if "\\" in raw or raw.startswith("//"):
+        return False
+    try:
+        parsed = urlparse(raw)
+    except ValueError:
+        return False
+    return not parsed.scheme and not parsed.netloc
 
 
 def audit(path: Path) -> dict[str, Any]:
