@@ -85,6 +85,7 @@ def _public_links(event: dict[str, Any]) -> list[tuple[str, Any]]:
         "group_url",
         "request_url",
         "primary_action_url",
+        "tweet_url",
     ):
         if key in event and event[key] is not None:
             links.append((key, event[key]))

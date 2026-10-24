@@ -22,6 +22,7 @@ def test_valid_feed_has_no_errors(tmp_path: Path) -> None:
                 "start": "2026-08-06T20:00:00+09:00",
                 "url": "https://example.com/event-1",
                 "primary_action_url": "https://example.com/join",
+                "tweet_url": "https://example.com/announcement",
                 "official_links": [{"url": "https://example.com/official"}],
                 "proof_links": ["https://example.com/proof"],
             }
@@ -63,6 +64,7 @@ def test_all_public_navigation_links_fail_closed_on_unsafe_schemes(tmp_path: Pat
                 "id": "unsafe-links",
                 "title": "Unsafe links",
                 "primary_action_url": "javascript:alert(1)",
+                "tweet_url": "https://user@example.com/post",
                 "join_url": "http://example.com/join",
                 "official_links": [{"url": "data:text/html,bad"}],
                 "proof_links": ["//example.com/proof"],
@@ -73,6 +75,7 @@ def test_all_public_navigation_links_fail_closed_on_unsafe_schemes(tmp_path: Pat
     fields = {error.get("field") for error in audit(path)["errors"] if error["code"] == "invalid_url"}
     assert fields == {
         "primary_action_url",
+        "tweet_url",
         "join_url",
         "official_links[0]",
         "proof_links[0]",
