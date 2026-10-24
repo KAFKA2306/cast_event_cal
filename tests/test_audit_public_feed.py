@@ -94,3 +94,32 @@ def test_public_feed_rejects_credentials_and_malformed_https(tmp_path: Path) -> 
         path = _write(tmp_path, [{"id": "unsafe", "title": "Unsafe", "url": value}])
         errors = audit(path)["errors"]
         assert any(row["code"] == "invalid_url" and row["field"] == "url" for row in errors), value
+
+
+def test_assets_and_sources_navigation_urls_fail_closed(tmp_path: Path) -> None:
+    path = _write(tmp_path, [{
+        "id": "nested-links", "title": "Nested links",
+        "assets": [
+            {"url": "javascript:alert(1)"},
+            {"href": "https://example.com/image"},
+            {"url": "/media/local.png"},
+        ],
+        "sources": [
+            {"href": "data:text/html,bad"},
+            "https://example.com/source",
+            {"url": "//evil.example/path"},
+            {"url": "", "href": "javascript:alert(2)"},
+        ],
+    }])
+    errors = audit(path)["errors"]
+    fields = {row["field"] for row in errors if row["code"] == "invalid_url"}
+    assert fields == {"assets[0]", "sources[0]", "sources[2]", "sources[3]"}
+
+
+def test_relative_first_party_proof_assets_remain_allowed(tmp_path: Path) -> None:
+    path = _write(tmp_path, [{
+        "id": "local-assets", "title": "Local assets",
+        "assets": [{"href": "./media/preview.png"}, {"url": "/media/cover.png"}],
+        "sources": [{"url": "../events/another/"}],
+    }])
+    assert audit(path)["error_count"] == 0
