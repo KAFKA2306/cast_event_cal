@@ -104,7 +104,7 @@ jobs:
       - name: Enrich official VRChat group images
         run: python scripts/enrich_vrchat_group_assets.py
       - name: Audit dedup cluster safety
-        run: python scripts/audit_dedup_clusters.py
+        run: python -m scripts.audit_dedup_clusters
       - name: Collapse duplicate source posts into canonical occurrences
         run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
