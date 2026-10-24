@@ -69,6 +69,8 @@ jobs:
         env:
           YAHOO_MIN_RETWEETS: '3'
         run: python scripts/refine_yahoo_corpus.py
+      - name: Audit Yahoo query yield (read-only)
+        run: python scripts/audit_yahoo_query_yield.py
       - name: Measure recurring corpus before materialization
         run: python scripts/audit_recurring_replay.py --require-gates
       - name: Collect external calendars and official event pages
