@@ -38,3 +38,32 @@ def test_result_does_not_depend_on_collection_order():
         {"id": "a", "organizer": "A", "official_url": "https://a.example/events/1"},
     ]
     assert audit(events) == audit(list(reversed(events)))
+
+def test_shared_event_platform_origin_is_not_organizer_identity():
+    events = [
+        {"id": "a", "organizer": "Shared Name", "official_url": "https://x.com/first"},
+        {"id": "b", "organizer": "Shared Name", "official_url": "https://x.com/second"},
+    ]
+    candidate = audit(events)["candidates"][0]
+    assert candidate["decision"] == "ambiguous"
+    assert candidate["evidence"] == []
+
+
+def test_distinct_organizer_profiles_on_same_host_do_not_merge():
+    events = [
+        {"id": "a", "organizer": "Shared Name", "organizer_url": "https://example.com/people/a"},
+        {"id": "b", "organizer": "Shared Name", "organizer_url": "https://example.com/people/b"},
+    ]
+    assert audit(events)["candidates"][0]["decision"] == "distinct"
+
+
+def test_identical_organizer_profile_merges_but_generic_or_credential_url_does_not():
+    events = [
+        {"id": "a", "organizer": "Shared Name", "organizer_url": "https://example.com/people/a"},
+        {"id": "b", "organizer": "Shared Name", "organizer_url": "https://example.com/people/a/"},
+    ]
+    assert audit(events)["candidates"][0]["decision"] == "merged"
+    events[1]["organizer_url"] = "https://user@example.com/people/a"
+    assert audit(events)["candidates"][0]["decision"] == "ambiguous"
+    events[1]["organizer_url"] = "https://example.com/"
+    assert audit(events)["candidates"][0]["decision"] == "ambiguous"
