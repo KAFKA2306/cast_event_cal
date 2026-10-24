@@ -16,25 +16,44 @@ def normalize_label(value: object) -> str:
     return re.sub(r"\s+", " ", text).strip().casefold()
 
 
-def _https_origin(value: object) -> str | None:
+def _https_organizer_profile(value: object) -> str | None:
+    """Accept only an explicit, profile-specific HTTPS organizer identity."""
+    if not isinstance(value, str):
+        return None
+    raw = value.strip()
+    if not raw or any(ord(char) < 32 or ord(char) == 127 for char in value):
+        return None
+    if "\\" in raw or raw.startswith("//"):
+        return None
     try:
-        parsed = urlparse(str(value or ""))
+        parsed = urlparse(raw)
+        if (
+            parsed.scheme != "https"
+            or not parsed.hostname
+            or parsed.username
+            or parsed.password
+            or "@" in parsed.netloc
+            or any(char.isspace() for char in parsed.netloc)
+            or parsed.port not in (None, 443)
+        ):
+            return None
     except ValueError:
         return None
-    if parsed.scheme != "https" or not parsed.hostname:
+    path = parsed.path.rstrip("/")
+    if not path:
         return None
-    return f"https://{parsed.hostname.lower()}"
+    return f"https://{parsed.hostname.lower()}{path}"
 
 
 def strong_keys(event: dict) -> tuple[str, ...]:
     keys: set[str] = set()
     group = event.get("group_id") or event.get("vrchat_group_id")
-    if group:
-        keys.add(f"vrchat-group:{str(group).strip().casefold()}")
-    for field in ("official_url", "organizer_url"):
-        origin = _https_origin(event.get(field))
-        if origin:
-            keys.add(f"official-origin:{origin}")
+    if isinstance(group, str) and group.strip():
+        keys.add(f"vrchat-group:{group.strip().casefold()}")
+    # official_url identifies an event or platform, not the organizer.
+    profile = _https_organizer_profile(event.get("organizer_url"))
+    if profile:
+        keys.add(f"organizer-profile:{profile}")
     return tuple(sorted(keys))
 
 
