@@ -38,3 +38,18 @@ def test_generic_source_link_does_not_become_actionable() -> None:
         }
     ])
     assert report["status"] == "ok"
+
+def test_primary_action_rejects_credentials_and_malformed_https() -> None:
+    for value in (
+        "https://user:pass@example.com/join",
+        "https://user@example.com/join",
+        "https://example.com:bad/join",
+        "https:\\example.com/join",
+    ):
+        report = audit([{
+            "id": "unsafe",
+            "primary_action_url": value,
+            "primary_action_kind": "announcement",
+        }])
+        assert report["status"] == "error", value
+        assert report["failures"]["invalid_primary_action_url"] == ["unsafe"]
