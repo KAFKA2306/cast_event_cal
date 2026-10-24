@@ -1,0 +1,22 @@
+name: Production refresh liveness
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Independent of the production refresh workflow (17 minutes past each hour).
+    - cron: '47 * * * *'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Check most recent successful main production refresh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/check_production_refresh_liveness.py

@@ -8,7 +8,9 @@ on:
     branches: [main]
     paths:
       - scripts/build_yahoo_llm_review_queue.py
+      - scripts/gate_yahoo_llm_review_queue.py
       - tests/test_yahoo_llm_review_queue.py
+      - tests/test_yahoo_llm_review_queue_gate.py
       - data/yahoo_llm_review_resolutions.json
       - .github/workflows/yahoo-llm-review-queue.yml
 
@@ -35,10 +37,12 @@ jobs:
         run: pip install -e '.[dev]'
       - name: Verify deterministic queue rules
         run: |
-          ruff check scripts/build_yahoo_llm_review_queue.py tests/test_yahoo_llm_review_queue.py
-          pytest -q tests/test_yahoo_llm_review_queue.py
+          ruff check scripts/build_yahoo_llm_review_queue.py scripts/gate_yahoo_llm_review_queue.py tests/test_yahoo_llm_review_queue.py tests/test_yahoo_llm_review_queue_gate.py
+          pytest -q tests/test_yahoo_llm_review_queue.py tests/test_yahoo_llm_review_queue_gate.py
       - name: Build pending LLM review queue
         run: python scripts/build_yahoo_llm_review_queue.py
+      - name: Gate timestamp-only rewrites
+        run: python scripts/gate_yahoo_llm_review_queue.py
       - name: Validate queue integrity
         run: |
           python - <<'PY'
@@ -80,7 +84,7 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add "${paths[@]}"
           if git diff --cached --quiet; then
-            echo 'Yahoo LLM review queue is already current'
+            echo 'Yahoo LLM review queue semantic workset is already current'
           else
             git commit -m 'chore: refresh Yahoo LLM review queue [skip ci]'
             git pull --rebase --autostash origin main

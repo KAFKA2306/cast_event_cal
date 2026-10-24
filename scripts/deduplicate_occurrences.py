@@ -104,7 +104,14 @@ def occurrence_match(
 
     left_url = canonical_url(left.get("url"))
     right_url = canonical_url(right.get("url"))
-    if left_url and left_url == right_url:
+    # Calendar directories and VRChat group pages can be shared by distinct
+    # events at the exact same time. A shared link is not event identity.
+    if (
+        left_url
+        and left_url == right_url
+        and normalize_text(left.get("title"))
+        and normalize_text(left.get("title")) == normalize_text(right.get("title"))
+    ):
         return "same_canonical_url", 1.0
 
     left_description = normalize_text(left.get("description"))

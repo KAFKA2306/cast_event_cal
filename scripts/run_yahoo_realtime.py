@@ -66,7 +66,7 @@ def observed_candidate(row: dict[str, Any], observed_at: datetime) -> dict[str, 
     except (TypeError, ValueError):
         retweet_count = None
     stamp = implementation.utc_text(observed_at)
-    return {
+    normalized = {
         "status_id": status_id,
         "url": url,
         "text": text,
@@ -77,6 +77,18 @@ def observed_candidate(row: dict[str, Any], observed_at: datetime) -> dict[str, 
         "last_decision": str(row.get("last_decision") or "pending"),
         "last_reason": row.get("last_reason") or row.get("reason"),
     }
+    for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id"):
+        value = str(row.get(key) or "").strip()
+        if implementation.STATUS_ID_RE.fullmatch(value):
+            normalized[key] = value
+    links = row.get("linked_urls")
+    if isinstance(links, list):
+        normalized["linked_urls"] = sorted({
+            str(value).strip()
+            for value in links
+            if isinstance(value, str) and value.startswith(("https://", "http://"))
+        })[:20]
+    return normalized
 
 
 def merge_history(
@@ -99,6 +111,16 @@ def merge_history(
             new_retweets = normalized.get("retweet_count")
             if old_retweets is not None and (new_retweets is None or int(old_retweets) > int(new_retweets)):
                 normalized["retweet_count"] = int(old_retweets)
+            for key in ("conversation_id", "in_reply_to_status_id", "quoted_status_id"):
+                if not normalized.get(key) and current.get(key):
+                    normalized[key] = current[key]
+            combined_links = {
+                str(value).strip()
+                for value in [*(current.get("linked_urls") or []), *(normalized.get("linked_urls") or [])]
+                if isinstance(value, str) and value.startswith(("https://", "http://"))
+            }
+            if combined_links:
+                normalized["linked_urls"] = sorted(combined_links)[:20]
         normalized["last_seen_at"] = stamp
         selected[normalized["status_id"]] = normalized
     lower = observed_at - timedelta(days=HISTORY_RETENTION_DAYS)

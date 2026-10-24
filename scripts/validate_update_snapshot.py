@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -17,6 +16,7 @@ SOURCE_HEALTH_PATHS = {
 }
 VALID_COLLECTION_STATUSES = {"ok", "degraded", "skipped", "error", "failed"}
 OPTIONAL_COLLECTION_SOURCES = {"vrchat_calendar_discovery", "x_curated_events", "external_calendar_events"}
+YAHOO_RESOLVER_VERSION = "2.1"
 
 
 class SnapshotValidationError(RuntimeError):
@@ -141,11 +141,12 @@ def validate_snapshot(root: Path) -> None:
     require(len(rows) > 0, "public/events.json contains no events")
 
     require(history.get("candidate_count") == len(history.get("candidates", [])), "Yahoo candidate history count mismatch")
-    require(audit.get("classifier_version") == "1.9", "Yahoo classifier audit is not version 1.9")
-    require(audit.get("accepted_count") == len(yahoo), "Yahoo accepted count mismatch")
+    require(audit.get("classifier_version") == YAHOO_RESOLVER_VERSION, f"Yahoo classifier audit is not resolver version {YAHOO_RESOLVER_VERSION}")
+    require(audit.get("accepted_count") == yahoo_health.get("history_accepted_count"), "Yahoo accepted candidate count mismatch")
+    require(yahoo_health.get("materialized_event_count") == len(yahoo), "Yahoo materialized occurrence count mismatch")
     require(audit.get("rejected_count") == len(rejected), "Yahoo rejected count mismatch")
     require(audit.get("accepted_count", 0) + audit.get("rejected_count", 0) == history.get("candidate_count"), "Yahoo audit does not partition candidate history")
-    require(yahoo_health.get("parser_version") == "1.9", "Yahoo health parser version is not 1.9")
+    require(yahoo_health.get("parser_version") == YAHOO_RESOLVER_VERSION, f"Yahoo health parser version is not resolver version {YAHOO_RESOLVER_VERSION}")
     require(yahoo_health.get("status") == "ok", f"Yahoo collection is not healthy: {yahoo_health.get('status')} {yahoo_health.get('reason')}")
     require(yahoo_health.get("queries_failed") == 0, f"Yahoo collection has failed queries: {yahoo_health.get('queries_failed')}")
     require(int(yahoo_health.get("queries_succeeded") or 0) > 0, "Yahoo collection completed without a successful query")
@@ -156,7 +157,7 @@ def validate_snapshot(root: Path) -> None:
     latest = registration.get("latest") or {}
     require(latest.get("calendar_event_count") == events.get("count"), "registration calendar event count mismatch")
     require(latest.get("yahoo_candidate_count") == history.get("candidate_count"), "registration Yahoo candidate count mismatch")
-    require(latest.get("yahoo_accepted_count") == len(yahoo), "registration Yahoo accepted count mismatch")
+    require(latest.get("yahoo_accepted_count") == yahoo_health.get("history_accepted_count"), "registration Yahoo accepted candidate count mismatch")
     require(latest.get("yahoo_rejected_count") == len(rejected), "registration Yahoo rejected count mismatch")
     require(latest.get("yahoo_queries_failed") == 0, "registration reports failed Yahoo queries")
 
@@ -219,49 +220,20 @@ def validate_snapshot(root: Path) -> None:
         status = source_status.get(name)
         require(status in {"ok", "degraded", "skipped"}, f"public health has invalid optional source status for {name}: {status}")
 
-    for path, label in (("public/official-asset-audit.json", "official assets"), ("public/event-link-audit.json", "event links"), ("public/vrchat-group-asset-audit.json", "VRChat group assets")):
-        require(isinstance(load_json(root, path), dict), f"{label} audit must be an object")
-    if int(assets.get("counts", {}).get("official_x") or 0) == 0:
-        annotation("warning", "asset coverage", "no event currently has an official X link")
-    if int(assets.get("counts", {}).get("webp_image") or 0) == 0:
-        annotation("warning", "asset coverage", "no event currently has a WebP image")
-    if int(links.get("events_with_primary_action") or 0) == 0:
-        annotation("warning", "link coverage", "no event currently has a primary action URL")
-    if int(groups.get("events_with_group_url") or 0) == 0:
-        annotation("warning", "group coverage", "no event currently has a VRChat group URL")
-
-
-def write_summary(health: dict[str, Any]) -> None:
-    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if not summary_path:
-        return
-    lines = [
-        "### Collection health",
-        "",
-        f"Overall: **{health.get('status', 'unknown')}**",
-        "",
-        "| Source | Status | Events | Reason |",
-        "| --- | --- | ---: | --- |",
-    ]
-    for source in health.get("sources", []):
-        if not isinstance(source, dict):
-            continue
-        reason = str(source.get("reason") or "").replace("|", "\\|")
-        lines.append(f"| {source.get('name', '')} | {source.get('status', '')} | {source.get('count', 0)} | {reason} |")
-    with Path(summary_path).open("a", encoding="utf-8") as handle:
-        handle.write("\n".join(lines) + "\n")
+    require(assets.get("schema_version") == "1.1", "official asset audit schema mismatch")
+    require(links.get("schema_version") == "1.0", "event link audit schema mismatch")
+    require(groups.get("schema_version") == "1.0", "VRChat group asset audit schema mismatch")
 
 
 def main() -> int:
     try:
-        health = sync_collection_health(ROOT)
+        sync_collection_health(ROOT)
         validate_snapshot(ROOT)
-        write_summary(health)
     except SnapshotValidationError as exc:
-        annotation("error", "update snapshot validation", str(exc))
         print(f"validation failed: {exc}", file=sys.stderr)
+        annotation("error", "snapshot validation", str(exc))
         return 1
-    print(f"validated autonomous update snapshot: status={health.get('status')} events={health.get('event_count')}")
+    print("snapshot validation passed")
     return 0
 
 

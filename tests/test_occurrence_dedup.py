@@ -192,3 +192,41 @@ def test_dedup_is_idempotent_for_already_merged_occurrence():
     assert second[0]["merged_source_count"] == 2
     assert first_audit["duplicate_occurrence_count"] == 1
     assert second_audit["duplicate_occurrence_count"] == 0
+
+def test_shared_external_calendar_listing_keeps_distinct_simultaneous_events():
+    listing = "https://vrc-ta-hub.com/event/list/"
+    rows = [
+        event(
+            event_id="chemistry",
+            source_id="chemistry-20261102",
+            organizer="@chemistry",
+            title="化学のおはなし会",
+            description="化学の知識を交流する会です。",
+            starts_at="2026-11-02T13:30:00Z",
+            url=listing,
+        ),
+        event(
+            event_id="motion",
+            source_id="motion-20261102",
+            organizer="@motion",
+            title="VR酔い訓練集会",
+            description="VR酔いの訓練をする集会です。",
+            starts_at="2026-11-02T13:30:00Z",
+            url=listing,
+        ),
+        event(
+            event_id="chemistry-copy",
+            source_id="chemistry-copy-20261102",
+            organizer="@chemistry",
+            title="化学のおはなし会",
+            description="同じ化学イベントの別告知",
+            starts_at="2026-11-02T13:30:00Z",
+            url=listing,
+        ),
+    ]
+
+    deduped, audit = deduplicate_events(rows)
+
+    assert len(deduped) == 2
+    assert sorted(row["title"] for row in deduped) == ["VR酔い訓練集会", "化学のおはなし会"]
+    assert audit["duplicate_occurrence_count"] == 1

@@ -1,0 +1,31 @@
+name: Audit VRC Search publication delta
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/fetch_external_calendars.py'
+      - 'scripts/audit_vrc_search_coverage.py'
+      - 'config/external_calendars.yaml'
+      - '.github/workflows/vrc-search-coverage-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install project
+        run: pip install -e .
+      - name: Measure live net public-count contribution
+        run: python scripts/audit_vrc_search_coverage.py --output /tmp/vrc-search-coverage.json
+      - name: Show report
+        if: always()
+        run: cat /tmp/vrc-search-coverage.json || true

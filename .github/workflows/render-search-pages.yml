@@ -39,6 +39,7 @@ permissions:
 
 jobs:
   verify:
+    timeout-minutes: 60
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -51,10 +52,11 @@ jobs:
           cache: pip
       - run: pip install -e '.[dev]'
       - name: Install Japanese font for deterministic OG rendering
+        timeout-minutes: 10
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
-          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+          sudo apt-get install -y --no-install-recommends fonts-ipafont-gothic
+          test -f /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
       - run: pytest tests/test_promotions.py tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
       - run: python scripts/render_search_pages.py
       - run: python scripts/render_category_pages.py
@@ -65,6 +67,7 @@ jobs:
       - run: python scripts/verify_crawl_graph.py
 
   publish:
+    timeout-minutes: 90
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     needs: verify
     runs-on: ubuntu-latest
@@ -83,10 +86,11 @@ jobs:
           cache: pip
       - run: pip install -e .
       - name: Install Japanese font for deterministic OG rendering
+        timeout-minutes: 10
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
-          test -f /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+          sudo apt-get install -y --no-install-recommends fonts-ipafont-gothic
+          test -f /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
       - name: Render current/future crawlable event pages
         run: python scripts/render_search_pages.py
       - name: Render category landing pages
