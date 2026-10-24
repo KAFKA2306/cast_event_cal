@@ -2,13 +2,13 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1181,
+  "event_count": 1161,
   "matched_events": 296,
   "matched_series": {
-    "asmr-gathering": 36,
-    "vrc-fit-boxing": 36,
+    "asmr-gathering": 35,
     "vrc-petting-zoo": 18,
-    "en-jp-language-exchange": 35,
+    "en-jp-language-exchange": 36,
+    "vrc-fit-boxing": 36,
     "personally-match": 18,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
@@ -19,33 +19,9 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 885,
+  "unmatched_events": 865,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "a4b7d64e7f767f4a4b2f",
-      "title": "ASMR集会 初心者説明会",
-      "status": "matched",
-      "ontology_id": "asmr-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "81d9d2ef197a8ea31b82",
-      "title": "VRCフィットボクシング集会",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "3242c5ae207798ade024",
       "title": "ASMR集会 本営業",
@@ -3556,21 +3532,45 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "aa1e27956affd2f66ea3",
+      "title": "EN-JP Language Exchange（日曜）",
+      "status": "matched",
+      "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "026799fc8cf64d6bad45",
+      "title": "VRCフィットボクシング集会（日曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1181,
+    "event_count": 1161,
     "category_breakdown": {
       "art": 122,
-      "community": 292,
-      "game": 108,
-      "language_exchange": 35,
+      "community": 280,
+      "game": 107,
+      "language_exchange": 36,
       "learning": 29,
-      "music": 123,
-      "other": 80,
+      "music": 120,
+      "other": 76,
       "performance": 17,
-      "recruitment_deadline": 6,
+      "recruitment_deadline": 5,
       "technology": 280,
       "wellness": 71,
       "world_tour": 18
@@ -3579,16 +3579,16 @@
       "ai": 34,
       "application_deadline": 1,
       "bar": 4,
-      "cafe": 33,
+      "cafe": 31,
       "cast_recruitment": 1,
       "cast_service": 4,
       "class": 3,
-      "dance": 54,
-      "dj": 4,
+      "dance": 53,
+      "dj": 3,
       "engineering": 170,
       "fitness": 37,
-      "hangout": 69,
-      "language_exchange": 35,
+      "hangout": 65,
+      "language_exchange": 36,
       "lecture": 6,
       "mystery": 34,
       "orientation": 1,
@@ -3597,97 +3597,30 @@
       "reading": 1,
       "research": 67,
       "show": 13,
-      "social": 178,
-      "tabletop": 37,
+      "social": 173,
+      "tabletop": 36,
       "theater": 2,
       "workshop": 11,
       "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 6,
+      "deadline": 5,
       "hybrid": 6,
-      "in_world": 1165,
+      "in_world": 1146,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 279,
-      "fallback": 80,
-      "keyword_rules": 569,
-      "legacy_and_keywords": 129,
+      "fallback": 76,
+      "keyword_rules": 556,
+      "legacy_and_keywords": 126,
       "legacy_category": 124
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 125,
-    "audit_event_count": 125
+    "low_confidence_event_count": 120,
+    "audit_event_count": 120
   },
   "category_review_queue": [
-    {
-      "event_id": "99e6226d0f8eec695fc6",
-      "title": "ちょいトレ・がちトレ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "684dfcb2fea89ea6cd66",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "8f78f8073b1181dee683",
-      "title": "MLGround ＃77",
-      "category": "game",
-      "label": "ゲーム・参加型",
-      "subcategory": "tabletop",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:麻雀"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "173de656beece33f27c6",
-      "title": "【10/23(金)21:00～ 特別エリア開放イベントにつきまして】 昨今の VRChat の事情を考慮し、Project Pedictaへの Group 参加を一時的に承認制へ変更いたしまし…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "2c55c1cb1019656b6a5f",
-      "title": "釣り堀こいのぼり",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "396d9a83bb38cf5f82e0",
       "title": "Bar Veil",
