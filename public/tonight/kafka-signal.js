@@ -79,8 +79,29 @@
     if (footer && !footer.querySelector('.ks-version')) {
       const paragraph = document.createElement('p');
       paragraph.className = 'ks-version';
-      paragraph.textContent = `KAFKA SIGNAL ${release} · 6cceef70`;
+      paragraph.textContent = `KAFKA SIGNAL ${release} · source UNVERIFIED`;
       footer.append(paragraph);
+      fetch('../snapshot.json', { cache: 'no-store' })
+        .then((response) => {
+          if (!response.ok) throw new Error('snapshot unavailable');
+          return response.json();
+        })
+        .then((snapshot) => {
+          if (
+            snapshot.schema_version !== 1 ||
+            !/^[0-9a-f]{40}$/.test(snapshot.source_revision || '') ||
+            !/^[0-9a-f]{64}$/.test(snapshot.events_sha256 || '') ||
+            typeof snapshot.generated_at !== 'string' ||
+            !Number.isFinite(Date.parse(snapshot.generated_at))
+          ) throw new Error('invalid snapshot identity');
+          paragraph.textContent = `KAFKA SIGNAL ${release} · source ${snapshot.source_revision.slice(0, 8)}`;
+          paragraph.title = `公開イベントデータの生成元: ${snapshot.source_revision}`;
+          document.documentElement.dataset.snapshotSourceRevision = snapshot.source_revision;
+        })
+        .catch(() => {
+          paragraph.textContent = `KAFKA SIGNAL ${release} · source UNVERIFIED`;
+          document.documentElement.dataset.snapshotSourceRevision = 'UNVERIFIED';
+        });
     }
     const off = document.querySelector('#history-off');
     if (off) {
