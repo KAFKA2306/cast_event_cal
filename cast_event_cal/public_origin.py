@@ -10,6 +10,14 @@ ENV_NAME = "CAST_EVENT_CAL_PUBLIC_ORIGIN"
 def public_origin() -> str:
     raw = os.environ.get(ENV_NAME, DEFAULT_PUBLIC_ORIGIN).strip().rstrip("/")
     parsed = urlsplit(raw)
-    if parsed.scheme != "https" or not parsed.netloc or parsed.path not in {"", "/"}\n        or parsed.username is not None or parsed.password is not None\n        or parsed.query or parsed.fragment:
-        raise ValueError(f"{ENV_NAME} must be an HTTPS origin without a path")
+    if (
+        parsed.scheme != "https"
+        or not parsed.netloc
+        or parsed.path not in {"", "/"}
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+        or parsed.fragment
+    ):
+        raise ValueError(f"{ENV_NAME} must be an HTTPS origin without credentials, path, query or fragment")
     return raw
