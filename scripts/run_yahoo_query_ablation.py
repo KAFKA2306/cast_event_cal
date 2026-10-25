@@ -179,7 +179,7 @@ def enrich(results: list[dict[str, Any]], full_key: str) -> dict[str, Any]:
         effects[block] = {
             "full_key": full_key,
             "ablated_key": ablated_key,
-            "precision_delta_full_minus_ablated": round(
+            "acceptance_rate_delta_full_minus_ablated": round(
                 float(full["content_acceptance_rate"])
                 - float(ablated["content_acceptance_rate"]),
                 6,
@@ -238,7 +238,7 @@ def run(config_path: Path = CONFIG_PATH) -> dict[str, Any]:
     comparison = enrich(results, str(config["full_variant_key"]))
     successful = sum(row.get("status") == "ok" for row in results)
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": yahoo.utc_text(now),
         "classifier_version": yahoo.PARSER_VERSION,
         "status": "ok" if successful == len(results) else ("degraded" if successful else "failed"),
@@ -253,14 +253,25 @@ def run(config_path: Path = CONFIG_PATH) -> dict[str, Any]:
             "same_result_limit": result_limit,
             "same_classifier": True,
             "minimum_retweets": minimum_retweets,
-            "content_precision_ignores_x_source_deduplication": True,
-            "production_precision_applies_x_source_deduplication": True,
+            "content_acceptance_ignores_x_source_deduplication": True,
+            "production_acceptance_applies_x_source_deduplication": True,
+        },
+        "metric_semantics": {
+            "content_acceptance_rate": (
+                "fraction of retrieved candidates accepted by the current classifier before "
+                "X-source deduplication; not ground-truth precision"
+            ),
+            "production_acceptance_rate": (
+                "fraction of retrieved candidates accepted by the current classifier after "
+                "X-source deduplication; not ground-truth precision"
+            ),
+            "block_effects": "differences in classifier acceptance and accepted yield only",
         },
         "variants": [{key: value for key, value in row.items() if key not in _PRIVATE_FIELDS} for row in results],
         **comparison,
         "limitations": [
             "Yahoo realtime ranking is time-dependent.",
-            "Result-limit conditions estimate top-K precision, not corpus recall.",
+            "Result-limit conditions estimate top-K classifier acceptance/yield, not independent precision or corpus recall.",
             "Removing the platform block intentionally permits non-VRChat results.",
         ],
     }
