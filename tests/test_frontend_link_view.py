@@ -61,3 +61,38 @@ def test_rendered_frontend_keeps_datetime_provenance_ui() -> None:
     assert "日時根拠あり" in rendered
     assert "resolutionText(event)" in rendered
     assert "date_resolution_evidence?.matched_text" in rendered
+
+def test_frontend_jst_today_boundary_and_equal_time_sort_are_deterministic() -> None:
+    import shutil
+    import subprocess
+
+    import pytest
+
+    if shutil.which("node") is None:
+        pytest.skip("Node.js is required to execute frontend JavaScript")
+
+    html = rendered_frontend()
+    helpers = "function stableEventKey(event){" + html.split(
+        "function stableEventKey(event){", 1
+    )[1].split("function eventLinks(event){", 1)[0]
+    script = r"""
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const source = require('node:fs').readFileSync(0, 'utf8');
+function contextAt(iso) {
+  const FixedDate = class extends Date {
+    constructor(...args) { super(...(args.length ? args : [iso])); }
+  };
+  const context = vm.createContext({Date: FixedDate, Intl});
+  vm.runInContext(source, context);
+  return context;
+}
+const beforeMidnight = contextAt('2026-10-25T14:59:00Z');
+const afterMidnight = contextAt('2026-10-25T15:01:00Z');
+assert.equal(vm.runInContext("rangeEnd('today').toISOString()", beforeMidnight), '2026-10-25T14:59:59.999Z');
+assert.equal(vm.runInContext("rangeEnd('today').toISOString()", afterMidnight), '2026-10-26T14:59:59.999Z');
+assert.equal(vm.runInContext("compareStableEvents({id:'b'},{id:'a'})", beforeMidnight), 1);
+assert.equal(vm.runInContext("compareStableEvents({id:'a'},{id:'b'})", beforeMidnight), -1);
+assert.equal(vm.runInContext("compareStableEvents({id:'a'},{id:'a'})", beforeMidnight), 0);
+"""
+    subprocess.run(["node", "-e", script], input=helpers, text=True, check=True)
