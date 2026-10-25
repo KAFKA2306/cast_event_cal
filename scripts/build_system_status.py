@@ -33,7 +33,10 @@ def _instant(value: Any) -> datetime | None:
 def build_status(
     health: dict[str, Any], snapshot: dict[str, Any], *, now: datetime,
     max_snapshot_age_minutes: int = DEFAULT_MAX_SNAPSHOT_AGE_MINUTES,
+    refresh_result: str = "success",
 ) -> dict[str, Any]:
+    if refresh_result not in {"success", "failure"}:
+        raise ValueError(f"invalid refresh result: {refresh_result}")
     freshness = audit(health, snapshot, now=now, max_snapshot_age_minutes=max_snapshot_age_minutes)
     source_rows: list[dict[str, Any]] = []
     for source in health.get("sources", []):
@@ -50,7 +53,7 @@ def build_status(
     health_status = health.get("status")
     if freshness["status"] == "stale":
         overall = "stale"
-    elif health_status == "ok":
+    elif health_status == "ok" and refresh_result == "success":
         overall = "ok"
     else:
         overall = "degraded"
@@ -61,6 +64,7 @@ def build_status(
         "snapshot_generated_at": freshness["published_at"],
         "snapshot_age_minutes": freshness["snapshot_age_minutes"],
         "overall_status": overall,
+        "refresh_result": refresh_result,
         "canonical_event_count": snapshot.get("event_count"),
         "sources": source_rows,
         "slo": {"max_snapshot_age_minutes": max_snapshot_age_minutes, "version": "1.0"},
@@ -73,13 +77,15 @@ def main() -> int:
     parser.add_argument("--snapshot", type=Path, default=DEFAULT_SNAPSHOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--max-age-minutes", type=int, default=DEFAULT_MAX_SNAPSHOT_AGE_MINUTES)
+    parser.add_argument("--refresh-result", choices=("success", "failure"), default="success")
     parser.add_argument("--now", help="fixed timezone-aware ISO-8601 instant")
     args = parser.parse_args()
     now = _instant(args.now) if args.now else datetime.now(UTC)
     if now is None:
         raise ValueError("--now must be timezone-aware ISO-8601")
     status = build_status(read_object(args.health), read_object(args.snapshot), now=now,
-                          max_snapshot_age_minutes=args.max_age_minutes)
+                          max_snapshot_age_minutes=args.max_age_minutes,
+                          refresh_result=args.refresh_result)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"System status: {status['overall_status']}")
