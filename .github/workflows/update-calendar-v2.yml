@@ -31,6 +31,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      UPDATE_RUN_REPORT: /tmp/update-run-telemetry.jsonl
+      UPDATE_RUN_SUMMARY: /tmp/update-run-telemetry.json
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -46,6 +49,8 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
+      - name: Start run telemetry
+        run: echo "UPDATE_RUN_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
       - name: Install dependencies
         run: pip install -e '.[dev]'
       - name: Regression tests
@@ -64,7 +69,13 @@ jobs:
       - name: Extend Yahoo candidate corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
-        run: python scripts/collect_yahoo_corpus.py --mode daily --target 1000
+        run: >-
+          python scripts/run_stage.py --report "$UPDATE_RUN_REPORT"
+          --name yahoo-collection --kind network
+          --input config --code-input scripts/collect_yahoo_corpus.py
+          --output data/yahoo_realtime_candidates.json
+          --measure-json data/yahoo_realtime_health.json --
+          python scripts/collect_yahoo_corpus.py --mode daily --target 1000
       - name: Replay retained Yahoo corpus
         env:
           YAHOO_MIN_RETWEETS: '3'
@@ -108,7 +119,12 @@ jobs:
       - name: Collapse duplicate source posts into canonical occurrences
         run: python scripts/deduplicate_occurrences.py
       - name: Render linked-image frontend and live ontologies
-        run: python scripts/render_frontend.py
+        run: >-
+          python scripts/run_stage.py --report "$UPDATE_RUN_REPORT"
+          --name render-frontend --kind projection
+          --input public/events.json --input web --code-input scripts/render_frontend.py
+          --output public/index.html --
+          python scripts/render_frontend.py
       - name: Build validated promotion overlay
         run: python scripts/build_promotions.py
       - name: Order home view by user decision value
@@ -169,7 +185,22 @@ jobs:
           SOURCE_REVISION="$(python -c 'import json; print(json.load(open("audit/validated-source.json"))["validated_base_sha"])')"
           python scripts/write_snapshot_identity.py --check public/snapshot.json --source-revision "$SOURCE_REVISION"
       - name: Gate generated snapshot freshness
-        run: python scripts/audit_freshness.py --max-age-minutes 180
+        run: >-
+          python scripts/run_stage.py --report "$UPDATE_RUN_REPORT"
+          --name snapshot-freshness --kind validation
+          --input public/snapshot.json --code-input scripts/audit_freshness.py --
+          python scripts/audit_freshness.py --max-age-minutes 180
+      - name: Finalize run telemetry
+        if: always()
+        run: python scripts/finalize_update_telemetry.py --report "$UPDATE_RUN_REPORT" --output "$UPDATE_RUN_SUMMARY"
+      - name: Upload run telemetry
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: update-run-telemetry-${{ github.run_id }}
+          path: /tmp/update-run-telemetry.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Build durable system status
         run: python scripts/build_system_status.py --max-age-minutes 180
       - name: Stage validated snapshot for publisher
