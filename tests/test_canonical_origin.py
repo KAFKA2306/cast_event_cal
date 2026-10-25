@@ -11,7 +11,9 @@ def test_audit_accepts_one_origin_and_rejects_legacy_host(tmp_path: Path) -> Non
         encoding="utf-8",
     )
     (tmp_path / "events" / "evt" / "index.html").write_text(
-        f'<link rel="canonical" href="{expected}/events/evt/">', encoding="utf-8"
+        f'<link rel="canonical" href="{expected}/events/evt/">'
+        f'<meta property="og:url" content="{expected}/events/evt/">',
+        encoding="utf-8"
     )
     (tmp_path / "sitemap.xml").write_text(
         f'<urlset><url><loc>{expected}/</loc></url><url><loc>{expected}/events/evt/</loc></url></urlset>',
@@ -20,11 +22,12 @@ def test_audit_accepts_one_origin_and_rejects_legacy_host(tmp_path: Path) -> Non
     assert audit(tmp_path, expected) == []
 
     (tmp_path / "events" / "evt" / "index.html").write_text(
-        '<link rel="canonical" href="https://kafka2306.github.io/cast_event_cal/events/evt/">',
+        '<link rel="canonical" href="https://kafka2306.github.io/cast_event_cal/events/evt/">'
+        '<meta property="og:url" content="https://kafka2306.github.io/cast_event_cal/events/evt/">',
         encoding="utf-8",
     )
     failures = audit(tmp_path, expected)
-    assert len(failures) == 1
+    assert len(failures) == 2
     assert "kafka2306.github.io" in failures[0]
 
 
@@ -66,3 +69,21 @@ def test_audit_rejects_malformed_sitemap(tmp_path: Path) -> None:
     )
     (tmp_path / "sitemap.xml").write_text("<urlset><url>", encoding="utf-8")
     assert any("invalid sitemap XML" in row for row in audit(tmp_path, expected))
+
+
+def test_audit_rejects_missing_or_mismatched_og_url(tmp_path: Path) -> None:
+    expected = "https://vrc-cast-event-calender.pages.dev"
+    (tmp_path / "index.html").write_text(
+        f'<link rel="canonical" href="{expected}/">', encoding="utf-8"
+    )
+    (tmp_path / "sitemap.xml").write_text(
+        f"<urlset><url><loc>{expected}/</loc></url></urlset>", encoding="utf-8"
+    )
+    assert any("missing og:url" in row for row in audit(tmp_path, expected))
+
+    (tmp_path / "index.html").write_text(
+        f'<link rel="canonical" href="{expected}/">'
+        f'<meta property="og:url" content="{expected}/other/">',
+        encoding="utf-8",
+    )
+    assert any("canonical and og:url disagree" in row for row in audit(tmp_path, expected))
