@@ -1,5 +1,4 @@
 """Browser-level provenance behavior: use published snapshot, never a stale literal."""
-import json
 import shutil
 import subprocess
 from pathlib import Path
