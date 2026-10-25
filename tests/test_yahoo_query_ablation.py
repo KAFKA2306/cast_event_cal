@@ -77,12 +77,12 @@ def test_enrich_calculates_block_effects_and_incremental_accepts() -> None:
     assert comparison["block_effects"]["access"] == {
         "full_key": "abc_full",
         "ablated_key": "ac_no_access",
-        "precision_delta_full_minus_ablated": 0.25,
+        "acceptance_rate_delta_full_minus_ablated": 0.25,
         "accepted_yield_delta_full_minus_ablated": 1,
         "accepted_lost_when_removed_count": 1,
         "accepted_gained_when_removed_count": 0,
     }
-    assert comparison["block_effects"]["announcement"]["precision_delta_full_minus_ablated"] == -0.25
+    assert comparison["block_effects"]["announcement"]["acceptance_rate_delta_full_minus_ablated"] == -0.25
     assert comparison["block_effects"]["announcement"]["accepted_gained_when_removed_count"] == 1
     assert comparison["block_effects"]["platform"]["accepted_lost_when_removed_count"] == 2
 
@@ -91,3 +91,28 @@ def test_ratio_and_jaccard_are_zero_safe() -> None:
     assert ablation.ratio(0, 0) == 0.0
     assert ablation.jaccard(set(), set()) == 0.0
     assert ablation.jaccard({"1", "2"}, {"2", "3"}) == 0.333333
+
+
+def test_block_effects_do_not_claim_ground_truth_precision() -> None:
+    results = [
+        {
+            "key": "abc_full",
+            "status": "ok",
+            "content_acceptance_rate": 0.5,
+            "content_accepted_count": 1,
+            "candidate_status_ids": ["1", "2"],
+            "content_accepted_status_ids": ["1"],
+        },
+        {
+            "key": "ac_no_access",
+            "status": "ok",
+            "content_acceptance_rate": 0.0,
+            "content_accepted_count": 0,
+            "candidate_status_ids": ["2"],
+            "content_accepted_status_ids": [],
+        },
+    ]
+    comparison = ablation.enrich(results, "abc_full")
+    effect = comparison["block_effects"]["access"]
+    assert effect["acceptance_rate_delta_full_minus_ablated"] == 0.5
+    assert "precision_delta_full_minus_ablated" not in effect

@@ -53,7 +53,7 @@ jobs:
           from pathlib import Path
 
           payload = json.loads(Path('public/yahoo-query-ablation.json').read_text(encoding='utf-8'))
-          assert payload['schema_version'] == '1.0'
+          assert payload['schema_version'] == '1.1'
           assert payload['classifier_version'] == '1.8'
           assert payload['status'] == 'ok'
           assert payload['variant_count'] == 10
@@ -63,6 +63,13 @@ jobs:
           assert all(row['candidate_count'] > 0 for row in payload['variants'])
           assert all('content_acceptance_rate' in row for row in payload['variants'])
           assert all('production_acceptance_rate' in row for row in payload['variants'])
+          assert 'metric_semantics' in payload
+          assert 'not ground-truth precision' in payload['metric_semantics']['content_acceptance_rate']
+          assert all(
+              'acceptance_rate_delta_full_minus_ablated' in effect
+              and 'precision_delta_full_minus_ablated' not in effect
+              for effect in payload['block_effects'].values()
+          )
           print('\nAblation summary')
           for row in payload['variants']:
               print(
