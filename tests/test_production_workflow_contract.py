@@ -39,4 +39,4 @@ def test_failed_refresh_writes_only_durable_status_after_publish():
     assert "needs.publish.result != 'success'" in status_job
     assert "--refresh-result failure" in status_job
     assert "git add public/status.json" in status_job
-    assert "git add public/" not in status_job
+    assert not any(line.strip() in {"git add public/", "git add public"} for line in status_job.splitlines())
