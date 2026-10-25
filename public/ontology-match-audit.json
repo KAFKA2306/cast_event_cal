@@ -2,10 +2,9 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1102,
-  "matched_events": 295,
+  "event_count": 1069,
+  "matched_events": 294,
   "matched_series": {
-    "personally-match": 18,
     "en-jp-language-exchange": 35,
     "vrc-fit-boxing": 35,
     "cafe-bar-for-light": 1,
@@ -18,23 +17,12 @@
     "vrc-idle-gathering": 17,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
-    "vrc-petting-zoo": 17
+    "vrc-petting-zoo": 17,
+    "personally-match": 17
   },
-  "unmatched_events": 807,
+  "unmatched_events": 775,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "0ea6c634032e01172a77",
-      "title": "Personally match",
-      "status": "matched",
-      "ontology_id": "personally-match",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "0b850211cdbd50b651d6",
       "title": "EN-JP Language Exchange（日曜）",
@@ -3549,44 +3537,43 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1102,
+    "event_count": 1069,
     "category_breakdown": {
       "art": 121,
-      "community": 257,
-      "game": 109,
+      "community": 242,
+      "game": 107,
       "language_exchange": 35,
-      "learning": 27,
-      "music": 111,
-      "other": 68,
-      "performance": 9,
+      "learning": 26,
+      "music": 107,
+      "other": 61,
+      "performance": 6,
       "recruitment_deadline": 6,
-      "technology": 273,
+      "technology": 272,
       "wellness": 69,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 2,
-      "bar": 1,
-      "cafe": 27,
+      "cafe": 23,
       "cast_recruitment": 1,
-      "cast_service": 4,
+      "cast_service": 3,
       "class": 2,
       "dance": 48,
       "dj": 4,
-      "engineering": 165,
+      "engineering": 164,
       "fitness": 35,
-      "hangout": 63,
+      "hangout": 60,
       "language_exchange": 35,
-      "lecture": 7,
+      "lecture": 6,
       "mystery": 34,
       "participant_recruitment": 1,
       "photography": 121,
       "quiz": 1,
       "reading": 1,
       "research": 66,
-      "show": 7,
-      "social": 160,
+      "show": 4,
+      "social": 154,
       "tabletop": 35,
       "workshop": 10,
       "world_tour": 17
@@ -3594,144 +3581,21 @@
     "event_mode_breakdown": {
       "deadline": 6,
       "hybrid": 4,
-      "in_world": 1088,
+      "in_world": 1055,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 278,
-      "fallback": 68,
-      "keyword_rules": 524,
-      "legacy_and_keywords": 110,
+      "curated_ontology": 277,
+      "fallback": 61,
+      "keyword_rules": 508,
+      "legacy_and_keywords": 101,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 108,
-    "audit_event_count": 108
+    "low_confidence_event_count": 99,
+    "audit_event_count": 99
   },
   "category_review_queue": [
-    {
-      "event_id": "b444e0f719e8dd62df89",
-      "title": "club Focus",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "1e6500c1e12fe24c5015",
-      "title": "cop",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e3a38766b73f1f638092",
-      "title": "102回VRC武人集会【TOKYO MARUI VRC Survival Game Field ＂CONQUEST＂】",
-      "category": "game",
-      "label": "ゲーム・参加型",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:game"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "e67337aace0268c3b7ba",
-      "title": "Progrès fulgurant",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "70cfb09c9d53e7cddf1d",
-      "title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 ------ 未完成でありながら、他の本に比べ読…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "a49d6765476139ee0d06",
-      "title": "VRChat RPイベント「忘却古書店」 🎃ハロウィンイベント 開催 🎃 10/24 22:00-23:00 グループインスタンス にて 開催 何処かから楽しそうな声が聞こえる…… こっち？ …",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "60c8e4be54b7787d8c8f",
-      "title": "VRChatイベント『ブイシロ』",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d29b136627091d584ae4",
-      "title": "ごきげんよう🍩 今夜 22時から オープン です🍀 予定通り 開催 いたしますので、もしペアで来られたいお客様はこちらのポストを引用RPしていただき、お相手様とご自分の VRC ネームをご記載…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "a26346c290b44cafa0cf",
-      "title": "イベント 開催告知 です。 今週の VRC イベント『Fighting Burst』は予約等なしの、フリー参加形式で 本日 10/24(土)22時より 開催 します！ JOIN 先はリプに続け…",
-      "category": "community",
-      "label": "交流・カフェ",
-      "subcategory": "cafe",
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:cafe"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "f943daeb89aeb8dee2f5",
       "title": "副本-夜眠花",
