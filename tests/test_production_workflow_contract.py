@@ -28,3 +28,15 @@ def test_required_production_gates_run_before_commit() -> None:
     for command in required:
         assert command in text
         assert text.index(command) < commit_index
+
+
+def test_failed_refresh_writes_only_durable_status_after_publish():
+    text = workflow_text()
+    assert "  status_on_failure:\n" in text
+    status_job = text.split("  status_on_failure:\n", 1)[1]
+    assert "needs: [build, publish]" in status_job
+    assert "always()" in status_job
+    assert "needs.publish.result != 'success'" in status_job
+    assert "--refresh-result failure" in status_job
+    assert "git add public/status.json" in status_job
+    assert "git add public/" not in status_job
