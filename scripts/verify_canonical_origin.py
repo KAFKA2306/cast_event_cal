@@ -56,8 +56,18 @@ def audit(root: Path, expected: str) -> list[str]:
         for kind, url in parser.urls:
             if _origin(url) != expected:
                 failures.append(f"{path}: {kind} origin drift: {url!r} (expected {expected})")
-        if not any(kind == "canonical" for kind, _ in parser.urls):
+        canonical_urls = [url for kind, url in parser.urls if kind == "canonical"]
+        og_urls = [url for kind, url in parser.urls if kind == "og:url"]
+        if not canonical_urls:
             failures.append(f"{path}: missing canonical")
+        if not og_urls:
+            failures.append(f"{path}: missing og:url")
+        if len(canonical_urls) > 1:
+            failures.append(f"{path}: duplicate canonical")
+        if len(og_urls) > 1:
+            failures.append(f"{path}: duplicate og:url")
+        if canonical_urls and og_urls and canonical_urls[0] != og_urls[0]:
+            failures.append(f"{path}: canonical and og:url disagree")
     sitemap = root / "sitemap.xml"
     if sitemap.is_file():
         try:
