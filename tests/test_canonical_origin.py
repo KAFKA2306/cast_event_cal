@@ -40,3 +40,29 @@ def test_audit_reports_missing_canonical(tmp_path: Path) -> None:
     (tmp_path / "index.html").write_text("<title>Missing canonical</title>", encoding="utf-8")
     (tmp_path / "sitemap.xml").write_text(f"<urlset><url><loc>{expected}/</loc></url></urlset>", encoding="utf-8")
     assert any("missing canonical" in row for row in audit(tmp_path, expected))
+
+def test_audit_detects_reversed_attribute_order_and_namespaced_sitemap(tmp_path: Path) -> None:
+    expected = "https://vrc-cast-event-calender.pages.dev"
+    (tmp_path / "index.html").write_text(
+        f'<link href="{expected}/" rel="canonical"><meta content="{expected}/" property="og:url">',
+        encoding="utf-8",
+    )
+    (tmp_path / "sitemap.xml").write_text(
+        f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{expected}/</loc></url></urlset>',
+        encoding="utf-8",
+    )
+    assert audit(tmp_path, expected) == []
+    (tmp_path / "index.html").write_text(
+        '<link href="https://kafka2306.github.io/cast_event_cal/" rel="canonical">',
+        encoding="utf-8",
+    )
+    assert any("canonical origin drift" in row for row in audit(tmp_path, expected))
+
+
+def test_audit_rejects_malformed_sitemap(tmp_path: Path) -> None:
+    expected = "https://vrc-cast-event-calender.pages.dev"
+    (tmp_path / "index.html").write_text(
+        f'<link rel="canonical" href="{expected}/">', encoding="utf-8"
+    )
+    (tmp_path / "sitemap.xml").write_text("<urlset><url>", encoding="utf-8")
+    assert any("invalid sitemap XML" in row for row in audit(tmp_path, expected))
