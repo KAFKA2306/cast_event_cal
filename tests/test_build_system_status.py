@@ -52,3 +52,18 @@ def test_script_entrypoint_runs_from_repository_root(tmp_path):
     )
     assert result.returncode == 0, result.stderr
     assert output.exists()
+
+
+def test_failed_refresh_marks_fresh_last_good_snapshot_degraded():
+    health = {"status": "ok", "generated_at": "2026-09-26T01:30:00Z", "sources": []}
+    result = build_status(health, _snapshot(), now=NOW, refresh_result="failure")
+    assert result["snapshot_age_minutes"] == 30.0
+    assert result["refresh_result"] == "failure"
+    assert result["overall_status"] == "degraded"
+
+
+def test_invalid_refresh_result_is_rejected():
+    import pytest
+
+    with pytest.raises(ValueError, match="invalid refresh result"):
+        build_status({"status": "ok"}, _snapshot(), now=NOW, refresh_result="unknown")
