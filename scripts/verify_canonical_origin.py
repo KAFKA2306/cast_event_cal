@@ -26,10 +26,14 @@ def audit(root: Path, expected: str) -> list[str]:
     html_paths += sorted((root / "events").glob("*/index.html"))
     html_paths += sorted((root / "categories").glob("*/index.html"))
     html_paths += sorted((root / "series").glob("*/index.html"))
+    if not (root / "index.html").is_file():
+        failures.append(f"{root}: missing root index.html")
     for path in html_paths:
         if not path.is_file():
             continue
         text = path.read_text(encoding="utf-8")
+        if 'rel="canonical"' not in text and "rel='canonical'" not in text:
+            failures.append(f"{path}: missing canonical")
         for url in OWN_URL.findall(text):
             if _origin(url) != expected:
                 failures.append(f"{path}: own URL uses {_origin(url) or 'invalid origin'}: {url}")
@@ -38,6 +42,8 @@ def audit(root: Path, expected: str) -> list[str]:
         for url in SITEMAP_LOC.findall(sitemap.read_text(encoding="utf-8")):
             if _origin(url) != expected:
                 failures.append(f"{sitemap}: sitemap URL uses {_origin(url) or 'invalid origin'}: {url}")
+    else:
+        failures.append(f"{sitemap}: missing sitemap.xml")
     return failures
 
 
