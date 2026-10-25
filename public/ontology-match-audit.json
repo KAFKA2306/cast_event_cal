@@ -2,15 +2,15 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1124,
-  "matched_events": 294,
+  "event_count": 1102,
+  "matched_events": 295,
   "matched_series": {
-    "vrc-fit-boxing": 36,
     "personally-match": 18,
     "en-jp-language-exchange": 35,
+    "vrc-fit-boxing": 35,
     "cafe-bar-for-light": 1,
-    "vrc-goita": 17,
-    "vrc-game-world-club": 17,
+    "vrc-goita": 18,
+    "vrc-game-world-club": 18,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
@@ -20,21 +20,9 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 830,
+  "unmatched_events": 807,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "eeb8e68c1c34a47ffadf",
-      "title": "VRCフィットボクシング集会（土曜）",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "0ea6c634032e01172a77",
       "title": "Personally match",
@@ -3533,110 +3521,94 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "2dc0a78cc71d8f736670",
+      "title": "VRCごいた会",
+      "status": "matched",
+      "ontology_id": "vrc-goita",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "70de9e05638042fcb58f",
+      "title": "VRCゲームワールド部 月曜イベント",
+      "status": "matched",
+      "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1124,
+    "event_count": 1102,
     "category_breakdown": {
       "art": 121,
-      "community": 269,
-      "game": 107,
+      "community": 257,
+      "game": 109,
       "language_exchange": 35,
       "learning": 27,
-      "music": 116,
-      "other": 71,
-      "performance": 10,
+      "music": 111,
+      "other": 68,
+      "performance": 9,
       "recruitment_deadline": 6,
-      "technology": 275,
-      "wellness": 70,
+      "technology": 273,
+      "wellness": 69,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 1,
+      "application_deadline": 2,
       "bar": 1,
-      "cafe": 28,
+      "cafe": 27,
       "cast_recruitment": 1,
       "cast_service": 4,
       "class": 2,
-      "dance": 50,
-      "dj": 5,
+      "dance": 48,
+      "dj": 4,
       "engineering": 165,
-      "fitness": 36,
-      "hangout": 67,
+      "fitness": 35,
+      "hangout": 63,
       "language_exchange": 35,
       "lecture": 7,
-      "live_music": 1,
       "mystery": 34,
       "participant_recruitment": 1,
       "photography": 121,
       "quiz": 1,
       "reading": 1,
-      "research": 67,
-      "show": 8,
-      "social": 165,
-      "tabletop": 34,
+      "research": 66,
+      "show": 7,
+      "social": 160,
+      "tabletop": 35,
       "workshop": 10,
       "world_tour": 17
     },
     "event_mode_breakdown": {
       "deadline": 6,
       "hybrid": 4,
-      "in_world": 1110,
+      "in_world": 1088,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 71,
-      "keyword_rules": 535,
-      "legacy_and_keywords": 118,
-      "legacy_category": 123
+      "curated_ontology": 278,
+      "fallback": 68,
+      "keyword_rules": 524,
+      "legacy_and_keywords": 110,
+      "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 111,
-    "audit_event_count": 111
+    "low_confidence_event_count": 108,
+    "audit_event_count": 108
   },
   "category_review_queue": [
-    {
-      "event_id": "2efb19ad224c2261b7e6",
-      "title": "디멘션 허브 ［Dimension Hub］",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "d60c7d949292b987d888",
-      "title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "751e8adab658bad9829b",
-      "title": "三軒立直",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "b444e0f719e8dd62df89",
       "title": "club Focus",
