@@ -13,7 +13,13 @@
     const source = card.querySelector('[data-field="source"]')?.textContent?.trim();
     const paragraph = document.createElement('p');
     paragraph.className = 'why-shown';
-    paragraph.innerHTML = `<strong>この一覧に表示された理由</strong><br>${reason || '選択中の期間・カテゴリ・情報源条件に一致したため表示しています。'}${source ? ` 情報源: ${source}` : ''}。これは公式説明ではなく、収集・分類処理の説明です。`;
+    const heading = document.createElement('strong');
+    heading.textContent = 'この一覧に表示された理由';
+    paragraph.append(
+      heading,
+      document.createElement('br'),
+      `${reason || '選択中の期間・カテゴリ・情報源条件に一致したため表示しています。'}${source ? ` 情報源: ${source}` : ''}。これは公式説明ではなく、収集・分類処理の説明です。`
+    );
     details.prepend(paragraph);
   }
 
