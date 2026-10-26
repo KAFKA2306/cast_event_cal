@@ -1,16 +1,39 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1062,
-  "event_count_after": 1062,
-  "candidate_cluster_count": 0,
-  "duplicate_cluster_count": 0,
-  "duplicate_occurrence_count": 0,
-  "duplicate_post_count": 0,
-  "duplicate_rate": 0.0,
+  "event_count_before": 1230,
+  "event_count_after": 1229,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.000813,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
-  "clusters": [],
+  "clusters": [
+    {
+      "cluster_id": "occ_3e02d62261cfbce56e5e",
+      "starts_at": "2026-11-01T19:00:00Z",
+      "title": "＃ THE WAVE ＃1 Year Anniversary",
+      "member_count": 2,
+      "member_ids": [
+        "db849c28f32a19826d53",
+        "f4da79e81a45ba5fd400"
+      ],
+      "source_record_ids": [
+        "src_58335fc124fa73f1c7d6",
+        "src_67113d9f96b14b67ccb6"
+      ],
+      "sources": [
+        "external_calendar_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_67113d9f96b14b67ccb6"
+    }
+  ],
   "ambiguous_candidates": [
     {
       "left_id": "4afbcacfdff2d2e31807",
@@ -24,105 +47,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "e89baa3ad39fa2dd11f7",
-      "right_id": "f3fc8c74d89474c0703a",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "Cafe Morning Space",
-      "right_organizer": "LafVR Comedy",
-      "similarity": 0.1122,
-      "left_title": "Cafe Morning Space",
-      "right_title": "International Comedy Mic - 18＋"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "29dace05cba9be1efc4f",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "The Madhouse Carnival",
+      "similarity": 0.2043,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "CARNI-TENDO SUNDAYS"
     },
     {
-      "left_id": "e89baa3ad39fa2dd11f7",
-      "right_id": "c9db6d4af887c22951b0",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "Cafe Morning Space",
-      "right_organizer": "Rainbow Library",
-      "similarity": 0.1056,
-      "left_title": "Cafe Morning Space",
-      "right_title": "Rainbow Karaoke"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "0bdd3472dc7e69312afc",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "Worst Group in VR",
+      "similarity": 0.1594,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Free Drunk Dating Advice 18＋"
     },
     {
-      "left_id": "e89baa3ad39fa2dd11f7",
-      "right_id": "31a5eb64212c5cb2bc47",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "Cafe Morning Space",
-      "right_organizer": "CLUB LMNTRIX",
-      "similarity": 0.0403,
-      "left_title": "Cafe Morning Space",
-      "right_title": "Sunday EVENT 10 PM CET 4 PM EST NSFW"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "2aee5911c560b4e20721",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "White Rose Mafia",
+      "similarity": 0.021,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Fun"
     },
     {
-      "left_id": "f3fc8c74d89474c0703a",
-      "right_id": "c9db6d4af887c22951b0",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "LafVR Comedy",
-      "right_organizer": "Rainbow Library",
-      "similarity": 0.2333,
-      "left_title": "International Comedy Mic - 18＋",
-      "right_title": "Rainbow Karaoke"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "f0c15703e71caec0fcaa",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "CnA The Encore",
+      "similarity": 0.1354,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Group Instanceǃǃǃ"
     },
     {
-      "left_id": "f3fc8c74d89474c0703a",
-      "right_id": "31a5eb64212c5cb2bc47",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "LafVR Comedy",
-      "right_organizer": "CLUB LMNTRIX",
-      "similarity": 0.191,
-      "left_title": "International Comedy Mic - 18＋",
-      "right_title": "Sunday EVENT 10 PM CET 4 PM EST NSFW"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "2509e15f6f511fc4b1b7",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "Midnight Madness",
+      "similarity": 0.2141,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Howl-o-ween"
     },
     {
-      "left_id": "c9db6d4af887c22951b0",
-      "right_id": "31a5eb64212c5cb2bc47",
-      "starts_at": "2026-10-25T21:00:00Z",
-      "left_organizer": "Rainbow Library",
-      "right_organizer": "CLUB LMNTRIX",
-      "similarity": 0.1889,
-      "left_title": "Rainbow Karaoke",
-      "right_title": "Sunday EVENT 10 PM CET 4 PM EST NSFW"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "5b8266f6c479a9bc27b9",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "Oasis Church VR",
+      "similarity": 0.2117,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Never Been to Church? Youre Welcome Here․"
     },
     {
-      "left_id": "321655544e2f736950aa",
-      "right_id": "dfe614a502543ba7c84e",
-      "starts_at": "2026-10-25T22:00:00Z",
-      "left_organizer": "Epic Fellowship VR",
-      "right_organizer": "Clownie's Cuties",
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "859d35896b7c778baec4",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "Dumpsterfire",
       "similarity": 0.1905,
-      "left_title": "EPIC Fellowship Sunday Service",
-      "right_title": "Karaoke Nights"
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Pool Hangout"
     },
     {
-      "left_id": "321655544e2f736950aa",
-      "right_id": "73ff9ca1a84bdd841094",
-      "starts_at": "2026-10-25T22:00:00Z",
-      "left_organizer": "Epic Fellowship VR",
-      "right_organizer": "Bucker's Music",
-      "similarity": 0.0833,
-      "left_title": "EPIC Fellowship Sunday Service",
-      "right_title": "Singing Live ＠ Cosy Circle Concerts by Hanseatic Harmonies"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "9cff3097f384c73074b7",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "Forjadores Hispanos",
+      "similarity": 0.2218,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Reunion Dominical de forjadores"
     },
     {
-      "left_id": "dfe614a502543ba7c84e",
-      "right_id": "73ff9ca1a84bdd841094",
-      "starts_at": "2026-10-25T22:00:00Z",
-      "left_organizer": "Clownie's Cuties",
-      "right_organizer": "Bucker's Music",
-      "similarity": 0.2267,
-      "left_title": "Karaoke Nights",
-      "right_title": "Singing Live ＠ Cosy Circle Concerts by Hanseatic Harmonies"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "0478b6ce24ab710762ef",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "UNSC Embers Of Hope",
+      "similarity": 0.1243,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "Server Meeting"
     },
     {
-      "left_id": "82916d8069fa4120483d",
-      "right_id": "85115dfa7caba787647c",
-      "starts_at": "2026-10-26T01:00:00Z",
-      "left_organizer": "CLUB SIREN",
-      "right_organizer": "The Synapse",
-      "similarity": 0.2581,
-      "left_title": "DESIRE AFTER DARK",
-      "right_title": "Game Nightǃ"
+      "left_id": "b436a82e7306a03d519c",
+      "right_id": "3c50279b70c669ee8c3b",
+      "starts_at": "2026-10-26T00:00:00Z",
+      "left_organizer": "Respiteful Friends",
+      "right_organizer": "SYN",
+      "similarity": 0.1947,
+      "left_title": "Cafe Fishingǃ",
+      "right_title": "SINFUL SUNDAY"
     }
   ],
-  "generated_at": "2026-10-26T19:16:47Z"
+  "generated_at": "2026-10-26T23:09:31Z"
 }
