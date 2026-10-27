@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1169,
-  "event_count_after": 1168,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.000855,
+  "event_count_before": 1156,
+  "event_count_after": 1154,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.00173,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
@@ -32,6 +32,28 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_67113d9f96b14b67ccb6"
+    },
+    {
+      "cluster_id": "occ_7ce514e258d96d01028b",
+      "starts_at": "2026-11-03T13:00:00Z",
+      "title": "🐾キャストオフショット🐾 VRC ユーザ名：「Ruri834」 @vr_ruri834 #ルーアファミー は毎月第1,第3火曜日、22:00-23:00で開店しております。 次回 営業 日は1…",
+      "member_count": 2,
+      "member_ids": [
+        "444a0318062d871412d4",
+        "4b26ca03220b10e815a3"
+      ],
+      "source_record_ids": [
+        "src_3eee4d341f6be55f7d11",
+        "src_efba2cdf3e43436be65e"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_efba2cdf3e43436be65e"
     }
   ],
   "ambiguous_candidates": [
@@ -46,66 +68,6 @@
     }
   ],
   "negative_samples": [
-    {
-      "left_id": "11232df29faed1bb169b",
-      "right_id": "cca4f3775961565509ff",
-      "starts_at": "2026-10-26T02:30:00Z",
-      "left_organizer": "Los Angeles Police Department",
-      "right_organizer": "Furcore",
-      "similarity": 0.1554,
-      "left_title": "Recruitment",
-      "right_title": "Sunday Night Karaoke Nightǃ"
-    },
-    {
-      "left_id": "f8d49c4112d31ef6ea38",
-      "right_id": "ee7185575e817e078519",
-      "starts_at": "2026-10-26T03:00:00Z",
-      "left_organizer": "PHAT KAT FAM",
-      "right_organizer": "Brown Dog Society",
-      "similarity": 0.1036,
-      "left_title": "Baddies Sunday",
-      "right_title": "Brown Dog Game Night"
-    },
-    {
-      "left_id": "f8d49c4112d31ef6ea38",
-      "right_id": "d7c273bda75ae1cf62b6",
-      "starts_at": "2026-10-26T03:00:00Z",
-      "left_organizer": "PHAT KAT FAM",
-      "right_organizer": "Card Game Connoisseurs",
-      "similarity": 0.0657,
-      "left_title": "Baddies Sunday",
-      "right_title": "Four Days of Fall Day Four"
-    },
-    {
-      "left_id": "ee7185575e817e078519",
-      "right_id": "d7c273bda75ae1cf62b6",
-      "starts_at": "2026-10-26T03:00:00Z",
-      "left_organizer": "Brown Dog Society",
-      "right_organizer": "Card Game Connoisseurs",
-      "similarity": 0.163,
-      "left_title": "Brown Dog Game Night",
-      "right_title": "Four Days of Fall Day Four"
-    },
-    {
-      "left_id": "bbd014e2c86649cd4a3a",
-      "right_id": "16521d1fe709f3c329e8",
-      "starts_at": "2026-10-26T04:00:00Z",
-      "left_organizer": "Avatar Search World Balancer",
-      "right_organizer": "Radiant Gaming",
-      "similarity": 0.1341,
-      "left_title": "Come join us for a game․",
-      "right_title": "Game Day"
-    },
-    {
-      "left_id": "1bec833cff0e47ebac87",
-      "right_id": "c6d061c03b0aeca7ca47",
-      "starts_at": "2026-10-26T05:00:00Z",
-      "left_organizer": "BENDY",
-      "right_organizer": "Nightmare Nexus",
-      "similarity": 0.1558,
-      "left_title": "Bendy and the Ink Machine Chapter 5 Anniversaryǃ",
-      "right_title": "SlashCo Sunday"
-    },
     {
       "left_id": "20d0b56eea65ceedf426",
       "right_id": "522ee96b294bdb7b551a",
@@ -145,7 +107,67 @@
       "similarity": 0.0,
       "left_title": "【20˸30 or 20˸45~】ハロウィンワールドでソーラン節ǃ【15分エクササイズ】",
       "right_title": "디멘션 허브 ［Dimension Hub］"
+    },
+    {
+      "left_id": "1c23f96ac6e5f6eb575f",
+      "right_id": "af5f549da34645eaa25e",
+      "starts_at": "2026-10-26T11:30:00Z",
+      "left_organizer": "ぶいトレ",
+      "right_organizer": "Dimension Hub",
+      "similarity": 0.0,
+      "left_title": "ちょいトレ・がちトレ",
+      "right_title": "디멘션 허브 ［Dimension Hub］"
+    },
+    {
+      "left_id": "8bd453c93b32fc71e186",
+      "right_id": "5b870ee34170b82d42bb",
+      "starts_at": "2026-10-26T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "C9ue - Billiards and Bar",
+      "similarity": 0.0474,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "BilliardsBAR『C9ue』"
+    },
+    {
+      "left_id": "8bd453c93b32fc71e186",
+      "right_id": "f3b915274a6bb1967956",
+      "starts_at": "2026-10-26T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "VRCごいた会",
+      "similarity": 0.0,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "VRCごいた会"
+    },
+    {
+      "left_id": "8bd453c93b32fc71e186",
+      "right_id": "ae45192ab7517c561d5c",
+      "starts_at": "2026-10-26T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "VRCゲームワールド部",
+      "similarity": 0.0128,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "VRCゲームワールド部 月曜イベント"
+    },
+    {
+      "left_id": "8bd453c93b32fc71e186",
+      "right_id": "e454eda0ab3a3648444e",
+      "starts_at": "2026-10-26T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "VRCフィットボクシング集会"
+    },
+    {
+      "left_id": "8bd453c93b32fc71e186",
+      "right_id": "3258c33a5e2f87c10726",
+      "starts_at": "2026-10-26T12:00:00Z",
+      "left_organizer": "吃书兽读书会",
+      "right_organizer": "【女性限定メイドカフェ】Lilly à la mode（りりあら）",
+      "similarity": 0.0,
+      "left_title": "5月23日⁄本周六 晚上八点 读书会活动主题【摇滚 ⁄ 重金属】",
+      "right_title": "【時短営業】Lilly à la mode"
     }
   ],
-  "generated_at": "2026-10-27T02:03:47Z"
+  "generated_at": "2026-10-27T07:48:10Z"
 }
