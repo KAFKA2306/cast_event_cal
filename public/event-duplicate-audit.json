@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1145,
-  "event_count_after": 1144,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.000873,
+  "event_count_before": 1124,
+  "event_count_after": 1122,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.001779,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 2,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_3e02d62261cfbce56e5e",
@@ -32,18 +32,31 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_67113d9f96b14b67ccb6"
+    },
+    {
+      "cluster_id": "occ_7ce514e258d96d01028b",
+      "starts_at": "2026-11-03T13:00:00Z",
+      "title": "🐾キャストオフショット🐾 VRC ユーザ名：「Ruri834」 @vr_ruri834 #ルーアファミー は毎月第1,第3 火曜日 、22:00-23:00で開店しております。 次回営業日は1…",
+      "member_count": 2,
+      "member_ids": [
+        "444a0318062d871412d4",
+        "4b26ca03220b10e815a3"
+      ],
+      "source_record_ids": [
+        "src_3eee4d341f6be55f7d11",
+        "src_efba2cdf3e43436be65e"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_efba2cdf3e43436be65e"
     }
   ],
   "ambiguous_candidates": [
-    {
-      "left_id": "b8bfa3937d1706058e6d",
-      "right_id": "1029eb8677024f95663b",
-      "starts_at": "2026-10-28T12:45:00Z",
-      "organizer": "@WAROSTUDIOGAMES",
-      "similarity": 0.7119,
-      "left_title": "VRChatイベント 「お屋敷で迷子に！？真夜中のキャッスルゅかみかハロウィン ライブ 2026」 開始 します！(USWサーバーでの 開催 です) #ゅかみか # VRChat #JPTOW…",
-      "right_title": "本日VRChatイベント 「お屋敷で迷子に！？真夜中のキャッスルゅかみかハロウィン ライブ 2026」あります！ ぜひお越しください！ 21:45 開場 JPTOWNのpublicインスタンス…"
-    },
     {
       "left_id": "4afbcacfdff2d2e31807",
       "right_id": "b38905db5094d6653297",
@@ -56,105 +69,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "bce1b7f35a594279b6b1",
-      "right_id": "a2dc2c9c558395259a58",
-      "starts_at": "2026-10-27T12:50:00Z",
-      "left_organizer": "絵本の平行世界",
-      "right_organizer": "S P E A K U P",
-      "similarity": 0.0305,
-      "left_title": "絵本の平行世界 第27回 第1部",
-      "right_title": "잠시후 10시ǃǃ 제13회 펭귄바 X 스피크업 콜라보 9월 음악 콘서트"
+      "left_id": "4ba6e48a657ba4c850bb",
+      "right_id": "831cd0f9286a163609e8",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "The Cyber Harem",
+      "right_organizer": "VRDancing",
+      "similarity": 0.2991,
+      "left_title": "Dance Event~",
+      "right_title": "Dance Week - EU"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "45300eb1ec4442854c0c",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": null,
-      "similarity": 0.1199,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "VRChat.rb"
+      "left_id": "4ba6e48a657ba4c850bb",
+      "right_id": "93198a604758ee51dceb",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "The Cyber Harem",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.1043,
+      "left_title": "Dance Event~",
+      "right_title": "The Autistic Circus"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "7378a47e56a0052b8508",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "u_n_room by inu_noyo1",
-      "similarity": 0.0602,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "【定期ライブ】＃ゆーえぬるーむ"
+      "left_id": "4ba6e48a657ba4c850bb",
+      "right_id": "4816a857a665cd0173d1",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "The Cyber Harem",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.04,
+      "left_title": "Dance Event~",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "f6684a21509fa9087138",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "@yumevrchat",
-      "similarity": 0.119,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "とうとう 本日 です💄✨ VRC 美肌部の協賛企業でもある #ダイアナシューズ さんの靴で、気合いを入れて登壇させていただきます👠🤍 今夜 22時〜、 VRC 美肌部 グループインスタンス に…"
+      "left_id": "831cd0f9286a163609e8",
+      "right_id": "93198a604758ee51dceb",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "The Autistic Circus",
+      "similarity": 0.2079,
+      "left_title": "Dance Week - EU",
+      "right_title": "The Autistic Circus"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "7bf5d10db77bc810e259",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "めるぷらむ",
-      "similarity": 0.1896,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "めるぷらむハロウィン！"
+      "left_id": "831cd0f9286a163609e8",
+      "right_id": "4816a857a665cd0173d1",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0114,
+      "left_title": "Dance Week - EU",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "db20e327ec0dbcd2731a",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "CASINO LUお客様用グループ",
-      "similarity": 0.1354,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "カジノLU【ハロウィン特別営業】"
+      "left_id": "93198a604758ee51dceb",
+      "right_id": "4816a857a665cd0173d1",
+      "starts_at": "2026-10-27T19:00:00Z",
+      "left_organizer": "The Autistic Circus",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.0123,
+      "left_title": "The Autistic Circus",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "c2c0aedb410aeb562bee",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "MOKURI Project",
-      "similarity": 0.0493,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "公式モクリ集会！ Official Mokuri Meetupǃ"
+      "left_id": "6940a3ee738561f77b21",
+      "right_id": "5dac19f592ec0d32d353",
+      "starts_at": "2026-10-27T20:00:00Z",
+      "left_organizer": "old_Dragon Sets",
+      "right_organizer": "Greater Maldrood",
+      "similarity": 0.1545,
+      "left_title": "Dance Trance Tuesday - by Old Dragon",
+      "right_title": "ENFORCER TRAINING （other branches welcome）"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "10ddd963d74c609a3430",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "ボカロソングアバター集会",
-      "similarity": 0.0819,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "第39回ボカロソングアバター集会"
+      "left_id": "6940a3ee738561f77b21",
+      "right_id": "dd84de8e0772195e0f79",
+      "starts_at": "2026-10-27T20:00:00Z",
+      "left_organizer": "old_Dragon Sets",
+      "right_organizer": "Trans",
+      "similarity": 0.1932,
+      "left_title": "Dance Trance Tuesday - by Old Dragon",
+      "right_title": "（CANCELLED） Voice Office Hours w⁄ Prof․ Jessa"
     },
     {
-      "left_id": "32023f0f54aac0451df8",
-      "right_id": "ac71b55ab99c40544ed1",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": "メンズボイチェン交流バー「Boyce」",
-      "right_organizer": "手掴み酒場まる連",
-      "similarity": 0.0702,
-      "left_title": "10⁄27 Boyce営業日【ハロウィン営業】",
-      "right_title": "第57営業回"
+      "left_id": "5dac19f592ec0d32d353",
+      "right_id": "dd84de8e0772195e0f79",
+      "starts_at": "2026-10-27T20:00:00Z",
+      "left_organizer": "Greater Maldrood",
+      "right_organizer": "Trans",
+      "similarity": 0.1257,
+      "left_title": "ENFORCER TRAINING （other branches welcome）",
+      "right_title": "（CANCELLED） Voice Office Hours w⁄ Prof․ Jessa"
     },
     {
-      "left_id": "45300eb1ec4442854c0c",
-      "right_id": "7378a47e56a0052b8508",
-      "starts_at": "2026-10-27T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "u_n_room by inu_noyo1",
-      "similarity": 0.0,
-      "left_title": "VRChat.rb",
-      "right_title": "【定期ライブ】＃ゆーえぬるーむ"
+      "left_id": "62d13527032e6a18811c",
+      "right_id": "6b5151f485a0a6718712",
+      "starts_at": "2026-10-27T21:00:00Z",
+      "left_organizer": "Cafe Morning Space",
+      "right_organizer": "WCFR",
+      "similarity": 0.1507,
+      "left_title": "Cafe Morning Space",
+      "right_title": "THE COURT IS SO ON"
     }
   ],
-  "generated_at": "2026-10-28T12:47:11Z"
+  "generated_at": "2026-10-28T18:50:57Z"
 }
