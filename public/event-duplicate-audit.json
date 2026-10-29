@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1241,
-  "event_count_after": 1238,
+  "event_count_before": 1231,
+  "event_count_after": 1228,
   "candidate_cluster_count": 3,
   "duplicate_cluster_count": 3,
   "duplicate_occurrence_count": 3,
   "duplicate_post_count": 3,
-  "duplicate_rate": 0.002417,
+  "duplicate_rate": 0.002437,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 3,
+  "unresolved_ambiguous_cluster_count": 6,
   "clusters": [
     {
       "cluster_id": "occ_3e02d62261cfbce56e5e",
@@ -56,29 +56,56 @@
       "representative_source_record_id": "src_62185d7f9eb9f224257b"
     },
     {
-      "cluster_id": "occ_7ce514e258d96d01028b",
-      "starts_at": "2026-11-03T13:00:00Z",
-      "title": "🐾キャストオフショット🐾 VRC ユーザ名：「Ruri834」 @vr_ruri834 #ルーアファミー は毎月第1,第3 火曜日 、22:00-23:00で開店しております。 次回営業日は1…",
+      "cluster_id": "occ_c730d646a4e980537c96",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
       "member_count": 2,
       "member_ids": [
-        "444a0318062d871412d4",
-        "4b26ca03220b10e815a3"
+        "067964993c369637af2d",
+        "feb585a04b71cf8ef781"
       ],
       "source_record_ids": [
-        "src_3eee4d341f6be55f7d11",
-        "src_efba2cdf3e43436be65e"
+        "src_503e687891aa54dc64d8",
+        "src_b78b8a0c7133ae460fc6"
       ],
       "sources": [
         "yahoo_realtime_events"
       ],
       "reasons": [
-        "same_canonical_url"
+        "same_organizer_same_start_high_similarity"
       ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_efba2cdf3e43436be65e"
+      "confidence": 0.94,
+      "representative_source_record_id": "src_503e687891aa54dc64d8"
     }
   ],
   "ambiguous_candidates": [
+    {
+      "left_id": "c06f331b50dd49f8b9dd",
+      "right_id": "9c931ce4e09a96a379e6",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "organizer": "@asamurakou",
+      "similarity": 0.6154,
+      "left_title": "VRC 滋賀県 集会 いよいよ 明日 です！ グループ+にて開きますので登録の方よろしくお願いいたします！ https://t.co/87egCQiw96 # VRChatイベント #バーチャ…",
+      "right_title": "第一回 VRC 滋賀県 集会 本日 21時から 開始 ！ 第一回なので色々ぐだぐだになりそうですが、県民も滋賀に興味がある方もどんな方でもお気軽に！ グループ+で開きますので、グループへの 参…"
+    },
+    {
+      "left_id": "067964993c369637af2d",
+      "right_id": "b38905db5094d6653297",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.6867,
+      "left_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
+      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
+    },
+    {
+      "left_id": "4afbcacfdff2d2e31807",
+      "right_id": "067964993c369637af2d",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.6552,
+      "left_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…",
+      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
+    },
     {
       "left_id": "4afbcacfdff2d2e31807",
       "right_id": "b38905db5094d6653297",
@@ -109,105 +136,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "89dc6d152417b4001732",
-      "right_id": "829cc125586cbb101da3",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@VRC_nayameeting",
-      "similarity": 0.1322,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：safim -サフ…",
-      "right_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第86回は10月28日(水) 『21:00〜22:30』 ※当イベント…"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "6737923636930491cbf2",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "The Eye Of Veritas",
+      "similarity": 0.2586,
+      "left_title": "Dance Week - NA",
+      "right_title": "Educational Expedition"
     },
     {
-      "left_id": "89dc6d152417b4001732",
-      "right_id": "8a59be7e33dea47ccb15",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "ゆるゲMEET",
-      "similarity": 0.1,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：safim -サフ…",
-      "right_title": "ゆるゲMEET定期開催日"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "35b77b20e978a8cc101a",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "El Alba",
+      "similarity": 0.1317,
+      "left_title": "Dance Week - NA",
+      "right_title": "El Alba Wednesday Activities"
     },
     {
-      "left_id": "89dc6d152417b4001732",
-      "right_id": "32c2bbd6d2e32f297d42",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": null,
-      "similarity": 0.1056,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：safim -サフ…",
-      "right_title": "怪し火定例会「いろりばたの会」"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "0fa6c45fb407f5b8611e",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "NYFursVR",
+      "similarity": 0.179,
+      "left_title": "Dance Week - NA",
+      "right_title": "FoNY Game Nightsǃ"
     },
     {
-      "left_id": "89dc6d152417b4001732",
-      "right_id": "b1d6c6f9be070044a2ed",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "水曜Quest初心者の集い",
-      "similarity": 0.104,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：safim -サフ…",
-      "right_title": "水曜Quest初心者の集い"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "20a4f776d761fdf6e0df",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "White Rose Mafia",
+      "similarity": 0.0159,
+      "left_title": "Dance Week - NA",
+      "right_title": "Fun"
     },
     {
-      "left_id": "89dc6d152417b4001732",
-      "right_id": "ff3f1632539c5f0d1cfb",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "謎めぐり",
-      "similarity": 0.075,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join join 先：safim -サフ…",
-      "right_title": "謎めぐり"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "b2e8962f350d685f1b41",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "CnA The Encore",
+      "similarity": 0.1697,
+      "left_title": "Dance Week - NA",
+      "right_title": "Group Instanceǃǃǃ"
     },
     {
-      "left_id": "829cc125586cbb101da3",
-      "right_id": "8a59be7e33dea47ccb15",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": "ゆるゲMEET",
-      "similarity": 0.0576,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第86回は10月28日(水) 『21:00〜22:30』 ※当イベント…",
-      "right_title": "ゆるゲMEET定期開催日"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "167bf75a4bd87c99a9af",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "ANIME NEXUS",
+      "similarity": 0.2222,
+      "left_title": "Dance Week - NA",
+      "right_title": "HALLOWEEN PARTY"
     },
     {
-      "left_id": "829cc125586cbb101da3",
-      "right_id": "32c2bbd6d2e32f297d42",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": null,
-      "similarity": 0.1495,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第86回は10月28日(水) 『21:00〜22:30』 ※当イベント…",
-      "right_title": "怪し火定例会「いろりばたの会」"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "6e8ed9dc1a9c80572dd2",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "The Mighty Gym",
+      "similarity": 0.1953,
+      "left_title": "Dance Week - NA",
+      "right_title": "Halloween Workout Adventureǃ （NA Showtime）"
     },
     {
-      "left_id": "829cc125586cbb101da3",
-      "right_id": "b1d6c6f9be070044a2ed",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": "水曜Quest初心者の集い",
-      "similarity": 0.0465,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第86回は10月28日(水) 『21:00〜22:30』 ※当イベント…",
-      "right_title": "水曜Quest初心者の集い"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "d3ac4a0aa2e33d28aad9",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "Midnight Madness",
+      "similarity": 0.239,
+      "left_title": "Dance Week - NA",
+      "right_title": "Howl-o-ween"
     },
     {
-      "left_id": "829cc125586cbb101da3",
-      "right_id": "ff3f1632539c5f0d1cfb",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "@VRC_nayameeting",
-      "right_organizer": "謎めぐり",
-      "similarity": 0.1006,
-      "left_title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第86回は10月28日(水) 『21:00〜22:30』 ※当イベント…",
-      "right_title": "謎めぐり"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "af2b50af602a362b40e4",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "SYN",
+      "similarity": 0.2043,
+      "left_title": "Dance Week - NA",
+      "right_title": "LADIES NIGHT"
     },
     {
-      "left_id": "8a59be7e33dea47ccb15",
-      "right_id": "32c2bbd6d2e32f297d42",
-      "starts_at": "2026-10-28T12:00:00Z",
-      "left_organizer": "ゆるゲMEET",
-      "right_organizer": null,
-      "similarity": 0.0513,
-      "left_title": "ゆるゲMEET定期開催日",
-      "right_title": "怪し火定例会「いろりばたの会」"
+      "left_id": "fd11805279567e4704b6",
+      "right_id": "d1acfbcd2684e1beb265",
+      "starts_at": "2026-10-29T00:00:00Z",
+      "left_organizer": "VRDancing",
+      "right_organizer": "Unknown Theater",
+      "similarity": 0.2112,
+      "left_title": "Dance Week - NA",
+      "right_title": "Live Loops （Music Performance）"
     }
   ],
-  "generated_at": "2026-10-29T09:53:38Z"
+  "generated_at": "2026-10-29T16:55:36Z"
 }
