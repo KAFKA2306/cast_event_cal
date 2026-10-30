@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1176,
-  "event_count_after": 1173,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
+  "event_count_before": 1225,
+  "event_count_after": 1222,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
   "duplicate_occurrence_count": 3,
   "duplicate_post_count": 3,
-  "duplicate_rate": 0.002551,
+  "duplicate_rate": 0.002449,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 9,
+  "unresolved_ambiguous_cluster_count": 14,
   "clusters": [
     {
       "cluster_id": "occ_3e02d62261cfbce56e5e",
@@ -34,39 +34,19 @@
       "representative_source_record_id": "src_67113d9f96b14b67ccb6"
     },
     {
-      "cluster_id": "occ_7a7aa0deef380129dc98",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "title": "Club Immortal",
-      "member_count": 2,
-      "member_ids": [
-        "c412f829090fd7d79bd0",
-        "ce6e1430798768244abf"
-      ],
-      "source_record_ids": [
-        "src_047de12c1f4a08347c53",
-        "src_62185d7f9eb9f224257b"
-      ],
-      "sources": [
-        "external_calendar_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_62185d7f9eb9f224257b"
-    },
-    {
-      "cluster_id": "occ_c730d646a4e980537c96",
+      "cluster_id": "occ_3f9e34a15eba8e26bad7",
       "starts_at": "2026-10-30T12:50:00Z",
       "title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
-      "member_count": 2,
+      "member_count": 3,
       "member_ids": [
         "067964993c369637af2d",
+        "14ce28bf971192807cb8",
         "feb585a04b71cf8ef781"
       ],
       "source_record_ids": [
         "src_503e687891aa54dc64d8",
-        "src_b78b8a0c7133ae460fc6"
+        "src_b78b8a0c7133ae460fc6",
+        "src_cfd4c45f4dcaacb59fc1"
       ],
       "sources": [
         "yahoo_realtime_events"
@@ -74,7 +54,7 @@
       "reasons": [
         "same_organizer_same_start_high_similarity"
       ],
-      "confidence": 0.94,
+      "confidence": 0.9291,
       "representative_source_record_id": "src_503e687891aa54dc64d8"
     }
   ],
@@ -86,6 +66,42 @@
       "organizer": "@VrcYss",
       "similarity": 0.6867,
       "left_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
+      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
+    },
+    {
+      "left_id": "14ce28bf971192807cb8",
+      "right_id": "067964993c369637af2d",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.693,
+      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
+      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
+    },
+    {
+      "left_id": "14ce28bf971192807cb8",
+      "right_id": "2c8fb8a3827958fafaca",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.4793,
+      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
+      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
+    },
+    {
+      "left_id": "14ce28bf971192807cb8",
+      "right_id": "4afbcacfdff2d2e31807",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.5726,
+      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
+      "right_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…"
+    },
+    {
+      "left_id": "14ce28bf971192807cb8",
+      "right_id": "b38905db5094d6653297",
+      "starts_at": "2026-10-30T12:50:00Z",
+      "organizer": "@VrcYss",
+      "similarity": 0.5872,
+      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
       "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
     },
     {
@@ -159,109 +175,118 @@
       "similarity": 0.6043,
       "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
       "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
+    },
+    {
+      "left_id": "c9e18023d974094091a1",
+      "right_id": "fe3af7e1af9aae154d7c",
+      "starts_at": "2026-10-30T21:00:00Z",
+      "organizer": "Projekt Community",
+      "similarity": 0.6438,
+      "left_title": "HorrorCon Monster Bash Day One",
+      "right_title": "Monster Bash - HorrorCon Day 1"
     }
   ],
   "negative_samples": [
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "ce6e1430798768244abf",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "similarity": 0.1021,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "Club Immortal"
+      "left_id": "5f3762c219e1b155026f",
+      "right_id": "5678239fb83ab2544beb",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": "VRC初心者ワールドツアー",
+      "right_organizer": "@VRC_kiokubu",
+      "similarity": 0.1124,
+      "left_title": "VRC初心者ワールドツアー",
+      "right_title": "【次回 定期会のお知らせ】 開催日時 :2026年10月29日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…"
     },
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "0e17f271329096447d6c",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "Club Eclipse",
-      "similarity": 0.1119,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "Dance Event"
+      "left_id": "5f3762c219e1b155026f",
+      "right_id": "4da360fa5bde85ba3afa",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": "VRC初心者ワールドツアー",
+      "right_organizer": null,
+      "similarity": 0.0656,
+      "left_title": "VRC初心者ワールドツアー",
+      "right_title": "データサイエンティスト集会"
     },
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "a60fb1a74e72b3e0cd7d",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "PHAT KAT FAM",
-      "similarity": 0.1128,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "El Reggaeton Room Hours"
+      "left_id": "5f3762c219e1b155026f",
+      "right_id": "9c931ce4e09a96a379e6",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": "VRC初心者ワールドツアー",
+      "right_organizer": "@asamurakou",
+      "similarity": 0.1154,
+      "left_title": "VRC初心者ワールドツアー",
+      "right_title": "第一回 VRC 滋賀県 集会 本日 21時から 開始 ！ 第一回なので色々ぐだぐだになりそうですが、県民も滋賀に興味がある方もどんな方でもお気軽に！ グループ+で開きますので、グループへの 参…"
     },
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "c412f829090fd7d79bd0",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "similarity": 0.1043,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "Gotholica"
+      "left_id": "5678239fb83ab2544beb",
+      "right_id": "4da360fa5bde85ba3afa",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": "@VRC_kiokubu",
+      "right_organizer": null,
+      "similarity": 0.1629,
+      "left_title": "【次回 定期会のお知らせ】 開催日時 :2026年10月29日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
+      "right_title": "データサイエンティスト集会"
     },
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "c38bb50bd0adde532167",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "MetaBoo",
-      "similarity": 0.2344,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "MetaBoo Midweek Mixers"
+      "left_id": "5678239fb83ab2544beb",
+      "right_id": "9c931ce4e09a96a379e6",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": "@VRC_kiokubu",
+      "right_organizer": "@asamurakou",
+      "similarity": 0.1508,
+      "left_title": "【次回 定期会のお知らせ】 開催日時 :2026年10月29日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
+      "right_title": "第一回 VRC 滋賀県 集会 本日 21時から 開始 ！ 第一回なので色々ぐだぐだになりそうですが、県民も滋賀に興味がある方もどんな方でもお気軽に！ グループ+で開きますので、グループへの 参…"
     },
     {
-      "left_id": "680da5213d2e45fb939f",
-      "right_id": "a994c970054d0b238116",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Failed To Render Comedy Club",
-      "right_organizer": "Maple Paws",
-      "similarity": 0.1233,
-      "left_title": "Bomb Voyage - A Virtual Reality Comedy Show （18＋）",
-      "right_title": "Weekly Game Nightǃ （Game to be Announced）"
+      "left_id": "4da360fa5bde85ba3afa",
+      "right_id": "9c931ce4e09a96a379e6",
+      "starts_at": "2026-10-29T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@asamurakou",
+      "similarity": 0.0676,
+      "left_title": "データサイエンティスト集会",
+      "right_title": "第一回 VRC 滋賀県 集会 本日 21時から 開始 ！ 第一回なので色々ぐだぐだになりそうですが、県民も滋賀に興味がある方もどんな方でもお気軽に！ グループ+で開きますので、グループへの 参…"
     },
     {
-      "left_id": "ce6e1430798768244abf",
-      "right_id": "0e17f271329096447d6c",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "right_organizer": "Club Eclipse",
-      "similarity": 0.2424,
-      "left_title": "Club Immortal",
-      "right_title": "Dance Event"
+      "left_id": "2d0007f4ec43551e16ae",
+      "right_id": "745809df376c6d3300a7",
+      "starts_at": "2026-10-29T13:00:00Z",
+      "left_organizer": "@KitsunekotanVrc",
+      "right_organizer": "@H4w6pmFUyO1u3IO",
+      "similarity": 0.1105,
+      "left_title": "VRChatイベント 「休憩処 キツネコタン」 10/29(木) 22:00～23:00 開店します 🦊 ハロウィン...なんていうのはなかった... 通常通りの 営業 です！ ご来店お待ちし…",
+      "right_title": "本日10月29日の22時頃から VRC 新宿駅で路上ライブをやります！今月最後の 木曜日 、ぜひ聴きにきてくださーい☺️ 時間になったら私にjoin！フレンド申請も歓迎です！ #Moonlit…"
     },
     {
-      "left_id": "ce6e1430798768244abf",
-      "right_id": "a60fb1a74e72b3e0cd7d",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "right_organizer": "PHAT KAT FAM",
-      "similarity": 0.1773,
-      "left_title": "Club Immortal",
-      "right_title": "El Reggaeton Room Hours"
+      "left_id": "03fb694dc2dde3709212",
+      "right_id": "2b36fb79a852ad3e6036",
+      "starts_at": "2026-10-29T19:00:00Z",
+      "left_organizer": "@voisism_vrc",
+      "right_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "similarity": 0.1412,
+      "left_title": "【 VRChat イベント情報】 ✝️Secret Wisper✝️ 🎃コスプレハロウィンナイト 開催決定 👻 配信者とお話や写真が撮れちゃう✨️✨️ 応募方法 RP&等アカウントフォローして…",
+      "right_title": "おはよう！朝4時に何してるんだぃ？"
     },
     {
-      "left_id": "ce6e1430798768244abf",
-      "right_id": "c38bb50bd0adde532167",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "right_organizer": "MetaBoo",
-      "similarity": 0.1678,
-      "left_title": "Club Immortal",
-      "right_title": "MetaBoo Midweek Mixers"
+      "left_id": "271fca1cce8cf395b6fc",
+      "right_id": "8ea7e59b55391f1dcf9e",
+      "starts_at": "2026-10-30T00:00:00Z",
+      "left_organizer": "TrüBlüCrü",
+      "right_organizer": "BynniGroup",
+      "similarity": 0.0451,
+      "left_title": "Bass Therapy Thursday 78",
+      "right_title": "Bynni ＠ MidPoint"
     },
     {
-      "left_id": "ce6e1430798768244abf",
-      "right_id": "a994c970054d0b238116",
-      "starts_at": "2026-10-29T02:00:00Z",
-      "left_organizer": "Shiki ღ ᴅᴀɴᴄᴇʀ ғᴀɴᴀᴛɪᴄs",
-      "right_organizer": "Maple Paws",
-      "similarity": 0.0571,
-      "left_title": "Club Immortal",
-      "right_title": "Weekly Game Nightǃ （Game to be Announced）"
+      "left_id": "271fca1cce8cf395b6fc",
+      "right_id": "d0f90baddd90495cab8d",
+      "starts_at": "2026-10-30T00:00:00Z",
+      "left_organizer": "TrüBlüCrü",
+      "right_organizer": "VRDancing",
+      "similarity": 0.1535,
+      "left_title": "Bass Therapy Thursday 78",
+      "right_title": "Dance Week - NA"
     }
   ],
-  "generated_at": "2026-10-30T01:57:45Z"
+  "generated_at": "2026-10-30T08:36:18Z"
 }
