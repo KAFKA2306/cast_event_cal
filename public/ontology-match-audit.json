@@ -2,38 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1222,
-  "matched_events": 294,
+  "event_count": 1258,
+  "matched_events": 295,
   "matched_series": {
-    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 36,
     "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 35,
-    "vrc-fit-boxing": 34,
-    "personally-match": 17,
+    "vrc-fit-boxing": 35,
+    "personally-match": 18,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
-    "vrc-idle-gathering": 17
+    "vrc-idle-gathering": 17,
+    "vrc-beginner-world-tour": 17
   },
-  "unmatched_events": 928,
+  "unmatched_events": 963,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "5f3762c219e1b155026f",
-      "title": "VRC初心者ワールドツアー",
-      "status": "matched",
-      "ontology_id": "vrc-beginner-world-tour",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "9888338a738178eb90dc",
       "title": "ASMR集会 初心者説明会",
@@ -3532,88 +3520,98 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "10bc1eebc3069f9db76e",
+      "title": "VRCフィットボクシング集会（土曜）",
+      "status": "matched",
+      "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "5497cb77fb01e6ba9a22",
+      "title": "Personally match",
+      "status": "matched",
+      "ontology_id": "personally-match",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1222,
+    "event_count": 1258,
     "category_breakdown": {
-      "art": 122,
-      "community": 282,
-      "game": 121,
+      "art": 123,
+      "community": 302,
+      "game": 120,
       "language_exchange": 35,
       "learning": 27,
-      "music": 145,
-      "other": 98,
-      "performance": 23,
-      "recruitment_deadline": 8,
-      "technology": 275,
-      "wellness": 68,
+      "music": 150,
+      "other": 107,
+      "performance": 24,
+      "recruitment_deadline": 4,
+      "technology": 279,
+      "wellness": 69,
       "world_tour": 18
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 1,
       "bar": 2,
-      "cafe": 34,
-      "cast_recruitment": 1,
-      "cast_service": 5,
-      "class": 4,
+      "cafe": 38,
+      "cast_service": 7,
+      "class": 5,
       "competition": 1,
-      "dance": 62,
-      "dj": 2,
-      "engineering": 166,
-      "fitness": 34,
-      "hangout": 68,
+      "dance": 64,
+      "dj": 4,
+      "engineering": 169,
+      "fitness": 35,
+      "hangout": 75,
       "language_exchange": 35,
-      "lecture": 5,
+      "lecture": 4,
       "live_music": 2,
-      "mystery": 35,
+      "mystery": 34,
       "orientation": 1,
-      "participant_recruitment": 2,
+      "participant_recruitment": 1,
       "photography": 121,
+      "reading": 1,
       "research": 66,
       "show": 21,
-      "social": 157,
+      "social": 163,
       "tabletop": 37,
       "theater": 1,
       "workshop": 9,
       "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 8,
-      "hybrid": 9,
-      "in_world": 1201,
+      "deadline": 4,
+      "hybrid": 12,
+      "in_world": 1238,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 276,
-      "fallback": 98,
-      "keyword_rules": 572,
-      "legacy_and_keywords": 137,
+      "curated_ontology": 278,
+      "fallback": 107,
+      "keyword_rules": 600,
+      "legacy_and_keywords": 134,
       "legacy_category": 139
     },
     "organizer_profile_count": 22,
-    "low_confidence_event_count": 144,
-    "audit_event_count": 144
+    "low_confidence_event_count": 152,
+    "audit_event_count": 152
   },
   "category_review_queue": [
     {
-      "event_id": "5678239fb83ab2544beb",
-      "title": "【次回 定期会のお知らせ】 開催日時 :2026年10月29日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "2d0007f4ec43551e16ae",
-      "title": "VRChatイベント 「休憩処 キツネコタン」 10/29(木) 22:00～23:00 開店します 🦊 ハロウィン...なんていうのはなかった... 通常通りの 営業 です！ ご来店お待ちし…",
+      "event_id": "e240bff5f5a9d4a4b7f3",
+      "title": "📢メタ フェス 2026 開催 …まもなく❗ 10月30日24時（10月31日0時)に メタ フェス 2026は 開場 します🎉 来場特典として VRChat 内で使える じゃんけん棒をプレゼ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3623,40 +3621,6 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "6c1f91500dc947abd952",
-      "title": "✨ VRChat ライブ✨ 『Lumina Performance Live vol.23』 ⏰10/29( 今日 )22:15～ 開場 🪄# VRC _Lumina Group開催 💫タイム…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "performance"
-      ]
-    },
-    {
-      "event_id": "03fb694dc2dde3709212",
-      "title": "【 VRChat イベント情報】 ✝️Secret Wisper✝️ 🎃コスプレハロウィンナイト 開催決定 👻 配信者とお話や写真が撮れちゃう✨️✨️ 応募方法 RP&等アカウントフォローして…",
-      "category": "recruitment_deadline",
-      "label": "募集・締切",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:応募"
-      ],
-      "event_mode": "deadline",
-      "ambiguous_with": [
-        "community"
-      ]
     },
     {
       "event_id": "5bafd6b3b8998905cef1",
@@ -4135,6 +4099,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "04699db05370df4c3dd3",
+      "title": "📰【VTuberニュースまとめ】 10/30 夜19時 ① DPVR、P1 MAX向け新型VRヘッドホンを発表 耳に近い配置と50 mmドライバーで共有空間のVR利用に配慮 ② 800名以上の…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "a716270368c647a776df",
       "title": "ミレド-miredo- 試着会",
       "category": "other",
@@ -4155,6 +4132,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "053b6318798b890f312d",
+      "title": "👻10/30(金) 本日 もハロウィンソーラン🎃 🦇 今日 も腕を伸ばすを意識してソーランしました☠️ 🧛 明日 は20:30~ JP 初心者プラザで 開催 予定🧟 #メタバースソーラン 🌕コ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4189,8 +4179,34 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "84f04b468b93b1dfb0af",
+      "title": "【乾盃 VRC -Oasis-】第2回目ハロウィン 営業 へご来店いただきありがとうございました｡ 期間限定のハロウィンドリンクを実装🎃 たくさんのご注文をいただきありがとうございました｡ 次…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "edac0d0535eef97d4e67",
       "title": "イサナイワールド探検隊_ハロウィン特別編",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "28440ef252ed0b6e2372",
+      "title": "本日 21:00より 『乾盃 VRC -Oasis-』開店いたします🎃 今宵ご指名でお相手をさせていただくキャストは【tttarou】【あさぎり】です｡ 本日 ､ハロウィン 営業 最終日です｡…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4254,7 +4270,7 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "occ_3f9e34a15eba8e26bad7",
+      "event_id": "occ_12845c5dc704ada264c8",
       "title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
       "category": "other",
       "label": "その他",
@@ -4319,8 +4335,21 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "60dbfb27bb04493400f7",
+      "title": "【まもなく イベント開始 】 この後22時より 初公開のWorldで、#悪役結社ヴァリアール の ハロウィン イベント を 開催 。 VRC グループ VRHEEL.3997 に加入し Joi…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "74f4e1a5d713b59baa27",
-      "title": "【悪の イベント告知 】 毎年恒例、悪役結社ヴァリアールのハロウィンイベントを 開催 。 今年の会場は、新規に用意されたワールド。 仮装して、あるいは常の姿で来場されたし。 イベントの終わり際…",
+      "title": "【悪の イベント告知 】 毎年恒例、悪役結社ヴァリアールのハロウィンイベントを開催。 今年の会場は、新規に用意されたワールド。 仮装して、あるいは常の姿で来場されたし。 イベントの終わり際に、…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4334,6 +4363,32 @@
     {
       "event_id": "2fa0d18711bd45e5e4ba",
       "title": "おうちめすがき 通常営業",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2b5706f173982a5d0ff4",
+      "title": "🎃 VRChat 会場 OPEN ！👻🔥｜#YSS_ VRC 🎶 YSS_HomeLive #32 「YSS Halloween Live」 ⏰ 22:00 START！あと10分！ 🌐 VR…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d37c296432b661d066a1",
+      "title": "本日 「のーざん・くらうん」を 開催 いたします。 どなたでも参加可能な当日 リクイン 制となっております。 参加をご希望の方は、22時25分から22時29分までの間に、以下の VRC アカウ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4584,20 +4639,7 @@
     },
     {
       "event_id": "22dea6178f3fcf24c279",
-      "title": "夜の冷え込みに堪えている VRChatter 、こちらは VRC マーチス。 10月の 開催 情報お伝えします！ ・日 時 10月31日２１：００〜 ・場 所 海しご会 Group +インスタ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "b5857903682cb494f64f",
-      "title": "📢 イベント告知 📢 🎃『#ぼくらの VRC 渋谷ハロウィン』🎃 📅：10/31 (土) 🕙：21:00〜22:00 ※集合20:45～ 3週目はハロウィン🎃 VRChat で再現した渋谷(?…",
+      "title": "夜の冷え込みに堪えている VRChatter 、こちらは VRC マーチス。 10月の 開催 情報お伝えします！ ・日 時 10月31日２１：００〜 ・場 所 海しご会 Group + インス…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4624,6 +4666,19 @@
     {
       "event_id": "4d9b2fdfdf48ae19d9e1",
       "title": "club Focus",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "5f46fb9bc3d84975a2a4",
+      "title": "#VRCEngrishを攻略しよう 6 開催 のお知らせ 10月31日（土） 22:00～ VRChat Group ＋ インスタンス ＆ Discordで行います 参加 条件はありません！ …",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4743,6 +4798,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "92772282047c7f1e3631",
+      "title": "🎟️ 2nd VERSARY VRChat 会場チケット 一般予約 受付 開始 #clubVERSE 2周年記念 フェス 「2nd #VERSARY」 2026/11/1(日) OPEN 17…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "3619160fe3e690780dc0",
       "title": "VRTRPG-GM相談会",
       "category": "other",
@@ -4750,6 +4818,19 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d91a218f938cc582a192",
+      "title": "🌙【#ClubMorceau】#43🌙 ～ モルソ 第43回 Hardcore回 ～ ⏰11月1日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4854,6 +4935,23 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "fc3a4160d9d7bd61da95",
+      "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 録画で打ち上げを追います。機密ミッションを一緒に観ましょう。 🚀 Falcon 9 Block 5 | USSF-432 📆 日本…",
+      "category": "performance",
+      "label": "公演・ショー",
+      "subcategory": "show",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ショー"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "64d40cd650bee48ab722",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
@@ -4914,6 +5012,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "515f98bd09ddf59d79cd",
+      "title": "🍵【コラボ イベント開催 ！】 鹿児島製茶株式会社様とのコラボ「本格お茶淹れ体験 イベント 」が決定！ ゲスト：有明ステラさん・羽澄愛さん✨ 📅11月3日(火・祝)21:00〜 📍 VRC 九…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "1e838c247f775986a351",
       "title": "Join for Some Funǃ",
       "category": "other",
@@ -4941,7 +5052,7 @@
     },
     {
       "event_id": "18a403335bc9cd1120bc",
-      "title": "次回の VRC 弓道部は11月4日！水曜日です！ 弓道未経験の方も大歓迎です！ VRC 弓道部の Group インスタンスで 開催 するので気軽に参加してください！ Group のリンクはRP…",
+      "title": "次回の VRC 弓道部は11月4日！水曜日です！ 弓道未経験の方も大歓迎です！ VRC 弓道部の Group インスタンスで 開催 するので気軽に 参加 してください！ Group のリンクは…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4968,19 +5079,6 @@
     {
       "event_id": "1b6e21fc4d4ac7cedf13",
       "title": "Join to have late-night funǃ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "e629c587802a2d6549be",
-      "title": "来週の木曜日21:00より 開催 されるSCPに基づいた VRChatイベント 「ESHU」にて、森に棲まう妖精として皆さんの来訪をお待ちさせて頂きます 何やらこの森にお客様が来るようですね …",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -5105,6 +5203,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "47bb5a9434809c4d4c19",
+      "title": "VRC イベント 『Luminous Astrantia』 🍀第7回 オープン のお知らせ🍀 11/13(金)22:55~24:15 🌟リポストキャンペーン🌟 ゲストさんの歌×particle…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "54409b37830be4a1d404",
       "title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "category": "technology",
@@ -5202,19 +5313,6 @@
       "ambiguous_with": [
         "community"
       ]
-    },
-    {
-      "event_id": "c700db2d600ea05e0b8a",
-      "title": "【 フライヤーつくりました 】 CLUBOWL 2ndAnniversary 🗓2026.12.5(Sat.) 13:00~19:00 📍club JB'S(名古屋) 👛[Door 2500/…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
     },
     {
       "event_id": "0b2f14574eed0ee9f095",
@@ -5435,6 +5533,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "29189df39cfd8790b3dc",
+      "title": "🌸 VRC 初心者ノ寺子屋 第拾期 開校 🌸 VRChat 初心者向け✨ 2週間同じメンバーで毎日楽しく学校体験ができるイベントです🏫 🗓️開講期間：1/9(土)～1/23(土) 毎日22:0…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "a92d7384884e11c40bbb",
