@@ -1,45 +1,16 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 1182,
-  "event_count_after": 1176,
+  "event_count_before": 1258,
+  "event_count_after": 1255,
   "candidate_cluster_count": 3,
   "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 6,
-  "duplicate_post_count": 6,
-  "duplicate_rate": 0.005076,
+  "duplicate_occurrence_count": 3,
+  "duplicate_post_count": 3,
+  "duplicate_rate": 0.002385,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 24,
+  "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
-    {
-      "cluster_id": "occ_12845c5dc704ada264c8",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
-      "member_count": 5,
-      "member_ids": [
-        "067964993c369637af2d",
-        "14ce28bf971192807cb8",
-        "40b49be6457b084e2de8",
-        "cb23306f87b5bab04e69",
-        "feb585a04b71cf8ef781"
-      ],
-      "source_record_ids": [
-        "src_503e687891aa54dc64d8",
-        "src_9475ca3d17fdb704ce37",
-        "src_b78b8a0c7133ae460fc6",
-        "src_cfd4c45f4dcaacb59fc1",
-        "src_f5b9d4b564d605280b96"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start",
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.9283,
-      "representative_source_record_id": "src_503e687891aa54dc64d8"
-    },
     {
       "cluster_id": "occ_3e02d62261cfbce56e5e",
       "starts_at": "2026-11-01T19:00:00Z",
@@ -61,6 +32,28 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_67113d9f96b14b67ccb6"
+    },
+    {
+      "cluster_id": "occ_e394bd2a5cb92a0a99c2",
+      "starts_at": "2026-10-31T10:00:00Z",
+      "title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 : 本日 19:00 VRC ボクシングに興味がある方、楽しみたい方、…",
+      "member_count": 2,
+      "member_ids": [
+        "537f7981f3ca2fd4508f",
+        "a09002fb41e6339618d3"
+      ],
+      "source_record_ids": [
+        "src_2668104d7107004d7d4c",
+        "src_aaf00ef7af7f6e554699"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_aaf00ef7af7f6e554699"
     },
     {
       "cluster_id": "occ_eceb4fff0ab1c805377d",
@@ -85,325 +78,108 @@
       "representative_source_record_id": "src_b34828cadc2c17c0b2ae"
     }
   ],
-  "ambiguous_candidates": [
-    {
-      "left_id": "85edf2b6a16bea6f62cf",
-      "right_id": "470c68ea28e89205a1a0",
-      "starts_at": "2026-10-30T12:00:00Z",
-      "organizer": "@micafe01234",
-      "similarity": 0.5763,
-      "left_title": "＼ ☕ 本日開催 ！MICafe プレ オープン ☕ ／ 今夜 、少人数制 VRChat カフェ「MICafe」 オープン します✨ 一足先にまったりカフェタイムを楽しみませんか？ 🗓 本日 …",
-      "right_title": "＼ 🎉 今夜 21:00 OPEN ！ 🎉 ／ 本日 、少人数制 VRChat カフェ「MICafe」のプレ オープン を 開催 ！ まったりお話ししながら素敵な時間を過ごしましょう☕️✨ ⏰…"
-    },
-    {
-      "left_id": "067964993c369637af2d",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.6867,
-      "left_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "14ce28bf971192807cb8",
-      "right_id": "067964993c369637af2d",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.693,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
-    },
-    {
-      "left_id": "14ce28bf971192807cb8",
-      "right_id": "2c8fb8a3827958fafaca",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.4793,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
-    },
-    {
-      "left_id": "14ce28bf971192807cb8",
-      "right_id": "4afbcacfdff2d2e31807",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5726,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…"
-    },
-    {
-      "left_id": "14ce28bf971192807cb8",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5872,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "2c8fb8a3827958fafaca",
-      "right_id": "067964993c369637af2d",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5917,
-      "left_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…",
-      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
-    },
-    {
-      "left_id": "2c8fb8a3827958fafaca",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.7045,
-      "left_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "40b49be6457b084e2de8",
-      "right_id": "067964993c369637af2d",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.693,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
-    },
-    {
-      "left_id": "40b49be6457b084e2de8",
-      "right_id": "2c8fb8a3827958fafaca",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.4793,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
-    },
-    {
-      "left_id": "40b49be6457b084e2de8",
-      "right_id": "4afbcacfdff2d2e31807",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5726,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…"
-    },
-    {
-      "left_id": "40b49be6457b084e2de8",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5872,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "4afbcacfdff2d2e31807",
-      "right_id": "067964993c369637af2d",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.6552,
-      "left_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…",
-      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
-    },
-    {
-      "left_id": "4afbcacfdff2d2e31807",
-      "right_id": "2c8fb8a3827958fafaca",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.561,
-      "left_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…",
-      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
-    },
-    {
-      "left_id": "4afbcacfdff2d2e31807",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.6695,
-      "left_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "cb23306f87b5bab04e69",
-      "right_id": "067964993c369637af2d",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.69,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫 明日 の YSS！｜ #YSS_ VRC 🎃 YSS Halloween Live👻🍭 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 …"
-    },
-    {
-      "left_id": "cb23306f87b5bab04e69",
-      "right_id": "2c8fb8a3827958fafaca",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.4774,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
-    },
-    {
-      "left_id": "cb23306f87b5bab04e69",
-      "right_id": "4afbcacfdff2d2e31807",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5702,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…"
-    },
-    {
-      "left_id": "cb23306f87b5bab04e69",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5847,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "feb585a04b71cf8ef781",
-      "right_id": "2c8fb8a3827958fafaca",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5124,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎧10/30 Fri 本日 のYSS✨｜ #YSS_ VRC 🎶 YSS_HomeLive #32 🎃「YSS Halloween Live」👻🍭 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙21：50…"
-    },
-    {
-      "left_id": "feb585a04b71cf8ef781",
-      "right_id": "4afbcacfdff2d2e31807",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.5726,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "🎃 YSS_HomeLive 32｜#YSS_ VRC YSS Halloween Live 👻✨ 📅 10/30(金) 🕙 21:50 Open / 22:00 Start 🎃 ハロウィン衣…"
-    },
-    {
-      "left_id": "feb585a04b71cf8ef781",
-      "right_id": "b38905db5094d6653297",
-      "starts_at": "2026-10-30T12:50:00Z",
-      "organizer": "@VrcYss",
-      "similarity": 0.6043,
-      "left_title": "🎃 YSS Halloween Live｜#YSS_ VRC 📅 10/30(金) 🕙 21:50 OPEN / 22:00 START 🌐 VRChat 会場 Join ：[ Group +…",
-      "right_title": "💫「YSS HomeLive」開催のお知らせ✨｜ #YSS_ VRC - YSS_HomeLive #32 - 🎃 YSS Halloween Live ✨ ￣￣￣￣￣￣￣￣￣￣￣￣￣￣ 🕙 …"
-    },
-    {
-      "left_id": "60dbfb27bb04493400f7",
-      "right_id": "74f4e1a5d713b59baa27",
-      "starts_at": "2026-10-30T13:00:00Z",
-      "organizer": "@VRHeel",
-      "similarity": 0.5181,
-      "left_title": "【まもなく イベント開始 】 この後22時より 初公開のWorldで、#悪役結社ヴァリアール の ハロウィン イベント を 開催 。 VRC グループ VRHEEL.3997 に加入し Joi…",
-      "right_title": "【悪の イベント告知 】 毎年恒例、悪役結社ヴァリアールのハロウィンイベントを開催。 今年の会場は、新規に用意されたワールド。 仮装して、あるいは常の姿で来場されたし。 イベントの終わり際に、…"
-    },
-    {
-      "left_id": "c9e18023d974094091a1",
-      "right_id": "fe3af7e1af9aae154d7c",
-      "starts_at": "2026-10-30T21:00:00Z",
-      "organizer": "Projekt Community",
-      "similarity": 0.6438,
-      "left_title": "HorrorCon Monster Bash Day One",
-      "right_title": "Monster Bash - HorrorCon Day 1"
-    }
-  ],
+  "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "ad9eaee05c87d421127b",
-      "right_id": "eed95cc5060dd64c58ab",
-      "starts_at": "2026-10-30T09:39:00Z",
-      "left_organizer": "JAMONES",
-      "right_organizer": "JAMONES",
-      "similarity": 0.351,
-      "left_title": "BORRACHERA TERAPÉUTICA S․A․C․",
-      "right_title": "LA JUNTA DE LOS CEBADOS"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "c7db7f3f170164ba8704",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "QuantumpawsPark",
+      "similarity": 0.1554,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Adrenaline Fridays"
     },
     {
-      "left_id": "1d8361700eaa1050d125",
-      "right_id": "69c50e352afb7d59c3e9",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "c4de7c921311deb959f3",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "The Night Shift",
+      "similarity": 0.2492,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Bostin's Community Nightǃ"
+    },
+    {
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "6d6373494da143ce50ef",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Dibz Adventures",
+      "similarity": 0.1439,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Community Night Stream"
+    },
+    {
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "3379805cad44c15bfe2c",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
       "right_organizer": "VRDancing",
-      "similarity": 0.0242,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "Dance Week - AP"
+      "similarity": 0.2903,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Dance Week - NA"
     },
     {
-      "left_id": "1d8361700eaa1050d125",
-      "right_id": "2e88712f02befdc6a243",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "Virtual Market",
-      "similarity": 0.0919,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "【LIVE】Vket公式TikTok配信！みんなでゲームをしよう！"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "eb132105a232e29a44d7",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Epic Fellowship VR",
+      "similarity": 0.2469,
+      "left_title": "Activity Nightǃ",
+      "right_title": "EPIC Fellowship Bible Reading"
     },
     {
-      "left_id": "1d8361700eaa1050d125",
-      "right_id": "eda63f7b56db6ccda8c2",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "@gorouya_cg",
-      "similarity": 0.0854,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "【まつり、大幅リニューアル🍃】 明日 10/30(金) 19:00から頒布 開始 ！ 年明けからコツコツ作ってきた VRC アバター【まつり】 リニューアル＆メタ フェス 出展を記念して、期間…"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "8c3bac5bb1cc11ca51f6",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "FEMBOY",
+      "similarity": 0.3333,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Femboy Friday"
     },
     {
-      "left_id": "1d8361700eaa1050d125",
-      "right_id": "e715626c774d1546e20d",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "喫茶「はたご」",
-      "similarity": 0.1324,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "喫茶『はたご』通常営業日"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "79916be9149150f6bc87",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "SYN",
+      "similarity": 0.2581,
+      "left_title": "Activity Nightǃ",
+      "right_title": "FORBIDDEN FRIDAYS"
     },
     {
-      "left_id": "1d8361700eaa1050d125",
-      "right_id": "04699db05370df4c3dd3",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "Precious Stone Garnet",
-      "right_organizer": "@hirofuji84",
-      "similarity": 0.1198,
-      "left_title": "Cafe＆BAR Precious Stone Garnet",
-      "right_title": "📰【VTuberニュースまとめ】 10/30 夜19時 ① DPVR、P1 MAX向け新型VRヘッドホンを発表 耳に近い配置と50 mmドライバーで共有空間のVR利用に配慮 ② 800名以上の…"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "3c1aac4ef8dbef2589d6",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "The Madhouse Carnival",
+      "similarity": 0.1353,
+      "left_title": "Activity Nightǃ",
+      "right_title": "FREAKSHOW FESTIVAL"
     },
     {
-      "left_id": "69c50e352afb7d59c3e9",
-      "right_id": "2e88712f02befdc6a243",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "VRDancing",
-      "right_organizer": "Virtual Market",
-      "similarity": 0.0303,
-      "left_title": "Dance Week - AP",
-      "right_title": "【LIVE】Vket公式TikTok配信！みんなでゲームをしよう！"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "0126cdb1db88cd5f825a",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Delirium",
+      "similarity": 0.213,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Friday Drinking Night"
     },
     {
-      "left_id": "69c50e352afb7d59c3e9",
-      "right_id": "eda63f7b56db6ccda8c2",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "VRDancing",
-      "right_organizer": "@gorouya_cg",
-      "similarity": 0.0247,
-      "left_title": "Dance Week - AP",
-      "right_title": "【まつり、大幅リニューアル🍃】 明日 10/30(金) 19:00から頒布 開始 ！ 年明けからコツコツ作ってきた VRC アバター【まつり】 リニューアル＆メタ フェス 出展を記念して、期間…"
-    },
-    {
-      "left_id": "69c50e352afb7d59c3e9",
-      "right_id": "e715626c774d1546e20d",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "VRDancing",
-      "right_organizer": "喫茶「はたご」",
-      "similarity": 0.0792,
-      "left_title": "Dance Week - AP",
-      "right_title": "喫茶『はたご』通常営業日"
-    },
-    {
-      "left_id": "69c50e352afb7d59c3e9",
-      "right_id": "04699db05370df4c3dd3",
-      "starts_at": "2026-10-30T10:00:00Z",
-      "left_organizer": "VRDancing",
-      "right_organizer": "@hirofuji84",
-      "similarity": 0.0321,
-      "left_title": "Dance Week - AP",
-      "right_title": "📰【VTuberニュースまとめ】 10/30 夜19時 ① DPVR、P1 MAX向け新型VRヘッドホンを発表 耳に近い配置と50 mmドライバーで共有空間のVR利用に配慮 ② 800名以上の…"
+      "left_id": "67e2e224832097be4b66",
+      "right_id": "d7c85569475395a97386",
+      "starts_at": "2026-10-31T00:00:00Z",
+      "left_organizer": "Bunny Burrow",
+      "right_organizer": "Project Eden",
+      "similarity": 0.3944,
+      "left_title": "Activity Nightǃ",
+      "right_title": "Fucked Up Friday"
     }
   ],
-  "generated_at": "2026-10-31T06:59:02Z"
+  "generated_at": "2026-10-31T13:38:50Z"
 }
