@@ -2,14 +2,16 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 1170,
-  "matched_events": 294,
+  "event_count": 1152,
+  "matched_events": 295,
   "matched_series": {
-    "en-jp-language-exchange": 36,
     "vrc-fit-boxing": 36,
     "personally-match": 18,
+    "en-jp-language-exchange": 35,
+    "cafe-bar-for-light": 1,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
+    "zerozoku-auction": 1,
     "exploit-club": 17,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
@@ -19,21 +21,9 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 876,
+  "unmatched_events": 857,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "7cbfd0510c919edf7016",
-      "title": "EN-JP Language Exchange（土曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "54b368bdee03e1741f63",
       "title": "VRCフィットボクシング集会（土曜）",
@@ -83,6 +73,18 @@
       "profile_attached": true
     },
     {
+      "event_id": "1ce98b9022506cead7fe",
+      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌 参加 方法 JOIN 制｜ILへフレンド申請→ JOIN VRC 初…",
+      "status": "matched",
+      "ontology_id": "cafe-bar-for-light",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
       "event_id": "6bffb7923f81287383dd",
       "title": "VRCごいた会",
       "status": "matched",
@@ -99,6 +101,18 @@
       "title": "VRCゲームワールド部 月曜イベント",
       "status": "matched",
       "ontology_id": "vrc-game-world-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "331f78adb580293ee38f",
+      "title": "VRCイベント 〜０属オークション〜 ✨第8回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 11/2(月) 22:00～ ✅ リクイン 抽選式 ✅ 参加 条件は5000UC以上の所…",
+      "status": "matched",
+      "ontology_id": "zerozoku-auction",
       "evidence": [
         "alias",
         "organizer",
@@ -3536,17 +3550,17 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 1170,
+    "event_count": 1152,
     "category_breakdown": {
       "art": 122,
-      "community": 280,
-      "game": 116,
-      "language_exchange": 36,
+      "community": 281,
+      "game": 114,
+      "language_exchange": 35,
       "learning": 29,
-      "music": 122,
-      "other": 85,
-      "performance": 9,
-      "recruitment_deadline": 7,
+      "music": 120,
+      "other": 76,
+      "performance": 5,
+      "recruitment_deadline": 6,
       "technology": 276,
       "wellness": 71,
       "world_tour": 17
@@ -3554,17 +3568,18 @@
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 1,
+      "auction": 1,
       "bar": 2,
       "cafe": 41,
-      "cast_service": 7,
+      "cast_service": 8,
       "class": 2,
-      "competition": 2,
-      "dance": 56,
-      "dj": 5,
+      "competition": 1,
+      "dance": 55,
+      "dj": 6,
       "engineering": 168,
       "fitness": 37,
       "hangout": 69,
-      "language_exchange": 36,
+      "language_exchange": 35,
       "lecture": 8,
       "live_music": 3,
       "mystery": 34,
@@ -3572,160 +3587,30 @@
       "participant_recruitment": 1,
       "photography": 121,
       "research": 65,
-      "show": 8,
-      "social": 157,
-      "tabletop": 42,
+      "show": 4,
+      "social": 158,
+      "tabletop": 41,
       "workshop": 10,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 7,
-      "hybrid": 5,
-      "in_world": 1154,
+      "deadline": 6,
+      "hybrid": 4,
+      "in_world": 1138,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 85,
-      "keyword_rules": 561,
-      "legacy_and_keywords": 121,
-      "legacy_category": 126
+      "curated_ontology": 278,
+      "fallback": 76,
+      "keyword_rules": 557,
+      "legacy_and_keywords": 116,
+      "legacy_category": 125
     },
-    "organizer_profile_count": 22,
-    "low_confidence_event_count": 125,
-    "audit_event_count": 125
+    "organizer_profile_count": 21,
+    "low_confidence_event_count": 116,
+    "audit_event_count": 116
   },
   "category_review_queue": [
-    {
-      "event_id": "b7e1c3498486668cc289",
-      "title": "Murder drone role play ǃǃ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "7b6cd6291f3fd8d34bed",
-      "title": "Fiesta de Halloween de NOCTURNOS en Just B Club",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c50a68ee713f4b753683",
-      "title": "Sky tournament",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "cdd5f32ab43388cbccf3",
-      "title": "Friday Unique Roleplay",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "bb565069717eb444b8d5",
-      "title": "NOS QUEDA SOLO UNA HORAǃ",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "acac11e342856c5c5c95",
-      "title": "～昼の部～",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "ef9d72c067ec0a35e214",
-      "title": "Server Start up",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "55977a81ad53a0ae8b2b",
-      "title": "Join up",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "f49f837cdb9f6c21889f",
-      "title": "Roleplays",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "cae239d5333facbc0ca7",
-      "title": "Join the rp",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "f9868bb6bfc28649a097",
       "title": "初心者案内＆ジェイプラツアー",
@@ -3901,7 +3786,7 @@
     },
     {
       "event_id": "2723f5f4e405e692964b",
-      "title": "VRC 1:1型RP イベント 『モーモー牧場』の 営業 は 本日 です！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてます。 【10/…",
+      "title": "VRC 1:1型RPイベント 『モーモー牧場』の 営業 は 本日 です！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてます。 【10/3…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4020,7 +3905,7 @@
     },
     {
       "event_id": "c19ef4dba0306a7dba12",
-      "title": "VRCイベント 「ふぇむふぇむもくもく」 #fem_moku 10/31（土）23:00に リクイン 受付 開始 です 本日 はハロウィン 開催 ！ ふぇむぼーい達のハロウィン衣装をご堪能あれ…",
+      "title": "VRC イベント「ふぇむふぇむもくもく」 #fem_moku 10/31（土）23:00に リクイン 受付 開始 です 本日 はハロウィン 開催 ！ ふぇむぼーい達のハロウィン衣装をご堪能あれ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4142,19 +4027,6 @@
     {
       "event_id": "3a581913b8c3ef5516b1",
       "title": "Open-Door Flock Apologetics 101",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "92772282047c7f1e3631",
-      "title": "🎟️ 2nd VERSARY VRChat 会場チケット 一般予約 受付 開始 #clubVERSE 2周年記念フェス「2nd #VERSARY」 2026/11/1(日) OPEN 17:4…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4349,6 +4221,19 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "7f87e98c7d04796a4366",
+      "title": "『伝統文化の宴』開催まであと1日！！ VRChat で活躍する、様々な伝統文化系の皆々様が大集合！！ 【とき】11月2日㈪・3日㈫㈷ 21時 ～23時 【場所】 VRChat の VRC 茶道…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -4695,6 +4580,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "6ae0d6d50a660e01909d",
+      "title": "【お知らせ】🥂 VRChatイベント 「ドキドキガールズバー」 🐰今週のテーマはバニー🐰 ぴょんっと可愛いバニー姿で、ご主人様をお迎えするよ💕 どきどきSchedule↓ 👑本 営業 👑 📅 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "45544f213fc6969f4db8",
