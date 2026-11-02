@@ -49,7 +49,7 @@ def test_base_drift_rebuild_is_bounded_and_never_publishes_stale_output() -> Non
 
     # A changed main must fail the original publisher before any commit.
     assert '"base_changed_after_validation:"' in publish
-    assert 'echo 'base_changed=true' >> "$GITHUB_OUTPUT"' in publish
+    assert "base_changed=true" in publish
     assert 'exit "$guard_status"' in publish
     assert publish.index('exit "$guard_status"') < publish.index("Commit generated data safely")
 
