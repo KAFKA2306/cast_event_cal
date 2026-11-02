@@ -40,3 +40,22 @@ def test_failed_refresh_writes_only_durable_status_after_publish():
     assert "--refresh-result failure" in status_job
     assert "git add public/status.json" in status_job
     assert not any(line.strip() in {"git add public/", "git add public"} for line in status_job.splitlines())
+
+
+def test_base_drift_rebuild_is_bounded_and_never_publishes_stale_output() -> None:
+    text = workflow_text()
+    publish = text.split("  publish:\n", 1)[1].split("  status_on_failure:\n", 1)[0]
+    recovery = text.split("  status_on_failure:\n", 1)[1]
+
+    # A changed main must fail the original publisher before any commit.
+    assert '"base_changed_after_validation:"' in publish
+    assert "base_changed=true" in publish
+    assert 'exit "$guard_status"' in publish
+    assert publish.index('exit "$guard_status"') < publish.index("Commit generated data safely")
+
+    # Rebuild from a fresh main checkout, at most once per failed run.
+    assert "needs.publish.outputs.base_changed == 'true'" in recovery
+    assert "inputs.recovery_attempt != '1'" in recovery
+    assert "needs.build.result == 'success'" in recovery
+    assert recovery.count("gh workflow run update-calendar-v2.yml --ref main -f recovery_attempt=1") == 1
+    assert recovery.index("git push origin HEAD:main") < recovery.index("Rebuild once from current main")
