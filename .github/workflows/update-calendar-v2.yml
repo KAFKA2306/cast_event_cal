@@ -3,6 +3,13 @@ name: Update calendar data
 
 on:
   workflow_dispatch:
+    inputs:
+      recovery_attempt:
+        description: 'Bounded rebuild attempt after validated main changes'
+        required: false
+        type: choice
+        options: ['0', '1']
+        default: '0'
   schedule:
     - cron: '17 * * * *'
   push:
@@ -227,6 +234,8 @@ jobs:
 
   publish:
     needs: build
+    outputs:
+      base_changed: ${{ steps.publication_gate.outputs.base_changed }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -242,7 +251,20 @@ jobs:
           name: calendar-publish-snapshot-${{ github.run_id }}
           path: .
       - name: Reject publication when main changed after validation
-        run: python scripts/publication_guard.py check
+        id: publication_gate
+        shell: bash
+        run: |
+          set +e
+          guard_output="$(python scripts/publication_guard.py check 2>&1)"
+          guard_status=$?
+          set -e
+          printf '%s\n' "$guard_output"
+          if [ "$guard_status" -ne 0 ]; then
+            if [[ "$guard_output" == *"base_changed_after_validation:"* ]]; then
+              echo 'base_changed=true' >> "$GITHUB_OUTPUT"
+            fi
+            exit "$guard_status"
+          fi
       - name: Commit generated data safely
         run: |
           set -euo pipefail
@@ -276,6 +298,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -298,3 +321,8 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
+      - name: Rebuild once from current main after validated-base drift
+        if: ${{ needs.build.result == 'success' && needs.publish.outputs.base_changed == 'true' && inputs.recovery_attempt != '1' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-calendar-v2.yml --ref main -f recovery_attempt=1
