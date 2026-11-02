@@ -2,6 +2,12 @@ name: Audit open PR lifecycle
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-open-pr-lifecycle.yml'
+      - 'scripts/audit_open_pr_lifecycle.py'
+      - 'tests/test_open_pr_lifecycle_audit.py'
   schedule:
     - cron: '23 3 * * *'
 
