@@ -44,14 +44,14 @@ def test_failed_refresh_writes_only_durable_status_after_publish():
 
 def test_base_drift_rebuild_is_bounded_and_never_publishes_stale_output() -> None:
     text = workflow_text()
-    publish = text.split("  publish:\\n", 1)[1].split("  status_on_failure:\\n", 1)[0]
-    recovery = text.split("  status_on_failure:\\n", 1)[1]
+    publish = text.split("  publish:\n", 1)[1].split("  status_on_failure:\n", 1)[0]
+    recovery = text.split("  status_on_failure:\n", 1)[1]
 
     # A changed main must fail the original publisher before any commit.
     assert '"base_changed_after_validation:"' in publish
-    assert 'echo \'base_changed=true\' >> "$GITHUB_OUTPUT"' in publish
+    assert 'echo 'base_changed=true' >> "$GITHUB_OUTPUT"' in publish
     assert 'exit "$guard_status"' in publish
-    assert publish.index("exit \\"$guard_status\\"") < publish.index("Commit generated data safely")
+    assert publish.index('exit "$guard_status"') < publish.index("Commit generated data safely")
 
     # Rebuild from a fresh main checkout, at most once per failed run.
     assert "needs.publish.outputs.base_changed == 'true'" in recovery
