@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
       - name: Record and propagate upstream conclusion
@@ -45,7 +45,7 @@ jobs:
             --run-id "${{ github.event.workflow_run.id }}" \
             --head-sha "${{ github.event.workflow_run.head_sha }}" \
             --report build/upstream-workflow-run.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: upstream-workflow-run
@@ -64,10 +64,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'main' }}
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
           cache: pip
@@ -76,7 +76,7 @@ jobs:
       - run: pytest tests/test_audit_public_feed.py tests/test_semantic_collision_audit.py tests/test_check_upstream_conclusion.py
       - run: python scripts/audit_public_feed.py public/events.json --report build/public-feed-audit.json
       - run: python scripts/audit_semantic_collisions.py public/events.json --report build/semantic-collision-audit.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: public-feed-audit
