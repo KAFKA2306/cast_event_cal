@@ -117,12 +117,12 @@ def test_multiple_production_surfaces_keep_separate_final_response_evidence(monk
 
 def test_check_report_rejects_invalid_live_csp_without_enforcing_missing_headers():
     clean = {"policy_errors": [], "production": [
-        {"final_url": "https://example.test/", "policy_errors": []},
-        {"final_url": "https://example.test/tonight/", "policy_errors": []},
+        {"final_url": "https://example.test/", "status": 200, "policy_errors": []},
+        {"final_url": "https://example.test/tonight/", "status": 200, "policy_errors": []},
     ]}
     assert audit.check_report(clean) == []
     malformed = {"policy_errors": [], "production": [
-        {"final_url": "https://example.test/tonight/", "policy_errors": [
+        {"final_url": "https://example.test/tonight/", "status": 200, "policy_errors": [
             "CSP #1: duplicate directive script-src"
         ]},
     ]}
@@ -181,3 +181,15 @@ def test_missing_generated_family_fails_security_coverage(tmp_path):
     assert audit.check_report({"policy_errors": [], "missing_surfaces": missing}) == [
         "missing audit surface: public/categories/*/index.html"
     ]
+
+
+def test_live_http_status_must_be_200_even_when_policy_is_valid():
+    report = {"policy_errors": [], "production": [
+        {"final_url": "https://example.test/", "status": 200, "policy_errors": []},
+        {"final_url": "https://example.test/tonight/", "status": 204, "policy_errors": []},
+    ]}
+    assert audit.check_report(report) == [
+        "https://example.test/tonight/: unexpected HTTP status 204"
+    ]
+    report["production"][1]["status"] = 200
+    assert audit.check_report(report) == []
