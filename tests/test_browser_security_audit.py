@@ -109,3 +109,21 @@ def test_multiple_production_surfaces_keep_separate_final_response_evidence(monk
     monkeypatch.setattr(audit, "read_production_response", lambda url: {"final_url": url, "headers": {}})
     report = audit.build_report(urls)
     assert [entry["final_url"] for entry in report["production"]] == urls
+
+
+
+def test_check_report_rejects_invalid_live_csp_without_enforcing_missing_headers():
+    clean = {"policy_errors": [], "production": [
+        {"final_url": "https://example.test/", "policy_errors": []},
+        {"final_url": "https://example.test/tonight/", "policy_errors": []},
+    ]}
+    assert audit.check_report(clean) == []
+    malformed = {"policy_errors": [], "production": [
+        {"final_url": "https://example.test/tonight/", "policy_errors": [
+            "CSP #1: duplicate directive script-src"
+        ]},
+    ]}
+    assert audit.check_report(malformed) == [
+        "https://example.test/tonight/: CSP #1: duplicate directive script-src"
+    ]
+    assert audit.check_report({"policy_errors": ["bad local policy"]}) == ["bad local policy"]
