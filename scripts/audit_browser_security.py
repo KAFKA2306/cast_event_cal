@@ -22,12 +22,15 @@ REPRESENTATIVE_GROUPS = ("events", "categories", "series")
 def select_surfaces(root: Path) -> tuple[list[Path], list[str]]:
     """Inspect generated entry points plus one deterministic page per family."""
     candidates = [root / relative for relative in REQUIRED_SURFACES]
+    missing = []
     for family in REPRESENTATIVE_GROUPS:
         sample = next(iter(sorted((root / "public" / family).glob("*/index.html"))), None)
-        if sample is not None:
+        if sample is None:
+            missing.append(f"public/{family}/*/index.html")
+        else:
             candidates.append(sample)
     existing = [path for path in candidates if path.is_file()]
-    missing = [str(path.relative_to(root)) for path in candidates if not path.is_file()]
+    missing.extend(str(path.relative_to(root)) for path in candidates if not path.is_file())
     return existing, missing
 ORIGIN_RE = re.compile(r"https://[^\s\"'<>`)]+")
 

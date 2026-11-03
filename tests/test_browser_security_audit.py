@@ -162,3 +162,22 @@ def test_representative_generated_pages_and_missing_entry_point(tmp_path):
     assert audit.check_report({"policy_errors": [], "missing_surfaces": missing}) == [
         "missing audit surface: public/tonight/index.html"
     ]
+
+
+def test_missing_generated_family_fails_security_coverage(tmp_path):
+    for relative in (
+        "web/index.template.html",
+        "public/index.html",
+        "public/tonight/index.html",
+        "public/events/one/index.html",
+        "public/series/one/index.html",
+    ):
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("<main>test</main>", encoding="utf-8")
+    selected, missing = audit.select_surfaces(tmp_path)
+    assert len(selected) == 5
+    assert missing == ["public/categories/*/index.html"]
+    assert audit.check_report({"policy_errors": [], "missing_surfaces": missing}) == [
+        "missing audit surface: public/categories/*/index.html"
+    ]
