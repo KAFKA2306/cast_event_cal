@@ -173,6 +173,8 @@ def check_report(report: dict[str, object]) -> list[str]:
     errors = list(report["policy_errors"])
     errors.extend(f"missing audit surface: {path}" for path in report.get("missing_surfaces", []))
     for entry in report.get("production", []):
+        if entry.get("status") != 200:
+            errors.append(f"{entry['final_url']}: unexpected HTTP status {entry.get('status')}")
         for error in entry["policy_errors"]:
             errors.append(f"{entry['final_url']}: {error}")
     return errors
