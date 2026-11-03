@@ -37,3 +37,32 @@ def test_repository_policy_is_audit_only_and_fail_closed():
     assert policy["directives"]["frame-ancestors"] == ["'none'"]
     assert "*" not in sum(policy["directives"].values(), [])
     assert "'unsafe-eval'" not in sum(policy["directives"].values(), [])
+
+
+def test_inventory_does_not_count_external_or_data_scripts_as_inline_execution():
+    result = audit.inventory("""
+      <script src="/assets/app.js"></script>
+      <script type="application/ld+json">{"@context":"https://schema.org"}</script>
+      <script type="module">window.ready = true</script>
+      <script>window.ready = true</script>
+    """)
+    assert result["inline_script_blocks"] == 2
+    assert result["external_script_blocks"] == 1
+
+
+def test_missing_production_headers_are_reported_explicitly(monkeypatch):
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+
+    monkeypatch.setattr(
+        audit,
+        "urlopen",
+        lambda *_args, **_kwargs: nullcontext(
+            SimpleNamespace(headers={"Content-Security-Policy": "default-src 'self'"})
+        ),
+    )
+    headers = audit.read_headers("https://example.test/")
+    assert headers["content-security-policy"] == "default-src 'self'"
+    assert headers["referrer-policy"] == "missing"
+    assert headers["x-content-type-options"] == "missing"
+    assert headers["permissions-policy"] == "missing"
