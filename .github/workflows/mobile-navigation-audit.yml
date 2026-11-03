@@ -28,7 +28,7 @@ jobs:
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
       - name: Audit generated Tonight navigation without modifying production
-        run: python scripts/audit_mobile_navigation.py --output-dir mobile-audit
+        run: python scripts/audit_mobile_navigation.py --output-dir mobile-audit --strict
       - name: Verify bounded Tonight URL state in Chromium
         run: python scripts/audit_tonight_url_browser.py --output-dir tonight-url-browser-audit
       - name: Save URL-state browser evidence
