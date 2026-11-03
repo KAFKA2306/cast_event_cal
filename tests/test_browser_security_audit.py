@@ -31,6 +31,9 @@ def test_repository_policy_is_audit_only_and_fail_closed():
     assert report["mode"] == "audit-only"
     assert report["policy_errors"] == []
     surface = report["surfaces"]["web/index.template.html"]
+    assert "public/index.html" in report["surfaces"]
+    assert "public/tonight/index.html" in report["surfaces"]
+    assert not report["missing_surfaces"]
     assert surface["eval_calls"] == 0
     assert surface["dynamic_script_injection"] is False
     policy = json.loads(Path(audit.POLICY).read_text(encoding="utf-8"))
@@ -127,3 +130,35 @@ def test_check_report_rejects_invalid_live_csp_without_enforcing_missing_headers
         "https://example.test/tonight/: CSP #1: duplicate directive script-src"
     ]
     assert audit.check_report({"policy_errors": ["bad local policy"]}) == ["bad local policy"]
+
+
+def test_representative_generated_pages_and_missing_entry_point(tmp_path):
+    pages = (
+        "web/index.template.html",
+        "public/index.html",
+        "public/tonight/index.html",
+        "public/events/z/index.html",
+        "public/events/a/index.html",
+        "public/categories/community/index.html",
+        "public/series/one/index.html",
+    )
+    for relative in pages:
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("<script>window.ready = true</script>", encoding="utf-8")
+    selected, missing = audit.select_surfaces(tmp_path)
+    assert [str(path.relative_to(tmp_path)) for path in selected] == [
+        "web/index.template.html",
+        "public/index.html",
+        "public/tonight/index.html",
+        "public/events/a/index.html",
+        "public/categories/community/index.html",
+        "public/series/one/index.html",
+    ]
+    assert missing == []
+    (tmp_path / "public/tonight/index.html").unlink()
+    _, missing = audit.select_surfaces(tmp_path)
+    assert missing == ["public/tonight/index.html"]
+    assert audit.check_report({"policy_errors": [], "missing_surfaces": missing}) == [
+        "missing audit surface: public/tonight/index.html"
+    ]
