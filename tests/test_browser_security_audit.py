@@ -66,3 +66,46 @@ def test_missing_production_headers_are_reported_explicitly(monkeypatch):
     assert headers["referrer-policy"] == "missing"
     assert headers["x-content-type-options"] == "missing"
     assert headers["permissions-policy"] == "missing"
+
+
+def test_final_get_headers_and_duplicate_csp_are_visible(monkeypatch):
+    from contextlib import nullcontext
+    from email.message import Message
+    from types import SimpleNamespace
+
+    headers = Message()
+    headers.add_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; script-src https://unexpected.test")
+    headers.add_header("Content-Security-Policy", "object-src 'none'")
+    headers.add_header("X-Frame-Options", "DENY")
+    requests = []
+
+    def fake_urlopen(request, timeout):
+        requests.append((request.get_method(), timeout))
+        return nullcontext(SimpleNamespace(
+            headers=headers,
+            status=200,
+            geturl=lambda: "https://example.test/tonight/",
+        ))
+
+    monkeypatch.setattr(audit, "urlopen", fake_urlopen)
+    result = audit.read_production_response("http://example.test/tonight")
+    assert requests == [("GET", 15)]
+    assert result["final_url"] == "https://example.test/tonight/"
+    assert result["status"] == 200
+    assert result["headers"]["x-frame-options"] == "DENY"
+    assert result["duplicate_header_counts"]["content-security-policy"] == 2
+    assert any("duplicate directive script-src" in error for error in result["policy_errors"])
+    assert result["headers"]["permissions-policy"] == "missing"
+
+
+def test_policy_parser_rejects_conflicting_none_but_not_distinct_directives():
+    assert audit.policy_directive_errors(["default-src 'self'; object-src 'none'"]) == []
+    errors = audit.policy_directive_errors(["script-src 'none' https://unexpected.test"])
+    assert any("combines 'none'" in error for error in errors)
+
+
+def test_multiple_production_surfaces_keep_separate_final_response_evidence(monkeypatch):
+    urls = ["https://example.test/", "https://example.test/tonight/", "https://example.test/events/one/"]
+    monkeypatch.setattr(audit, "read_production_response", lambda url: {"final_url": url, "headers": {}})
+    report = audit.build_report(urls)
+    assert [entry["final_url"] for entry in report["production"]] == urls
