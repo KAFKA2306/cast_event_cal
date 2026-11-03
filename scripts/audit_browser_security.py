@@ -146,6 +146,15 @@ def build_report(production_url: str | list[str] | None = None) -> dict[str, obj
     return report
 
 
+def check_report(report: dict[str, object]) -> list[str]:
+    """Fail on malformed policies, but keep missing headers audit-only."""
+    errors = list(report["policy_errors"])
+    for entry in report.get("production", []):
+        for error in entry["policy_errors"]:
+            errors.append(f"{entry['final_url']}: {error}")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--production-url", action="append", help="Repeat for home, Tonight, and an event detail URL")
@@ -158,7 +167,7 @@ def main() -> int:
         args.output.write_text(rendered, encoding="utf-8")
     else:
         print(rendered, end="")
-    if args.check and report["policy_errors"]:
+    if args.check and check_report(report):
         return 1
     return 0
 
