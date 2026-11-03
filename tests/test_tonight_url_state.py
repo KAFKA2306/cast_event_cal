@@ -39,7 +39,8 @@ def test_untrusted_limit_and_range_cannot_force_unbounded_render():
         assert 30 <= result["state"]["limit"] <= 300
         assert result["state"]["limit"] % 30 == 0
         assert "range=" not in result["canonical"]
-    assert _run("?limit=999999999")["state"]["limit"] == 300
+    assert _run("?limit=999999999")["state"]["limit"] == 30
+    assert _run("?limit=999999990")["state"]["limit"] == 300
     assert _run("?limit=31.5")["state"]["limit"] == 30
 
 
