@@ -129,7 +129,6 @@ def read_headers(url: str) -> dict[str, str | list[str]]:
     return read_production_response(url)["headers"]
 
 
-
 def build_report(production_url: str | list[str] | None = None) -> dict[str, object]:
     policy = json.loads(POLICY.read_text(encoding="utf-8"))
     surfaces = {}
