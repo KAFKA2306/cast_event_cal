@@ -28,7 +28,17 @@ def inspect(page, width, zoom):
     page.goto(page.audit_url, wait_until="domcontentloaded")
     page.locator("header nav a").first.wait_for()
     if zoom != 1:
-        page.evaluate("(factor) => { document.body.style.zoom = String(factor) }", zoom)
+        # Text-only scaling proxy: preserve layout dimensions and enlarge computed
+        # font sizes, unlike CSS zoom which magnifies every box and control.
+        page.evaluate("""(factor) => {
+          const elements = Array.from(document.querySelectorAll('*'));
+          const sizes = elements.map(el => [el, parseFloat(getComputedStyle(el).fontSize)]);
+          for (const [el, size] of sizes) {
+            if (Number.isFinite(size) && size > 0) {
+              el.style.setProperty('font-size', String(size * factor) + 'px', 'important');
+            }
+          }
+        }""", zoom)
     return page.evaluate("""() => {
       const links = Array.from(document.querySelectorAll('header nav a'));
       const viewport = window.innerWidth;
@@ -76,11 +86,11 @@ def main():
                 page = browser.new_page()
                 page.audit_url = url
                 for width in WIDTHS:
-                    for zoom in (1, 2) if width == 320 else (1,):
+                    for zoom in (1, 2) if width in (320, 390) else (1,):
                         result = inspect(page, width, zoom)
-                        result["informational_zoom_proxy"] = zoom != 1
+                        result["text_only_zoom_proxy"] = zoom != 1
                         result["requested_width"] = width
-                        result["css_zoom_proxy"] = zoom
+                        result["text_zoom_factor"] = zoom
                         result["expected_links"] = list(EXPECTED)
                         result["labels_match"] = [x["text"] for x in result["links"]] == list(EXPECTED)
                         result["all_initially_visible"] = all(x["initially_visible"] for x in result["links"])
@@ -103,13 +113,12 @@ def main():
         server.shutdown()
         server.server_close()
     summary = {"scope": "generated public/tonight/ navigation only", "mode": "read-only",
-               "zoom_note": "CSS zoom proxy, not a claim of native text-only zoom",
-               "status": "pass" if all(x["pass"] for x in results if not x["informational_zoom_proxy"]) else "findings",
+               "zoom_note": "Computed font-size scaling proxy; not native browser text-only zoom",
+               "status": "pass" if all(x["pass"] for x in results) else "findings",
                "results": results}
     (output / "report.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"status": summary["status"], "cases": len(results),
-                      "failed": [f"{x['requested_width']}px zoom{x['css_zoom_proxy']}" for x in results if not x["pass"] and not x["informational_zoom_proxy"]],
-                      "informational_zoom_findings": [f"{x['requested_width']}px zoom{x['css_zoom_proxy']}" for x in results if not x["pass"] and x["informational_zoom_proxy"]]},
+                      "failed": [f"{x['requested_width']}px text{x['text_zoom_factor']}x" for x in results if not x["pass"]]},
                      ensure_ascii=False))
     if args.strict and summary["status"] != "pass":
         raise SystemExit(1)
