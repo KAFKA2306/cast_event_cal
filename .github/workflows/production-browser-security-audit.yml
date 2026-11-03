@@ -1,0 +1,86 @@
+name: Live browser security headers (audit only)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * *'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/production-browser-security-audit.yml'
+      - 'scripts/audit_browser_security.py'
+permissions:
+  contents: read
+jobs:
+  observe-live-headers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Record final GET response for home, Tonight, and a live event detail
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          import subprocess
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urljoin, urlsplit
+          from urllib.request import Request, urlopen
+
+          home = 'https://kafka2306.github.io/cast_event_cal/'
+          tonight = urljoin(home, 'tonight/')
+          output = Path('production-browser-security.json')
+
+          class EventLinks(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'a':
+                      href = dict(attrs).get('href')
+                      if href:
+                          url = urljoin(home, href)
+                          parsed = urlsplit(url)
+                          if (parsed.scheme == 'https' and parsed.netloc == 'kafka2306.github.io'
+                                  and re.fullmatch(r'/cast_event_cal/events/[0-9a-f]+/', parsed.path)):
+                              self.links.append(url)
+
+          try:
+              with urlopen(Request(home, headers={'User-Agent': 'cast-event-cal-security-audit/1'}), timeout=20) as response:
+                  html = response.read().decode('utf-8')
+              parser = EventLinks()
+              parser.feed(html)
+              detail = None
+              for candidate in dict.fromkeys(parser.links):
+                  try:
+                      with urlopen(Request(candidate, headers={'User-Agent': 'cast-event-cal-security-audit/1'}), timeout=10) as response:
+                          if response.status == 200:
+                              detail = candidate
+                              break
+                  except Exception:
+                      continue
+              if not detail:
+                  raise RuntimeError('No reachable canonical event detail URL on the live home page')
+              subprocess.run([
+                  'python', 'scripts/audit_browser_security.py',
+                  '--production-url', home, '--production-url', tonight,
+                  '--production-url', detail, '--output', str(output), '--check',
+              ], check=True)
+              report = json.loads(output.read_text(encoding='utf-8'))
+              print(json.dumps({'mode': 'audit-only', 'production': report['production']}, ensure_ascii=False))
+          except Exception as exc:
+              if not output.exists():
+                  output.write_text(json.dumps({'mode': 'audit-only', 'error': str(exc)}, ensure_ascii=False) + '\n', encoding='utf-8')
+              raise
+          PY
+      - name: Save live HTTP evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: production-browser-security
+          path: production-browser-security.json
+          if-no-files-found: error
