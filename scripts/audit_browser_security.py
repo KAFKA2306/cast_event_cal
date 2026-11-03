@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -14,16 +15,40 @@ SURFACES = (ROOT / "web/index.template.html",)
 ORIGIN_RE = re.compile(r"https://[^\s\"'<>`)]+")
 
 
+class _ActiveBlockCounter(HTMLParser):
+    """Count executable inline scripts separately from external and data scripts."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.inline_scripts = 0
+        self.external_scripts = 0
+        self.inline_styles = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = dict(attrs)
+        if tag == "style":
+            self.inline_styles += 1
+        elif tag == "script":
+            if attributes.get("src"):
+                self.external_scripts += 1
+            else:
+                script_type = (attributes.get("type") or "").split(";", 1)[0].strip().lower()
+                if script_type in {"", "module", "text/javascript", "application/javascript"}:
+                    self.inline_scripts += 1
+
+
 def inventory(text: str) -> dict[str, object]:
     origins = sorted({m.group(0).split('/', 3)[2] for m in ORIGIN_RE.finditer(text)})
+    counter = _ActiveBlockCounter()
+    counter.feed(text)
     return {
         "origins": origins,
-        "inline_script_blocks": len(re.findall(r"<script(?:\s[^>]*)?>", text, re.I)),
-        "inline_style_blocks": len(re.findall(r"<style(?:\s[^>]*)?>", text, re.I)),
+        "inline_script_blocks": counter.inline_scripts,
+        "external_script_blocks": counter.external_scripts,
+        "inline_style_blocks": counter.inline_styles,
         "eval_calls": len(re.findall(r"\beval\s*\(", text)),
         "dynamic_script_injection": bool(re.search(r"createElement\s*\(\s*['\"]script['\"]", text)),
     }
-
 
 def audit_policy(policy: dict[str, object]) -> list[str]:
     errors: list[str] = []
@@ -45,8 +70,9 @@ def audit_policy(policy: dict[str, object]) -> list[str]:
 def read_headers(url: str) -> dict[str, str]:
     request = Request(url, method="HEAD", headers={"User-Agent": "cast-event-cal-security-audit/1"})
     with urlopen(request, timeout=15) as response:
-        wanted = {"content-security-policy", "referrer-policy", "x-content-type-options", "permissions-policy"}
-        return {k.lower(): v for k, v in response.headers.items() if k.lower() in wanted}
+        wanted = ("content-security-policy", "referrer-policy", "x-content-type-options", "permissions-policy")
+        observed = {k.lower(): v for k, v in response.headers.items()}
+        return {name: observed.get(name, "missing") for name in wanted}
 
 
 def build_report(production_url: str | None = None) -> dict[str, object]:
