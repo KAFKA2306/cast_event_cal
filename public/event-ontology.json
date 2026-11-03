@@ -1,8 +1,8 @@
 {
   "schema_version": "3.0",
-  "generated_at": "2026-11-03T18:12:13Z",
-  "source_event_generated_at": "2026-11-03T18:11:47Z",
-  "source_event_count": 884,
+  "generated_at": "2026-11-03T21:23:59Z",
+  "source_event_generated_at": "2026-11-03T21:23:33Z",
+  "source_event_count": 885,
   "curated_schema_version": "2.0",
   "governance": {
     "curation_mode": "human_only",
@@ -23,7 +23,7 @@
     "required_identity": "alias or exact organizer plus all required patterns"
   },
   "curated_entry_count": 15,
-  "observed_entity_count": 47,
+  "observed_entity_count": 48,
   "category_ontology_schema_version": "2.0",
   "category_labels": {
     "recruitment_deadline": "募集・締切",
@@ -48,8 +48,8 @@
     "language_exchange": 34,
     "learning": 18,
     "world_tour": 17,
+    "music": 7,
     "other": 7,
-    "music": 6,
     "recruitment_deadline": 5,
     "performance": 3
   },
@@ -73,13 +73,13 @@
     "dj": 1
   },
   "event_mode_breakdown": {
-    "in_world": 874,
+    "in_world": 875,
     "deadline": 5,
     "unknown": 4,
     "hybrid": 1
   },
   "classification_source_breakdown": {
-    "keyword_rules": 380,
+    "keyword_rules": 381,
     "curated_ontology": 278,
     "legacy_category": 122,
     "legacy_and_keywords": 97,
@@ -981,13 +981,13 @@
       "image_url": null,
       "image_kind": null,
       "observed_event_count": 121,
-      "latest_observed_start": "2027-03-02T19:00:00Z",
+      "latest_observed_start": "2027-03-03T19:00:00Z",
       "sample_event_ids": [
+        "ea43200dfa7e8d5e319c",
         "55f260a6c0229adf70d4",
         "72437acc611a00e04ab7",
         "ac0fe6d617ff9d3a50d9",
-        "f0ab7c7b18bebd7a0f60",
-        "49c32a2d424a1fd9d980"
+        "f0ab7c7b18bebd7a0f60"
       ],
       "sample_titles": [
         "おはよう！朝4時に何してるんだぃ？",
@@ -2366,6 +2366,52 @@
         },
         {
           "url": "https://x.com/kamonegi10_06",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/kohadachaan",
+      "organizer": "@kohadachaan",
+      "official_x_url": "https://x.com/kohadachaan",
+      "official_website_url": null,
+      "image_url": null,
+      "image_kind": null,
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-06T21:00:00Z",
+      "sample_event_ids": [
+        "f03235e2192497da7814"
+      ],
+      "sample_titles": [
+        "🎂 イベント告知 🎂 様々なご縁やご紹介でお世話になっているdataさんのお誕生日会が VRChat で 開催 されます！私も DJ でお祝いさせていただきます☺️ 📅 イベント開始 ：11/…"
+      ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/funsizedata/status/2117704408255578121",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/kohadachaan/status/2117709580822265871?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/kohadachaan",
           "label": "公式X",
           "kind": "official_x"
         }
