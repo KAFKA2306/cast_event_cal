@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 891,
+  "event_count": 895,
   "matched_events": 294,
   "matched_series": {
     "vrc-goita": 18,
@@ -20,7 +20,7 @@
     "vrc-fit-boxing": 34,
     "personally-match": 17
   },
-  "unmatched_events": 597,
+  "unmatched_events": 601,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3537,17 +3537,17 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 891,
+    "event_count": 895,
     "category_breakdown": {
       "art": 121,
-      "community": 222,
+      "community": 224,
       "game": 113,
       "language_exchange": 34,
       "learning": 19,
       "music": 7,
-      "other": 11,
+      "other": 12,
       "performance": 1,
-      "recruitment_deadline": 3,
+      "recruitment_deadline": 4,
       "technology": 274,
       "wellness": 69,
       "world_tour": 17
@@ -3556,12 +3556,13 @@
       "ai": 34,
       "application_deadline": 1,
       "auction": 2,
+      "bar": 1,
       "cafe": 17,
       "cast_service": 2,
       "dj": 2,
       "engineering": 165,
       "fitness": 34,
-      "hangout": 57,
+      "hangout": 58,
       "language_exchange": 34,
       "mystery": 34,
       "photography": 121,
@@ -3572,21 +3573,21 @@
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 3,
+      "deadline": 4,
       "hybrid": 4,
-      "in_world": 879,
+      "in_world": 882,
       "unknown": 5
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
-      "fallback": 11,
-      "keyword_rules": 385,
+      "fallback": 12,
+      "keyword_rules": 388,
       "legacy_and_keywords": 96,
       "legacy_category": 122
     },
     "organizer_profile_count": 21,
-    "low_confidence_event_count": 46,
-    "audit_event_count": 46
+    "low_confidence_event_count": 48,
+    "audit_event_count": 48
   },
   "category_review_queue": [
     {
@@ -3770,6 +3771,36 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "faf167c0569e57a9ffec",
+      "title": "#私立 VRC 学園 第24期生徒 説明会 を行います。 本校は学生生活の体験を通して # VRChat の世界の中で可能性と出会える イベント です。 生徒応募には、期間中に1日 説明会 へ…",
+      "category": "recruitment_deadline",
+      "label": "募集・締切",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:応募"
+      ],
+      "event_mode": "deadline",
+      "ambiguous_with": [
+        "learning"
+      ]
+    },
+    {
+      "event_id": "617c1d3251833a47e26b",
+      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 11月9日（月曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください！…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
