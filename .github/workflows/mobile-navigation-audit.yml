@@ -1,8 +1,9 @@
-name: Mobile navigation browser audit (report-only)
+name: Public browser regression (navigation and URL state)
 on:
   pull_request:
     paths:
       - 'scripts/audit_mobile_navigation.py'
+      - 'scripts/audit_tonight_url_browser.py'
       - 'public/tonight/**'
       - '.github/workflows/mobile-navigation-audit.yml'
   push:
@@ -28,6 +29,15 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Audit generated Tonight navigation without modifying production
         run: python scripts/audit_mobile_navigation.py --output-dir mobile-audit
+      - name: Verify bounded Tonight URL state in Chromium
+        run: python scripts/audit_tonight_url_browser.py --output-dir tonight-url-browser-audit
+      - name: Save URL-state browser evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: tonight-url-browser-audit
+          path: tonight-url-browser-audit/
+          if-no-files-found: error
       - name: Save measured findings and screenshots
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
