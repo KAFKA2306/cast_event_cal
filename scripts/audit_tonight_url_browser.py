@@ -7,7 +7,7 @@ canonical event payload. No production data or external services are changed.
 import functools
 import json
 import threading
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import quote
@@ -21,9 +21,9 @@ class QuietHandler(SimpleHTTPRequestHandler):
 
 
 def fixture():
-    start = (datetime.now(timezone.utc) + timedelta(days=2)).isoformat()
+    start = (datetime.now(UTC) + timedelta(days=2)).isoformat()
     return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "events": [
             {
                 "id": f"fixture-{index}",
