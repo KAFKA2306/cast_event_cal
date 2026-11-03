@@ -11,7 +11,24 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "config/browser-security-policy.json"
-SURFACES = (ROOT / "web/index.template.html",)
+REQUIRED_SURFACES = (
+    "web/index.template.html",
+    "public/index.html",
+    "public/tonight/index.html",
+)
+REPRESENTATIVE_GROUPS = ("events", "categories", "series")
+
+
+def select_surfaces(root: Path) -> tuple[list[Path], list[str]]:
+    """Inspect generated entry points plus one deterministic page per family."""
+    candidates = [root / relative for relative in REQUIRED_SURFACES]
+    for family in REPRESENTATIVE_GROUPS:
+        sample = next(iter(sorted((root / "public" / family).glob("*/index.html"))), None)
+        if sample is not None:
+            candidates.append(sample)
+    existing = [path for path in candidates if path.is_file()]
+    missing = [str(path.relative_to(root)) for path in candidates if not path.is_file()]
+    return existing, missing
 ORIGIN_RE = re.compile(r"https://[^\s\"'<>`)]+")
 
 
@@ -132,12 +149,14 @@ def read_headers(url: str) -> dict[str, str | list[str]]:
 def build_report(production_url: str | list[str] | None = None) -> dict[str, object]:
     policy = json.loads(POLICY.read_text(encoding="utf-8"))
     surfaces = {}
-    for path in SURFACES:
+    selected, missing = select_surfaces(ROOT)
+    for path in selected:
         surfaces[str(path.relative_to(ROOT))] = inventory(path.read_text(encoding="utf-8"))
     report: dict[str, object] = {
         "policy_version": policy["version"],
         "mode": policy["mode"],
         "policy_errors": audit_policy(policy),
+        "missing_surfaces": missing,
         "surfaces": surfaces,
     }
     if production_url:
@@ -149,6 +168,7 @@ def build_report(production_url: str | list[str] | None = None) -> dict[str, obj
 def check_report(report: dict[str, object]) -> list[str]:
     """Fail on malformed policies, but keep missing headers audit-only."""
     errors = list(report["policy_errors"])
+    errors.extend(f"missing audit surface: {path}" for path in report.get("missing_surfaces", []))
     for entry in report.get("production", []):
         for error in entry["policy_errors"]:
             errors.append(f"{entry['final_url']}: {error}")
