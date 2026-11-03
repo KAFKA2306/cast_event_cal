@@ -10,7 +10,7 @@ on:
     - cron: '47 * * * *'
 
 permissions:
-  actions: read
+  actions: write # required only for bounded recovery workflow_dispatch
   contents: read
 
 jobs:
@@ -45,10 +45,26 @@ jobs:
       - name: Audit updater liveness
         if: always()
         run: python scripts/audit_updater_liveness.py --input /tmp/liveness-input.json --output updater-liveness.json
+      - name: Plan bounded recovery after a late scheduled update
+        if: ${{ always() && github.event_name == 'schedule' }}
+        id: recovery
+        run: >-
+          python scripts/plan_stale_updater_recovery.py
+          --audit updater-liveness.json
+          --input /tmp/liveness-input.json
+          --output updater-recovery-decision.json
+          --github-output "$GITHUB_OUTPUT"
+      - name: Dispatch one recovery update
+        if: ${{ always() && github.event_name == 'schedule' && steps.recovery.outputs.dispatch == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-calendar-v2.yml --ref main -f recovery_attempt=1
       - name: Upload machine-readable audit
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: updater-liveness
-          path: updater-liveness.json
+          path: |
+            updater-liveness.json
+            updater-recovery-decision.json
           if-no-files-found: error
