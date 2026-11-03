@@ -2,75 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 898,
-  "matched_events": 294,
+  "event_count": 891,
+  "matched_events": 295,
   "matched_series": {
-    "vrc-goita": 18,
-    "vrc-game-world-club": 18,
-    "zerozoku-auction": 2,
     "exploit-club": 18,
-    "yuruge-meet": 17,
-    "wednesday-quest-beginners": 17,
-    "ml-gathering": 34,
-    "vrc-idle-gathering": 17,
+    "yuruge-meet": 18,
+    "wednesday-quest-beginners": 18,
+    "ml-gathering": 36,
+    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
-    "personally-match": 17
+    "personally-match": 17,
+    "vrc-goita": 17,
+    "vrc-game-world-club": 17
   },
-  "unmatched_events": 604,
+  "unmatched_events": 596,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "6bffb7923f81287383dd",
-      "title": "VRCごいた会",
-      "status": "matched",
-      "ontology_id": "vrc-goita",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "b690f97dbcf662babaea",
-      "title": "VRCゲームワールド部 月曜イベント",
-      "status": "matched",
-      "ontology_id": "vrc-game-world-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "331f78adb580293ee38f",
-      "title": "VRC イベント 〜０属オークション〜 ✨第8回 開催 ✨ 【RT招待キャンペーン！】 『 開催日時 』 11/2(月) 22:00～ ✅ リクイン 抽選式 ✅参加条件は5000UC以上の所持…",
-      "status": "matched",
-      "ontology_id": "zerozoku-auction",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "a408bed3ef29fdb466d5",
-      "title": "VRC オークションイベント 💰『０属オークション』💰 本日 22:00~ 第8回 開催 ～出品サキュバス公開～ 【参加方法】 時間になったらインスタンスリーダーに１回 リクイン ！ 🔔22:…",
-      "status": "matched",
-      "ontology_id": "zerozoku-auction",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "1827c8b82af9ef9d2b9e",
       "title": "EXPLOIT部 定期対戦会",
@@ -3533,97 +3484,146 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "43c18c586f17f63335ca",
+      "title": "ゆるゲMEET定期開催日",
+      "status": "matched",
+      "ontology_id": "yuruge-meet",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "8a8bc2ad7806c012ad8b",
+      "title": "水曜Quest初心者の集い",
+      "status": "matched",
+      "ontology_id": "wednesday-quest-beginners",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "4fbcd0fb9b774a41e7e4",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "1e61321daf0a3a795166",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "7137c599dc838690a052",
+      "title": "VRCでボーっとする会",
+      "status": "matched",
+      "ontology_id": "vrc-idle-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 898,
+    "event_count": 891,
     "category_breakdown": {
       "art": 121,
-      "community": 229,
-      "game": 108,
+      "community": 225,
+      "game": 106,
       "language_exchange": 34,
-      "learning": 19,
-      "music": 8,
-      "other": 10,
-      "performance": 1,
-      "recruitment_deadline": 6,
+      "learning": 18,
+      "music": 6,
+      "other": 12,
+      "performance": 2,
+      "recruitment_deadline": 5,
       "technology": 274,
       "wellness": 69,
       "world_tour": 19
     },
     "subcategory_breakdown": {
-      "ai": 34,
+      "ai": 36,
       "application_deadline": 1,
-      "auction": 2,
       "bar": 1,
       "cafe": 17,
       "cast_recruitment": 1,
-      "cast_service": 2,
-      "dj": 2,
-      "engineering": 165,
+      "dj": 1,
+      "engineering": 164,
       "fitness": 34,
-      "hangout": 59,
+      "hangout": 57,
       "language_exchange": 34,
-      "mystery": 34,
+      "mystery": 35,
       "photography": 121,
-      "research": 66,
-      "social": 149,
-      "tabletop": 37,
+      "research": 65,
+      "social": 150,
+      "tabletop": 36,
       "workshop": 10,
       "world_tour": 19
     },
     "event_mode_breakdown": {
-      "deadline": 6,
-      "hybrid": 4,
-      "in_world": 883,
-      "unknown": 5
+      "deadline": 5,
+      "hybrid": 3,
+      "in_world": 879,
+      "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 10,
-      "keyword_rules": 392,
+      "curated_ontology": 278,
+      "fallback": 12,
+      "keyword_rules": 382,
       "legacy_and_keywords": 97,
       "legacy_category": 122
     },
-    "organizer_profile_count": 21,
+    "organizer_profile_count": 20,
     "low_confidence_event_count": 46,
     "audit_event_count": 46
   },
   "category_review_queue": [
     {
-      "event_id": "64d40cd650bee48ab722",
-      "title": "SW_Arch ソフトウェアアーキテクチャ集会",
-      "category": "technology",
-      "label": "技術・研究",
-      "subcategory": "engineering",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ソフトウェア"
-      ],
+      "event_id": "8103a4f04671dfe323df",
+      "title": "【 本日 22時から！】 グループ限定NAGiSAを 開催 します！ メンバー同士の親交を深めるのはもちろん、新しい方も歓迎してます！ 身体障害をお持ちの方や、身体障害に興味がある方は、 VR…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
       "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
+      "ambiguous_with": []
     },
     {
-      "event_id": "3ab081a165ca063f87b6",
-      "title": "VRC歴史集会",
-      "category": "learning",
-      "label": "学習・講義",
+      "event_id": "e1cddc94c36b856008f4",
+      "title": "これ 本日 22:00から vrc にて 上映会 するので興味ある方はぜひあすまのフレンドインスタンスにて 上映会 への 参加 を🎥 https://t.co/fe2Oe5UKZ5",
+      "category": "other",
+      "label": "その他",
       "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:歴史"
-      ],
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
       "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
+      "ambiguous_with": []
     },
     {
       "event_id": "5332ebd06edd7da9537f",
@@ -3640,7 +3640,7 @@
     },
     {
       "event_id": "f43ebd4cc868f3332588",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第87回は11月4日(水) 『21:00〜22:30』 ※当 イベ…",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第87回は11月4日(水) 『21:00〜22:30』 ※当イベントは…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3727,7 +3727,7 @@
     },
     {
       "event_id": "45544f213fc6969f4db8",
-      "title": "🌸✨ 第2回プレ オープン開催 決定！ ✨🌸 🏫 放課後Sioくらぶ - Pleiades -（#しおぷれ VRC ） 📅 11月7日（土） 🕙 営業 時間｜22:00〜23:00 🌟 アフタ…",
+      "title": "🌸✨ 第2回プレ オープン開催決定 ！ ✨🌸 🏫 放課後Sioくらぶ - Pleiades -（#しおぷれ VRC ） 📅 11月7日（土） 🕙 営業時間｜22:00〜23:00 🌟 アフター…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
