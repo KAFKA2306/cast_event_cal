@@ -67,15 +67,70 @@ def audit_policy(policy: dict[str, object]) -> list[str]:
     return errors
 
 
-def read_headers(url: str) -> dict[str, str]:
-    request = Request(url, method="HEAD", headers={"User-Agent": "cast-event-cal-security-audit/1"})
+PRODUCTION_HEADERS = (
+    "content-security-policy",
+    "content-security-policy-report-only",
+    "referrer-policy",
+    "x-content-type-options",
+    "permissions-policy",
+    "x-frame-options",
+)
+
+
+def policy_directive_errors(policies: list[str]) -> list[str]:
+    """Identify duplicate directives and contradictory 'none' source lists."""
+    errors: list[str] = []
+    for index, policy in enumerate(policies, start=1):
+        seen: set[str] = set()
+        for clause in policy.split(";"):
+            parts = clause.strip().split()
+            if not parts:
+                continue
+            directive, *sources = parts
+            directive = directive.lower()
+            if directive in seen:
+                errors.append(f"CSP #{index}: duplicate directive {directive}")
+            seen.add(directive)
+            if "'none'" in sources and len(sources) > 1:
+                errors.append(f"CSP #{index}: {directive} combines 'none' with other sources")
+    return errors
+
+
+def read_production_response(url: str) -> dict[str, object]:
+    """Inspect the final GET response, not an intermediate redirect or HEAD."""
+    request = Request(url, method="GET", headers={"User-Agent": "cast-event-cal-security-audit/1"})
     with urlopen(request, timeout=15) as response:
-        wanted = ("content-security-policy", "referrer-policy", "x-content-type-options", "permissions-policy")
-        observed = {k.lower(): v for k, v in response.headers.items()}
-        return {name: observed.get(name, "missing") for name in wanted}
+        observed: dict[str, list[str]] = {}
+        for name in PRODUCTION_HEADERS:
+            if hasattr(response.headers, "get_all"):
+                values = response.headers.get_all(name) or []
+            else:
+                values = [value for key, value in response.headers.items() if key.lower() == name]
+            observed[name] = values
+        headers: dict[str, str | list[str]] = {
+            name: values[0] if len(values) == 1 else values if values else "missing"
+            for name, values in observed.items()
+        }
+        errors = policy_directive_errors(observed["content-security-policy"])
+        errors.extend(policy_directive_errors(observed["content-security-policy-report-only"]))
+        duplicates = {name: len(values) for name, values in observed.items() if len(values) > 1}
+        return {
+            "requested_url": url,
+            "final_url": response.geturl() if hasattr(response, "geturl") else url,
+            "status": getattr(response, "status", None),
+            "headers": headers,
+            "duplicate_header_counts": duplicates,
+            "policy_errors": errors,
+        }
 
 
-def build_report(production_url: str | None = None) -> dict[str, object]:
+def read_headers(url: str) -> dict[str, str | list[str]]:
+    """Backward-compatible header-only view of the final response."""
+    return read_production_response(url)["headers"]
+
+
+
+def build_report(production_url: str | list[str] | None = None) -> dict[str, object]:
     policy = json.loads(POLICY.read_text(encoding="utf-8"))
     surfaces = {}
     for path in SURFACES:
@@ -87,13 +142,14 @@ def build_report(production_url: str | None = None) -> dict[str, object]:
         "surfaces": surfaces,
     }
     if production_url:
-        report["production"] = {"url": production_url, "headers": read_headers(production_url)}
+        urls = [production_url] if isinstance(production_url, str) else production_url
+        report["production"] = [read_production_response(url) for url in urls]
     return report
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--production-url")
+    parser.add_argument("--production-url", action="append", help="Repeat for home, Tonight, and an event detail URL")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
