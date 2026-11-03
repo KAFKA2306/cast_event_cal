@@ -14,16 +14,16 @@ def _run(query: str, *, populate: bool = False) -> dict:
     pop = re.search(r"function populate\(\)\{.*?\}(?=function bind)", source)
     assert pop, "dataset-dependent filter validation must remain testable"
     js = """
-const PAGE=30,MAX_RENDER=300;
+const PAGE=30,MAX_RENDER=300,MAX_QUERY_CHARS=256;
 const state={q:'',range:'today',category:'all',source:'all',deadlines:false,limit:PAGE,
              events:[{category:'VRChat',source:'official'}],historyOff:false};
-const location={search:QUERY,pathname:'/tonight/'};
+const location={search:__QUERY_LITERAL__,pathname:'/tonight/'};
 let canonical='';
 const history={replaceState:(_a,_b,value)=>{canonical=value}};
 const elements={};
 const $=selector=>elements[selector]??=( {innerHTML:'',value:'',checked:false,setAttribute(){}});
 const category=e=>e.category,source=e=>e.source,esc=v=>v;
-""" .replace("QUERY", json.dumps(query, ensure_ascii=False))
+""" .replace("__QUERY_LITERAL__", json.dumps(query, ensure_ascii=False))
     js += read.group(0) + "\n" + pop.group(0) + "\nreadUrl();\n"
     if populate:
         js += "populate();\n"
@@ -56,3 +56,22 @@ def test_canonical_roundtrip_and_dataset_option_validation():
     assert "category=" not in invalid["canonical"]
     assert "source=" not in invalid["canonical"]
     assert "limit=" not in invalid["canonical"]
+
+
+def test_long_untrusted_query_is_rejected_not_silently_truncated():
+    oversized = _run("?q=" + "あ" * 257, populate=True)
+    assert oversized["state"]["q"] == ""
+    assert "256文字" in oversized["state"]["urlWarning"]
+    assert "q=" not in oversized["canonical"]
+    boundary = _run("?q=" + "あ" * 256, populate=True)
+    assert boundary["state"]["q"] == "あ" * 256
+    assert "q=" in boundary["canonical"]
+    assert _run("?" + boundary["canonical"].split("?", 1)[1])["state"]["q"] == "あ" * 256
+
+
+def test_repeated_query_keys_use_first_value_deterministically():
+    result = _run("?q=%E5%A4%A7%E9%98%AA&q=%E6%9D%B1%E4%BA%AC&range=week&range=all")
+    assert result["state"]["q"] == "大阪"
+    assert result["state"]["range"] == "week"
+    assert result["canonical"].count("q=") == 1
+    assert result["canonical"].count("range=") == 1
