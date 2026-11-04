@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-03T21:51:38Z",
+  "generated_at": "2026-11-04T01:42:51Z",
   "policy": "fail-closed-for-unreachable-optional-image-assets",
-  "checked_url_count": 70,
-  "reachable_url_count": 58,
-  "failed_url_count": 12,
-  "events_degraded": 70,
-  "stripped_image_fields": 141,
+  "checked_url_count": 69,
+  "reachable_url_count": 59,
+  "failed_url_count": 10,
+  "events_degraded": 68,
+  "stripped_image_fields": 136,
   "failures": {
-    "http_404": 4,
+    "http_404": 2,
     "unexpected_content_type:application/octet-stream": 8
   },
   "failed_urls": [
@@ -29,11 +29,11 @@
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_b44799ed-bef0-4d5e-852c-f8a99862f4ee/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_b44799ed-bef0-4d5e-852c-f8a99862f4ee/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
@@ -45,19 +45,11 @@
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/2017182793315618817/De9ZPLNl.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1692339500582887424/elXkQ6dt.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1774635895532257280/2Cb85imX.png?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
       "url": "https://pbs.twimg.com/profile_images/2109665691146338304/dM_WKUoM.png?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2017182793315618817/De9ZPLNl.jpg?format=webp&name=200x200",
       "reason": "http_404"
     }
   ]
