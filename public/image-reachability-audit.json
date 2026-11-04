@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-04T09:19:19Z",
+  "generated_at": "2026-11-04T16:39:12Z",
   "policy": "fail-closed-for-unreachable-optional-image-assets",
-  "checked_url_count": 65,
-  "reachable_url_count": 55,
-  "failed_url_count": 10,
-  "events_degraded": 68,
-  "stripped_image_fields": 136,
+  "checked_url_count": 82,
+  "reachable_url_count": 70,
+  "failed_url_count": 12,
+  "events_degraded": 69,
+  "stripped_image_fields": 138,
   "failures": {
-    "http_404": 2,
+    "http_404": 4,
     "unexpected_content_type:application/octet-stream": 8
   },
   "failed_urls": [
@@ -33,16 +33,24 @@
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_b44799ed-bef0-4d5e-852c-f8a99862f4ee/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_b44799ed-bef0-4d5e-852c-f8a99862f4ee/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
       "url": "https://api.vrchat.cloud/api/1/file/file_d5d81342-2354-4db9-8a92-7cae4fa721fc/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1522760913996025856/RtpWyyKM.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1728575042278289409/8pkRZEta.jpg?format=webp&name=200x200",
+      "reason": "http_404"
     },
     {
       "url": "https://pbs.twimg.com/profile_images/2017182793315618817/De9ZPLNl.jpg?format=webp&name=200x200",
