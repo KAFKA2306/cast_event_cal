@@ -2,85 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 907,
-  "matched_events": 295,
+  "event_count": 919,
+  "matched_events": 293,
   "matched_series": {
-    "yuruge-meet": 18,
-    "wednesday-quest-beginners": 18,
-    "ml-gathering": 36,
-    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 34,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
-    "exploit-club": 17
+    "exploit-club": 17,
+    "yuruge-meet": 17,
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 34,
+    "vrc-idle-gathering": 17
   },
-  "unmatched_events": 612,
+  "unmatched_events": 626,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "ad75da481fada5d16638",
-      "title": "ゆるゲMEET定期開催日",
-      "status": "matched",
-      "ontology_id": "yuruge-meet",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "df152579e48ee6f297a7",
-      "title": "水曜Quest初心者の集い",
-      "status": "matched",
-      "ontology_id": "wednesday-quest-beginners",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "7e38d0748fe88f9409de",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "a1caaec5d96cdec04f3e",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "da7303632997e92cec59",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "525e308bf1681cae00f9",
       "title": "VRC初心者ワールドツアー",
@@ -3543,90 +3484,101 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "a7c03965e6665e610669",
+      "title": "ASMR集会 初心者説明会",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "57323348402836e6344f",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "01001628bfbd5d23d2e1",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 907,
+    "event_count": 919,
     "category_breakdown": {
-      "art": 121,
-      "community": 231,
-      "game": 105,
+      "art": 122,
+      "community": 236,
+      "game": 103,
       "language_exchange": 34,
       "learning": 19,
-      "music": 11,
-      "other": 14,
-      "performance": 4,
-      "recruitment_deadline": 3,
-      "technology": 278,
-      "wellness": 69,
+      "music": 17,
+      "other": 16,
+      "performance": 5,
+      "recruitment_deadline": 4,
+      "technology": 277,
+      "wellness": 68,
       "world_tour": 18
     },
     "subcategory_breakdown": {
-      "ai": 36,
+      "ai": 34,
       "application_deadline": 1,
       "cafe": 19,
-      "cast_service": 1,
-      "engineering": 167,
+      "dance": 1,
+      "engineering": 169,
       "fitness": 34,
-      "hangout": 58,
+      "hangout": 61,
       "language_exchange": 34,
       "live_music": 1,
-      "mystery": 36,
+      "mystery": 35,
       "orientation": 1,
+      "participant_recruitment": 1,
       "photography": 121,
-      "research": 67,
+      "research": 66,
       "show": 1,
-      "social": 153,
+      "social": 156,
       "tabletop": 34,
       "theater": 1,
       "workshop": 10,
       "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 3,
-      "hybrid": 2,
-      "in_world": 898,
+      "deadline": 4,
+      "hybrid": 5,
+      "in_world": 906,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 14,
-      "keyword_rules": 395,
+      "curated_ontology": 275,
+      "fallback": 16,
+      "keyword_rules": 407,
       "legacy_and_keywords": 99,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 52,
-    "audit_event_count": 52
+    "low_confidence_event_count": 56,
+    "audit_event_count": 56
   },
   "category_review_queue": [
-    {
-      "event_id": "f43ebd4cc868f3332588",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第87回は11月4日(水) 『21:00〜22:30』 ※当イベントは…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c82740d1f733ecdec0f1",
-      "title": "昼 告知 ！ VRC 弓道部は今晩22時から！ 弓道未経験の方も気軽に参加してください！ Group インスタンスで 開催 するので事前に VRC 弓道部の Group への参加をお忘れなく！…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "25796d6d860ef203ae08",
       "title": "今夜 は VRChat 映画観賞会をするので、早い時間にワールド選んでおこうかな。 人数的には8~10人ぐらい 20時 開始 だけど、後ろの予定詰まってる人がいるので、 20時に上映 開始 と…",
@@ -3652,6 +3604,23 @@
       "evidence": [
         "keyword:title:演劇",
         "keyword:title:theater"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
+      "event_id": "62a78229c17da0273b7f",
+      "title": "# VRChat # VRChat イベント 会員の 開催 イベントについて 告知 します。 【 VRC 芸術 集会 （仮）】木曜２２時～ 美術や建築、考古、陶磁器といった芸術に関するプレゼン…",
+      "category": "art",
+      "label": "アート・展示・撮影",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:美術"
       ],
       "event_mode": "in_world",
       "ambiguous_with": [
@@ -3702,8 +3671,21 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "329a296c758edff80899",
+      "title": "【Guest Recruitment】 完璧な笑顔で武装した彼女たちが、 ハイヒールを脱ぎ、素顔に戻る場所。 VRChat 1:1個室いちゃいちゃイベント 『Sovereign's Secre…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "d9f320523511495db709",
-      "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 アメリカ宇宙軍の機密ミッション、打ち上げ映像を録画で観覧しましょう🚀 🚀 Falcon 9 Block 5 | USSF-432 …",
+      "title": "< 告知 > ロケット打ち上げを観る 集会 - アーカイブの部 アメリカ宇宙軍の機密ミッション、打ち上げ映像を録画で観覧しましょう🚀 🚀 Falcon 9 Block 5 | USSF-432…",
       "category": "performance",
       "label": "公演・ショー",
       "subcategory": "show",
@@ -3738,7 +3720,20 @@
     },
     {
       "event_id": "45544f213fc6969f4db8",
-      "title": "🌸✨ 第2回プレ オープン開催決定 ！ ✨🌸 🏫 放課後Sioくらぶ - Pleiades -（#しおぷれ VRC ） 📅 11月7日（土） 🕙 営業時間｜22:00〜23:00 🌟 アフター…",
+      "title": "🌸✨ 第2回プレ オープン開催決定 ！ ✨🌸 🏫 放課後Sioくらぶ - Pleiades -（#しおぷれ VRC ） 📅 11月7日（土） 🕙 営業 時間｜22:00〜23:00 🌟 アフタ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "3d80ec80e93fb713219b",
+      "title": "🎁メタ フェス 2026 11/8まで 開催 中🎉 メタ フェス 2026 開催 中です！ 800名以上のクリエイターによる 大規模即売会✨️ VRChat のワールドメニューから簡単入場‼️…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3794,7 +3789,7 @@
     },
     {
       "event_id": "ee51f365b39db4828d6b",
-      "title": "第76回「アバター改変なんもわからん集会」 日時 ：11月11日(水) 22:00 開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加方法： VRC グループへ JOIN ※講…",
+      "title": "第76回「アバター改変なんもわからん 集会 」 日時 ：11月11日(水) 22:00 開場 内容：改変なんでも質問会 想定技術Lv：なんもわからん 参加 方法： VRC グループへ JOIN…",
       "category": "technology",
       "label": "技術・研究",
       "subcategory": "engineering",
@@ -3808,6 +3803,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "dc8fe111a06b3ed8553a",
+      "title": "VRC 射撃部定例 イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日 はクレー射撃部 1位 ぼうし_12ga様 2位 ΜαSSPrο・Αμ様 3位 ねのはひ様でした…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "2bf099940034dc13e91c",
@@ -3946,6 +3954,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "573dba106f1af131a04f",
+      "title": "🌌 12月、初音ミクに VRChat で会おう！ 「初音ミク 夜空プログラム PLAYBACK LIVE in VRChat 」 開催決定 ！ 2023年から2026年まで、各年のメインビジュ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "0b2f14574eed0ee9f095",
@@ -4109,6 +4130,23 @@
       "event_mode": "in_world",
       "ambiguous_with": [
         "community"
+      ]
+    },
+    {
+      "event_id": "7c54e9a91b932a333eac",
+      "title": "ツクヨミ感謝祭最新情報 アマテラス衣装でのライブ 開催 決定 YouTubeでのアーカイブあり。 VRChat では12/26日21:00から本公演 その後は7回の再 公演 あり！ 遅刻現金！…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ライブ"
+      ],
+      "event_mode": "hybrid",
+      "ambiguous_with": [
+        "performance"
       ]
     },
     {
