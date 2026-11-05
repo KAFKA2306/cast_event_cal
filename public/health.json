@@ -1,11 +1,11 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-11-04T23:39:15Z",
+  "generated_at": "2026-11-05T02:51:51Z",
   "status": "degraded",
   "enabled_sources": 5,
   "successful_sources": 3,
   "failed_sources": 0,
-  "event_count": 902,
+  "event_count": 903,
   "sources": [
     {
       "name": "repository_manual_events",
@@ -18,7 +18,7 @@
       "status": "skipped",
       "count": 0,
       "duration_ms": 0,
-      "collection_generated_at": "2026-11-04T23:37:50Z",
+      "collection_generated_at": "2026-11-05T02:50:16Z",
       "reason": "VRCHAT_AUTH_COOKIE is not configured",
       "collection_event_count": 0
     },
@@ -27,24 +27,24 @@
       "status": "skipped",
       "count": 2,
       "duration_ms": 0,
-      "collection_generated_at": "2026-11-04T23:37:50Z",
+      "collection_generated_at": "2026-11-05T02:50:16Z",
       "reason": "X_BEARER_TOKEN is not configured; retained existing cache",
       "collection_event_count": 2
     },
     {
       "name": "yahoo_realtime_events",
       "status": "ok",
-      "count": 39,
+      "count": 40,
       "duration_ms": 0,
-      "collection_generated_at": "2026-11-04T23:39:13Z",
-      "collection_event_count": 39
+      "collection_generated_at": "2026-11-05T02:51:47Z",
+      "collection_event_count": 40
     },
     {
       "name": "external_calendar_events",
       "status": "ok",
       "count": 367,
       "duration_ms": 0,
-      "collection_generated_at": "2026-11-04T23:38:51Z",
+      "collection_generated_at": "2026-11-05T02:51:24Z",
       "collection_event_count": 367
     }
   ],
@@ -54,13 +54,13 @@
     "entries": 15,
     "matched_events": 295,
     "matched_series": 13,
-    "unmatched_events": 607,
+    "unmatched_events": 608,
     "ambiguous_events": 0,
     "status": "ok"
   },
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 902,
+    "event_count": 903,
     "category_breakdown": {
       "art": 121,
       "community": 230,
@@ -68,7 +68,7 @@
       "language_exchange": 34,
       "learning": 18,
       "music": 8,
-      "other": 14,
+      "other": 15,
       "performance": 4,
       "recruitment_deadline": 3,
       "technology": 278,
@@ -96,21 +96,21 @@
     "event_mode_breakdown": {
       "deadline": 3,
       "hybrid": 3,
-      "in_world": 892,
+      "in_world": 893,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
-      "fallback": 14,
+      "fallback": 15,
       "keyword_rules": 390,
       "legacy_and_keywords": 99,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 51,
-    "audit_event_count": 51
+    "low_confidence_event_count": 52,
+    "audit_event_count": 52
   },
-  "normalized_event_count": 902,
+  "normalized_event_count": 903,
   "occurrence_dedup_policy": "canonical-occurrence.v1",
   "skipped_sources": 2,
   "degraded_sources": 0
