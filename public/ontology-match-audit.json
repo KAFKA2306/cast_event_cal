@@ -2,13 +2,13 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 922,
-  "matched_events": 293,
+  "event_count": 926,
+  "matched_events": 294,
   "matched_series": {
     "vrc-beginner-world-tour": 18,
     "asmr-gathering": 36,
     "vrc-petting-zoo": 18,
-    "en-jp-language-exchange": 34,
+    "en-jp-language-exchange": 35,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
@@ -19,7 +19,7 @@
     "ml-gathering": 34,
     "vrc-idle-gathering": 17
   },
-  "unmatched_events": 629,
+  "unmatched_events": 632,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3520,17 +3520,29 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "7ba4ad331572cc8b84d6",
+      "title": "EN-JP Language Exchange（土曜）",
+      "status": "matched",
+      "ontology_id": "en-jp-language-exchange",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 922,
+    "event_count": 926,
     "category_breakdown": {
       "art": 122,
-      "community": 236,
-      "game": 104,
-      "language_exchange": 34,
-      "learning": 19,
+      "community": 237,
+      "game": 103,
+      "language_exchange": 35,
+      "learning": 22,
       "music": 18,
       "other": 17,
       "performance": 5,
@@ -3542,21 +3554,21 @@
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 1,
-      "cafe": 19,
+      "cafe": 18,
+      "class": 4,
       "dance": 1,
       "dj": 1,
       "engineering": 169,
       "fitness": 34,
-      "hangout": 61,
-      "language_exchange": 34,
+      "hangout": 62,
+      "language_exchange": 35,
       "live_music": 1,
       "mystery": 35,
-      "orientation": 1,
       "participant_recruitment": 1,
       "photography": 121,
       "research": 66,
       "show": 1,
-      "social": 156,
+      "social": 157,
       "tabletop": 34,
       "theater": 1,
       "workshop": 10,
@@ -3565,19 +3577,19 @@
     "event_mode_breakdown": {
       "deadline": 4,
       "hybrid": 5,
-      "in_world": 909,
+      "in_world": 913,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 275,
+      "curated_ontology": 276,
       "fallback": 17,
-      "keyword_rules": 409,
+      "keyword_rules": 412,
       "legacy_and_keywords": 99,
       "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 58,
-    "audit_event_count": 58
+    "low_confidence_event_count": 57,
+    "audit_event_count": 57
   },
   "category_review_queue": [
     {
@@ -3672,17 +3684,15 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "1f06464d467bb7baa064",
-      "title": "本日VRChatイベント 「スナックくり魔りEX」あります！ ぜひお越しください！ 22:00～JPTOWNのpublicインスタンスで行います。 # VRChat #JPTOWN https…",
-      "category": "game",
-      "label": "ゲーム・参加型",
+      "event_id": "9e81187c685bf9796e2b",
+      "title": "航空祭シーズンの11月も、金曜日22時からは VRC 空戦 イベント です。 本日 はドッグファイトと現代航空戦の両方をご用意してお待ちしております！ フライトを希望される場合は22:05に遅…",
+      "category": "other",
+      "label": "その他",
       "subcategory": null,
-      "score": 3,
-      "confidence": 0.585,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:organizer:game"
-      ],
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
     },
@@ -3940,19 +3950,6 @@
       "ambiguous_with": [
         "community"
       ]
-    },
-    {
-      "event_id": "32c0c1e6bfdbfa591d77",
-      "title": "第4回 LoLビジターカスタム Supported by Voicemod 🔥 前回 大会 の名場面 ゼリで5人抜きのペンタキル！ VRChat の会場で、みんなで観戦しました⚔️ 今回の本戦…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
     },
     {
       "event_id": "054e9b76cd4421419637",
