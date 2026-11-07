@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 933,
-  "event_count_after": 932,
+  "event_count_before": 918,
+  "event_count_after": 917,
   "candidate_cluster_count": 1,
   "duplicate_cluster_count": 1,
   "duplicate_occurrence_count": 1,
   "duplicate_post_count": 1,
-  "duplicate_rate": 0.001072,
+  "duplicate_rate": 0.001089,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
     {
       "cluster_id": "occ_06d14542bcd609de0391",
@@ -36,6 +36,15 @@
   ],
   "ambiguous_candidates": [
     {
+      "left_id": "b8122409db3153173804",
+      "right_id": "d1bca97ecf7ac7ec7679",
+      "starts_at": "2026-11-07T11:30:00Z",
+      "organizer": "@OTONOHAKOVRC",
+      "similarity": 0.6881,
+      "left_title": "【 ECHO｜TIME TABLE 】 ◤ タイムテーブル解禁 ◢ 音が届き、想いが重なり、 その響きが、誰かの 明日 へとつながる。 6組の出演者が紡ぐ、特別な一夜。 11.07 SAT｜ …",
+      "right_title": "【 ECHO｜いよいよ 明日開催 】 音が生まれ、想いが重なる。 その響きが、誰かの 明日 を照らす。 11.07 SAT｜ VRChat 20:30 OPEN / 21:00 START チ…"
+    },
+    {
       "left_id": "52092382c35a8226f288",
       "right_id": "ca537b89e45c429d5c59",
       "starts_at": "2026-11-07T12:00:00Z",
@@ -47,105 +56,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "aa053f82e1aa1a710400",
-      "right_id": "6e997e13fe8a1e374308",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "b8122409db3153173804",
+      "right_id": "d1bca97ecf7ac7ec7679",
+      "starts_at": "2026-11-07T11:30:00Z",
+      "left_organizer": "@OTONOHAKOVRC",
+      "right_organizer": "@OTONOHAKOVRC",
+      "similarity": 0.6881,
+      "left_title": "【 ECHO｜TIME TABLE 】 ◤ タイムテーブル解禁 ◢ 音が届き、想いが重なり、 その響きが、誰かの 明日 へとつながる。 6組の出演者が紡ぐ、特別な一夜。 11.07 SAT｜ …",
+      "right_title": "【 ECHO｜いよいよ 明日開催 】 音が生まれ、想いが重なる。 その響きが、誰かの 明日 を照らす。 11.07 SAT｜ VRChat 20:30 OPEN / 21:00 START チ…"
+    },
+    {
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "4a173628d2d4028ee3de",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@neil_core",
+      "similarity": 0.087,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "『ゴジラ-0.0』の VRC での感想会、 本日 21時から23時位でインスタンスを開いています。 今日 が初ゴジラの方も、地元をゴジラにぶっ壊してほしいゴジラファンの方も、奮ってご参加くださ…"
+    },
+    {
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "52092382c35a8226f288",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1203,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 11月7日(土) 21:00～ 開場 21:15～ てりやき定食さん 『#6 パーティクル ライブ を知ろう！ From JVSL』 ぜひお…"
+    },
+    {
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "e17af47f0f71a51c0a5c",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
       "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
+      "similarity": 0.0623,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "学生学際集会"
     },
     {
-      "left_id": "aa053f82e1aa1a710400",
-      "right_id": "e1f2ac830fdc90ef0265",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@takamaruvr",
-      "similarity": 0.0769,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRChat DJイベント 【イベント 告知 】 2026.11.06金曜日 21:00〜 group +にて これでいい、これがいい アニソンがたくさんかかる日！ ぜひ、遊びに来てね♪🤗 わ…"
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "ca537b89e45c429d5c59",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.0759,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "明日 は学生学際集会！ 第2回 学生学際集会×仮想学生集会 相互登壇 JVSLからてりやき定食さんが当集会に登壇します！ 『パーティクルライブを知ろう！ From JVSL』 学生学際集会のグ…"
     },
     {
-      "left_id": "aa053f82e1aa1a710400",
-      "right_id": "3c1b8de02f29ca54427b",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRC_AvaColle",
-      "similarity": 0.1348,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【#こなぷら お知らせ】 VRC Avatar Collection #あばこれ の定期集会イベント 「こなれ＋（こなれぷらす）」#こなぷら 📅 11月前半だけ、スタッフのスケジュール都合で金…"
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "d4c310d69a521574c9b3",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@pocozo_game",
+      "similarity": 0.1463,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "本日 11/7 21時から # VRC アバター自作交流会 です アバターの制作などに興味があるなら、どなたでも 参加 できます インスタンスは Group または Group +となりますの…"
     },
     {
-      "left_id": "6e997e13fe8a1e374308",
-      "right_id": "e1f2ac830fdc90ef0265",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@takamaruvr",
-      "similarity": 0.0608,
-      "left_title": "VRC Blender集会",
-      "right_title": "VRChat DJイベント 【イベント 告知 】 2026.11.06金曜日 21:00〜 group +にて これでいい、これがいい アニソンがたくさんかかる日！ ぜひ、遊びに来てね♪🤗 わ…"
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "fcadd51e630af80e9dec",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@suzufuki",
+      "similarity": 0.1512,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "本日 21時から冒険企画局の近藤さんTZFFの北沢さんと 対談 イベント があります VDP2026スペシャルステージ企画「TRPGトライアングルトークショー」 春の新企画のお話もしますので、…"
     },
     {
-      "left_id": "6e997e13fe8a1e374308",
-      "right_id": "3c1b8de02f29ca54427b",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@VRC_AvaColle",
-      "similarity": 0.0793,
-      "left_title": "VRC Blender集会",
-      "right_title": "【#こなぷら お知らせ】 VRC Avatar Collection #あばこれ の定期集会イベント 「こなれ＋（こなれぷらす）」#こなぷら 📅 11月前半だけ、スタッフのスケジュール都合で金…"
-    },
-    {
-      "left_id": "e1f2ac830fdc90ef0265",
-      "right_id": "3c1b8de02f29ca54427b",
-      "starts_at": "2026-11-06T12:00:00Z",
-      "left_organizer": "@takamaruvr",
-      "right_organizer": "@VRC_AvaColle",
-      "similarity": 0.1825,
-      "left_title": "VRChat DJイベント 【イベント 告知 】 2026.11.06金曜日 21:00〜 group +にて これでいい、これがいい アニソンがたくさんかかる日！ ぜひ、遊びに来てね♪🤗 わ…",
-      "right_title": "【#こなぷら お知らせ】 VRC Avatar Collection #あばこれ の定期集会イベント 「こなれ＋（こなれぷらす）」#こなぷら 📅 11月前半だけ、スタッフのスケジュール都合で金…"
-    },
-    {
-      "left_id": "682cc49324c0d67c68e1",
-      "right_id": "f7a7ed018d0016c26e15",
-      "starts_at": "2026-11-06T13:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "2bf4707395b74b9471e0",
+      "right_id": "b4ba3e5a852b38462e7a",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
       "right_organizer": null,
-      "similarity": 0.1074,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "Blender＆Unity技術交流会"
+      "similarity": 0.0334,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "株式投資座談会"
     },
     {
-      "left_id": "682cc49324c0d67c68e1",
-      "right_id": "7189caf26ed8f53b0cb7",
-      "starts_at": "2026-11-06T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.4,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "4a173628d2d4028ee3de",
+      "right_id": "52092382c35a8226f288",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "@neil_core",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.1569,
+      "left_title": "『ゴジラ-0.0』の VRC での感想会、 本日 21時から23時位でインスタンスを開いています。 今日 が初ゴジラの方も、地元をゴジラにぶっ壊してほしいゴジラファンの方も、奮ってご参加くださ…",
+      "right_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 11月7日(土) 21:00～ 開場 21:15～ てりやき定食さん 『#6 パーティクル ライブ を知ろう！ From JVSL』 ぜひお…"
     },
     {
-      "left_id": "682cc49324c0d67c68e1",
-      "right_id": "3300684c89c8021faf45",
-      "starts_at": "2026-11-06T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.3333,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRCふれあい動物園"
-    },
-    {
-      "left_id": "682cc49324c0d67c68e1",
-      "right_id": "277a9391678fad8ef30a",
-      "starts_at": "2026-11-06T13:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "4a173628d2d4028ee3de",
+      "right_id": "e17af47f0f71a51c0a5c",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "left_organizer": "@neil_core",
       "right_organizer": null,
-      "similarity": 0.093,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRC微分音集会"
+      "similarity": 0.1278,
+      "left_title": "『ゴジラ-0.0』の VRC での感想会、 本日 21時から23時位でインスタンスを開いています。 今日 が初ゴジラの方も、地元をゴジラにぶっ壊してほしいゴジラファンの方も、奮ってご参加くださ…",
+      "right_title": "学生学際集会"
     }
   ],
-  "generated_at": "2026-11-07T10:01:40Z"
+  "generated_at": "2026-11-07T15:13:03Z"
 }
