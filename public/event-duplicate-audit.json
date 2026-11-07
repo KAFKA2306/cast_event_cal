@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 926,
-  "event_count_after": 925,
+  "event_count_before": 933,
+  "event_count_after": 932,
   "candidate_cluster_count": 1,
   "duplicate_cluster_count": 1,
   "duplicate_occurrence_count": 1,
   "duplicate_post_count": 1,
-  "duplicate_rate": 0.00108,
+  "duplicate_rate": 0.001072,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_06d14542bcd609de0391",
@@ -34,7 +34,17 @@
       "representative_source_record_id": "src_be8eb87c6f79a965e829"
     }
   ],
-  "ambiguous_candidates": [],
+  "ambiguous_candidates": [
+    {
+      "left_id": "52092382c35a8226f288",
+      "right_id": "ca537b89e45c429d5c59",
+      "starts_at": "2026-11-07T12:00:00Z",
+      "organizer": "@vrcsim_official",
+      "similarity": 0.6169,
+      "left_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 11月7日(土) 21:00～ 開場 21:15～ てりやき定食さん 『#6 パーティクル ライブ を知ろう！ From JVSL』 ぜひお…",
+      "right_title": "明日 は学生学際集会！ 第2回 学生学際集会×仮想学生集会 相互登壇 JVSLからてりやき定食さんが当集会に登壇します！ 『パーティクルライブを知ろう！ From JVSL』 学生学際集会のグ…"
+    }
+  ],
   "negative_samples": [
     {
       "left_id": "aa053f82e1aa1a710400",
@@ -137,5 +147,5 @@
       "right_title": "VRC微分音集会"
     }
   ],
-  "generated_at": "2026-11-07T07:49:51Z"
+  "generated_at": "2026-11-07T10:01:40Z"
 }
