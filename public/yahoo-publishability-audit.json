@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
   "policy_version": "issue-196-generic-publishability.v1",
-  "generated_at": "2026-11-07T16:25:51Z",
+  "generated_at": "2026-11-07T19:40:35Z",
   "candidate_count": 5000,
-  "missing_datetime_before": 398,
-  "publishability_backlog_before": 177,
+  "missing_datetime_before": 399,
+  "publishability_backlog_before": 178,
   "occurrence_decision_counts_before": {
-    "ambiguous_datetime": 31,
+    "ambiguous_datetime": 32,
     "non_event": 17,
     "non_event_personal": 3,
     "partial_datetime": 131,
@@ -14,34 +14,32 @@
     "recurring_event": 15,
     "resolvable_event_candidate": 3
   },
-  "accepted_event_count": 119,
-  "promoted_from_missing_datetime": 2,
+  "accepted_event_count": 120,
+  "promoted_from_missing_datetime": 1,
   "promoted_status_ids": [
-    "2118553963251323221",
-    "2118584163959967992"
+    "2118553963251323221"
   ],
   "recurrence_materialized_count": 8,
-  "corroborated_materialized_count": 1,
+  "corroborated_materialized_count": 0,
   "resolution_method_counts": {
-    "corroborated_event_fingerprint_date_clock": 1,
-    "explicit_calendar_date": 49,
+    "explicit_calendar_date": 52,
     "explicit_calendar_date_evidence_span": 1,
     "explicit_datetime": 5,
     "next_occurrence_unprefixed": 3,
     "recurrence_ordinal_monthly_materialized": 4,
     "recurrence_weekly_materialized": 4,
     "relative_day_evidence_span": 10,
-    "relative_day_from_source_timestamp": 42
+    "relative_day_from_source_timestamp": 41
   },
   "resolution_blocker_counts": {
     "conflicting_fingerprint_resolution": 1,
     "datetime_parser_unsupported_or_unsafe": 16,
-    "missing_or_conflicting_clock": 67,
-    "missing_or_conflicting_date": 189,
-    "no_datetime_evidence": 1871,
-    "no_peer_evidence": 374,
-    "no_strong_event_signal": 35,
-    "non_event": 906,
+    "missing_or_conflicting_clock": 68,
+    "missing_or_conflicting_date": 188,
+    "no_datetime_evidence": 1868,
+    "no_peer_evidence": 378,
+    "no_strong_event_signal": 34,
+    "non_event": 905,
     "non_event_commerce": 169,
     "non_event_personal": 156,
     "out_of_publication_window": 11,

@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 917,
+  "event_count": 919,
   "matched_events": 294,
   "matched_series": {
     "en-jp-language-exchange": 36,
@@ -19,7 +19,7 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 623,
+  "unmatched_events": 625,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3536,16 +3536,16 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 917,
+    "event_count": 919,
     "category_breakdown": {
       "art": 121,
-      "community": 229,
+      "community": 231,
       "game": 102,
       "language_exchange": 36,
       "learning": 22,
-      "music": 12,
+      "music": 11,
       "other": 27,
-      "performance": 3,
+      "performance": 4,
       "recruitment_deadline": 3,
       "technology": 273,
       "wellness": 70,
@@ -3554,7 +3554,8 @@
     "subcategory_breakdown": {
       "ai": 34,
       "application_deadline": 1,
-      "cafe": 23,
+      "cafe": 24,
+      "cast_service": 1,
       "class": 4,
       "dj": 1,
       "engineering": 163,
@@ -3565,7 +3566,7 @@
       "mystery": 34,
       "photography": 121,
       "research": 68,
-      "show": 2,
+      "show": 3,
       "sightseeing": 1,
       "social": 147,
       "tabletop": 34,
@@ -3575,13 +3576,13 @@
     "event_mode_breakdown": {
       "deadline": 3,
       "hybrid": 3,
-      "in_world": 907,
+      "in_world": 909,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 277,
       "fallback": 27,
-      "keyword_rules": 396,
+      "keyword_rules": 398,
       "legacy_and_keywords": 95,
       "legacy_category": 122
     },
@@ -3590,6 +3591,23 @@
     "audit_event_count": 67
   },
   "category_review_queue": [
+    {
+      "event_id": "d9f320523511495db709",
+      "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 アメリカ宇宙軍の機密ミッション、打ち上げ映像を録画で観覧しましょう🚀 🚀 Falcon 9 Block 5 | USSF-432 …",
+      "category": "performance",
+      "label": "公演・ショー",
+      "subcategory": "show",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:ショー"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
     {
       "event_id": "df8e51162a35dbb203bd",
       "title": "毎週土曜 開催 中の「初心者案内＆ジェイプラツアー」 操作説明や遊び方、 VRChat のあれこれをみんなで学びます！ 🕗 日時 ：11/7(土)20:00～ 📜 参加 方法：グループ「JPL…",
@@ -3644,24 +3662,7 @@
     },
     {
       "event_id": "52092382c35a8226f288",
-      "title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 11月7日(土) 21:00～ 開場 21:15～ てりやき定食さん 『#6 パーティクル ライブ を知ろう！ From JVSL』 ぜひお…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "ca537b89e45c429d5c59",
-      "title": "明日 は学生学際集会！ 第2回 学生学際集会×仮想学生集会 相互登壇 JVSLからてりやき定食さんが当集会に登壇します！ 『パーティクルライブを知ろう！ From JVSL』 学生学際集会のグ…",
+      "title": "今夜 は学生学際集会！ 【タイムスケジュール】 11月7日(土) 21:00～ 開場 21:15～ てりやき定食さん 『#6 パーティクルライブを知ろう！ From JVSL』 ぜひお越しくだ…",
       "category": "music",
       "label": "音楽・ダンス",
       "subcategory": null,
