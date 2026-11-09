@@ -2,14 +2,12 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 900,
-  "matched_events": 293,
+  "event_count": 891,
+  "matched_events": 292,
   "matched_series": {
-    "en-jp-language-exchange": 35,
-    "vrc-fit-boxing": 35,
     "vrc-goita": 18,
     "vrc-game-world-club": 18,
-    "exploit-club": 17,
+    "exploit-club": 18,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
@@ -17,35 +15,13 @@
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
+    "en-jp-language-exchange": 34,
+    "vrc-fit-boxing": 34,
     "personally-match": 17
   },
-  "unmatched_events": 607,
+  "unmatched_events": 599,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "be6ea365e33355c8db67",
-      "title": "EN-JP Language Exchange（日曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "cb4b2393882549dbc8fb",
-      "title": "VRCフィットボクシング集会（日曜）",
-      "status": "matched",
-      "ontology_id": "vrc-fit-boxing",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "f6bcd2c8a966f9fe9b03",
       "title": "VRCごいた会",
@@ -3520,78 +3496,79 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "39be13bd60aa394a6750",
+      "title": "EXPLOIT部 定期対戦会",
+      "status": "matched",
+      "ontology_id": "exploit-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 900,
+    "event_count": 891,
     "category_breakdown": {
       "art": 121,
-      "community": 232,
-      "game": 107,
-      "language_exchange": 35,
-      "learning": 22,
-      "music": 13,
-      "other": 7,
-      "recruitment_deadline": 3,
-      "technology": 271,
-      "wellness": 71,
+      "community": 231,
+      "game": 108,
+      "language_exchange": 34,
+      "learning": 19,
+      "music": 7,
+      "other": 9,
+      "recruitment_deadline": 4,
+      "technology": 270,
+      "wellness": 70,
       "world_tour": 18
     },
     "subcategory_breakdown": {
       "ai": 34,
       "bar": 1,
       "cafe": 18,
+      "cast_recruitment": 1,
       "cast_service": 2,
-      "class": 4,
-      "dj": 5,
-      "engineering": 161,
-      "fitness": 35,
+      "dj": 1,
+      "engineering": 160,
+      "fitness": 34,
       "hangout": 64,
-      "language_exchange": 35,
+      "language_exchange": 34,
+      "lecture": 1,
       "mystery": 34,
+      "orientation": 1,
       "photography": 121,
-      "research": 68,
+      "research": 67,
       "sightseeing": 1,
-      "social": 146,
-      "tabletop": 35,
-      "workshop": 10,
+      "social": 145,
+      "tabletop": 36,
+      "workshop": 9,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 3,
+      "deadline": 4,
       "hybrid": 2,
-      "in_world": 891,
+      "in_world": 881,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 276,
-      "fallback": 7,
-      "keyword_rules": 401,
-      "legacy_and_keywords": 95,
+      "curated_ontology": 275,
+      "fallback": 9,
+      "keyword_rules": 390,
+      "legacy_and_keywords": 96,
       "legacy_category": 121
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 43,
-    "audit_event_count": 43
+    "low_confidence_event_count": 45,
+    "audit_event_count": 45
   },
   "category_review_queue": [
     {
-      "event_id": "46b2c039fa696707bb57",
-      "title": "🌙【#ClubMorceau】#44🌙 ～ モルソ 第44回 通常営業 ～ ⏰11月8日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) 🎉Pe…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "6920aa4af5f710a362d8",
-      "title": "VRChatイベント 「スナックくり魔りEX」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/QP8diXdkVe",
+      "event_id": "98bda44938ab2701ab2d",
+      "title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/qhkilzSulh",
       "category": "game",
       "label": "ゲーム・参加型",
       "subcategory": null,
@@ -3630,6 +3607,32 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "4df123b105c1c75aa3d9",
+      "title": "# VRC にんおうきょう VRCイベント 「忍桜郷」 🌸11月10日(火)22時🌸 🌸秋風はやがて冬の風へ 今宵も忍桜郷にてお待ちしております 【タイムテーブル】 21:50~21:52 R…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "f5dd4d56b1999d15618a",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第88回は11月11日(水) 『21:00〜22:30』 ※当 イ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
@@ -3885,6 +3888,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "14c4c892e139c8ff5f1c",
+      "title": "VR核融合コミュニティ Virtual Fusion Nexus",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "b028535937209dfaff69",
