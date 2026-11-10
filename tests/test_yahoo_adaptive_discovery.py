@@ -2,7 +2,7 @@
 
 from datetime import UTC, datetime, timedelta
 
-from scripts.collect_yahoo_corpus import select_ablation_queries
+from scripts.collect_yahoo_corpus import select_ablation_queries, select_daily_plan
 
 
 NOW = datetime(2026, 11, 10, 5, 0, tzinfo=UTC)
@@ -65,3 +65,22 @@ def test_no_measured_novel_acceptances_means_no_auto_expansion():
     for row in report["variants"]:
         row["new_production_accepted_count"] = 0
     assert select_ablation_queries([], report=report, experiment=experiment, now=NOW) == []
+
+
+def test_hourly_rotation_expands_distinct_source_coverage_without_extra_queries():
+    base = [{"key": "base", "group": "base", "query": "core"}]
+    production = [
+        {"key": f"production-{n}", "group": "activities", "query": str(n)}
+        for n in range(40)
+    ]
+    audit = [
+        {"key": f"audit-{n}", "group": "temporal_audit", "query": str(n)}
+        for n in range(6)
+    ]
+    plan = base + production + audit
+    first = select_daily_plan(plan, NOW, 8)
+    next_hour = select_daily_plan(plan, NOW + timedelta(hours=1), 8)
+    assert len(first) == len(next_hour) == 9
+    assert first[0]["key"] == next_hour[0]["key"] == "base"
+    assert {row["key"] for row in first} != {row["key"] for row in next_hour}
+    assert all(row["key"] != "base" for row in first[1:])
