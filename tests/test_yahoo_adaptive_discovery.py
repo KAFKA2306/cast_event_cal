@@ -84,3 +84,55 @@ def test_hourly_rotation_expands_distinct_source_coverage_without_extra_queries(
     assert first[0]["key"] == next_hour[0]["key"] == "base"
     assert {row["key"] for row in first} != {row["key"] for row in next_hour}
     assert all(row["key"] != "base" for row in first[1:])
+
+
+def test_yahoo_query_yield_prioritizes_proven_exclusive_event_hits():
+    base = [{"key": "base-0", "group": "base", "query": "base"}]
+    production = [
+        {"key": f"core-{n:03d}", "group": "core", "query": f"query-{n}"}
+        for n in range(40)
+    ]
+    audit = [
+        {"key": f"audit-{n}", "group": "temporal_audit", "query": f"audit-{n}"}
+        for n in range(4)
+    ]
+    yield_report = {
+        "queries": [
+            {"query_key": "core-003", "classification": "productive", "unique_only_accepted": 6, "observed_candidates": 20},
+            {"query_key": "core-004", "classification": "productive", "unique_only_accepted": 5, "observed_candidates": 20},
+            {"query_key": "core-005", "classification": "productive", "unique_only_accepted": 4, "observed_candidates": 20},
+            {"query_key": "audit-1", "classification": "productive", "unique_only_accepted": 40, "observed_candidates": 40},
+            {"query_key": "missing-key", "classification": "productive", "unique_only_accepted": 40, "observed_candidates": 40},
+            {"query_key": "core-006", "classification": "high-noise", "unique_only_accepted": 100, "observed_candidates": 100},
+        ]
+    }
+    classifier = {"generated_at": (NOW - timedelta(hours=1)).isoformat()}
+    first = select_daily_plan(
+        base + production + audit, NOW, 18,
+        yield_audit=yield_report, classifier_audit=classifier,
+    )
+    assert len(first) == 1 + 16 + 2
+    assert [row["key"] for row in first[1:4]] == ["core-003", "core-004", "core-005"]
+    second = select_daily_plan(
+        base + production + audit, NOW + timedelta(hours=1), 18,
+        yield_audit=yield_report, classifier_audit=classifier,
+    )
+    assert len(second) == len(first)
+    assert {row["key"] for row in first} != {row["key"] for row in second}
+    assert len({row["key"] for row in first}) == len(first)
+
+
+def test_yahoo_yield_uses_fresh_classifier_provenance_only():
+    plan = [
+        {"key": f"core-{n:03d}", "group": "core", "query": str(n)}
+        for n in range(20)
+    ]
+    yield_report = {"queries": [
+        {"query_key": "core-019", "classification": "productive", "unique_only_accepted": 10, "observed_candidates": 10}
+    ]}
+    stale = {"generated_at": (NOW - timedelta(hours=48)).isoformat()}
+    future = {"generated_at": (NOW + timedelta(minutes=1)).isoformat()}
+    baseline = select_daily_plan(plan, NOW, 8)
+    assert select_daily_plan(plan, NOW, 8, yield_audit=yield_report, classifier_audit=stale) == baseline
+    assert select_daily_plan(plan, NOW, 8, yield_audit=yield_report, classifier_audit=future) == baseline
+    assert select_daily_plan(plan, NOW, 8, yield_audit={}, classifier_audit={"generated_at": NOW.isoformat()}) == baseline
