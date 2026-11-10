@@ -108,12 +108,15 @@ def test_operator_attestation_is_private_scoped_and_time_bounded(tmp_path):
         {"allowed_endpoint": "https://search.yahoo.co.jp/search"},
     ]
     for override in denied:
-        attested = record(
-            tmp_path, approved=True, authorization_basis="operator_attestation",
-            authorization_reference=None, valid_until=None,
-            authorization_verification="operator_reported_not_independently_verified",
-            operator_review_due_at="2026-11-20T00:00:00Z", **override,
-        )
+        settings = {
+            "authorization_basis": "operator_attestation",
+            "authorization_reference": None,
+            "valid_until": None,
+            "authorization_verification": "operator_reported_not_independently_verified",
+            "operator_review_due_at": "2026-11-20T00:00:00Z",
+        }
+        settings.update(override)
+        attested = record(tmp_path, approved=True, **settings)
         assert permission_status(policy_path=attested, now=NOW)[0] is False
 
 
