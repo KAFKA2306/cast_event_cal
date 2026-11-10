@@ -2,7 +2,7 @@ import json
 import re
 from pathlib import Path
 
-from scripts.build_public_snapshot_delta import append_history, build_delta
+from scripts.build_public_snapshot_delta import append_history, build_delta, write_yahoo_scorecard
 
 
 def write_json(path: Path, payload) -> None:
@@ -229,3 +229,63 @@ def test_production_workflow_captures_and_persists_delta_contract() -> None:
     assert re.search(r"uses: actions/upload-artifact@[0-9a-f]{40}\b", workflow)
     assert "path: audit/public-snapshot-delta.json" in workflow
     assert "audit/public-snapshot-delta-history.jsonl" in workflow
+
+
+def test_yahoo_scorecard_separates_new_publication_from_eviction_and_dedup(tmp_path: Path) -> None:
+    before = tmp_path / "before.json"
+    after = tmp_path / "after.json"
+    health = tmp_path / "health.json"
+    previous_yahoo = tmp_path / "previous-yahoo.json"
+    initial = [
+        event("old-expired", "2026-09-20T00:00:00Z", source="yahoo_realtime_events", source_id="yahoo:x:100"),
+        event("old-merged", "2026-09-27T00:00:00Z", source="yahoo_realtime_events", source_id="yahoo:x:101"),
+        event("old-unknown", "2026-09-27T00:00:00Z", source="yahoo_realtime_events", source_id="yahoo:x:102"),
+        event("existing-external", "2026-09-27T00:00:00Z", source="external_calendar_events"),
+    ]
+    updated = [
+        event("new-yahoo", "2026-09-28T00:00:00Z", source="yahoo_realtime_events", source_id="yahoo:x:103"),
+        event("promoted-yahoo", "2026-09-28T00:00:00Z", source="yahoo_realtime_events", source_id="yahoo:x:104"),
+        event("merged-survivor", "2026-09-28T00:00:00Z", provenance=[{"source_id": "yahoo:x:101"}]),
+        event("existing-external", "2026-09-27T00:00:00Z", source="external_calendar_events",
+              provenance=[{"source_id": "yahoo:x:105"}]),
+    ]
+    snapshot(before, initial)
+    snapshot(after, updated)
+    healthy(health)
+    write_json(previous_yahoo, {"candidates": [{"status_id": "104", "last_decision": "rejected", "last_reason": "missing_datetime"}]})
+    report = build_delta(before, after, health_path=health, previous_yahoo_history_path=previous_yahoo)
+
+    yahoo = report["yahoo"]
+    assert yahoo["before"] == 3
+    assert yahoo["after"] == 4
+    assert yahoo["added"] == 3
+    assert yahoo["removed"] == 3
+    assert yahoo["new_since_previous_snapshot"] == 1
+    assert yahoo["promoted_datetime_resolution"] == 1
+    assert yahoo["yahoo_attribution_gained_on_existing_occurrences"] == 1
+    assert yahoo["removed_reasons"] == {"dedup_merged": 1, "expired": 1, "unknown": 1}
+    assert yahoo["unknown_removals"] == 1
+    # An unknown removal is an alarm, not fabricated proof of history eviction.
+    assert report["healthy"] is True
+
+
+def test_yahoo_scorecard_history_is_bounded_and_idempotent(tmp_path: Path) -> None:
+    before = tmp_path / "before.json"
+    after = tmp_path / "after.json"
+    health = tmp_path / "health.json"
+    output = tmp_path / "scorecard.json"
+    history = tmp_path / "history.jsonl"
+    snapshot(before, [])
+    snapshot(after, [event("new-yahoo", "2026-09-27T00:00:00Z",
+                           source="yahoo_realtime_events", source_id="yahoo:x:123")])
+    healthy(health)
+    report = build_delta(before, after, health_path=health, base_sha="abc")
+    write_yahoo_scorecard(report, output, history, history_limit=2)
+    write_yahoo_scorecard(report, output, history, history_limit=2)
+    assert len(history.read_text(encoding="utf-8").splitlines()) == 1
+    assert json.loads(output.read_text(encoding="utf-8"))["yahoo"]["new_since_previous_snapshot"] == 1
+    for n in range(3):
+        next_report = dict(report)
+        next_report["generated_at"] = f"2026-09-26T0{n+1}:00:00Z"
+        write_yahoo_scorecard(next_report, output, history, history_limit=2)
+    assert len(history.read_text(encoding="utf-8").splitlines()) == 2

@@ -34,6 +34,9 @@ jobs:
       - run: ruff check cast_event_cal scripts tests
       - name: Verify analytics privacy boundary
         run: node tests/browser_analytics_privacy.cjs
+      - name: Verify external watchdog safety gates
+        if: matrix.python-version == '3.12'
+        run: node --test ops/cloudflare-watchdog/worker.test.mjs
       - name: Run pytest
         run: |
           set +e
