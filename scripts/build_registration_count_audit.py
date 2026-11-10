@@ -5,6 +5,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from scripts.yahoo_collection_permission import permission_status
+
 CALENDAR_HEALTH = Path("public/health.json")
 EVENTS = Path("public/events.json")
 YAHOO_HEALTH = Path("data/yahoo_realtime_health.json")
@@ -96,7 +98,13 @@ def build() -> dict[str, Any]:
     yahoo = read_json(YAHOO_HEALTH, {})
     if calendar.get("status") != "ok":
         raise ValueError("calendar health must be ok")
-    if yahoo.get("status") != "ok":
+    if yahoo.get("status") == "skipped":
+        allowed, reason = permission_status()
+        if (allowed or yahoo.get("reason") != reason
+                or integer(yahoo.get("queries_succeeded", -1)) != 0
+                or integer(yahoo.get("queries_failed", -1)) != 0):
+            raise ValueError("Yahoo permission skip is inconsistent")
+    elif yahoo.get("status") != "ok":
         raise ValueError("Yahoo health must be ok")
     if not isinstance(events, dict) or "count" not in events:
         raise ValueError("public events snapshot is required")
