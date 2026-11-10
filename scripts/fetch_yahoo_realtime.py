@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 import time
 from collections import Counter
 from datetime import UTC, datetime, timedelta
@@ -14,6 +15,9 @@ from urllib.parse import urlencode, urlparse
 from zoneinfo import ZoneInfo
 
 import httpx
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts.yahoo_collection_permission import permission_status, require_permission
 
