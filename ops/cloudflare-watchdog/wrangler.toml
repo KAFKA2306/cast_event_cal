@@ -1,0 +1,10 @@
+name = "cast-event-cal-independent-watchdog"
+main = "worker.mjs"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["8 * * * *"]
+
+[vars]
+RECOVERY_ENABLED = "false"
+YAHOO_COLLECTION_APPROVED = "false"
