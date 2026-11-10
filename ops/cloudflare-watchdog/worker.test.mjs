@@ -1,93 +1,71 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { checkAndRecover, decideRecovery } from "./worker.mjs";
+import {assess, monitor} from "./worker.mjs";
 
-const hour = 60 * 60 * 1000;
-const now = Date.parse("2026-11-10T10:00:00Z");
-const previous = (hours, overrides = {}) => ({
-  head_branch: "main",
-  status: "completed",
-  conclusion: "success",
-  event: "schedule",
-  created_at: new Date(now - hours * hour).toISOString(),
-  updated_at: new Date(now - hours * hour).toISOString(),
-  ...overrides,
+const NOW = Date.parse("2026-11-10T12:00:00Z");
+const at = (minutesAgo) => new Date(NOW - minutesAgo * 60000).toISOString();
+const run = (minutesAgo, extras = {}) => ({
+  created_at: at(minutesAgo), updated_at: at(minutesAgo), head_branch: "main",
+  status: "completed", conclusion: "success", event: "schedule", ...extras
+});
+const snapshot = (minutesAgo) => ({event_count: 100, generated_at: at(minutesAgo)});
+
+test("recent run and snapshot are both required", () => {
+  assert.equal(assess({runs: [run(30)], snapshot: snapshot(40), now: NOW}).state, "healthy");
+  assert.equal(assess({runs: [run(30)], snapshot: snapshot(210), now: NOW}).dispatch, false);
 });
 
-test("recent success is healthy and no recovery is attempted", () => {
-  const decision = decideRecovery([previous(1)], now);
-  assert.equal(decision.state, "healthy");
-  assert.equal(decision.dispatch, false);
-  assert.equal(decision.age_minutes, 60);
+test("stale run and snapshot without an active attempt allows one recovery", () => {
+  const d = assess({runs: [run(220)], snapshot: snapshot(220), now: NOW});
+  assert.equal(d.dispatch, true);
+  assert.equal(d.run_age_minutes, 220);
 });
 
-test("stale refresh is actionable only without newer attempts", () => {
-  assert.deepEqual(
-    decideRecovery([previous(4), previous(0.5, { conclusion: "failure" })], now).reason,
-    "cooldown",
-  );
-  assert.equal(decideRecovery([previous(4)], now).dispatch, true);
-  assert.equal(
-    decideRecovery([
-      previous(4),
-      previous(2, { conclusion: null, status: "in_progress" }),
-    ], now).reason,
-    "already_running",
-  );
+test("unknown and future data cannot authorize dispatch", () => {
+  assert.equal(assess({runs: [], snapshot: snapshot(220), now: NOW}).state, "unknown");
+  assert.equal(assess({runs: [run(220)], snapshot: snapshot(-1), now: NOW}).state, "unknown");
+  assert.equal(assess({runs: [run(220, {created_at: "garbage"})], snapshot: snapshot(220), now: NOW}).state, "unknown");
+  assert.equal(assess({runs: [run(220, {created_at: "2026-11-10T08:20:00"})], snapshot: snapshot(220), now: NOW}).state, "unknown");
 });
 
-test("recovery budget, branch boundaries and future timestamps fail closed", () => {
-  assert.equal(
-    decideRecovery([
-      previous(7),
-      previous(4, { event: "workflow_dispatch" }),
-      previous(2, { event: "workflow_dispatch", conclusion: "failure" }),
-    ], now).reason,
-    "daily_budget_exhausted",
-  );
-  assert.equal(
-    decideRecovery([previous(4, { head_branch: "feature" })], now).dispatch,
-    true,
-  );
-  assert.equal(
-    decideRecovery([previous(-1)], now).dispatch,
-    true,
-  );
+test("active updater and cooldown suppress dispatch", () => {
+  assert.equal(assess({runs: [run(215, {status:"in_progress", conclusion:null}), run(240)], snapshot: snapshot(220), now: NOW}).dispatch, false);
+  assert.equal(assess({runs: [run(25, {event:"workflow_dispatch", conclusion:"failure"}), run(240)], snapshot: snapshot(220), now: NOW}).reason, "recovery_cooldown");
 });
 
-test("no authorization means read-only observation, not dispatch", async () => {
+test("two dispatches in 24 hours exhaust recovery budget", () => {
+  const d = assess({runs: [run(110, {event:"workflow_dispatch", conclusion:"failure"}), run(240, {event:"workflow_dispatch", conclusion:"failure"}), run(300)], snapshot: snapshot(220), now: NOW});
+  assert.equal(d.reason, "daily_dispatch_budget_exhausted");
+  assert.equal(d.dispatch, false);
+});
+
+test("overfull GitHub response is unknown rather than undercounted", () => {
+  const runs = Array.from({length: 100}, (_, i) => run(200 + i));
+  assert.equal(assess({runs, snapshot: snapshot(230), now: NOW}).reason, "run_history_incomplete_for_daily_budget");
+});
+
+test("missing token observes but does not dispatch", async () => {
+  const fake = async (url) => ({ok:true, json: async () => url.includes("/actions/") ? {workflow_runs: [run(220)]} : snapshot(220)});
+  const original = console.log;
+  console.log = () => {};
+  try {
+    const result = await monitor({}, fake, NOW);
+    assert.equal(result.reason, "dispatch_token_not_configured");
+    assert.equal(result.dispatch, false);
+  } finally { console.log = original; }
+});
+
+test("successful dispatch accepts only GitHub 204", async () => {
   let posts = 0;
-  const fakeFetch = async (_url, request) => {
-    if (request.method === "POST") posts++;
-    return { ok: true, status: 200, json: async () => ({ workflow_runs: [previous(4)] }) };
+  const fake = async (url, options={}) => {
+    if (options.method === "POST") { posts++; return {status:204}; }
+    return {ok:true, json: async () => url.includes("/actions/") ? {workflow_runs: [run(220)]} : snapshot(220)};
   };
-  const result = await checkAndRecover({}, now, fakeFetch);
-  assert.equal(result.reason, "recovery_not_approved");
-  assert.equal(posts, 0);
-});
-
-test("only separately approved, token-backed recovery may dispatch", async () => {
-  let posts = 0;
-  const fakeFetch = async (url, request) => {
-    if (url.endsWith("/dispatches")) {
-      posts++;
-      assert.equal(request.method, "POST");
-      assert.match(request.headers.Authorization, /^Bearer /);
-      assert.equal(JSON.parse(request.body).inputs.recovery_attempt, "1");
-      return { ok: true, status: 204 };
-    }
-    return { ok: true, status: 200, json: async () => ({ workflow_runs: [previous(4)] }) };
-  };
-  const result = await checkAndRecover({
-    GITHUB_DISPATCH_TOKEN: "test-secret",
-    RECOVERY_ENABLED: "true",
-    YAHOO_COLLECTION_APPROVED: "true",
-  }, now, fakeFetch);
-  assert.equal(result.reason, "recovery_dispatched");
-  assert.equal(posts, 1);
-});
-
-test("API failure is never silently interpreted as healthy", async () => {
-  const badFetch = async () => ({ ok: false, status: 403 });
-  await assert.rejects(checkAndRecover({}, now, badFetch), /HTTP 403/);
+  const original = console.log;
+  console.log = () => {};
+  try {
+    const result = await monitor({GITHUB_WATCHDOG_TOKEN:"test-token"}, fake, NOW);
+    assert.equal(result.state, "recovery_requested");
+    assert.equal(posts, 1);
+  } finally { console.log = original; }
 });
