@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 import time
 from collections import Counter
 from datetime import UTC, datetime, timedelta
@@ -14,6 +15,11 @@ from urllib.parse import urlencode, urlparse
 from zoneinfo import ZoneInfo
 
 import httpx
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from scripts.yahoo_collection_permission import permission_status, require_permission
 
 JST = ZoneInfo("Asia/Tokyo")
 OUTPUT_PATH = Path("data/yahoo_realtime_events.json")
@@ -560,6 +566,7 @@ def validate_search_url(url: str) -> None:
 
 
 def fetch_page(url: str) -> tuple[str, int, str]:
+    require_permission(url)
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml",
@@ -610,6 +617,15 @@ def main() -> int:
     validate_search_url(search_url)
     now = datetime.now(UTC).replace(microsecond=0)
     existing = read_array(OUTPUT_PATH)
+    allowed, reason = permission_status()
+    if not allowed:
+        write_health(
+            status="skipped", reason=reason, search_url=search_url,
+            http_status=None, final_url=None, html_bytes=0, fetched=0, accepted=0,
+            rejected=0, retained=len(existing), event_count=len(existing),
+            rejection_counts=Counter(),
+        )
+        return 0
     x_ids = known_x_ids(read_array(X_EVENTS_PATH))
     try:
         html_text, http_status, final_url = fetch_page(search_url)

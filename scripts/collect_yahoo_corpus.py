@@ -20,6 +20,7 @@ if __package__ in {None, ""}:
 from scripts import fetch_yahoo_realtime as implementation
 from scripts import run_yahoo_realtime as ledger
 from scripts.yahoo_evidence_graph import event_fingerprints
+from scripts.yahoo_collection_permission import permission_status
 
 JST = ZoneInfo("Asia/Tokyo")
 CONFIG_PATH = Path("config/yahoo_query_terms.json")
@@ -821,6 +822,26 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--peer-evidence-queries", type=int)
     parser.add_argument("--require-target", action="store_true")
     args = parser.parse_args(argv)
+
+    allowed, permission_reason = permission_status()
+    if not allowed:
+        # Do not request Yahoo pages. Preserve the last known corpus and event cache.
+        existing_health = ledger.read_object(implementation.HEALTH_PATH)
+        existing_events = implementation.read_array(implementation.OUTPUT_PATH)
+        existing_health.update({
+            "generated_at": implementation.utc_text(datetime.now(UTC)),
+            "status": "skipped",
+            "reason": permission_reason,
+            "event_count": len(existing_events),
+            "queries_attempted": 0,
+            "queries_succeeded": 0,
+            "queries_failed": 0,
+            "raw_candidate_count": 0,
+            "unique_candidates_this_run": 0,
+        })
+        implementation.write_json(implementation.HEALTH_PATH, existing_health)
+        print(f"Yahoo network collection skipped: {permission_reason}; retained {len(existing_events)} cached events")
+        return 0
 
     configure_classifier()
     config = read_json(CONFIG_PATH, {})

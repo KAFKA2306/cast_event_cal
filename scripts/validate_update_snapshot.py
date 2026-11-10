@@ -147,9 +147,18 @@ def validate_snapshot(root: Path) -> None:
     require(audit.get("rejected_count") == len(rejected), "Yahoo rejected count mismatch")
     require(audit.get("accepted_count", 0) + audit.get("rejected_count", 0) == history.get("candidate_count"), "Yahoo audit does not partition candidate history")
     require(yahoo_health.get("parser_version") == YAHOO_RESOLVER_VERSION, f"Yahoo health parser version is not resolver version {YAHOO_RESOLVER_VERSION}")
-    require(yahoo_health.get("status") == "ok", f"Yahoo collection is not healthy: {yahoo_health.get('status')} {yahoo_health.get('reason')}")
+    yahoo_status = yahoo_health.get("status")
     require(yahoo_health.get("queries_failed") == 0, f"Yahoo collection has failed queries: {yahoo_health.get('queries_failed')}")
-    require(int(yahoo_health.get("queries_succeeded") or 0) > 0, "Yahoo collection completed without a successful query")
+    if yahoo_status == "skipped":
+        from scripts.yahoo_collection_permission import permission_status
+        permission_ok, reason = permission_status()
+        require(not permission_ok and yahoo_health.get("reason") == reason,
+                "Yahoo skip requires an unapproved permission record and matching reason")
+        require(int(yahoo_health.get("queries_succeeded") or 0) == 0,
+                "Yahoo skip must have zero successful network queries")
+    else:
+        require(yahoo_status == "ok", f"Yahoo collection is not healthy: {yahoo_status} {yahoo_health.get('reason')}")
+        require(int(yahoo_health.get("queries_succeeded") or 0) > 0, "Yahoo collection completed without a successful query")
 
     require(registration.get("schema_version") == "1.0", "registration audit schema mismatch")
     require(registration.get("status") == "ok", "registration audit is not healthy")
@@ -215,7 +224,8 @@ def validate_snapshot(root: Path) -> None:
     require({"vrc_technology_academic_hub", "official_event_websites", "vrceve_authorized_feed"} <= external_names, "external discovery health is missing configured sources")
 
     source_status = {source.get("name"): source.get("status") for source in public_health.get("sources", []) if isinstance(source, dict)}
-    require(source_status.get("yahoo_realtime_events") == "ok", "public health does not report Yahoo as healthy")
+    require(source_status.get("yahoo_realtime_events") == yahoo_status,
+            "public health Yahoo source status does not match collection health")
     for name in OPTIONAL_COLLECTION_SOURCES:
         status = source_status.get(name)
         require(status in {"ok", "degraded", "skipped"}, f"public health has invalid optional source status for {name}: {status}")
