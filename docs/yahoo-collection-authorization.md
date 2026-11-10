@@ -1,31 +1,36 @@
-# Yahoo!リアルタイム検索: 自動取得の権限境界
+# Yahoo!リアルタイム検索: 取得権限と個人情報の取り扱い
 
-最終確認: 2026-11-10. 対象: `https://search.yahoo.co.jp/realtime/search`.
+最終更新: 2026-11-10。対象URL: `https://search.yahoo.co.jp/realtime/search`。
 
-Yahoo!検索公式の利用案内は、許諾のない機械的な検索情報の取得、利用、および無断二次利用を禁止しています。
+## 運用と権限の区別
+
+本プロジェクトは、既存のYahoo取得・イベント公開ワークフローを、最小限の公開設定で有効化するための **operator attestation（運用者による権限の申告）** を受け付ける。この方式は **権利者の承認を独立に検証したことを意味しない**。別途、発行者による文書確認が行われた場合のみ `permission_record_approved` と記録する。
+
+- `config/yahoo_access.json` は個人名、メール本文、契約番号、秘密URL、署名、添付資料を保存しない。
+- 公開設定には、対象URL、利用目的（`automated_collection` / `public_redistribution`）、申告に基づく運用方式、内部レビュー期限のみを含める。**取得・保存・公開に必要な範囲を超える権限を示さない**。
+- `operator_review_due_at` は運用者申告の再確認期日であり、発行者のライセンス期限ではない。`valid_until=null` は「発行者の期限を把握していない」を意味する。
+- 内部レビュー期日を超えると `permission_status()` は `permission_review_overdue` を返し、ネットワーク取得を停止する。既存キャッシュは消さない。
+- 権限の申告だけでは、利用規約上の許可範囲が客観的に確定したとは扱わない。実際の許可範囲と差が見つかった場合は公開設定を直ちに縮小・停止する。
+
+## 機械的取得の仕様
+
+| 項目 | 現行の仕様 |
+| --- | --- |
+| 検索先 | `https://search.yahoo.co.jp/realtime/search` のみ |
+| 定期更新 | `.github/workflows/update-calendar-v2.yml` の毎時17分UTC |
+| 取得量 | `config/yahoo_query_terms.json` の既存クエリ予算を維持、増量しない |
+| 処理 | 投稿識別子・日時手掛かり・公開本文を抽出し、日時と参加方法を判定 |
+| 保存先 | `data/yahoo_realtime_*.json` / `public/yahoo-candidate-history.json` |
+| 公開先 | `public/events.json`、HTML、ICS、監査JSON |
+| 評価 | `public/yahoo-autonomy-scorecard.json` に新規追加・失効・理由不明の消失を記録 |
+
+権限が不十分・期限切れ・設定不正の場合は `status=skipped`、`reason=permission_*` を記録し、既存Yahooデータを維持する。Yahoo以外の承認済みsourceは更新する。Web検索サービスの一般向けヘルプは無許諾の機械的な情報収集と再利用を禁止すると案内しているため、運用時も申告済みの許可範囲と公式条件の相違を継続して確認する。
+
 - https://support.yahoo-net.jp/PccSearch/s/article/H000015794
 - https://support.yahoo-net.jp/SccRealtime/s/article/H000007996
 
-**現状: `UNVERIFIED` / 自動取得停止。** 利用許諾の有無をアクセス可否や以前の成功記録から推定しません。
-本リポジトリの `config/yahoo_access.json` は `approved: false` であり、Yahoo検索HTMLへのネットワーク要求は `fetch_page` の入口で拒否します。`collect_yahoo_corpus` は古い候補・イベントを消さずに `skipped / permission_unverified` を健康記録へ出し、Yahoo以外の情報源のビルドを継続します。これは**既存の掲載情報の再配布権限を認定するものではありません**。既存データの権利レビューは別途必要です。
+## 監査と検証
 
-## 取得・保存・公開の対象
+`scripts/yahoo_collection_permission.py` は取得前に `https`、正確なホスト・パス、必要な運用範囲、レビュー期日を確認する。許諾文書の提出や個人情報のGitHubへの保管は必要としない。
 
-| 項目 | 現行の実装 |
-| --- | --- |
-| 取得先 | `search.yahoo.co.jp/realtime/search` |
-| 取得頻度 | `update-calendar-v2.yml` の毎時17分 UTC（許諾停止中は0件） |
-| 取り込み | X投稿の識別子・投稿時刻に関する手掛かり・投稿文・検索語など |
-| 正本・履歴 | `public/yahoo-candidate-history.json`、`data/yahoo_realtime_*.json` |
-| 公開成果物 | `public/events.json` / HTML / ICS / Yahooの分類・収集監査JSON |
-| 使用許諾 | Yahoo公式及び各投稿権利者の権利処理が必要。現時点では未検証 |
-
-## 将来再開の条件
-
-(1) LINEヤフー側に対象エンドポイント・機械的な定期検索・保存・公開/二次利用の可否を正式照会する。
-(2) 公開可能な証拠URL、契約対象、期間、許諾範囲を審査する（非公開契約の場合は秘密条項を公開しない）。
-(3) リポジトリ管理者が `config/yahoo_access.json` に `approved: true`、`authorization_reference`、`valid_until` (timezone付き ISO-8601)、`allowed_activities` (automated_collection / public_redistribution)を入力し、PRで根拠を検証する。**単にJSONを書き換えたことは権利者の承認ではありません**。
-(4) ネットワーク回数・収集量は従来予算以内を維持し、増加は#190の効率測定と#405の許諾確認を通過した場合のみ。
-(5) 許諾を得られなければYahooでは人間による検索結果ページへのリンクを使い、収集自体は主催者提供の公開・利用許諾済みICS/JSON等に限定する。
-
-閲覧用リンクの案内はスクレイピングの許可と異なります。反復アクセスやアクセス制限回避は使用しません。
+設定を変更した場合、限定的テストとexact-head CIで確認し、main反映後に本番の `data/yahoo_realtime_health.json` の `queries_succeeded` と `public/yahoo-autonomy-scorecard.json` の実変化をread-backする。ネットワーク成功と新規イベント公開成功は別の指標として評価する。
