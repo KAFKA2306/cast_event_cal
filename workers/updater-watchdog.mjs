@@ -7,7 +7,7 @@ const COOLDOWN = 90;
 const MAX_DISPATCHES_24H = 2;
 
 function instant(raw) {
-  if (typeof raw !== "string" || !/(Z|[+-]\\d{2}:\\d{2})$/.test(raw)) return null;
+  if (typeof raw !== "string" || !/(Z|[+-]\d{2}:\d{2})$/.test(raw)) return null;
   const value = Date.parse(raw);
   return Number.isFinite(value) ? value : null;
 }
