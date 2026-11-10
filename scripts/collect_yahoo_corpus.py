@@ -313,7 +313,15 @@ def build_query_plan(config: dict[str, Any]) -> list[dict[str, str]]:
     return plan
 
 
-def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> list[dict[str, str]]:
+def select_daily_plan(
+    plan: list[dict[str, str]],
+    now: datetime,
+    count: int,
+    *,
+    yield_audit: dict[str, Any] | None = None,
+    classifier_audit: dict[str, Any] | None = None,
+) -> list[dict[str, str]]:
+    """Reserve a few queries for proven exclusive event yield; rotate all others."""
     base = [row for row in plan if row["group"] == "base"]
     production = [row for row in plan if row["group"] not in AUDIT_GROUPS | {"base"}]
     audit = [row for row in plan if row["group"] in AUDIT_GROUPS]
@@ -321,10 +329,45 @@ def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> 
     audit_count = min(2, len(audit))
     local_time = now.astimezone(JST)
     hour_slot = local_time.date().toordinal() * 24 + local_time.hour
-    # Hourly refreshes must not query the same narrow shards all day.
-    # Keep core/base coverage on every run; rotate the bounded optional shards.
-    production_offset = (hour_slot * production_count) % len(production)
-    selected = base + (production[production_offset:] + production[:production_offset])[:production_count]
+
+    # A query is promoted only by recent, final-classifier accepted evidence.
+    # No query is disabled; the unpromoted terms still rotate hourly.
+    productive: list[tuple[int, float, str]] = []
+    source_time = implementation.parse_instant(
+        str((classifier_audit or {}).get("generated_at") or "")
+    )
+    if (
+        source_time is not None
+        and timedelta(0) <= now - source_time <= timedelta(hours=36)
+        and isinstance((yield_audit or {}).get("queries"), list)
+    ):
+        available = {row["key"] for row in production}
+        for row in yield_audit["queries"]:
+            if not isinstance(row, dict):
+                continue
+            key = str(row.get("query_key") or "")
+            if key not in available or row.get("classification") != "productive":
+                continue
+            try:
+                exclusive = int(row.get("unique_only_accepted") or 0)
+                observed = int(row.get("observed_candidates") or 0)
+            except (TypeError, ValueError):
+                continue
+            if exclusive > 0 and observed >= exclusive:
+                productive.append((exclusive, exclusive / max(1, observed), key))
+    productive.sort(key=lambda row: (-row[0], -row[1], row[2]))
+    pinned_keys = {
+        key for _count, _rate, key in productive[: min(3, max(0, production_count // 4))]
+    }
+    priority = [row for row in production if row["key"] in pinned_keys]
+    remaining = [row for row in production if row["key"] not in pinned_keys]
+    rotate_count = production_count - len(priority)
+    if remaining:
+        production_offset = (hour_slot * rotate_count) % len(remaining)
+        rotated = (remaining[production_offset:] + remaining[:production_offset])[:rotate_count]
+    else:
+        rotated = []
+    selected = base + priority + rotated
     if audit_count:
         audit_offset = (hour_slot * audit_count) % len(audit)
         selected += (audit[audit_offset:] + audit[:audit_offset])[:audit_count]
@@ -797,7 +840,11 @@ def main(argv: list[str] | None = None) -> int:
         peer_plan: list[dict[str, str]] = []
     else:
         daily_count = int(config.get("daily_query_count", 16)) * (2 if len(before) < target else 1)
-        selected_plan = select_daily_plan(plan, now, int(args.max_queries or daily_count))
+        selected_plan = select_daily_plan(
+            plan, now, int(args.max_queries or daily_count),
+            yield_audit=read_json(Path("public/yahoo-query-yield-audit.json"), {}),
+            classifier_audit=read_json(Path("public/yahoo-classifier-audit.json"), {}),
+        )
         peer_limit = int(
             args.peer_evidence_queries
             if args.peer_evidence_queries is not None
