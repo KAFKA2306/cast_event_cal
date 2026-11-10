@@ -1,4 +1,7 @@
 import json
+import subprocess
+import sys
+from pathlib import Path
 from datetime import UTC, datetime, timedelta
 
 import pytest
@@ -90,3 +93,22 @@ def test_sync_collection_health_keeps_degraded_source_visible(tmp_path):
     assert statuses["x_curated_events"] == "degraded"
     assert health["status"] == "degraded"
     assert health["degraded_sources"] == 1
+
+
+def test_validator_direct_script_package_import_under_isolated_python():
+    """The GH Actions CLI path must see scripts.yahoo_collection_permission."""
+    root = Path(__file__).resolve().parents[1]
+    result = subprocess.run(
+        [
+            sys.executable, "-I", "-c",
+            "import runpy; runpy.run_path('scripts/validate_update_snapshot.py', "
+            "run_name='isolated_import_check'); "
+            "from scripts.yahoo_collection_permission import permission_status; "
+            "assert callable(permission_status)",
+        ],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
