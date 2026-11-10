@@ -73,3 +73,17 @@ Complete only when the requested Goal is directly inspected, canonical state rem
 - **Range:** Combine code, data, tests, runtime/UI, and domain expertise when that materially improves the outcome, while respecting canonical owners and avoiding duplicate systems.
 - **Speed:** Complete authorized read-only and reversible work through implementation, focused checks, and read-back without unnecessary approval loops. Bound retries and stop at the proven outcome.
 - These principles never bypass repository-specific security, privacy, permission, publication, spending, destructive-action, or release boundaries. State verified results and any remaining `UNVERIFIED` layers.
+
+## Issue lifecycle: keep the queue actionable
+
+Before opening an Issue, check the current open Issues, PRs, code, and canonical workline for the same observable outcome. A new Issue needs all of: (1) a current, evidence-backed problem or explicitly requested feature; (2) one bounded owner/outcome; (3) an AI-executable next action with a verifiable acceptance condition; and (4) no existing Issue or implementation that owns it. Do not create Issues just to record ideas, trends, hypothetical failures, or a new technology to evaluate.
+
+At each maintenance pass, prune the same queue rather than generating replacement worklines:
+
+- **Duplicate:** Preserve any distinct acceptance requirements in the canonical Issue or link to the full source Issue, then close the redundant Issue as `duplicate` with a short reason and owner link.
+- **Not planned:** Close speculative, unsupported, superseded, or high-maintenance proposals lacking observed user benefit as `not_planned`; give a specific reason and the evidence that would justify reopening.
+- **External-only blocker:** Do not leave open AI implementation work that cannot complete because a third party must grant rights, enter a contract, verify identity, supply credentials, or make a business decision. Preserve the actual human action and resumption condition in the existing source-of-truth record, then close as `not_planned` when no AI-executable work remains. Never present user permission as third-party authorization.
+- **Retain:** Keep current production incidents, verified data integrity or security/privacy defects, concrete accessibility failures, and user-prioritized work open even if they are difficult. Split off the actionable technical part only when necessary.
+- **Safety:** Closing a rights/permission Issue must not disable fail-closed code, change an `UNVERIFIED` authority state, restart prohibited collection, or mark an unverified external action complete.
+
+Use reversible GitHub closure rather than permanent deletion so evidence stays auditable. Never reopen or re-create a pruned Issue without new evidence or explicit user direction. Report open counts before/after, closed Issue links/reasons, and the remaining highest-value executable action. Do not add CI or a second backlog database merely to implement this policy.
