@@ -8,6 +8,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(ROOT))
+
 SOURCE_HEALTH_PATHS = {
     "vrchat_calendar_discovery": Path("data/discovery_health.json"),
     "x_curated_events": Path("data/x_discovery_health.json"),
