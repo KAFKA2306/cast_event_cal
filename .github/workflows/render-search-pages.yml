@@ -3,73 +3,21 @@ name: Render searchable event pages
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - scripts/render_search_pages.py
-      - scripts/render_category_pages.py
-      - scripts/render_series_pages.py
-      - scripts/render_social_assets.py
-      - scripts/render_internal_links.py
-      - scripts/verify_crawl_graph.py
-      - scripts/write_snapshot_identity.py
-      - scripts/build_promotions.py
-      - config/promotions.json
-      - web/promotions.js
-      - public/tonight/index.html
-      - tests/test_promotions.py
-      - tests/test_snapshot_identity.py
-      - tests/test_search_pages.py
-      - tests/test_category_pages.py
-      - tests/test_series_pages.py
-      - tests/test_social_assets.py
-      - tests/test_crawl_graph.py
-      - public/category-ontology.json
-      - pyproject.toml
-      - .github/workflows/render-search-pages.yml
   workflow_run:
     workflows: ["Update calendar data"]
     types: [completed]
 
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('search-pr-{0}', github.event.pull_request.number) || 'cast-event-calendar-publication' }}
+  group: cast-event-calendar-publication
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  verify:
-    timeout-minutes: 60
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || 'main' }}
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-          cache: pip
-      - run: pip install -e '.[dev]'
-      - name: Install Japanese font for deterministic OG rendering
-        timeout-minutes: 10
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-ipafont-gothic
-          test -f /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
-      - run: pytest tests/test_promotions.py tests/test_snapshot_identity.py tests/test_search_pages.py tests/test_category_pages.py tests/test_series_pages.py tests/test_social_assets.py tests/test_crawl_graph.py -q
-      - run: python scripts/render_search_pages.py
-      - run: python scripts/render_category_pages.py
-      - run: python scripts/render_series_pages.py
-      - run: python scripts/render_social_assets.py
-      - run: python scripts/render_internal_links.py
-      - run: python scripts/build_promotions.py
-      - run: python scripts/verify_crawl_graph.py
-
   publish:
     timeout-minutes: 90
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
-    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: write

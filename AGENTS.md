@@ -87,3 +87,10 @@ At each maintenance pass, prune the same queue rather than generating replacemen
 - **Safety:** Closing a rights/permission Issue must not disable fail-closed code, change an `UNVERIFIED` authority state, restart prohibited collection, or mark an unverified external action complete.
 
 Use reversible GitHub closure rather than permanent deletion so evidence stays auditable. Never reopen or re-create a pruned Issue without new evidence or explicit user direction. Report open counts before/after, closed Issue links/reasons, and the remaining highest-value executable action. Do not add CI or a second backlog database merely to implement this policy.
+
+## Minimal CI budget
+
+- Run one Python 3.12 lint/test job for pull requests. Do not restore 3-version matrices, repeated `pytest` on every scheduled refresh, or PR-specific audit workflows that repeat this suite.
+- Keep source-permission fail-closed behavior, snapshot integrity, publication race protection, and runtime safety checks inside their canonical production jobs. CI simplification never bypasses those checks.
+- An independent scheduled/manual workflow must produce a distinct useful artifact, actual collection improvement, recovery, or production observation; avoid standalone checks that merely duplicate a test or re-run validation after a successful updater.
+- For a new required gate, state the unique failure it detects, the owner, cost and trigger frequency before adding it. Prefer extending an existing job over creating another workflow.
