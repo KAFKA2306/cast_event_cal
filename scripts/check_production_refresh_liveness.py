@@ -109,7 +109,7 @@ def main() -> int:
             method="POST",
         )
         with urlopen(dispatch, timeout=20) as response:
-            if response.status != 204:
+            if response.status not in {200, 202, 204}:
                 raise RuntimeError(f"unexpected recovery dispatch status: {response.status}")
         print("dispatched one bounded production refresh recovery", file=sys.stderr)
     else:
