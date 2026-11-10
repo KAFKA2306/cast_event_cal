@@ -832,6 +832,7 @@ def main(argv: list[str] | None = None) -> int:
             "generated_at": implementation.utc_text(datetime.now(UTC)),
             "status": "skipped",
             "reason": permission_reason,
+            "authorization_status": permission_reason,
             "event_count": len(existing_events),
             "queries_attempted": 0,
             "queries_succeeded": 0,
@@ -898,6 +899,7 @@ def main(argv: list[str] | None = None) -> int:
         health = ledger.read_object(implementation.HEALTH_PATH)
         health.update({
             "parser_version": implementation.PARSER_VERSION, "status": "degraded",
+            "authorization_status": permission_reason,
             "reason": "all Yahoo corpus queries failed; retained history and events",
             "corpus_target_count": target, "corpus_candidate_count": len(before),
             "corpus_target_reached": len(before) >= target,
@@ -952,6 +954,7 @@ def main(argv: list[str] | None = None) -> int:
     health.update({
         "schema_version": "2.0", "parser_version": implementation.PARSER_VERSION,
         "generated_at": utc_text(now),
+        "authorization_status": permission_reason,
         "status": "ok" if successful == len(query_results) else "degraded",
         "reason": None if successful == len(query_results) else "partial Yahoo query failure",
         "event_count": len(accepted), "history_replay_mode": "sharded_corpus",
