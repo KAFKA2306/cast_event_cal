@@ -3,6 +3,16 @@
   "compatibility_date": "2026-08-16",
   "assets": {
     "directory": "./public",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    "binding": "ASSETS"
+  },
+  "main": "workers/updater-watchdog.mjs",
+  "triggers": {
+    "crons": [
+      "53 * * * *"
+    ]
+  },
+  "observability": {
+    "enabled": true
   }
 }
