@@ -7,7 +7,7 @@ on:
     - cron: '47 * * * *'
 
 permissions:
-  actions: read
+  actions: write  # dispatch one bounded recovery when the hourly updater stalls
   contents: read
 
 jobs:

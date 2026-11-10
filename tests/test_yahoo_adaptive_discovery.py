@@ -1,0 +1,67 @@
+"""Tests of evidence-based Yahoo discovery selection, independent of network fetches."""
+
+from datetime import UTC, datetime, timedelta
+
+from scripts.collect_yahoo_corpus import select_ablation_queries
+
+
+NOW = datetime(2026, 11, 10, 5, 0, tzinfo=UTC)
+PLATFORM = "(VRChat OR VRC)"
+ANNOUNCEMENT = "(イベント告知 OR OPEN)"
+ACCESS = "(JOIN OR リクイン)"
+AC = f"{ANNOUNCEMENT} {PLATFORM}"
+BC = f"{ACCESS} {PLATFORM}"
+AB = f"{ANNOUNCEMENT} {ACCESS}"
+
+
+def evidence():
+    experiment = {
+        "blocks": {"announcement": ANNOUNCEMENT, "access": ACCESS, "platform": PLATFORM},
+        "variants": [
+            {"key": "ac", "blocks": ["announcement", "platform"]},
+            {"key": "bc", "blocks": ["access", "platform"]},
+            {"key": "ab", "blocks": ["announcement", "access"]},
+        ],
+    }
+    report = {
+        "status": "ok",
+        "generated_at": (NOW - timedelta(hours=2)).isoformat(),
+        "variants": [
+            {"key": "ac", "status": "ok", "query": AC, "new_to_ledger_count": 12, "production_accepted_count": 7, "new_production_accepted_count": 3},
+            {"key": "bc", "status": "ok", "query": BC, "new_to_ledger_count": 10, "production_accepted_count": 5, "new_production_accepted_count": 2},
+            {"key": "ab", "status": "ok", "query": AB, "new_to_ledger_count": 40, "production_accepted_count": 20, "new_production_accepted_count": 18},
+        ],
+    }
+    return report, experiment
+
+
+def test_production_selects_measured_novel_queries_with_platform_constraint():
+    report, experiment = evidence()
+    selected = select_ablation_queries([], report=report, experiment=experiment, now=NOW)
+    assert [row["key"] for row in selected] == ["ablation-ac", "ablation-bc"]
+    assert all(PLATFORM in row["query"] for row in selected)
+    assert all(row["url"].startswith("https://search.yahoo.co.jp/realtime/search?") for row in selected)
+
+
+def test_stale_and_future_experiment_results_are_not_used():
+    report, experiment = evidence()
+    report["generated_at"] = (NOW - timedelta(hours=37)).isoformat()
+    assert select_ablation_queries([], report=report, experiment=experiment, now=NOW) == []
+    report["generated_at"] = (NOW + timedelta(minutes=1)).isoformat()
+    assert select_ablation_queries([], report=report, experiment=experiment, now=NOW) == []
+
+
+def test_evidence_must_match_versioned_experiment_and_not_duplicate_active_queries():
+    report, experiment = evidence()
+    report["variants"][1]["query"] = "changed by some other experiment"
+    selected = select_ablation_queries(
+        [{"query": AC}], report=report, experiment=experiment, now=NOW
+    )
+    assert selected == []
+
+
+def test_no_measured_novel_acceptances_means_no_auto_expansion():
+    report, experiment = evidence()
+    for row in report["variants"]:
+        row["new_production_accepted_count"] = 0
+    assert select_ablation_queries([], report=report, experiment=experiment, now=NOW) == []

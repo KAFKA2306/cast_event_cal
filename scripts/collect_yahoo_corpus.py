@@ -329,6 +329,76 @@ def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> 
 
 
 
+
+def select_ablation_queries(
+    selected: list[dict[str, str]],
+    *,
+    report: dict[str, Any],
+    experiment: dict[str, Any],
+    now: datetime,
+    limit: int = 2,
+) -> list[dict[str, str]]:
+    """Reuse recent measured discovery yield without weakening VRChat constraints."""
+    if limit <= 0 or report.get("status") != "ok":
+        return []
+    generated = implementation.parse_instant(str(report.get("generated_at") or ""))
+    if generated is None or not timedelta(0) <= now - generated <= timedelta(hours=36):
+        return []
+    blocks = experiment.get("blocks")
+    variants = experiment.get("variants")
+    results = report.get("variants")
+    if not isinstance(blocks, dict) or not isinstance(variants, list) or not isinstance(results, list):
+        return []
+    specs = {row["key"]: row for row in variants if isinstance(row, dict) and isinstance(row.get("key"), str)}
+    known_queries = {str(row["query"]).casefold() for row in selected}
+    ranked: list[tuple[int, float, str, str]] = []
+    for row in results:
+        if not isinstance(row, dict) or row.get("status") != "ok":
+            continue
+        key = str(row.get("key") or "")
+        spec = specs.get(key)
+        if not spec:
+            continue
+        names = spec.get("blocks")
+        if isinstance(names, list) and names:
+            if "platform" not in names or any(name not in blocks for name in names):
+                continue
+            expected = " ".join(str(blocks[name]).strip() for name in names)
+        else:
+            expected = str(spec.get("query") or "").strip()
+            if not re.search(r"\(\s*VRChat\s+OR\s+VRC\s*\)", expected, re.IGNORECASE):
+                continue
+        query = str(row.get("query") or "").strip()
+        if not query or query != expected or query.casefold() in known_queries:
+            continue
+        try:
+            novel = int(row.get("new_production_accepted_count") or 0)
+            new_candidates = int(row.get("new_to_ledger_count") or 0)
+            accepted = int(row.get("production_accepted_count") or 0)
+        except (TypeError, ValueError):
+            continue
+        if min(novel, new_candidates, accepted) <= 0:
+            continue
+        ranked.append((novel, novel / max(new_candidates, 1), key, query))
+    ranked.sort(key=lambda row: (-row[0], -row[1], row[2]))
+    planned: list[dict[str, str]] = []
+    for _, _, key, query in ranked:
+        if query.casefold() in known_queries:
+            continue
+        known_queries.add(query.casefold())
+        planned.append({
+            "key": f"ablation-{key}",
+            "group": "adaptive",
+            "term": key,
+            "query": query,
+            "url": "https://search.yahoo.co.jp/realtime/search?"
+            + urlencode({"ei": "UTF-8", "p": query, "md": "h"}),
+        })
+        if len(planned) >= limit:
+            break
+    return planned
+
+
 PEER_EVIDENCE_PLATFORM = "(VRChat OR VRC)"
 
 
@@ -536,12 +606,19 @@ def fetch_candidates(
             html, status, final_url = implementation.fetch_page(query["url"])
             rows = implementation.extract_candidates(html)
             raw_total += len(rows)
+            previous_unique = len(selected)
+            new_to_ledger = {
+                str(row.get("status_id")) for row in rows
+                if row.get("status_id") and str(row["status_id"]) not in existing_ids
+            }
             for row in rows:
                 add_candidate(selected, row, query)
             result = {
                 "key": query["key"], "group": query["group"], "term": query["term"],
                 "status": "ok", "http_status": status, "final_url": final_url,
                 "html_bytes": len(html.encode()), "raw_candidates": len(rows),
+                "new_to_ledger_count": len(new_to_ledger),
+                "new_unique_candidate_count": len(selected) - previous_unique,
                 "unique_candidates_after_query": len(selected),
                 "duration_ms": int((time.monotonic() - started) * 1000),
             }
@@ -711,6 +788,7 @@ def main(argv: list[str] | None = None) -> int:
     now = datetime.now(UTC).replace(microsecond=0)
     before = ledger.read_history()
     plan = build_query_plan(config)
+    adaptive_plan: list[dict[str, str]] = []
     if args.mode == "bootstrap":
         selected_plan = plan[: int(args.max_queries or config.get("bootstrap_query_count", 140))]
         peer_plan: list[dict[str, str]] = []
@@ -729,6 +807,13 @@ def main(argv: list[str] | None = None) -> int:
             for row in peer_plan
             if str(row["query"]).casefold() not in seen_queries
         )
+        adaptive_plan = select_ablation_queries(
+            selected_plan,
+            report=read_json(Path("public/yahoo-query-ablation.json"), {}),
+            experiment=read_json(Path("config/yahoo_query_ablation.json"), {}),
+            now=now,
+        )
+        selected_plan.extend(adaptive_plan)
 
     observed, query_results, raw_total = fetch_candidates(
         selected_plan,
@@ -757,6 +842,7 @@ def main(argv: list[str] | None = None) -> int:
         "duplicate_observations_removed": max(0, raw_total - len(observed)),
         "query_results": query_results, "candidates": observed,
         "peer_evidence_queries_planned": len(peer_plan),
+        "adaptive_queries_planned": [row["key"] for row in adaptive_plan],
     })
 
     ledger.HISTORY_RETENTION_DAYS = int(config.get("retention_days", HISTORY_RETENTION_DAYS))
@@ -805,6 +891,11 @@ def main(argv: list[str] | None = None) -> int:
         "queries_attempted": len(query_results), "queries_succeeded": successful,
         "queries_failed": len(query_results) - successful,
         "peer_evidence_queries_planned": len(peer_plan),
+        "adaptive_queries_planned": [row["key"] for row in adaptive_plan],
+        "adaptive_queries_succeeded": sum(
+            row.get("group") == "adaptive" and row.get("status") == "ok"
+            for row in query_results
+        ),
         "peer_evidence_queries_succeeded": sum(
             row.get("group") == "peer_evidence" and row.get("status") == "ok"
             for row in query_results

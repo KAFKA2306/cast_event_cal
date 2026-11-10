@@ -12,6 +12,8 @@ from urllib.request import Request, urlopen
 
 WORKFLOW = "update-calendar-v2.yml"
 MAX_AGE = timedelta(hours=3)
+RECOVERY_COOLDOWN = timedelta(minutes=90)
+MAX_RECOVERIES_PER_DAY = 2
 
 
 def parse_utc(value: str) -> datetime:
@@ -47,25 +49,72 @@ def evaluate(runs: list[dict], now: datetime, max_age: timedelta = MAX_AGE) -> t
     return True, f"latest successful refresh is {int(age.total_seconds() // 60)} minutes old: {url}"
 
 
+def recovery_decision(runs: list[dict], now: datetime) -> tuple[bool, str]:
+    """Bound recovery attempts even when scheduling or source collection is broken."""
+    recent_dispatches = 0
+    for run in runs:
+        if run.get("head_branch") != "main":
+            continue
+        raw = run.get("created_at")
+        if not isinstance(raw, str):
+            continue
+        try:
+            created = parse_utc(raw)
+        except ValueError:
+            continue
+        age = now.astimezone(UTC) - created
+        if age < timedelta(0):
+            continue
+        if age <= RECOVERY_COOLDOWN:
+            return False, "a production refresh was already requested recently"
+        if age <= timedelta(days=1) and run.get("event") == "workflow_dispatch":
+            recent_dispatches += 1
+        if age <= timedelta(hours=3) and run.get("status") in {
+            "queued", "in_progress", "waiting", "pending", "requested"
+        }:
+            return False, "a production refresh is still running"
+    if recent_dispatches >= MAX_RECOVERIES_PER_DAY:
+        return False, "daily dispatch budget exhausted; preserve failure signal"
+    return True, "no recent attempt or active run; one bounded recovery is allowed"
+
+
 def main() -> int:
     repository = os.environ["GITHUB_REPOSITORY"]
     token = os.environ["GITHUB_TOKEN"]
     api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-    url = f"{api}/repos/{repository}/actions/workflows/{quote(WORKFLOW)}/runs?branch=main&status=success&per_page=5"
-    request = Request(url, headers={
+    endpoint = f"{api}/repos/{repository}/actions/workflows/{quote(WORKFLOW)}"
+    headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
         "User-Agent": "cast-event-cal-liveness-watch",
-    })
+    }
+    request = Request(f"{endpoint}/runs?branch=main&per_page=50", headers=headers)
     with urlopen(request, timeout=20) as response:
         payload = json.load(response)
     runs = payload.get("workflow_runs")
     if not isinstance(runs, list):
         raise ValueError("GitHub Actions API response lacks workflow_runs")
-    healthy, message = evaluate(runs, datetime.now(UTC))
+    now = datetime.now(UTC)
+    healthy, message = evaluate(runs, now)
     print(message, file=sys.stdout if healthy else sys.stderr)
-    return 0 if healthy else 1
+    if healthy:
+        return 0
+    allowed, reason = recovery_decision(runs, now)
+    if allowed:
+        dispatch = Request(
+            f"{endpoint}/dispatches",
+            data=json.dumps({"ref": "main", "inputs": {"recovery_attempt": "1"}}).encode("utf-8"),
+            headers={**headers, "Content-Type": "application/json"},
+            method="POST",
+        )
+        with urlopen(dispatch, timeout=20) as response:
+            if response.status != 204:
+                raise RuntimeError(f"unexpected recovery dispatch status: {response.status}")
+        print("dispatched one bounded production refresh recovery", file=sys.stderr)
+    else:
+        print(f"recovery suppressed: {reason}", file=sys.stderr)
+    return 1
 
 
 if __name__ == "__main__":
