@@ -53,6 +53,10 @@ def test_live_network_entrypoint_fails_closed(monkeypatch):
             raise AssertionError("network must not be opened without authorization")
 
     monkeypatch.setattr(yahoo.httpx, "Client", NoNetwork)
+    monkeypatch.setattr(
+        "scripts.yahoo_collection_permission.permission_status",
+        lambda: (False, "permission_unverified"),
+    )
     with pytest.raises(PermissionError, match="Yahoo automated collection disabled"):
         yahoo.fetch_page("https://search.yahoo.co.jp/realtime/search?p=VRChat")
     with pytest.raises(PermissionError, match="outside approved scope"):
@@ -76,3 +80,51 @@ def test_collection_skips_network_without_erasing_existing_events(monkeypatch):
     assert health["queries_succeeded"] == 0
     assert health["event_count"] == 1
     assert health["history_accepted_count"] == 2
+
+
+def test_operator_attestation_is_private_scoped_and_time_bounded(tmp_path):
+    attested = record(
+        tmp_path,
+        approved=True,
+        authorization_basis="operator_attestation",
+        authorization_reference=None,
+        valid_until=None,
+        authorization_verification="operator_reported_not_independently_verified",
+        operator_review_due_at="2026-11-20T00:00:00Z",
+    )
+    assert permission_status(policy_path=attested, now=NOW) == (
+        True, "operator_attested_review_pending"
+    )
+    assert permission_status(
+        policy_path=attested, now=datetime(2026, 11, 20, tzinfo=UTC)
+    ) == (False, "permission_review_overdue")
+
+    denied = [
+        {"allowed_activities": ["automated_collection"]},
+        {"operator_review_due_at": None},
+        {"operator_review_due_at": "2026-11-20T00:00:00"},
+        {"authorization_verification": "issuer_verified"},
+        {"authorization_reference": "https://example.org/secret"},
+        {"allowed_endpoint": "https://search.yahoo.co.jp/search"},
+    ]
+    for override in denied:
+        settings = {
+            "authorization_basis": "operator_attestation",
+            "authorization_reference": None,
+            "valid_until": None,
+            "authorization_verification": "operator_reported_not_independently_verified",
+            "operator_review_due_at": "2026-11-20T00:00:00Z",
+        }
+        settings.update(override)
+        attested = record(tmp_path, approved=True, **settings)
+        assert permission_status(policy_path=attested, now=NOW)[0] is False
+
+
+def test_current_runtime_permission_config_requires_no_private_document():
+    from scripts.yahoo_collection_permission import POLICY_PATH
+
+    policy = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
+    assert policy["authorization_basis"] == "operator_attestation"
+    assert policy["authorization_reference"] is None
+    assert policy["valid_until"] is None
+    assert permission_status(policy_path=POLICY_PATH, now=NOW)[0] is True
