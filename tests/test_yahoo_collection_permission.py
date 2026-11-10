@@ -57,3 +57,22 @@ def test_live_network_entrypoint_fails_closed(monkeypatch):
         yahoo.fetch_page("https://search.yahoo.co.jp/realtime/search?p=VRChat")
     with pytest.raises(PermissionError, match="outside approved scope"):
         require_permission("https://other.example/realtime/search")
+
+
+def test_collection_skips_network_without_erasing_existing_events(monkeypatch):
+    import scripts.collect_yahoo_corpus as corpus
+    import scripts.fetch_yahoo_realtime as impl
+
+    writes = {}
+    monkeypatch.setattr(corpus, "permission_status", lambda: (False, "permission_unverified"))
+    monkeypatch.setattr(corpus.ledger, "read_object", lambda path: {"history_accepted_count": 2})
+    monkeypatch.setattr(impl, "read_array", lambda path: [{"source_id": "existing"}])
+    monkeypatch.setattr(impl, "write_json", lambda path, payload: writes.update({str(path): payload}))
+    monkeypatch.setattr(corpus, "fetch_candidates", lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("network called")))
+
+    assert corpus.main(["--mode", "daily"]) == 0
+    health = writes[str(impl.HEALTH_PATH)]
+    assert health["status"] == "skipped"
+    assert health["queries_succeeded"] == 0
+    assert health["event_count"] == 1
+    assert health["history_accepted_count"] == 2
