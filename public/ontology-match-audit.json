@@ -2,50 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 929,
-  "matched_events": 293,
+  "event_count": 936,
+  "matched_events": 296,
   "matched_series": {
-    "vrc-goita": 18,
-    "vrc-game-world-club": 18,
     "exploit-club": 18,
-    "wednesday-quest-beginners": 18,
-    "yuruge-meet": 17,
-    "ml-gathering": 34,
-    "vrc-idle-gathering": 17,
+    "wednesday-quest-beginners": 19,
+    "yuruge-meet": 18,
+    "ml-gathering": 36,
+    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
-    "personally-match": 17
+    "personally-match": 17,
+    "vrc-goita": 17,
+    "vrc-game-world-club": 17
   },
-  "unmatched_events": 636,
+  "unmatched_events": 640,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "f6bcd2c8a966f9fe9b03",
-      "title": "VRCごいた会",
-      "status": "matched",
-      "ontology_id": "vrc-goita",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "8435043c22b1194f5605",
-      "title": "VRCゲームワールド部 月曜イベント",
-      "status": "matched",
-      "ontology_id": "vrc-game-world-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "deb33fb097bba8c1d821",
       "title": "EXPLOIT部 定期対戦会",
@@ -3519,85 +3495,127 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "a06982005ab2fc63a4f4",
+      "title": "ゆるゲMEET定期開催日",
+      "status": "matched",
+      "ontology_id": "yuruge-meet",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "09983d224a5647e4aa2d",
+      "title": "水曜Quest初心者の集い",
+      "status": "matched",
+      "ontology_id": "wednesday-quest-beginners",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "42517537e6d4ad5fa42f",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "7a04946d89b6029a3cfe",
+      "title": "ML集会",
+      "status": "matched",
+      "ontology_id": "ml-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "6cc26c43cd920a97b2dc",
+      "title": "VRCでボーっとする会",
+      "status": "matched",
+      "ontology_id": "vrc-idle-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 929,
+    "event_count": 936,
     "category_breakdown": {
       "art": 121,
-      "community": 242,
+      "community": 237,
       "game": 110,
       "language_exchange": 34,
-      "learning": 18,
-      "music": 15,
-      "other": 17,
-      "performance": 7,
-      "recruitment_deadline": 6,
-      "technology": 271,
+      "learning": 21,
+      "music": 16,
+      "other": 20,
+      "performance": 8,
+      "recruitment_deadline": 5,
+      "technology": 276,
       "wellness": 70,
       "world_tour": 18
     },
     "subcategory_breakdown": {
-      "ai": 34,
+      "ai": 36,
       "application_deadline": 1,
       "bar": 1,
       "cafe": 18,
-      "cast_recruitment": 1,
-      "cast_service": 3,
+      "cast_service": 1,
+      "class": 4,
       "dance": 1,
-      "dj": 1,
-      "engineering": 161,
+      "dj": 2,
+      "engineering": 162,
       "fitness": 34,
-      "hangout": 70,
+      "hangout": 66,
       "language_exchange": 34,
       "live_music": 1,
-      "mystery": 34,
-      "orientation": 1,
+      "mystery": 35,
       "photography": 121,
-      "research": 67,
+      "reading": 1,
+      "research": 69,
       "show": 7,
       "sightseeing": 1,
-      "social": 150,
-      "tabletop": 40,
+      "social": 151,
+      "tabletop": 39,
       "workshop": 9,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 6,
-      "hybrid": 5,
-      "in_world": 914,
+      "deadline": 5,
+      "hybrid": 6,
+      "in_world": 921,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 276,
-      "fallback": 17,
+      "curated_ontology": 279,
+      "fallback": 20,
       "keyword_rules": 419,
-      "legacy_and_keywords": 96,
+      "legacy_and_keywords": 97,
       "legacy_category": 121
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 56,
-    "audit_event_count": 56
+    "low_confidence_event_count": 59,
+    "audit_event_count": 59
   },
   "category_review_queue": [
-    {
-      "event_id": "faf167c0569e57a9ffec",
-      "title": "#私立 VRC 学園 第24期生徒説明会を行います。 本校は学生生活の体験を通して # VRChat の世界の中で可能性と出会えるイベントです。 生徒応募には、期間中に1日説明会への参加が必須…",
-      "category": "recruitment_deadline",
-      "label": "募集・締切",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:応募"
-      ],
-      "event_mode": "deadline",
-      "ambiguous_with": [
-        "learning"
-      ]
-    },
     {
       "event_id": "42a3d91400262f4a4558",
       "title": "C# Tokyo VRもくもく会",
@@ -3625,6 +3643,23 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "8f7f4db4a8cb04c7e48a",
+      "title": "本日 22時30分よりグループ＋にて定期触手 集会 を 開催 いたします。インスタンス数は1つの予定です。 今回は 集会 の最後に「 VRC 触手フォトコン」の結果発表を行います。 応募作品群…",
+      "category": "recruitment_deadline",
+      "label": "募集・締切",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:応募"
+      ],
+      "event_mode": "deadline",
+      "ambiguous_with": [
+        "community"
+      ]
+    },
+    {
       "event_id": "defdb514923a7f30d4dd",
       "title": "< 告知 > ロケット打ち上げを観る 集会 - アーカイブの部 アメリカ宇宙軍の機密ミッション、その打ち上げ映像をみんなで観覧！ 🚀 Falcon 9 Block 5 | USSF-627 📆…",
       "category": "performance",
@@ -3643,7 +3678,7 @@
     },
     {
       "event_id": "f5dd4d56b1999d15618a",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第88回は11月11日(水) 『21:00〜22:30』 ※当 イ…",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第88回は11月11日(水) 『21:00〜22:30』 ※当イベント…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3724,19 +3759,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "aa3679c4d099ba654ad9",
-      "title": "VRC CLINIC 記念すべきプレ オープン イベント💉 ご来院ありがとうございました！！ 次回は11/12の22時からフレンド＋インスタンでの 開催となります！ またのご来院お待ちしており…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "b69ca02c5a2c3cd1a29f",
       "title": "人身売買闇オークション VRChatイベント 「Obedience AUCTION」 2026年11月12日（木）22:00～24:00 開催 決定！ 主人と奴隷に別れてRP交流！初心者、見学…",
       "category": "performance",
@@ -3755,8 +3777,34 @@
       ]
     },
     {
+      "event_id": "7847dcedb20dd2bdd29e",
+      "title": "2026.11.13 (Fri.) 22:00- Aftercurrent vol.3 今週末 金曜日 は VRChat にてOrganic House / Deep Progressive …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "3125fa8da924af5d43c7",
+      "title": "VRChat であまり良くないコミュニティにあたってしまってやめていく方がいるのは残念。 毎週 金曜日 、22時～23時に開催されているQuestコロニーは、Questやスマホユーザーが集まり…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "223c7c78253d9eac86ba",
-      "title": "【 VRC 映画 上映会 】『犬神家の一族』（2006年版）がyoutubeにて期間限定無料公開されるのでみんなで鑑賞会しませんか！！！！ 日時 :11/13(金)22:00頃から 21:30…",
+      "title": "【 VRC 映画上映会】『犬神家の一族』（2006年版）がyoutubeにて期間限定無料公開されるのでみんなで鑑賞会しませんか！！！！ 日時 :11/13(金)22:00頃から 21:30頃ｲ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3866,6 +3914,19 @@
       ]
     },
     {
+      "event_id": "7443b7477104beafc888",
+      "title": "VRChat であまり良くないコミュニティにあたってしまってやめていく方がいるのは残念。 毎週 金曜日 、22時～23時に開催されているQuestコロニーは、Questやスマホユーザーが集まり…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "f0a7b4e468661d0f6e78",
       "title": "「計算と自然」集会",
       "category": "technology",
@@ -3884,13 +3945,13 @@
       ]
     },
     {
-      "event_id": "a1f5bf10a346805ee32d",
-      "title": "#ばけNeko 蟹江企画「Spot de-Light Night vol.2」 開催決定 ！ VRChat で活動しているギターボーカルを招聘し、アコギと歌の特別な一夜をお届けします☕ 日時：…",
+      "event_id": "42f5956001746c17e753",
+      "title": "VRChat であまり良くないコミュニティにあたってしまってやめていく方がいるのは残念。 毎週 金曜日 、22時～23時に開催されているQuestコロニーは、Questやスマホユーザーが集まり…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3925,6 +3986,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "557d558553eba5789e98",
+      "title": "VRChat であまり良くないコミュニティにあたってしまってやめていく方がいるのは残念。 毎週 金曜日 、22時～23時に開催されているQuestコロニーは、Questやスマホユーザーが集まり…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "70d81e7834da04c8edcd",
