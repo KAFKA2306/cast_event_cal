@@ -8,6 +8,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# GitHub Actions executes this file as a script, without the repository root on sys.path.
+if __package__ in {None, ""} and str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 SOURCE_HEALTH_PATHS = {
     "vrchat_calendar_discovery": Path("data/discovery_health.json"),
     "x_curated_events": Path("data/x_discovery_health.json"),
