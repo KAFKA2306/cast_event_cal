@@ -1,13 +1,8 @@
-name: Live browser security headers (audit only)
+name: Live browser security headers (manual audit)
+
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 5 * * *'
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/production-browser-security-audit.yml'
-      - 'scripts/audit_browser_security.py'
+
 permissions:
   contents: read
 jobs:
