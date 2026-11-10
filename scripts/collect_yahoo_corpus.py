@@ -319,11 +319,14 @@ def select_daily_plan(plan: list[dict[str, str]], now: datetime, count: int) -> 
     audit = [row for row in plan if row["group"] in AUDIT_GROUPS]
     production_count = max(1, min(max(count - 2, 1), len(production)))
     audit_count = min(2, len(audit))
-    ordinal = now.astimezone(JST).date().toordinal()
-    production_offset = (ordinal * production_count) % len(production)
+    local_time = now.astimezone(JST)
+    hour_slot = local_time.date().toordinal() * 24 + local_time.hour
+    # Hourly refreshes must not query the same narrow shards all day.
+    # Keep core/base coverage on every run; rotate the bounded optional shards.
+    production_offset = (hour_slot * production_count) % len(production)
     selected = base + (production[production_offset:] + production[:production_offset])[:production_count]
     if audit_count:
-        audit_offset = (ordinal * audit_count) % len(audit)
+        audit_offset = (hour_slot * audit_count) % len(audit)
         selected += (audit[audit_offset:] + audit[:audit_offset])[:audit_count]
     return selected
 
