@@ -220,3 +220,43 @@ def test_build_rejects_unhealthy_inputs(tmp_path, monkeypatch):
         assert "calendar health" in str(exc)
     else:
         raise AssertionError("unhealthy input must fail closed")
+
+
+def test_permission_skipped_yahoo_preserves_cached_kpis(tmp_path, monkeypatch):
+    calendar = tmp_path / "health.json"
+    events = tmp_path / "events.json"
+    yahoo = tmp_path / "yahoo.json"
+    output = tmp_path / "audit.json"
+    calendar.write_text(json.dumps({
+        "status": "ok", "generated_at": "2026-11-10T09:00:00Z",
+        "event_count": 1, "sources": [
+            {"name": "yahoo_realtime_events", "count": 1},
+        ],
+    }), encoding="utf-8")
+    write_events(events, generated_at="2026-11-10T09:00:00Z", count=1)
+    yahoo.write_text(json.dumps({
+        "status": "skipped", "reason": "permission_unverified",
+        "history_candidate_count": 3, "history_accepted_count": 1,
+        "history_rejected_count": 2, "queries_succeeded": 0,
+        "queries_failed": 0, "unique_candidates_this_run": 0,
+    }), encoding="utf-8")
+    monkeypatch.setattr(audit, "CALENDAR_HEALTH", calendar)
+    monkeypatch.setattr(audit, "EVENTS", events)
+    monkeypatch.setattr(audit, "YAHOO_HEALTH", yahoo)
+    monkeypatch.setattr(audit, "OUTPUT", output)
+    monkeypatch.setattr(audit, "permission_status", lambda: (False, "permission_unverified"))
+
+    latest = audit.build()["latest"]
+    assert latest["yahoo_candidate_count"] == 3
+    assert latest["yahoo_accepted_count"] == 1
+    assert latest["yahoo_queries_succeeded"] == 0
+
+    yahoo.write_text(yahoo.read_text(encoding="utf-8").replace(
+        "permission_unverified", "network_error"
+    ), encoding="utf-8")
+    try:
+        audit.build()
+    except ValueError as exc:
+        assert "permission skip" in str(exc)
+    else:
+        raise AssertionError("unverified skip reason must not pass registration audit")
