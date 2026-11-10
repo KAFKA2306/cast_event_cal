@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
+from pathlib import Path
 
 from scripts import build_registration_count_audit as audit
 
@@ -260,3 +263,20 @@ def test_permission_skipped_yahoo_preserves_cached_kpis(tmp_path, monkeypatch):
         assert "permission skip" in str(exc)
     else:
         raise AssertionError("unverified skip reason must not pass registration audit")
+
+
+def test_registration_audit_imports_as_isolated_direct_script() -> None:
+    # GitHub Actions invokes 'python scripts/...py', not 'python -m scripts...'.
+    # Isolated mode reproduces a missing repository root in sys.path.
+    root = Path(__file__).resolve().parents[1]
+    result = subprocess.run(
+        [
+            sys.executable, "-I", "-c",
+            "import runpy; runpy.run_path('scripts/build_registration_count_audit.py', run_name='import_check')",
+        ],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr

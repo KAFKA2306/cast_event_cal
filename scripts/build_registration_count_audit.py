@@ -4,8 +4,12 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+import sys
 
-from scripts.yahoo_collection_permission import permission_status
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from scripts.yahoo_collection_permission import permission_status  # noqa: E402
 
 CALENDAR_HEALTH = Path("public/health.json")
 EVENTS = Path("public/events.json")
