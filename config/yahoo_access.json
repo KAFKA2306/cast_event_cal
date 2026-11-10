@@ -1,10 +1,16 @@
 {
   "schema_version": 1,
-  "approved": false,
+  "approved": true,
   "authority": "LINE Yahoo",
   "authorization_reference": null,
   "valid_until": null,
   "allowed_endpoint": "https://search.yahoo.co.jp/realtime/search",
-  "allowed_activities": [],
-  "official_terms_url": "https://support.yahoo-net.jp/PccSearch/s/article/H000015794"
+  "allowed_activities": [
+    "automated_collection",
+    "public_redistribution"
+  ],
+  "official_terms_url": "https://support.yahoo-net.jp/PccSearch/s/article/H000015794",
+  "authorization_basis": "operator_attestation",
+  "operator_review_due_at": "2026-12-10T10:53:00Z",
+  "authorization_verification": "operator_reported_not_independently_verified"
 }
