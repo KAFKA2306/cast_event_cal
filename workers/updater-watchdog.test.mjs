@@ -25,6 +25,7 @@ test("unknown and future data cannot authorize dispatch", () => {
   assert.equal(assess({runs: [], snapshot: snapshot(220), now: NOW}).state, "unknown");
   assert.equal(assess({runs: [run(220)], snapshot: snapshot(-1), now: NOW}).state, "unknown");
   assert.equal(assess({runs: [run(220, {created_at: "garbage"})], snapshot: snapshot(220), now: NOW}).state, "unknown");
+  assert.equal(assess({runs: [run(220, {created_at: "2026-11-10T08:20:00"})], snapshot: snapshot(220), now: NOW}).state, "unknown");
 });
 
 test("active updater and cooldown suppress dispatch", () => {
