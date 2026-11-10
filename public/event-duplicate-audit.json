@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 912,
-  "event_count_after": 911,
-  "candidate_cluster_count": 1,
-  "duplicate_cluster_count": 1,
-  "duplicate_occurrence_count": 1,
-  "duplicate_post_count": 1,
-  "duplicate_rate": 0.001096,
+  "event_count_before": 942,
+  "event_count_after": 940,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.002123,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
@@ -32,6 +32,28 @@
       ],
       "confidence": 1.0,
       "representative_source_record_id": "src_f2a39454886936792551"
+    },
+    {
+      "cluster_id": "occ_c1c7cd8aa70d41574469",
+      "starts_at": "2026-11-14T12:00:00Z",
+      "title": "🌼 KYOP BLOOM 初の 交流会 を 開催 します🌼 おかげさまでDAISYを多くの方にお迎えいただきました。本当にありがとうございます！ 感謝の気持ちを込めて、DAISYユーザーさん同…",
+      "member_count": 2,
+      "member_ids": [
+        "4e9bc95d662f8d474e63",
+        "c05cb0cb262a78a0f025"
+      ],
+      "source_record_ids": [
+        "src_2580b2beafb7021e5231",
+        "src_b2d59996ad81e9501461"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_b2d59996ad81e9501461"
     }
   ],
   "ambiguous_candidates": [],
@@ -43,7 +65,7 @@
       "left_organizer": "@vrc_jack",
       "right_organizer": "VRCごいた会",
       "similarity": 0.0645,
-      "left_title": "# VRChat ＃ VRC キャスト募集 # VRC スタッフ募集 #イベキャス就活 本日 も21時から、 VRChat のイベントのキャスト／スタッフ募集の定期イベントを開催します。 有効…",
+      "left_title": "# VRChat ＃ VRC キャスト募集 # VRC スタッフ募集 #イベキャス就活 本日も 21時 から、 VRChat のイベントのキャスト／スタッフ募集の定期イベントを開催します。 有…",
       "right_title": "VRCごいた会"
     },
     {
@@ -53,7 +75,7 @@
       "left_organizer": "@vrc_jack",
       "right_organizer": "VRCゲームワールド部",
       "similarity": 0.1069,
-      "left_title": "# VRChat ＃ VRC キャスト募集 # VRC スタッフ募集 #イベキャス就活 本日 も21時から、 VRChat のイベントのキャスト／スタッフ募集の定期イベントを開催します。 有効…",
+      "left_title": "# VRChat ＃ VRC キャスト募集 # VRC スタッフ募集 #イベキャス就活 本日も 21時 から、 VRChat のイベントのキャスト／スタッフ募集の定期イベントを開催します。 有…",
       "right_title": "VRCゲームワールド部 月曜イベント"
     },
     {
@@ -98,16 +120,6 @@
     },
     {
       "left_id": "faf167c0569e57a9ffec",
-      "right_id": "e567dfcc7d261f545b7d",
-      "starts_at": "2026-11-09T13:00:00Z",
-      "left_organizer": "@VRC_HighSchool",
-      "right_organizer": "@WAROSTUDIOGAMES",
-      "similarity": 0.2075,
-      "left_title": "#私立 VRC 学園 第24期生徒説明会を行います。 本校は学生生活の体験を通して # VRChat の世界の中で可能性と出会えるイベントです。 生徒応募には、期間中に1日説明会への参加が必須…",
-      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNのpublicインスタンスで行います。 # VRChat #JPTOWN h…"
-    },
-    {
-      "left_id": "faf167c0569e57a9ffec",
       "right_id": "828c094af04972f1c9d1",
       "starts_at": "2026-11-09T13:00:00Z",
       "left_organizer": "@VRC_HighSchool",
@@ -135,7 +147,17 @@
       "similarity": 0.1638,
       "left_title": "VRC 怪談 集会 赤い部屋 第155回 ◎ 開催日時 ：11/9(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bE…",
       "right_title": "【 本日 の注目 イベント ✨】 🕒11/9(月) 22:00～ 🟠私立 VRC 学園 24期生徒 説明会 🟠 私立 VRC 学園は、24期を11月21日(土)から12月05日(土)の日程で開…"
+    },
+    {
+      "left_id": "906a056a9dd5e049bd08",
+      "right_id": "828c094af04972f1c9d1",
+      "starts_at": "2026-11-09T13:00:00Z",
+      "left_organizer": "@akaiheya_vrc",
+      "right_organizer": "@vrc_luminai",
+      "similarity": 0.215,
+      "left_title": "VRC 怪談 集会 赤い部屋 第155回 ◎ 開催日時 ：11/9(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5bE…",
+      "right_title": "🌙 VRC 1対1接客型イベント 『Luminous Night』 次回は11/9(月)22:00～ちょっと遅めのハロウィン 営業 です🎃 今回は当日 リクイン のみとなりますので、お時間ある…"
     }
   ],
-  "generated_at": "2026-11-10T03:42:58Z"
+  "generated_at": "2026-11-10T03:52:35Z"
 }
