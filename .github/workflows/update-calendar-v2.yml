@@ -108,7 +108,15 @@ jobs:
           from scripts.validate_update_snapshot import OPTIONAL_COLLECTION_SOURCES, ROOT, require, sync_collection_health
           health = sync_collection_health(ROOT)
           statuses = {str(row.get('name')): str(row.get('status')) for row in health.get('sources', []) if isinstance(row, dict)}
-          require(statuses.get('yahoo_realtime_events') == 'ok', f"Yahoo collection is not healthy: {statuses.get('yahoo_realtime_events')}")
+          yahoo = next((row for row in health.get('sources', []) if isinstance(row, dict) and row.get('name') == 'yahoo_realtime_events'), {})
+          yahoo_status = yahoo.get('status')
+          yahoo_reason = yahoo.get('reason')
+          yahoo_allowed = yahoo_status == 'ok' or (yahoo_status == 'skipped' and yahoo_reason in {
+              'permission_unverified', 'permission_record_missing_or_invalid', 'permission_authority_unverified',
+              'permission_evidence_missing', 'permission_endpoint_mismatch', 'permission_scope_incomplete',
+              'permission_expiry_invalid', 'permission_expired',
+          })
+          require(yahoo_allowed, f"Yahoo collection is not healthy: {yahoo_status} {yahoo_reason}")
           for name in OPTIONAL_COLLECTION_SOURCES:
               require(statuses.get(name) in {'ok', 'degraded', 'skipped'}, f"optional collection source has invalid status: {name}={statuses.get(name)}")
           print(f"collection health gate passed: {health.get('status')}")
