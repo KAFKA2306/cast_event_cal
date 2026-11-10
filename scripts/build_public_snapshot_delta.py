@@ -318,6 +318,55 @@ def _removed_reason(
     return "unknown", {}
 
 
+def _has_yahoo_provenance(row: dict[str, Any]) -> bool:
+    """Attribute a canonical occurrence to Yahoo, including deduplicated peers."""
+    if row.get("source") == "yahoo_realtime_events":
+        return True
+    source_ids, _source_record_ids = _source_evidence(row)
+    return any(source_id.startswith("yahoo:") for source_id in source_ids)
+
+
+def _yahoo_snapshot_delta(
+    before: dict[str, dict[str, Any]],
+    after: dict[str, dict[str, Any]],
+    added: list[dict[str, Any]],
+    removed: list[dict[str, Any]],
+    changed: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Measure published event changes, not scraped-post volume."""
+    newly_added = [row for row in added if _has_yahoo_provenance(after[row["occurrence_id"]])]
+    disappeared = [row for row in removed if _has_yahoo_provenance(before[row["occurrence_id"]])]
+    gained = sum(
+        not _has_yahoo_provenance(before[occurrence_id])
+        and _has_yahoo_provenance(after[occurrence_id])
+        for occurrence_id in before.keys() & after.keys()
+    )
+    reason_added = dict(sorted(Counter(row["reason"] for row in newly_added).items()))
+    reason_removed = dict(sorted(Counter(row["reason"] for row in disappeared).items()))
+    return {
+        "source": "yahoo_realtime_events",
+        "before": sum(_has_yahoo_provenance(row) for row in before.values()),
+        "after": sum(_has_yahoo_provenance(row) for row in after.values()),
+        "added": len(newly_added),
+        "removed": len(disappeared),
+        "new_since_previous_snapshot": reason_added.get("new_discovery", 0),
+        "promoted_datetime_resolution": reason_added.get("promoted_datetime_resolution", 0),
+        "yahoo_attribution_gained_on_existing_occurrences": gained,
+        "added_reasons": reason_added,
+        "removed_reasons": reason_removed,
+        "unknown_removals": reason_removed.get("unknown", 0),
+        "material_changes": sum(
+            _has_yahoo_provenance(after[row["occurrence_id"]])
+            and bool(row.get("material_fields"))
+            for row in changed
+        ),
+        "interpretation": (
+            "new_since_previous_snapshot is not verified first-ever publication; "
+            "accepted candidates and search hits are not published events"
+        ),
+    }
+
+
 def build_delta(
     before_path: Path,
     after_path: Path,
@@ -459,6 +508,7 @@ def build_delta(
             after_payload,
             after_rows,
         ),
+        "yahoo": _yahoo_snapshot_delta(before_by_id, after_by_id, added, removed, changed),
         "counts": {
             "before": len(before_rows),
             "after": len(after_rows),
@@ -528,6 +578,7 @@ def append_history(
             "status",
             "generated_at",
             "base_sha",
+            "yahoo",
             "counts",
             "reason_counts",
         )
@@ -587,6 +638,47 @@ def append_history(
     return True
 
 
+def write_yahoo_scorecard(
+    report: dict[str, Any],
+    output: Path,
+    history: Path,
+    *,
+    history_limit: int = 336,
+) -> None:
+    """Publish a bounded summary; canonical facts still live in events/history."""
+    item = {
+        "schema_version": "1.0",
+        "generated_at": report["generated_at"],
+        "source_revision": report["base_sha"],
+        "semantic_snapshot_sha256": report["after_snapshot"]["semantic_sha256"],
+        "delta_healthy": report["healthy"],
+        "yahoo": report["yahoo"],
+    }
+    write_report(item, output)
+    if not report["healthy"]:
+        return
+    rows: list[dict[str, Any]] = []
+    if history.exists():
+        for line in history.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                old = json.loads(line)
+                if isinstance(old, dict):
+                    rows.append(old)
+    # A retry or identical snapshot must not manufacture an extra observation.
+    key = (item["generated_at"], item["semantic_snapshot_sha256"])
+    if not any(
+        (row.get("generated_at"), row.get("semantic_snapshot_sha256")) == key
+        for row in rows
+    ):
+        rows.append(item)
+    rows = rows[-history_limit:]
+    history.parent.mkdir(parents=True, exist_ok=True)
+    history.write_text(
+        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
@@ -635,6 +727,16 @@ def parse_args() -> argparse.Namespace:
         default=os.environ.get("GITHUB_SHA", ""),
     )
     parser.add_argument(
+        "--yahoo-scorecard",
+        type=Path,
+        default=Path("public/yahoo-autonomy-scorecard.json"),
+    )
+    parser.add_argument(
+        "--yahoo-scorecard-history",
+        type=Path,
+        default=Path("public/yahoo-autonomy-scorecard-history.jsonl"),
+    )
+    parser.add_argument(
         "--past-days",
         type=int,
         default=1,
@@ -655,6 +757,7 @@ def main() -> int:
     )
     write_report(report, args.output)
     appended = append_history(report, args.history)
+    write_yahoo_scorecard(report, args.yahoo_scorecard, args.yahoo_scorecard_history)
     counts = report["counts"]
     print(
         "public snapshot delta: "
