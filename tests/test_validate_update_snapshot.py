@@ -90,3 +90,22 @@ def test_sync_collection_health_keeps_degraded_source_visible(tmp_path):
     assert statuses["x_curated_events"] == "degraded"
     assert health["status"] == "degraded"
     assert health["degraded_sources"] == 1
+
+
+def test_validator_direct_script_resolves_permission_module():
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    command = (
+        "import runpy; "
+        "runpy.run_path('scripts/validate_update_snapshot.py', run_name='import_check'); "
+        "from scripts.yahoo_collection_permission import permission_status; "
+        "assert callable(permission_status)"
+    )
+    result = subprocess.run(
+        [sys.executable, "-I", "-c", command],
+        cwd=root, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stderr
