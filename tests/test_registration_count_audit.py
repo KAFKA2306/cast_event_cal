@@ -260,3 +260,37 @@ def test_permission_skipped_yahoo_preserves_cached_kpis(tmp_path, monkeypatch):
         assert "permission skip" in str(exc)
     else:
         raise AssertionError("unverified skip reason must not pass registration audit")
+
+
+def test_registration_audit_direct_script_entrypoint(tmp_path):
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    (tmp_path / "data").mkdir()
+    (tmp_path / "public").mkdir()
+    (tmp_path / "public/health.json").write_text(json.dumps({
+        "status": "ok", "event_count": 1,
+        "generated_at": "2026-11-10T10:00:00Z", "sources": [],
+    }), encoding="utf-8")
+    write_events(
+        tmp_path / "public/events.json",
+        generated_at="2026-11-10T10:00:00Z", count=1,
+    )
+    (tmp_path / "data/yahoo_realtime_health.json").write_text(json.dumps({
+        "status": "skipped", "reason": "permission_unverified",
+        "history_candidate_count": 1, "history_accepted_count": 1,
+        "history_rejected_count": 0, "queries_succeeded": 0,
+        "queries_failed": 0,
+    }), encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, str(root / "scripts/build_registration_count_audit.py")],
+        cwd=tmp_path, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    written = json.loads(
+        (tmp_path / "public/registration-count-audit.json").read_text(encoding="utf-8")
+    )
+    assert written["latest"]["yahoo_queries_succeeded"] == 0
