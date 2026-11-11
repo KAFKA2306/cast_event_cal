@@ -59,7 +59,7 @@ def test_issue_47_search_pagination_is_fail_closed() -> None:
 
 
 def test_issue_47_documented_tool_catalog_matches_contract() -> None:
-    doc = (ROOT / "docs" / "event-mcp.md").read_text(encoding="utf-8")
+    doc = (ROOT / "docs" / "mcp.md").read_text(encoding="utf-8")
     expected = {
         "search_events",
         "get_event",
