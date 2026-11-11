@@ -11,6 +11,6 @@ Default: Streamable HTTP at `127.0.0.1:8011`. Environment: `CAST_EVENT_MCP_HOST`
 
 Tools: `search_events`, `get_event`, `get_tonight_events`, `get_series`, `get_source_health`, `get_classification_audit`, `get_ontology`, `get_data_quality`, `get_methodology`. Search/list are paginated (`limit <= 100`, `offset`). `get_tonight_events(date_jst=...)` supports deterministic replay.
 
-Preserve canonical records and available provenance (source/time/decision/ontology). Missing values remain null with reasons, not fabricated. Ambiguous ontology matches and duplicate event IDs fail closed. The deployment repo is projection-only.
+Preserve canonical records and available provenance (source/time/decision/ontology). Missing values remain null with reasons, not fabricated. Ambiguous ontology matches and duplicate event IDs fail closed. Classification logic is not canonical in the deployment repository `KAFKA2306/vrc_cast_event_calender`.
 
 Verification: `pytest -q tests/test_mcp_contract.py tests/test_mcp_acceptance.py tests/test_mcp_runtime_config.py`.

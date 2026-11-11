@@ -4,7 +4,8 @@ VRChatイベントを収集・検証し、出典付きのカレンダーを公�
 
 - [公開カレンダー](https://kafka2306.github.io/cast_event_cal/)
 - [今夜のイベント](https://kafka2306.github.io/cast_event_cal/tonight/)
-- [JSON](https://kafka2306.github.io/cast_event_cal/events.json) / [iCalendar](https://kafka2306.github.io/cast_event_cal/calendar.ics)
+- JSON: https://kafka2306.github.io/cast_event_cal/events.json
+- iCalendar: https://kafka2306.github.io/cast_event_cal/calendar.ics
 
 ## データ処理
 
