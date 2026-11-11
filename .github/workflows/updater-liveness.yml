@@ -24,7 +24,7 @@ jobs:
         run: |
           set +e
           printf '{"runs":[],"jobs_by_run":{}}\n' > /tmp/liveness-input.json
-          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-calendar-v2.yml/runs?per_page=20" > /tmp/runs.json || exit 0
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-calendar-v2.yml/runs?per_page=100" > /tmp/runs.json || exit 0
           python - <<'PY'
           import json, os, subprocess
           runs = json.load(open('/tmp/runs.json', encoding='utf-8')).get('workflow_runs', [])
