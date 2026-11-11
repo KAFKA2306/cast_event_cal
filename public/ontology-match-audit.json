@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 927,
+  "event_count": 949,
   "matched_events": 295,
   "matched_series": {
     "exploit-club": 18,
@@ -19,7 +19,7 @@
     "vrc-goita": 17,
     "vrc-game-world-club": 17
   },
-  "unmatched_events": 632,
+  "unmatched_events": 654,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3547,62 +3547,61 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 927,
+    "event_count": 949,
     "category_breakdown": {
       "art": 121,
-      "community": 244,
-      "game": 106,
+      "community": 252,
+      "game": 107,
       "language_exchange": 34,
-      "learning": 17,
-      "music": 20,
-      "other": 13,
-      "performance": 5,
-      "recruitment_deadline": 5,
-      "technology": 275,
+      "learning": 21,
+      "music": 21,
+      "other": 21,
+      "performance": 3,
+      "recruitment_deadline": 6,
+      "technology": 276,
       "wellness": 69,
       "world_tour": 18
     },
     "subcategory_breakdown": {
       "ai": 36,
       "application_deadline": 1,
-      "bar": 1,
-      "cafe": 20,
-      "cast_service": 2,
+      "cafe": 21,
+      "cast_service": 3,
       "dance": 5,
       "dj": 2,
       "engineering": 161,
       "fitness": 34,
       "hangout": 70,
       "language_exchange": 34,
+      "lecture": 4,
       "live_music": 1,
       "mystery": 35,
       "photography": 121,
-      "reading": 1,
-      "research": 69,
-      "show": 3,
+      "research": 70,
+      "show": 2,
       "sightseeing": 1,
-      "social": 151,
-      "tabletop": 35,
+      "social": 158,
+      "tabletop": 36,
       "theater": 1,
       "workshop": 9,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 5,
-      "hybrid": 6,
-      "in_world": 912,
+      "deadline": 6,
+      "hybrid": 7,
+      "in_world": 932,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 278,
-      "fallback": 13,
-      "keyword_rules": 418,
+      "fallback": 21,
+      "keyword_rules": 432,
       "legacy_and_keywords": 97,
       "legacy_category": 121
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 50,
-    "audit_event_count": 50
+    "low_confidence_event_count": 58,
+    "audit_event_count": 58
   },
   "category_review_queue": [
     {
@@ -3667,7 +3666,7 @@
     },
     {
       "event_id": "f5dd4d56b1999d15618a",
-      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』 開催 します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第88回は11月11日(水) 『21:00〜22:30』 ※当イベ…",
+      "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第88回は11月11日(水) 『21:00〜22:30』 ※当イベント…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3690,6 +3689,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "3560156720e2f1ad85b4",
+      "title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”殺陣”回です！ 本日 のテーマは⇊ 🗡殺陣のお話！ガン=カタ編⚔ 心よりお待ちしております✨ ⏰time⇒22:…",
+      "category": "technology",
+      "label": "技術・研究",
+      "subcategory": "research",
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:研究"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "5e473c28dedd984cb2d7",
@@ -3731,24 +3747,6 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "b69ca02c5a2c3cd1a29f",
-      "title": "人身売買闇オークション VRChatイベント 「Obedience AUCTION」 2026年11月12日（木）22:00～24:00 開催 決定！ 主人と奴隷に別れてRP交流！初心者、見学…",
-      "category": "performance",
-      "label": "公演・ショー",
-      "subcategory": "show",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ショー"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "game",
-        "community"
-      ]
-    },
-    {
       "event_id": "223c7c78253d9eac86ba",
       "title": "【 VRC 映画上映会】『犬神家の一族』（2006年版）がyoutubeにて期間限定無料公開されるのでみんなで鑑賞会しませんか！！！！ 日時 :11/13(金)22:00頃から 21:30頃ｲ…",
       "category": "other",
@@ -3759,6 +3757,19 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "dc4f403cdd726847da9a",
+      "title": "現在 開催 中の VRChatイベント 「バーチャルダイスパーティ2026」にスタヂオひまつぶしとして 参加 させていただいております！ 次回ブース在廊予定は11/13(金)22時頃！ ↓プロ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
@@ -3777,6 +3788,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "7f42c77f9f95a4a30629",
+      "title": "🌙【#ClubMorceau】#45🌙 ～ モルソ 第45回 かちかち回 ～ ⏰11月15日( 日曜日 ) 21:00~23:00 🌐Group+ instance (MORC.2201) 🎉…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "54409b37830be4a1d404",
@@ -3874,6 +3898,45 @@
       ]
     },
     {
+      "event_id": "aa11f3b44d9906051a6e",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "556ec56831a68ff5801a",
+      "title": "VRC 美肌部としてしんたやも登壇します！ 11/28（土） 21時 から、「SpiceOfVRinks」の第5会場です！ 美肌部だけでなく、いろいろなイベントやコミュニティを知るきっかけにも…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "38b1e31da3b59104e2b9",
+      "title": "VRC 美肌部も登壇します！ 11/28（土） 21時 から（日本時間）、「SpiceOfVRinks」の第5会場です！ 美肌部だけでなく、いろいろなイベントやコミュニティを知るきっかけにもな…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "1ca35dbc927b547740c5",
       "title": "分解技術集会",
       "category": "technology",
@@ -3891,8 +3954,8 @@
       ]
     },
     {
-      "event_id": "70d81e7834da04c8edcd",
-      "title": "SOURCE : LOCATION #2 Number 9 は、フィールドレコーディングに特化した音と映像の イベント を再び 開催 します。 🗓️ 2026/12/05 (Sat) 🕘 21…",
+      "event_id": "057c8f588f36dc29bafb",
+      "title": "⏰12/5 （土）14:00～ 🗺IV AKIHABARA 💴¥2300+1D（¥700） VRChat とリアルのアニクラを繋ぐ イベント 「InstanceOpen!!(public)」は…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3966,6 +4029,19 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "ef2151fecdfdd7a39a9a",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
@@ -4068,6 +4144,19 @@
       ]
     },
     {
+      "event_id": "c63ce379dafa06fc06fb",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "f6b4fcf90dc5c57c3291",
       "title": "「計算と自然」集会",
       "category": "technology",
@@ -4135,6 +4224,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "687fc4c16c9f004b9b52",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "a92d7384884e11c40bbb",
