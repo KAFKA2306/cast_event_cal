@@ -1,4 +1,4 @@
-"""Decide whether a late calendar updater merits one bounded recovery dispatch.
+"""Decide whether a failed or late calendar updater merits one bounded recovery dispatch.
 
 This module never calls GitHub. The workflow owns the actual dispatch permission.
 """
@@ -6,9 +6,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+
+MAX_DISPATCHES_24H = 2
+RUN_HISTORY_PAGE_SIZE = 100
 
 
 def parse_time(value: str | None) -> datetime | None:
@@ -16,7 +19,7 @@ def parse_time(value: str | None) -> datetime | None:
         return None
     try:
         return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(UTC)
-    except ValueError:
+    except (TypeError, ValueError):
         return None
 
 
@@ -27,12 +30,14 @@ def plan_recovery(
     checked_at: datetime,
     cooldown_minutes: int,
 ) -> dict[str, Any]:
-    """Fail closed on unknown data, active runs, or recent manual dispatches."""
-    if audit.get("state") != "late":
-        return {"dispatch": False, "reason": "audit_not_late"}
+    """Fail closed on unknown state, incomplete history, active runs, or retry budget."""
+    state = audit.get("state")
+    if state not in {"late", "failed"}:
+        return {"dispatch": False, "reason": "audit_not_recoverable"}
     if not runs:
         return {"dispatch": False, "reason": "no_updater_runs"}
 
+    parsed: list[tuple[dict[str, Any], datetime]] = []
     for run in runs:
         if not isinstance(run, dict) or run.get("status") != "completed":
             return {"dispatch": False, "reason": "updater_active_or_unknown"}
@@ -42,14 +47,42 @@ def plan_recovery(
         age_minutes = (checked_at - started).total_seconds() / 60
         if age_minutes < 0:
             return {"dispatch": False, "reason": "future_run_timestamp"}
-        if run.get("event") == "workflow_dispatch" and age_minutes < cooldown_minutes:
-            return {
-                "dispatch": False,
-                "reason": "manual_dispatch_cooldown",
-                "last_dispatch_age_minutes": round(age_minutes, 1),
-            }
+        parsed.append((run, started))
 
-    return {"dispatch": True, "reason": "late_without_active_or_recent_manual_run"}
+    oldest = min(started for _, started in parsed)
+    if len(parsed) >= RUN_HISTORY_PAGE_SIZE and oldest >= checked_at - timedelta(days=1):
+        return {"dispatch": False, "reason": "run_history_incomplete_for_daily_budget"}
+
+    recent = [
+        (run, started)
+        for run, started in parsed
+        if checked_at - started < timedelta(days=1)
+    ]
+    if any(
+        run.get("event") == "workflow_dispatch"
+        and (checked_at - started).total_seconds() / 60 < cooldown_minutes
+        for run, started in recent
+    ):
+        return {"dispatch": False, "reason": "manual_dispatch_cooldown"}
+    dispatches = sum(run.get("event") == "workflow_dispatch" for run, _ in recent)
+    if dispatches >= MAX_DISPATCHES_24H:
+        return {
+            "dispatch": False,
+            "reason": "daily_dispatch_budget_exhausted",
+            "dispatches_last_24h": dispatches,
+        }
+
+    # Do not pile a manual dispatch on top of a recent scheduled attempt.
+    if any(
+        (checked_at - started).total_seconds() / 60 < cooldown_minutes
+        for _, started in recent
+    ):
+        return {"dispatch": False, "reason": "recent_updater_attempt"}
+    return {
+        "dispatch": True,
+        "reason": f"{state}_without_active_or_recent_run",
+        "dispatches_last_24h": dispatches,
+    }
 
 
 def main() -> int:
