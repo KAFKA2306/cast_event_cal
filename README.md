@@ -13,7 +13,7 @@ VRChatイベントを収集・検証し、出典付きのカレンダーを公�
 
 - 日付・参加方法・VRChatとの関連性を推測して採用しない。相対日時は投稿時刻基準。
 - 不確実な日時、権限未確認の収集、曖昧なontology照合はfail-closed。棄却理由と観測記録は保持する。
-- Yahoo取得権限の条件は [取得権限](docs/yahoo-collection-authorization.md) に従う。
+- Yahoo取得は [取得権限](docs/yahoo-collection-authorization.md) に従う。現行の許可判定は期限付きの運用者申告に基づき、権利者の許諾を独立に確認したものではない。
 - イベントIDと開催回の区別は [アーキテクチャ](docs/architecture.md)、正本と配信先の境界は [公開フロー](docs/canonical-flow.md) を参照。
 
 主要な入力: `data/recurring_events.json`、`data/one_off_events.json`、`data/discovered_events.json`、`data/x_events.json`、`data/yahoo_realtime_candidates.json`、`config/event_ontology.json`。
