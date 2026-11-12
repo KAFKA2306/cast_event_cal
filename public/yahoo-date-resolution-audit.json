@@ -1,20 +1,18 @@
 {
   "schema_version": "1.0",
   "policy_version": "calendar-week-relative-date.v1",
-  "generated_at": "2026-11-11T18:40:49Z",
+  "generated_at": "2026-11-12T01:31:12Z",
   "timezone": "Asia/Tokyo",
   "week_start": "monday",
-  "previous_event_count": 53,
-  "current_event_count": 46,
-  "events_with_resolution_evidence": 46,
+  "previous_event_count": 41,
+  "current_event_count": 40,
+  "events_with_resolution_evidence": 40,
   "resolution_method_counts": {
-    "explicit_calendar_date": 37,
-    "explicit_calendar_date_evidence_span": 1,
-    "next_occurrence_unprefixed": 1,
-    "relative_day_evidence_span": 1,
-    "relative_day_from_source_timestamp": 6
+    "explicit_calendar_date": 34,
+    "explicit_calendar_date_evidence_span": 2,
+    "relative_day_from_source_timestamp": 4
   },
-  "changed_event_count": 1,
+  "changed_event_count": 2,
   "changed_events": [
     {
       "source_id": "yahoo:x:2120475869689110712",
@@ -22,6 +20,13 @@
       "current_starts_at": "2026-11-12T13:00:00Z",
       "date_resolution_method": "relative_day_from_source_timestamp",
       "date_resolution_anchor": "2026-11-11T11:16:58Z"
+    },
+    {
+      "source_id": "yahoo:x:2120485785321509194",
+      "previous_starts_at": "2026-11-13T14:00:00Z",
+      "current_starts_at": "2026-11-12T14:00:00Z",
+      "date_resolution_method": "relative_day_from_source_timestamp",
+      "date_resolution_anchor": "2026-11-11T11:56:22Z"
     }
   ]
 }
