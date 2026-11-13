@@ -1,38 +1,16 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 968,
-  "event_count_after": 962,
-  "candidate_cluster_count": 6,
-  "duplicate_cluster_count": 6,
-  "duplicate_occurrence_count": 6,
-  "duplicate_post_count": 6,
-  "duplicate_rate": 0.006198,
+  "event_count_before": 938,
+  "event_count_after": 933,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.00533,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 2,
   "clusters": [
-    {
-      "cluster_id": "occ_3d6581052d1824fcabd6",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "title": "💡新 VRC イベント 『オレンジサファリパーク』 💡 ♻️フォロー＆RPで1名様にペア招待券プレゼント🎁 プレ オープン 開催日決定‼ 11月12日(木) 21:50~23:00 🍊集合時間…",
-      "member_count": 2,
-      "member_ids": [
-        "2858c6e055a8aed658af",
-        "f5238629c08599e40555"
-      ],
-      "source_record_ids": [
-        "src_ed537c2fd35e7e09fc02",
-        "src_f6c942e56e9f529dac01"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_f6c942e56e9f529dac01"
-    },
     {
       "cluster_id": "occ_93e7bc7016c14bac9c49",
       "starts_at": "2026-11-16T13:00:00Z",
@@ -78,28 +56,6 @@
       "representative_source_record_id": "src_271a0882bac1a4432126"
     },
     {
-      "cluster_id": "occ_9a8cda973cd0e1bb7af1",
-      "starts_at": "2026-11-18T12:30:00Z",
-      "title": "【11月度 開催 のお知らせ🍁❄️】 『ダンス・パレット！』🎨 ダンス未経験の子も気軽に遊びに来てねー！ フルトラじゃなくても大丈夫！ 3点、デスクトップの方もお待ちしております🫶 ​📅 毎週…",
-      "member_count": 2,
-      "member_ids": [
-        "769419060af4d87cd57c",
-        "7bf0324ee96151a9722e"
-      ],
-      "source_record_ids": [
-        "src_82fccc896a138cb2583e",
-        "src_c02fb36363fdb582d3e5"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_c02fb36363fdb582d3e5"
-    },
-    {
       "cluster_id": "occ_c1c7cd8aa70d41574469",
       "starts_at": "2026-11-14T12:00:00Z",
       "title": "🌼 KYOP BLOOM 初の 交流会 を 開催 します🌼 おかげさまでDAISYを多くの方にお迎えいただきました。本当にありがとうございます！ 感謝の気持ちを込めて、DAISYユーザーさん同…",
@@ -142,110 +98,151 @@
       ],
       "confidence": 0.99,
       "representative_source_record_id": "src_3a50720339211ff7c6d4"
+    },
+    {
+      "cluster_id": "occ_f1b2639d9ef2055bda85",
+      "starts_at": "2026-11-17T13:00:00Z",
+      "title": "VRC 1:1型RP イベント 🐄モーモー牧場🐄 【11/17(火)22:00～23:00 開催 】 お客様 参加 枠の抽選を行います 事前抽選にてご招待 ※抽選枠はキャストの人数にて変動 応…",
+      "member_count": 2,
+      "member_ids": [
+        "b9b84db9e6b2c329aa1e",
+        "fd9f9eda5e17ec3f8eff"
+      ],
+      "source_record_ids": [
+        "src_a064a7f64ba74618ad79",
+        "src_ee893e75030cc6900f5b"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_a064a7f64ba74618ad79"
     }
   ],
-  "ambiguous_candidates": [],
+  "ambiguous_candidates": [
+    {
+      "left_id": "678372a8e9e5095f242d",
+      "right_id": "33af4786b9084c0e3866",
+      "starts_at": "2026-11-13T13:00:00Z",
+      "organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.6016,
+      "left_title": "VRChatイベント 「スナックくり魔りEX」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/E9TSWxhJSZ",
+      "right_title": "本日VRChatイベント 「スナックくり魔りEX」あります！ ぜひお越しください！ 22:00～JPTOWNのpublicインスタンスで行います。 # VRChat #JPTOWN https…"
+    },
+    {
+      "left_id": "f59aa35f76a259a21e26",
+      "right_id": "30f12fcb3f91d5dd7a84",
+      "starts_at": "2026-11-14T12:00:00Z",
+      "organizer": "@dadada_datarou",
+      "similarity": 0.6129,
+      "left_title": "📢 VRC イベント出演のお知らせ📢 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ 🎵シアターライブSpecial🎵 ﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ VR演劇のミライを作るメタシアター主催の音楽 ライブイベ…",
+      "right_title": "📢‼️ 明日 は VRC祭り 出演‼️📢 朝は警戒荘でボドゲ配信、夜は ライブ ☀️🌙 明日 は VRChat 尽くしの土曜日🔥 🎵シアター ライブ Special🎵 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋…"
+    }
+  ],
   "negative_samples": [
     {
-      "left_id": "6cbaa7c25b681974733d",
-      "right_id": "53c6713cb0db8dea94bb",
-      "starts_at": "2026-11-12T12:00:00Z",
-      "left_organizer": "VRC初心者ワールドツアー",
+      "left_id": "1b2cd7c7f48d21a734bc",
+      "right_id": "8388a35028dde262d193",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "ASMR集会",
       "right_organizer": null,
-      "similarity": 0.0656,
-      "left_title": "VRC初心者ワールドツアー",
-      "right_title": "データサイエンティスト集会"
+      "similarity": 0.0701,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "VRC Blender集会"
     },
     {
-      "left_id": "6cbaa7c25b681974733d",
-      "right_id": "6d05b57569a30369b7cb",
-      "starts_at": "2026-11-12T12:00:00Z",
-      "left_organizer": "VRC初心者ワールドツアー",
-      "right_organizer": null,
-      "similarity": 0.0442,
-      "left_title": "VRC初心者ワールドツアー",
-      "right_title": "仮想学生集会"
+      "left_id": "1b2cd7c7f48d21a734bc",
+      "right_id": "992a9e0e35a253a0da30",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@omokuroya_fumi",
+      "similarity": 0.1481,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "もうすぐ 開催 ！ 本日 11/13(金)21:00～！！ 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 #アイアラVR 場所・詳細は⏬から！ …"
     },
     {
-      "left_id": "53c6713cb0db8dea94bb",
-      "right_id": "6d05b57569a30369b7cb",
-      "starts_at": "2026-11-12T12:00:00Z",
+      "left_id": "1b2cd7c7f48d21a734bc",
+      "right_id": "43a371ca039c5e88485e",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@omokuroya_fumi",
+      "similarity": 0.1159,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "今夜 はアイドルアライブVR 大会 直前練習会🎤 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 ＃アイアラVR 場所・詳細は⏬️から！ ※ VR…"
+    },
+    {
+      "left_id": "1b2cd7c7f48d21a734bc",
+      "right_id": "52d983b4f1d056263e4f",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@micafe01234",
+      "similarity": 0.1455,
+      "left_title": "ASMR集会 初心者説明会",
+      "right_title": "＼ 本日 21:00 グランド オープン ！ ／ ​ついに 本日 、少人数制 VRChat カフェ「MICafe」が正式 オープン します まったりお話ししながら素敵なカフェタイムを過ごしませ…"
+    },
+    {
+      "left_id": "8388a35028dde262d193",
+      "right_id": "992a9e0e35a253a0da30",
+      "starts_at": "2026-11-13T12:00:00Z",
       "left_organizer": null,
+      "right_organizer": "@omokuroya_fumi",
+      "similarity": 0.0664,
+      "left_title": "VRC Blender集会",
+      "right_title": "もうすぐ 開催 ！ 本日 11/13(金)21:00～！！ 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 #アイアラVR 場所・詳細は⏬から！ …"
+    },
+    {
+      "left_id": "8388a35028dde262d193",
+      "right_id": "43a371ca039c5e88485e",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@omokuroya_fumi",
+      "similarity": 0.066,
+      "left_title": "VRC Blender集会",
+      "right_title": "今夜 はアイドルアライブVR 大会 直前練習会🎤 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 ＃アイアラVR 場所・詳細は⏬️から！ ※ VR…"
+    },
+    {
+      "left_id": "8388a35028dde262d193",
+      "right_id": "52d983b4f1d056263e4f",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@micafe01234",
+      "similarity": 0.0701,
+      "left_title": "VRC Blender集会",
+      "right_title": "＼ 本日 21:00 グランド オープン ！ ／ ​ついに 本日 、少人数制 VRChat カフェ「MICafe」が正式 オープン します まったりお話ししながら素敵なカフェタイムを過ごしませ…"
+    },
+    {
+      "left_id": "992a9e0e35a253a0da30",
+      "right_id": "52d983b4f1d056263e4f",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "@omokuroya_fumi",
+      "right_organizer": "@micafe01234",
+      "similarity": 0.1667,
+      "left_title": "もうすぐ 開催 ！ 本日 11/13(金)21:00～！！ 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 #アイアラVR 場所・詳細は⏬から！ …",
+      "right_title": "＼ 本日 21:00 グランド オープン ！ ／ ​ついに 本日 、少人数制 VRChat カフェ「MICafe」が正式 オープン します まったりお話ししながら素敵なカフェタイムを過ごしませ…"
+    },
+    {
+      "left_id": "43a371ca039c5e88485e",
+      "right_id": "52d983b4f1d056263e4f",
+      "starts_at": "2026-11-13T12:00:00Z",
+      "left_organizer": "@omokuroya_fumi",
+      "right_organizer": "@micafe01234",
+      "similarity": 0.1026,
+      "left_title": "今夜 はアイドルアライブVR 大会 直前練習会🎤 大会 前にウォーミングアップ！ 初めての方も 大会 に出ない方も歓迎です！ #VDP2026 ＃アイアラVR 場所・詳細は⏬️から！ ※ VR…",
+      "right_title": "＼ 本日 21:00 グランド オープン ！ ／ ​ついに 本日 、少人数制 VRChat カフェ「MICafe」が正式 オープン します まったりお話ししながら素敵なカフェタイムを過ごしませ…"
+    },
+    {
+      "left_id": "b1e743e63ebad0492dad",
+      "right_id": "f50edf06940ec2facaea",
+      "starts_at": "2026-11-13T13:00:00Z",
+      "left_organizer": "ASMR集会",
       "right_organizer": null,
-      "similarity": 0.1815,
-      "left_title": "データサイエンティスト集会",
-      "right_title": "仮想学生集会"
-    },
-    {
-      "left_id": "2858c6e055a8aed658af",
-      "right_id": "40c2ae99bece4f33e298",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "left_organizer": "@orange_safari",
-      "right_organizer": "@Vrc_Barlouve",
-      "similarity": 0.1759,
-      "left_title": "【 告知 】 🦓新 VRC イベント 『オレンジサファリパーク』🦁 本日開催 ‼ イベント時間:21:50~23:00 集合時間:21:35~21:45 場所: グループインスタンス ORAN…",
-      "right_title": "【 営業 日のお知らせ】 本日 11/12 21:50〜 通常営業 となります！🫶 ⚠️ VRC のメンテナンスのため、 営業 時間を少し早めております。お間違えの無いようご注意ください！ な…"
-    },
-    {
-      "left_id": "2858c6e055a8aed658af",
-      "right_id": "9d94681c8f2adf2ca8ad",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "left_organizer": "@orange_safari",
-      "right_organizer": "@jobunai",
-      "similarity": 0.127,
-      "left_title": "【 告知 】 🦓新 VRC イベント 『オレンジサファリパーク』🦁 本日開催 ‼ イベント時間:21:50~23:00 集合時間:21:35~21:45 場所: グループインスタンス ORAN…",
-      "right_title": "꒦꒷ 🕯️ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 添付画像の注意事項を必ずご確認ください👻 🎀 公式 VRC グループ 【https://t.co/3pZdv0Nx6u】 🗝️ 当日の リクイン 先 【ht…"
-    },
-    {
-      "left_id": "40c2ae99bece4f33e298",
-      "right_id": "9d94681c8f2adf2ca8ad",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "left_organizer": "@Vrc_Barlouve",
-      "right_organizer": "@jobunai",
-      "similarity": 0.1523,
-      "left_title": "【 営業 日のお知らせ】 本日 11/12 21:50〜 通常営業 となります！🫶 ⚠️ VRC のメンテナンスのため、 営業 時間を少し早めております。お間違えの無いようご注意ください！ な…",
-      "right_title": "꒦꒷ 🕯️ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 添付画像の注意事項を必ずご確認ください👻 🎀 公式 VRC グループ 【https://t.co/3pZdv0Nx6u】 🗝️ 当日の リクイン 先 【ht…"
-    },
-    {
-      "left_id": "40c2ae99bece4f33e298",
-      "right_id": "f5238629c08599e40555",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "left_organizer": "@Vrc_Barlouve",
-      "right_organizer": "@orange_safari",
-      "similarity": 0.1743,
-      "left_title": "【 営業 日のお知らせ】 本日 11/12 21:50〜 通常営業 となります！🫶 ⚠️ VRC のメンテナンスのため、 営業 時間を少し早めております。お間違えの無いようご注意ください！ な…",
-      "right_title": "💡新 VRC イベント 『オレンジサファリパーク』 💡 ♻️フォロー＆RPで1名様にペア招待券プレゼント🎁 プレ オープン 開催日決定‼ 11月12日(木) 21:50~23:00 🍊集合時間…"
-    },
-    {
-      "left_id": "9d94681c8f2adf2ca8ad",
-      "right_id": "f5238629c08599e40555",
-      "starts_at": "2026-11-12T12:50:00Z",
-      "left_organizer": "@jobunai",
-      "right_organizer": "@orange_safari",
-      "similarity": 0.1495,
-      "left_title": "꒦꒷ 🕯️ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 添付画像の注意事項を必ずご確認ください👻 🎀 公式 VRC グループ 【https://t.co/3pZdv0Nx6u】 🗝️ 当日の リクイン 先 【ht…",
-      "right_title": "💡新 VRC イベント 『オレンジサファリパーク』 💡 ♻️フォロー＆RPで1名様にペア招待券プレゼント🎁 プレ オープン 開催日決定‼ 11月12日(木) 21:50~23:00 🍊集合時間…"
-    },
-    {
-      "left_id": "06945f09b88fb864e9e8",
-      "right_id": "e30f15a1863ce93bef1c",
-      "starts_at": "2026-11-12T13:00:00Z",
-      "left_organizer": "@UgokuTou",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.1008,
-      "left_title": "VRChat をやってらっしゃってる方！ 明日 22:00にけもの 集会 イベントをやる予定です！kemoconで使われたヤギの丘コテージっぽい建物(うろ覚えモデリング)でお出迎えします！ケモ…",
-      "right_title": "【 本日 の注目イベント✨】 🕒11/12(木) 22:00～ 🟠私立 VRC 学園 24期生徒 説明会 🟠 私立 VRC 学園は、24期を11月21日(土)から12月05日(土)の日程で開校…"
-    },
-    {
-      "left_id": "06945f09b88fb864e9e8",
-      "right_id": "b69ca02c5a2c3cd1a29f",
-      "starts_at": "2026-11-12T13:00:00Z",
-      "left_organizer": "@UgokuTou",
-      "right_organizer": "@azumano_jam",
-      "similarity": 0.1553,
-      "left_title": "VRChat をやってらっしゃってる方！ 明日 22:00にけもの 集会 イベントをやる予定です！kemoconで使われたヤギの丘コテージっぽい建物(うろ覚えモデリング)でお出迎えします！ケモ…",
-      "right_title": "人身売買闇オークション VRChat イベント「Obedience AUCTION」 2026年11月12日（木）22:00～24:00 開催決定 ！ 主人と奴隷に別れてRP交流！初心者、見学…"
+      "similarity": 0.1074,
+      "left_title": "ASMR集会 本営業",
+      "right_title": "Blender＆Unity技術交流会"
     }
   ],
-  "generated_at": "2026-11-13T11:38:23Z"
+  "generated_at": "2026-11-13T15:22:18Z"
 }
