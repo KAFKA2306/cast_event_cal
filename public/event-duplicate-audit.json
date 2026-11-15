@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 943,
-  "event_count_after": 940,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 3,
-  "duplicate_post_count": 3,
-  "duplicate_rate": 0.003181,
+  "event_count_before": 920,
+  "event_count_after": 918,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 2,
+  "duplicate_post_count": 2,
+  "duplicate_rate": 0.002174,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 3,
+  "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
     {
       "cluster_id": "occ_56956fd6d3f20e6bef9d",
@@ -36,7 +36,7 @@
     {
       "cluster_id": "occ_64670405790cc0da7017",
       "starts_at": "2026-11-15T12:30:00Z",
-      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育てて…",
+      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～ 講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育て…",
       "member_count": 2,
       "member_ids": [
         "8fe51dbac19d1eb9d809",
@@ -54,160 +54,110 @@
       ],
       "confidence": 0.96,
       "representative_source_record_id": "src_5cc7d1cbc158c4c8815b"
-    },
-    {
-      "cluster_id": "occ_c1c7cd8aa70d41574469",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "title": "🌼 KYOP BLOOM 初の 交流会 を 開催 します🌼 おかげさまでDAISYを多くの方にお迎えいただきました。本当にありがとうございます！ 感謝の気持ちを込めて、DAISYユーザーさん同…",
-      "member_count": 2,
-      "member_ids": [
-        "4e9bc95d662f8d474e63",
-        "c05cb0cb262a78a0f025"
-      ],
-      "source_record_ids": [
-        "src_2580b2beafb7021e5231",
-        "src_b2d59996ad81e9501461"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_b2d59996ad81e9501461"
     }
   ],
-  "ambiguous_candidates": [
-    {
-      "left_id": "f59aa35f76a259a21e26",
-      "right_id": "30f12fcb3f91d5dd7a84",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "organizer": "@dadada_datarou",
-      "similarity": 0.6129,
-      "left_title": "📢 VRC イベント出演のお知らせ📢 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ 🎵シアターライブSpecial🎵 ﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ VR演劇のミライを作るメタシアター主催の音楽 ライブイベ…",
-      "right_title": "📢‼️ 明日 は VRC 祭り出演‼️📢 朝は警戒荘でボドゲ配信、夜はライブ☀️🌙 明日 は VRChat 尽くしの土曜日🔥 🎵シアターライブSpecial🎵 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ …"
-    },
-    {
-      "left_id": "a9c31249da2e2e120d54",
-      "right_id": "c05e9cf43e0a3167dd05",
-      "starts_at": "2026-11-15T03:30:00Z",
-      "organizer": "@VRChat_JP",
-      "similarity": 0.6512,
-      "left_title": "『レインボーシックス シージ』世界 大会 「Osaka Major」、まもなく決勝！🏆 DarkZero vs FaZe Clan 本日 11/15（日）12:30 開始 予定（日本時間） 優…",
-      "right_title": "『レインボーシックス シージ』世界大会「Osaka Major」準決勝第2試合、Team Falcons vs FaZe Clan がスタート！🔥 決勝に進むのはどっちだ？ VRChat の観…"
-    },
-    {
-      "left_id": "c05e9cf43e0a3167dd05",
-      "right_id": "e444475440998287af3f",
-      "starts_at": "2026-11-15T03:30:00Z",
-      "organizer": "@VRChat_JP",
-      "similarity": 0.6667,
-      "left_title": "『レインボーシックス シージ』世界大会「Osaka Major」準決勝第2試合、Team Falcons vs FaZe Clan がスタート！🔥 決勝に進むのはどっちだ？ VRChat の観…",
-      "right_title": "明日はいよいよ『レインボーシックス シージ』世界大会「Osaka Major」決勝！🏆 DarkZero vs FaZe Clan 11/15（日）12:30 開始予定（日本時間） 大阪で優勝…"
-    }
-  ],
+  "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "c813162b6824f3d57457",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
+      "left_id": "cf22867ff8ab7bb7ac29",
+      "right_id": "b76d1026d2c29c430511",
+      "starts_at": "2026-11-15T11:00:00Z",
+      "left_organizer": "@wondernote_info",
+      "right_organizer": "@vrc_furuyoni",
+      "similarity": 0.1422,
+      "left_title": "【 本日 の注目イベント✨】 🕒11/15(日) 20:00～ 🟠お好み焼き集会🟠 みんな大好きお好み焼き！ みんなでお好み焼きを食べる集会です。 日時 :11/15(日) 20:00～21:…",
+      "right_title": "🌸第14回桜降る代に決闘を準公式交流祭🌸 本日 20時から VRChat にてふるよに 大会 を 開催 します！ 詳しくはDiscord該当ページやリプ欄をご覧ください！ 新しいシーズンをみん…"
+    },
+    {
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "268a1cb6a5931591f9a4",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "EN-JP Language Exchange",
+      "similarity": 0.0581,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "EN-JP Language Exchange（日曜）"
+    },
+    {
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "f10c2feeb6ddfeafa66f",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
-      "similarity": 0.1294,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "VRC海洋学研究会"
+      "similarity": 0.0902,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "ITエンジニア キャリア相談・雑談集会"
     },
     {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "387036c34be59e654080",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@VRC_MeteoR",
-      "similarity": 0.0791,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "【 告知 】 🎮MeteoR - VRC ポケモン対戦 交流会 ☕ 📅11/14(土)21:00～ VRC 最大規模の #ポケモンチャンピオンズ 対戦イベント✨ 観戦のみもOK！👀 今回はチャ…"
-    },
-    {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "e36c120a2957d1944e6e",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": null,
-      "similarity": 0.0851,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "セキュリティ集会"
-    },
-    {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "a1faa91ad4c45608368a",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": null,
-      "similarity": 0.0334,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "株式投資座談会"
-    },
-    {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "4e9bc95d662f8d474e63",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@KyopShop",
-      "similarity": 0.0899,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "🌼 KYOP BLOOM 初の 交流会 を 開催 します🌼 おかげさまでDAISYを多くの方にお迎えいただきました。本当にありがとうございます！ 感謝の気持ちを込めて、DAISYユーザーさん同…"
-    },
-    {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "c05cb0cb262a78a0f025",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@KyopShop",
-      "similarity": 0.0899,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "🌼 KYOP BLOOM 初の 交流会 を 開催 します🌼 おかげさまでDAISYを多くの方にお迎えいただきました。本当にありがとうございます！ 感謝の気持ちを込めて、DAISYユーザーさん同…"
-    },
-    {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "f59aa35f76a259a21e26",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@dadada_datarou",
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "2d4e5115fb9dd25343e5",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@VRChatChessJP",
       "similarity": 0.087,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "📢 VRC イベント出演のお知らせ📢 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ 🎵シアターライブSpecial🎵 ﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ VR演劇のミライを作るメタシアター主催の音楽 ライブイベ…"
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
     },
     {
-      "left_id": "5b8e8c87d3c43f3a0337",
-      "right_id": "30f12fcb3f91d5dd7a84",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": "VRCフィットボクシング集会",
-      "right_organizer": "@dadada_datarou",
-      "similarity": 0.1014,
-      "left_title": "VRCフィットボクシング集会（土曜）",
-      "right_title": "📢‼️ 明日 は VRC 祭り出演‼️📢 朝は警戒荘でボドゲ配信、夜はライブ☀️🌙 明日 は VRChat 尽くしの土曜日🔥 🎵シアターライブSpecial🎵 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ …"
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "b9faab84f5b566f243ae",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0732,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "VRCフィットボクシング集会（日曜）"
     },
     {
-      "left_id": "c813162b6824f3d57457",
-      "right_id": "387036c34be59e654080",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@VRC_MeteoR",
-      "similarity": 0.2023,
-      "left_title": "VRC海洋学研究会",
-      "right_title": "【 告知 】 🎮MeteoR - VRC ポケモン対戦 交流会 ☕ 📅11/14(土)21:00～ VRC 最大規模の #ポケモンチャンピオンズ 対戦イベント✨ 観戦のみもOK！👀 今回はチャ…"
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "992dc617a6ca10b35e82",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@wondernote_info",
+      "similarity": 0.1116,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "【 本日 の注目イベント✨】 🕒11/15(日) 21:00～ 🟠 VRC チェス対局 交流会 🟠 日本人向けに開かれるチェスの対局会。 インスタンスにいる自由な相手と対局を楽しむことができま…"
     },
     {
-      "left_id": "c813162b6824f3d57457",
-      "right_id": "e36c120a2957d1944e6e",
-      "starts_at": "2026-11-14T12:00:00Z",
-      "left_organizer": null,
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "daadd64213b00968a33f",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@vrc_vvat",
+      "similarity": 0.1647,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "【イベントのお知らせ】 11月15日(日)21:00～より VRC 原神同好会Vワット group +インスタンスにて 『第37回 Vワット定期 交流会 』 を 開催 いたします Ver7.2…"
+    },
+    {
+      "left_id": "58cdcec007b5d7732133",
+      "right_id": "90895f283590c12b613f",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
-      "similarity": 0.362,
-      "left_title": "VRC海洋学研究会",
-      "right_title": "セキュリティ集会"
+      "similarity": 0.0796,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "分散システム集会"
+    },
+    {
+      "left_id": "268a1cb6a5931591f9a4",
+      "right_id": "f10c2feeb6ddfeafa66f",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "EN-JP Language Exchange",
+      "right_organizer": null,
+      "similarity": 0.09,
+      "left_title": "EN-JP Language Exchange（日曜）",
+      "right_title": "ITエンジニア キャリア相談・雑談集会"
+    },
+    {
+      "left_id": "268a1cb6a5931591f9a4",
+      "right_id": "2d4e5115fb9dd25343e5",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "EN-JP Language Exchange",
+      "right_organizer": "@VRChatChessJP",
+      "similarity": 0.2316,
+      "left_title": "EN-JP Language Exchange（日曜）",
+      "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
     }
   ],
-  "generated_at": "2026-11-15T09:18:43Z"
+  "generated_at": "2026-11-15T16:24:36Z"
 }
