@@ -1,20 +1,42 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 938,
-  "event_count_after": 936,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.002132,
+  "event_count_before": 943,
+  "event_count_after": 940,
+  "candidate_cluster_count": 3,
+  "duplicate_cluster_count": 3,
+  "duplicate_occurrence_count": 3,
+  "duplicate_post_count": 3,
+  "duplicate_rate": 0.003181,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 2,
+  "unresolved_ambiguous_cluster_count": 3,
   "clusters": [
+    {
+      "cluster_id": "occ_56956fd6d3f20e6bef9d",
+      "starts_at": "2026-11-15T03:30:00Z",
+      "title": "『レインボーシックス シージ』世界 大会 「Osaka Major」、まもなく決勝！🏆 DarkZero vs FaZe Clan 本日 11/15（日）12:30 開始 予定（日本時間） 優…",
+      "member_count": 2,
+      "member_ids": [
+        "a9c31249da2e2e120d54",
+        "e444475440998287af3f"
+      ],
+      "source_record_ids": [
+        "src_14bd2fb0238e631edd84",
+        "src_bf94b8f05cac726edc21"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_bf94b8f05cac726edc21"
+    },
     {
       "cluster_id": "occ_64670405790cc0da7017",
       "starts_at": "2026-11-15T12:30:00Z",
-      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～ 講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育て…",
+      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育てて…",
       "member_count": 2,
       "member_ids": [
         "8fe51dbac19d1eb9d809",
@@ -67,26 +89,25 @@
       "right_title": "📢‼️ 明日 は VRC 祭り出演‼️📢 朝は警戒荘でボドゲ配信、夜はライブ☀️🌙 明日 は VRChat 尽くしの土曜日🔥 🎵シアターライブSpecial🎵 ﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋ …"
     },
     {
+      "left_id": "a9c31249da2e2e120d54",
+      "right_id": "c05e9cf43e0a3167dd05",
+      "starts_at": "2026-11-15T03:30:00Z",
+      "organizer": "@VRChat_JP",
+      "similarity": 0.6512,
+      "left_title": "『レインボーシックス シージ』世界 大会 「Osaka Major」、まもなく決勝！🏆 DarkZero vs FaZe Clan 本日 11/15（日）12:30 開始 予定（日本時間） 優…",
+      "right_title": "『レインボーシックス シージ』世界大会「Osaka Major」準決勝第2試合、Team Falcons vs FaZe Clan がスタート！🔥 決勝に進むのはどっちだ？ VRChat の観…"
+    },
+    {
       "left_id": "c05e9cf43e0a3167dd05",
       "right_id": "e444475440998287af3f",
       "starts_at": "2026-11-15T03:30:00Z",
       "organizer": "@VRChat_JP",
       "similarity": 0.6667,
       "left_title": "『レインボーシックス シージ』世界大会「Osaka Major」準決勝第2試合、Team Falcons vs FaZe Clan がスタート！🔥 決勝に進むのはどっちだ？ VRChat の観…",
-      "right_title": "明日 はいよいよ『レインボーシックス シージ』世界 大会 「Osaka Major」決勝！🏆 DarkZero vs FaZe Clan 11/15（日）12:30 開始 予定（日本時間） 大…"
+      "right_title": "明日はいよいよ『レインボーシックス シージ』世界大会「Osaka Major」決勝！🏆 DarkZero vs FaZe Clan 11/15（日）12:30 開始予定（日本時間） 大阪で優勝…"
     }
   ],
   "negative_samples": [
-    {
-      "left_id": "965899572241a22a68aa",
-      "right_id": "858cf63570c3d5586e1c",
-      "starts_at": "2026-11-14T04:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "@emn_records",
-      "similarity": 0.0878,
-      "left_title": "EN-JP Language Exchange（土曜）",
-      "right_title": "明日 11/14（土） VRC イベントのお知らせ ☕️13:00〜「Before the Jam-VRジャズミュージシャンの横顔スケッチトーク」※YouTube配信有 トークテーマ：EMN …"
-    },
     {
       "left_id": "5b8e8c87d3c43f3a0337",
       "right_id": "c813162b6824f3d57457",
@@ -176,7 +197,17 @@
       "similarity": 0.2023,
       "left_title": "VRC海洋学研究会",
       "right_title": "【 告知 】 🎮MeteoR - VRC ポケモン対戦 交流会 ☕ 📅11/14(土)21:00～ VRC 最大規模の #ポケモンチャンピオンズ 対戦イベント✨ 観戦のみもOK！👀 今回はチャ…"
+    },
+    {
+      "left_id": "c813162b6824f3d57457",
+      "right_id": "e36c120a2957d1944e6e",
+      "starts_at": "2026-11-14T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": null,
+      "similarity": 0.362,
+      "left_title": "VRC海洋学研究会",
+      "right_title": "セキュリティ集会"
     }
   ],
-  "generated_at": "2026-11-15T01:53:14Z"
+  "generated_at": "2026-11-15T09:18:43Z"
 }
