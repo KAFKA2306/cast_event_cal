@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 920,
-  "event_count_after": 918,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 2,
-  "duplicate_post_count": 2,
-  "duplicate_rate": 0.002174,
+  "event_count_before": 926,
+  "event_count_after": 921,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.0054,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
+    {
+      "cluster_id": "occ_14d2821acdea7e0fed7c",
+      "starts_at": "2026-11-15T13:00:00Z",
+      "title": "【 VRC DJイベント開催 🎧】 喫茶店VOICEにて DJイベント を 開催 します！ 今回のDJは、久々の出演となる「DJきち」☕️🎶 11/15(日) 22:00～ 落ち着いた喫茶店の…",
+      "member_count": 2,
+      "member_ids": [
+        "0be1fb670bfd86f3f759",
+        "a50079a3054bd068e51f"
+      ],
+      "source_record_ids": [
+        "src_4e63d227437b621bf09a",
+        "src_8b364f531fab91432524"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_8b364f531fab91432524"
+    },
     {
       "cluster_id": "occ_56956fd6d3f20e6bef9d",
       "starts_at": "2026-11-15T03:30:00Z",
@@ -36,7 +58,7 @@
     {
       "cluster_id": "occ_64670405790cc0da7017",
       "starts_at": "2026-11-15T12:30:00Z",
-      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～ 講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育て…",
+      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育てて…",
       "member_count": 2,
       "member_ids": [
         "8fe51dbac19d1eb9d809",
@@ -54,6 +76,50 @@
       ],
       "confidence": 0.96,
       "representative_source_record_id": "src_5cc7d1cbc158c4c8815b"
+    },
+    {
+      "cluster_id": "occ_76e72a07d719b1c96bac",
+      "starts_at": "2026-12-05T12:00:00Z",
+      "title": "SOURCE : LOCATION #2 Number 9 は、フィールドレコーディングに特化した音と映像のイベントを再び 開催 します。 🗓️ 2026/12/05 (Sat) 🕘 21:0…",
+      "member_count": 2,
+      "member_ids": [
+        "5cdb9abc0a15e1e04e2b",
+        "70d81e7834da04c8edcd"
+      ],
+      "source_record_ids": [
+        "src_17d2752bf4b86b65eea5",
+        "src_f557e8338e60b3a578ab"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_f557e8338e60b3a578ab"
+    },
+    {
+      "cluster_id": "occ_b0ad3ffdfdcdc6d877ab",
+      "starts_at": "2026-11-21T16:20:00Z",
+      "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━…",
+      "member_count": 2,
+      "member_ids": [
+        "0e9150c367457d6881dc",
+        "7fa52bb0db896e6043cc"
+      ],
+      "source_record_ids": [
+        "src_17c6cad28f9e089e20e6",
+        "src_5c790e1325c959ea914c"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_5c790e1325c959ea914c"
     }
   ],
   "ambiguous_candidates": [],
@@ -159,5 +225,5 @@
       "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
     }
   ],
-  "generated_at": "2026-11-15T16:24:36Z"
+  "generated_at": "2026-11-15T21:46:36Z"
 }
