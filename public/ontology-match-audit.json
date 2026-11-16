@@ -2,13 +2,12 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 933,
+  "event_count": 930,
   "matched_events": 292,
   "matched_series": {
-    "cafe-bar-for-light": 1,
     "vrc-goita": 18,
     "vrc-game-world-club": 18,
-    "exploit-club": 17,
+    "exploit-club": 18,
     "yuruge-meet": 17,
     "wednesday-quest-beginners": 17,
     "ml-gathering": 34,
@@ -20,21 +19,9 @@
     "vrc-fit-boxing": 34,
     "personally-match": 17
   },
-  "unmatched_events": 641,
+  "unmatched_events": 638,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "cda8833b4f1acc42e347",
-      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌 参加 方法 JOIN 制｜ILへ フレンド申請 → JOIN VRC…",
-      "status": "matched",
-      "ontology_id": "cafe-bar-for-light",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "fc2fdd34ccddae63dbfc",
       "title": "VRCごいた会",
@@ -3509,76 +3496,74 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "3e21c608da9c950f1d29",
+      "title": "EXPLOIT部 定期対戦会",
+      "status": "matched",
+      "ontology_id": "exploit-club",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 933,
+    "event_count": 930,
     "category_breakdown": {
       "art": 121,
-      "community": 238,
-      "game": 106,
+      "community": 236,
+      "game": 108,
       "language_exchange": 34,
       "learning": 19,
-      "music": 25,
+      "music": 20,
       "other": 25,
-      "performance": 1,
-      "recruitment_deadline": 6,
-      "technology": 271,
+      "performance": 2,
+      "recruitment_deadline": 5,
+      "technology": 273,
       "wellness": 70,
       "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 34,
-      "application_deadline": 1,
-      "cafe": 22,
-      "cast_service": 1,
-      "dance": 6,
+      "cafe": 20,
+      "cast_service": 2,
+      "dance": 2,
       "dj": 4,
-      "engineering": 163,
+      "engineering": 165,
       "fitness": 35,
-      "hangout": 67,
+      "hangout": 66,
       "language_exchange": 34,
       "mystery": 35,
       "photography": 121,
       "research": 65,
       "show": 1,
       "social": 148,
-      "tabletop": 35,
+      "tabletop": 36,
       "workshop": 11,
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 6,
+      "deadline": 5,
       "hybrid": 5,
-      "in_world": 918,
+      "in_world": 916,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 275,
       "fallback": 25,
-      "keyword_rules": 414,
+      "keyword_rules": 411,
       "legacy_and_keywords": 96,
       "legacy_category": 123
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 62,
-    "audit_event_count": 62
+    "low_confidence_event_count": 63,
+    "audit_event_count": 63
   },
   "category_review_queue": [
-    {
-      "event_id": "5c91c7cebc3aa0037ea1",
-      "title": "【おしらせ】 本日 は当日枠を多めにご用意してお待ちしております。 当日枠でのご参加は、当アカウントのプロフィールに記載されているリンク先の VRC アカウントまで事前に フレンド申請 してい…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "907065a283354f14f14b",
       "title": "🌹タンドゥレーヴ 本日 のご案内🌹 本日 ご参加の皆さまは、21:55頃に VRChat で「普通の人間ぐれしん」へ リクイン をお送りください。 当日枠も若干名ございます。 22:00開店で…",
@@ -3608,6 +3593,21 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "5b8c33f5f2b364c81258",
+      "title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/CMhRM1kQfV",
+      "category": "game",
+      "label": "ゲーム・参加型",
+      "subcategory": null,
+      "score": 3,
+      "confidence": 0.585,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:organizer:game"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "63dc5e4c815e9082e940",
@@ -3711,6 +3711,32 @@
       ]
     },
     {
+      "event_id": "410d04bd291134fac667",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・日曜日22時から オープン する、とても楽しめる BAR イベントです。 初心者にも優しいタグギミック…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2ffb88b1ebe624c82967",
+      "title": "【次回 定期会のお知らせ】 開催日時 :2026年11月19日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "b2204c62c071e97fda17",
       "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
       "category": "other",
@@ -3743,19 +3769,6 @@
     {
       "event_id": "7319574ca92d4e0ac95a",
       "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "occ_8755d9fc1bd10757389e",
-      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3828,8 +3841,8 @@
       ]
     },
     {
-      "event_id": "219d3e42152956a7dac5",
-      "title": "【出演 告知 】 VRC のデッカデカ イベント ”Autonomy vol.4”に出演させていただきます！ ﾔｯﾀﾈ!! あまりにも大規模すぎるので140字で説明できない！ 開催 は来週22…",
+      "event_id": "ec715a315dfb8233e2eb",
+      "title": "VRChat 公開収録ラジオ番組「コケっとりうサンデー」第2回のお知らせです 日時 ：11/22（日）15:00～16:30（1時間半） インスタンス： Group + スペシャルゲストはなん…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3841,8 +3854,34 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "ec715a315dfb8233e2eb",
-      "title": "VRChat 公開収録ラジオ番組「コケっとりうサンデー」第2回のお知らせです 日時 ：11/22（日）15:00～16:30（1時間半） インスタンス： Group + スペシャルゲストはなん…",
+      "event_id": "3c7183576b53e742517e",
+      "title": "映画鑑賞ワールド「#遠夏の鑑賞会」 第七十三回 上映会開催 ！ 【日程】 11月22日(日) 21時～22時半 「【 VRchat 壊れちゃった】#５やり直したら壊れた」 「ラストホリデイゼロ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fa146c85a34f1c739a6a",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・日曜日22時から オープン する、とても楽しめる BAR イベントです。 初心者にも優しいタグギミック…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c611d72fafab0af5011d",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・日曜日22時から オープン する、とても楽しめる BAR イベントです。 初心者にも優しいタグギミック…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3867,13 +3906,13 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "054e9b76cd4421419637",
-      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
+      "event_id": "43e3df9bbdb31455670f",
+      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 11月26日（木曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3932,6 +3971,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "0a1021db0ea10df964b7",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・日曜日22時から オープン する、とても楽しめる BAR イベントです。 初心者にも優しいタグギミック…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "1ca35dbc927b547740c5",
       "title": "分解技術集会",
       "category": "technology",
@@ -3947,32 +3999,6 @@
       "ambiguous_with": [
         "community"
       ]
-    },
-    {
-      "event_id": "0d2dfd9b884697fb33b8",
-      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "occ_76e72a07d719b1c96bac",
-      "title": "SOURCE : LOCATION #2 Number 9 は、フィールドレコーディングに特化した音と映像のイベントを再び 開催 します。 🗓️ 2026/12/05 (Sat) 🕘 21:0…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
     },
     {
       "event_id": "0b2f14574eed0ee9f095",
@@ -4050,19 +4076,6 @@
       "source": "fallback",
       "evidence": [],
       "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "a7d7b1494728b407e02e",
-      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
       "ambiguous_with": []
     },
     {

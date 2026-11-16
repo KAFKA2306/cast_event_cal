@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 940,
-  "event_count_after": 933,
-  "candidate_cluster_count": 5,
-  "duplicate_cluster_count": 5,
-  "duplicate_occurrence_count": 7,
-  "duplicate_post_count": 7,
-  "duplicate_rate": 0.007447,
+  "event_count_before": 934,
+  "event_count_after": 930,
+  "candidate_cluster_count": 2,
+  "duplicate_cluster_count": 2,
+  "duplicate_occurrence_count": 4,
+  "duplicate_post_count": 4,
+  "duplicate_rate": 0.004283,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_54fd7d4880ccd8634a3c",
@@ -37,72 +37,6 @@
       "representative_source_record_id": "src_3a50720339211ff7c6d4"
     },
     {
-      "cluster_id": "occ_76e72a07d719b1c96bac",
-      "starts_at": "2026-12-05T12:00:00Z",
-      "title": "SOURCE : LOCATION #2 Number 9 は、フィールドレコーディングに特化した音と映像のイベントを再び 開催 します。 🗓️ 2026/12/05 (Sat) 🕘 21:0…",
-      "member_count": 2,
-      "member_ids": [
-        "5cdb9abc0a15e1e04e2b",
-        "70d81e7834da04c8edcd"
-      ],
-      "source_record_ids": [
-        "src_17d2752bf4b86b65eea5",
-        "src_f557e8338e60b3a578ab"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_f557e8338e60b3a578ab"
-    },
-    {
-      "cluster_id": "occ_8755d9fc1bd10757389e",
-      "starts_at": "2026-11-20T13:00:00Z",
-      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
-      "member_count": 2,
-      "member_ids": [
-        "73f15da1d623c42c0b61",
-        "891414055a8f7c458773"
-      ],
-      "source_record_ids": [
-        "src_2efe67eeeb883f8e5d59",
-        "src_710fa6339a12bd5d6e9b"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_710fa6339a12bd5d6e9b"
-    },
-    {
-      "cluster_id": "occ_9a8cda973cd0e1bb7af1",
-      "starts_at": "2026-11-18T12:30:00Z",
-      "title": "【11月度開催のお知らせ🍁❄️】 『ダンス・パレット！』🎨 ダンス未経験の子も気軽に遊びに来てねー！ フルトラじゃなくても大丈夫！ 3点、デスクトップの方もお待ちしております🫶 ​📅 毎週 水…",
-      "member_count": 2,
-      "member_ids": [
-        "769419060af4d87cd57c",
-        "7bf0324ee96151a9722e"
-      ],
-      "source_record_ids": [
-        "src_82fccc896a138cb2583e",
-        "src_c02fb36363fdb582d3e5"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_canonical_url"
-      ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_c02fb36363fdb582d3e5"
-    },
-    {
       "cluster_id": "occ_c663e0d899a33decae40",
       "starts_at": "2026-11-21T16:20:00Z",
       "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
@@ -127,38 +61,18 @@
       "representative_source_record_id": "src_759a206f716d5e693afe"
     }
   ],
-  "ambiguous_candidates": [],
+  "ambiguous_candidates": [
+    {
+      "left_id": "5b8c33f5f2b364c81258",
+      "right_id": "63dc5e4c815e9082e940",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.626,
+      "left_title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/CMhRM1kQfV",
+      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
+    }
+  ],
   "negative_samples": [
-    {
-      "left_id": "3d0d0fb674cabb92950b",
-      "right_id": "135f08e330f7ad16ca04",
-      "starts_at": "2026-11-15T13:00:00Z",
-      "left_organizer": "@Pecheur_VRC",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.17,
-      "left_title": "【 VRC ホストイベント】 ✯Pécheur✯ 第9回 Open ▶開催日時11/15(日)22時〜 ▶ 参加方法 ・Xのフォロー ・pécheurのグループ参加 ・下記抽選応募フォーム記入…",
-      "right_title": "【 本日 の注目イベント✨】 🕒11/15(日) 22:00～ 🟠ポケモン cafe 🟠 ポケモンが好きな店長がやってる cafe ポケモンを通して VRC でフレンドを作りませんか？ ポケモ…"
-    },
-    {
-      "left_id": "3d0d0fb674cabb92950b",
-      "right_id": "7cd671f297ac3d5952fb",
-      "starts_at": "2026-11-15T13:00:00Z",
-      "left_organizer": "@Pecheur_VRC",
-      "right_organizer": "@yusura_ktn",
-      "similarity": 0.1818,
-      "left_title": "【 VRC ホストイベント】 ✯Pécheur✯ 第9回 Open ▶開催日時11/15(日)22時〜 ▶ 参加方法 ・Xのフォロー ・pécheurのグループ参加 ・下記抽選応募フォーム記入…",
-      "right_title": "いよいよ 明日 、初開催！ VRChat で気軽に AIの話を楽しむ交流イベント 「AIと、何かはじめない？」 AI初心者も経験者も大歓迎！ 聞き専・無言 参加 もOKです✨ 📅 11/15(…"
-    },
-    {
-      "left_id": "135f08e330f7ad16ca04",
-      "right_id": "7cd671f297ac3d5952fb",
-      "starts_at": "2026-11-15T13:00:00Z",
-      "left_organizer": "@wondernote_info",
-      "right_organizer": "@yusura_ktn",
-      "similarity": 0.2295,
-      "left_title": "【 本日 の注目イベント✨】 🕒11/15(日) 22:00～ 🟠ポケモン cafe 🟠 ポケモンが好きな店長がやってる cafe ポケモンを通して VRC でフレンドを作りませんか？ ポケモ…",
-      "right_title": "いよいよ 明日 、初開催！ VRChat で気軽に AIの話を楽しむ交流イベント 「AIと、何かはじめない？」 AI初心者も経験者も大歓迎！ 聞き専・無言 参加 もOKです✨ 📅 11/15(…"
-    },
     {
       "left_id": "fc2fdd34ccddae63dbfc",
       "right_id": "dd8c9488758a019973c5",
@@ -211,6 +125,16 @@
     },
     {
       "left_id": "54409b37830be4a1d404",
+      "right_id": "5b8c33f5f2b364c81258",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.1075,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/CMhRM1kQfV"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
       "right_id": "374ebec39a4467597366",
       "starts_at": "2026-11-16T13:00:00Z",
       "left_organizer": null,
@@ -228,7 +152,27 @@
       "similarity": 0.1315,
       "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "d9f80af7fa7575104207",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@tempsdereves",
+      "similarity": 0.1385,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "🌹 11/16(月) 22:00 OPEN 🌹 VRChat の男装 Bar 《タンドゥレーヴ》。 リアル女性キャストが扮する三人の王子が、皆さまをお迎えします。 参加 は リクイン 制です。…"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "66cdd2549d2e1d26d8eb",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@VRChatKANSAI",
+      "similarity": 0.1259,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "📢緊急 告知 ‼ 本日 11月16日(月)22時～ VRChat 関西部のグループインスタンスで「めちゃさわ(@mecha_meta )」プレゼンツの DJイベント を 開催 🎉 インスタンス…"
     }
   ],
-  "generated_at": "2026-11-16T12:06:37Z"
+  "generated_at": "2026-11-16T20:25:57Z"
 }
