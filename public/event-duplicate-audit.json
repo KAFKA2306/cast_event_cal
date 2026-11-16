@@ -1,82 +1,16 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 926,
-  "event_count_after": 921,
-  "candidate_cluster_count": 5,
-  "duplicate_cluster_count": 5,
-  "duplicate_occurrence_count": 5,
-  "duplicate_post_count": 5,
-  "duplicate_rate": 0.0054,
+  "event_count_before": 920,
+  "event_count_after": 919,
+  "candidate_cluster_count": 1,
+  "duplicate_cluster_count": 1,
+  "duplicate_occurrence_count": 1,
+  "duplicate_post_count": 1,
+  "duplicate_rate": 0.001087,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
-    {
-      "cluster_id": "occ_14d2821acdea7e0fed7c",
-      "starts_at": "2026-11-15T13:00:00Z",
-      "title": "【 VRC DJイベント開催 🎧】 喫茶店VOICEにて DJイベント を 開催 します！ 今回のDJは、久々の出演となる「DJきち」☕️🎶 11/15(日) 22:00～ 落ち着いた喫茶店の…",
-      "member_count": 2,
-      "member_ids": [
-        "0be1fb670bfd86f3f759",
-        "a50079a3054bd068e51f"
-      ],
-      "source_record_ids": [
-        "src_4e63d227437b621bf09a",
-        "src_8b364f531fab91432524"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start"
-      ],
-      "confidence": 0.99,
-      "representative_source_record_id": "src_8b364f531fab91432524"
-    },
-    {
-      "cluster_id": "occ_56956fd6d3f20e6bef9d",
-      "starts_at": "2026-11-15T03:30:00Z",
-      "title": "『レインボーシックス シージ』世界 大会 「Osaka Major」、まもなく決勝！🏆 DarkZero vs FaZe Clan 本日 11/15（日）12:30 開始 予定（日本時間） 優…",
-      "member_count": 2,
-      "member_ids": [
-        "a9c31249da2e2e120d54",
-        "e444475440998287af3f"
-      ],
-      "source_record_ids": [
-        "src_14bd2fb0238e631edd84",
-        "src_bf94b8f05cac726edc21"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_bf94b8f05cac726edc21"
-    },
-    {
-      "cluster_id": "occ_64670405790cc0da7017",
-      "starts_at": "2026-11-15T12:30:00Z",
-      "title": "第5回 VRC 博物イベントEXPO 2026.11.15（日）21:30～24:00 21:30～ 開場 22:00～講演会 ① VRC 園芸部【GARDEN.4446】 『甘唐辛子を育てて…",
-      "member_count": 2,
-      "member_ids": [
-        "8fe51dbac19d1eb9d809",
-        "e78ba2055792cce37566"
-      ],
-      "source_record_ids": [
-        "src_5abd83a1e5af5355b3d4",
-        "src_5cc7d1cbc158c4c8815b"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_ordinal"
-      ],
-      "confidence": 0.96,
-      "representative_source_record_id": "src_5cc7d1cbc158c4c8815b"
-    },
     {
       "cluster_id": "occ_76e72a07d719b1c96bac",
       "starts_at": "2026-12-05T12:00:00Z",
@@ -98,42 +32,20 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_f557e8338e60b3a578ab"
-    },
-    {
-      "cluster_id": "occ_b0ad3ffdfdcdc6d877ab",
-      "starts_at": "2026-11-21T16:20:00Z",
-      "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━…",
-      "member_count": 2,
-      "member_ids": [
-        "0e9150c367457d6881dc",
-        "7fa52bb0db896e6043cc"
-      ],
-      "source_record_ids": [
-        "src_17c6cad28f9e089e20e6",
-        "src_5c790e1325c959ea914c"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_5c790e1325c959ea914c"
     }
   ],
-  "ambiguous_candidates": [],
-  "negative_samples": [
+  "ambiguous_candidates": [
     {
-      "left_id": "cf22867ff8ab7bb7ac29",
-      "right_id": "b76d1026d2c29c430511",
-      "starts_at": "2026-11-15T11:00:00Z",
-      "left_organizer": "@wondernote_info",
-      "right_organizer": "@vrc_furuyoni",
-      "similarity": 0.1422,
-      "left_title": "【 本日 の注目イベント✨】 🕒11/15(日) 20:00～ 🟠お好み焼き集会🟠 みんな大好きお好み焼き！ みんなでお好み焼きを食べる集会です。 日時 :11/15(日) 20:00～21:…",
-      "right_title": "🌸第14回桜降る代に決闘を準公式交流祭🌸 本日 20時から VRChat にてふるよに 大会 を 開催 します！ 詳しくはDiscord該当ページやリプ欄をご覧ください！ 新しいシーズンをみん…"
-    },
+      "left_id": "678372a8e9e5095f242d",
+      "right_id": "63dc5e4c815e9082e940",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.5669,
+      "left_title": "VRChatイベント 「スナックくり魔りEX」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/E9TSWxhJSZ",
+      "right_title": "本日VRChatイベント 「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNのpublicインスタンスで行います。 # VRChat #JPTOWN h…"
+    }
+  ],
+  "negative_samples": [
     {
       "left_id": "58cdcec007b5d7732133",
       "right_id": "268a1cb6a5931591f9a4",
@@ -196,6 +108,16 @@
     },
     {
       "left_id": "58cdcec007b5d7732133",
+      "right_id": "062ce6a61b27c40de72e",
+      "starts_at": "2026-11-15T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@255Radio_vrc",
+      "similarity": 0.0938,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "【重大発表】 #255放送局 冬の公開収録日決定！ DJやお便り、すべらない話などいつもとは一味違う公開収録なので是非遊びに来てください!! 日時 :11/15(日) 21:00~23:10 …"
+    },
+    {
+      "left_id": "58cdcec007b5d7732133",
       "right_id": "90895f283590c12b613f",
       "starts_at": "2026-11-15T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
@@ -225,5 +147,5 @@
       "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
     }
   ],
-  "generated_at": "2026-11-15T21:46:36Z"
+  "generated_at": "2026-11-16T02:01:24Z"
 }
