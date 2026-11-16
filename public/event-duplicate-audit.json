@@ -1,16 +1,41 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 927,
-  "event_count_after": 923,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 4,
-  "duplicate_post_count": 4,
-  "duplicate_rate": 0.004315,
+  "event_count_before": 940,
+  "event_count_after": 933,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 7,
+  "duplicate_post_count": 7,
+  "duplicate_rate": 0.007447,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
+    {
+      "cluster_id": "occ_54fd7d4880ccd8634a3c",
+      "starts_at": "2026-11-17T13:00:00Z",
+      "title": "🐄11月 営業 日のお知らせ🐄 VRChat 1:1型RPイベント 『モーモー牧場』 11月の 営業 日が決定しました！ 11月17日(火) 11月24日(火) 22:00～23:00 「抽選…",
+      "member_count": 3,
+      "member_ids": [
+        "0d4e1f583580f7e9a45b",
+        "383ddba1bc68cd70fcf7",
+        "4f19b9a3025082757811"
+      ],
+      "source_record_ids": [
+        "src_3a50720339211ff7c6d4",
+        "src_46323f535653b5b68f6f",
+        "src_67d874f566471f9c4581"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start",
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_3a50720339211ff7c6d4"
+    },
     {
       "cluster_id": "occ_76e72a07d719b1c96bac",
       "starts_at": "2026-12-05T12:00:00Z",
@@ -32,6 +57,50 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_f557e8338e60b3a578ab"
+    },
+    {
+      "cluster_id": "occ_8755d9fc1bd10757389e",
+      "starts_at": "2026-11-20T13:00:00Z",
+      "title": "【11月の美肌部】 毎週金曜22時から、 VRC 美肌部の グループインスタンス で 開催 します！ 11/6 美肌フライデー 11/13 メガ割前！みんなのおすすめ教えて 11/20 コラボ…",
+      "member_count": 2,
+      "member_ids": [
+        "73f15da1d623c42c0b61",
+        "891414055a8f7c458773"
+      ],
+      "source_record_ids": [
+        "src_2efe67eeeb883f8e5d59",
+        "src_710fa6339a12bd5d6e9b"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_710fa6339a12bd5d6e9b"
+    },
+    {
+      "cluster_id": "occ_9a8cda973cd0e1bb7af1",
+      "starts_at": "2026-11-18T12:30:00Z",
+      "title": "【11月度開催のお知らせ🍁❄️】 『ダンス・パレット！』🎨 ダンス未経験の子も気軽に遊びに来てねー！ フルトラじゃなくても大丈夫！ 3点、デスクトップの方もお待ちしております🫶 ​📅 毎週 水…",
+      "member_count": 2,
+      "member_ids": [
+        "769419060af4d87cd57c",
+        "7bf0324ee96151a9722e"
+      ],
+      "source_record_ids": [
+        "src_82fccc896a138cb2583e",
+        "src_c02fb36363fdb582d3e5"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_c02fb36363fdb582d3e5"
     },
     {
       "cluster_id": "occ_c663e0d899a33decae40",
@@ -56,132 +125,110 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_759a206f716d5e693afe"
-    },
-    {
-      "cluster_id": "occ_d4efd8b44f7a52ccfb1a",
-      "starts_at": "2026-11-16T13:00:00Z",
-      "title": "【 VRC イベントのお知らせ】 第13回 #よくばり知見集会 SHEARTさん（@SHEART_KDP）の 「フロリダ・ウォルトディズニーワールドへの旅 〜憧れが夢に変わるまで〜」 📅 11…",
-      "member_count": 2,
-      "member_ids": [
-        "374ebec39a4467597366",
-        "f77d14d5ba21b3f566c7"
-      ],
-      "source_record_ids": [
-        "src_018f8337b91537af2df6",
-        "src_ff5d8b1b2bf51b5e0d20"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_ordinal"
-      ],
-      "confidence": 0.9345,
-      "representative_source_record_id": "src_018f8337b91537af2df6"
     }
   ],
   "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "268a1cb6a5931591f9a4",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "EN-JP Language Exchange",
-      "similarity": 0.0581,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "EN-JP Language Exchange（日曜）"
-    },
-    {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "f10c2feeb6ddfeafa66f",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": null,
-      "similarity": 0.0902,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "ITエンジニア キャリア相談・雑談集会"
-    },
-    {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "2d4e5115fb9dd25343e5",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@VRChatChessJP",
-      "similarity": 0.087,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
-    },
-    {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "b9faab84f5b566f243ae",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "VRCフィットボクシング集会",
-      "similarity": 0.0732,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "VRCフィットボクシング集会（日曜）"
-    },
-    {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "992dc617a6ca10b35e82",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
+      "left_id": "3d0d0fb674cabb92950b",
+      "right_id": "135f08e330f7ad16ca04",
+      "starts_at": "2026-11-15T13:00:00Z",
+      "left_organizer": "@Pecheur_VRC",
       "right_organizer": "@wondernote_info",
-      "similarity": 0.1116,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "【 本日 の注目イベント✨】 🕒11/15(日) 21:00～ 🟠 VRC チェス対局 交流会 🟠 日本人向けに開かれるチェスの対局会。 インスタンスにいる自由な相手と対局を楽しむことができま…"
+      "similarity": 0.17,
+      "left_title": "【 VRC ホストイベント】 ✯Pécheur✯ 第9回 Open ▶開催日時11/15(日)22時〜 ▶ 参加方法 ・Xのフォロー ・pécheurのグループ参加 ・下記抽選応募フォーム記入…",
+      "right_title": "【 本日 の注目イベント✨】 🕒11/15(日) 22:00～ 🟠ポケモン cafe 🟠 ポケモンが好きな店長がやってる cafe ポケモンを通して VRC でフレンドを作りませんか？ ポケモ…"
     },
     {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "daadd64213b00968a33f",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@vrc_vvat",
-      "similarity": 0.1647,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "【イベントのお知らせ】 11月15日(日)21:00～より VRC 原神同好会Vワット group +インスタンスにて 『第37回 Vワット定期 交流会 』 を 開催 いたします Ver7.2…"
+      "left_id": "3d0d0fb674cabb92950b",
+      "right_id": "7cd671f297ac3d5952fb",
+      "starts_at": "2026-11-15T13:00:00Z",
+      "left_organizer": "@Pecheur_VRC",
+      "right_organizer": "@yusura_ktn",
+      "similarity": 0.1818,
+      "left_title": "【 VRC ホストイベント】 ✯Pécheur✯ 第9回 Open ▶開催日時11/15(日)22時〜 ▶ 参加方法 ・Xのフォロー ・pécheurのグループ参加 ・下記抽選応募フォーム記入…",
+      "right_title": "いよいよ 明日 、初開催！ VRChat で気軽に AIの話を楽しむ交流イベント 「AIと、何かはじめない？」 AI初心者も経験者も大歓迎！ 聞き専・無言 参加 もOKです✨ 📅 11/15(…"
     },
     {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "062ce6a61b27c40de72e",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@255Radio_vrc",
-      "similarity": 0.0938,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "【重大発表】 #255放送局 冬の公開収録日決定！ DJやお便り、すべらない話などいつもとは一味違う公開収録なので是非遊びに来てください!! 日時 :11/15(日) 21:00~23:10 …"
+      "left_id": "135f08e330f7ad16ca04",
+      "right_id": "7cd671f297ac3d5952fb",
+      "starts_at": "2026-11-15T13:00:00Z",
+      "left_organizer": "@wondernote_info",
+      "right_organizer": "@yusura_ktn",
+      "similarity": 0.2295,
+      "left_title": "【 本日 の注目イベント✨】 🕒11/15(日) 22:00～ 🟠ポケモン cafe 🟠 ポケモンが好きな店長がやってる cafe ポケモンを通して VRC でフレンドを作りませんか？ ポケモ…",
+      "right_title": "いよいよ 明日 、初開催！ VRChat で気軽に AIの話を楽しむ交流イベント 「AIと、何かはじめない？」 AI初心者も経験者も大歓迎！ 聞き専・無言 参加 もOKです✨ 📅 11/15(…"
     },
     {
-      "left_id": "58cdcec007b5d7732133",
-      "right_id": "90895f283590c12b613f",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "@Conductor_vrc",
-      "right_organizer": null,
-      "similarity": 0.0796,
-      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加方法：Discord事前抽選＋ join (入る…",
-      "right_title": "分散システム集会"
+      "left_id": "fc2fdd34ccddae63dbfc",
+      "right_id": "dd8c9488758a019973c5",
+      "starts_at": "2026-11-16T12:00:00Z",
+      "left_organizer": "VRCごいた会",
+      "right_organizer": "VRCゲームワールド部",
+      "similarity": 0.4828,
+      "left_title": "VRCごいた会",
+      "right_title": "VRCゲームワールド部 月曜イベント"
     },
     {
-      "left_id": "268a1cb6a5931591f9a4",
-      "right_id": "f10c2feeb6ddfeafa66f",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": null,
-      "similarity": 0.09,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "ITエンジニア キャリア相談・雑談集会"
+      "left_id": "fc2fdd34ccddae63dbfc",
+      "right_id": "7e32c74b52a4399a01dc",
+      "starts_at": "2026-11-16T12:00:00Z",
+      "left_organizer": "VRCごいた会",
+      "right_organizer": "@cercle630",
+      "similarity": 0.0897,
+      "left_title": "VRCごいた会",
+      "right_title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 :11月16日 21時～ VRC ボクシングに興味がある方、楽しみたい…"
     },
     {
-      "left_id": "268a1cb6a5931591f9a4",
-      "right_id": "2d4e5115fb9dd25343e5",
-      "starts_at": "2026-11-15T12:00:00Z",
-      "left_organizer": "EN-JP Language Exchange",
-      "right_organizer": "@VRChatChessJP",
-      "similarity": 0.2316,
-      "left_title": "EN-JP Language Exchange（日曜）",
-      "right_title": "VRC チェス対局 交流会 は 本日 21時から。 このあとすぐ！ ♔♟♞♗♖♛ # VRChat # VRC チェス対局 交流会 https://t.co/OYe3AdO1Gv"
+      "left_id": "dd8c9488758a019973c5",
+      "right_id": "7e32c74b52a4399a01dc",
+      "starts_at": "2026-11-16T12:00:00Z",
+      "left_organizer": "VRCゲームワールド部",
+      "right_organizer": "@cercle630",
+      "similarity": 0.1104,
+      "left_title": "VRCゲームワールド部 月曜イベント",
+      "right_title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 :11月16日 21時～ VRC ボクシングに興味がある方、楽しみたい…"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "6a1182933cea113f356c",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "SW_Arch",
+      "similarity": 0.1758,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "9be632cb5d59a7c5ee71",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@akaiheya_vrc",
+      "similarity": 0.2551,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "VRC 怪談 集会 赤い部屋 第156回 ◎ 開催日時 ：11/16(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5b…"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "374ebec39a4467597366",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@1eeVRC",
+      "similarity": 0.1441,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "【 VRC イベントのお知らせ】 第13回 #よくばり知見集会 SHEARTさん（@SHEART_KDP）の 「フロリダ・ウォルトディズニーワールドへの旅 〜憧れが夢に変わるまで〜」 📅 11…"
+    },
+    {
+      "left_id": "54409b37830be4a1d404",
+      "right_id": "63dc5e4c815e9082e940",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@WAROSTUDIOGAMES",
+      "similarity": 0.1315,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
+      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
     }
   ],
-  "generated_at": "2026-11-16T09:35:49Z"
+  "generated_at": "2026-11-16T12:06:37Z"
 }
