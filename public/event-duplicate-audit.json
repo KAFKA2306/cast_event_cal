@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 934,
-  "event_count_after": 930,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 4,
-  "duplicate_post_count": 4,
-  "duplicate_rate": 0.004283,
+  "event_count_before": 938,
+  "event_count_after": 932,
+  "candidate_cluster_count": 4,
+  "duplicate_cluster_count": 4,
+  "duplicate_occurrence_count": 6,
+  "duplicate_post_count": 6,
+  "duplicate_rate": 0.006397,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
@@ -37,6 +37,50 @@
       "representative_source_record_id": "src_3a50720339211ff7c6d4"
     },
     {
+      "cluster_id": "occ_784124bf4624caea1912",
+      "starts_at": "2026-11-17T13:00:00Z",
+      "title": "🐾キャストオフショット🐾 VRC ユーザ名：「D oji」 @daruma_D_oji #ルーアファミー は毎月第1,第3 火曜日 、22:00-23:00で開店しております。 次回営業日は1…",
+      "member_count": 2,
+      "member_ids": [
+        "350b3cf0a5efa4372801",
+        "bcd90d52247cb2223c8a"
+      ],
+      "source_record_ids": [
+        "src_0281bc5fa5e1942e328e",
+        "src_f2a39454886936792551"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_f2a39454886936792551"
+    },
+    {
+      "cluster_id": "occ_9a8cda973cd0e1bb7af1",
+      "starts_at": "2026-11-18T12:30:00Z",
+      "title": "【11月度開催のお知らせ🍁❄️】 『ダンス・パレット！』🎨 ダンス未経験の子も気軽に遊びに来てねー！ フルトラじゃなくても大丈夫！ 3点、デスクトップの方もお待ちしております🫶 ​📅 毎週 水…",
+      "member_count": 2,
+      "member_ids": [
+        "769419060af4d87cd57c",
+        "7bf0324ee96151a9722e"
+      ],
+      "source_record_ids": [
+        "src_82fccc896a138cb2583e",
+        "src_c02fb36363fdb582d3e5"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_c02fb36363fdb582d3e5"
+    },
+    {
       "cluster_id": "occ_c663e0d899a33decae40",
       "starts_at": "2026-11-21T16:20:00Z",
       "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
@@ -63,13 +107,13 @@
   ],
   "ambiguous_candidates": [
     {
-      "left_id": "5b8c33f5f2b364c81258",
-      "right_id": "63dc5e4c815e9082e940",
-      "starts_at": "2026-11-16T13:00:00Z",
-      "organizer": "@WAROSTUDIOGAMES",
-      "similarity": 0.626,
-      "left_title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/CMhRM1kQfV",
-      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
+      "left_id": "993af477b814da1f36c7",
+      "right_id": "f476adda7bc2a95999f8",
+      "starts_at": "2026-11-18T13:00:00Z",
+      "organizer": "@syuutingbe",
+      "similarity": 0.7013,
+      "left_title": "昼 告知 ！次回の VRC 弓道部は次の水曜日！18日です！ Group インスタンスで 開催 するので 参加 希望の方は事前に Group への 参加 をお忘れなく！ https://t.c…",
+      "right_title": "次回の VRC 弓道部は11月18日です！ 弓道未経験の方も気軽に 参加 してください！ VRC 弓道部の Groupインスタンス で 開催 するので 参加 希望の方は事前に Group への…"
     }
   ],
   "negative_samples": [
@@ -125,43 +169,13 @@
     },
     {
       "left_id": "54409b37830be4a1d404",
-      "right_id": "5b8c33f5f2b364c81258",
-      "starts_at": "2026-11-16T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@WAROSTUDIOGAMES",
-      "similarity": 0.1075,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
-      "right_title": "VRChatイベント 「スナックくり魔りWeekly」 開始 します！(USWサーバーでの 開催 です) # VRChat #JPTOWN https://t.co/CMhRM1kQfV"
-    },
-    {
-      "left_id": "54409b37830be4a1d404",
-      "right_id": "374ebec39a4467597366",
-      "starts_at": "2026-11-16T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@1eeVRC",
-      "similarity": 0.1441,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
-      "right_title": "【 VRC イベントのお知らせ】 第13回 #よくばり知見集会 SHEARTさん（@SHEART_KDP）の 「フロリダ・ウォルトディズニーワールドへの旅 〜憧れが夢に変わるまで〜」 📅 11…"
-    },
-    {
-      "left_id": "54409b37830be4a1d404",
-      "right_id": "63dc5e4c815e9082e940",
-      "starts_at": "2026-11-16T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@WAROSTUDIOGAMES",
-      "similarity": 0.1315,
-      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
-      "right_title": "本日VRChat イベント「スナックくり魔りWeekly」あります！ ぜひお越しください！ 22:00～JPTOWNの public インスタンスで行います。 # VRChat #JPTOWN…"
-    },
-    {
-      "left_id": "54409b37830be4a1d404",
       "right_id": "d9f80af7fa7575104207",
       "starts_at": "2026-11-16T13:00:00Z",
       "left_organizer": null,
       "right_organizer": "@tempsdereves",
       "similarity": 0.1385,
       "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
-      "right_title": "🌹 11/16(月) 22:00 OPEN 🌹 VRChat の男装 Bar 《タンドゥレーヴ》。 リアル女性キャストが扮する三人の王子が、皆さまをお迎えします。 参加 は リクイン 制です。…"
+      "right_title": "🌹 11/16(月) 22:00 OPEN 🌹 VRChat の男装Bar《タンドゥレーヴ》。 リアル女性キャストが扮する三人の王子が、皆さまをお迎えします。 参加 は リクイン 制です。 予…"
     },
     {
       "left_id": "54409b37830be4a1d404",
@@ -172,7 +186,37 @@
       "similarity": 0.1259,
       "left_title": "SW_Arch ソフトウェアアーキテクチャ集会",
       "right_title": "📢緊急 告知 ‼ 本日 11月16日(月)22時～ VRChat 関西部のグループインスタンスで「めちゃさわ(@mecha_meta )」プレゼンツの DJイベント を 開催 🎉 インスタンス…"
+    },
+    {
+      "left_id": "6a1182933cea113f356c",
+      "right_id": "9be632cb5d59a7c5ee71",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@akaiheya_vrc",
+      "similarity": 0.1019,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
+      "right_title": "VRC 怪談 集会 赤い部屋 第156回 ◎ 開催日時 ：11/16(月) 22:00 ◎ 参加 方法：akaiheyaグループインスタンスに JOIN https://t.co/qmUv5b…"
+    },
+    {
+      "left_id": "6a1182933cea113f356c",
+      "right_id": "d9f80af7fa7575104207",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@tempsdereves",
+      "similarity": 0.0805,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
+      "right_title": "🌹 11/16(月) 22:00 OPEN 🌹 VRChat の男装Bar《タンドゥレーヴ》。 リアル女性キャストが扮する三人の王子が、皆さまをお迎えします。 参加 は リクイン 制です。 予…"
+    },
+    {
+      "left_id": "6a1182933cea113f356c",
+      "right_id": "66cdd2549d2e1d26d8eb",
+      "starts_at": "2026-11-16T13:00:00Z",
+      "left_organizer": "SW_Arch",
+      "right_organizer": "@VRChatKANSAI",
+      "similarity": 0.13,
+      "left_title": "SW_Arch ソフトウェアアーキテクチャ集会（第3月曜）",
+      "right_title": "📢緊急 告知 ‼ 本日 11月16日(月)22時～ VRChat 関西部のグループインスタンスで「めちゃさわ(@mecha_meta )」プレゼンツの DJイベント を 開催 🎉 インスタンス…"
     }
   ],
-  "generated_at": "2026-11-16T20:25:57Z"
+  "generated_at": "2026-11-17T03:53:49Z"
 }
