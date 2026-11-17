@@ -1,27 +1,29 @@
 {
   "delta_healthy": true,
-  "generated_at": "2026-11-17T03:53:49Z",
+  "generated_at": "2026-11-17T13:17:55Z",
   "schema_version": "1.0",
-  "semantic_snapshot_sha256": "0c7fb72a3672d27e8f4d71f64da0831e36b7a3bad27b0fcb1c421e84b47d8379",
-  "source_revision": "2567b02435b25396afaebeea7e96f7b6274b27cf",
+  "semantic_snapshot_sha256": "de331226692498b2a640d80b67471e55aa4d7bbbdf4de4b55bb8de18d3db79d3",
+  "source_revision": "0f5bdcbaa00ab346b345ffefe4c130687f2a0d65",
   "yahoo": {
-    "added": 20,
+    "added": 16,
     "added_reasons": {
-      "new_discovery": 19,
-      "promoted_datetime_resolution": 1
+      "new_discovery": 15,
+      "other": 1
     },
-    "after": 70,
-    "before": 68,
+    "after": 54,
+    "before": 70,
     "interpretation": "new_since_previous_snapshot is not verified first-ever publication; accepted candidates and search hits are not published events",
     "material_changes": 0,
-    "new_since_previous_snapshot": 19,
-    "promoted_datetime_resolution": 1,
-    "removed": 18,
+    "new_since_previous_snapshot": 15,
+    "promoted_datetime_resolution": 0,
+    "removed": 32,
     "removed_reasons": {
-      "unknown": 18
+      "dedup_merged": 1,
+      "expired": 6,
+      "unknown": 25
     },
     "source": "yahoo_realtime_events",
-    "unknown_removals": 18,
+    "unknown_removals": 25,
     "yahoo_attribution_gained_on_existing_occurrences": 0
   }
 }
