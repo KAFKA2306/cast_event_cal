@@ -2,14 +2,14 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 922,
-  "matched_events": 294,
+  "event_count": 942,
+  "matched_events": 295,
   "matched_series": {
     "exploit-club": 18,
     "yuruge-meet": 18,
     "wednesday-quest-beginners": 18,
     "ml-gathering": 36,
-    "vrc-idle-gathering": 17,
+    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 17,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
@@ -19,7 +19,7 @@
     "vrc-goita": 17,
     "vrc-game-world-club": 17
   },
-  "unmatched_events": 628,
+  "unmatched_events": 647,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3531,21 +3531,33 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "48d889fbcf742f0de5a0",
+      "title": "VRCでボーっとする会",
+      "status": "matched",
+      "ontology_id": "vrc-idle-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 922,
+    "event_count": 942,
     "category_breakdown": {
       "art": 121,
-      "community": 242,
+      "community": 247,
       "game": 106,
       "language_exchange": 34,
-      "learning": 20,
-      "music": 23,
-      "other": 13,
+      "learning": 24,
+      "music": 25,
+      "other": 21,
       "performance": 1,
-      "recruitment_deadline": 1,
+      "recruitment_deadline": 2,
       "technology": 275,
       "wellness": 69,
       "world_tour": 17
@@ -3553,14 +3565,15 @@
     "subcategory_breakdown": {
       "ai": 36,
       "bar": 1,
-      "cafe": 18,
+      "cafe": 23,
       "cast_service": 2,
-      "dance": 2,
-      "dj": 4,
+      "dance": 3,
+      "dj": 5,
       "engineering": 164,
       "fitness": 34,
       "hangout": 67,
       "language_exchange": 34,
+      "lecture": 4,
       "live_music": 1,
       "mystery": 36,
       "orientation": 1,
@@ -3572,21 +3585,21 @@
       "world_tour": 17
     },
     "event_mode_breakdown": {
-      "deadline": 1,
+      "deadline": 2,
       "hybrid": 7,
-      "in_world": 910,
+      "in_world": 929,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 277,
-      "fallback": 13,
-      "keyword_rules": 415,
+      "curated_ontology": 278,
+      "fallback": 21,
+      "keyword_rules": 425,
       "legacy_and_keywords": 96,
-      "legacy_category": 121
+      "legacy_category": 122
     },
     "organizer_profile_count": 20,
-    "low_confidence_event_count": 48,
-    "audit_event_count": 48
+    "low_confidence_event_count": 56,
+    "audit_event_count": 56
   },
   "category_review_queue": [
     {
@@ -3650,6 +3663,19 @@
       ]
     },
     {
+      "event_id": "410d04bd291134fac667",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・ 日曜日 22時からオープンする、とても楽しめるBARイベントです。 初心者にも優しいタグギミックもあ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "183230f0e085ed46064c",
       "title": "【 イベント告知 ・再投稿！】 ー魚の行き交う空間でピアノと特別な夜を楽しむ🐟 次回は11/18（水）23:00〜 VRChat Group (TSAQ.1504)にて 幻想的な時を共に過ごそ…",
       "category": "other",
@@ -3657,6 +3683,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "4d7b7f04a725846b1862",
+      "title": "11/19（木） 21時 〜 VRChat 未来しごとプロジェクト始動！ テーマは ソーシャルグッドなものをみんなで創ろう！ イベンター・モデラー・クリエイターでチームを組み、作品を共同実施 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3724,8 +3763,21 @@
       ]
     },
     {
-      "event_id": "c0c131c07fe2f8264038",
-      "title": "🌙 11/25(水) GRAND OPEN 🌙 VRChat 1対1寝かしつけイベント『眠庭ゆめゆい』 眠りにつくまでのひとときをご提供します。 🕛 23:55〜23:58 リクイン 受付 💤…",
+      "event_id": "e4cdcbe48daba961fc72",
+      "title": "土曜日(11月14日)は VRChat の #ぶいちゃ感謝祭 (Quest3s単機で参加)、 日曜日 (15日)はclusterの #まだナニ (PCデスクトップ)、月曜日(16日)はclus…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "3c7183576b53e742517e",
+      "title": "映画鑑賞ワールド「#遠夏の鑑賞会」 第七十三回上映会開催！ 【日程】 11月22日(日) 21時 ～22時半 「【 VRchat 壊れちゃった】#５やり直したら壊れた」 「ラストホリデイゼロ」…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3737,13 +3789,39 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "43e3df9bbdb31455670f",
-      "title": "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 11月26日（木曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください…",
+      "event_id": "fa146c85a34f1c739a6a",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・ 日曜日 22時からオープンする、とても楽しめるBARイベントです。 初心者にも優しいタグギミックもあ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c611d72fafab0af5011d",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・ 日曜日 22時からオープンする、とても楽しめるBARイベントです。 初心者にも優しいタグギミックもあ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c0c131c07fe2f8264038",
+      "title": "🌙 11/25(水) GRAND OPEN 🌙 VRChat 1対1寝かしつけイベント『眠庭ゆめゆい』 眠りにつくまでのひとときをご提供します。 🕛 23:55〜23:58 リクイン 受付 💤…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3765,6 +3843,19 @@
     {
       "event_id": "02b65048b9e13d5e1f22",
       "title": "✼••┈┈┈┈┈••✼••┈┈┈┈┈••✼ VRC まめふれ保育園から 第3回 おゆうぎ会のお知らせです🎈 開催 日 : 11月28日（土） 時間 : 22:00 join 先 : VRC _…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0a1021db0ea10df964b7",
+      "title": "【ポチのおすすめ VRchat イベント】 @NByrkz0526 『よるかぜ』 毎週水・ 日曜日 22時からオープンする、とても楽しめるBARイベントです。 初心者にも優しいタグギミックもあ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3871,6 +3962,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "5e49e5e65cc7948ae423",
+      "title": "【 VRC 心中RP イベント 、またねの約束。第5回 営業 のお知らせ】 ◆ 開催 日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加 方法◆ 事前抽選 https:…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "757ad6929e4f65524629",
       "title": "VRC歴史集会",
       "category": "learning",
@@ -3968,6 +4072,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "44367263f3ba6a14abe5",
+      "title": "📢 イベント告知 📢 12/27(日)21:00より VRC 忘年会を 開催 します！ 皆さまのご参加お待ちしております！ https://t.co/mWblcfdTQG",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "f6b4fcf90dc5c57c3291",

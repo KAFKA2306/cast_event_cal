@@ -1,8 +1,8 @@
 {
   "schema_version": "3.0",
-  "generated_at": "2026-11-17T13:18:44Z",
-  "source_event_generated_at": "2026-11-17T13:17:55Z",
-  "source_event_count": 922,
+  "generated_at": "2026-11-17T21:49:47Z",
+  "source_event_generated_at": "2026-11-17T21:49:05Z",
+  "source_event_count": 942,
   "curated_schema_version": "2.0",
   "governance": {
     "curation_mode": "human_only",
@@ -23,7 +23,7 @@
     "required_identity": "alias or exact organizer plus all required patterns"
   },
   "curated_entry_count": 15,
-  "observed_entity_count": 74,
+  "observed_entity_count": 84,
   "category_ontology_schema_version": "2.0",
   "category_labels": {
     "recruitment_deadline": "募集・締切",
@@ -41,17 +41,17 @@
   },
   "category_breakdown": {
     "technology": 275,
-    "community": 242,
+    "community": 247,
     "art": 121,
     "game": 106,
     "wellness": 69,
     "language_exchange": 34,
-    "music": 23,
-    "learning": 20,
+    "music": 25,
+    "learning": 24,
+    "other": 21,
     "world_tour": 17,
-    "other": 13,
-    "performance": 1,
-    "recruitment_deadline": 1
+    "recruitment_deadline": 2,
+    "performance": 1
   },
   "subcategory_breakdown": {
     "engineering": 164,
@@ -64,28 +64,29 @@
     "tabletop": 35,
     "fitness": 34,
     "language_exchange": 34,
-    "cafe": 18,
+    "cafe": 23,
     "world_tour": 17,
     "workshop": 10,
-    "dj": 4,
+    "dj": 5,
+    "lecture": 4,
+    "dance": 3,
     "cast_service": 2,
-    "dance": 2,
     "bar": 1,
     "live_music": 1,
     "orientation": 1
   },
   "event_mode_breakdown": {
-    "in_world": 910,
+    "in_world": 929,
     "hybrid": 7,
     "unknown": 4,
-    "deadline": 1
+    "deadline": 2
   },
   "classification_source_breakdown": {
-    "keyword_rules": 415,
-    "curated_ontology": 277,
-    "legacy_category": 121,
+    "keyword_rules": 425,
+    "curated_ontology": 278,
+    "legacy_category": 122,
     "legacy_and_keywords": 96,
-    "fallback": 13
+    "fallback": 21
   },
   "entries": [
     {
@@ -983,13 +984,13 @@
       "image_url": null,
       "image_kind": null,
       "observed_event_count": 121,
-      "latest_observed_start": "2027-03-16T19:00:00Z",
+      "latest_observed_start": "2027-03-17T19:00:00Z",
       "sample_event_ids": [
+        "1bf9f262514e087855d8",
         "04e395a1319a5264db4d",
         "fc649ed0e17e6809f97b",
         "6b35e75231abc1a0cc24",
-        "9f0ad19e07bdb7d1cc05",
-        "1f7b1d9ab0208b4d25b0"
+        "9f0ad19e07bdb7d1cc05"
       ],
       "sample_titles": [
         "おはよう！朝4時に何してるんだぃ？",
@@ -1274,6 +1275,55 @@
       ]
     },
     {
+      "entity_id": "vrcでボーっとする会",
+      "organizer": "VRCでボーっとする会",
+      "official_x_url": null,
+      "official_website_url": null,
+      "image_url": null,
+      "image_kind": null,
+      "observed_event_count": 18,
+      "latest_observed_start": "2027-03-17T13:30:00Z",
+      "sample_event_ids": [
+        "48d889fbcf742f0de5a0",
+        "6cc26c43cd920a97b2dc",
+        "7137c599dc838690a052",
+        "2bc5c263d5cc98e9b25c",
+        "a0e4494dbe35dd7e4eeb"
+      ],
+      "sample_titles": [
+        "VRCでボーっとする会",
+        "VRCでボーっとする会",
+        "VRCでボーっとする会"
+      ],
+      "category_distribution": {
+        "wellness": 18
+      },
+      "dominant_category": {
+        "value": "wellness",
+        "count": 18,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 18
+      },
+      "matched_ontology_ids": {
+        "vrc-idle-gathering": 18
+      },
+      "official_links": [
+        {
+          "url": "https://x.com/VRC_bskai",
+          "label": "イベント公式X",
+          "kind": "official_x"
+        },
+        {
+          "url": "https://vrc.group/BSKAI.0397",
+          "label": "VRChat Group",
+          "kind": "vrchat_group"
+        }
+      ]
+    },
+    {
       "entity_id": "ゆるゲmeet",
       "organizer": "ゆるゲMEET",
       "official_x_url": null,
@@ -1552,55 +1602,6 @@
       ]
     },
     {
-      "entity_id": "vrcでボーっとする会",
-      "organizer": "VRCでボーっとする会",
-      "official_x_url": null,
-      "official_website_url": null,
-      "image_url": null,
-      "image_kind": null,
-      "observed_event_count": 17,
-      "latest_observed_start": "2027-03-10T13:30:00Z",
-      "sample_event_ids": [
-        "6cc26c43cd920a97b2dc",
-        "7137c599dc838690a052",
-        "2bc5c263d5cc98e9b25c",
-        "a0e4494dbe35dd7e4eeb",
-        "6bf67485ccabf9ccfc11"
-      ],
-      "sample_titles": [
-        "VRCでボーっとする会",
-        "VRCでボーっとする会",
-        "VRCでボーっとする会"
-      ],
-      "category_distribution": {
-        "wellness": 17
-      },
-      "dominant_category": {
-        "value": "wellness",
-        "count": 17,
-        "share": 1.0
-      },
-      "subcategory_distribution": {},
-      "event_mode_distribution": {
-        "in_world": 17
-      },
-      "matched_ontology_ids": {
-        "vrc-idle-gathering": 17
-      },
-      "official_links": [
-        {
-          "url": "https://x.com/VRC_bskai",
-          "label": "イベント公式X",
-          "kind": "official_x"
-        },
-        {
-          "url": "https://vrc.group/BSKAI.0397",
-          "label": "VRChat Group",
-          "kind": "vrchat_group"
-        }
-      ]
-    },
-    {
       "entity_id": "vrcふれあい動物園",
       "organizer": "VRCふれあい動物園",
       "official_x_url": null,
@@ -1866,6 +1867,61 @@
       "official_links": []
     },
     {
+      "entity_id": "https://x.com/loki3190p",
+      "organizer": "@Loki3190p",
+      "official_x_url": "https://x.com/Loki3190p",
+      "official_website_url": null,
+      "image_url": null,
+      "image_kind": null,
+      "observed_event_count": 8,
+      "latest_observed_start": "2027-03-12T12:00:00Z",
+      "sample_event_ids": [
+        "e22c9a6fa7ad44027441",
+        "e38741a5ca89340adb32",
+        "514deaeac8a70a8cee4c",
+        "38417335936a1ada1ab4",
+        "0a1021db0ea10df964b7"
+      ],
+      "sample_titles": [
+        "【ポチのおすすめ VRchat イベント】 @KBakery12 『コロネベーカリー』 エモ研のコロネちゃんが営業する、コロネベーカリー 毎月12日 21時 から始まる喫茶イベント コンセプト…",
+        "【ポチのおすすめ VRchat イベント】 @KBakery12 『コロネベーカリー』 エモ研のコロネちゃんが営業する、コロネベーカリー 毎月12日 21時 から始まる喫茶イベント コンセプト…",
+        "【ポチのおすすめ VRchat イベント】 @KBakery12 『コロネベーカリー』 エモ研のコロネちゃんが営業する、コロネベーカリー 毎月12日 21時 から始まる喫茶イベント コンセプト…"
+      ],
+      "category_distribution": {
+        "community": 4,
+        "other": 4
+      },
+      "dominant_category": {
+        "value": "community",
+        "count": 4,
+        "share": 0.5
+      },
+      "subcategory_distribution": {
+        "cafe": 4
+      },
+      "event_mode_distribution": {
+        "in_world": 8
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://x.com/Loki3190p/status/2122355993157996589?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/Loki3190p/status/2122355995733368832?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/Loki3190p",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
       "entity_id": "https://x.com/sw_arch",
       "organizer": "SW_Arch",
       "official_x_url": "https://x.com/SW_Arch",
@@ -1946,6 +2002,59 @@
       },
       "matched_ontology_ids": {},
       "official_links": []
+    },
+    {
+      "entity_id": "https://x.com/vrcsca",
+      "organizer": "@VRCSCA",
+      "official_x_url": "https://x.com/VRCSCA",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HWPrj-YbEAEq7ky.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 4,
+      "latest_observed_start": "2026-12-13T11:30:00Z",
+      "sample_event_ids": [
+        "543d2322fb2ff168d8b9",
+        "873271449ee3e2bbdf1f",
+        "64b0287e5a77082b7156",
+        "edc4eab1df95a5adc3bb"
+      ],
+      "sample_titles": [
+        "# VRChat イベント 会員の開催イベントについて告知します。 主催 飛鳥山はるか VRC 世界史講義 毎週 日曜日 20時30分から。 通史で世界史を解説しています。1時間半ほどの講義形…",
+        "# VRChat イベント 会員の開催イベントについて告知します。 主催 飛鳥山はるか VRC 世界史講義 毎週 日曜日 20時30分から。 通史で世界史を解説しています。1時間半ほどの講義形…",
+        "# VRChat イベント 会員の開催イベントについて告知します。 主催 飛鳥山はるか VRC 世界史講義 毎週 日曜日 20時30分から。 通史で世界史を解説しています。1時間半ほどの講義形…"
+      ],
+      "category_distribution": {
+        "learning": 4
+      },
+      "dominant_category": {
+        "value": "learning",
+        "count": 4,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "lecture": 4
+      },
+      "event_mode_distribution": {
+        "in_world": 4
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/VRCSCA/status/2121566313986568687",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/VRCSCA/status/2121566313986568687?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/VRCSCA",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
     },
     {
       "entity_id": "https://x.com/autonomy_event",
@@ -2162,6 +2271,54 @@
         },
         {
           "url": "https://x.com/3dcgworkshopvp",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/__igod",
+      "organizer": "@__iGod",
+      "official_x_url": "https://x.com/__iGod",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXVKAgDbgAAhb42.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-19T21:00:00Z",
+      "sample_event_ids": [
+        "f77df643c4923370b073"
+      ],
+      "sample_titles": [
+        "11/20（金）は、 VRChat DJイベント 「のぶのーび」第6回！ たかぽんは26:00〜27:00に出演します。 22:45 OPEN ／23:00 START 29:00（翌朝5:0…"
+      ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dj": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/__iGod/status/2122684865229492622",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/__iGod/status/2122684865229492622?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/__iGod",
           "label": "公式X",
           "kind": "official_x"
         }
@@ -2702,7 +2859,7 @@
         "26b7d47cd691fe2ad9bd"
       ],
       "sample_titles": [
-        "🔥 VRC ライブ 告知 🔥 \"夜行決戦\" 11/26(木) OPEN ：21:50 at RIPPLE2 (StrollZ Group +) StrollZとのツーマンゴリラ🔥🔥🔥 ﾍﾞﾘﾍ…"
+        "🔥 VRC ライブ告知🔥 \"夜行決戦\" 11/26(木) OPEN ：21:50 at RIPPLE2 (StrollZ Group +) StrollZとのツーマンゴリラ🔥🔥🔥 ﾍﾞﾘﾍﾞﾘ…"
       ],
       "category_distribution": {
         "music": 1
@@ -2736,46 +2893,48 @@
       ]
     },
     {
-      "entity_id": "https://x.com/kamonegi10_06",
-      "organizer": "@kamonegi10_06",
-      "official_x_url": "https://x.com/kamonegi10_06",
+      "entity_id": "https://x.com/kagri_ayashiro",
+      "organizer": "@kagri_ayashiro",
+      "official_x_url": "https://x.com/kagri_ayashiro",
       "official_website_url": null,
-      "image_url": "https://pbs.twimg.com/media/HXQ8clzbQAAeqR0.jpg?format=webp&name=small",
+      "image_url": "https://pbs.twimg.com/media/HXWzc46bwAEm42S.jpg?format=webp&name=small",
       "image_kind": "post_media",
       "observed_event_count": 1,
-      "latest_observed_start": "2026-11-26T13:00:00Z",
+      "latest_observed_start": "2026-11-18T13:00:00Z",
       "sample_event_ids": [
-        "43e3df9bbdb31455670f"
+        "a1d05960cf3b24e70823"
       ],
       "sample_titles": [
-        "【# VRC 餌場 開催告知 ！】 VRC の雑魚の イベント 餌場《Kamonegi》 11月26日（木曜日）22時～ 開催 ！！ 事前申し込み制になりますので下記のフォームにご記入ください…"
+        "おはようございます☀️ 本日 (11/18第19回22:00〜23:00の1時間 VRC 個人 イベント の喫茶Mercure〜メルキュール〜がグループプラスにて オープン 致します イベント…"
       ],
       "category_distribution": {
-        "other": 1
+        "community": 1
       },
       "dominant_category": {
-        "value": "other",
+        "value": "community",
         "count": 1,
         "share": 1.0
       },
-      "subcategory_distribution": {},
+      "subcategory_distribution": {
+        "cafe": 1
+      },
       "event_mode_distribution": {
         "in_world": 1
       },
       "matched_ontology_ids": {},
       "official_links": [
         {
-          "url": "https://twitter.com/kamonegi10_06/status/2122389242999640230",
+          "url": "https://twitter.com/kagri_ayashiro/status/2122800115056578995",
           "label": "公式告知",
           "kind": "announcement"
         },
         {
-          "url": "https://x.com/kamonegi10_06/status/2122389242999640230?utm_source=yjrealtime&utm_medium=search",
+          "url": "https://x.com/kagri_ayashiro/status/2122800115056578995?utm_source=yjrealtime&utm_medium=search",
           "label": "公式告知",
           "kind": "announcement"
         },
         {
-          "url": "https://x.com/kamonegi10_06",
+          "url": "https://x.com/kagri_ayashiro",
           "label": "公式X",
           "kind": "official_x"
         }
@@ -2868,6 +3027,54 @@
         },
         {
           "url": "https://x.com/kazuaki_ndk",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/kiruan_02",
+      "organizer": "@kiruan_02",
+      "official_x_url": "https://x.com/kiruan_02",
+      "official_website_url": null,
+      "image_url": null,
+      "image_kind": null,
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-12-11T12:00:00Z",
+      "sample_event_ids": [
+        "a8754385a60f2e6f21eb"
+      ],
+      "sample_titles": [
+        "【来月開催】 VRC A-POP Dance Night 本開催第1回目は来月の12/11(金)の 21時 から開催です！ ゲストにはとかげさんをお呼びしてます✨ レギュラーDJ、スタッフも増…"
+      ],
+      "category_distribution": {
+        "music": 1
+      },
+      "dominant_category": {
+        "value": "music",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {
+        "dance": 1
+      },
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/vrca_dan/status/2121182259663548522",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/kiruan_02/status/2122311181151142185?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/kiruan_02",
           "label": "公式X",
           "kind": "official_x"
         }
@@ -3010,6 +3217,52 @@
         },
         {
           "url": "https://x.com/mamefurehoikuen",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/mezasi20",
+      "organizer": "@mezasi20",
+      "official_x_url": "https://x.com/mezasi20",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXVrvkua8AArTKg.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-12-27T12:00:00Z",
+      "sample_event_ids": [
+        "44367263f3ba6a14abe5"
+      ],
+      "sample_titles": [
+        "📢 イベント告知 📢 12/27(日)21:00より VRC 忘年会を 開催 します！ 皆さまのご参加お待ちしております！ https://t.co/mWblcfdTQG"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/mezasi20/status/2122721505268400288",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/mezasi20/status/2122721505268400288?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/mezasi20",
           "label": "公式X",
           "kind": "official_x"
         }
@@ -3223,7 +3476,7 @@
         "43a9d7ec9b145f55fb3b"
       ],
       "sample_titles": [
-        "明日 11月17日(火)の21時から、第74回ガンダム集会です。公式配信のガンダムXのラスト2話を VRC で一緒に見ておしゃべりしましょう。ニュータイプ論に一つの結論を出した名最終回です。 …"
+        "明日11月17日(火)の 21時 から、第74回ガンダム集会です。公式配信のガンダムXのラスト2話を VRC で一緒に見ておしゃべりしましょう。ニュータイプ論に一つの結論を出した名最終回です。…"
       ],
       "category_distribution": {
         "community": 1
@@ -3460,6 +3713,52 @@
       ]
     },
     {
+      "entity_id": "https://x.com/satoshikisaragi",
+      "organizer": "@satoshikisaragi",
+      "official_x_url": "https://x.com/satoshikisaragi",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXQOFP5awAAL4W8.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-22T12:00:00Z",
+      "sample_event_ids": [
+        "e4cdcbe48daba961fc72"
+      ],
+      "sample_titles": [
+        "土曜日(11月14日)は VRChat の #ぶいちゃ感謝祭 (Quest3s単機で参加)、 日曜日 (15日)はclusterの #まだナニ (PCデスクトップ)、月曜日(16日)はclus…"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/satoshikisaragi/status/2122338495620628683",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/satoshikisaragi/status/2122338495620628683?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/satoshikisaragi",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
       "entity_id": "https://x.com/seisyun_keion",
       "organizer": "@seisyun_keion",
       "official_x_url": "https://x.com/seisyun_keion",
@@ -3550,6 +3849,57 @@
           "url": "https://x.com/ShizuokaSyuukai",
           "label": "公式X",
           "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/sousinagi",
+      "organizer": "@SousiNagi",
+      "official_x_url": "https://x.com/SousiNagi",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXO99r1aoAAURzl.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-22T12:00:00Z",
+      "sample_event_ids": [
+        "3c7183576b53e742517e"
+      ],
+      "sample_titles": [
+        "映画鑑賞ワールド「#遠夏の鑑賞会」 第七十三回上映会開催！ 【日程】 11月22日(日) 21時 ～22時半 「【 VRchat 壊れちゃった】#５やり直したら壊れた」 「ラストホリデイゼロ」…"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/SousiNagi/status/2122250644132344259",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/SousiNagi/status/2122250644132344259?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/SousiNagi",
+          "label": "公式X",
+          "kind": "official_x"
+        },
+        {
+          "url": "https://vrchat.com/home/group/grp_27f66660-cb19-4767-bb11-8e204e97f953",
+          "label": "VRChat Group",
+          "kind": "vrchat_group"
         }
       ]
     },
@@ -3973,6 +4323,52 @@
       ]
     },
     {
+      "entity_id": "https://x.com/vrc_camera",
+      "organizer": "@vrc_camera",
+      "official_x_url": "https://x.com/vrc_camera",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXPNZj2bAAEIUgT.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-28T12:00:00Z",
+      "sample_event_ids": [
+        "8ab2cb0a86a5d18c2734"
+      ],
+      "sample_titles": [
+        "【イベント開催決定！】 VRC カメラ集会📸 第２回開催が決定いたしました！ 2026年11月28日 21時 スタート グループに参加してインスタンスから入場！ 第２回は参加者の皆様から展示す…"
+      ],
+      "category_distribution": {
+        "recruitment_deadline": 1
+      },
+      "dominant_category": {
+        "value": "recruitment_deadline",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "deadline": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/vrc_camera/status/2122265859075006763",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/vrc_camera/status/2122265859075006763?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/vrc_camera",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
       "entity_id": "https://x.com/vrc_kiokubu",
       "organizer": "@VRC_kiokubu",
       "official_x_url": "https://x.com/VRC_kiokubu",
@@ -4013,6 +4409,57 @@
         },
         {
           "url": "https://x.com/VRC_kiokubu",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/vrc_matane",
+      "organizer": "@VRC_matane",
+      "official_x_url": "https://x.com/VRC_matane",
+      "official_website_url": "https://x.gd/EefjA",
+      "image_url": "https://pbs.twimg.com/media/HXVIBnobYAAqMfi.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-12-15T12:45:00Z",
+      "sample_event_ids": [
+        "5e49e5e65cc7948ae423"
+      ],
+      "sample_titles": [
+        "【 VRC 心中RP イベント 、またねの約束。第5回 営業 のお知らせ】 ◆ 開催 日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加 方法◆ 事前抽選 https:…"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/VRC_matane/status/2122682035202634059",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/VRC_matane/status/2122682035202634059?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSfdg2kH5h6qMKNPiPXLVdrLLaCDz9eDXxusDpBjiyn4ECYx-A/viewform?usp=send_form",
+          "label": "応募・申込",
+          "kind": "application"
+        },
+        {
+          "url": "https://x.com/VRC_matane",
           "label": "公式X",
           "kind": "official_x"
         }
@@ -4107,6 +4554,52 @@
         },
         {
           "url": "https://x.com/VRC_Owarai_dojo",
+          "label": "公式X",
+          "kind": "official_x"
+        }
+      ]
+    },
+    {
+      "entity_id": "https://x.com/vrc_shigoto",
+      "organizer": "@VRC_SHIGOTO",
+      "official_x_url": "https://x.com/VRC_SHIGOTO",
+      "official_website_url": null,
+      "image_url": "https://pbs.twimg.com/media/HXV3FVVb0AAzlWP.jpg?format=webp&name=small",
+      "image_kind": "post_media",
+      "observed_event_count": 1,
+      "latest_observed_start": "2026-11-19T12:00:00Z",
+      "sample_event_ids": [
+        "4d7b7f04a725846b1862"
+      ],
+      "sample_titles": [
+        "11/19（木） 21時 〜 VRChat 未来しごとプロジェクト始動！ テーマは ソーシャルグッドなものをみんなで創ろう！ イベンター・モデラー・クリエイターでチームを組み、作品を共同実施 …"
+      ],
+      "category_distribution": {
+        "other": 1
+      },
+      "dominant_category": {
+        "value": "other",
+        "count": 1,
+        "share": 1.0
+      },
+      "subcategory_distribution": {},
+      "event_mode_distribution": {
+        "in_world": 1
+      },
+      "matched_ontology_ids": {},
+      "official_links": [
+        {
+          "url": "https://twitter.com/VRC_SHIGOTO/status/2122733740518683078",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/VRC_SHIGOTO/status/2122733740518683078?utm_source=yjrealtime&utm_medium=search",
+          "label": "公式告知",
+          "kind": "announcement"
+        },
+        {
+          "url": "https://x.com/VRC_SHIGOTO",
           "label": "公式X",
           "kind": "official_x"
         }
