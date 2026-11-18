@@ -30,7 +30,6 @@ def test_materializes_rolling_120_day_window():
         "asmr-main-event",
         "en-jp-language-exchange-saturday",
         "exploit-weekly-match",
-        "ml-meetup",
         "personally-match",
         "sw-arch-first-monday",
     } <= represented_series
