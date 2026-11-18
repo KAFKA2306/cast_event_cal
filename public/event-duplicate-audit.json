@@ -1,26 +1,76 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 930,
-  "event_count_after": 924,
-  "candidate_cluster_count": 2,
-  "duplicate_cluster_count": 2,
-  "duplicate_occurrence_count": 6,
-  "duplicate_post_count": 6,
-  "duplicate_rate": 0.006452,
+  "event_count_before": 935,
+  "event_count_after": 925,
+  "candidate_cluster_count": 3,
+  "duplicate_cluster_count": 3,
+  "duplicate_occurrence_count": 10,
+  "duplicate_post_count": 10,
+  "duplicate_rate": 0.010695,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 1,
+  "unresolved_ambiguous_cluster_count": 0,
   "clusters": [
     {
-      "cluster_id": "occ_1ef767343108b0a24135",
+      "cluster_id": "occ_023a76b2216fc98211b2",
+      "starts_at": "2026-11-21T17:20:00Z",
+      "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
+      "member_count": 4,
+      "member_ids": [
+        "0e9150c367457d6881dc",
+        "14ae919bc0101392be15",
+        "54c19be3890e7b3919ee",
+        "f3f2e13387f49f46e407"
+      ],
+      "source_record_ids": [
+        "src_06510c7831f7ad760f32",
+        "src_5c790e1325c959ea914c",
+        "src_b5811ba7cbe6a6b0a5a2",
+        "src_c3bb94e859778fa21b8c"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_c3bb94e859778fa21b8c"
+    },
+    {
+      "cluster_id": "occ_24cd56b4cdd9e167340d",
+      "starts_at": "2026-11-24T13:00:00Z",
+      "title": "VRC 1:1型RP イベント 🐄モーモー牧場🐄 【11/24(火)22:00～23:00 開催 】 お客様 参加 枠の抽選を行います 事前抽選にてご招待 ※抽選枠はキャストの人数にて変動 応…",
+      "member_count": 2,
+      "member_ids": [
+        "ca7889dad0f6a76a2bc2",
+        "f05f9538b904d2c2c409"
+      ],
+      "source_record_ids": [
+        "src_2fc0e64946b9aac81e1e",
+        "src_efa212894f2a824c2b82"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_efa212894f2a824c2b82"
+    },
+    {
+      "cluster_id": "occ_43758a47962c9657ef8e",
       "starts_at": "2026-11-21T16:20:00Z",
       "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
-      "member_count": 5,
+      "member_count": 7,
       "member_ids": [
         "279350be713d997bd512",
+        "471f6956dd950ad0d316",
         "4e6e01afbfc9f9c2fc60",
         "7fa52bb0db896e6043cc",
         "9fac617ed05c0799e88f",
+        "b65356f9aba395d8b65b",
         "e7728a21e948bfdb7ca3"
       ],
       "source_record_ids": [
@@ -28,7 +78,9 @@
         "src_238a5d1752f7a1d4f130",
         "src_5f3e05fbcff2bb9911df",
         "src_759a206f716d5e693afe",
-        "src_90020347cb32448270f7"
+        "src_90020347cb32448270f7",
+        "src_b3070ea4a00b4d98c8be",
+        "src_d4933b222bd5eff821a3"
       ],
       "sources": [
         "yahoo_realtime_events"
@@ -37,146 +89,111 @@
         "same_organizer_same_start_high_similarity"
       ],
       "confidence": 0.94,
-      "representative_source_record_id": "src_90020347cb32448270f7"
-    },
-    {
-      "cluster_id": "occ_54fd7d4880ccd8634a3c",
-      "starts_at": "2026-11-17T13:00:00Z",
-      "title": "🐄11月 営業 日のお知らせ🐄 VRChat 1:1型RPイベント 『モーモー牧場』 11月の 営業 日が決定しました！ 11月17日(火) 11月24日(火) 22:00～23:00 「抽選…",
-      "member_count": 3,
-      "member_ids": [
-        "0d4e1f583580f7e9a45b",
-        "383ddba1bc68cd70fcf7",
-        "4f19b9a3025082757811"
-      ],
-      "source_record_ids": [
-        "src_3a50720339211ff7c6d4",
-        "src_46323f535653b5b68f6f",
-        "src_67d874f566471f9c4581"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "exact_text_same_start",
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_3a50720339211ff7c6d4"
+      "representative_source_record_id": "src_d4933b222bd5eff821a3"
     }
   ],
-  "ambiguous_candidates": [
-    {
-      "left_id": "993af477b814da1f36c7",
-      "right_id": "f476adda7bc2a95999f8",
-      "starts_at": "2026-11-18T13:00:00Z",
-      "organizer": "@syuutingbe",
-      "similarity": 0.7013,
-      "left_title": "昼 告知 ！次回の VRC 弓道部は次の水曜日！18日です！ Group インスタンスで 開催 するので 参加 希望の方は事前に Group への 参加 をお忘れなく！ https://t.c…",
-      "right_title": "次回の VRC 弓道部は11月18日です！ 弓道未経験の方も気軽に 参加 してください！ VRC 弓道部の Groupインスタンス で 開催 するので 参加 希望の方は事前に Group への…"
-    }
-  ],
+  "ambiguous_candidates": [],
   "negative_samples": [
     {
-      "left_id": "34e2dda499de8d8a2241",
-      "right_id": "3aa0e9a24291f48390e3",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "233c530b4a705c1de830",
+      "right_id": "84161cf8ac2eb6914072",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
-      "similarity": 0.08,
+      "similarity": 0.1429,
       "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
-      "right_title": "CS集会"
+      "right_title": "VRC数学談話会"
     },
     {
-      "left_id": "34e2dda499de8d8a2241",
-      "right_id": "b88c5f73d07101f1189d",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "233c530b4a705c1de830",
+      "right_id": "b209927b4fc3981dfd28",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.1121,
+      "right_organizer": "ゆるゲMEET",
+      "similarity": 0.0966,
       "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 また、…"
+      "right_title": "ゆるゲMEET定期開催日"
     },
     {
-      "left_id": "34e2dda499de8d8a2241",
-      "right_id": "165df44fcd63646317b5",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "233c530b4a705c1de830",
+      "right_id": "594492266901d6c876df",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@vrcudrone",
-      "similarity": 0.1847,
+      "right_organizer": null,
+      "similarity": 0.0699,
       "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
-      "right_title": "１１月も折り返しです🍂 VRChat は沢山の楽しい イベント があります 日頃どんな遊び方をされてますか? ちょっとドローンに興味があるけど リアルでは気軽に始めるのは ちょっと勇気が必要 …"
+      "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     },
     {
-      "left_id": "34e2dda499de8d8a2241",
-      "right_id": "4f66116d9a8b342aa978",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "233c530b4a705c1de830",
+      "right_id": "57241c4e72b81827e7ef",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": "@Conductor_vrc",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1519,
+      "right_organizer": "水曜Quest初心者の集い",
+      "similarity": 0.1011,
       "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+      "right_title": "水曜Quest初心者の集い"
     },
     {
-      "left_id": "3aa0e9a24291f48390e3",
-      "right_id": "b88c5f73d07101f1189d",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "233c530b4a705c1de830",
+      "right_id": "0ba08d245eb680c05abf",
+      "starts_at": "2026-11-18T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "謎めぐり",
+      "similarity": 0.0727,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "謎めぐり"
+    },
+    {
+      "left_id": "84161cf8ac2eb6914072",
+      "right_id": "b209927b4fc3981dfd28",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": null,
-      "right_organizer": "@KMID_Numanidive",
-      "similarity": 0.134,
-      "left_title": "CS集会",
-      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 また、…"
+      "right_organizer": "ゆるゲMEET",
+      "similarity": 0.1156,
+      "left_title": "VRC数学談話会",
+      "right_title": "ゆるゲMEET定期開催日"
     },
     {
-      "left_id": "3aa0e9a24291f48390e3",
-      "right_id": "165df44fcd63646317b5",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "84161cf8ac2eb6914072",
+      "right_id": "594492266901d6c876df",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": null,
-      "right_organizer": "@vrcudrone",
-      "similarity": 0.0948,
-      "left_title": "CS集会",
-      "right_title": "１１月も折り返しです🍂 VRChat は沢山の楽しい イベント があります 日頃どんな遊び方をされてますか? ちょっとドローンに興味があるけど リアルでは気軽に始めるのは ちょっと勇気が必要 …"
+      "right_organizer": null,
+      "similarity": 0.3502,
+      "left_title": "VRC数学談話会",
+      "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     },
     {
-      "left_id": "3aa0e9a24291f48390e3",
-      "right_id": "4f66116d9a8b342aa978",
-      "starts_at": "2026-11-17T12:00:00Z",
+      "left_id": "84161cf8ac2eb6914072",
+      "right_id": "57241c4e72b81827e7ef",
+      "starts_at": "2026-11-18T12:00:00Z",
       "left_organizer": null,
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1206,
-      "left_title": "CS集会",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+      "right_organizer": "水曜Quest初心者の集い",
+      "similarity": 0.068,
+      "left_title": "VRC数学談話会",
+      "right_title": "水曜Quest初心者の集い"
     },
     {
-      "left_id": "b88c5f73d07101f1189d",
-      "right_id": "165df44fcd63646317b5",
-      "starts_at": "2026-11-17T12:00:00Z",
-      "left_organizer": "@KMID_Numanidive",
-      "right_organizer": "@vrcudrone",
-      "similarity": 0.0658,
-      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 また、…",
-      "right_title": "１１月も折り返しです🍂 VRChat は沢山の楽しい イベント があります 日頃どんな遊び方をされてますか? ちょっとドローンに興味があるけど リアルでは気軽に始めるのは ちょっと勇気が必要 …"
+      "left_id": "84161cf8ac2eb6914072",
+      "right_id": "0ba08d245eb680c05abf",
+      "starts_at": "2026-11-18T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "謎めぐり",
+      "similarity": 0.0829,
+      "left_title": "VRC数学談話会",
+      "right_title": "謎めぐり"
     },
     {
-      "left_id": "b88c5f73d07101f1189d",
-      "right_id": "4f66116d9a8b342aa978",
-      "starts_at": "2026-11-17T12:00:00Z",
-      "left_organizer": "@KMID_Numanidive",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1905,
-      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に 参加 する方は沼民グループへの 参加 をお忘れなく。 また、…",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
-    },
-    {
-      "left_id": "165df44fcd63646317b5",
-      "right_id": "4f66116d9a8b342aa978",
-      "starts_at": "2026-11-17T12:00:00Z",
-      "left_organizer": "@vrcudrone",
-      "right_organizer": "@ShizuokaSyuukai",
-      "similarity": 0.1048,
-      "left_title": "１１月も折り返しです🍂 VRChat は沢山の楽しい イベント があります 日頃どんな遊び方をされてますか? ちょっとドローンに興味があるけど リアルでは気軽に始めるのは ちょっと勇気が必要 …",
-      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+      "left_id": "b209927b4fc3981dfd28",
+      "right_id": "594492266901d6c876df",
+      "starts_at": "2026-11-18T12:00:00Z",
+      "left_organizer": "ゆるゲMEET",
+      "right_organizer": null,
+      "similarity": 0.0882,
+      "left_title": "ゆるゲMEET定期開催日",
+      "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     }
   ],
-  "generated_at": "2026-11-18T03:43:49Z"
+  "generated_at": "2026-11-18T13:01:45Z"
 }
