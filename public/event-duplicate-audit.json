@@ -1,16 +1,52 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 951,
-  "event_count_after": 941,
-  "candidate_cluster_count": 3,
-  "duplicate_cluster_count": 3,
-  "duplicate_occurrence_count": 10,
-  "duplicate_post_count": 10,
-  "duplicate_rate": 0.010515,
+  "event_count_before": 955,
+  "event_count_after": 942,
+  "candidate_cluster_count": 4,
+  "duplicate_cluster_count": 4,
+  "duplicate_occurrence_count": 13,
+  "duplicate_post_count": 13,
+  "duplicate_rate": 0.013613,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 0,
+  "unresolved_ambiguous_cluster_count": 4,
   "clusters": [
+    {
+      "cluster_id": "occ_007790290557b85db9a4",
+      "starts_at": "2026-11-21T16:20:00Z",
+      "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
+      "member_count": 9,
+      "member_ids": [
+        "279350be713d997bd512",
+        "285d1edc2c1446c46967",
+        "471f6956dd950ad0d316",
+        "4e6e01afbfc9f9c2fc60",
+        "7fa52bb0db896e6043cc",
+        "9fac617ed05c0799e88f",
+        "b37c70190f7351c96c3f",
+        "b65356f9aba395d8b65b",
+        "e7728a21e948bfdb7ca3"
+      ],
+      "source_record_ids": [
+        "src_01aa206b1c2c3bc48f74",
+        "src_17c6cad28f9e089e20e6",
+        "src_238a5d1752f7a1d4f130",
+        "src_5f3e05fbcff2bb9911df",
+        "src_759a206f716d5e693afe",
+        "src_90020347cb32448270f7",
+        "src_b3070ea4a00b4d98c8be",
+        "src_d4933b222bd5eff821a3",
+        "src_ddec65945ff777b24c07"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_ddec65945ff777b24c07"
+    },
     {
       "cluster_id": "occ_023a76b2216fc98211b2",
       "starts_at": "2026-11-21T17:20:00Z",
@@ -60,39 +96,66 @@
       "representative_source_record_id": "src_efa212894f2a824c2b82"
     },
     {
-      "cluster_id": "occ_43758a47962c9657ef8e",
-      "starts_at": "2026-11-21T16:20:00Z",
-      "title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…",
-      "member_count": 7,
+      "cluster_id": "occ_bdc6761d8938509928e6",
+      "starts_at": "2026-11-20T12:00:00Z",
+      "title": "11月20日(金)に第2回 VRC 民俗学 集会 を 開催 します。 テーマは「 VRC における民俗学研究の障壁」です。 ぜひお越しください。 # VRC 民俗学 集会 https://t.…",
+      "member_count": 2,
       "member_ids": [
-        "279350be713d997bd512",
-        "471f6956dd950ad0d316",
-        "4e6e01afbfc9f9c2fc60",
-        "7fa52bb0db896e6043cc",
-        "9fac617ed05c0799e88f",
-        "b65356f9aba395d8b65b",
-        "e7728a21e948bfdb7ca3"
+        "69fc22713033612f6343",
+        "d2ccd3947e370cf32b8c"
       ],
       "source_record_ids": [
-        "src_17c6cad28f9e089e20e6",
-        "src_238a5d1752f7a1d4f130",
-        "src_5f3e05fbcff2bb9911df",
-        "src_759a206f716d5e693afe",
-        "src_90020347cb32448270f7",
-        "src_b3070ea4a00b4d98c8be",
-        "src_d4933b222bd5eff821a3"
+        "src_38dff6e613ef37a483e7",
+        "src_8951845cd6910ad63b82"
       ],
       "sources": [
         "yahoo_realtime_events"
       ],
       "reasons": [
-        "same_organizer_same_start_high_similarity"
+        "same_organizer_same_start_ordinal"
       ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_d4933b222bd5eff821a3"
+      "confidence": 0.9466,
+      "representative_source_record_id": "src_38dff6e613ef37a483e7"
     }
   ],
-  "ambiguous_candidates": [],
+  "ambiguous_candidates": [
+    {
+      "left_id": "0245a5968cc4d1154850",
+      "right_id": "0e9150c367457d6881dc",
+      "starts_at": "2026-11-21T17:20:00Z",
+      "organizer": "@AUTONOMY_event",
+      "similarity": 0.7167,
+      "left_title": "❖━━━＼PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━━━…",
+      "right_title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…"
+    },
+    {
+      "left_id": "0245a5968cc4d1154850",
+      "right_id": "14ae919bc0101392be15",
+      "starts_at": "2026-11-21T17:20:00Z",
+      "organizer": "@AUTONOMY_event",
+      "similarity": 0.7257,
+      "left_title": "❖━━━＼PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━━━…",
+      "right_title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…"
+    },
+    {
+      "left_id": "0245a5968cc4d1154850",
+      "right_id": "54c19be3890e7b3919ee",
+      "starts_at": "2026-11-21T17:20:00Z",
+      "organizer": "@AUTONOMY_event",
+      "similarity": 0.735,
+      "left_title": "❖━━━＼PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━━━…",
+      "right_title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…"
+    },
+    {
+      "left_id": "0245a5968cc4d1154850",
+      "right_id": "f3f2e13387f49f46e407",
+      "starts_at": "2026-11-21T17:20:00Z",
+      "organizer": "@AUTONOMY_event",
+      "similarity": 0.7257,
+      "left_title": "❖━━━＼PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━━━…",
+      "right_title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…"
+    }
+  ],
   "negative_samples": [
     {
       "left_id": "233c530b4a705c1de830",
@@ -101,7 +164,7 @@
       "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
       "similarity": 0.1429,
-      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join (入…",
       "right_title": "VRC数学談話会"
     },
     {
@@ -111,7 +174,7 @@
       "left_organizer": "@Conductor_vrc",
       "right_organizer": "ゆるゲMEET",
       "similarity": 0.0966,
-      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join (入…",
       "right_title": "ゆるゲMEET定期開催日"
     },
     {
@@ -121,7 +184,7 @@
       "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
       "similarity": 0.0699,
-      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join (入…",
       "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     },
     {
@@ -131,7 +194,7 @@
       "left_organizer": "@Conductor_vrc",
       "right_organizer": "水曜Quest初心者の集い",
       "similarity": 0.1011,
-      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join (入…",
       "right_title": "水曜Quest初心者の集い"
     },
     {
@@ -141,7 +204,7 @@
       "left_organizer": "@Conductor_vrc",
       "right_organizer": "謎めぐり",
       "similarity": 0.0727,
-      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "left_title": "# VRC _Conductor VRC 接客イベント『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join (入…",
       "right_title": "謎めぐり"
     },
     {
@@ -195,5 +258,5 @@
       "right_title": "妖怪好き交流所『怪し火-AYASHIBI-』"
     }
   ],
-  "generated_at": "2026-11-19T03:22:44Z"
+  "generated_at": "2026-11-19T11:39:01Z"
 }
