@@ -31,7 +31,7 @@ pip install -e '.[dev]'
 ruff check cast_event_cal scripts tests
 pytest -q
 python scripts/materialize_events.py
-python main_executor.py run --strict
+cast-event-cal run --strict
 python scripts/render_frontend.py
 python -m http.server 8000 --directory public
 ```

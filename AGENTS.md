@@ -18,15 +18,7 @@
 ## 変更・検証
 一つの結果に一つの正本処理・監査・worklineを使う。重複する経路は参照を検査してから削除する（DELETE > MERGE > REPLACE > ADD）。余計なCI・テスト・台帳を増やさない。
 
-関連範囲の最小検証から始め、実際に実行しなかったコマンドをPASSとしない。標準例:
-
-```bash
-ruff check cast_event_cal scripts tests main_executor.py
-pytest -q
-python scripts/materialize_events.py
-python main_executor.py run --strict
-python scripts/render_frontend.py
-```
+関連範囲の最小検証から始める。標準コマンドは [READMEの開発・検証手順](README.md#開発検証) を参照する。実際に実行しなかったコマンドをPASSとしない。
 
 PRの変更HEADと必須条件を確認して統合する。公開変更では統合後の本番URL・JSON・監査・snapshotを別途確認する。Actions成功だけで本番成功と断定しない。
 
