@@ -73,6 +73,7 @@ VRCEveは、事前許可のない継続的な自動取得や外部サービス�
 
 ```bash
 python scripts/fetch_external_calendars.py
-python main_executor.py run --strict
 pytest -q tests/test_external_calendar_sources.py tests/test_vrchat_discovery_routes.py
 ```
+
+収集後に公開データを生成する場合は、[READMEの開発・検証手順](../README.md#開発検証) のカレンダー生成コマンドを実行します。
