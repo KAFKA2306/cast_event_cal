@@ -3,6 +3,9 @@ name: Render searchable event pages
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/render-search-pages.yml']
   workflow_run:
     workflows: ["Update calendar data"]
     types: [completed]
@@ -130,6 +133,8 @@ jobs:
       contents: read
       pages: write
       id-token: write
+    env:
+      PAGES_ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -143,10 +148,13 @@ jobs:
       - name: Upload current public snapshot
         uses: actions/upload-pages-artifact@v4
         with:
+          name: ${{ env.PAGES_ARTIFACT_NAME }}
           path: public
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT_NAME }}
       - name: Verify deployed public surface
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
