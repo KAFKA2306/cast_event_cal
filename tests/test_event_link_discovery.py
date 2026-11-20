@@ -20,3 +20,18 @@ def test_primary_action_prefers_application() -> None:
     assert result["primary_action_url"] == "https://forms.gle/example"
     assert result["primary_action_kind"] == "application"
     assert [row["kind"] for row in result["official_links"]][:3] == ["application", "vrchat_group", "announcement"]
+
+
+def test_group_settings_link_opens_group_profile_for_participants() -> None:
+    group = "https://vrchat.com/home/group/grp_bdb4dfe7-c3f7-4eb9-9ff2-ca7745004c3b"
+    settings = f"{group}/settings?tab=roles"
+    calendar = f"{group}/calendar/cal_example"
+    event = {"description": f"参加 {settings} 日程 {calendar}"}
+
+    with httpx.Client() as client:
+        result = enrich(event, client)
+
+    assert result["primary_action_url"] == group
+    assert result["primary_action_kind"] == "vrchat_group"
+    assert [row["url"] for row in result["official_links"]] == [group, calendar]
+    assert result["description"] == event["description"]
