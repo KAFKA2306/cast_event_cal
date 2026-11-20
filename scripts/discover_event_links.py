@@ -14,6 +14,10 @@ import httpx
 EVENTS = Path("public/events.json")
 AUDIT = Path("public/event-link-audit.json")
 URL_RE = re.compile(r"https://[^\s<>\]\[(){}\"'、。]+", re.I)
+GROUP_SETTINGS_PATH = re.compile(
+    r"(/home/group/grp_[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})/settings/?",
+    re.I,
+)
 SHORTENERS = {"t.co", "bit.ly", "tinyurl.com", "is.gd", "x.gd", "onl.sc"}
 BLOCKED = {"pbs.twimg.com", "search.yahoo.co.jp"}
 PRIORITY = {
@@ -44,6 +48,10 @@ def canonical(url: Any) -> str | None:
     parsed = urlparse(value)
     if not parsed.hostname:
         return None
+    if parsed.hostname in {"vrchat.com", "www.vrchat.com"}:
+        group = GROUP_SETTINGS_PATH.fullmatch(parsed.path)
+        if group:
+            return f"https://vrchat.com{group[1].lower()}"
     return value
 
 
