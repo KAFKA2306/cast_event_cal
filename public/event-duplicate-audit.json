@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 962,
-  "event_count_after": 944,
-  "candidate_cluster_count": 8,
-  "duplicate_cluster_count": 8,
-  "duplicate_occurrence_count": 18,
-  "duplicate_post_count": 18,
-  "duplicate_rate": 0.018711,
+  "event_count_before": 961,
+  "event_count_after": 941,
+  "candidate_cluster_count": 10,
+  "duplicate_cluster_count": 10,
+  "duplicate_occurrence_count": 20,
+  "duplicate_post_count": 20,
+  "duplicate_rate": 0.020812,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 8,
+  "unresolved_ambiguous_cluster_count": 9,
   "clusters": [
     {
       "cluster_id": "occ_023a76b2216fc98211b2",
@@ -40,7 +40,7 @@
     {
       "cluster_id": "occ_141174e1b4e6e21e747e",
       "starts_at": "2026-11-27T13:00:00Z",
-      "title": "【 VRChatイベント告知 】 ｢Amazonブラックフライデー何買った集会｣を 開催 成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27(金) 22…",
+      "title": "【 VRChatイベント告知 】 ｢Amazonブラックフライデー何買った集会｣を開催成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時:11/27(金) 22:00…",
       "member_count": 2,
       "member_ids": [
         "1342762b697a98b27582",
@@ -142,26 +142,48 @@
       "representative_source_record_id": "src_ddec65945ff777b24c07"
     },
     {
-      "cluster_id": "occ_60dc7abf93575b7fac85",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "title": "＼ ☕ 明日営業 ！MiCafeのお知らせ ☕ ／ 明日 21時より、少人数制 VRChat カフェ「MiCafe」を オープン します✨ まったりお話ししながら、落ち着いたカフェタイムを過ご…",
+      "cluster_id": "occ_68709ea6fbc72d3c36d1",
+      "starts_at": "2026-11-21T13:00:00Z",
+      "title": "本日 22時から 開催 される VRC イベント、MogMog 集会 は Group Onryで 開催 されます！ VRC 内のグループ【あったかいおなか】のグループに入っていない場合イベント…",
       "member_count": 2,
       "member_ids": [
-        "3ad7b37a5a6d8aac71c4",
-        "9f24b01d832f295d6559"
+        "2140901bf65aa73233e9",
+        "acba4a588afb64f1115f"
       ],
       "source_record_ids": [
-        "src_94fa2078562430a9feb8",
-        "src_abd9e5a57cb6f99a6355"
+        "src_552b08218c44b9377f3e",
+        "src_cc6622127a0148eee02c"
       ],
       "sources": [
         "yahoo_realtime_events"
       ],
       "reasons": [
-        "same_organizer_same_start_high_similarity"
+        "exact_text_same_start"
       ],
-      "confidence": 0.9334,
-      "representative_source_record_id": "src_abd9e5a57cb6f99a6355"
+      "confidence": 0.99,
+      "representative_source_record_id": "src_cc6622127a0148eee02c"
+    },
+    {
+      "cluster_id": "occ_a5b440fec27d803f7994",
+      "starts_at": "2026-11-25T12:30:00Z",
+      "title": "【11月度開催のお知らせ🍁❄️】 『ダンス・パレット！』🎨 ダンス未経験の子も気軽に遊びに来てねー！ フルトラじゃなくても大丈夫！ 3点、デスクトップの方もお待ちしております🫶 ​📅 毎週 水…",
+      "member_count": 2,
+      "member_ids": [
+        "7bf0324ee96151a9722e",
+        "a77c0809b7ebdec76f6c"
+      ],
+      "source_record_ids": [
+        "src_82fccc896a138cb2583e",
+        "src_af358405513c38a046fd"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_af358405513c38a046fd"
     },
     {
       "cluster_id": "occ_ab5f7615dfd2bb770740",
@@ -184,6 +206,28 @@
       ],
       "confidence": 0.94,
       "representative_source_record_id": "src_f7786a11fe18d5d3c0ea"
+    },
+    {
+      "cluster_id": "occ_cee84d5c063ad5adb0e0",
+      "starts_at": "2026-12-05T12:00:00Z",
+      "title": "【 告知 】 RESONARK 非公式定期 イベント 『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （…",
+      "member_count": 2,
+      "member_ids": [
+        "a80ab447672c799577dd",
+        "e1b58f70a49ba4a6cffb"
+      ],
+      "source_record_ids": [
+        "src_ed31894981a8d2210e3b",
+        "src_f719b5d450b48bba370d"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_canonical_url"
+      ],
+      "confidence": 1.0,
+      "representative_source_record_id": "src_f719b5d450b48bba370d"
     },
     {
       "cluster_id": "occ_ddb13f8ec24935824855",
@@ -280,109 +324,118 @@
       "similarity": 0.7257,
       "left_title": "❖━━━＼PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━━━━…",
       "right_title": "❖━━━＼出演者PR動画公開！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter ❖━━━━━━━…"
+    },
+    {
+      "left_id": "cf6876bb4389f8d0ad85",
+      "right_id": "f76cada2f19b65ade3b6",
+      "starts_at": "2026-11-22T12:00:00Z",
+      "organizer": "@VRC_Warframe_JP",
+      "similarity": 0.4718,
+      "left_title": "#VRCwarframe 集会 明日 、21:00から VRChat の「Warframe集会場」のグループ+で 開催 します！ 「テンノ商会」グループに 参加 後に イベント にご参加下さい…",
+      "right_title": "11月22日（日）に #VRCwarframe集会 開催します！ 3連休の 日曜日 開催になります！ 暫くはグループ+でイベント開催になります 参加希望の方は VRChat 「テンノ商会」グル…"
     }
   ],
   "negative_samples": [
     {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "d5162a922f4d9fc4251a",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@2026nen8gatuVRC",
-      "similarity": 0.1538,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "BAR杏珠 × 2026年8月 VRC 同期会 特別コラボイベント 開催決定 ！ 「今宵、ふたつの縁が交わる。」 BAR杏珠のキャストとともに、いつもとはひと味違う特別な夜をお届けします！ 1…"
+      "left_id": "64e686ad2bfec41b3c9c",
+      "right_id": "e4e6fdf23017e44f85bb",
+      "starts_at": "2026-11-20T19:00:00Z",
+      "left_organizer": "おはよう！朝4時に何してるんだぃ？",
+      "right_organizer": "@Barcointoss",
+      "similarity": 0.0928,
+      "left_title": "おはよう！朝4時に何してるんだぃ？",
+      "right_title": "皆さんおはようございます 本日 Bar.cointoss 営業 日になります!! また、 本日 YouTubeにて動画投稿をしている「れいさ」様が「24時間で VRChat の イベント をど…"
     },
     {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "9831bbedacb60a85b0fc",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "520e52e5c01264c28a1d",
+      "right_id": "295375ab9497ada06481",
+      "starts_at": "2026-11-21T11:00:00Z",
+      "left_organizer": "@VRCbowlingClub",
+      "right_organizer": "@yuuheyTARZAN",
+      "similarity": 0.0669,
+      "left_title": "【 イベント 告知 】 11月21日(土) 20時から第16回 VRC ボウリング部 交流会 を 開催 致します❗️ VRC ボウリングをやったことがないよという方でも大歓迎🔰 運営スタッフが…",
+      "right_title": "本日 20時〜 VRC Dance Challenge 第5回目 ゲストショーケース『Black Star』として 参加 します！ こちらの イベント も今回を持って終了し、新たな形で 開催 …"
+    },
+    {
+      "left_id": "b8641afed899be8920ca",
+      "right_id": "3d3e0e5f1bb20cceac48",
+      "starts_at": "2026-11-21T11:30:00Z",
+      "left_organizer": "@mika_zato_",
+      "right_organizer": "@m1k42470_vrc",
+      "similarity": 0.8186,
+      "left_title": "#おはようVtuber やぁ皆。令和の談話狐、三可里リオンだよ！ 本日 は VRC 公式グループ「三可里リオンのあとりえ」メンバー１００人突破記念 イベント 【りおにすと】の 開催 日となって…",
+      "right_title": "やぁ皆。令和の談話狐、三可里リオンだよ～！ 本日 は VRC 公式グループ「三可里リオンのあとりえ」メンバー１００人突破記念 イベント 【りおにすと】 の 開催 日となっております！ 20:3…"
+    },
+    {
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "bcfac6e757a0c16875f9",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.0432,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "VRCフィットボクシング集会（土曜）"
+    },
+    {
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "111976874bfc82c5a4a9",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
+      "right_organizer": "@cercle630",
+      "similarity": 0.1339,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 :11/21 21時～ VRC ボクシングに興味がある方、楽しみたい方…"
+    },
+    {
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "cf026860d0acda8c0ef6",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.2222,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "今夜 は学生学際 集会 ！ 【タイムスケジュール】 11月21日(土) 21:00～ 開場 21:15～ 降谷凪さん 『#7 小説を書く私が考える〝言語化〟について～比喩表現を使った伝え方～』…"
+    },
+    {
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "c2031c9ca1065d31d4c2",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
       "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
+      "similarity": 0.1714,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "学生学際集会"
     },
     {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "b00ded7c2db05511825f",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "5c302c2f77b46d614cb4",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
+      "right_organizer": "@vrcsim_official",
+      "similarity": 0.2301,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "明日 は学生学際 集会 ！ 11月21日(土) 21:00～ 開場 21:15～ 降谷凪さん 『#7 小説を書く私が考える〝言語化〟について～比喩表現を使った伝え方～』 ぜひお越しください！！…"
+    },
+    {
+      "left_id": "d2602964762dfdb87c97",
+      "right_id": "6b0152df471b276bb57b",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "@harumiou1117",
       "right_organizer": null,
-      "similarity": 0.1818,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC MED J SALON"
+      "similarity": 0.0801,
+      "left_title": "11月21日（土）21:00より、 MUSIC＆ DANCE BAR「BAR SL9」 改装してのプレ オープン です。 音楽に耳を傾けたり、ダンスを眺めたり。 ゆっくりと過ごしていただける場…",
+      "right_title": "株式投資座談会"
     },
     {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "e433d63687b08c7f621c",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.1151,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VR研究Cafe"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "1c716a0873c2d5c39383",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VR研究カフェ",
-      "similarity": 0.2857,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VR研究カフェ（毎月20日）"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "bfb118cd551ccfeeb5f9",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@wondernote_info",
-      "similarity": 0.0702,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "【 本日 の注目イベント✨】 🕒11/20(金) 21:00～ 🟠第２３回辛口麵 集会 🟠 毎月だいたい第３金曜日 21：00～22:00 VRChat にて、辛いカップ麵をみんなで一斉に作っ…"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "69fc22713033612f6343",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@_matu4649",
-      "similarity": 0.1325,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "明日 (11月20日金曜)21時より、第2回 VRC 民俗学 集会 を開きます。 第2回では「 VRC における民俗学研究の障壁」について、高瀬雷神龍平さんに発表をしていただきます。 参加 さ…"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "7ab8278a3f7eab3f0bff",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@koikoisararira",
-      "similarity": 0.129,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "明日 ・20日(金) 21時～ VRChat で『民俗学 集会 』があります👀 ご興味ある方良ければどうぞ～✨ https://t.co/dqAdDEkVN2"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "3ad7b37a5a6d8aac71c4",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@micafe01234",
-      "similarity": 0.16,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "＼ ☕ 明日営業 ！MiCafeのお知らせ ☕ ／ 明日 21時より、少人数制 VRChat カフェ「MiCafe」を オープン します✨ まったりお話ししながら、落ち着いたカフェタイムを過ご…"
-    },
-    {
-      "left_id": "74976e1c0fcbf0732eaf",
-      "right_id": "9f24b01d832f295d6559",
-      "starts_at": "2026-11-20T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@micafe01234",
-      "similarity": 0.1818,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "＼ ☕ 本日営業 ！MiCafeのお知らせ ☕ ／ 今夜 21時より、少人数制 VRChat カフェ「MiCafe」 オープン します✨ 一日の終わりに、まったりお喋りしながら一息つきませんか…"
+      "left_id": "bcfac6e757a0c16875f9",
+      "right_id": "111976874bfc82c5a4a9",
+      "starts_at": "2026-11-21T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@cercle630",
+      "similarity": 0.0881,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【お知らせ】 こんにちは、 VRC ボクシング日本公式チームinner circleです。 練習会のお知らせです。 日時 :11/21 21時～ VRC ボクシングに興味がある方、楽しみたい方…"
     }
   ],
-  "generated_at": "2026-11-21T09:44:26Z"
+  "generated_at": "2026-11-21T16:27:06Z"
 }
