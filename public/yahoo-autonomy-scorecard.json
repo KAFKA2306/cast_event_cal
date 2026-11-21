@@ -1,29 +1,30 @@
 {
-  "delta_healthy": false,
-  "generated_at": "2026-11-20T20:08:51Z",
+  "delta_healthy": true,
+  "generated_at": "2026-11-21T01:29:59Z",
   "schema_version": "1.0",
-  "semantic_snapshot_sha256": "e0ce567a5056941ffccd9b2c2a06113294d5d1ae065531dc6225f0bf8c64e452",
-  "source_revision": "f1b88162bc998f641682c906dc57c68bfa3cbaa8",
+  "semantic_snapshot_sha256": "12f64f79b811d4c311f1f64d4e563a5c25f94d0ef2dc69bed2acd1227f23d223",
+  "source_revision": "3c4ae4b649e4709198d3f48e24ca217189c93765",
   "yahoo": {
-    "added": 14,
+    "added": 27,
     "added_reasons": {
-      "new_discovery": 13,
-      "other": 1
+      "new_discovery": 24,
+      "other": 2,
+      "promoted_datetime_resolution": 1
     },
-    "after": 77,
-    "before": 102,
+    "after": 96,
+    "before": 77,
     "interpretation": "new_since_previous_snapshot is not verified first-ever publication; accepted candidates and search hits are not published events",
     "material_changes": 0,
-    "new_since_previous_snapshot": 13,
-    "promoted_datetime_resolution": 0,
-    "removed": 39,
+    "new_since_previous_snapshot": 24,
+    "promoted_datetime_resolution": 1,
+    "removed": 8,
     "removed_reasons": {
-      "dedup_merged": 1,
-      "expired": 10,
-      "unknown": 28
+      "dedup_merged": 2,
+      "expired": 1,
+      "unknown": 5
     },
     "source": "yahoo_realtime_events",
-    "unknown_removals": 28,
+    "unknown_removals": 5,
     "yahoo_attribution_gained_on_existing_occurrences": 0
   }
 }
