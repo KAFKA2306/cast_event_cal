@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-21T23:12:37Z",
+  "generated_at": "2026-11-22T03:08:35Z",
   "policy": "fail-closed-for-unreachable-optional-image-assets",
-  "checked_url_count": 132,
-  "reachable_url_count": 109,
-  "failed_url_count": 23,
-  "events_degraded": 78,
-  "stripped_image_fields": 154,
+  "checked_url_count": 147,
+  "reachable_url_count": 117,
+  "failed_url_count": 30,
+  "events_degraded": 86,
+  "stripped_image_fields": 170,
   "failures": {
-    "http_404": 15,
+    "http_404": 22,
     "unexpected_content_type:application/octet-stream": 8
   },
   "failed_urls": [
@@ -33,11 +33,11 @@
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_be01ea23-f2cf-4944-b1ad-054a8767f52d/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
-      "url": "https://api.vrchat.cloud/api/1/file/file_be01ea23-f2cf-4944-b1ad-054a8767f52d/1/file",
+      "url": "https://api.vrchat.cloud/api/1/file/file_bf3b1000-7621-4662-963f-934e1a7d9eed/1/file",
       "reason": "unexpected_content_type:application/octet-stream"
     },
     {
@@ -49,23 +49,11 @@
       "reason": "http_404"
     },
     {
+      "url": "https://pbs.twimg.com/profile_images/1642085811675090946/5Srt5_4Q.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
       "url": "https://pbs.twimg.com/profile_images/1728234539544412161/LZ1-sHXt.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1809770321651929088/rWSeQPL-.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1818982803717095424/wssocIjZ.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1885288217538420737/MrmKCae6.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/1999879643009302528/SaQdQ-yT.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
@@ -73,23 +61,23 @@
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/1908128057329913856/cXTCzMyV.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
-      "url": "https://pbs.twimg.com/profile_images/2063463199438176256/CGhtwUSb.jpg?format=webp&name=200x200",
-      "reason": "http_404"
-    },
-    {
       "url": "https://pbs.twimg.com/profile_images/1749332709607141376/qPVtRpAO.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/2068176677994430464/2KhSOa8j.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1809770321651929088/rWSeQPL-.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
-      "url": "https://pbs.twimg.com/profile_images/2095559141096083456/s6KFt_FF.jpg?format=webp&name=200x200",
+      "url": "https://pbs.twimg.com/profile_images/1885288217538420737/MrmKCae6.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1818982803717095424/wssocIjZ.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1908128057329913856/cXTCzMyV.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
@@ -97,11 +85,51 @@
       "reason": "http_404"
     },
     {
+      "url": "https://pbs.twimg.com/profile_images/2043685709119418368/T4Yf3YJT.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2005578244347826176/Ae1ll9E2.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
       "url": "https://pbs.twimg.com/profile_images/2017182793315618817/De9ZPLNl.jpg?format=webp&name=200x200",
       "reason": "http_404"
     },
     {
+      "url": "https://pbs.twimg.com/profile_images/2063463199438176256/CGhtwUSb.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/1999879643009302528/SaQdQ-yT.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2067195618586689536/jVV089NX.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2059656169330012162/vj42CcNJ.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
       "url": "https://pbs.twimg.com/profile_images/2081791204103204864/VPMo0A0D.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2094384669123063808/GsF9HRER.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2093971868218953728/tKlYpe3n.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/2095559141096083456/s6KFt_FF.jpg?format=webp&name=200x200",
+      "reason": "http_404"
+    },
+    {
+      "url": "https://pbs.twimg.com/profile_images/378800000073523779/86d6341dcece7826e3273b8789e8f90d.jpeg?format=webp&name=200x200",
       "reason": "http_404"
     }
   ]
