@@ -2,12 +2,13 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 941,
+  "event_count": 949,
   "matched_events": 277,
   "matched_series": {
-    "en-jp-language-exchange": 36,
     "vrc-fit-boxing": 36,
     "personally-match": 18,
+    "en-jp-language-exchange": 35,
+    "cafe-bar-for-light": 1,
     "vrc-goita": 17,
     "vrc-game-world-club": 17,
     "exploit-club": 17,
@@ -19,21 +20,9 @@
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17
   },
-  "unmatched_events": 664,
+  "unmatched_events": 672,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "2a4a3da8ff62de09bc42",
-      "title": "EN-JP Language Exchange（土曜）",
-      "status": "matched",
-      "ontology_id": "en-jp-language-exchange",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "bcfac6e757a0c16875f9",
       "title": "VRCフィットボクシング集会（土曜）",
@@ -75,6 +64,18 @@
       "title": "VRCフィットボクシング集会（日曜）",
       "status": "matched",
       "ontology_id": "vrc-fit-boxing",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "7a51d76fc17dedac1050",
+      "title": "☕ Cafe & Bar FOR LIGHT 営業告知 本日 22:30〜23:35 OPEN 形式：20分×3ローテ 📌 参加 方法 JOIN 制｜ILへフレンド申請→ JOIN VRC 初…",
+      "status": "matched",
+      "ontology_id": "cafe-bar-for-light",
       "evidence": [
         "alias",
         "organizer",
@@ -3332,58 +3333,73 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 941,
+    "event_count": 949,
     "category_breakdown": {
       "art": 121,
-      "community": 251,
+      "community": 255,
       "game": 103,
-      "language_exchange": 36,
-      "learning": 23,
-      "music": 24,
-      "other": 28,
+      "language_exchange": 35,
+      "learning": 24,
+      "music": 22,
+      "other": 35,
+      "performance": 1,
       "recruitment_deadline": 5,
-      "technology": 261,
+      "technology": 260,
       "wellness": 71,
-      "world_tour": 18
+      "world_tour": 17
     },
     "subcategory_breakdown": {
       "ai": 17,
-      "cafe": 22,
+      "cafe": 23,
+      "cast_service": 1,
       "class": 4,
       "dance": 3,
-      "dj": 2,
-      "engineering": 166,
+      "dj": 1,
+      "engineering": 165,
       "fitness": 37,
-      "hangout": 71,
-      "language_exchange": 36,
-      "live_music": 1,
+      "hangout": 72,
+      "language_exchange": 35,
+      "lecture": 1,
       "mystery": 35,
       "orientation": 1,
       "photography": 121,
       "research": 70,
-      "social": 158,
+      "social": 159,
       "tabletop": 34,
       "workshop": 10,
-      "world_tour": 18
+      "world_tour": 17
     },
     "event_mode_breakdown": {
       "deadline": 5,
-      "hybrid": 8,
-      "in_world": 924,
+      "hybrid": 6,
+      "in_world": 934,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 260,
-      "fallback": 28,
-      "keyword_rules": 436,
+      "fallback": 35,
+      "keyword_rules": 437,
       "legacy_and_keywords": 95,
       "legacy_category": 122
     },
     "organizer_profile_count": 19,
-    "low_confidence_event_count": 69,
-    "audit_event_count": 69
+    "low_confidence_event_count": 74,
+    "audit_event_count": 74
   },
   "category_review_queue": [
+    {
+      "event_id": "926b8eb4ec1364597f62",
+      "title": "踏みたい人と踏まれたい人が集まるイベント足蹴屋です。 本日 21時 より第254回目を開催します。 参加したい方は VRC アカウントにTwitterアカウント紐付けの上、グループ申請をお願い…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
     {
       "event_id": "17991903e5bb4fac458a",
       "title": "💫 今週11/21(土)はYSS！✨ #YSS_ VRC 🎤 YSS_HomeLive #33 開催 ！ ━━━━━━━━━━━━━━━━ 📅 11/21(土) 🕘 21:50 OPEN / …",
@@ -3425,7 +3441,7 @@
     },
     {
       "event_id": "608ec0ed8a6f371800d7",
-      "title": "【 本日 の出勤表】 本日 はメイド8名、スタッフ3名です。 今回は記念すべき初 開催 ！✨メイド一同皆様のご来店を心よりお待ちしております♪ ☆参加方法☆ 21時57分に、主催（ VRC I…",
+      "title": "【 本日 の出勤表】 本日 はメイド8名、スタッフ3名です。 今回は記念すべき初 開催 ！✨メイド一同皆様のご来店を心よりお待ちしております♪ ☆ 参加 方法☆ 21時57分に、主催（ VRC…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3483,8 +3499,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "3df737419805076420a2",
-      "title": "【📣 VRC イベント 告知 】 11/21(土)22:45より 笑点風大喜利イベント 第178回 #にぎやか大喜利宴会 を 開催 します。 観るだけ・聴くだけ・笑うだけ歓迎！ 回答したい人大…",
+      "event_id": "8b76f2b9e3cefe71589e",
+      "title": "私事になりますが、今日の 22時 から VRC のイベントでAmberに出るのですが、最後の出勤になるので是非遊びに来てね。",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3496,8 +3512,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "c57e7547b822810e992d",
-      "title": "# VRC イベント # VRC _Noir VRC _ bar _Noir 開催 19日目！ 開催日時 ：11/21(土) 23:00~24:00 今日 もやります！！よければお越しください…",
+      "event_id": "3df737419805076420a2",
+      "title": "【📣 VRC イベント 告知 】 11/21(土)22:45より 笑点風大喜利イベント 第178回 #にぎやか大喜利宴会 を 開催 します。 観るだけ・聴くだけ・笑うだけ歓迎！ 回答したい人大…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3535,21 +3551,60 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "943cd306520552458efd",
-      "title": "📍 おすすめの VRChat イベント！ 11/22（日） 13:00〜 UR Beats Dev.1 Vol.6 17:30〜 Autonomy vol.4 in Vket… 21:00〜 …",
+      "event_id": "443932a15299f46df1b7",
+      "title": "本日 、 VRChat 収録ラジオ番組「コケっとりうサンデー」第2回公開生収録です！ 日時 ：11/22（日）15:00～16:30（1時間半） インスタンス： Group + スペシャルゲス…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
+      "score": 0,
+      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
     },
     {
-      "event_id": "443932a15299f46df1b7",
-      "title": "本日 、 VRChat 収録ラジオ番組「コケっとりうサンデー」第2回公開生収録です！ 日時 ：11/22（日）15:00～16:30（1時間半） インスタンス： Group + スペシャルゲス…",
+      "event_id": "7d0386de01db20a78ae3",
+      "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d105bc9970b2216e6a78",
+      "title": "🐈こんばんわbar迷い猫です🐈 本日！21時から！！グランド オープン ！！！ ↓ 参加方法 ↓ ①概要欄ウェブサイトから ② VRchat 内にてグループ検索NEKO.0450 にてグループ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "2b5c7b5c8e8fbc17ad31",
+      "title": "SugoiAvatarのコラボイベントに出ます！ #LiendeNuit から 参加 します！ 当日新しい姿で出ると思います～＾＾ もしよかったらみんな来てね！ #sugoiyoru # VR…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "0989a51b5d22912953f6",
+      "title": "◤◢◤◢◤◢◤◢◤◢◤◢◤◢ アイマリンプロジェクト＋＋ VR LIVE 2026 vol.2 後夜祭INFORMATION ◤◢◤◢◤◢◤◢◤◢◤◢◤◢ 本日22:00〜 VRChat CL…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3576,6 +3631,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "2e62c345d7e65beb0b2e",
+      "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "687b65a358ccbaf00ce5",
       "title": "🔥お知らせ 11/23月 21:30-🔥 VRChat バンド リアル ライブイベント #ミュートできない夜 の説明会をやります‼️ ・行きたいけどフレンドがいない ・当日の注意事項を知りたい…",
       "category": "learning",
@@ -3593,8 +3661,34 @@
       ]
     },
     {
+      "event_id": "8962becfb647f3c1479b",
+      "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "3878994bc4b7cbf8f01a",
       "title": "VRC 吟行句会 第95回 開催 します。 Quest、iOS対応ワールドです。 ■ 日時 11/24（火）21:30～24:00 ■ 参加 方法 ・「 VRC 吟行句会」グループに 参加 （…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "fbca311e302a44463fa1",
+      "title": "毎日21～23時には「コアタイム」が 開催 中！✨ 各会場に出展者が集まっているかも？ ご参加はこちらの VRChat グループから時間になったら解放される グループインスタンス にご参加くだ…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3621,6 +3715,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "3b23de1724c77b98da73",
+      "title": "11月25日は もーちゃんのお誕生日ですぅ 今年もお誕生日配信をするので お祝いに来てね！ ①24日23時～25日1時 Vキャス スタジオ ②25日20時～ 21時 半 Vキャス スタジオ ③…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "hybrid",
+      "ambiguous_with": []
     },
     {
       "event_id": "c0c131c07fe2f8264038",
@@ -3650,7 +3757,7 @@
     },
     {
       "event_id": "2ee51e65be9842ae496a",
-      "title": "【次回開催のお知らせ】 次回の開催は11/27日(金)22:00予定です。 参加方法 はRainDropの VRC グループ(https://t.co/b3jsbXRDBw)へ加入の後グループ…",
+      "title": "【次回 開催 のお知らせ】 次回の 開催 は11/27日(金)22:00予定です。 参加 方法はRainDropの VRC グループ(https://t.co/b3jsbXRDBw)へ加入の後…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3719,7 +3826,7 @@
     },
     {
       "event_id": "45493f6265c02184f73f",
-      "title": "🌸✨ PDLイベントコラボ 開催 決定 ✨🌸 『Cafe＆ Bar 極華 @Cafe_ Bar _kyokka 』との特別なコラボイベントを 開催 ！✨ 素適な BAR 空間と音楽が交わる、一…",
+      "title": "🌸✨ PDLイベントコラボ 開催決定 ✨🌸 『Cafe＆Bar極華 @Cafe_Bar_kyokka 』との特別なコラボイベントを 開催 ！✨ 素適なBAR空間と音楽が交わる、一夜限りのスペシ…",
       "category": "music",
       "label": "音楽・ダンス",
       "subcategory": null,
@@ -3754,7 +3861,7 @@
     },
     {
       "event_id": "9a20af2ffd6fc44f1753",
-      "title": "【 VRChatイベント告知 】 大変お待たせいたしました！ 弊主催による #FanofTwisted_ vrc の ちょっとはやいクリスマス回を実施いたします！ 日時：12月5日(土) 22…",
+      "title": "【 VRChat イベント 告知 】 大変お待たせいたしました！ 弊主催による #FanofTwisted_ vrc の ちょっとはやいクリスマス回を実施いたします！ 日時 ：12月5日(土)…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3839,21 +3946,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "e20ef3f22c0ac06b3f4d",
-      "title": "【イベント出演 告知 🎷】 𝐒𝐖𝐈𝐍𝐆 𝐁𝐄𝐆𝐈𝐍 𝐕𝐨𝐥.𝟑 📅2026/12/12 (Sat.) 🕐21:00 ( OPEN ) 📍 BAR SPEAKEASY ( VRChat ) 告知…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "5e49e5e65cc7948ae423",
-      "title": "【 VRC 心中RPイベント、またねの約束。第5回営業のお知らせ】 ◆開催日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加方法 ◆ 事前抽選 https://t.co…",
+      "title": "【 VRC 心中RPイベント、またねの約束。第5回 営業 のお知らせ】 ◆ 開催 日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加 方法◆ 事前抽選 https://…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3974,40 +4068,6 @@
       "event_mode": "in_world",
       "ambiguous_with": [
         "community"
-      ]
-    },
-    {
-      "event_id": "7c54e9a91b932a333eac",
-      "title": "ツクヨミ感謝祭最新情報 アマテラス衣装でのライブ 開催決定 YouTubeでのアーカイブあり。 VRChat では12/26日21:00から本公演 その後は7回の再公演あり！ 遅刻現金！⚠️ア…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "hybrid",
-      "ambiguous_with": [
-        "performance"
-      ]
-    },
-    {
-      "event_id": "768954f28ec4871add6a",
-      "title": "📚「MF文庫J ライブラリー」が VRChat 内 #バーチャルピューロ に オープン ！ 幻想的な図書館で人気作品を試し読み ミニゲームやクロミのスペシャルライブも楽しめます✨ スマホからも…",
-      "category": "music",
-      "label": "音楽・ダンス",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "game"
       ]
     },
     {
