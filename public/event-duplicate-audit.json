@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 917,
-  "event_count_after": 913,
+  "event_count_before": 914,
+  "event_count_after": 910,
   "candidate_cluster_count": 4,
   "duplicate_cluster_count": 4,
   "duplicate_occurrence_count": 4,
   "duplicate_post_count": 4,
-  "duplicate_rate": 0.004362,
+  "duplicate_rate": 0.004376,
   "exact_source_duplicate_count": 0,
-  "unresolved_ambiguous_cluster_count": 2,
+  "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
       "cluster_id": "occ_141174e1b4e6e21e747e",
@@ -78,38 +78,29 @@
       "representative_source_record_id": "src_f719b5d450b48bba370d"
     },
     {
-      "cluster_id": "occ_ddb13f8ec24935824855",
-      "starts_at": "2026-12-18T13:00:00Z",
-      "title": "今日は11月第3 金曜日 初心者講習会の日です！ ふるよにを始めてみたいけどルールがわからない！という方におすすめのイベントとなっております！ 22時から VRC ふるよに部のGroup+でお…",
+      "cluster_id": "occ_fe6ef9f0d10ad571664f",
+      "starts_at": "2027-01-16T12:00:00Z",
+      "title": "【# VRC 落語会 ２周年記念有料 公演告知 】 お陰様で VRC 落語会は、まもなく2周年を迎えます 画面の向こうにいる私たちは、お互いの顔も名前も知らないけれど、同じ噺に耳を傾け、同じと…",
       "member_count": 2,
       "member_ids": [
-        "4a7983e9c33277bc609e",
-        "9032bd23a4f6989bac3c"
+        "0bc1307a331d26bf406b",
+        "6f4241d7e450e83849e9"
       ],
       "source_record_ids": [
-        "src_10b263fb358fe16ccedf",
-        "src_949025fba9510bad5088"
+        "src_cc9a4e64ad7028eb43da",
+        "src_d6bb0215455139134178"
       ],
       "sources": [
         "yahoo_realtime_events"
       ],
       "reasons": [
-        "same_canonical_url"
+        "exact_text_same_start"
       ],
-      "confidence": 1.0,
-      "representative_source_record_id": "src_949025fba9510bad5088"
+      "confidence": 0.99,
+      "representative_source_record_id": "src_cc9a4e64ad7028eb43da"
     }
   ],
   "ambiguous_candidates": [
-    {
-      "left_id": "879f628d87f2aee7f5cf",
-      "right_id": "fab80b00fc466afdbca6",
-      "starts_at": "2026-11-22T08:30:00Z",
-      "organizer": "@AUTONOMY_event",
-      "similarity": 0.6426,
-      "left_title": "❖━━━＼ 本日 開幕！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter 🔥 本日 11/22（…",
-      "right_title": "❖━━━＼まもなく OPEN ！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter 🔥 本日 17…"
-    },
     {
       "left_id": "877ba8460a86143a87df",
       "right_id": "0de89c516979b7866ada",
@@ -121,26 +112,6 @@
     }
   ],
   "negative_samples": [
-    {
-      "left_id": "879f628d87f2aee7f5cf",
-      "right_id": "fab80b00fc466afdbca6",
-      "starts_at": "2026-11-22T08:30:00Z",
-      "left_organizer": "@AUTONOMY_event",
-      "right_organizer": "@AUTONOMY_event",
-      "similarity": 0.6426,
-      "left_title": "❖━━━＼ 本日 開幕！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter 🔥 本日 11/22（…",
-      "right_title": "❖━━━＼まもなく OPEN ！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter 🔥 本日 17…"
-    },
-    {
-      "left_id": "879f628d87f2aee7f5cf",
-      "right_id": "5bd72681475b1040b02c",
-      "starts_at": "2026-11-22T08:30:00Z",
-      "left_organizer": "@AUTONOMY_event",
-      "right_organizer": "@namibito7",
-      "similarity": 0.2039,
-      "left_title": "❖━━━＼ 本日 開幕！／━━━❖ 【Vket公認】 VRChat 最大級 ライブイベント ⚔ Autonomy vol.4 ⚔ in Vket 2026 Winter 🔥 本日 11/22（…",
-      "right_title": "【ライブ出演のお知らせ📢】 来たる11/22❗️そして12/12,13‼️ ⚔️⚔️Autonomy vol.4 ⚔️⚔️ またまた帰ってまいりました VRC 最大級の音楽祭Autonomy‼…"
-    },
     {
       "left_id": "fab80b00fc466afdbca6",
       "right_id": "5bd72681475b1040b02c",
@@ -203,16 +174,6 @@
     },
     {
       "left_id": "1a9db4af5a05de0e3a73",
-      "right_id": "e4cdcbe48daba961fc72",
-      "starts_at": "2026-11-22T12:00:00Z",
-      "left_organizer": "@KRJP_EX",
-      "right_organizer": "@satoshikisaragi",
-      "similarity": 0.181,
-      "left_title": "# VRChat # VRC 日韓 交流会 第95回日韓 交流会 が今週日曜日、11月22日21時から Group +インスタンスで 開催 されます！ VRC グループ[KRJPEX.1355…",
-      "right_title": "土曜日 (11月14日)は VRChat の #ぶいちゃ感謝祭 (Quest3s単機で参加)、日曜日(15日)はclusterの #まだナニ (PCデスクトップ)、月曜日(16日)はclust…"
-    },
-    {
-      "left_id": "1a9db4af5a05de0e3a73",
       "right_id": "d105bc9970b2216e6a78",
       "starts_at": "2026-11-22T12:00:00Z",
       "left_organizer": "@KRJP_EX",
@@ -220,7 +181,37 @@
       "similarity": 0.1892,
       "left_title": "# VRChat # VRC 日韓 交流会 第95回日韓 交流会 が今週日曜日、11月22日21時から Group +インスタンスで 開催 されます！ VRC グループ[KRJPEX.1355…",
       "right_title": "🐈こんばんわbar迷い猫です🐈 本日！21時から！！グランド オープン ！！！ ↓ 参加方法 ↓ ①概要欄ウェブサイトから ② VRchat 内にてグループ検索NEKO.0450 にてグループ…"
+    },
+    {
+      "left_id": "4099ed77b3b4e4bf4c33",
+      "right_id": "cdc35833b9b63107dddd",
+      "starts_at": "2026-11-22T12:00:00Z",
+      "left_organizer": "EN-JP Language Exchange",
+      "right_organizer": "VRCフィットボクシング集会",
+      "similarity": 0.4286,
+      "left_title": "EN-JP Language Exchange（日曜）",
+      "right_title": "VRCフィットボクシング集会（日曜）"
+    },
+    {
+      "left_id": "4099ed77b3b4e4bf4c33",
+      "right_id": "310ab065a38b43fe8a2d",
+      "starts_at": "2026-11-22T12:00:00Z",
+      "left_organizer": "EN-JP Language Exchange",
+      "right_organizer": "@wondernote_info",
+      "similarity": 0.1148,
+      "left_title": "EN-JP Language Exchange（日曜）",
+      "right_title": "【 本日 の注目イベント✨】 🕒11/22(日) 21:00～ 🟠 VRC 日韓 交流会 ( VRC 한일교류회)🟠 VRChat で行っている日本と韓国の文化 交流会 です！ #国際交流 #…"
+    },
+    {
+      "left_id": "4099ed77b3b4e4bf4c33",
+      "right_id": "2009530a07f663874ea4",
+      "starts_at": "2026-11-22T12:00:00Z",
+      "left_organizer": "EN-JP Language Exchange",
+      "right_organizer": null,
+      "similarity": 0.125,
+      "left_title": "EN-JP Language Exchange（日曜）",
+      "right_title": "ゲーム開発集会Ⅳ"
     }
   ],
-  "generated_at": "2026-11-23T00:21:48Z"
+  "generated_at": "2026-11-23T07:39:18Z"
 }
