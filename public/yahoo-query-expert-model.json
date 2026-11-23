@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "model_type": "evidence_gated_query_experts",
-  "generated_at": "2026-11-15T23:23:07Z",
-  "status": "ready",
+  "generated_at": "2026-11-23T00:15:25Z",
+  "status": "insufficient_evidence",
   "fail_closed": true,
   "thresholds": {
     "minimum_support": 20,
@@ -11,209 +11,247 @@
     "minimum_ensemble_coverage": 0.9
   },
   "training_rows": 5000,
-  "accepted_universe_count": 165,
-  "promoted_expert_count": 17,
-  "ensemble_positive_coverage": 0.951515,
-  "recommended_query_keys": [
-    "base-001",
-    "venues-011-交流イベント",
-    "core-008-開場",
-    "ablation-bc_no_announcement",
-    "activities-000-djイベント",
-    "core-005-交流会",
-    "core-007-ライブイベント",
-    "base-002",
-    "ablation-ac_no_access",
-    "core-000-イベント告知",
-    "venues-005-club-open",
-    "base-004",
-    "ablation-participation_method_access",
-    "peer-8aaa0b7a4534",
-    "access-014-group-public",
-    "venues-003-bar-open",
-    "venues-001-cafe-open"
-  ],
+  "accepted_universe_count": 185,
+  "promoted_expert_count": 20,
+  "ensemble_positive_coverage": 0.843243,
+  "recommended_query_keys": [],
   "experts": [
     {
       "query_key": "base-001",
-      "support": 47,
-      "accepted": 31,
-      "rejected": 16,
-      "precision": 0.659574,
-      "wilson_precision_lower_95": 0.516709,
-      "positive_coverage": 0.187879,
+      "support": 49,
+      "accepted": 32,
+      "rejected": 17,
+      "precision": 0.653061,
+      "wilson_precision_lower_95": 0.513112,
+      "positive_coverage": 0.172973,
       "tier": "precision",
       "eligible": true,
       "top_rejection_reasons": {
-        "accepted": 31,
+        "accepted": 32,
         "missing_datetime": 14,
+        "too_far_future_now": 1,
         "giveaway_only": 1,
         "missing_event_marker": 1
       }
     },
     {
-      "query_key": "venues-011-交流イベント",
-      "support": 23,
-      "accepted": 15,
-      "rejected": 8,
-      "precision": 0.652174,
-      "wilson_precision_lower_95": 0.448903,
-      "positive_coverage": 0.090909,
+      "query_key": "ablation-business_open_access",
+      "support": 27,
+      "accepted": 18,
+      "rejected": 9,
+      "precision": 0.666667,
+      "wilson_precision_lower_95": 0.478248,
+      "positive_coverage": 0.097297,
       "tier": "precision",
       "eligible": true,
       "top_rejection_reasons": {
-        "accepted": 15,
-        "missing_datetime": 8
+        "accepted": 18,
+        "missing_datetime": 8,
+        "too_far_future_now": 1
       }
     },
     {
-      "query_key": "core-008-開場",
-      "support": 48,
-      "accepted": 28,
-      "rejected": 20,
-      "precision": 0.583333,
-      "wilson_precision_lower_95": 0.442813,
-      "positive_coverage": 0.169697,
+      "query_key": "access-002-group-インスタンス",
+      "support": 40,
+      "accepted": 24,
+      "rejected": 16,
+      "precision": 0.6,
+      "wilson_precision_lower_95": 0.445959,
+      "positive_coverage": 0.12973,
       "tier": "precision",
       "eligible": true,
       "top_rejection_reasons": {
-        "accepted": 28,
-        "missing_datetime": 13,
+        "accepted": 24,
+        "missing_datetime": 9,
         "missing_event_marker": 5,
-        "product_only": 1,
+        "giveaway_only": 2
+      }
+    },
+    {
+      "query_key": "ablation-participation_method_access",
+      "support": 52,
+      "accepted": 25,
+      "rejected": 27,
+      "precision": 0.480769,
+      "wilson_precision_lower_95": 0.351041,
+      "positive_coverage": 0.135135,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "accepted": 25,
+        "missing_event_marker": 15,
+        "missing_datetime": 12
+      }
+    },
+    {
+      "query_key": "core-005-交流会",
+      "support": 54,
+      "accepted": 21,
+      "rejected": 33,
+      "precision": 0.388889,
+      "wilson_precision_lower_95": 0.270419,
+      "positive_coverage": 0.113514,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 33,
+        "accepted": 21
+      }
+    },
+    {
+      "query_key": "access-001-group-instance",
+      "support": 106,
+      "accepted": 36,
+      "rejected": 70,
+      "precision": 0.339623,
+      "wilson_precision_lower_95": 0.25649,
+      "positive_coverage": 0.194595,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 44,
+        "accepted": 36,
+        "missing_event_marker": 22,
+        "giveaway_only": 2,
+        "too_far_future_now": 1
+      }
+    },
+    {
+      "query_key": "access-008-group-instance",
+      "support": 110,
+      "accepted": 36,
+      "rejected": 74,
+      "precision": 0.327273,
+      "wilson_precision_lower_95": 0.246711,
+      "positive_coverage": 0.194595,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 47,
+        "accepted": 36,
+        "missing_event_marker": 23,
+        "giveaway_only": 2,
+        "too_far_future_now": 1
+      }
+    },
+    {
+      "query_key": "access-011-フレンド申請",
+      "support": 62,
+      "accepted": 20,
+      "rejected": 42,
+      "precision": 0.322581,
+      "wilson_precision_lower_95": 0.219545,
+      "positive_coverage": 0.108108,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 37,
+        "accepted": 20,
+        "missing_event_marker": 5
+      }
+    },
+    {
+      "query_key": "access-014-group-public",
+      "support": 123,
+      "accepted": 33,
+      "rejected": 90,
+      "precision": 0.268293,
+      "wilson_precision_lower_95": 0.197885,
+      "positive_coverage": 0.178378,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 58,
+        "accepted": 33,
+        "missing_event_marker": 26,
+        "giveaway_only": 3,
+        "product_only": 2
+      }
+    },
+    {
+      "query_key": "access-009-グル-プインスタンス",
+      "support": 79,
+      "accepted": 22,
+      "rejected": 57,
+      "precision": 0.278481,
+      "wilson_precision_lower_95": 0.191682,
+      "positive_coverage": 0.118919,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 46,
+        "accepted": 22,
+        "missing_event_marker": 10,
         "giveaway_only": 1
       }
     },
     {
       "query_key": "ablation-bc_no_announcement",
-      "support": 60,
-      "accepted": 32,
-      "rejected": 28,
-      "precision": 0.533333,
-      "wilson_precision_lower_95": 0.408934,
-      "positive_coverage": 0.193939,
+      "support": 175,
+      "accepted": 42,
+      "rejected": 133,
+      "precision": 0.24,
+      "wilson_precision_lower_95": 0.182743,
+      "positive_coverage": 0.227027,
       "tier": "precision",
       "eligible": true,
       "top_rejection_reasons": {
-        "accepted": 32,
-        "missing_datetime": 18,
-        "missing_event_marker": 8,
-        "giveaway_only": 2
-      }
-    },
-    {
-      "query_key": "activities-000-djイベント",
-      "support": 41,
-      "accepted": 17,
-      "rejected": 24,
-      "precision": 0.414634,
-      "wilson_precision_lower_95": 0.277565,
-      "positive_coverage": 0.10303,
-      "tier": "precision",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 24,
-        "accepted": 17
-      }
-    },
-    {
-      "query_key": "core-005-交流会",
-      "support": 60,
-      "accepted": 23,
-      "rejected": 37,
-      "precision": 0.383333,
-      "wilson_precision_lower_95": 0.270883,
-      "positive_coverage": 0.139394,
-      "tier": "precision",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 37,
-        "accepted": 23
-      }
-    },
-    {
-      "query_key": "core-007-ライブイベント",
-      "support": 35,
-      "accepted": 12,
-      "rejected": 23,
-      "precision": 0.342857,
-      "wilson_precision_lower_95": 0.208317,
-      "positive_coverage": 0.072727,
-      "tier": "precision",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 23,
-        "accepted": 12
-      }
-    },
-    {
-      "query_key": "base-002",
-      "support": 247,
-      "accepted": 50,
-      "rejected": 197,
-      "precision": 0.202429,
-      "wilson_precision_lower_95": 0.157053,
-      "positive_coverage": 0.30303,
-      "tier": "precision",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 141,
-        "missing_event_marker": 52,
-        "accepted": 50,
-        "giveaway_only": 2,
-        "product_only": 2
-      }
-    },
-    {
-      "query_key": "ablation-ac_no_access",
-      "support": 135,
-      "accepted": 29,
-      "rejected": 106,
-      "precision": 0.214815,
-      "wilson_precision_lower_95": 0.153938,
-      "positive_coverage": 0.175758,
-      "tier": "precision",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 98,
-        "accepted": 29,
-        "missing_event_marker": 5,
-        "giveaway_only": 2,
-        "product_only": 1
-      }
-    },
-    {
-      "query_key": "core-000-イベント告知",
-      "support": 21,
-      "accepted": 6,
-      "rejected": 15,
-      "precision": 0.285714,
-      "wilson_precision_lower_95": 0.138139,
-      "positive_coverage": 0.036364,
-      "tier": "balanced",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 14,
-        "accepted": 6,
+        "missing_datetime": 99,
+        "accepted": 42,
+        "missing_event_marker": 25,
+        "giveaway_only": 7,
         "too_far_future_now": 1
       }
     },
     {
-      "query_key": "venues-005-club-open",
-      "support": 107,
-      "accepted": 21,
-      "rejected": 86,
-      "precision": 0.196262,
-      "wilson_precision_lower_95": 0.132104,
-      "positive_coverage": 0.127273,
-      "tier": "balanced",
+      "query_key": "base-002",
+      "support": 238,
+      "accepted": 51,
+      "rejected": 187,
+      "precision": 0.214286,
+      "wilson_precision_lower_95": 0.166911,
+      "positive_coverage": 0.275676,
+      "tier": "precision",
       "eligible": true,
       "top_rejection_reasons": {
-        "missing_datetime": 70,
-        "accepted": 21,
-        "missing_event_marker": 11,
-        "product_only": 3,
+        "missing_datetime": 131,
+        "accepted": 51,
+        "missing_event_marker": 49,
+        "too_far_future_now": 3,
         "giveaway_only": 2
+      }
+    },
+    {
+      "query_key": "core-003-開催決定",
+      "support": 53,
+      "accepted": 14,
+      "rejected": 39,
+      "precision": 0.264151,
+      "wilson_precision_lower_95": 0.164374,
+      "positive_coverage": 0.075676,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 39,
+        "accepted": 14
+      }
+    },
+    {
+      "query_key": "ablation-ac_no_access",
+      "support": 213,
+      "accepted": 43,
+      "rejected": 170,
+      "precision": 0.201878,
+      "wilson_precision_lower_95": 0.153473,
+      "positive_coverage": 0.232432,
+      "tier": "precision",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 157,
+        "accepted": 43,
+        "missing_event_marker": 7,
+        "giveaway_only": 3,
+        "product_only": 2
       }
     },
     {
@@ -223,7 +261,7 @@
       "rejected": 16,
       "precision": 0.272727,
       "wilson_precision_lower_95": 0.131508,
-      "positive_coverage": 0.036364,
+      "positive_coverage": 0.032432,
       "tier": "balanced",
       "eligible": true,
       "top_rejection_reasons": {
@@ -232,101 +270,98 @@
       }
     },
     {
-      "query_key": "ablation-participation_method_access",
-      "support": 28,
-      "accepted": 7,
-      "rejected": 21,
-      "precision": 0.25,
-      "wilson_precision_lower_95": 0.126765,
-      "positive_coverage": 0.042424,
-      "tier": "balanced",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 12,
-        "missing_event_marker": 9,
-        "accepted": 7
-      }
-    },
-    {
-      "query_key": "peer-8aaa0b7a4534",
-      "support": 76,
-      "accepted": 15,
-      "rejected": 61,
-      "precision": 0.197368,
-      "wilson_precision_lower_95": 0.12342,
-      "positive_coverage": 0.090909,
-      "tier": "balanced",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 41,
-        "accepted": 15,
-        "missing_event_marker": 11,
-        "giveaway_only": 6,
-        "product_only": 3
-      }
-    },
-    {
-      "query_key": "access-014-group-public",
-      "support": 97,
-      "accepted": 17,
+      "query_key": "venues-005-club-open",
+      "support": 99,
+      "accepted": 19,
       "rejected": 80,
-      "precision": 0.175258,
-      "wilson_precision_lower_95": 0.112401,
-      "positive_coverage": 0.10303,
+      "precision": 0.191919,
+      "wilson_precision_lower_95": 0.12645,
+      "positive_coverage": 0.102703,
       "tier": "balanced",
       "eligible": true,
       "top_rejection_reasons": {
-        "missing_datetime": 52,
-        "missing_event_marker": 24,
-        "accepted": 17,
-        "giveaway_only": 2,
-        "product_only": 2
-      }
-    },
-    {
-      "query_key": "venues-003-bar-open",
-      "support": 147,
-      "accepted": 21,
-      "rejected": 126,
-      "precision": 0.142857,
-      "wilson_precision_lower_95": 0.095374,
-      "positive_coverage": 0.127273,
-      "tier": "balanced",
-      "eligible": true,
-      "top_rejection_reasons": {
-        "missing_datetime": 107,
-        "accepted": 21,
-        "missing_event_marker": 14,
-        "product_only": 4,
-        "giveaway_only": 1
+        "missing_datetime": 66,
+        "accepted": 19,
+        "missing_event_marker": 10,
+        "product_only": 4
       }
     },
     {
       "query_key": "venues-001-cafe-open",
-      "support": 105,
-      "accepted": 11,
-      "rejected": 94,
-      "precision": 0.104762,
-      "wilson_precision_lower_95": 0.059511,
-      "positive_coverage": 0.066667,
-      "tier": "recall",
+      "support": 121,
+      "accepted": 21,
+      "rejected": 100,
+      "precision": 0.173554,
+      "wilson_precision_lower_95": 0.116409,
+      "positive_coverage": 0.113514,
+      "tier": "balanced",
       "eligible": true,
       "top_rejection_reasons": {
-        "missing_datetime": 79,
-        "accepted": 11,
-        "missing_event_marker": 8,
-        "product_only": 5,
-        "giveaway_only": 2
+        "missing_datetime": 81,
+        "accepted": 21,
+        "missing_event_marker": 12,
+        "product_only": 6,
+        "too_far_future_now": 1
       }
     },
     {
-      "query_key": "ablation-event_announcement_access",
+      "query_key": "venues-003-bar-open",
+      "support": 165,
+      "accepted": 23,
+      "rejected": 142,
+      "precision": 0.139394,
+      "wilson_precision_lower_95": 0.094715,
+      "positive_coverage": 0.124324,
+      "tier": "balanced",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 120,
+        "accepted": 23,
+        "missing_event_marker": 14,
+        "product_only": 7,
+        "too_far_future_now": 1
+      }
+    },
+    {
+      "query_key": "access-004-リクイン",
+      "support": 91,
+      "accepted": 13,
+      "rejected": 78,
+      "precision": 0.142857,
+      "wilson_precision_lower_95": 0.085428,
+      "positive_coverage": 0.07027,
+      "tier": "balanced",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 70,
+        "accepted": 13,
+        "missing_event_marker": 7,
+        "too_far_future_now": 1
+      }
+    },
+    {
+      "query_key": "activities-000-djイベント",
+      "support": 28,
+      "accepted": 4,
+      "rejected": 24,
+      "precision": 0.142857,
+      "wilson_precision_lower_95": 0.05699,
+      "positive_coverage": 0.021622,
+      "tier": "recall",
+      "eligible": true,
+      "top_rejection_reasons": {
+        "missing_datetime": 24,
+        "accepted": 4
+      }
+    },
+    {
+      "query_key": "access-000-join制",
       "support": 7,
       "accepted": 6,
       "rejected": 1,
       "precision": 0.857143,
       "wilson_precision_lower_95": 0.486872,
-      "positive_coverage": 0.036364,
+      "positive_coverage": 0.032432,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
@@ -335,77 +370,66 @@
       }
     },
     {
-      "query_key": "venues-009-ホストイベント",
-      "support": 8,
-      "accepted": 6,
-      "rejected": 2,
-      "precision": 0.75,
-      "wilson_precision_lower_95": 0.409275,
-      "positive_coverage": 0.036364,
+      "query_key": "access-003-ジョイン",
+      "support": 16,
+      "accepted": 8,
+      "rejected": 8,
+      "precision": 0.5,
+      "wilson_precision_lower_95": 0.279996,
+      "positive_coverage": 0.043243,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "accepted": 6,
-        "missing_datetime": 2
+        "accepted": 8,
+        "missing_datetime": 5,
+        "too_far_future_now": 1,
+        "missing_event_marker": 1,
+        "giveaway_only": 1
+      }
+    },
+    {
+      "query_key": "core-000-イベント告知",
+      "support": 18,
+      "accepted": 8,
+      "rejected": 10,
+      "precision": 0.444444,
+      "wilson_precision_lower_95": 0.245595,
+      "positive_coverage": 0.043243,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 10,
+        "accepted": 8
+      }
+    },
+    {
+      "query_key": "access-006-リクエストインバイト",
+      "support": 10,
+      "accepted": 5,
+      "rejected": 5,
+      "precision": 0.5,
+      "wilson_precision_lower_95": 0.236593,
+      "positive_coverage": 0.027027,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 5,
+        "accepted": 5
       }
     },
     {
       "query_key": "activities-031-vrc世界旅行ex",
-      "support": 4,
-      "accepted": 3,
+      "support": 3,
+      "accepted": 2,
       "rejected": 1,
-      "precision": 0.75,
-      "wilson_precision_lower_95": 0.300642,
-      "positive_coverage": 0.018182,
+      "precision": 0.666667,
+      "wilson_precision_lower_95": 0.20766,
+      "positive_coverage": 0.010811,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "accepted": 3,
+        "accepted": 2,
         "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "communities-007-講演会",
-      "support": 4,
-      "accepted": 3,
-      "rejected": 1,
-      "precision": 0.75,
-      "wilson_precision_lower_95": 0.300642,
-      "positive_coverage": 0.018182,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "accepted": 3,
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "communities-020-個人開発集会",
-      "support": 4,
-      "accepted": 3,
-      "rejected": 1,
-      "precision": 0.75,
-      "wilson_precision_lower_95": 0.300642,
-      "positive_coverage": 0.018182,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "accepted": 3,
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "communities-008-セミナ",
-      "support": 1,
-      "accepted": 1,
-      "rejected": 0,
-      "precision": 1.0,
-      "wilson_precision_lower_95": 0.206549,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "accepted": 1
       }
     },
     {
@@ -415,7 +439,7 @@
       "rejected": 0,
       "precision": 1.0,
       "wilson_precision_lower_95": 0.206549,
-      "positive_coverage": 0.006061,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
@@ -423,18 +447,32 @@
       }
     },
     {
-      "query_key": "activities-030-vrc世界旅行",
-      "support": 8,
-      "accepted": 3,
-      "rejected": 5,
-      "precision": 0.375,
-      "wilson_precision_lower_95": 0.136844,
-      "positive_coverage": 0.018182,
+      "query_key": "temporal_audit-005-週末",
+      "support": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "precision": 1.0,
+      "wilson_precision_lower_95": 0.206549,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 5,
-        "accepted": 3
+        "accepted": 1
+      }
+    },
+    {
+      "query_key": "access-012-フレリク",
+      "support": 2,
+      "accepted": 1,
+      "rejected": 1,
+      "precision": 0.5,
+      "wilson_precision_lower_95": 0.094531,
+      "positive_coverage": 0.005405,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "accepted": 1,
+        "missing_datetime": 1
       }
     },
     {
@@ -444,7 +482,7 @@
       "rejected": 1,
       "precision": 0.5,
       "wilson_precision_lower_95": 0.094531,
-      "positive_coverage": 0.006061,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
@@ -454,17 +492,32 @@
     },
     {
       "query_key": "recruitment-007-公募",
-      "support": 3,
+      "support": 2,
       "accepted": 1,
-      "rejected": 2,
-      "precision": 0.333333,
-      "wilson_precision_lower_95": 0.061492,
-      "positive_coverage": 0.006061,
+      "rejected": 1,
+      "precision": 0.5,
+      "wilson_precision_lower_95": 0.094531,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 2,
-        "accepted": 1
+        "accepted": 1,
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "activities-030-vrc世界旅行",
+      "support": 7,
+      "accepted": 2,
+      "rejected": 5,
+      "precision": 0.285714,
+      "wilson_precision_lower_95": 0.082219,
+      "positive_coverage": 0.010811,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 5,
+        "accepted": 2
       }
     },
     {
@@ -474,7 +527,7 @@
       "rejected": 8,
       "precision": 0.2,
       "wilson_precision_lower_95": 0.056682,
-      "positive_coverage": 0.012121,
+      "positive_coverage": 0.010811,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
@@ -484,419 +537,404 @@
       }
     },
     {
-      "query_key": "core-002-通常営業",
-      "support": 11,
-      "accepted": 2,
-      "rejected": 9,
-      "precision": 0.181818,
-      "wilson_precision_lower_95": 0.051368,
-      "positive_coverage": 0.012121,
+      "query_key": "commerce_noise-013-フォロ-rp",
+      "support": 32,
+      "accepted": 4,
+      "rejected": 28,
+      "precision": 0.125,
+      "wilson_precision_lower_95": 0.049701,
+      "positive_coverage": 0.021622,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
+        "giveaway_only": 19,
         "missing_datetime": 9,
-        "accepted": 2
+        "accepted": 4
       }
     },
     {
-      "query_key": "access-008-group-instance",
-      "support": 62,
-      "accepted": 6,
-      "rejected": 56,
-      "precision": 0.096774,
-      "wilson_precision_lower_95": 0.045112,
-      "positive_coverage": 0.036364,
+      "query_key": "core-008-開場",
+      "support": 23,
+      "accepted": 3,
+      "rejected": 20,
+      "precision": 0.130435,
+      "wilson_precision_lower_95": 0.045377,
+      "positive_coverage": 0.016216,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 39,
-        "missing_event_marker": 17,
-        "accepted": 6
+        "missing_datetime": 15,
+        "accepted": 3,
+        "product_only": 2,
+        "missing_event_marker": 2,
+        "too_far_future_now": 1
       }
     },
     {
-      "query_key": "access-001-group-instance",
-      "support": 65,
-      "accepted": 6,
-      "rejected": 59,
-      "precision": 0.092308,
-      "wilson_precision_lower_95": 0.042995,
-      "positive_coverage": 0.036364,
+      "query_key": "access-007-request-invite",
+      "support": 5,
+      "accepted": 1,
+      "rejected": 4,
+      "precision": 0.2,
+      "wilson_precision_lower_95": 0.036224,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 41,
-        "missing_event_marker": 18,
-        "accepted": 6
+        "missing_datetime": 4,
+        "accepted": 1
       }
     },
     {
       "query_key": "base-000",
-      "support": 1083,
-      "accepted": 47,
-      "rejected": 1036,
-      "precision": 0.043398,
-      "wilson_precision_lower_95": 0.032791,
-      "positive_coverage": 0.284848,
+      "support": 889,
+      "accepted": 42,
+      "rejected": 847,
+      "precision": 0.047244,
+      "wilson_precision_lower_95": 0.03514,
+      "positive_coverage": 0.227027,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 889,
-        "missing_event_marker": 105,
-        "accepted": 47,
-        "giveaway_only": 24,
-        "product_only": 16
-      }
-    },
-    {
-      "query_key": "core-004-集会",
-      "support": 163,
-      "accepted": 9,
-      "rejected": 154,
-      "precision": 0.055215,
-      "wilson_precision_lower_95": 0.029317,
-      "positive_coverage": 0.054545,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 153,
-        "accepted": 9,
-        "too_far_future_now": 1
-      }
-    },
-    {
-      "query_key": "commerce_noise-013-フォロ-rp",
-      "support": 20,
-      "accepted": 2,
-      "rejected": 18,
-      "precision": 0.1,
-      "wilson_precision_lower_95": 0.027866,
-      "positive_coverage": 0.012121,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "giveaway_only": 14,
-        "missing_datetime": 4,
-        "accepted": 2
-      }
-    },
-    {
-      "query_key": "temporal_audit-000-本日",
-      "support": 225,
-      "accepted": 11,
-      "rejected": 214,
-      "precision": 0.048889,
-      "wilson_precision_lower_95": 0.027515,
-      "positive_coverage": 0.066667,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 173,
-        "missing_event_marker": 36,
-        "accepted": 11,
-        "product_only": 3,
-        "giveaway_only": 2
-      }
-    },
-    {
-      "query_key": "core-014-祭り",
-      "support": 8,
-      "accepted": 1,
-      "rejected": 7,
-      "precision": 0.125,
-      "wilson_precision_lower_95": 0.022417,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 7,
-        "accepted": 1
-      }
-    },
-    {
-      "query_key": "core-003-開催決定",
-      "support": 47,
-      "accepted": 3,
-      "rejected": 44,
-      "precision": 0.06383,
-      "wilson_precision_lower_95": 0.021945,
-      "positive_coverage": 0.018182,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 43,
-        "accepted": 3,
-        "missing_event_marker": 1
+        "missing_datetime": 719,
+        "missing_event_marker": 90,
+        "accepted": 42,
+        "giveaway_only": 22,
+        "product_only": 14
       }
     },
     {
       "query_key": "core-009-オ-プン",
-      "support": 138,
-      "accepted": 5,
-      "rejected": 133,
-      "precision": 0.036232,
-      "wilson_precision_lower_95": 0.015574,
-      "positive_coverage": 0.030303,
+      "support": 166,
+      "accepted": 10,
+      "rejected": 156,
+      "precision": 0.060241,
+      "wilson_precision_lower_95": 0.033047,
+      "positive_coverage": 0.054054,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 126,
-        "accepted": 5,
-        "missing_event_marker": 4,
-        "giveaway_only": 3
+        "missing_datetime": 148,
+        "accepted": 10,
+        "giveaway_only": 3,
+        "missing_event_marker": 3,
+        "product_only": 2
       }
     },
     {
-      "query_key": "peer-54693f5e5ebc",
-      "support": 12,
-      "accepted": 1,
-      "rejected": 11,
-      "precision": 0.083333,
-      "wilson_precision_lower_95": 0.014865,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 11,
-        "accepted": 1
-      }
-    },
-    {
-      "query_key": "access-009-グル-プインスタンス",
-      "support": 45,
+      "query_key": "core-007-ライブイベント",
+      "support": 18,
       "accepted": 2,
-      "rejected": 43,
-      "precision": 0.044444,
-      "wilson_precision_lower_95": 0.012274,
-      "positive_coverage": 0.012121,
+      "rejected": 16,
+      "precision": 0.111111,
+      "wilson_precision_lower_95": 0.03102,
+      "positive_coverage": 0.010811,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 37,
-        "missing_event_marker": 6,
+        "missing_datetime": 16,
         "accepted": 2
       }
     },
     {
-      "query_key": "temporal_audit-002-明日",
-      "support": 106,
-      "accepted": 3,
-      "rejected": 103,
-      "precision": 0.028302,
-      "wilson_precision_lower_95": 0.009671,
-      "positive_coverage": 0.018182,
+      "query_key": "access-010-フレンドインスタンス",
+      "support": 6,
+      "accepted": 1,
+      "rejected": 5,
+      "precision": 0.166667,
+      "wilson_precision_lower_95": 0.030053,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 88,
-        "missing_event_marker": 12,
-        "accepted": 3,
+        "missing_datetime": 3,
         "giveaway_only": 2,
-        "too_far_future_now": 1
+        "accepted": 1
       }
     },
     {
-      "query_key": "core-006-公演",
+      "query_key": "peer-54693f5e5ebc",
+      "support": 7,
+      "accepted": 1,
+      "rejected": 6,
+      "precision": 0.142857,
+      "wilson_precision_lower_95": 0.02568,
+      "positive_coverage": 0.005405,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 6,
+        "accepted": 1
+      }
+    },
+    {
+      "query_key": "core-004-集会",
+      "support": 160,
+      "accepted": 8,
+      "rejected": 152,
+      "precision": 0.05,
+      "wilson_precision_lower_95": 0.025551,
+      "positive_coverage": 0.043243,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 150,
+        "accepted": 8,
+        "too_far_future_now": 2
+      }
+    },
+    {
+      "query_key": "temporal_audit-014-22時",
+      "support": 183,
+      "accepted": 8,
+      "rejected": 175,
+      "precision": 0.043716,
+      "wilson_precision_lower_95": 0.022315,
+      "positive_coverage": 0.043243,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_event_marker": 79,
+        "missing_datetime": 79,
+        "accepted": 8,
+        "giveaway_only": 8,
+        "product_only": 4
+      }
+    },
+    {
+      "query_key": "temporal_audit-013-21時",
+      "support": 223,
+      "accepted": 8,
+      "rejected": 215,
+      "precision": 0.035874,
+      "wilson_precision_lower_95": 0.018288,
+      "positive_coverage": 0.043243,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 102,
+        "missing_event_marker": 96,
+        "accepted": 8,
+        "product_only": 8,
+        "giveaway_only": 4
+      }
+    },
+    {
+      "query_key": "core-015-フェス",
+      "support": 108,
+      "accepted": 4,
+      "rejected": 104,
+      "precision": 0.037037,
+      "wilson_precision_lower_95": 0.014496,
+      "positive_coverage": 0.021622,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 103,
+        "accepted": 4,
+        "missing_event_marker": 1
+      }
+    },
+    {
+      "query_key": "temporal_audit-000-本日",
+      "support": 224,
+      "accepted": 6,
+      "rejected": 218,
+      "precision": 0.026786,
+      "wilson_precision_lower_95": 0.012333,
+      "positive_coverage": 0.032432,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 168,
+        "missing_event_marker": 40,
+        "accepted": 6,
+        "product_only": 5,
+        "giveaway_only": 5
+      }
+    },
+    {
+      "query_key": "temporal_audit-015-23時",
+      "support": 111,
+      "accepted": 3,
+      "rejected": 108,
+      "precision": 0.027027,
+      "wilson_precision_lower_95": 0.009234,
+      "positive_coverage": 0.016216,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 59,
+        "missing_event_marker": 41,
+        "giveaway_only": 5,
+        "accepted": 3,
+        "missing_participation_method": 1
+      }
+    },
+    {
+      "query_key": "peer-8aaa0b7a4534",
+      "support": 60,
+      "accepted": 2,
+      "rejected": 58,
+      "precision": 0.033333,
+      "wilson_precision_lower_95": 0.009189,
+      "positive_coverage": 0.010811,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 39,
+        "missing_event_marker": 10,
+        "giveaway_only": 5,
+        "product_only": 4,
+        "accepted": 2
+      }
+    },
+    {
+      "query_key": "temporal_audit-008-水曜日",
+      "support": 65,
+      "accepted": 2,
+      "rejected": 63,
+      "precision": 0.030769,
+      "wilson_precision_lower_95": 0.008479,
+      "positive_coverage": 0.010811,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 54,
+        "missing_event_marker": 9,
+        "accepted": 2
+      }
+    },
+    {
+      "query_key": "recruitment-000-キャスト募集",
       "support": 21,
       "accepted": 1,
       "rejected": 20,
       "precision": 0.047619,
       "wilson_precision_lower_95": 0.008456,
-      "positive_coverage": 0.006061,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 19,
-        "accepted": 1,
-        "missing_event_marker": 1
-      }
-    },
-    {
-      "query_key": "recruitment-000-キャスト募集",
-      "support": 26,
-      "accepted": 1,
-      "rejected": 25,
-      "precision": 0.038462,
-      "wilson_precision_lower_95": 0.006822,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 25,
-        "accepted": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-014-22時",
-      "support": 113,
-      "accepted": 2,
-      "rejected": 111,
-      "precision": 0.017699,
-      "wilson_precision_lower_95": 0.004867,
-      "positive_coverage": 0.012121,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_event_marker": 58,
-        "missing_datetime": 41,
-        "giveaway_only": 5,
-        "missing_participation_method": 4,
-        "product_only": 3
-      }
-    },
-    {
-      "query_key": "temporal_audit-010-金曜日",
-      "support": 116,
-      "accepted": 2,
-      "rejected": 114,
-      "precision": 0.017241,
-      "wilson_precision_lower_95": 0.004741,
-      "positive_coverage": 0.012121,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 101,
-        "missing_event_marker": 10,
-        "accepted": 2,
-        "missing_participation_method": 2,
-        "giveaway_only": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-005-週末",
-      "support": 43,
-      "accepted": 1,
-      "rejected": 42,
-      "precision": 0.023256,
-      "wilson_precision_lower_95": 0.004117,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 42,
+        "missing_datetime": 20,
         "accepted": 1
       }
     },
     {
       "query_key": "communities-011-同期会",
-      "support": 51,
+      "support": 46,
       "accepted": 1,
-      "rejected": 50,
-      "precision": 0.019608,
-      "wilson_precision_lower_95": 0.00347,
-      "positive_coverage": 0.006061,
+      "rejected": 45,
+      "precision": 0.021739,
+      "wilson_precision_lower_95": 0.003848,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 46,
+        "missing_datetime": 41,
         "missing_event_marker": 4,
         "accepted": 1
       }
     },
     {
-      "query_key": "temporal_audit-012-日曜日",
-      "support": 77,
+      "query_key": "commerce_noise-005-商品",
+      "support": 126,
       "accepted": 1,
-      "rejected": 76,
-      "precision": 0.012987,
-      "wilson_precision_lower_95": 0.002296,
-      "positive_coverage": 0.006061,
+      "rejected": 125,
+      "precision": 0.007937,
+      "wilson_precision_lower_95": 0.001402,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 69,
-        "missing_event_marker": 6,
-        "accepted": 1,
-        "missing_participation_method": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-015-23時",
-      "support": 79,
-      "accepted": 1,
-      "rejected": 78,
-      "precision": 0.012658,
-      "wilson_precision_lower_95": 0.002238,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 40,
-        "missing_event_marker": 30,
-        "giveaway_only": 5,
-        "product_only": 2,
+        "missing_datetime": 102,
+        "giveaway_only": 15,
+        "product_only": 8,
         "accepted": 1
       }
     },
     {
-      "query_key": "temporal_audit-009-木曜日",
-      "support": 101,
+      "query_key": "temporal_audit-010-金曜日",
+      "support": 136,
       "accepted": 1,
-      "rejected": 100,
-      "precision": 0.009901,
-      "wilson_precision_lower_95": 0.00175,
-      "positive_coverage": 0.006061,
+      "rejected": 135,
+      "precision": 0.007353,
+      "wilson_precision_lower_95": 0.001299,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 85,
-        "missing_event_marker": 14,
+        "missing_datetime": 120,
+        "missing_event_marker": 13,
         "accepted": 1,
-        "product_only": 1
+        "missing_participation_method": 1,
+        "giveaway_only": 1
       }
     },
     {
       "query_key": "commerce_noise-008-プレゼント",
-      "support": 135,
+      "support": 190,
       "accepted": 1,
-      "rejected": 134,
-      "precision": 0.007407,
-      "wilson_precision_lower_95": 0.001309,
-      "positive_coverage": 0.006061,
+      "rejected": 189,
+      "precision": 0.005263,
+      "wilson_precision_lower_95": 0.00093,
+      "positive_coverage": 0.005405,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "giveaway_only": 70,
-        "missing_datetime": 64,
-        "accepted": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-001-今日",
-      "support": 231,
-      "accepted": 1,
-      "rejected": 230,
-      "precision": 0.004329,
-      "wilson_precision_lower_95": 0.000765,
-      "positive_coverage": 0.006061,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 201,
-        "missing_event_marker": 26,
-        "product_only": 3,
+        "giveaway_only": 98,
+        "missing_datetime": 91,
         "accepted": 1
       }
     },
     {
       "query_key": "ablation-c_only",
-      "support": 70,
+      "support": 194,
+      "accepted": 1,
+      "rejected": 193,
+      "precision": 0.005155,
+      "wilson_precision_lower_95": 0.000911,
+      "positive_coverage": 0.005405,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 157,
+        "giveaway_only": 23,
+        "missing_event_marker": 11,
+        "product_only": 2,
+        "accepted": 1
+      }
+    },
+    {
+      "query_key": "access-013-インスタンスオ-プン",
+      "support": 6,
       "accepted": 0,
-      "rejected": 70,
+      "rejected": 6,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 54,
-        "giveaway_only": 9,
-        "missing_event_marker": 6,
-        "product_only": 1
+        "missing_datetime": 6
       }
     },
     {
-      "query_key": "access-000-join制",
+      "query_key": "activities-002-ダンスイベント",
+      "support": 3,
+      "accepted": 0,
+      "rejected": 3,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 3
+      }
+    },
+    {
+      "query_key": "activities-003-演奏会",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -907,166 +945,6 @@
       "eligible": false,
       "top_rejection_reasons": {
         "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "access-002-group-インスタンス",
-      "support": 16,
-      "accepted": 0,
-      "rejected": 16,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 10,
-        "missing_event_marker": 6
-      }
-    },
-    {
-      "query_key": "access-003-ジョイン",
-      "support": 7,
-      "accepted": 0,
-      "rejected": 7,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 4,
-        "missing_event_marker": 2,
-        "giveaway_only": 1
-      }
-    },
-    {
-      "query_key": "access-004-リクイン",
-      "support": 67,
-      "accepted": 0,
-      "rejected": 67,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 61,
-        "missing_event_marker": 6
-      }
-    },
-    {
-      "query_key": "access-006-リクエストインバイト",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "access-007-request-invite",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "access-010-フレンドインスタンス",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1,
-        "missing_event_marker": 1
-      }
-    },
-    {
-      "query_key": "access-011-フレンド申請",
-      "support": 51,
-      "accepted": 0,
-      "rejected": 51,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 48,
-        "missing_event_marker": 3
-      }
-    },
-    {
-      "query_key": "access-012-フレリク",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "access-013-インスタンスオ-プン",
-      "support": 4,
-      "accepted": 0,
-      "rejected": 4,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 4
-      }
-    },
-    {
-      "query_key": "activities-002-ダンスイベント",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "activities-003-演奏会",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
       }
     },
     {
@@ -1112,59 +990,45 @@
       }
     },
     {
-      "query_key": "activities-014-展覧会",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
       "query_key": "activities-015-撮影会",
-      "support": 10,
+      "support": 6,
       "accepted": 0,
-      "rejected": 10,
+      "rejected": 6,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 10
+        "missing_datetime": 6
       }
     },
     {
       "query_key": "activities-016-フォトコン",
-      "support": 13,
+      "support": 8,
       "accepted": 0,
-      "rejected": 13,
+      "rejected": 8,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 13
+        "missing_datetime": 8
       }
     },
     {
       "query_key": "activities-017-ワ-ルド巡り",
-      "support": 68,
+      "support": 41,
       "accepted": 0,
-      "rejected": 68,
+      "rejected": 41,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 65,
+        "missing_datetime": 38,
         "missing_event_marker": 1,
         "past_event": 1,
         "too_far_future_now": 1
@@ -1213,20 +1077,6 @@
       }
     },
     {
-      "query_key": "activities-024-ボ-ドゲ-ム会",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
       "query_key": "activities-025-trpg会",
       "support": 1,
       "accepted": 0,
@@ -1242,64 +1092,64 @@
     },
     {
       "query_key": "activities-026-クイズ大会",
-      "support": 6,
+      "support": 4,
       "accepted": 0,
-      "rejected": 6,
+      "rejected": 4,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 6
+        "missing_datetime": 4
       }
     },
     {
       "query_key": "commerce_noise-000-booth",
-      "support": 244,
+      "support": 269,
       "accepted": 0,
-      "rejected": 244,
+      "rejected": 269,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 211,
-        "product_only": 18,
-        "giveaway_only": 15
+        "missing_datetime": 234,
+        "giveaway_only": 18,
+        "product_only": 17
       }
     },
     {
       "query_key": "commerce_noise-001-販売",
-      "support": 103,
+      "support": 176,
       "accepted": 0,
-      "rejected": 103,
+      "rejected": 176,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 96,
-        "product_only": 4,
-        "giveaway_only": 3
+        "missing_datetime": 159,
+        "product_only": 11,
+        "giveaway_only": 6
       }
     },
     {
       "query_key": "commerce_noise-002-発売",
-      "support": 150,
+      "support": 188,
       "accepted": 0,
-      "rejected": 150,
+      "rejected": 188,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 113,
-        "product_only": 19,
-        "giveaway_only": 18
+        "missing_datetime": 142,
+        "giveaway_only": 25,
+        "product_only": 21
       }
     },
     {
@@ -1313,135 +1163,104 @@
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 76,
-        "giveaway_only": 35,
-        "product_only": 5,
+        "missing_datetime": 73,
+        "giveaway_only": 40,
+        "product_only": 3,
         "missing_event_marker": 1
       }
     },
     {
       "query_key": "commerce_noise-004-セ-ル",
-      "support": 61,
+      "support": 50,
       "accepted": 0,
-      "rejected": 61,
+      "rejected": 50,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 53,
+        "missing_datetime": 43,
         "product_only": 4,
-        "giveaway_only": 4
-      }
-    },
-    {
-      "query_key": "commerce_noise-005-商品",
-      "support": 93,
-      "accepted": 0,
-      "rejected": 93,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 80,
-        "giveaway_only": 10,
-        "product_only": 3
-      }
-    },
-    {
-      "query_key": "commerce_noise-006-衣装",
-      "support": 219,
-      "accepted": 0,
-      "rejected": 219,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 209,
-        "product_only": 7,
         "giveaway_only": 3
       }
     },
     {
-      "query_key": "commerce_noise-007-アバタ",
-      "support": 246,
+      "query_key": "commerce_noise-006-衣装",
+      "support": 234,
       "accepted": 0,
-      "rejected": 246,
+      "rejected": 234,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 234,
+        "missing_datetime": 223,
         "product_only": 6,
-        "giveaway_only": 6
+        "giveaway_only": 5
+      }
+    },
+    {
+      "query_key": "commerce_noise-007-アバタ",
+      "support": 266,
+      "accepted": 0,
+      "rejected": 266,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 239,
+        "giveaway_only": 15,
+        "product_only": 12
       }
     },
     {
       "query_key": "commerce_noise-009-キャンペ-ン",
-      "support": 122,
+      "support": 142,
       "accepted": 0,
-      "rejected": 122,
+      "rejected": 142,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 79,
-        "giveaway_only": 40,
-        "missing_event_marker": 2,
-        "product_only": 1
-      }
-    },
-    {
-      "query_key": "commerce_noise-010-giveaway",
-      "support": 3,
-      "accepted": 0,
-      "rejected": 3,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2,
-        "giveaway_only": 1
+        "missing_datetime": 82,
+        "giveaway_only": 56,
+        "product_only": 2,
+        "missing_event_marker": 2
       }
     },
     {
       "query_key": "commerce_noise-011-patreon",
-      "support": 3,
+      "support": 5,
       "accepted": 0,
-      "rejected": 3,
+      "rejected": 5,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 3
+        "missing_datetime": 5
       }
     },
     {
       "query_key": "commerce_noise-012-無料配布",
-      "support": 85,
+      "support": 109,
       "accepted": 0,
-      "rejected": 85,
+      "rejected": 109,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "giveaway_only": 78,
-        "missing_datetime": 7
+        "giveaway_only": 101,
+        "missing_datetime": 8
       }
     },
     {
@@ -1459,17 +1278,17 @@
       }
     },
     {
-      "query_key": "communities-017-vrc初心者案内",
-      "support": 1,
+      "query_key": "communities-008-セミナ",
+      "support": 2,
       "accepted": 0,
-      "rejected": 1,
+      "rejected": 2,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1
+        "missing_datetime": 2
       }
     },
     {
@@ -1487,74 +1306,103 @@
       }
     },
     {
-      "query_key": "core-010-説明会",
-      "support": 23,
+      "query_key": "communities-020-個人開発集会",
+      "support": 1,
       "accepted": 0,
-      "rejected": 23,
+      "rejected": 1,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 23
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "core-002-通常営業",
+      "support": 8,
+      "accepted": 0,
+      "rejected": 8,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 7,
+        "too_far_future_now": 1
+      }
+    },
+    {
+      "query_key": "core-006-公演",
+      "support": 18,
+      "accepted": 0,
+      "rejected": 18,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 17,
+        "missing_event_marker": 1
+      }
+    },
+    {
+      "query_key": "core-010-説明会",
+      "support": 21,
+      "accepted": 0,
+      "rejected": 21,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 21
       }
     },
     {
       "query_key": "core-011-体験会",
-      "support": 12,
+      "support": 9,
       "accepted": 0,
-      "rejected": 12,
+      "rejected": 9,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 12
-      }
-    },
-    {
-      "query_key": "core-012-試写会",
-      "support": 5,
-      "accepted": 0,
-      "rejected": 5,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 5
+        "missing_datetime": 9
       }
     },
     {
       "query_key": "core-013-オフ会",
-      "support": 36,
+      "support": 52,
       "accepted": 0,
-      "rejected": 36,
+      "rejected": 52,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 36
+        "missing_datetime": 52
       }
     },
     {
-      "query_key": "core-015-フェス",
-      "support": 118,
+      "query_key": "core-014-祭り",
+      "support": 14,
       "accepted": 0,
-      "rejected": 118,
+      "rejected": 14,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 117,
-        "missing_event_marker": 1
+        "missing_datetime": 14
       }
     },
     {
@@ -1572,6 +1420,20 @@
       }
     },
     {
+      "query_key": "peer-084785b5866d",
+      "support": 2,
+      "accepted": 0,
+      "rejected": 2,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 2
+      }
+    },
+    {
       "query_key": "peer-093c30773ef6",
       "support": 1,
       "accepted": 0,
@@ -1586,17 +1448,45 @@
       }
     },
     {
-      "query_key": "peer-0a9fb4040660",
-      "support": 2,
+      "query_key": "peer-0a83e6f19025",
+      "support": 1,
       "accepted": 0,
-      "rejected": 2,
+      "rejected": 1,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 2
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-0a9fb4040660",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-0aa611d27fba",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
       }
     },
     {
@@ -1615,16 +1505,16 @@
     },
     {
       "query_key": "peer-0f91277fdaa8",
-      "support": 3,
+      "support": 2,
       "accepted": 0,
-      "rejected": 3,
+      "rejected": 2,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 3
+        "missing_datetime": 2
       }
     },
     {
@@ -1638,9 +1528,7 @@
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "product_only": 1,
-        "missing_event_marker": 1,
-        "missing_datetime": 1
+        "missing_datetime": 3
       }
     },
     {
@@ -1659,20 +1547,6 @@
     },
     {
       "query_key": "peer-190020899d9e",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-1c25f7a24b05",
       "support": 2,
       "accepted": 0,
       "rejected": 2,
@@ -1700,20 +1574,6 @@
       }
     },
     {
-      "query_key": "peer-203dfde0b049",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
       "query_key": "peer-20c944ecab1a",
       "support": 1,
       "accepted": 0,
@@ -1729,16 +1589,16 @@
     },
     {
       "query_key": "peer-20fcd5ef9f16",
-      "support": 3,
+      "support": 1,
       "accepted": 0,
-      "rejected": 3,
+      "rejected": 1,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 3
+        "missing_datetime": 1
       }
     },
     {
@@ -1770,7 +1630,7 @@
       }
     },
     {
-      "query_key": "peer-2543d2aa9e4e",
+      "query_key": "peer-29cc6a76ac9d",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -1781,20 +1641,6 @@
       "eligible": false,
       "top_rejection_reasons": {
         "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-2bb22e467581",
-      "support": 4,
-      "accepted": 0,
-      "rejected": 4,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 4
       }
     },
     {
@@ -1812,45 +1658,45 @@
       }
     },
     {
+      "query_key": "peer-300035cf9346",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
       "query_key": "peer-3b0e4d24d82b",
-      "support": 3,
+      "support": 2,
       "accepted": 0,
-      "rejected": 3,
+      "rejected": 2,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 3
+        "missing_datetime": 2
       }
     },
     {
-      "query_key": "peer-3ef71d46e1ba",
-      "support": 1,
+      "query_key": "peer-45e8340781f7",
+      "support": 4,
       "accepted": 0,
-      "rejected": 1,
+      "rejected": 4,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-4118acedc3b0",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
+        "missing_datetime": 4
       }
     },
     {
@@ -1883,30 +1729,44 @@
     },
     {
       "query_key": "peer-4cf22d334e48",
-      "support": 8,
+      "support": 7,
       "accepted": 0,
-      "rejected": 8,
+      "rejected": 7,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 8
+        "missing_datetime": 7
+      }
+    },
+    {
+      "query_key": "peer-4efa2e7ab030",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
       }
     },
     {
       "query_key": "peer-5169986210d3",
-      "support": 15,
+      "support": 12,
       "accepted": 0,
-      "rejected": 15,
+      "rejected": 12,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 15
+        "missing_datetime": 12
       }
     },
     {
@@ -1925,48 +1785,20 @@
     },
     {
       "query_key": "peer-530867e5b030",
-      "support": 13,
+      "support": 7,
       "accepted": 0,
-      "rejected": 13,
+      "rejected": 7,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 13
+        "missing_datetime": 7
       }
     },
     {
-      "query_key": "peer-538812beb432",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-548d700c3012",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-571d5097dca8",
+      "query_key": "peer-545d1301a8bb",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -1981,48 +1813,6 @@
     },
     {
       "query_key": "peer-5ab2a9130138",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-5e61ea6b0a79",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-60b17a582ff6",
-      "support": 3,
-      "accepted": 0,
-      "rejected": 3,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 3
-      }
-    },
-    {
-      "query_key": "peer-61928f642196",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -2064,20 +1854,6 @@
       }
     },
     {
-      "query_key": "peer-740a67e16e8f",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
       "query_key": "peer-740ba4000445",
       "support": 1,
       "accepted": 0,
@@ -2092,7 +1868,21 @@
       }
     },
     {
-      "query_key": "peer-78bd759c5a66",
+      "query_key": "peer-747573ab81c4",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-799c001ac95f",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -2164,35 +1954,6 @@
     },
     {
       "query_key": "peer-863690c8e3fb",
-      "support": 9,
-      "accepted": 0,
-      "rejected": 9,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 8,
-        "missing_event_marker": 1
-      }
-    },
-    {
-      "query_key": "peer-87a32103ded3",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-8ce1699cc4d5",
       "support": 2,
       "accepted": 0,
       "rejected": 2,
@@ -2206,32 +1967,45 @@
       }
     },
     {
-      "query_key": "peer-91a149b6009a",
-      "support": 21,
+      "query_key": "peer-904b8da17215",
+      "support": 1,
       "accepted": 0,
-      "rejected": 21,
+      "rejected": 1,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 20,
-        "missing_event_marker": 1
+        "missing_datetime": 1
       }
     },
     {
       "query_key": "peer-99224ff65703",
-      "support": 5,
+      "support": 3,
       "accepted": 0,
-      "rejected": 5,
+      "rejected": 3,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 5
+        "missing_datetime": 3
+      }
+    },
+    {
+      "query_key": "peer-a44b939107c6",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
       }
     },
     {
@@ -2251,30 +2025,16 @@
     },
     {
       "query_key": "peer-a5859cef008c",
-      "support": 2,
+      "support": 1,
       "accepted": 0,
-      "rejected": 2,
+      "rejected": 1,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "peer-a80257a9db25",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
+        "missing_datetime": 1
       }
     },
     {
@@ -2335,7 +2095,7 @@
       }
     },
     {
-      "query_key": "peer-afaf97370c90",
+      "query_key": "peer-b15f2e8aa187",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -2349,24 +2109,49 @@
       }
     },
     {
-      "query_key": "peer-b743ef3a8762",
-      "support": 64,
+      "query_key": "peer-b777e20cce13",
+      "support": 2,
       "accepted": 0,
-      "rejected": 64,
+      "rejected": 2,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 49,
-        "missing_event_marker": 7,
-        "giveaway_only": 7,
-        "product_only": 1
+        "missing_datetime": 2
+      }
+    },
+    {
+      "query_key": "peer-b9d547a1baf6",
+      "support": 2,
+      "accepted": 0,
+      "rejected": 2,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 2
       }
     },
     {
       "query_key": "peer-b9d706c7d785",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-b9ee975870e6",
       "support": 2,
       "accepted": 0,
       "rejected": 2,
@@ -2380,60 +2165,32 @@
       }
     },
     {
-      "query_key": "peer-bb46fd89ed91",
-      "support": 1,
+      "query_key": "peer-c50776bffe4d",
+      "support": 4,
       "accepted": 0,
-      "rejected": 1,
+      "rejected": 4,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-c24e3f5fcee5",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
+        "missing_datetime": 4
       }
     },
     {
       "query_key": "peer-c62630ec9544",
-      "support": 17,
+      "support": 16,
       "accepted": 0,
-      "rejected": 17,
+      "rejected": 16,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 14,
+        "missing_datetime": 13,
         "missing_event_marker": 3
-      }
-    },
-    {
-      "query_key": "peer-c9d2aad73f9a",
-      "support": 2,
-      "accepted": 0,
-      "rejected": 2,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 2
       }
     },
     {
@@ -2451,31 +2208,18 @@
       }
     },
     {
-      "query_key": "peer-cb2abdb9a4ea",
-      "support": 1,
+      "query_key": "peer-d9b10b256d67",
+      "support": 23,
       "accepted": 0,
-      "rejected": 1,
+      "rejected": 23,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-da9eab314ca0",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
+        "missing_datetime": 21,
+        "missing_event_marker": 2
       }
     },
     {
@@ -2566,6 +2310,20 @@
     },
     {
       "query_key": "peer-e75913324a9c",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-e89e358e45cb",
       "support": 2,
       "accepted": 0,
       "rejected": 2,
@@ -2576,34 +2334,6 @@
       "eligible": false,
       "top_rejection_reasons": {
         "missing_datetime": 2
-      }
-    },
-    {
-      "query_key": "peer-e76a1eeeb5d7",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
-      }
-    },
-    {
-      "query_key": "peer-e8d5a305ed75",
-      "support": 1,
-      "accepted": 0,
-      "rejected": 1,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 1
       }
     },
     {
@@ -2663,7 +2393,35 @@
       }
     },
     {
+      "query_key": "peer-f9b4e43ae40e",
+      "support": 28,
+      "accepted": 0,
+      "rejected": 28,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 28
+      }
+    },
+    {
       "query_key": "peer-fb6ed0d43d19",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "peer-fc101e444f61",
       "support": 1,
       "accepted": 0,
       "rejected": 1,
@@ -2706,33 +2464,32 @@
     },
     {
       "query_key": "recruitment-004-テスタ-募集",
-      "support": 14,
+      "support": 17,
       "accepted": 0,
-      "rejected": 14,
+      "rejected": 17,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 11,
+        "missing_datetime": 14,
         "product_only": 2,
         "giveaway_only": 1
       }
     },
     {
       "query_key": "recruitment-005-参加者募集",
-      "support": 12,
+      "support": 9,
       "accepted": 0,
-      "rejected": 12,
+      "rejected": 9,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 11,
-        "giveaway_only": 1
+        "missing_datetime": 9
       }
     },
     {
@@ -2746,27 +2503,103 @@
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1,
-        "giveaway_only": 1
+        "missing_datetime": 2
       }
     },
     {
       "query_key": "recruitment-009-面接",
-      "support": 24,
+      "support": 29,
       "accepted": 0,
-      "rejected": 24,
+      "rejected": 29,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 22,
+        "missing_datetime": 27,
         "giveaway_only": 2
       }
     },
     {
+      "query_key": "temporal_audit-001-今日",
+      "support": 105,
+      "accepted": 0,
+      "rejected": 105,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 84,
+        "missing_event_marker": 19,
+        "product_only": 2
+      }
+    },
+    {
+      "query_key": "temporal_audit-002-明日",
+      "support": 72,
+      "accepted": 0,
+      "rejected": 72,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 62,
+        "missing_event_marker": 9,
+        "giveaway_only": 1
+      }
+    },
+    {
       "query_key": "temporal_audit-003-今夜",
+      "support": 38,
+      "accepted": 0,
+      "rejected": 38,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 31,
+        "missing_event_marker": 6,
+        "product_only": 1
+      }
+    },
+    {
+      "query_key": "temporal_audit-004-今週",
+      "support": 1,
+      "accepted": 0,
+      "rejected": 1,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 1
+      }
+    },
+    {
+      "query_key": "temporal_audit-006-月曜日",
+      "support": 39,
+      "accepted": 0,
+      "rejected": 39,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 31,
+        "missing_event_marker": 8
+      }
+    },
+    {
+      "query_key": "temporal_audit-007-火曜日",
       "support": 46,
       "accepted": 0,
       "rejected": 46,
@@ -2776,107 +2609,57 @@
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 42,
-        "missing_event_marker": 4
+        "missing_datetime": 35,
+        "missing_event_marker": 7,
+        "giveaway_only": 4
       }
     },
     {
-      "query_key": "temporal_audit-004-今週",
-      "support": 50,
+      "query_key": "temporal_audit-009-木曜日",
+      "support": 78,
       "accepted": 0,
-      "rejected": 50,
+      "rejected": 78,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 46,
-        "missing_event_marker": 2,
-        "giveaway_only": 1,
+        "missing_datetime": 64,
+        "missing_event_marker": 13,
         "product_only": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-006-月曜日",
-      "support": 60,
-      "accepted": 0,
-      "rejected": 60,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 50,
-        "missing_event_marker": 9,
-        "product_only": 1
-      }
-    },
-    {
-      "query_key": "temporal_audit-007-火曜日",
-      "support": 55,
-      "accepted": 0,
-      "rejected": 55,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 45,
-        "missing_event_marker": 8,
-        "giveaway_only": 2
-      }
-    },
-    {
-      "query_key": "temporal_audit-008-水曜日",
-      "support": 63,
-      "accepted": 0,
-      "rejected": 63,
-      "precision": 0.0,
-      "wilson_precision_lower_95": 0.0,
-      "positive_coverage": 0.0,
-      "tier": "exploration",
-      "eligible": false,
-      "top_rejection_reasons": {
-        "missing_datetime": 52,
-        "missing_event_marker": 10,
-        "giveaway_only": 1
       }
     },
     {
       "query_key": "temporal_audit-011-土曜日",
-      "support": 80,
+      "support": 92,
       "accepted": 0,
-      "rejected": 80,
+      "rejected": 92,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 65,
-        "missing_event_marker": 14,
-        "missing_participation_method": 1
+        "missing_datetime": 75,
+        "missing_event_marker": 16,
+        "product_only": 1
       }
     },
     {
-      "query_key": "temporal_audit-013-21時",
-      "support": 144,
+      "query_key": "temporal_audit-012-日曜日",
+      "support": 84,
       "accepted": 0,
-      "rejected": 144,
+      "rejected": 84,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_event_marker": 69,
-        "missing_datetime": 63,
-        "product_only": 7,
-        "giveaway_only": 2,
-        "missing_participation_method": 2
+        "missing_datetime": 77,
+        "missing_event_marker": 6,
+        "missing_participation_method": 1
       }
     },
     {
@@ -2890,24 +2673,38 @@
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 42,
-        "missing_event_marker": 18,
-        "product_only": 2,
+        "missing_datetime": 39,
+        "missing_event_marker": 19,
+        "product_only": 4,
         "too_far_future_now": 1
       }
     },
     {
-      "query_key": "venues-000-カフェ営業",
-      "support": 1,
+      "query_key": "venues-009-ホストイベント",
+      "support": 3,
       "accepted": 0,
-      "rejected": 1,
+      "rejected": 3,
       "precision": 0.0,
       "wilson_precision_lower_95": 0.0,
       "positive_coverage": 0.0,
       "tier": "exploration",
       "eligible": false,
       "top_rejection_reasons": {
-        "missing_datetime": 1
+        "missing_datetime": 3
+      }
+    },
+    {
+      "query_key": "venues-011-交流イベント",
+      "support": 6,
+      "accepted": 0,
+      "rejected": 6,
+      "precision": 0.0,
+      "wilson_precision_lower_95": 0.0,
+      "positive_coverage": 0.0,
+      "tier": "exploration",
+      "eligible": false,
+      "top_rejection_reasons": {
+        "missing_datetime": 6
       }
     },
     {
@@ -2928,103 +2725,121 @@
   "leave_one_expert_out_ablation": [
     {
       "removed_query_key": "core-005-交流会",
-      "coverage_without_expert": 0.818182,
-      "marginal_positive_coverage": 0.133333,
-      "unique_accepted_count": 22
-    },
-    {
-      "removed_query_key": "core-008-開場",
-      "coverage_without_expert": 0.854545,
-      "marginal_positive_coverage": 0.09697,
+      "coverage_without_expert": 0.756757,
+      "marginal_positive_coverage": 0.086486,
       "unique_accepted_count": 16
     },
     {
-      "removed_query_key": "venues-011-交流イベント",
-      "coverage_without_expert": 0.866667,
-      "marginal_positive_coverage": 0.084848,
+      "removed_query_key": "access-009-グル-プインスタンス",
+      "coverage_without_expert": 0.767568,
+      "marginal_positive_coverage": 0.075676,
       "unique_accepted_count": 14
     },
     {
-      "removed_query_key": "activities-000-djイベント",
-      "coverage_without_expert": 0.872727,
-      "marginal_positive_coverage": 0.078788,
-      "unique_accepted_count": 13
+      "removed_query_key": "access-002-group-インスタンス",
+      "coverage_without_expert": 0.778378,
+      "marginal_positive_coverage": 0.064865,
+      "unique_accepted_count": 12
     },
     {
-      "removed_query_key": "core-007-ライブイベント",
-      "coverage_without_expert": 0.890909,
-      "marginal_positive_coverage": 0.060606,
-      "unique_accepted_count": 10
-    },
-    {
-      "removed_query_key": "venues-005-club-open",
-      "coverage_without_expert": 0.921212,
-      "marginal_positive_coverage": 0.030303,
-      "unique_accepted_count": 5
-    },
-    {
-      "removed_query_key": "ablation-ac_no_access",
-      "coverage_without_expert": 0.927273,
-      "marginal_positive_coverage": 0.024242,
-      "unique_accepted_count": 4
+      "removed_query_key": "core-003-開催決定",
+      "coverage_without_expert": 0.794595,
+      "marginal_positive_coverage": 0.048649,
+      "unique_accepted_count": 9
     },
     {
       "removed_query_key": "base-004",
-      "coverage_without_expert": 0.933333,
-      "marginal_positive_coverage": 0.018182,
-      "unique_accepted_count": 3
+      "coverage_without_expert": 0.810811,
+      "marginal_positive_coverage": 0.032432,
+      "unique_accepted_count": 6
     },
     {
-      "removed_query_key": "venues-003-bar-open",
-      "coverage_without_expert": 0.939394,
-      "marginal_positive_coverage": 0.012121,
-      "unique_accepted_count": 2
-    },
-    {
-      "removed_query_key": "ablation-bc_no_announcement",
-      "coverage_without_expert": 0.945455,
-      "marginal_positive_coverage": 0.006061,
-      "unique_accepted_count": 1
-    },
-    {
-      "removed_query_key": "base-001",
-      "coverage_without_expert": 0.945455,
-      "marginal_positive_coverage": 0.006061,
-      "unique_accepted_count": 1
-    },
-    {
-      "removed_query_key": "peer-8aaa0b7a4534",
-      "coverage_without_expert": 0.945455,
-      "marginal_positive_coverage": 0.006061,
-      "unique_accepted_count": 1
+      "removed_query_key": "access-011-フレンド申請",
+      "coverage_without_expert": 0.816216,
+      "marginal_positive_coverage": 0.027027,
+      "unique_accepted_count": 5
     },
     {
       "removed_query_key": "ablation-participation_method_access",
-      "coverage_without_expert": 0.951515,
+      "coverage_without_expert": 0.821622,
+      "marginal_positive_coverage": 0.021622,
+      "unique_accepted_count": 4
+    },
+    {
+      "removed_query_key": "access-004-リクイン",
+      "coverage_without_expert": 0.821622,
+      "marginal_positive_coverage": 0.021622,
+      "unique_accepted_count": 4
+    },
+    {
+      "removed_query_key": "ablation-ac_no_access",
+      "coverage_without_expert": 0.827027,
+      "marginal_positive_coverage": 0.016216,
+      "unique_accepted_count": 3
+    },
+    {
+      "removed_query_key": "ablation-bc_no_announcement",
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "ablation-business_open_access",
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "access-001-group-instance",
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "access-008-group-instance",
+      "coverage_without_expert": 0.843243,
       "marginal_positive_coverage": 0.0,
       "unique_accepted_count": 0
     },
     {
       "removed_query_key": "access-014-group-public",
-      "coverage_without_expert": 0.951515,
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "activities-000-djイベント",
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "base-001",
+      "coverage_without_expert": 0.843243,
       "marginal_positive_coverage": 0.0,
       "unique_accepted_count": 0
     },
     {
       "removed_query_key": "base-002",
-      "coverage_without_expert": 0.951515,
-      "marginal_positive_coverage": 0.0,
-      "unique_accepted_count": 0
-    },
-    {
-      "removed_query_key": "core-000-イベント告知",
-      "coverage_without_expert": 0.951515,
+      "coverage_without_expert": 0.843243,
       "marginal_positive_coverage": 0.0,
       "unique_accepted_count": 0
     },
     {
       "removed_query_key": "venues-001-cafe-open",
-      "coverage_without_expert": 0.951515,
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "venues-003-bar-open",
+      "coverage_without_expert": 0.843243,
+      "marginal_positive_coverage": 0.0,
+      "unique_accepted_count": 0
+    },
+    {
+      "removed_query_key": "venues-005-club-open",
+      "coverage_without_expert": 0.843243,
       "marginal_positive_coverage": 0.0,
       "unique_accepted_count": 0
     }
