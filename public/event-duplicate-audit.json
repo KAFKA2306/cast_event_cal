@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 905,
-  "event_count_after": 901,
-  "candidate_cluster_count": 4,
-  "duplicate_cluster_count": 4,
-  "duplicate_occurrence_count": 4,
-  "duplicate_post_count": 4,
-  "duplicate_rate": 0.00442,
+  "event_count_before": 927,
+  "event_count_after": 922,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.005394,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
+    {
+      "cluster_id": "occ_0a83aebd34d8ecf05eb1",
+      "starts_at": "2026-11-24T13:00:00Z",
+      "title": "VRC 1:1型RP イベント 『モーモー牧場」 営業 は 本日 です！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてます。 【11/2…",
+      "member_count": 2,
+      "member_ids": [
+        "7cb91d95d5515cea6788",
+        "9b35120fc4c4da2f1ab7"
+      ],
+      "source_record_ids": [
+        "src_329132ac01a2a7569b14",
+        "src_982ea8ea93cdcf4ef149"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_982ea8ea93cdcf4ef149"
+    },
     {
       "cluster_id": "occ_141174e1b4e6e21e747e",
       "starts_at": "2026-11-27T13:00:00Z",
@@ -113,105 +135,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "9b7ba929da742b49571e",
-      "right_id": "ccf45a1360b975db4772",
-      "starts_at": "2026-11-23T12:00:00Z",
-      "left_organizer": "VRCごいた会",
-      "right_organizer": "VRCゲームワールド部",
-      "similarity": 0.4828,
-      "left_title": "VRCごいた会",
-      "right_title": "VRCゲームワールド部 月曜イベント"
-    },
-    {
-      "left_id": "be185fe2b9188b293460",
-      "right_id": "6cebfce20bdfb4b99149",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@GZofficial0853",
-      "right_organizer": "@akaiheya_vrc",
-      "similarity": 0.1751,
-      "left_title": "#スーパーロボット大戦GZ 2026.11.23（月） 22:00～23:00 スパロボ好きの方への DJイベント開催 ！ ロボットソングOnly流れまくります！ VRC 歴108年世界は異星…",
-      "right_title": "VRC 怪談集会 赤い部屋 第157回 ◎ 開催日時 ：11/23(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bD…"
-    },
-    {
-      "left_id": "be185fe2b9188b293460",
-      "right_id": "d309bee21158836cfde2",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@GZofficial0853",
+      "left_id": "03ebcbb66480c8054b81",
+      "right_id": "55dc6ade106a205b334b",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
       "right_organizer": null,
-      "similarity": 0.178,
-      "left_title": "#スーパーロボット大戦GZ 2026.11.23（月） 22:00～23:00 スパロボ好きの方への DJイベント開催 ！ ロボットソングOnly流れまくります！ VRC 歴108年世界は異星…",
-      "right_title": "VRChat.ts"
+      "similarity": 0.0894,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "C# Tokyo VRもくもく会"
     },
     {
-      "left_id": "be185fe2b9188b293460",
-      "right_id": "de7a82e037919bc5c01f",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@GZofficial0853",
-      "right_organizer": "@casa_di_luce_vr",
+      "left_id": "03ebcbb66480c8054b81",
+      "right_id": "a2215d22fe627d41f6bf",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@KMID_Numanidive",
+      "similarity": 0.0973,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…"
+    },
+    {
+      "left_id": "03ebcbb66480c8054b81",
+      "right_id": "f26ac96522bdcb6c8a45",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@dj_tsumugi",
+      "similarity": 0.141,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "今夜 21時は VRChat にてSushi House JP Night Version! 今回はおなじみのメンツが集まりました。わたしは3番手を務めます。 Group +での 開催 、 d…"
+    },
+    {
+      "left_id": "03ebcbb66480c8054b81",
+      "right_id": "54b7c3b36e7a4d3f179a",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@Conductor_vrc",
+      "right_organizer": "@ShizuokaSyuukai",
+      "similarity": 0.1519,
+      "left_title": "# VRC _Conductor VRC 接客 イベント 『Conductor』 期間限定和風 営業 ！！ 本日営業 日です！！ 時間:２１時 参加 方法：Discord事前抽選＋ join …",
+      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+    },
+    {
+      "left_id": "55dc6ade106a205b334b",
+      "right_id": "a2215d22fe627d41f6bf",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@KMID_Numanidive",
+      "similarity": 0.0911,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…"
+    },
+    {
+      "left_id": "55dc6ade106a205b334b",
+      "right_id": "f26ac96522bdcb6c8a45",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@dj_tsumugi",
+      "similarity": 0.0665,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "今夜 21時は VRChat にてSushi House JP Night Version! 今回はおなじみのメンツが集まりました。わたしは3番手を務めます。 Group +での 開催 、 d…"
+    },
+    {
+      "left_id": "55dc6ade106a205b334b",
+      "right_id": "54b7c3b36e7a4d3f179a",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": null,
+      "right_organizer": "@ShizuokaSyuukai",
+      "similarity": 0.0774,
+      "left_title": "C# Tokyo VRもくもく会",
+      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+    },
+    {
+      "left_id": "a2215d22fe627d41f6bf",
+      "right_id": "f26ac96522bdcb6c8a45",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@KMID_Numanidive",
+      "right_organizer": "@dj_tsumugi",
+      "similarity": 0.2529,
+      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…",
+      "right_title": "今夜 21時は VRChat にてSushi House JP Night Version! 今回はおなじみのメンツが集まりました。わたしは3番手を務めます。 Group +での 開催 、 d…"
+    },
+    {
+      "left_id": "a2215d22fe627d41f6bf",
+      "right_id": "54b7c3b36e7a4d3f179a",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@KMID_Numanidive",
+      "right_organizer": "@ShizuokaSyuukai",
+      "similarity": 0.1957,
+      "left_title": "【 告知 】 本日 21:00から『沼民 VRC 部集会』を 開催 します。 グループインスタンス での 開催 となるため、集会に参加する方は沼民グループへの参加をお忘れなく。 https:/…",
+      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
+    },
+    {
+      "left_id": "f26ac96522bdcb6c8a45",
+      "right_id": "54b7c3b36e7a4d3f179a",
+      "starts_at": "2026-11-24T12:00:00Z",
+      "left_organizer": "@dj_tsumugi",
+      "right_organizer": "@ShizuokaSyuukai",
       "similarity": 0.1593,
-      "left_title": "#スーパーロボット大戦GZ 2026.11.23（月） 22:00～23:00 スパロボ好きの方への DJイベント開催 ！ ロボットソングOnly流れまくります！ VRC 歴108年世界は異星…",
-      "right_title": "♦️•♣•━━ VRChat キャバレー Casa Di Luce 営業のお知らせ ━━•♠•❤️ 👠11月23日(月) 22:00 OPEN 事前抽選エントリー枠をご用意できる予定でおります…"
-    },
-    {
-      "left_id": "be185fe2b9188b293460",
-      "right_id": "9fd24174a5d929eaa629",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@GZofficial0853",
-      "right_organizer": "@vsp_vrc",
-      "similarity": 0.2377,
-      "left_title": "#スーパーロボット大戦GZ 2026.11.23（月） 22:00～23:00 スパロボ好きの方への DJイベント開催 ！ ロボットソングOnly流れまくります！ VRC 歴108年世界は異星…",
-      "right_title": "【 イベント告知 】 全国一斉熟睡プラ寝たリウム 【日時】11/23(月・祝) 22:00～23:00 【 Join 】 VRChat Group + 天文仮想研究所 (VSP. 9377) …"
-    },
-    {
-      "left_id": "6cebfce20bdfb4b99149",
-      "right_id": "d309bee21158836cfde2",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@akaiheya_vrc",
-      "right_organizer": null,
-      "similarity": 0.2869,
-      "left_title": "VRC 怪談集会 赤い部屋 第157回 ◎ 開催日時 ：11/23(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bD…",
-      "right_title": "VRChat.ts"
-    },
-    {
-      "left_id": "6cebfce20bdfb4b99149",
-      "right_id": "de7a82e037919bc5c01f",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@akaiheya_vrc",
-      "right_organizer": "@casa_di_luce_vr",
-      "similarity": 0.1938,
-      "left_title": "VRC 怪談集会 赤い部屋 第157回 ◎ 開催日時 ：11/23(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bD…",
-      "right_title": "♦️•♣•━━ VRChat キャバレー Casa Di Luce 営業のお知らせ ━━•♠•❤️ 👠11月23日(月) 22:00 OPEN 事前抽選エントリー枠をご用意できる予定でおります…"
-    },
-    {
-      "left_id": "6cebfce20bdfb4b99149",
-      "right_id": "9fd24174a5d929eaa629",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": "@akaiheya_vrc",
-      "right_organizer": "@vsp_vrc",
-      "similarity": 0.1796,
-      "left_title": "VRC 怪談集会 赤い部屋 第157回 ◎ 開催日時 ：11/23(月) 22:00 ◎参加方法：akaiheya グループインスタンス に JOIN https://t.co/qmUv5bD…",
-      "right_title": "【 イベント告知 】 全国一斉熟睡プラ寝たリウム 【日時】11/23(月・祝) 22:00～23:00 【 Join 】 VRChat Group + 天文仮想研究所 (VSP. 9377) …"
-    },
-    {
-      "left_id": "d309bee21158836cfde2",
-      "right_id": "de7a82e037919bc5c01f",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@casa_di_luce_vr",
-      "similarity": 0.2439,
-      "left_title": "VRChat.ts",
-      "right_title": "♦️•♣•━━ VRChat キャバレー Casa Di Luce 営業のお知らせ ━━•♠•❤️ 👠11月23日(月) 22:00 OPEN 事前抽選エントリー枠をご用意できる予定でおります…"
-    },
-    {
-      "left_id": "d309bee21158836cfde2",
-      "right_id": "9fd24174a5d929eaa629",
-      "starts_at": "2026-11-23T13:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@vsp_vrc",
-      "similarity": 0.1212,
-      "left_title": "VRChat.ts",
-      "right_title": "【 イベント告知 】 全国一斉熟睡プラ寝たリウム 【日時】11/23(月・祝) 22:00～23:00 【 Join 】 VRChat Group + 天文仮想研究所 (VSP. 9377) …"
+      "left_title": "今夜 21時は VRChat にてSushi House JP Night Version! 今回はおなじみのメンツが集まりました。わたしは3番手を務めます。 Group +での 開催 、 d…",
+      "right_title": "🎇【 本日 21時 開催 】🎆 VRChat 静岡ケンミン 集会 ☁️🍊 静岡県民あつまれ！ 👉 他県民の 参加 も大歓迎✨ ゆる雑談・初参加・聞き専OK！ 🕘 開始 ：21:00〜 ▼ 参加…"
     }
   ],
-  "generated_at": "2026-11-24T04:46:00Z"
+  "generated_at": "2026-11-24T15:50:57Z"
 }
