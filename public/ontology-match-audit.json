@@ -2,38 +2,26 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 931,
+  "event_count": 923,
   "matched_events": 277,
   "matched_series": {
-    "exploit-club": 18,
     "yuruge-meet": 18,
     "wednesday-quest-beginners": 18,
     "ml-gathering": 18,
     "vrc-idle-gathering": 18,
-    "vrc-beginner-world-tour": 17,
+    "vrc-beginner-world-tour": 18,
     "asmr-gathering": 34,
     "vrc-petting-zoo": 17,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
     "vrc-goita": 17,
-    "vrc-game-world-club": 17
+    "vrc-game-world-club": 17,
+    "exploit-club": 17
   },
-  "unmatched_events": 654,
+  "unmatched_events": 646,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "f19475f8fff8fb071071",
-      "title": "EXPLOIT部 定期対戦会",
-      "status": "matched",
-      "ontology_id": "exploit-club",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "bf24bf4627968220bf7d",
       "title": "ゆるゲMEET定期開催日",
@@ -3327,108 +3315,80 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "9780270819928cecd01b",
+      "title": "VRC初心者ワールドツアー",
+      "status": "matched",
+      "ontology_id": "vrc-beginner-world-tour",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 931,
+    "event_count": 923,
     "category_breakdown": {
       "art": 121,
       "community": 247,
-      "game": 107,
+      "game": 108,
       "language_exchange": 34,
       "learning": 18,
-      "music": 16,
-      "other": 31,
-      "performance": 5,
-      "recruitment_deadline": 4,
-      "technology": 259,
+      "music": 15,
+      "other": 25,
+      "performance": 4,
+      "recruitment_deadline": 3,
+      "technology": 260,
       "wellness": 69,
-      "world_tour": 20
+      "world_tour": 19
     },
     "subcategory_breakdown": {
       "ai": 18,
-      "application_deadline": 1,
       "bar": 1,
       "cafe": 19,
-      "cast_service": 3,
+      "cast_service": 1,
       "comedy": 3,
       "dance": 1,
-      "dj": 2,
+      "dj": 3,
       "engineering": 163,
       "fitness": 34,
-      "hangout": 71,
+      "hangout": 70,
       "language_exchange": 34,
       "live_music": 1,
-      "mystery": 35,
+      "mystery": 36,
       "orientation": 1,
       "photography": 121,
       "quiz": 1,
-      "research": 69,
-      "show": 2,
-      "sightseeing": 2,
-      "social": 153,
-      "tabletop": 35,
+      "research": 70,
+      "show": 1,
+      "sightseeing": 1,
+      "social": 156,
+      "tabletop": 34,
       "workshop": 9,
       "world_tour": 18
     },
     "event_mode_breakdown": {
-      "deadline": 4,
-      "hybrid": 5,
-      "in_world": 918,
+      "deadline": 3,
+      "hybrid": 3,
+      "in_world": 913,
       "unknown": 4
     },
     "classification_source_breakdown": {
-      "curated_ontology": 260,
-      "fallback": 31,
-      "keyword_rules": 421,
-      "legacy_and_keywords": 97,
+      "curated_ontology": 259,
+      "fallback": 25,
+      "keyword_rules": 419,
+      "legacy_and_keywords": 98,
       "legacy_category": 122
     },
     "organizer_profile_count": 19,
-    "low_confidence_event_count": 70,
-    "audit_event_count": 70
+    "low_confidence_event_count": 64,
+    "audit_event_count": 64
   },
   "category_review_queue": [
-    {
-      "event_id": "55dc6ade106a205b334b",
-      "title": "C# Tokyo VRもくもく会",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "hybrid",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "3878994bc4b7cbf8f01a",
-      "title": "VRC 吟行句会 第95回 開催 します。 Quest、iOS対応ワールドです。 ■ 日時 11/24（火）21:30～24:00 ■ 参加 方法 ・「 VRC 吟行句会」グループに 参加 （…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "occ_0a83aebd34d8ecf05eb1",
-      "title": "VRC 1:1型RPイベント 『モーモー牧場」 営業 は 本日 です！ 当日は リクイン 枠もございますので、残念ながら今回抽選に外れてしまった方も、当日枠で挑戦お待ちしてます。 【11/24…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
     {
       "event_id": "0aed21c3318755a25ff3",
       "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 中国宇宙ステーションへの乗員輸送、その記録映像を一緒に観ましょう。 🚀 長征2号F/G | 神舟24号 📆 日本時間 11/25(…",
@@ -3449,19 +3409,6 @@
     {
       "event_id": "ef54c2a5d2d2f00cc2cc",
       "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第89回は11月25日(水) 『21:00〜22:30』 ※当イベント…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "c432502dace15cf0b299",
-      "title": "また、 明日 11/25(水)にはSuara/すあらちゃん試着会二回目が 開催 されます！！ 📅11/25 21:00‐ S2KGLS_FC Group ＋ Instance １回目にお越しい…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3533,13 +3480,13 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "1f44bc80d296378bc986",
-      "title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日 はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様で…",
+      "event_id": "b9645a48dabb12ae39b3",
+      "title": "【次回 定期会のお知らせ】 開催日時 :2026年11月26日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3561,19 +3508,6 @@
     {
       "event_id": "11812e0b9fbf655acfd0",
       "title": "🐧オリパンダーの店🐼 ◥◣ 11/26（木）22:30～ ◢◤ 今回は VRChat 回。 クリスマスの飾りつけもしたから、久しぶりにまったりおしゃべりしよう～🎄✨ group ＋で オープン…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "bcf84d1ad9b814ae5783",
-      "title": "VRC BOXING Uniformのシューズは、実在のボリュームソールスニーカーを3D化。 ソール約8cmでも傾斜は約5cmで、リングでも美脚見え。 オープン フィンガーのグローブとバンテー…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3611,6 +3545,34 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "4b239bcde6ab6fd1a446",
+      "title": "皆さんお久しぶりです！！ 狂った飯テロリストの声をいただきまして、久々にコンビニに走りましょう。 ※今回も昼です。 📅 日時 ：11月28日（土） ⏰ 開始 ：13:00 頃〜 📍 会場： V…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "4e31520e5a5c657266e9",
+      "title": "11月28日（土）夜10時から、第69回 #Questアバター制作会（#QA会） を 開催 します！ VRChat のアバター制作に興味のある方なら、初心者から経験者まで大歓迎！ 制作仲間と交…",
+      "category": "game",
+      "label": "ゲーム・参加型",
+      "subcategory": null,
+      "score": 3,
+      "confidence": 0.585,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:organizer:game"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "89815d60851cc28b1648",
       "title": "🌙【#ClubMorceau】#47🌙 ～ モルソ 第47回 Phonk回 ～ ⏰11月29日(日曜日) 21:00~23:00 🌐 Group + instance (MORC.2201) …",
       "category": "other",
@@ -3622,36 +3584,6 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
-    },
-    {
-      "event_id": "f2a6f8f578d120d34d11",
-      "title": "#VRCEngrishを攻略しよう 7 開催 のお知らせ 11月29日（日） 22:00～ VRChat Group ＋ インスタンス 参加 条件はありません！ 英語が苦手な方でもできます！ …",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "df8b801a32fe6471f57f",
-      "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 開場 に合わせて、補給ミッションの録画上映へご参加ください🚀 🚀 Falcon 9 Block 5 | Cygnus CRS-2 …",
-      "category": "performance",
-      "label": "公演・ショー",
-      "subcategory": "show",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ショー"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
     },
     {
       "event_id": "13cfa93c7a129da3fa49",
@@ -3711,7 +3643,7 @@
     },
     {
       "event_id": "occ_cee84d5c063ad5adb0e0",
-      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
+      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3765,6 +3697,19 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "4a7a26473a72bfa8c0f5",
+      "title": "【 VRC 競馬場 セレクト セール のお知らせ】 12月5日、22:30分(イベントレース後)よりセレクト セール を開催いたします。 初心者の方が強い馬を買えるように忖度あります 奮ってご…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3844,34 +3789,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "4fe6fd3a812df4ab2944",
-      "title": "PRIMA REGINA プレ オープン のお知らせ 12/11（金）22:00〜24:00 VRC キャバクラ「PRIMA REGINA」 プレ オープン です！ ぜひお時間ある方お待ちして…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "5e311581db6e143ae4aa",
-      "title": "──あのリアイベを VRC でも！ 🎀あーしのともだち🎀 in Vket 2026 winter 🗓2026.12.14 (mon) ⏰OP 21:00／ST 21:30 📍Vket Entr…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
       "event_id": "5e49e5e65cc7948ae423",
-      "title": "【 VRC 心中RPイベント、またねの約束。第5回 営業 のお知らせ】 ◆ 開催 日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加 方法◆ 事前抽選 https://…",
+      "title": "【 VRC 心中RPイベント、またねの約束。第5回営業のお知らせ】 ◆開催日◆ 12月15日、22日（火曜日） 各日21時45分 リクイン ◆ 参加方法 ◆ 事前抽選 https://t.co…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3931,7 +3850,7 @@
     },
     {
       "event_id": "f20fd9dbc5e3b82cae89",
-      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
+      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4013,7 +3932,7 @@
     },
     {
       "event_id": "bcc7082678517edfd840",
-      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
+      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -4108,7 +4027,7 @@
     },
     {
       "event_id": "198279ed2f7315a7f152",
-      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
+      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
