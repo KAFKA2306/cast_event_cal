@@ -2,14 +2,12 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 918,
+  "event_count": 925,
   "matched_events": 276,
   "matched_series": {
-    "ml-gathering": 18,
-    "vrc-idle-gathering": 18,
     "vrc-beginner-world-tour": 18,
-    "asmr-gathering": 35,
-    "vrc-petting-zoo": 17,
+    "asmr-gathering": 36,
+    "vrc-petting-zoo": 18,
     "en-jp-language-exchange": 34,
     "vrc-fit-boxing": 34,
     "personally-match": 17,
@@ -17,34 +15,13 @@
     "vrc-game-world-club": 17,
     "exploit-club": 17,
     "yuruge-meet": 17,
-    "wednesday-quest-beginners": 17
+    "wednesday-quest-beginners": 17,
+    "ml-gathering": 17,
+    "vrc-idle-gathering": 17
   },
-  "unmatched_events": 642,
+  "unmatched_events": 649,
   "ambiguous_events": 0,
   "matches": [
-    {
-      "event_id": "86e6917adc57e1d25266",
-      "title": "ML集会",
-      "status": "matched",
-      "ontology_id": "ml-gathering",
-      "evidence": [
-        "alias",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
-    {
-      "event_id": "ebcd30a182a41db4c619",
-      "title": "VRCでボーっとする会",
-      "status": "matched",
-      "ontology_id": "vrc-idle-gathering",
-      "evidence": [
-        "alias",
-        "organizer",
-        "required_patterns"
-      ],
-      "profile_attached": true
-    },
     {
       "event_id": "97c6cabe6b631a86abf2",
       "title": "VRC初心者ワールドツアー",
@@ -3315,102 +3292,97 @@
         "required_patterns"
       ],
       "profile_attached": true
+    },
+    {
+      "event_id": "07b4fd7c799aef3a1b5d",
+      "title": "ASMR集会 本営業",
+      "status": "matched",
+      "ontology_id": "asmr-gathering",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
+    },
+    {
+      "event_id": "1bf58b1ce61e18072dbe",
+      "title": "VRCふれあい動物園",
+      "status": "matched",
+      "ontology_id": "vrc-petting-zoo",
+      "evidence": [
+        "alias",
+        "organizer",
+        "required_patterns"
+      ],
+      "profile_attached": true
     }
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 918,
+    "event_count": 925,
     "category_breakdown": {
       "art": 121,
-      "community": 246,
-      "game": 105,
+      "community": 252,
+      "game": 104,
       "language_exchange": 34,
-      "learning": 17,
-      "music": 14,
-      "other": 24,
-      "performance": 4,
+      "learning": 22,
+      "music": 12,
+      "other": 28,
+      "performance": 5,
       "recruitment_deadline": 3,
-      "technology": 260,
-      "wellness": 69,
-      "world_tour": 21
+      "technology": 258,
+      "wellness": 68,
+      "world_tour": 18
     },
     "subcategory_breakdown": {
-      "ai": 18,
-      "cafe": 22,
-      "cast_service": 1,
+      "ai": 17,
+      "cafe": 19,
+      "cast_recruitment": 1,
+      "cast_service": 2,
       "comedy": 4,
       "dance": 1,
       "dj": 1,
-      "engineering": 163,
+      "engineering": 164,
       "fitness": 34,
-      "hangout": 71,
+      "hangout": 74,
       "language_exchange": 34,
+      "lecture": 4,
       "live_music": 1,
       "mystery": 35,
       "photography": 121,
-      "research": 70,
-      "sightseeing": 1,
-      "social": 152,
+      "research": 68,
+      "social": 157,
       "tabletop": 34,
-      "workshop": 9,
-      "world_tour": 20
+      "workshop": 10,
+      "world_tour": 18
     },
     "event_mode_breakdown": {
       "deadline": 3,
-      "hybrid": 4,
-      "in_world": 907,
+      "hybrid": 2,
+      "in_world": 916,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 258,
-      "fallback": 24,
-      "keyword_rules": 417,
-      "legacy_and_keywords": 97,
+      "fallback": 28,
+      "keyword_rules": 419,
+      "legacy_and_keywords": 98,
       "legacy_category": 122
     },
     "organizer_profile_count": 19,
-    "low_confidence_event_count": 61,
-    "audit_event_count": 61
+    "low_confidence_event_count": 63,
+    "audit_event_count": 63
   },
   "category_review_queue": [
     {
-      "event_id": "3e0103ed3e17da028ab3",
-      "title": "# VRChat イベント #授乳酒場まけいぬ 11/25（水）23:05 開催 ミニゲームの勝者は個室でサキュバス授乳が受けられます✨ 当日発表されるILを選んで フレンド申請 後 23:0…",
-      "category": "game",
-      "label": "ゲーム・参加型",
-      "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ゲーム"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
-      "event_id": "c0c131c07fe2f8264038",
-      "title": "🌙 11/25(水) GRAND OPEN 🌙 VRChat 1対1寝かしつけイベント『眠庭ゆめゆい』 眠りにつくまでのひとときをご提供します。 🕛 23:55〜23:58 リクイン 受付 💤…",
+      "event_id": "1f44bc80d296378bc986",
+      "title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "2252f5c50401696db126",
-      "title": "【Guest Recruitment】 完璧な笑顔で武装した彼女たちが、 ハイヒールを脱ぎ、素顔に戻る場所。 VRChat 1:1個室いちゃいちゃイベント 『Sovereign's Secre…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3424,19 +3396,6 @@
       "subcategory": null,
       "score": 2,
       "confidence": 0.35,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "316ad5dc95ce86167172",
-      "title": "【 本日 の注目 イベント ✨】 🕒11/26(木) 22:00～ 🟠サキュバス育成秘密結社でびきゅーぶ！🟠 なんだか距離の近いサキュバス達が今宵も結社で待っている...💜 あなたの欲望でサキ…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 0,
-      "confidence": 0.25,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3471,6 +3430,19 @@
     {
       "event_id": "a1f5bf10a346805ee32d",
       "title": "#ばけNeko 蟹江企画「Spot de-Light Night vol.2」 開催決定 ！ VRChat で活動しているギターボーカルを招聘し、アコギと歌の特別な一夜をお届けします☕ 日時 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "d5c6fede97e3c0fcb245",
+      "title": "#VRCDDD VRC イベント「Double Down Deal」 11月27日(金)23時10分 リクイン 受付 開始 ♦️ 30分×1 【タイムテーブル】 23:10~23:12 Req…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3551,6 +3523,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "ec9720794311424d6a3e",
+      "title": "VRC 射撃部定例 イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日 のクレー射撃の順位は 1位 ぼうし様 2位 ΜαSSPrο・Αμ様 3位 Hipօgrifօ様…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "1a2693aff007f8c68fcf",
@@ -3726,6 +3711,19 @@
       "ambiguous_with": []
     },
     {
+      "event_id": "c0ed055828942bf816d4",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "5e311581db6e143ae4aa",
       "title": "──あのリアイベを VRC でも！ 🎀あーしのともだち🎀 in Vket 2026 winter 🗓2026.12.14 (mon) ⏰OP 21:00／ST 21:30 📍Vket Entr…",
       "category": "other",
@@ -3864,21 +3862,17 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "7c54e9a91b932a333eac",
-      "title": "ツクヨミ感謝祭最新情報 アマテラス衣装でのライブ 開催 決定 YouTubeでのアーカイブあり。 VRChat では12/26日21:00から本公演 その後は7回の再 公演 あり！ 遅刻現金！…",
-      "category": "music",
-      "label": "音楽・ダンス",
+      "event_id": "769448744e4fea2c40c8",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
       "subcategory": null,
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ライブ"
-      ],
-      "event_mode": "hybrid",
-      "ambiguous_with": [
-        "performance"
-      ]
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "bcc7082678517edfd840",
@@ -3963,6 +3957,19 @@
       ]
     },
     {
+      "event_id": "fcda997f9c296af21f16",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
       "event_id": "198279ed2f7315a7f152",
       "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "category": "other",
@@ -4043,6 +4050,19 @@
       "ambiguous_with": [
         "community"
       ]
+    },
+    {
+      "event_id": "99ef9a19e108e2027462",
+      "title": "✨Champion League✨ 毎月第2、第4 日曜日 13:00~22:00開催！ 【# VRChat インスタンス】も開かれます！ #雀魂 #三麻 VRC グループ「CLMGC.227…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
     },
     {
       "event_id": "d83177aeecad1cc4ca0b",

@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 922,
-  "event_count_after": 918,
-  "candidate_cluster_count": 4,
-  "duplicate_cluster_count": 4,
-  "duplicate_occurrence_count": 4,
-  "duplicate_post_count": 4,
-  "duplicate_rate": 0.004338,
+  "event_count_before": 930,
+  "event_count_after": 925,
+  "candidate_cluster_count": 5,
+  "duplicate_cluster_count": 5,
+  "duplicate_occurrence_count": 5,
+  "duplicate_post_count": 5,
+  "duplicate_rate": 0.005376,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
@@ -78,6 +78,28 @@
       "representative_source_record_id": "src_f719b5d450b48bba370d"
     },
     {
+      "cluster_id": "occ_dec43af30a96c0c6604f",
+      "starts_at": "2026-12-05T00:00:00Z",
+      "title": "「初音ミク 夜空プログラム」PLAYBACK LIVE in VRChat 、12月5日(土) 9:00 JSTの 公演 に行きます。いっしょに行こう！ 参加 無料、VR機器なしでもOK。 h…",
+      "member_count": 2,
+      "member_ids": [
+        "b34a956efcf7ab554d7e",
+        "eb0111cb587252ec1a26"
+      ],
+      "source_record_ids": [
+        "src_7edd3c1f8377aa6e39d4",
+        "src_b2f662f5f15dba77597e"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "exact_text_same_start"
+      ],
+      "confidence": 0.99,
+      "representative_source_record_id": "src_b2f662f5f15dba77597e"
+    },
+    {
       "cluster_id": "occ_fe6ef9f0d10ad571664f",
       "starts_at": "2027-01-16T12:00:00Z",
       "title": "【# VRC 落語会 ２周年記念有料 公演告知 】 お陰様で VRC 落語会は、まもなく2周年を迎えます 画面の向こうにいる私たちは、お互いの顔も名前も知らないけれど、同じ噺に耳を傾け、同じと…",
@@ -113,105 +135,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "0b1a730a0d1800fabfd8",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
-      "right_organizer": "@TNEETs0414",
-      "similarity": 0.1538,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "#CafeBarSKMZ 明日は水曜日で22時より オープン 予定です～ 寒くてリアルでは雪が降り始めましたが、 VRC では関係ないのでスク水着ます！ ご来店お待ちしています！ 参加はリプ欄…"
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "1f44bc80d296378bc986",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
+      "right_organizer": "@VRC1470742",
+      "similarity": 0.1557,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…"
     },
     {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "fd15d8b0b8fbb31f0e1f",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "97c6cabe6b631a86abf2",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
+      "right_organizer": "VRC初心者ワールドツアー",
+      "similarity": 0.15,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "VRC初心者ワールドツアー"
+    },
+    {
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "b9645a48dabb12ae39b3",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
+      "right_organizer": "@VRC_kiokubu",
+      "similarity": 0.1953,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "【次回 定期会のお知らせ】 開催日時 :2026年11月26日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…"
+    },
+    {
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "77f4d324182b7c569364",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
       "right_organizer": null,
-      "similarity": 0.0973,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "Web技術集会"
+      "similarity": 0.0705,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "データサイエンティスト集会"
     },
     {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "8ef9d3a483cb4efd3dc3",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
-      "right_organizer": "@tsukiyononesu",
-      "similarity": 0.1043,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "【おしらせ】 １１月２５日（水）２２：００頃から 生配信にて 「 VRCHAT 」の ワールド巡り をします。 今回は「水の ワールド巡り 」です！ 今回も VRC で私のフレンドの方はジョイ…"
-    },
-    {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "a08b0c207d354b70a418",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "9aa77f84dd5a847004e2",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
       "right_organizer": null,
-      "similarity": 0.0528,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "アバター改変なんもわからん集会"
+      "similarity": 0.0772,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "仮想学生集会"
     },
     {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "626d847f958312b8edc7",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
+      "left_id": "33589808b1f92063a45d",
+      "right_id": "c731d9f50d42097b0468",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@Shint_Akatohi",
+      "right_organizer": "@asamurakou",
+      "similarity": 0.2261,
+      "left_title": "VRC Kemono Workshop グループイベントのお知らせ 今週の木曜、26日の 21時 からお試しで改変相談会&作業雑談会をやります グループ+でインスタンスを開きます 入退室自由で…",
+      "right_title": "第二回 VRC 滋賀県 集会 本日 21時から 開始 ！ 第一回に比べのんびりしたものになると思います、石田三成も大河ドラマになるしぜひ！ グループ+で開きますので、グループへの 参加 の方よ…"
+    },
+    {
+      "left_id": "1f44bc80d296378bc986",
+      "right_id": "97c6cabe6b631a86abf2",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@VRC1470742",
+      "right_organizer": "VRC初心者ワールドツアー",
+      "similarity": 0.0602,
+      "left_title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…",
+      "right_title": "VRC初心者ワールドツアー"
+    },
+    {
+      "left_id": "1f44bc80d296378bc986",
+      "right_id": "b9645a48dabb12ae39b3",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@VRC1470742",
+      "right_organizer": "@VRC_kiokubu",
+      "similarity": 0.1756,
+      "left_title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…",
+      "right_title": "【次回 定期会のお知らせ】 開催日時 :2026年11月26日(木) 21:00～ 参加条件:写真が好きな方なら誰でもOK VRChat にて「# VRChat 記憶部」のグループへ入りインス…"
+    },
+    {
+      "left_id": "1f44bc80d296378bc986",
+      "right_id": "77f4d324182b7c569364",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@VRC1470742",
       "right_organizer": null,
-      "similarity": 0.0851,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "ブラックホール集会"
+      "similarity": 0.1163,
+      "left_title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…",
+      "right_title": "データサイエンティスト集会"
     },
     {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "8a3e1fdcfe3ef342cef2",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
-      "right_organizer": "@vrc_furuyoni",
-      "similarity": 0.21,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "今日 は水曜日！ VRC ふるよに初中級者交流会です！ 対戦相手が欲しい人やふるよにで誰かと交流したい人におすすめです！ 22時から VRC ふるよに部の Group +でお待ちしております！…"
-    },
-    {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "2c7b6bdd77dafde2a1df",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
-      "right_organizer": "@AdHoc_RM",
-      "similarity": 0.141,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "本日22時からは オープン マイク！ 今週のアドホックコールは 魔宮マオさん(@mamiya_mao ) です！ オープン マイクは VRC の様々な音楽が発信されているイベントです！ ESP…"
-    },
-    {
-      "left_id": "506bcc16fbb4b9c1b6e4",
-      "right_id": "36576c0ba2dd607a3b63",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@VRCkenjutu",
-      "right_organizer": "@VRC_WorldTour",
-      "similarity": 0.1468,
-      "left_title": "\"📅 本日 22時00分⏰”➡ # VRC 剣術研究会 開催 です❕ 今日 は”居合道”回です！ 本日 のテーマは⇊ 🗡居合道の形の紹介🗡 心よりお待ちしております✨ ⏰time⇒22:00(…",
-      "right_title": "💃【 VRC世界旅行EX 】💃 明日22:00〜23:00 「観客席から見た世界」 開催 です! いつもは舞台に目がいきがちな劇場や闘技場ですが、今回は「見る側」の場所、客席に注目する ツアー…"
-    },
-    {
-      "left_id": "0b1a730a0d1800fabfd8",
-      "right_id": "fd15d8b0b8fbb31f0e1f",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@TNEETs0414",
+      "left_id": "1f44bc80d296378bc986",
+      "right_id": "9aa77f84dd5a847004e2",
+      "starts_at": "2026-11-26T12:00:00Z",
+      "left_organizer": "@VRC1470742",
       "right_organizer": null,
-      "similarity": 0.1441,
-      "left_title": "#CafeBarSKMZ 明日は水曜日で22時より オープン 予定です～ 寒くてリアルでは雪が降り始めましたが、 VRC では関係ないのでスク水着ます！ ご来店お待ちしています！ 参加はリプ欄…",
-      "right_title": "Web技術集会"
-    },
-    {
-      "left_id": "0b1a730a0d1800fabfd8",
-      "right_id": "8ef9d3a483cb4efd3dc3",
-      "starts_at": "2026-11-25T13:00:00Z",
-      "left_organizer": "@TNEETs0414",
-      "right_organizer": "@tsukiyononesu",
-      "similarity": 0.1739,
-      "left_title": "#CafeBarSKMZ 明日は水曜日で22時より オープン 予定です～ 寒くてリアルでは雪が降り始めましたが、 VRC では関係ないのでスク水着ます！ ご来店お待ちしています！ 参加はリプ欄…",
-      "right_title": "【おしらせ】 １１月２５日（水）２２：００頃から 生配信にて 「 VRCHAT 」の ワールド巡り をします。 今回は「水の ワールド巡り 」です！ 今回も VRC で私のフレンドの方はジョイ…"
+      "similarity": 0.0679,
+      "left_title": "VRC 射撃部定例イベント # VRC 射撃部 へお越しいただきありがとうございました。 本日はクレー射撃 1位 ぼうし_12g様 2位 Húch4i_'-'様 3位 Hipօgrifօ様でし…",
+      "right_title": "仮想学生集会"
     }
   ],
-  "generated_at": "2026-11-26T12:22:13Z"
+  "generated_at": "2026-11-26T22:19:33Z"
 }
