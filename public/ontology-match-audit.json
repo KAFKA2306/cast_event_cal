@@ -2,7 +2,7 @@
   "schema_version": "2.0",
   "ontology_entries": 15,
   "curation_mode": "human_only",
-  "event_count": 923,
+  "event_count": 931,
   "matched_events": 277,
   "matched_series": {
     "yuruge-meet": 18,
@@ -19,7 +19,7 @@
     "vrc-game-world-club": 17,
     "exploit-club": 17
   },
-  "unmatched_events": 646,
+  "unmatched_events": 654,
   "ambiguous_events": 0,
   "matches": [
     {
@@ -3331,16 +3331,16 @@
   ],
   "category_classification": {
     "schema_version": "2.0",
-    "event_count": 923,
+    "event_count": 931,
     "category_breakdown": {
       "art": 121,
-      "community": 247,
+      "community": 251,
       "game": 108,
       "language_exchange": 34,
       "learning": 18,
-      "music": 15,
-      "other": 25,
-      "performance": 4,
+      "music": 19,
+      "other": 26,
+      "performance": 3,
       "recruitment_deadline": 3,
       "technology": 260,
       "wellness": 69,
@@ -3348,15 +3348,15 @@
     },
     "subcategory_breakdown": {
       "ai": 18,
-      "bar": 1,
-      "cafe": 19,
+      "bar": 2,
+      "cafe": 20,
       "cast_service": 1,
       "comedy": 3,
       "dance": 1,
-      "dj": 3,
+      "dj": 2,
       "engineering": 163,
       "fitness": 34,
-      "hangout": 70,
+      "hangout": 72,
       "language_exchange": 34,
       "live_music": 1,
       "mystery": 36,
@@ -3364,7 +3364,6 @@
       "photography": 121,
       "quiz": 1,
       "research": 70,
-      "show": 1,
       "sightseeing": 1,
       "social": 156,
       "tabletop": 34,
@@ -3373,42 +3372,38 @@
     },
     "event_mode_breakdown": {
       "deadline": 3,
-      "hybrid": 3,
-      "in_world": 913,
+      "hybrid": 4,
+      "in_world": 920,
       "unknown": 4
     },
     "classification_source_breakdown": {
       "curated_ontology": 259,
-      "fallback": 25,
-      "keyword_rules": 419,
+      "fallback": 26,
+      "keyword_rules": 426,
       "legacy_and_keywords": 98,
       "legacy_category": 122
     },
     "organizer_profile_count": 19,
-    "low_confidence_event_count": 64,
-    "audit_event_count": 64
+    "low_confidence_event_count": 65,
+    "audit_event_count": 65
   },
   "category_review_queue": [
     {
-      "event_id": "0aed21c3318755a25ff3",
-      "title": "< 告知 > ロケット打ち上げを観る集会 - アーカイブの部 中国宇宙ステーションへの乗員輸送、その記録映像を一緒に観ましょう。 🚀 長征2号F/G | 神舟24号 📆 日本時間 11/25(…",
-      "category": "performance",
-      "label": "公演・ショー",
-      "subcategory": "show",
-      "score": 5,
-      "confidence": 0.58,
-      "source": "keyword_rules",
-      "evidence": [
-        "keyword:title:ショー"
-      ],
-      "event_mode": "in_world",
-      "ambiguous_with": [
-        "community"
-      ]
-    },
-    {
       "event_id": "ef54c2a5d2d2f00cc2cc",
       "title": "【 イベント告知 】 『 VRC 悩み〜ティング』開催します！ グループワークを通して悩みや苦労を分かち合いましょう！！ 第89回は11月25日(水) 『21:00〜22:30』 ※当イベント…",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 0,
+      "confidence": 0.25,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "c432502dace15cf0b299",
+      "title": "また、 明日 11/25(水)にはSuara/すあらちゃん試着会二回目が 開催 されます！！ 📅11/25 21:00‐ S2KGLS_FC Group ＋Instance １回目にお越しいた…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3533,7 +3528,7 @@
     },
     {
       "event_id": "2ee51e65be9842ae496a",
-      "title": "【次回開催のお知らせ】 次回の開催は11/27日(金)22:00予定です。 参加方法 はRainDropの VRC グループ(https://t.co/b3jsbXRDBw)へ加入の後グループ…",
+      "title": "【次回 開催 のお知らせ】 次回の 開催 は11/27日(金)22:00予定です。 参加 方法はRainDropの VRC グループ(https://t.co/b3jsbXRDBw)へ加入の後…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3543,6 +3538,23 @@
       "evidence": [],
       "event_mode": "in_world",
       "ambiguous_with": []
+    },
+    {
+      "event_id": "503c972ba8f13d923eca",
+      "title": "【 VRC ホストクラブ-VAMP- 開催 】 【「iv イブ」 VRChat 接客イベント】 「iv イブ」の方も指名できるようになっています。 💜11月27日金曜〚REDコラボ〛 23:3…",
+      "category": "music",
+      "label": "音楽・ダンス",
+      "subcategory": null,
+      "score": 5,
+      "confidence": 0.58,
+      "source": "keyword_rules",
+      "evidence": [
+        "keyword:title:クラブ"
+      ],
+      "event_mode": "in_world",
+      "ambiguous_with": [
+        "community"
+      ]
     },
     {
       "event_id": "4b239bcde6ab6fd1a446",
@@ -3656,7 +3668,7 @@
     },
     {
       "event_id": "45493f6265c02184f73f",
-      "title": "🌸✨ PDLイベントコラボ 開催決定 ✨🌸 『Cafe＆Bar極華 @Cafe_Bar_kyokka 』との特別なコラボイベントを 開催 ！✨ 素適なBAR空間と音楽が交わる、一夜限りのスペシ…",
+      "title": "🌸✨ PDLイベントコラボ 開催 決定 ✨🌸 『 Cafe ＆Bar極華 @ Cafe _Bar_kyokka 』との特別なコラボイベントを 開催 ！✨ 素適なBAR空間と音楽が交わる、一夜限…",
       "category": "music",
       "label": "音楽・ダンス",
       "subcategory": null,
@@ -3697,19 +3709,6 @@
       "subcategory": null,
       "score": 0,
       "confidence": 0.25,
-      "source": "fallback",
-      "evidence": [],
-      "event_mode": "in_world",
-      "ambiguous_with": []
-    },
-    {
-      "event_id": "4a7a26473a72bfa8c0f5",
-      "title": "【 VRC 競馬場 セレクト セール のお知らせ】 12月5日、22:30分(イベントレース後)よりセレクト セール を開催いたします。 初心者の方が強い馬を買えるように忖度あります 奮ってご…",
-      "category": "other",
-      "label": "その他",
-      "subcategory": null,
-      "score": 2,
-      "confidence": 0.35,
       "source": "fallback",
       "evidence": [],
       "event_mode": "in_world",
@@ -3763,8 +3762,8 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "493a1e7230d970f64a38",
-      "title": "@miy_u0130 @Ryohei_Hajime ／ VRChat の人気コミュニティと コラボ イベント を 開催 🎀 ＼ VRChat の人気コミュニティと 開催 する、「コミュニティコ…",
+      "event_id": "6ccafe7574f8c2bd6d4a",
+      "title": "🐙 VRC イベント『Mouth of Madness』 12月は【12/10(木)】と【12/20(日)】に 開催 予定です。 21:50~22:00 リクイン 受付 22:00 インスタン…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
@@ -3776,8 +3775,21 @@
       "ambiguous_with": []
     },
     {
-      "event_id": "6ccafe7574f8c2bd6d4a",
-      "title": "🐙 VRC イベント『Mouth of Madness』 12月は【12/10(木)】と【12/20(日)】に 開催 予定です。 21:50~22:00 リクイン 受付 22:00 インスタン…",
+      "event_id": "e20ef3f22c0ac06b3f4d",
+      "title": "【イベント出演 告知 🎷】 𝐒𝐖𝐈𝐍𝐆 𝐁𝐄𝐆𝐈𝐍 𝐕𝐨𝐥.𝟑 📅2026/12/12 (Sat.) 🕐21:00 ( OPEN ) 📍BAR SPEAKEASY ( VRChat ) 告知 …",
+      "category": "other",
+      "label": "その他",
+      "subcategory": null,
+      "score": 2,
+      "confidence": 0.35,
+      "source": "fallback",
+      "evidence": [],
+      "event_mode": "in_world",
+      "ambiguous_with": []
+    },
+    {
+      "event_id": "5e311581db6e143ae4aa",
+      "title": "──あのリアイベを VRC でも！ 🎀あーしのともだち🎀 in Vket 2026 winter 🗓2026.12.14 (mon) ⏰OP 21:00／ST 21:30 📍Vket Entr…",
       "category": "other",
       "label": "その他",
       "subcategory": null,
