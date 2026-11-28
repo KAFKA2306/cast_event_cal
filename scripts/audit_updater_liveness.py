@@ -60,7 +60,8 @@ def main() -> int:
     result = evaluate(payload, checked_at=checked_at, late_after_minutes=int(config["late_after_minutes"]))
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))
-    return 0 if result["state"] == "healthy" else 1
+    extreme = int(config.get("extreme_stale_after_minutes", config["late_after_minutes"]))
+    return 1 if result["state"] in {"failed", "unknown"} or result["age_minutes"] is None or result["age_minutes"] > extreme else 0
 
 
 if __name__ == "__main__":

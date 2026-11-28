@@ -1,4 +1,9 @@
+import json
 from datetime import UTC, datetime
+
+import pytest
+
+from scripts import audit_updater_liveness
 
 from scripts.audit_updater_liveness import evaluate
 
@@ -41,3 +46,29 @@ def test_old_success_is_late():
 
 def test_missing_or_unreadable_authority_is_unknown_not_healthy():
     check([], {}, "unknown")
+
+
+@pytest.mark.parametrize(("age", "expected"), [(240, 0), (360, 0), (361, 1)])
+def test_late_exit_code_respects_extreme_staleness(tmp_path, monkeypatch, age, expected):
+    checked_at = NOW
+    success_at = checked_at.timestamp() - age * 60
+    created_at = datetime.fromtimestamp(success_at, UTC).isoformat()
+    input_path = tmp_path / "runs.json"
+    input_path.write_text(json.dumps({"runs": [run(1, created_at)], "jobs_by_run": {"1": [{"id": 10}]}}))
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({"late_after_minutes": 150, "extreme_stale_after_minutes": 360}))
+    output_path = tmp_path / "out.json"
+    monkeypatch.setattr("sys.argv", ["audit_updater_liveness", "--input", str(input_path), "--config", str(config_path), "--output", str(output_path), "--checked-at", NOW.isoformat()])
+
+    assert audit_updater_liveness.main() == expected
+
+
+@pytest.mark.parametrize("payload", [{"runs": [], "jobs_by_run": {}}, {"runs": [run(1, "2026-09-28T09:00:00Z", "failure")], "jobs_by_run": {"1": [{"id": 10}]}}])
+def test_unknown_or_failed_exit_nonzero(tmp_path, monkeypatch, payload):
+    input_path = tmp_path / "runs.json"
+    input_path.write_text(json.dumps(payload))
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({"late_after_minutes": 150, "extreme_stale_after_minutes": 360}))
+    monkeypatch.setattr("sys.argv", ["audit_updater_liveness", "--input", str(input_path), "--config", str(config_path), "--output", str(tmp_path / "out.json"), "--checked-at", NOW.isoformat()])
+
+    assert audit_updater_liveness.main() == 1
