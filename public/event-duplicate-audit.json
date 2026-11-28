@@ -1,16 +1,38 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 920,
-  "event_count_after": 915,
-  "candidate_cluster_count": 5,
-  "duplicate_cluster_count": 5,
-  "duplicate_occurrence_count": 5,
-  "duplicate_post_count": 5,
-  "duplicate_rate": 0.005435,
+  "event_count_before": 934,
+  "event_count_after": 928,
+  "candidate_cluster_count": 6,
+  "duplicate_cluster_count": 6,
+  "duplicate_occurrence_count": 6,
+  "duplicate_post_count": 6,
+  "duplicate_rate": 0.006424,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
+    {
+      "cluster_id": "occ_141174e1b4e6e21e747e",
+      "starts_at": "2026-11-27T13:00:00Z",
+      "title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー何買った集会｣を 開催 成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27(金) …",
+      "member_count": 2,
+      "member_ids": [
+        "1342762b697a98b27582",
+        "13e8bf3589e4740f5021"
+      ],
+      "source_record_ids": [
+        "src_181d53c5ba7100aef2d4",
+        "src_21ded4a9d548a38501e0"
+      ],
+      "sources": [
+        "yahoo_realtime_events"
+      ],
+      "reasons": [
+        "same_organizer_same_start_high_similarity"
+      ],
+      "confidence": 0.94,
+      "representative_source_record_id": "src_21ded4a9d548a38501e0"
+    },
     {
       "cluster_id": "occ_ba24f07d9a2c57e18d27",
       "starts_at": "2026-11-27T13:00:00Z",
@@ -58,7 +80,7 @@
     {
       "cluster_id": "occ_cee84d5c063ad5adb0e0",
       "starts_at": "2026-12-05T12:00:00Z",
-      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催決定 ！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
+      "title": "【 告知 】 RESONARK 非公式定期イベント『Reunison』 開催 決定！ 日時 ：毎月 第1・第3土曜 21:00~ （初回 開催 26/12/05） 場所： VRChat （ G…",
       "member_count": 2,
       "member_ids": [
         "a80ab447672c799577dd",
@@ -196,13 +218,23 @@
     },
     {
       "left_id": "c550b71ecbb5c29c3191",
+      "right_id": "13e8bf3589e4740f5021",
+      "starts_at": "2026-11-27T13:00:00Z",
+      "left_organizer": "ASMR集会",
+      "right_organizer": "@nagayanyan",
+      "similarity": 0.0884,
+      "left_title": "ASMR集会 本営業",
+      "right_title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー何買った集会｣を 開催 成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27(金) …"
+    },
+    {
+      "left_id": "c550b71ecbb5c29c3191",
       "right_id": "1342762b697a98b27582",
       "starts_at": "2026-11-27T13:00:00Z",
       "left_organizer": "ASMR集会",
       "right_organizer": "@nagayanyan",
       "similarity": 0.087,
       "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRChatイベント告知 】 ｢Amazonブラックフライデー先行セール何買った集会｣を開催します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時:11/27(金) 2…"
+      "right_title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー先行セール何買った集会｣を 開催 します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27…"
     },
     {
       "left_id": "c550b71ecbb5c29c3191",
@@ -223,17 +255,7 @@
       "similarity": 0.0903,
       "left_title": "ASMR集会 本営業",
       "right_title": "【 集会 閉場】 VR怪人組織 悪役結社ヴァリアールの本拠地を 舞台 とするメインRP 集会イベント 第50回 VRC 悪の組織 集会 が終了した。今回も実に盛況であった。 感想、写真等は #…"
-    },
-    {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "0f0224df44440343bd7d",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": null,
-      "similarity": 0.0554,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "エンジニア集会"
     }
   ],
-  "generated_at": "2026-11-28T07:42:04Z"
+  "generated_at": "2026-11-28T09:32:28Z"
 }

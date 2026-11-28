@@ -1,26 +1,29 @@
 {
   "delta_healthy": true,
-  "generated_at": "2026-11-28T07:42:04Z",
+  "generated_at": "2026-11-28T09:32:28Z",
   "schema_version": "1.0",
-  "semantic_snapshot_sha256": "2a83e9b319712095e476e2aaaf66efdaa0f5425be4ee371e7cdd419d1faf3876",
-  "source_revision": "2e1663f4159c2c137a8c5362a1ba69ca46692713",
+  "semantic_snapshot_sha256": "82130db90fe728750132ec6a9decaf22cb7eb79e4de8bf730241caba968640f3",
+  "source_revision": "8254c017e8661608f1c11f28bef867a2b6c0ac79",
   "yahoo": {
-    "added": 6,
+    "added": 17,
     "added_reasons": {
-      "new_discovery": 6
+      "new_discovery": 16,
+      "other": 1
     },
-    "after": 61,
-    "before": 66,
+    "after": 74,
+    "before": 61,
     "interpretation": "new_since_previous_snapshot is not verified first-ever publication; accepted candidates and search hits are not published events",
     "material_changes": 0,
-    "new_since_previous_snapshot": 6,
+    "new_since_previous_snapshot": 16,
     "promoted_datetime_resolution": 0,
-    "removed": 11,
+    "removed": 4,
     "removed_reasons": {
-      "unknown": 11
+      "dedup_merged": 1,
+      "expired": 1,
+      "unknown": 2
     },
     "source": "yahoo_realtime_events",
-    "unknown_removals": 11,
+    "unknown_removals": 2,
     "yahoo_attribution_gained_on_existing_occurrences": 0
   }
 }
