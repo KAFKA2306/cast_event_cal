@@ -130,6 +130,7 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
       pages: write
       id-token: write
@@ -150,6 +151,19 @@ jobs:
         with:
           name: ${{ env.PAGES_ARTIFACT_NAME }}
           path: public
+      - name: Wait for Pages artifact indexing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            if gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" | jq -e --arg name "${PAGES_ARTIFACT_NAME}" 'any(.artifacts[]?; .name == $name and .expired == false)' >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Pages artifact ${PAGES_ARTIFACT_NAME} was not indexed within 60 seconds" >&2
+          exit 1
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
