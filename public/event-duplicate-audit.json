@@ -1,64 +1,20 @@
 {
   "schema_version": "1.0",
   "policy_version": "canonical-occurrence.v1",
-  "event_count_before": 934,
-  "event_count_after": 928,
-  "candidate_cluster_count": 6,
-  "duplicate_cluster_count": 6,
-  "duplicate_occurrence_count": 6,
-  "duplicate_post_count": 6,
-  "duplicate_rate": 0.006424,
+  "event_count_before": 928,
+  "event_count_after": 924,
+  "candidate_cluster_count": 4,
+  "duplicate_cluster_count": 4,
+  "duplicate_occurrence_count": 4,
+  "duplicate_post_count": 4,
+  "duplicate_rate": 0.00431,
   "exact_source_duplicate_count": 0,
   "unresolved_ambiguous_cluster_count": 1,
   "clusters": [
     {
-      "cluster_id": "occ_141174e1b4e6e21e747e",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー何買った集会｣を 開催 成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27(金) …",
-      "member_count": 2,
-      "member_ids": [
-        "1342762b697a98b27582",
-        "13e8bf3589e4740f5021"
-      ],
-      "source_record_ids": [
-        "src_181d53c5ba7100aef2d4",
-        "src_21ded4a9d548a38501e0"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_21ded4a9d548a38501e0"
-    },
-    {
-      "cluster_id": "occ_ba24f07d9a2c57e18d27",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "title": "📣みなさーん！！ 本日 22:00からは〜！！ 業務時間外のドパガキドパおじドパおば イベント 、#オフザク ですよ！ ゲストに極エル #kimari_el さんを迎えた映えある第一回！ ぜひ…",
-      "member_count": 2,
-      "member_ids": [
-        "781ef5838ceef45c3099",
-        "f82eb4d90543b6e59dde"
-      ],
-      "source_record_ids": [
-        "src_a2036d8e67cefdf25eca",
-        "src_f051aacd12c076733a40"
-      ],
-      "sources": [
-        "yahoo_realtime_events"
-      ],
-      "reasons": [
-        "same_organizer_same_start_high_similarity"
-      ],
-      "confidence": 0.94,
-      "representative_source_record_id": "src_f051aacd12c076733a40"
-    },
-    {
       "cluster_id": "occ_bfaa0d1def9017fd0bb5",
       "starts_at": "2026-12-06T12:50:00Z",
-      "title": "❄️ YSSストリート ライブ in Vket 2026 Winter｜#YSS_ VRC ━━━━━━━━━━━━━━ 📅 12/6(日) 🕙 21:50 OPEN / 22:00 STAR…",
+      "title": "❄️ YSSストリートライブ in Vket 2026 Winter｜#YSS_ VRC ━━━━━━━━━━━━━━ 📅 12/6(日) 🕙 21:50 OPEN / 22:00 START…",
       "member_count": 2,
       "member_ids": [
         "3a6bcf97a88d50057925",
@@ -157,105 +113,105 @@
   ],
   "negative_samples": [
     {
-      "left_id": "5b9ca1a3e706a68b5602",
-      "right_id": "372c61118724001db8ac",
-      "starts_at": "2026-11-27T12:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "623103f03a67dd857be5",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
       "right_organizer": null,
-      "similarity": 0.0701,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "VRC Blender集会"
+      "similarity": 0.0597,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "VRC通信工学集会"
     },
     {
-      "left_id": "5b9ca1a3e706a68b5602",
-      "right_id": "cbbd48b6d11af96b9876",
-      "starts_at": "2026-11-27T12:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRC_billiards",
-      "similarity": 0.117,
-      "left_title": "ASMR集会 初心者説明会",
-      "right_title": "本日 ２１時から VRC ビリヤード同好会の8ボール月例会を行います。 今回は会場にてエントリーを受け付けますので参加希望の方は時間までに join してください。 また見学の方もVチャビリヤ…"
-    },
-    {
-      "left_id": "372c61118724001db8ac",
-      "right_id": "cbbd48b6d11af96b9876",
-      "starts_at": "2026-11-27T12:00:00Z",
-      "left_organizer": null,
-      "right_organizer": "@VRC_billiards",
-      "similarity": 0.073,
-      "left_title": "VRC Blender集会",
-      "right_title": "本日 ２１時から VRC ビリヤード同好会の8ボール月例会を行います。 今回は会場にてエントリーを受け付けますので参加希望の方は時間までに join してください。 また見学の方もVチャビリヤ…"
-    },
-    {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "473b95d4b6ffbcd93e3e",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "7b3dd8d735f21f203616",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
       "right_organizer": null,
-      "similarity": 0.1074,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "Blender＆Unity技術交流会"
+      "similarity": 0.0509,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "VRホビーロボット集会"
     },
     {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "35da34a56024ee86000f",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VR BLOOD RECALL",
-      "similarity": 0.4,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VR BLOOD RECALL 初心者説明会＆交流会"
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "37e12043d4366fa5b45b",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@sansuke05_vr",
+      "similarity": 0.0959,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【 VRChatイベント告知 】第3回 惰眠族のヨカ集会を開催します！ 日時：2026年11月28日 (土) 21:00 ~ 22:00 参加方法 ：「惰眠族のヨカ」のグループに参加 & 当日…"
     },
     {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "03cc45edaab9773f9b25",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "VRCふれあい動物園",
-      "similarity": 0.3333,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "VRCふれあい動物園"
-    },
-    {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "13e8bf3589e4740f5021",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@nagayanyan",
-      "similarity": 0.0884,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー何買った集会｣を 開催 成します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27(金) …"
-    },
-    {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "1342762b697a98b27582",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@nagayanyan",
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "6e3e8509acccc03c2569",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@wondernote_info",
       "similarity": 0.087,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 VRChat イベント 告知 】 ｢Amazonブラックフライデー先行セール何買った集会｣を 開催 します。 セールで買った商品、買いたい商品を紹介しあうイベントです。 日時 :11/27…"
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【 本日 の注目 イベント ✨】 🕒11/28(土) 21:00～ 🟠 VRC カメラ 集会 🟠 現実のカメラ機材・写真趣味と、 VRChat 内でのポートレート・アバター撮影を繋ぐ交流コミュ…"
     },
     {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "05bc796aee2a2da64fbe",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRHeel",
-      "similarity": 0.096,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 本日イベント開催 】 2018年より隔月で 開催 され続けた 『 VRC 悪の組織 集会 』が、 本日 記念すべき第50回を迎える。 今宵の 集会 は何かがおかしい。 22時、 Group…"
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "8ab2cb0a86a5d18c2734",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrc_camera",
+      "similarity": 0.0936,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "【イベント 開催決定 ！】 VRC カメラ集会📸 第２回 開催 が決定いたしました！ 2026年11月28日21時スタート グループに 参加 してインスタンスから入場！ 第２回は参加者の皆様か…"
     },
     {
-      "left_id": "c550b71ecbb5c29c3191",
-      "right_id": "7521396e6686124445c8",
-      "starts_at": "2026-11-27T13:00:00Z",
-      "left_organizer": "ASMR集会",
-      "right_organizer": "@VRHeel",
-      "similarity": 0.0903,
-      "left_title": "ASMR集会 本営業",
-      "right_title": "【 集会 閉場】 VR怪人組織 悪役結社ヴァリアールの本拠地を 舞台 とするメインRP 集会イベント 第50回 VRC 悪の組織 集会 が終了した。今回も実に盛況であった。 感想、写真等は #…"
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "f46b9089f060531dd1fe",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0851,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "セキュリティ集会"
+    },
+    {
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "5e81e088dcc3c344e2f3",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0584,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "マネジメント集会"
+    },
+    {
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "990f5787a4509b04de98",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@vrcce_official",
+      "similarity": 0.1074,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "今夜 は VRC 通信工学 集会 ！ 【タイムスケジュール】 11月28日(土) 21:00～ 開場 21:30～ Yudofu_185さん 『#12 壊れたデータが勝手に直るのはなぜ？ 〜誤…"
+    },
+    {
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "6beb5f87dcea36b201e5",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": "@VRdarts_hiroba",
+      "similarity": 0.0758,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "本日 21時からはVDZT！🎯 VRC のダーツ 大会 で1番大きな 大会 です！ ルールはゼロワン！✨️ 当日 参加 はもちろん見学だけでもお気軽に✧ \\( °∀° )/ ✧ 大会 の緊張感…"
+    },
+    {
+      "left_id": "a049027601cf8b80bc4e",
+      "right_id": "fcfb145e92c20bccb0c8",
+      "starts_at": "2026-11-28T12:00:00Z",
+      "left_organizer": "VRCフィットボクシング集会",
+      "right_organizer": null,
+      "similarity": 0.0334,
+      "left_title": "VRCフィットボクシング集会（土曜）",
+      "right_title": "株式投資座談会"
     }
   ],
-  "generated_at": "2026-11-28T09:32:28Z"
+  "generated_at": "2026-11-28T16:51:51Z"
 }
